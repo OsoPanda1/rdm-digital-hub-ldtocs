@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, Eye, Lock, Users, Fingerprint, ChevronRight, Zap, AlertTriangle, Cpu, Network, Radar } from "lucide-react";
+import { Shield, Eye, Lock, Users, Fingerprint, ChevronRight, Zap, AlertTriangle, Cpu, Network, Radar, Activity } from "lucide-react";
 import { WikiPage } from "@/components/WikiPage";
 import { Section, InfoBox } from "@/components/WikiElements";
+import { useSystemMode } from "@/hooks/useSystemMode";
 
 /* ── Centinelas Data ── */
 const centinelas = [
