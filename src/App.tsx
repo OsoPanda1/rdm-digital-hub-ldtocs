@@ -91,6 +91,10 @@ const Atlas = lazy(() => import("./pages/Atlas"));
 const DevHub = lazy(() => import("./pages/DevHub"));
 const Feed = lazy(() => import("./pages/Feed"));
 
+// ===== New Tourism pages =====
+const Estacionamientos = lazy(() => import("./pages/Estacionamientos"));
+const PatrimonioCultural = lazy(() => import("./pages/PatrimonioCultural"));
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
