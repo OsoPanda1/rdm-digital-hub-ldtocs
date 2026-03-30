@@ -23,7 +23,10 @@ export function RDMInteractiveMap() {
   const leafletLibRef = useRef<any>(null);
   const markersLayerRef = useRef<any>(null);
 
-  const [places] = useState<MapPlace[]>(REAL_DEL_MONTE_SITES.map(s => ({ ...s, rating: s.rating, description: s.description })));
+  const [places] = useState<MapPlace[]>([
+    ...REAL_DEL_MONTE_SITES.map(s => ({ ...s, rating: s.rating, description: s.description })),
+    ...ALL_TERRITORIAL_SITES.map(s => ({ id: s.id, name: s.nombre, category: s.categoria === "naturaleza" ? "aventura" : s.categoria === "museo" ? "historia" : "cultura", lat: s.lat, lng: s.lng, rating: null, description: s.descripcion })),
+  ]);
   const [mapReady, setMapReady] = useState(false);
   const [selectedMood, setSelectedMood] = useState<MoodFilter>("all");
   const [searchTerm, setSearchTerm] = useState("");
