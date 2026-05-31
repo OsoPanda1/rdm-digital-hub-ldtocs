@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import leyendaVideo from "@/assets/leyenda1.mp4";
 
 const VideoTrailer = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -84,10 +85,11 @@ const VideoTrailer = () => {
               </>
             ) : (
               <video
-                src="/video/leyenda1.mp4"
+                src={leyendaVideo}
                 className="w-full h-full object-cover"
                 controls
                 autoPlay
+                playsInline
               />
             )}
           </div>
