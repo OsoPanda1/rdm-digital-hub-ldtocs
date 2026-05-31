@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import leyendaVideo from "@/assets/leyenda1.mp4";
 
 const VideoTrailer = () => {
   const ref = useRef<HTMLDivElement>(null);
