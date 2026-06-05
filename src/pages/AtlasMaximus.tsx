@@ -40,7 +40,7 @@ export default function AtlasMaximus() {
       case "events":
         return events.map((e: any) => ({ title: e.name, sub: e.month ?? e.date ?? "", body: e.description, meta: "" }));
       case "dichos":
-        return dichos.map((d: any) => ({ title: d.texto ?? d.dicho ?? d.title, sub: d.autor ?? "Anónimo", body: d.contexto ?? d.descripcion ?? "", meta: "" }));
+        return dichos.map((d: any) => ({ title: d.jerga ?? d.texto ?? d.title, sub: d.personaje ?? d.autor ?? "Anónimo", body: d.significado ?? d.contexto ?? "", meta: d.inicial ? `Letra ${d.inicial}` : "" }));
       default:
         return [];
     }
