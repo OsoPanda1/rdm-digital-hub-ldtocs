@@ -102,6 +102,8 @@ const AtlasPastes = lazy(() => import("./pages/AtlasPastes"));
 const AtlasCementerio = lazy(() => import("./pages/AtlasCementerio"));
 const AtlasCalles = lazy(() => import("./pages/AtlasCalles"));
 const AtlasLeyendas = lazy(() => import("./pages/AtlasLeyendas"));
+const AtlasMaximus = lazy(() => import("./pages/AtlasMaximus"));
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
