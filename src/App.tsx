@@ -102,6 +102,8 @@ const AtlasPastes = lazy(() => import("./pages/AtlasPastes"));
 const AtlasCementerio = lazy(() => import("./pages/AtlasCementerio"));
 const AtlasCalles = lazy(() => import("./pages/AtlasCalles"));
 const AtlasLeyendas = lazy(() => import("./pages/AtlasLeyendas"));
+const AtlasMaximus = lazy(() => import("./pages/AtlasMaximus"));
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -222,6 +224,8 @@ const AnimatedRoutes = () => {
           <Route path="/capitulos/cementerio" element={<AtlasCementerio />} />
           <Route path="/capitulos/calles" element={<AtlasCalles />} />
           <Route path="/capitulos/leyendas" element={<AtlasLeyendas />} />
+          <Route path="/atlas-maximus" element={<AtlasMaximus />} />
+          <Route path="/corpus" element={<AtlasMaximus />} />
 
           {/* Catch-all */}
           <Route path="*" element={<NotFound />} />
