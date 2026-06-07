@@ -30,7 +30,7 @@ export function useGamification() {
         action,
         target_type: targetType ?? null,
         target_id: targetId ?? null,
-        metadata: metadata ?? null,
+        metadata: (metadata ?? null) as never,
       });
     },
     [user]

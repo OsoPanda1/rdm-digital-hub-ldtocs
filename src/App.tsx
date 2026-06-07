@@ -104,6 +104,8 @@ const AtlasCalles = lazy(() => import("./pages/AtlasCalles"));
 const AtlasLeyendas = lazy(() => import("./pages/AtlasLeyendas"));
 const AtlasMaximus = lazy(() => import("./pages/AtlasMaximus"));
 const EcosistemaLTOS = lazy(() => import("./pages/EcosistemaLTOS"));
+const Perfil = lazy(() => import("./pages/Perfil"));
+const Leaderboard = lazy(() => import("./pages/Leaderboard"));
 
 
 const queryClient = new QueryClient({
