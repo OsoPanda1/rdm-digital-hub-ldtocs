@@ -1,58 +1,51 @@
-# RDM Digital LTOS — Arquitectura Federada por Capas
+# RDM Digital LTOS — Architecture
 
-## Visión
+## Topología actual
 
-Monorepo federado en 4 capas, migración incremental sin romper rutas existentes.
-
-```text
-rdm-digital-ltos/
-├── apps/         # Experience surfaces (web, admin)
-├── services/     # Capacidades de dominio (IA, twin, economía, analytics, culture)
-├── packages/     # Librerías reutilizables (geo, kernel, ui, data-models)
-├── infra/        # Supabase, metrics, deployment
-└── docs/         # Blueprint, STATUS, este archivo
+```
+┌──────────────────────────────────────────────────────────┐
+│                 Cloudflare Pages (SPA)                   │
+│  apps/web    apps/admin    (Vite + React + TanStack)     │
+└─────────────┬──────────────────────────┬─────────────────┘
+              │ publishable key          │ user JWT
+              ▼                          ▼
+        ┌──────────────────────────────────────┐
+        │            Supabase                  │
+        │  Auth · Postgres (RLS) · Storage     │
+        │  Realtime · Edge Functions (Deno)    │
+        └──────────┬───────────────────────────┘
+                   │ service_role (server-only)
+                   ▼
+        ┌──────────────────────────────────────┐
+        │  services/* (Node/Deno workers)      │
+        │  IA (Gemini) · Eventos · Analytics   │
+        └──────────────────────────────────────┘
 ```
 
-## Aliases TS/Vite (Etapa 1 — activos)
+## Dominios
 
-| Alias | Apunta a | Propósito |
-|---|---|---|
-| `@geo-engine` | `packages/geo-engine/src` | Geo puro: haversine, bbox, LRU, spatial index |
-| `@core-kernel` | `packages/core-kernel/src` | Kernel LTOS, modos, auditoría, heptafederación |
-| `@data-models` | `packages/data-models/src` | Tipos y contratos compartidos |
-| `@ui-kit` | `packages/ui-kit/src` | UI primitives reutilizables |
-| `@` | `src` | Apps actuales (compat) |
+| Dominio            | Path                       | Estado |
+|--------------------|----------------------------|--------|
+| IA conversacional  | services/ai, apps/web/ai   | beta   |
+| Gemelo territorial | apps/web/twin              | alpha  |
+| Economía local     | services/economy           | alpha  |
+| Cultura            | apps/web/culture           | beta   |
+| Analytics          | services/analytics         | alpha  |
+| Sensores IoT       | services/sensors           | planned|
 
-## Aliases planificados (Etapas 2-4)
+## Trust boundaries
 
-| Alias | Capa | Etapa |
-|---|---|---|
-| `@ai-core` | services/ai-core | 2 |
-| `@twin` | services/territorial-twin | 2 |
-| `@economy` | services/economy | 2 |
-| `@analytics` | services/analytics | 2 |
-| `@culture` | services/culture | 2 |
+1. **Browser ↔ Supabase**: publishable key + RLS. Nunca service_role.
+2. **Browser ↔ Edge Functions**: JWT del usuario, validado por la función.
+3. **Edge Function ↔ Postgres**: service_role solo cuando se requiere bypass de RLS, con verificación previa del rol via `has_role()`.
+4. **CI ↔ Cloudflare/Supabase**: tokens OIDC efímeros, nunca PATs en secretos largos.
 
-## Reglas de dependencia
+## Datos sensibles
 
-```text
-apps/*     →  services/*  →  packages/*
-apps/*     →  packages/*
-services/* →  packages/*
-packages/* →  packages/*   (sólo entre fundaciones, sin ciclos)
-```
+- PII de visitantes (email, teléfono) → tabla `profiles`, RLS estricta por `auth.uid()`.
+- Roles → tabla `user_roles` separada (jamás en `profiles`).
+- Logs de IA → anonimizados a las 24 h.
 
-- `packages/*` **no** importa de `services/*` ni `apps/*`.
-- `services/*` **no** importa de `apps/*`.
-- `apps/*` exponen UI y routing; toda la lógica vive abajo.
+## Pendientes (gap analysis vs manual maestro)
 
-## Criterios de cierre (M3 → M4)
-
-Cada módulo cierra cuando:
-
-1. Build verde con su alias activo.
-2. Sin imports rotos a rutas legacy.
-3. Tipos públicos exportados desde su `index.ts`.
-4. Documentado en `docs/STATUS.md`.
-
-Ver `.lovable/plan.md` para el plan completo de las 4 etapas.
+Ver `docs/HARDENING-ROADMAP.md`.
