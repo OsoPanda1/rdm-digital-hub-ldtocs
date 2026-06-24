@@ -4,38 +4,50 @@ RDM Digital LTOS es una plataforma territorial crítica para el ecosistema de Re
 
 ## Alcance
 
-Esta política aplica a:
 - Repositorio `rdm-digital-ltos` y todos sus módulos.
 - Aplicaciones web (visitante, admin).
 - Servicios de dominio (IA, gemelo territorial, economía, analítica, cultura).
-- Librerías base (geo-engine, core-kernel, data-models, ui-kit).
+- Supabase (Auth · Postgres · Storage · Edge Functions).
+- Despliegue en Cloudflare Pages / Workers.
 
-## Reporte responsable de vulnerabilidades
+## Reportar una vulnerabilidad
 
-Si detectas una vulnerabilidad de seguridad:
+Envía un correo cifrado a **security@realdelmonte.example** con:
 
-1. **No abras un issue público.**
-2. Envía un correo a: `seguridad@rdm.digital` (actualiza con tu correo real).
-3. Incluye descripción, pasos para reproducirlo, impacto potencial y cualquier POC disponible.
+- Descripción técnica reproducible.
+- Impacto estimado.
+- PoC (si aplica).
 
-Nos comprometemos a reconocer recepción en un máximo de 72 horas, investigar y coordinar una solución sin exponer datos sensibles.
+Compromiso de respuesta:
 
-## Expectativas
+| Severidad | Acuse | Mitigación | Disclosure |
+|-----------|-------|------------|------------|
+| Crítica   | 24 h  | 72 h       | coordinado |
+| Alta      | 48 h  | 7 días     | coordinado |
+| Media     | 5 días| 30 días    | coordinado |
+| Baja      | 10 días| backlog   | a discreción |
 
-Pedimos a la comunidad no explotar vulnerabilidades en sistemas reales, no acceder a datos personales o confidenciales y no realizar ataques de denegación de servicio.
+No realices pruebas destructivas, no accedas a datos de terceros, no hagas DoS.
 
-## Gestión de secretos
+## Controles obligatorios
 
-- No se deben versionar archivos `.env` ni credenciales.
-- Cualquier clave o token debe residir en variables de entorno o gestores de secretos como Vault, Secret Manager o equivalentes por entorno.
-- Los mantenedores revisarán periódicamente el repositorio para evitar filtraciones accidentales.
+1. **Secret hygiene**: ningún secreto en código. Service-role aislado en `*.server.ts`. CI ejecuta `gitleaks` + `trufflehog` en cada PR.
+2. **Zero Trust frontend**: el navegador solo usa la `publishable key`. Toda escritura privilegiada pasa por Edge Function autenticada que verifica `has_role()`.
+3. **RLS por defecto**: toda tabla pública en `public` tiene RLS habilitada y políticas explícitas; `USING (true)` está prohibido salvo lectura genuinamente pública.
+4. **Roles en tabla separada**: `user_roles` + función `SECURITY DEFINER` `has_role()`. Jamás en `profiles`.
+5. **CSP / HSTS / headers**: ver `public/_headers`.
+6. **Dependencias**: `npm audit --audit-level=high` bloquea merge; CodeQL semanal.
+7. **Backups**: PITR Supabase + verificación mensual de restore.
+8. **Observabilidad**: logs estructurados (JSON), Sentry para errores, PostHog para producto.
 
-## Actualizaciones de dependencias
+## Roles
 
-- Se ejecutará `npm audit`/`pnpm audit` de forma regular.
-- Vulnerabilidades **HIGH/CRITICAL** deben ser atendidas con prioridad y documentadas en los cambios.
+- **Security lead**: define política, revisa hallazgos, aprueba excepciones.
+- **DPO**: cumplimiento de privacidad y respuesta a titulares de datos.
+- **On-call**: responde incidentes según `docs/RUNBOOK.md`.
 
-## Política de parches
+## Auditoría
 
-- Vulnerabilidades que afecten módulos T5–T7 (identidad, kernel, ciudadano crítico) se tratarán como incidentes mayores.
-- El proceso de Incident Response se rige por los protocolos internos del proyecto (ver `docs/GOVERNANCE.md`).
+- Logs de auth + admin retenidos 90 días.
+- Migraciones SQL revisadas en PR por al menos 1 reviewer con rol `db-reviewer`.
+- Cambios a políticas RLS requieren PR etiquetado `security-review` y aprobación del security lead.

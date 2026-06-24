@@ -1,13 +1,17 @@
-import { createClient } from '@supabase/supabase-js';
-import type { Database } from './types';
+/**
+ * DEPRECATED — DO NOT IMPORT.
+ *
+ * The service-role Supabase client now lives in `admin.server.ts`, which is
+ * blocked from the client bundle. This shim throws at import time to surface
+ * any lingering frontend references during build/dev.
+ *
+ * Migration:
+ *   - Frontend: use `client.ts` (publishable key).
+ *   - Server / Edge Functions: import { getSupabaseAdmin } from "./admin.server";
+ */
+throw new Error(
+  "[supabase/admin] This module is server-only and has moved to admin.server.ts. " +
+    "Frontend code must NEVER import the service-role client.",
+);
 
-const url = process.env.SUPABASE_URL;
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-if (!url || !serviceRoleKey) {
-  console.warn('[SUPABASE_ADMIN] Variables de entorno faltantes: SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY');
-}
-
-export const supabaseAdmin = createClient<Database>(url ?? '', serviceRoleKey ?? '', {
-  auth: { autoRefreshToken: false, persistSession: false },
-});
+export {};
