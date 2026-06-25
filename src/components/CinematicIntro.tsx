@@ -7,7 +7,7 @@ interface CinematicIntroProps {
 }
 
 /**
- * AudioEqualizer — barras espectrales ligadas al AnalyserNode
+ * AudioEqualizer — Barras espectrales de alta definición ligadas al AnalyserNode
  */
 const AudioEqualizer = ({ analyser }: { analyser: AnalyserNode | null }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -20,39 +20,46 @@ const AudioEqualizer = ({ analyser }: { analyser: AnalyserNode | null }) => {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    const BAR_COUNT = 48
+    // Optimización de nitidez para pantallas Retina/High-DPI
+    const dpr = window.devicePixelRatio || 1
+    canvas.width = 530 * dpr
+    canvas.height = 80 * dpr
+    ctx.scale(dpr, dpr)
+
+    const BAR_COUNT = 64
     const dataArr = new Uint8Array(analyser.frequencyBinCount)
 
     const draw = () => {
       rafRef.current = requestAnimationFrame(draw)
       analyser.getByteFrequencyData(dataArr)
 
-      const { width: w, height: h } = canvas
+      const w = 530
+      const h = 80
       ctx.clearRect(0, 0, w, h)
 
-      const barW = (w / BAR_COUNT) * 0.7
-      const gap = (w / BAR_COUNT) * 0.5
+      const barW = (w / BAR_COUNT) * 0.65
+      const gap = (w / BAR_COUNT) * 0.35
 
       for (let i = 0; i < BAR_COUNT; i++) {
-        const binIndex = Math.floor(
-          (i / BAR_COUNT) * (analyser.frequencyBinCount * 0.75),
-        )
+        const binIndex = Math.floor((i / BAR_COUNT) * (analyser.frequencyBinCount * 0.65))
         const rawVal = dataArr[binIndex] / 255
-        const barH = Math.max(4, rawVal * h * 0.9)
+        const barH = Math.max(3, rawVal * h * 0.95)
 
         const x = i * (barW + gap)
         const y = h - barH
 
         const grad = ctx.createLinearGradient(x, h, x, y)
-        grad.addColorStop(0, `hsla(43, 75%, 65%, ${0.3 + rawVal * 1.3})`)
-        grad.addColorStop(0.5, `hsla(210, 80%, 65%, ${0.45 + rawVal * 0.5})`)
-        grad.addColorStop(1, `hsla(280, 60%, 70%, ${0.3 + rawVal * 1.4})`)
+        // Paleta de Oro Realmontense a Zafiro Imperial
+        grad.addColorStop(0, `hsla(43, 85%, 60%, ${0.2 + rawVal * 1.2})`)
+        grad.addColorStop(0.5, `hsla(212, 90%, 65%, ${0.4 + rawVal * 0.6})`)
+        grad.addColorStop(1, `hsla(275, 75%, 70%, ${0.3 + rawVal * 1.5})`)
 
         ctx.fillStyle = grad
-        ctx.shadowBlur = rawVal > 0.55 ? 14 : 4
-        ctx.shadowColor = `hsla(210, 100%, 65%, ${rawVal * 0.9})`
+        ctx.shadowBlur = rawVal > 0.5 ? 16 : 2
+        ctx.shadowColor = `hsla(212, 100%, 60%, ${rawVal * 0.8})`
 
-        const radius = Math.min(barW / 2, 3)
+        // Esquinas redondeadas superiores de las barras espectrales
+        const radius = Math.min(barW / 2, 4)
         ctx.beginPath()
         ctx.moveTo(x + radius, y)
         ctx.lineTo(x + barW - radius, y)
@@ -64,10 +71,11 @@ const AudioEqualizer = ({ analyser }: { analyser: AnalyserNode | null }) => {
         ctx.closePath()
         ctx.fill()
 
+        // Reflejo inferior elegante (Efecto cristal de cuarzo)
         ctx.save()
-        ctx.globalAlpha = 0.36
-        ctx.scale(1, -0.35)
-        ctx.translate(0, -h * 2 - 6)
+        ctx.globalAlpha = 0.22
+        ctx.scale(1, -0.3)
+        ctx.translate(0, -h * 2 - 4)
         ctx.fillStyle = grad
         ctx.beginPath()
         ctx.moveTo(x + radius, y)
@@ -92,15 +100,13 @@ const AudioEqualizer = ({ analyser }: { analyser: AnalyserNode | null }) => {
   return (
     <canvas
       ref={canvasRef}
-      width={530}
-      height={80}
-      className="h-[70px] w-[320px] md:h-[80px] md:w-[530px]"
+      className="h-[65px] w-[300px] md:h-[80px] md:w-[530px]"
     />
   )
 }
 
 /**
- * AudioWaveform — osciloscopio temporal
+ * AudioWaveform — Osciloscopio temporal estilizado
  */
 const AudioWaveform = ({ analyser }: { analyser: AnalyserNode | null }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -113,23 +119,28 @@ const AudioWaveform = ({ analyser }: { analyser: AnalyserNode | null }) => {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
+    const dpr = window.devicePixelRatio || 1
+    canvas.width = 520 * dpr
+    canvas.height = 55 * dpr
+    ctx.scale(dpr, dpr)
+
     const dataArr = new Uint8Array(analyser.fftSize)
 
     const draw = () => {
       rafRef.current = requestAnimationFrame(draw)
       analyser.getByteTimeDomainData(dataArr)
 
-      const { width: w, height: h } = canvas
+      const w = 520
+      const h = 55
       ctx.clearRect(0, 0, w, h)
 
-      ctx.lineWidth = 3
-      ctx.strokeStyle = "hsla(210, 100%, 75%, 0.85)"
-      ctx.shadowBlur = 15
-      ctx.shadowColor = "hsla(210, 100%, 65%, 0.8)"
+      ctx.lineWidth = 2.5
+      ctx.strokeStyle = "hsla(212, 100%, 75%, 0.85)"
+      ctx.shadowBlur = 12
+      ctx.shadowColor = "hsla(212, 100%, 65%, 0.7)"
 
       ctx.beginPath()
-
-      const sliceWidth = (w * 1.0) / dataArr.length
+      const sliceWidth = w / dataArr.length
       let x = 0
 
       for (let i = 0; i < dataArr.length; i++) {
@@ -146,8 +157,9 @@ const AudioWaveform = ({ analyser }: { analyser: AnalyserNode | null }) => {
       ctx.lineTo(w, h / 2)
       ctx.stroke()
 
-      ctx.lineWidth = 0.5
-      ctx.strokeStyle = "hsla(210, 100%, 50%, 0.12)"
+      // Línea de horizonte espectral base tenue
+      ctx.lineWidth = 0.75
+      ctx.strokeStyle = "hsla(43, 90%, 50%, 0.15)"
       ctx.shadowBlur = 0
       ctx.beginPath()
       ctx.moveTo(0, h / 2)
@@ -164,15 +176,13 @@ const AudioWaveform = ({ analyser }: { analyser: AnalyserNode | null }) => {
   return (
     <canvas
       ref={canvasRef}
-      width={520}
-      height={55}
-      className="h-[34px] w-[320px] opacity-70 md:h-[48px] md:w-[520px]"
+      className="h-[30px] w-[300px] opacity-60 md:h-[48px] md:w-[520px]"
     />
   )
 }
 
 /**
- * Estrellas y cielo mágico
+ * Generación procedimental de constelaciones fijas y dinámicas
  */
 type Star = {
   id: number
@@ -188,40 +198,40 @@ type Star = {
 }
 
 const STAR_COLORS = [
-  "hsla(210,100%,80%,0.9)",
-  "hsla(43,95%,72%,0.9)",
-  "hsla(280,70%,75%,0.8)",
-  "hsla(0,0%,100%,0.7)",
+  "hsla(212, 100%, 85%, 0.95)", // Zafiro brillante
+  "hsla(43, 100%, 75%, 0.95)",  // Oro puro
+  "hsla(275, 80%, 80%, 0.85)",  // Amatista cósmica
+  "hsla(0, 0%, 100%, 0.9)",     // Blanco estelar
 ]
 
 const createStarField = (count: number): Star[] => {
   const stars: Star[] = []
   for (let i = 0; i < count; i++) {
     const layer = (i % 3) as 0 | 1 | 2
-    const sizeBase = layer === 0 ? 0.7 : layer === 1 ? 1.3 : 2.2
+    const sizeBase = layer === 0 ? 0.6 : layer === 1 ? 1.4 : 2.5
 
     stars.push({
       id: i,
-      size: sizeBase + Math.random() * (layer === 2 ? 2.4 : 1.4),
+      size: sizeBase + Math.random() * (layer === 2 ? 2.6 : 1.2),
       baseX: Math.random() * 100,
       baseY: Math.random() * 100,
       color: STAR_COLORS[i % STAR_COLORS.length],
-      driftX: (Math.random() - 0.5) * (layer === 2 ? 90 : 45),
-      driftY: -40 - Math.random() * (layer === 2 ? 130 : 60),
-      duration: 6 + Math.random() * 6,
-      delay: Math.random() * 4.5,
+      driftX: (Math.random() - 0.5) * (layer === 2 ? 70 : 35),
+      driftY: -50 - Math.random() * (layer === 2 ? 140 : 70),
+      duration: 7 + Math.random() * 7,
+      delay: Math.random() * 5,
       layer,
     })
   }
   return stars
 }
 
-const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
+export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
   const [phase, setPhase] = useState(0)
   const [started, setStarted] = useState(false)
   const [overlayVisible, setOverlayVisible] = useState(true)
   const [analyser, setAnalyser] = useState<AnalyserNode | null>(null)
-  const [stars] = useState<Star[]>(() => createStarField(190))
+  const [stars] = useState<Star[]>(() => createStarField(220))
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const audioCtxRef = useRef<AudioContext | null>(null)
@@ -235,12 +245,10 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
       clearInterval(fadeIntervalRef.current)
       fadeIntervalRef.current = null
     }
-
     if (fadeInIntervalRef.current !== null) {
       clearInterval(fadeInIntervalRef.current)
       fadeInIntervalRef.current = null
     }
-
     if (audioRef.current) {
       try {
         audioRef.current.pause()
@@ -248,12 +256,10 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
       } catch {}
       audioRef.current = null
     }
-
     if (audioCtxRef.current) {
       audioCtxRef.current.close().catch(() => {})
       audioCtxRef.current = null
     }
-
     sourceRef.current = null
     setAnalyser(null)
   }, [])
@@ -268,11 +274,9 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
 
   useEffect(() => {
     if (!started) return
-
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") handleSkip()
     }
-
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
   }, [started, handleSkip])
@@ -284,11 +288,9 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
     try {
       const Ctor = window.AudioContext || (window as any).webkitAudioContext
       const ctx = new Ctor()
-
       if (ctx.state === "suspended") {
         await ctx.resume()
       }
-
       audioCtxRef.current = ctx
 
       const audio = new Audio(introAudioSrc)
@@ -301,35 +303,34 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
 
       const anal = ctx.createAnalyser()
       anal.fftSize = 512
-      anal.smoothingTimeConstant = 0.85
+      anal.smoothingTimeConstant = 0.82
       setAnalyser(anal)
 
+      // Ecualización Acústica Premium Cinematográfica
       const bass = ctx.createBiquadFilter()
       bass.type = "lowshelf"
-      bass.frequency.value = 280
-      bass.gain.value = 6
+      bass.frequency.value = 220
+      bass.gain.value = 7 // Realce del latido profundo de la montaña
 
       const high = ctx.createBiquadFilter()
       high.type = "highshelf"
-      high.frequency.value = 6500
-      high.gain.value = 2
+      high.frequency.value = 7000
+      high.gain.value = 3 // Brillo y cristalización armónica
 
       const compressor = ctx.createDynamicsCompressor()
-      compressor.threshold.value = -26
-      compressor.knee.value = 24
-      compressor.ratio.value = 3.5
-      compressor.attack.value = 0.013
-      compressor.release.value = 0.25
+      compressor.threshold.value = -24
+      compressor.knee.value = 20
+      compressor.ratio.value = 4.0
+      compressor.attack.value = 0.01
+      compressor.release.value = 0.22
 
+      // Entorno de reverberación espacial (Delay estéreo cruzado)
       const delay = ctx.createDelay(1.0)
-      delay.delayTime.value = 0.38
-
+      delay.delayTime.value = 0.35
       const feedback = ctx.createGain()
-      feedback.gain.value = 0.32
-
+      feedback.gain.value = 0.28
       const wet = ctx.createGain()
-      wet.gain.value = 0.28
-
+      wet.gain.value = 0.25
       const dry = ctx.createGain()
       dry.gain.value = 1.0
 
@@ -348,87 +349,61 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
       anal.connect(ctx.destination)
 
       audio.volume = 0
-
       const playPromise = audio.play()
       if (playPromise !== undefined) {
         await playPromise
       }
 
-      // Fade in suave
+      // Fundido de entrada acústico ultra-suave
       fadeInIntervalRef.current = window.setInterval(() => {
-        if (!audioRef.current) {
-          if (fadeInIntervalRef.current !== null) {
-            clearInterval(fadeInIntervalRef.current)
-            fadeInIntervalRef.current = null
-          }
-          return
-        }
-
-        const nextVol = Math.min(audioRef.current.volume + 0.06, 1)
+        if (!audioRef.current) return
+        const nextVol = Math.min(audioRef.current.volume + 0.05, 0.9)
         audioRef.current.volume = nextVol
-
-        if (nextVol >= 0.85) {
-          if (fadeInIntervalRef.current !== null) {
-            clearInterval(fadeInIntervalRef.current)
-            fadeInIntervalRef.current = null
-          }
+        if (nextVol >= 0.9 && fadeInIntervalRef.current) {
+          clearInterval(fadeInIntervalRef.current)
         }
-      }, 120)
+      }, 100)
 
-      // Fade out final suave sobre los últimos segundos
+      // Fundido de salida al cierre definitivo de la experiencia sonora
       setTimeout(() => {
         if (!audioRef.current) return
         fadeIntervalRef.current = window.setInterval(() => {
-          if (!audioRef.current) {
-            if (fadeIntervalRef.current !== null) {
-              clearInterval(fadeIntervalRef.current)
-              fadeIntervalRef.current = null
-            }
-            return
-          }
-
+          if (!audioRef.current) return
           const nextVol = Math.max(audioRef.current.volume - 0.04, 0)
           audioRef.current.volume = nextVol
-
-          if (nextVol <= 0) {
-            if (fadeIntervalRef.current !== null) {
-              clearInterval(fadeIntervalRef.current)
-              fadeIntervalRef.current = null
-            }
+          if (nextVol <= 0 && fadeIntervalRef.current) {
+            clearInterval(fadeIntervalRef.current)
             stopAudio()
           }
-        }, 120)
-      }, 64000)
+        }, 100)
+      }, 73000)
 
       audio.addEventListener("ended", () => {
         setOverlayVisible(false)
         onComplete()
       })
     } catch (e) {
-      console.error("Audio init failed:", e)
+      console.error("Audio cinematic init failed:", e)
     }
   }
 
-  /**
-   * Timeline extendido (≈70s) + 1.5s extra por mensaje
-   * Antes: 0–70s aprox; ahora sumamos margen de lectura.
-   */
+  // Cronograma Maestro de Transición de Épocas y Sentimientos
   useEffect(() => {
     if (!started) return
 
     const timers = [
-      setTimeout(() => setPhase(1), 800),    // TAMV
-      setTimeout(() => setPhase(2), 8500),   // Dedicado a Reina (antes ~7s)
-      setTimeout(() => setPhase(3), 19000),  // Texto emotivo largo
-      setTimeout(() => setPhase(4), 31000),  // A mi madre / oveja negra
-      setTimeout(() => setPhase(5), 41000),  // Real del Monte / cielo
-      setTimeout(() => setPhase(6), 52000),  // Orgullo, memoria y magia
-      setTimeout(() => setPhase(7), 62000),  // Legado
-      setTimeout(() => setPhase(8), 70500),  // Bienvenidos / entrada
+      setTimeout(() => setPhase(1), 800),   // Alianza e Identidad Inicial
+      setTimeout(() => setPhase(2), 9500),  // Sacrificio y Dedicación Perpetua
+      setTimeout(() => setPhase(3), 20500), // La Promesa del Silencio Absoluto
+      setTimeout(() => setPhase(4), 32500), // El Retorno Glorioso y Entrega
+      setTimeout(() => setPhase(5), 43500), // Mística Territorial de Real del Monte
+      setTimeout(() => setPhase(6), 54500), // Historia Tallada en Plata Viva
+      setTimeout(() => setPhase(7), 65000), // El Legado Inquebrantable de las 7 Federaciones
+      setTimeout(() => setPhase(8), 73500), // El Horizonte Digital Absoluto
       setTimeout(() => {
         setOverlayVisible(false)
         onComplete()
-      }, 76000),
+      }, 80000),
     ]
 
     return () => timers.forEach(clearTimeout)
@@ -442,70 +417,62 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
     }
   }, [stopAudio])
 
-  // Contenido por fase
+  // Biblioteca Narrativa Universal: El Manifiesto de Orgullo
   const scene = (() => {
     switch (phase) {
       case 0:
       case 1:
         return {
-          tag: "TAMV ONLINE NETWORK",
-          title: "Orgullosamente realmontenses",
-          body:
-            "Una red nacida desde la montaña, hecha por manos que conocen el frío, la neblina y el corazón de este pueblo.",
+          tag: "TAMV ONLINE NETWORK — ALIANZA GLOBAL",
+          title: "Orgullosamente Realmontenses",
+          body: "Una arquitectura digital inquebrantable, forjada en la cumbre de la montaña por manos que desafían el frío, custodian la niebla y hacen latir el corazón mineral de la historia.",
         }
       case 2:
         return {
-          tag: "Dedicado con amor",
-          title: "Proyecto dedicado a Reina Trejo Serrano",
-          body:
-            "Porque detrás de cada sueño que se levanta, hubo una mujer que sostuvo el mundo en silencio.",
+          tag: "HOMENAJE ETERNO",
+          title: "Inspirado en Reina Trejo Serrano",
+          body: "Porque detrás de cada obra monumental construida para la eternidad, existió una mujer extraordinaria que sostuvo los cimientos del universo en absoluto silencio.",
         }
       case 3:
         return {
-          tag: "A ti, mamá",
-          title: "A ti que en silencio sostuviste noches interminables",
-          body:
-            "A ti que desde la sombra sufriste sin una sola queja. A ti que renunciaste a tu propia vida para darme alas, camino y futuro.",
+          tag: "EL SACRIFICIO DE UNA MADRE",
+          title: "A ti que resguardaste noches infinitas",
+          body: "A la guardiana de mis primeros pasos, quien desde las sombras del cansancio protegió mi porvenir sin un solo reproche, entregando su propia vida para esculpir mis alas y mis horizontes.",
         }
       case 4:
         return {
-          tag: "A mi madre",
-          title: "Hoy tu oveja negra te entrega su trabajo",
-          body:
-            "Sonríe, levanta el rostro y siéntete orgullosa: por fin lo logré. Todo esto también es tuyo. Te amo con toda el alma.",
+          tag: "EL TRIUNFO DE LA SANGRE",
+          title: "Hoy tu oveja negra redefine el destino",
+          body: "Sonríe con el alma y levanta la mirada hacia el cielo, madre: lo hemos logrado. Toda esta inmensidad tecnológica e histórica es tu fruto. Te amo con devoción eterna.",
         }
       case 5:
         return {
-          tag: "Real del Monte",
-          title: "Un lugar cerca del cielo",
-          body:
-            "Entre niebla, viento y campanas, un pueblo mágico levanta la voz y cuenta su propia historia.",
+          tag: "GEOGRAFÍA SAGRADA",
+          title: "Un Santuario Elevado Junto al Cielo",
+          body: "Entre hilos de neblina perpetua, ráfagas de viento y el tañido de campanas coloniales, un pueblo mágico despierta al mundo para narrar su señorío indomable.",
         }
       case 6:
         return {
-          tag: "Orgullo, memoria y magia",
-          title: "Una tierra que late con historia",
-          body:
-            "Aquí cada calle guarda una leyenda, cada mina un recuerdo, cada mirada un pedazo de eternidad.",
+          tag: "MEMORIA, PLATA Y RESILIENCIA",
+          title: "Una Tierra Donde la Piedra Cobra Vida",
+          body: "Aquí cada veta mineral guarda un lamento heroico, cada callejón empedrado custodia una leyenda de honor, y cada mirada realmontense porta un destello de inmortalidad.",
         }
       case 7:
         return {
-          tag: "Esto no es solo un proyecto",
-          title: "Es un legado",
-          body:
-            "Una forma de honrar lo que somos, lo que amamos y lo que soñamos dejarle a quienes vienen detrás.",
+          tag: "EL IMPERIO DE LAS 7 FEDERACIONES",
+          title: "Esto no es un Proyecto; Es un Legado Perpetuo",
+          body: "La convergencia perfecta de nuestras 7 federaciones unidas bajo un solo estandarte digital. Diseñado para trascender los siglos y guiar con orgullo a las generaciones del mañana.",
         }
       case 8:
       default:
         return {
-          tag: "Bienvenidos",
+          tag: "EL UMBRAL DE LA NUEVA ERA",
           title: "Real del Monte Digital",
-          body: "Aquí comienza una experiencia hecha con alma, memoria y orgullo.",
+          body: "Bienvenidos a la cumbre de la sofisticación tecnológica. Una experiencia creada con el alma pura, la memoria intacta y el orgullo inquebrantable de nuestra raza.",
         }
     }
   })()
 
-  // Secuencia de imágenes que entran y salen (hero + secundarias)
   const heroImages = [
     "/images/rdm-hero.png",
     "/images/realito-pasterias.png",
@@ -520,61 +487,79 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
     <AnimatePresence>
       {overlayVisible && (
         <motion.div
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          exit={{ opacity: 0, filter: "blur(30px)" }}
+          transition={{ duration: 1.8, ease: "easeInOut" }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden"
           style={{
-            background:
-              "radial-gradient(circle at top, hsl(220 45% 8%) 0%, hsl(220 35% 3%) 40%, hsl(220 25% 2%) 100%)",
+            background: "radial-gradient(circle at center, hsl(222, 50%, 6%) 0%, hsl(224, 60%, 3%) 50%, hsl(225, 80%, 1%) 100%)",
             cursor: !started ? "pointer" : "default",
-            backgroundAttachment: "fixed",
           }}
           onClick={!started ? startIntro : undefined}
         >
-          {/* Pantalla inicial: tocar para iniciar */}
+          {/* BOTÓN OMITIR INTRO (Elegancia minimalista reservada para pantallas activas) */}
+          {started && (
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              whileHover={{ opacity: 0.9, scale: 1.05 }}
+              onClick={(e) => {
+                e.stopPropagation()
+                handleSkip()
+              }}
+              className="absolute right-6 top-6 z-[60] font-mono text-[10px] tracking-[0.4em] text-white uppercase border border-white/20 px-4 py-2 rounded-full backdrop-blur-md transition-all"
+            >
+              Omitir Experiencia [ESC]
+            </motion.button>
+          )}
+
+          {/* Interfaz de entrada: Pantalla Sagrada de Inicio */}
           {!started && (
             <motion.div
-              className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-6"
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{
-                duration: 2.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+              className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-8"
+              animate={{ opacity: [0.6, 1, 0.6] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             >
-              <img
-                src="/images/rdm-hero.png"
-                alt="RDM Digital"
-                className="h-40 w-40 rounded-full object-cover opacity-90 md:h-56 md:w-56"
-                style={{
-                  filter:
-                    "drop-shadow(0 0 40px hsla(210,100%,60%,0.7)) saturate(1.25)",
-                }}
-              />
-              <p
-                className="text-xs tracking-[0.35em] uppercase md:text-sm"
-                style={{ color: "hsl(210 60% 75%)" }}
-              >
-                Toca para iniciar la experiencia sonora
-              </p>
+              <div className="relative">
+                <motion.div
+                  className="absolute inset-0 rounded-full blur-3xl opacity-60"
+                  style={{ background: "radial-gradient(circle, hsl(43, 100%, 60%) 0%, transparent 70%)" }}
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                />
+                <img
+                  src="/images/rdm-hero.png"
+                  alt="RDM Digital Maestría"
+                  className="relative h-44 w-44 rounded-full object-cover md:h-60 md:w-60"
+                  style={{
+                    filter: "drop-shadow(0 0 50px hsla(43,90%,55%,0.45)) saturate(1.15) contrast(1.1)",
+                    border: "2px solid hsla(43, 80%, 60%, 0.4)"
+                  }}
+                />
+              </div>
+              <div className="text-center space-y-2">
+                <p className="text-[11px] tracking-[0.45em] uppercase text-amber-200/80 font-mono">
+                  TAMV Online Network Presenta
+                </p>
+                <p className="text-xs tracking-[0.3em] uppercase text-sky-200/60">
+                  Toca la pantalla para iniciar la experiencia sonora territorial
+                </p>
+              </div>
               <motion.div
                 className="flex h-16 w-16 items-center justify-center rounded-full border-2"
-                style={{
-                  borderColor: "hsla(210, 80%, 60%, 0.6)",
-                }}
+                style={{ borderColor: "hsla(43, 80%, 60%, 0.5)" }}
                 animate={{
-                  scale: [1, 1.14, 1],
+                  scale: [1, 1.15, 1],
                   boxShadow: [
-                    "0 0 0px hsla(210,80%,60%,0)",
-                    "0 0 30px hsla(210,80%,60%,0.45)",
-                    "0 0 0px hsla(210,80%,60%,0)",
+                    "0 0 0px hsla(43,80%,60%,0)",
+                    "0 0 40px hsla(43,90%,60%,0.4)",
+                    "0 0px hsla(43,80%,60%,0)",
                   ],
                 }}
-                transition={{ duration: 1.8, repeat: Infinity }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               >
                 <div
-                  className="ml-1 h-0 w-0 border-b-[8px] border-t-[8px] border-l-[14px] border-b-transparent border-t-transparent"
-                  style={{ borderLeftColor: "hsl(210 80% 70%)" }}
+                  className="ml-1.5 h-0 w-0 border-b-[8px] border-t-[8px] border-l-[15px] border-b-transparent border-t-transparent"
+                  style={{ borderLeftColor: "hsl(43, 90%, 65%)" }}
                 />
               </motion.div>
             </motion.div>
@@ -582,42 +567,41 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
 
           {started && (
             <>
-              {/* Fondo hero dinámico a pantalla completa */}
+              {/* Paisajes de Fondo Cinematográficos Dinámicos */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={heroIndex}
                   className="absolute inset-0 z-0"
-                  initial={{ opacity: 0, scale: 1.06 }}
-                  animate={{ opacity: 0.7, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.04 }}
-                  transition={{ duration: 2.3, ease: "easeInOut" }}
+                  initial={{ opacity: 0, scale: 1.08, filter: "blur(10px)" }}
+                  animate={{ opacity: 0.55, scale: 1, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, scale: 1.03, filter: "blur(8px)" }}
+                  transition={{ duration: 2.5, ease: "easeInOut" }}
                 >
                   <img
                     src={heroImages[heroIndex]}
                     alt=""
                     className="h-full w-full object-cover"
                     style={{
-                      filter:
-                        "saturate(0.85) contrast(1.12) brightness(0.65) blur(0.4px)",
+                      filter: "saturate(0.7) contrast(1.2) brightness(0.4)",
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[hsl(220,25%,4%)] via-[hsla(220,20%,2%,0.7)] to-[hsl(220,20%,3%)]" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[hsl(224,70%,3%)] via-[hsla(224,40%,2%,0.75)] to-[hsl(225,50%,3%)]" />
                 </motion.div>
               </AnimatePresence>
 
-              {/* Capa extra oscurecida en momentos clave (para que el texto brille) */}
+              {/* Velo de Oscuridad Absoluta para Fases Íntimas */}
               <motion.div
                 className="absolute inset-0 z-[1]"
                 animate={{
                   backgroundColor:
-                    phase === 3 || phase === 4
-                      ? "rgba(0,0,0,0.55)"
-                      : "rgba(0,0,0,0.35)",
+                    phase === 2 || phase === 3 || phase === 4
+                      ? "rgba(0, 0, 0, 0.75)"
+                      : "rgba(0, 0, 0, 0.35)",
                 }}
-                transition={{ duration: 1.4, ease: "easeInOut" }}
+                transition={{ duration: 1.8, ease: "easeInOut" }}
               />
 
-              {/* Cielo estelar mágico */}
+              {/* Bóveda Celeste Estelar y Simulación Fluidodinámica de Neblinas */}
               <div className="pointer-events-none absolute inset-0 z-[2] overflow-hidden">
                 {stars.map((star) => (
                   <motion.div
@@ -631,17 +615,15 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
                       top: `${star.baseY}%`,
                       boxShadow:
                         star.layer === 2
-                          ? "0 0 20px hsla(43,95%,70%,0.8)"
-                          : "0 0 10px hsla(210,100%,80%,0.75)",
-                      opacity:
-                        star.layer === 0 ? 0.45 : star.layer === 1 ? 0.8 : 1,
+                          ? "0 0 15px hsla(43,100%,75%,0.9)"
+                          : "0 0 8px hsla(212,100%,80%,0.6)",
                     }}
-                    initial={{ opacity: 0, scale: 0, y: 0, x: 0 }}
+                    initial={{ opacity: 0, scale: 0, y: 0 }}
                     animate={{
-                      opacity: [0, 1, 0.4, 0.9, 0],
-                      scale: [0.4, 1.9, 1.2, 2.1, 0.7],
-                      y: [0, star.driftY, star.driftY * 1.1, 0],
-                      x: [0, star.driftX, star.driftX * 0.7, 0],
+                      opacity: [0, star.layer === 2 ? 1 : 0.7, 0.3, 0.9, 0],
+                      scale: [0.5, 1.6, 1, 1.8, 0.5],
+                      y: [0, star.driftY, star.driftY * 1.05, 0],
+                      x: [0, star.driftX, star.driftX * 0.9, 0],
                     }}
                     transition={{
                       duration: star.duration,
@@ -652,115 +634,91 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
                   />
                 ))}
 
-                {/* Nebulosas suaves centrales */}
+                {/* Nebulosas y Volumetría de Humo Emocional */}
                 <motion.div
-                  className="absolute inset-[-20%] blur-3xl"
-                  initial={{ opacity: 0 }}
-                  animate={
-                    phase >= 1 ? { opacity: [0.2, 0.6, 0.3] } : { opacity: 0 }
-                  }
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(circle at 30% 20%, hsla(210,100%,65%,0.32) 0, transparent 50%), radial-gradient(circle at 70% 80%, hsla(43,90%,60%,0.26) 0, transparent 55%), radial-gradient(circle at 50% 40%, hsla(280,60%,70%,0.22) 0, transparent 60%)",
-                    mixBlendMode: "screen",
+                  className="absolute inset-[-30%] blur-[120px]"
+                  animate={{
+                    opacity: [0.25, 0.5, 0.25],
+                    rotate: [0, 45, 0],
                   }}
-                />
-
-                {/* Grain sutil */}
-                <div
-                  className="absolute inset-0 opacity-[0.03]"
+                  transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
                   style={{
                     backgroundImage:
-                      "repeating-linear-gradient(0deg,transparent,transparent 2px,hsla(0,0%,100%,0.05) 2px,hsla(0,0%,100%,0.05) 4px)",
+                      "radial-gradient(circle at 25% 25%, hsla(212,100%,60%,0.25) 0, transparent 50%), radial-gradient(circle at 75% 75%, hsla(43,95%,55%,0.2) 0, transparent 55%), radial-gradient(circle at 50% 50%, hsla(275,80%,65%,0.18) 0, transparent 65%)",
+                    mixBlendMode: "screen",
                   }}
                 />
               </div>
 
-              {/* Anillos concéntricos centrales */}
+              {/* Anillos Astrales Concéntricos (Geometría Sagrada de la Red) */}
               <motion.div
                 className="pointer-events-none absolute inset-0 z-[3] flex items-center justify-center"
                 initial={{ opacity: 0 }}
-                animate={phase >= 1 ? { opacity: 1 } : {}}
+                animate={{ opacity: 1 }}
               >
-                {[0, 1, 2].map((ring) => (
+                {[0, 1, 2, 3].map((ring) => (
                   <motion.div
                     key={ring}
                     className="absolute rounded-full"
                     style={{
-                      width: `${520 + ring * 220}px`,
-                      height: `${520 + ring * 220}px`,
+                      width: `${460 + ring * 190}px`,
+                      height: `${460 + ring * 190}px`,
                       border: `1px solid ${
                         ring === 1
-                          ? "hsla(43,80%,65%,0.3)"
-                          : "hsla(210,100%,70%,0.24)"
+                          ? "hsla(43,85%,60%,0.22)"
+                          : "hsla(212,100%,70%,0.15)"
                       }`,
                     }}
-                    initial={{ opacity: 0, scale: 0.35 }}
-                    animate={
-                      phase >= 1
-                        ? {
-                            opacity: [0, 0.38, 0.14],
-                            scale: [0.35, 1, 1.1],
-                            rotate: ring % 2 === 0 ? [0, 220] : [60, -160],
-                          }
-                        : {}
-                    }
+                    initial={{ opacity: 0, scale: 0.4 }}
+                    animate={{
+                      opacity: [0, 0.35, 0.1],
+                      scale: [0.4, 1, 1.08],
+                      rotate: ring % 2 === 0 ? [0, 360] : [90, -270],
+                    }}
                     transition={{
-                      duration: 3.4 + ring * 0.8,
-                      ease: "easeOut",
-                      delay: ring * 0.4,
+                      duration: 5 + ring * 1.2,
+                      ease: "linear",
+                      repeat: Infinity,
+                      delay: ring * 0.3,
                     }}
                   />
                 ))}
               </motion.div>
 
-              {/* Núcleo RDM (más grande, más central) */}
+              {/* El Núcleo de Oro y Cristal RDM */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.45, filter: "blur(40px)" }}
-                animate={
-                  phase >= 1
-                    ? { opacity: 1, scale: 1, filter: "blur(0px)" }
-                    : {}
-                }
-                transition={{ duration: 1.9, ease: [0.16, 1, 0.3, 1] }}
-                className="relative z-[4] mb-10 flex items-center justify-center"
+                initial={{ opacity: 0, scale: 0.3, filter: "blur(30px)" }}
+                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
+                className="relative z-[4] mb-8 flex items-center justify-center"
               >
                 <motion.div
-                  className="absolute h-80 w-80 rounded-full blur-3xl md:h-[380px] md:w-[380px]"
+                  className="absolute h-72 w-72 rounded-full blur-3xl md:h-[360px] md:w-[360px]"
                   style={{
-                    background:
-                      "radial-gradient(circle,hsla(210,100%,60%,0.4) 0%,hsla(43,80%,50%,0.3) 45%,transparent 80%)",
+                    background: "radial-gradient(circle, hsla(43,90%,55%,0.35) 0%, hsla(212,80%,50%,0.2) 50%, transparent 75%)",
                   }}
-                  animate={
-                    phase >= 1
-                      ? { opacity: [0.35, 0.8, 0.35], scale: [1, 1.05, 1] }
-                      : { opacity: 0 }
-                  }
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  animate={{
+                    opacity: [0.4, 0.75, 0.4],
+                    scale: [1, 1.06, 1],
+                  }}
+                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
                 />
                 <div
-                  className="relative flex h-40 w-40 items-center justify-center rounded-full md:h-60 md:w-60"
+                  className="relative flex h-44 w-44 flex-col items-center justify-center rounded-full md:h-56 md:w-56"
                   style={{
-                    background:
-                      "linear-gradient(135deg, hsla(220,30%,15%,0.96), hsla(220,40%,8%,0.98))",
-                    border: "2px solid hsla(43,80%,65%,0.55)",
-                    boxShadow:
-                      "0 0 90px hsla(210,100%,60%,0.4), inset 0 0 42px hsla(210,100%,60%,0.2)",
+                    background: "linear-gradient(135deg, hsla(224,40%,12%,0.98), hsla(225,60%,6%,0.99))",
+                    border: "2px solid hsla(43,85%,60%,0.6)",
+                    boxShadow: "0 0 80px hsla(212,100%,55%,0.35), inset 0 0 35px hsla(43,100%,60%,0.15)",
                   }}
                 >
-                  <div className="text-center px-4">
-                    <p
-                      className="text-[10px] tracking-[0.3em] uppercase md:text-xs"
-                      style={{ color: "hsl(210 70% 70%)" }}
-                    >
+                  <div className="text-center px-4 space-y-0.5">
+                    <p className="font-mono text-[9px] tracking-[0.4em] text-sky-300/80 uppercase md:text-[10px]">
                       RDM DIGITAL
                     </p>
                     <h2
-                      className="mt-1 font-serif text-2xl font-bold md:text-3xl"
+                      className="font-serif text-2xl font-black tracking-wide md:text-3xl"
                       style={{
-                        background:
-                          "linear-gradient(135deg, hsl(43 80% 75%), hsl(43 60% 55%))",
+                        background: "linear-gradient(135deg, hsl(43, 90%, 80%), hsl(43, 70%, 50%))",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                       }}
@@ -768,10 +726,9 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
                       REAL DEL
                     </h2>
                     <h2
-                      className="font-serif text-2xl font-bold md:text-3xl"
+                      className="font-serif text-2xl font-black tracking-wide md:text-3xl"
                       style={{
-                        background:
-                          "linear-gradient(135deg, hsl(210 70% 85%), hsl(43 70% 70%))",
+                        background: "linear-gradient(135deg, hsl(0, 0%, 100%), hsl(212, 80%, 75%))",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                       }}
@@ -782,50 +739,29 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
                 </div>
               </motion.div>
 
-              {/* Bloque de texto: escenas (centrado, grande, full width) */}
+              {/* Bloque Central de Textos Épicos */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={phase}
-                  initial={{
-                    opacity: 0,
-                    y: 36,
-                    scale: 0.98,
-                    filter: "blur(12px)",
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                    filter: "blur(0px)",
-                  }}
-                  exit={{
-                    opacity: 0,
-                    y: -24,
-                    scale: 1.02,
-                    filter: "blur(10px)",
-                  }}
-                  transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative z-[5] mb-8 flex max-w-5xl flex-col items-center px-6 text-center"
+                  initial={{ opacity: 0, y: 40, filter: "blur(15px)", scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
+                  exit={{ opacity: 0, y: -30, filter: "blur(12px)", scale: 1.03 }}
+                  transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative z-[5] mb-6 flex max-w-4xl flex-col items-center px-6 text-center"
                 >
                   <p
-                    className="mb-3 text-[11px] tracking-[0.55em] uppercase md:text-xs"
+                    className="mb-4 text-[10px] tracking-[0.6em] font-mono uppercase md:text-xs"
                     style={{
-                      color:
-                        phase === 3 || phase === 4
-                          ? "hsl(43 70% 78%)"
-                          : "hsl(210 55% 72%)",
+                      color: phase === 2 || phase === 3 || phase === 4 ? "hsl(43, 90%, 75%)" : "hsl(212, 80%, 75%)",
                     }}
                   >
                     {scene.tag}
                   </p>
 
                   <h1
-                    className="font-serif text-3xl font-bold leading-tight md:text-5xl lg:text-6xl"
+                    className="font-serif text-3xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl"
                     style={{
-                      background:
-                        phase === 5 || phase === 6
-                          ? "linear-gradient(135deg,hsl(43 80% 80%),hsl(210 70% 88%))"
-                          : "linear-gradient(135deg,hsl(0 0% 98%),hsl(43 78% 78%),hsl(210 60% 86%),hsl(0 0% 92%))",
+                      background: "linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(43, 85%, 75%) 40%, hsl(212, 80%, 80%) 80%, hsl(0, 0%, 90%) 100%)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                     }}
@@ -834,132 +770,76 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
                   </h1>
 
                   <motion.div
-                    className="mx-auto my-4 h-[2px]"
+                    className="mx-auto my-5 h-[2px]"
                     style={{
-                      background:
-                        "linear-gradient(90deg,transparent,hsl(210 80% 65%),hsl(43 80% 58%),transparent)",
+                      background: "linear-gradient(90deg, transparent, hsl(43,90%,60%), hsl(212,100%,65%), transparent)",
                     }}
                     initial={{ width: 0 }}
                     animate={{
-                      width:
-                        phase <= 1
-                          ? "12rem"
-                          : phase <= 3
-                          ? "18rem"
-                          : phase <= 5
-                          ? "16rem"
-                          : "12rem",
+                      width: phase <= 2 ? "14rem" : phase <= 4 ? "22rem" : "16rem"
                     }}
-                    transition={{ duration: 1.1, ease: "easeOut" }}
+                    transition={{ duration: 1.3, ease: "easeOut" }}
                   />
 
-                  <p
-                    className="mx-auto max-w-3xl text-sm leading-7 text-[hsl(210_25%_80%)] md:text-lg"
-                    style={{ textShadow: "0 0 18px rgba(255,255,255,0.1)" }}
-                  >
+                  <p className="mx-auto max-w-2xl text-sm leading-relaxed tracking-wide text-slate-300/90 font-light md:text-lg">
                     {scene.body}
                   </p>
                 </motion.div>
               </AnimatePresence>
 
-              {/* Ecualizador + texto intro sonora */}
+              {/* Ecualizadores Acústicos en Sintonía */}
               <motion.div
-                initial={{ opacity: 0, scaleY: 0.3 }}
-                animate={phase >= 2 ? { opacity: 1, scaleY: 1 } : {}}
-                transition={{ duration: 1.8, delay: 0.6, ease: "easeOut" }}
-                className="relative z-[5] mb-6 flex flex-col items-center gap-1"
+                initial={{ opacity: 0, scaleY: 0.4 }}
+                animate={phase >= 1 ? { opacity: 1, scaleY: 1 } : {}}
+                transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
+                className="relative z-[5] mb-8 flex flex-col items-center gap-1.5"
               >
                 <AudioEqualizer analyser={analyser} />
                 <AudioWaveform analyser={analyser} />
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={phase >= 2 ? { opacity: 0.5 } : {}}
-                  transition={{ delay: 1.2, duration: 1.6 }}
-                  className="mt-2 text-[9px] tracking-[0.35em] uppercase"
-                  style={{ color: "hsl(210 40% 60%)" }}
-                >
-                  rdm · intro sonora territorial
-                </motion.p>
+                <p className="mt-1 font-mono text-[9px] tracking-[0.45em] text-slate-500 uppercase">
+                  TAMV SYSTEM · ARMONIZACIÓN GEOLOCALIZADA
+                </p>
               </motion.div>
 
-              {/* Carrusel inferior: imágenes que entran y salen */}
+              {/* Carrusel del Patrimonio Realmontense Inferior Completo */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={phase >= 5 ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 1.8 }}
-                className="absolute bottom-24 z-[5] flex w-full justify-center gap-5 px-4"
+                transition={{ duration: 2 }}
+                className="absolute bottom-12 z-[5] flex w-full justify-center gap-6 px-4"
               >
                 {[
                   { src: "/images/realito-pasterias.png", label: "Gastronomía" },
                   { src: "/images/realito-platerias.png", label: "Artesanías" },
                   { src: "/images/realito-sanitarios.png", label: "Servicios" },
                 ].map((item, i) => (
-                  <AnimatePresence key={item.label} mode="wait">
-                    <motion.div
-                      initial={{ opacity: 0, y: 24, scale: 0.9 }}
-                      animate={
-                        phase >= 5
-                          ? { opacity: 1, y: 0, scale: 1 }
-                          : { opacity: 0, y: 24, scale: 0.9 }
-                      }
-                      exit={{ opacity: 0, y: 24, scale: 0.9 }}
-                      transition={{ duration: 1, delay: i * 0.15 }}
-                      className="group relative"
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                    animate={phase >= 5 ? { opacity: 1, y: 0, scale: 1 } : {}}
+                    transition={{ duration: 1.2, delay: i * 0.2 }}
+                    className="group relative"
+                  >
+                    <div
+                      className="h-20 w-20 overflow-hidden rounded-2xl md:h-24 md:w-24 transition-all duration-500 group-hover:scale-105"
+                      style={{
+                        border: "1px solid hsla(43,85%,60%,0.3)",
+                        boxShadow: "0 10px 30px rgba(0,0,0,0.5), 0 0 20px hsla(212,100%,50%,0.15)",
+                      }}
                     >
-                      <div
-                        className="h-20 w-20 overflow-hidden rounded-2xl md:h-24 md:w-24"
-                        style={{
-                          border: "1px solid hsla(210,100%,70%,0.35)",
-                          boxShadow: "0 0 24px hsla(210,100%,60%,0.25)",
-                        }}
-                      >
-                        <img
-                          src={item.src}
-                          alt={item.label}
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                      <p
-                        className="mt-2 text-center text-[9px] uppercase tracking-wider md:text-[10px]"
-                        style={{ color: "hsl(210 55% 68%)" }}
-                      >
-                        {item.label}
-                      </p>
-                    </motion.div>
-                  </AnimatePresence>
+                      <img
+                        src={item.src}
+                        alt={item.label}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-40 transition-opacity" />
+                    </div>
+                    <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 font-mono text-[9px] tracking-widest text-slate-400 uppercase opacity-0 transition-opacity duration-300 group-hover:opacity-100 whitespace-nowrap">
+                      {item.label}
+                    </span>
+                  </motion.div>
                 ))}
               </motion.div>
-
-              {/* Claim inferior */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={phase >= 3 ? { opacity: 1 } : {}}
-                transition={{ duration: 1.8, delay: 0.7 }}
-                className="absolute bottom-10 z-[5] text-center"
-              >
-                <p
-                  className="text-[10px] tracking-[0.4em] uppercase md:text-xs"
-                  style={{ color: "hsl(210 40% 55%)" }}
-                >
-                  Innovación Turística Inteligente
-                </p>
-              </motion.div>
-
-              {/* Botón de saltar */}
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={phase >= 1 ? { opacity: 0.6 } : {}}
-                whileHover={{ opacity: 1, scale: 1.05 }}
-                onClick={handleSkip}
-                className="absolute bottom-6 right-6 z-[50] rounded-full px-4 py-2 text-[10px] tracking-widest uppercase transition-all"
-                style={{
-                  background: "hsla(0,0%,100%,0.05)",
-                  border: "1px solid hsla(0,0%,100%,0.15)",
-                  color: "hsl(0 0% 70%)",
-                }}
-              >
-                Saltar (Esc)
-              </motion.button>
             </>
           )}
         </motion.div>
@@ -967,5 +847,3 @@ const CinematicIntro = ({ onComplete }: CinematicIntroProps) => {
     </AnimatePresence>
   )
 }
-
-export default CinematicIntro
