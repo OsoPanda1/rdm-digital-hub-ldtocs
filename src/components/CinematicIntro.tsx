@@ -328,7 +328,7 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
       const delay = ctx.createDelay(1.0)
       delay.delayTime.value = 0.35
       const feedback = ctx.createGain()
-      feedback.gain.value = 0.28
+      feedback.gain.value = 0.38
       const wet = ctx.createGain()
       wet.gain.value = 0.25
       const dry = ctx.createGain()
@@ -357,7 +357,7 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
       // Fundido de entrada acústico ultra-suave
       fadeInIntervalRef.current = window.setInterval(() => {
         if (!audioRef.current) return
-        const nextVol = Math.min(audioRef.current.volume + 0.05, 0.9)
+        const nextVol = Math.min(audioRef.current.volume + 0.3, 0.9)
         audioRef.current.volume = nextVol
         if (nextVol >= 0.9 && fadeInIntervalRef.current) {
           clearInterval(fadeInIntervalRef.current)
@@ -392,10 +392,10 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
     if (!started) return
 
     const timers = [
-      setTimeout(() => setPhase(1), 800),   // Alianza e Identidad Inicial
-      setTimeout(() => setPhase(2), 9500),  // Sacrificio y Dedicación Perpetua
-      setTimeout(() => setPhase(3), 20500), // La Promesa del Silencio Absoluto
-      setTimeout(() => setPhase(4), 32500), // El Retorno Glorioso y Entrega
+      setTimeout(() => setPhase(1), 1200),   // Alianza e Identidad Inicial
+      setTimeout(() => setPhase(2), 10500),  // Sacrificio y Dedicación Perpetua
+      setTimeout(() => setPhase(3), 21500), // La Promesa del Silencio Absoluto
+      setTimeout(() => setPhase(4), 34500), // El Retorno Glorioso y Entrega
       setTimeout(() => setPhase(5), 43500), // Mística Territorial de Real del Monte
       setTimeout(() => setPhase(6), 54500), // Historia Tallada en Plata Viva
       setTimeout(() => setPhase(7), 65000), // El Legado Inquebrantable de las 7 Federaciones
@@ -403,7 +403,7 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
       setTimeout(() => {
         setOverlayVisible(false)
         onComplete()
-      }, 80000),
+      }, 98000),
     ]
 
     return () => timers.forEach(clearTimeout)
