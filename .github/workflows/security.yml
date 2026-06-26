@@ -6,57 +6,120 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    - cron: "0 6 * * 1"
+    - cron: "0 6 * * 1" # Lunes 06:00 UTC
+  workflow_dispatch:
 
 permissions:
   contents: read
   security-events: write
+  actions: read
+  checks: write
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: 20
+  AUDIT_LEVEL: high
 
 jobs:
   gitleaks:
     name: Gitleaks (secret scan)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@v2
+
+      # Opcional: usar config propia (gitleaks.toml) en el repo
+      # - name: Copy custom gitleaks config
+      #   run: cp .github/security/gitleaks.toml ./gitleaks.toml
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_ENABLE_UPLOAD_ARTIFACT: true
+          # GITLEAKS_CONFIG: .github/security/gitleaks.toml
 
   trufflehog:
     name: TruffleHog (verified secrets)
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: trufflesecurity/trufflehog@main
+
+      # En PR comparamos base/head; en push/schedule escaneamos rama completa
+      - name: Run TruffleHog (PR diff)
+        if: github.event_name == 'pull_request'
+        uses: trufflesecurity/trufflehog@main
         with:
-          path: ./
-          base: ${{ github.event.repository.default_branch }}
-          head: HEAD
+          path: .
+          base: ${{ github.event.pull_request.base.sha }}
+          head: ${{ github.event.pull_request.head.sha }}
+          extra_args: --only-verified
+
+      - name: Run TruffleHog (full branch)
+        if: github.event_name != 'pull_request'
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: .
+          base: ""
+          head: ${{ github.ref_name }}
           extra_args: --only-verified
 
   npm-audit:
     name: npm audit (high+critical)
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - run: npm ci --legacy-peer-deps
-      - run: npm audit --audit-level=high
-      - run: npx --yes better-npm-audit audit --level high
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      # npm audit faila el job si encuentra vulnerabilidades >= AUDIT_LEVEL
+      - name: npm audit (CLI)
+        run: npm audit --audit-level=${{ env.AUDIT_LEVEL }}
+
+      # better-npm-audit agrega reporting más limpio
+      - name: better-npm-audit (report)
+        run: npx --yes better-npm-audit audit --level ${{ env.AUDIT_LEVEL }}
 
   codeql:
     name: CodeQL (JS/TS)
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: github/codeql-action/init@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
         with:
           languages: javascript-typescript
-      - uses: github/codeql-action/analyze@v3
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:javascript-typescript"
