@@ -1,33 +1,51 @@
-import { supabaseAdmin } from '../integrations/supabase/admin';
+import { supabaseAdmin } from "../integrations/supabase/admin";
 
 export enum Federacion {
-  HOSPEDAJE = 'FED_HOSPEDAJE',
-  GASTRONOMIA = 'FED_GASTRONOMIA',
-  MINERIA_PLATERIA = 'FED_PLATERIA',
-  TURISMO_ACTIVO = 'FED_TURISMO',
-  MOVILIDAD = 'FED_MOVILIDAD',
-  COMERCIO_LOCAL = 'FED_COMERCIO',
-  GOBIERNO_DIGITAL = 'FED_GOBIERNO',
+  HOSPEDAJE = "FED_HOSPEDAJE",
+  GASTRONOMIA = "FED_GASTRONOMIA",
+  MINERIA_PLATERIA = "FED_PLATERIA",
+  TURISMO_ACTIVO = "FED_TURISMO",
+  MOVILIDAD = "FED_MOVILIDAD",
+  COMERCIO_LOCAL = "FED_COMERCIO",
+  GOBIERNO_DIGITAL = "FED_GOBIERNO",
 }
 
-interface CheckInPayload {
+/** Eventos de CHECKIN para hospedaje. */
+export interface CheckInPayload {
   turistaId: string;
   hotelId: string;
   noches: number;
 }
 
-type MessageHandler = (channel: string, message: string) => void;
+/** Tipos de eventos “soberanía” para el dominio. */
+export type SovereigntyEventType =
+  | "ANOMALIA_DATOS"
+  | "INTENTO_INTRUSION"
+  | "POLICY_VIOLATION"
+  | "OBSERVABILIDAD_SIGNAL";
 
-interface PubSubClient {
-  subscribe: (...channels: string[]) => Promise<void>;
+export type BusChannel =
+  | "CHECKIN_HOSPEDAJE"
+  | "LSM_REALTIME_STREAM"
+  | "SOVEREIGNTY_ALERTS"
+  | "REALITO_TRIGGER";
+
+export type MessageHandler = (channel: BusChannel, message: string) => void;
+
+export interface PubSubClient {
+  subscribe: (...channels: BusChannel[]) => Promise<void>;
   onMessage: (handler: MessageHandler) => void;
-  publish: (channel: string, payload: string) => Promise<void>;
+  publish: (channel: BusChannel, payload: string) => Promise<void>;
 }
 
+/**
+ * Implementación in-memory para pruebas / local dev.
+ * No persiste nada, pero respeta la interfaz PubSubClient.
+ */
 class InMemoryPubSubClient implements PubSubClient {
   private handlers: MessageHandler[] = [];
 
-  async subscribe(..._channels: string[]): Promise<void> {
+  async subscribe(..._channels: BusChannel[]): Promise<void> {
     return;
   }
 
@@ -35,11 +53,27 @@ class InMemoryPubSubClient implements PubSubClient {
     this.handlers.push(handler);
   }
 
-  async publish(channel: string, payload: string): Promise<void> {
-    this.handlers.forEach((handler) => handler(channel, payload));
+  async publish(channel: BusChannel, payload: string): Promise<void> {
+    for (const handler of this.handlers) {
+      handler(channel, payload);
+    }
   }
 }
 
+/** Tipos de eventos internos de FederationBus. */
+type FederationEvent =
+  | { type: "CHECKIN_HOSPEDAJE"; payload: CheckInPayload }
+  | { type: "LSM_STREAM"; payload: unknown }
+  | { type: "SOVEREIGNTY"; payload: unknown };
+
+/**
+ * FederationBus · Kernel federado para eventos transversales.
+ *
+ * Responsabilidades:
+ * - Escuchar canales relevantes (check-in, LSM, soberanía).
+ * - Transformar mensajes crudos (JSON string) en eventos tipados.
+ * - Encadenar protocolos (retención, alerts, Realito).
+ */
 export class FederationBus {
   private readonly subscriber: PubSubClient;
   private readonly publisher: PubSubClient;
@@ -48,81 +82,142 @@ export class FederationBus {
     const client = pubSubClient ?? new InMemoryPubSubClient();
     this.subscriber = client;
     this.publisher = client;
-    this.initListeners();
+    void this.initListeners();
   }
 
-  private initListeners() {
-    const channels = ['CHECKIN_HOSPEDAJE', 'LSM_REALTIME_STREAM', 'SOVEREIGNTY_ALERTS'];
+  private async initListeners() {
+    const channels: BusChannel[] = [
+      "CHECKIN_HOSPEDAJE",
+      "LSM_REALTIME_STREAM",
+      "SOVEREIGNTY_ALERTS",
+    ];
 
-    this.subscriber.subscribe(...channels).catch((err) => {
-      console.error('CRITICAL: Error en Kernel de Federación', err);
-    });
+    try {
+      await this.subscriber.subscribe(...channels);
+    } catch (err) {
+      console.error("[FED-BUS] CRITICAL: Error inicializando kernel de federación", err);
+    }
 
     this.subscriber.onMessage(async (channel, message) => {
       try {
-        const data = JSON.parse(message);
+        const event = this.parseEvent(channel, message);
+        if (!event) return;
 
-        switch (channel) {
-          case 'CHECKIN_HOSPEDAJE':
-            await this.handleCheckIn(data as CheckInPayload);
+        switch (event.type) {
+          case "CHECKIN_HOSPEDAJE":
+            await this.handleCheckIn(event.payload);
             break;
-          case 'LSM_REALTIME_STREAM':
-            console.log('[LSM] Stream de telemetría procesado');
+          case "LSM_STREAM":
+            this.handleLsmStream(event.payload);
             break;
-          default:
+          case "SOVEREIGNTY":
+            this.handleSovereigntyEvent(event.payload);
             break;
         }
       } catch (error) {
-        console.error(`[BUS] Error procesando canal ${channel}:`, error);
+        console.error(`[FED-BUS] Error procesando canal ${channel}:`, error);
       }
     });
   }
 
-  private async handleCheckIn(payload: CheckInPayload) {
-    console.log(`[FEDERACION] Ejecutando Protocolo de Retención. Turista: ${payload.turistaId}`);
+  /** Intenta parsear el mensaje y mapearlo a un evento interno. */
+  private parseEvent(channel: BusChannel, message: string): FederationEvent | null {
+    let data: unknown;
 
+    try {
+      data = JSON.parse(message);
+    } catch (error) {
+      console.warn("[FED-BUS] Mensaje no JSON en canal", channel, { message });
+      return null;
+    }
+
+    switch (channel) {
+      case "CHECKIN_HOSPEDAJE": {
+        const payload = data as Partial<CheckInPayload>;
+        if (!payload.turistaId || !payload.hotelId || typeof payload.noches !== "number") {
+          console.warn("[FED-BUS] Payload CHECKIN_HOSPEDAJE inválido", payload);
+          return null;
+        }
+        return {
+          type: "CHECKIN_HOSPEDAJE",
+          payload: payload as CheckInPayload,
+        };
+      }
+      case "LSM_REALTIME_STREAM":
+        return { type: "LSM_STREAM", payload: data };
+      case "SOVEREIGNTY_ALERTS":
+        return { type: "SOVEREIGNTY", payload: data };
+      default:
+        return null;
+    }
+  }
+
+  private async handleCheckIn(payload: CheckInPayload) {
+    console.log(
+      "[FEDERACION] Protocolo de Retención :: Turista",
+      payload.turistaId,
+      "Hotel",
+      payload.hotelId,
+    );
+
+    // En una versión futura, esto podría consultar Supabase / PG para ofertas contextuales.
     const oferta = await this.generarOfertaGastronomica(payload.hotelId);
 
-    // Ledger entry kept in-memory only (no dedicated cross-sell table yet)
-    console.info('[LEDGER] cross_sell_automatico', {
+    // Ledger aún en memoria, pero listo para persistir a supabaseAdmin.
+    console.info("[LEDGER] cross_sell_automatico", {
       turistaId: payload.turistaId,
       origen_federacion: Federacion.HOSPEDAJE,
       destino_federacion: Federacion.GASTRONOMIA,
       valor_estimado_mxn: payload.noches * 250,
       hotelId: payload.hotelId,
       oferta,
-      protocol: 'EOCT-KERNEL-B',
+      protocol: "EOCT-KERNEL-B",
     });
 
     await this.publisher.publish(
-      'REALITO_TRIGGER',
+      "REALITO_TRIGGER",
       JSON.stringify({
         turistaId: payload.turistaId,
-        triggerType: 'BIENVENIDA_CON_OFERTA',
+        triggerType: "BIENVENIDA_CON_OFERTA",
         timestamp: new Date().toISOString(),
         ofertaData: oferta,
-        visualStyle: 'CRYSTAL_GLOW',
+        visualStyle: "CRYSTAL_GLOW",
       }),
     );
   }
 
+  private handleLsmStream(_payload: unknown) {
+    // LSM: Layered Sensing Matrix (telemetría, mapa interactivo).[page:80][web:62]
+    // Aquí podrías enrutar datos hacia Supabase, Influx, etc.
+    console.log("[LSM] Stream de telemetría procesado");
+  }
+
+  private handleSovereigntyEvent(payload: unknown) {
+    // Hook para alertas de soberanía digital / policy engine.
+    console.log("[SOVEREIGNTY] Evento recibido", payload);
+  }
+
+  /** Genera oferta gastronómica base; fácilmente sustituible por consulta a Supabase. */
   private async generarOfertaGastronomica(hotelId: string) {
+    // Stub: más adelante usar supabaseAdmin para extraer partners cercanos.
+    // const { data } = await supabaseAdmin.from("restaurantes").select("*").match({ hotelId });
     return {
       origenHotel: hotelId,
-      restaurante: 'Paste_Minero_Reserva',
-      descuento: '15%',
+      restaurante: "Paste_Minero_Reserva",
+      descuento: "15%",
       vence_en_mins: 120,
       premium: true,
     };
   }
 
-  public async emitSovereigntyEvent(type: string, details: unknown) {
+  /** Emite un evento de soberanía a través del bus. */
+  public async emitSovereigntyEvent(type: SovereigntyEventType, details: unknown) {
     await this.publisher.publish(
-      'SOVEREIGNTY_ALERTS',
+      "SOVEREIGNTY_ALERTS",
       JSON.stringify({
         type,
         details,
-        timestamp: Date.now(),
+        timestamp: new Date().toISOString(),
       }),
     );
   }
