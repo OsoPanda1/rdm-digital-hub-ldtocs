@@ -2,106 +2,202 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
   workflow_dispatch:
 
 permissions:
   contents: read
   checks: write
+  security-events: write
+  id-token: write
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.ref }}-${{ github.workflow }}
   cancel-in-progress: true
 
 env:
   NODE_VERSION: 20
+  PNPM_VERSION: 9
   CI: true
 
 jobs:
-  quality:
-    name: Quality · Lint · Types · Unit · Build
+  #
+  # 1) Pre-checks muy rápidos (lint + typecheck) para fallar en < 2–3 min
+  #
+  fast-checks:
+    name: Fast Checks · Lint · Types
     runs-on: ubuntu-latest
-    timeout-minutes: 25
-
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [18, 20] # Compatibilidad multi runtime
-
-    env:
-      NODE_VERSION: ${{ matrix.node-version }}
-
+    timeout-minutes: 10
     steps:
-      - name: Checkout
+      - name: Hardened checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
-      - name: Setup Node
+      - name: Setup Node (with pnpm)
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          cache: pnpm
 
-      - name: Install deps
-        run: npm ci --legacy-peer-deps
+      - name: Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: npm run lint
+        run: pnpm lint
 
       - name: Typecheck
-        run: npx tsc -p tsconfig.json --noEmit
+        run: pnpm typecheck
 
-      - name: Unit tests (Vitest with coverage)
-        run: npx vitest run --coverage --runInBand --reporter=github-actions
-        # El reporter github-actions genera job summary y anotaciones.[web:16][web:27]
+  #
+  # 2) Seguridad de dependencias y análisis estático básico
+  #
+  security:
+    name: Security · deps audit · CodeQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: fast-checks
+    steps:
+      - name: Hardened checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
-      - name: Upload coverage artifact
-        if: always()
+      - name: Setup Node (with pnpm)
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: npm audit (low latency, fail on high/critical)
+        run: |
+          pnpm audit --audit-level=high || {
+            echo "::error::High or critical vulnerabilities detected";
+            exit 1;
+          }
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+  #
+  # 3) Test + build multi-runtime en paralelo
+  #
+  quality:
+    name: Quality · Unit · Build (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: fast-checks
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [18, 20]
+    env:
+      NODE_VERSION: ${{ matrix.node }}
+    steps:
+      - name: Hardened checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Unit tests (Vitest)
+        run: pnpm test:unit -- --runInBand --reporter=github-actions
+
+      - name: Build monorepo
+        run: pnpm build
+
+      - name: Upload dist artifact
+        if: matrix.node == '20'
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-node-${{ matrix.node-version }}
-          path: coverage
-          if-no-files-found: ignore
-          retention-days: 10
+          name: dist-node20
+          path: |
+            apps/**/dist
+            packages/**/dist
+          if-no-files-found: error
+          retention-days: 7
 
-      - name: Build
-        run: npm run build
-
+  #
+  # 4) E2E Playwright paralelo y shardizado
+  #
   e2e:
-    name: Playwright E2E (sharded)
+    name: E2E · Playwright · Sharded
     runs-on: ubuntu-latest
-    needs: quality
     timeout-minutes: 40
-
-    # Se puede shardear E2E si la suite crece.[web:22][web:24]
+    needs: quality
     strategy:
       fail-fast: false
       matrix:
         shard: [1/2, 2/2]
-
     steps:
-      - name: Checkout
+      - name: Hardened checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
-      - name: Setup Node
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          cache: pnpm
 
-      - name: Install deps
-        run: npm ci --legacy-peer-deps
+      - name: Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
 
-      - name: Setup Playwright (browsers + deps)
+      - name: Setup Playwright
         uses: microsoft/playwright-github-action@v1
         with:
           with-deps: true
-        # Acción recomendada para instalar browsers y dependencias en GHA.[web:20][web:22]
 
-      - name: Run Playwright tests (shard ${{ matrix.shard }})
-        run: npx playwright test --shard=${{ matrix.shard }} --reporter=list
-        # Puedes cambiar reporter a html/junit según tus necesidades.[web:22][web:26]
+      - name: Build web app
+        run: pnpm build:web
+
+      - name: Start web app (preview)
+        run: pnpm preview:web -- --port=4173 &
+      
+      - name: Wait for web app
+        run: npx wait-on http://127.0.0.1:4173
+
+      - name: Run Playwright E2E (shard ${{ matrix.shard }})
+        run: pnpm test:e2e -- --shard=${{ matrix.shard }}
 
       - name: Upload Playwright report
         if: always()
@@ -110,77 +206,110 @@ jobs:
           name: playwright-report-${{ matrix.shard }}
           path: playwright-report
           if-no-files-found: ignore
-          retention-days: 10
+          retention-days: 5
 
-  # Job opcional para agregar resumen de cobertura (JSON) o publicar a un dashboard
-  coverage_summary:
-    name: Coverage Summary
+  #
+  # 5) Smoke en main únicamente (baja latencia post-merge)
+  #
+  smoke-main:
+    name: Smoke · Critical Paths (main only)
     runs-on: ubuntu-latest
-    needs: quality
-    timeout-minutes: 10
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: npm
-
-      - name: Install deps
-        run: npm ci --legacy-peer-deps
-
-      # Ejemplo: generar un summary JSON estructurado con plugin de Vitest.[web:30]
-      - name: Vitest coverage summary JSON
-        run: |
-          npx vitest run --coverage --coverage.reporter=json-summary --runInBand
-        env:
-          CI: true
-
-      - name: Upload coverage summary
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-summary
-          path: coverage
-          if-no-files-found: ignore
-          retention-days: 10
-
-  # Job opcional: smoke E2E sólo en main o cron
-  e2e_smoke:
-    name: Playwright Smoke (critical paths)
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
+    needs: [quality, security]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
     steps:
-      - name: Checkout
+      - name: Hardened checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
-      - name: Setup Node
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          cache: pnpm
 
-      - name: Install deps
-        run: npm ci --legacy-peer-deps
+      - name: Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
 
       - name: Setup Playwright
         uses: microsoft/playwright-github-action@v1
         with:
           with-deps: true
 
-      # Aquí asumimos que tienes un proyecto/archivo de tests con tag @smoke.[web:26]
-      - name: Run Playwright smoke tests
-        run: npx playwright test --grep "@smoke"
+      - name: Build web app
+        run: pnpm build:web
 
-      - name: Upload Playwright smoke report
-        if: always()
-        uses: actions/upload-artifact@v4
+      - name: Start web app (preview)
+        run: pnpm preview:web -- --port=4173 &
+
+      - name: Wait for web app
+        run: npx wait-on http://127.0.0.1:4173
+
+      - name: Run Playwright smoke tests
+        run: pnpm test:e2e -- --grep "@smoke"
+
+  #
+  # 6) Despliegue condicionado (ejemplo: Vercel/Cloudflare) — solo si todo está verde
+  #
+  deploy:
+    name: Deploy · Production
+    runs-on: ubuntu-latest
+    needs: [quality, e2e, security]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    timeout-minutes: 20
+    steps:
+      - name: Hardened checkout
+        uses: actions/checkout@v4
         with:
-          name: playwright-smoke-report
-          path: playwright-report
-          if-no-files-found: ignore
-          retention-days: 5
+          fetch-depth: 1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Build for production
+        run: pnpm build
+
+      # Ejemplo Vercel deploy; ajusta a tu provider real
+      - name: Deploy to Vercel
+        uses: vercel/actions@v1
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: apps/web
+          prod: true
+
+  #
+  # 7) Publicar resumen en el Job Summary (opcional, útil para auditorías)
+  #
+  summary:
+    name: CI Summary
+    runs-on: ubuntu-latest
+    needs: [fast-checks, quality, security, e2e]
+    if: always()
+    steps:
+      - name: Generate summary
+        run: |
+          echo "## Real del Monte Digital Hub CI" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Fast checks: ${{ needs.fast-checks.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Quality: ${{ needs.quality.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Security: ${{ needs.security.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- E2E: ${{ needs.e2e.result }}" >> $GITHUB_STEP_SUMMARY
