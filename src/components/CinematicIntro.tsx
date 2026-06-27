@@ -7,7 +7,7 @@ import rdm01 from "@/assets/rdm01.jpg"
 import rdm02 from "@/assets/rdm02.jpg"
 import rdm03 from "@/assets/rdm03.jpg"
 import rdm04 from "@/assets/rdm-plaza-principal.jpg"
-import logoTamv from "@/assets/logo-tamv.jpg"
+import logoTamv from "@/assets/banner_rdm.jpg"
 import isabellaLogo from "@/assets/isabella_logo.jpg"
 import rdmLogo from "@/assets/rdm-logo.png"
 

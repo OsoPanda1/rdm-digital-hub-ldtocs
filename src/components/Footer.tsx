@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { MapPin, Mail, Phone, Send, Loader2, CheckCircle, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoRdm from "@/assets/logo-rdm-digital.png";
-import logoTamv from "@/assets/logo-tamv.jpg";
+import logoTamv from "@/assets/banner_rdm.jpg";
 import { newsletterApi } from "../lib/api";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
