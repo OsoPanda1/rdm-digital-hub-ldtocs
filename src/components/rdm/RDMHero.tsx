@@ -97,7 +97,7 @@ export function RDMHero() {
           {[{ value: "500+", label: "Años de historia" }, { value: "2,700m", label: "Altitud" }, { value: "14°C", label: "Temperatura media" }].map((stat) => (
             <div key={stat.label} className="text-right">
               <p className="text-2xl md:text-3xl font-bold text-[hsl(var(--rdm-amber))]" style={{ fontFamily: "var(--font-display)" }}>{stat.value}</p>
-              <p className="text-xs text-white/50" style={{ fontFamily: "var(--font-body)" }}>{stat.label}</p>
+              <p className="text-xs text-white/80" style={{ fontFamily: "var(--font-body)" }}>{stat.label}</p>
             </div>
           ))}
         </motion.div>

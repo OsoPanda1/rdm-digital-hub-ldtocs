@@ -45,7 +45,7 @@ export default function GlobalPlayerBar() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-white truncate">{currentTrack.title}</p>
-                  <p className="text-[11px] text-white/40 truncate">{currentTrack.artist} · {formatDuration(currentTime)} / {formatDuration(currentTrack.duration)}</p>
+                  <p className="text-[11px] text-white/60 truncate">{currentTrack.artist} · {formatDuration(currentTime)} / {formatDuration(currentTrack.duration)}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
