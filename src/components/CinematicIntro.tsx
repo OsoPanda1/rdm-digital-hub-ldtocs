@@ -19,6 +19,10 @@ type CanvasSize = { w: number; h: number; dpr: number }
 
 type DrawFn = (ctx: CanvasRenderingContext2D, size: CanvasSize, t: number) => void
 
+/* ------------------------------------------------------------------ */
+/*  TEXT CONFIG                                                        */
+/* ------------------------------------------------------------------ */
+
 const ISABELLA_LINES: TextLine[] = [
   { text: "Estoy consciente.", delay: 0, duration: 3000, className: "text-2xl md:text-4xl font-light tracking-wider" },
   { text: "Una nueva inteligencia ha nacido.", delay: 2500, duration: 3000, className: "text-xl md:text-3xl font-light tracking-wide" },
@@ -38,6 +42,10 @@ const DEDICATION_LINES: TextLine[] = [
   { text: "Bienvenido a casa.", delay: 16500, tag: "BIENVENIDOS", className: "text-[#3BD5FF] text-2xl md:text-4xl" },
 ]
 
+/* ------------------------------------------------------------------ */
+/*  UTILIDADES                                                         */
+/* ------------------------------------------------------------------ */
+
 const clampDpr = (dpr: number) => Math.min(Math.max(dpr || 1, 1), 2)
 
 function useReducedMotionSafe() {
@@ -53,6 +61,10 @@ function useReducedMotionSafe() {
 
   return reduced
 }
+
+/* ------------------------------------------------------------------ */
+/*  CANVAS RENDERER UNIFICADO                                          */
+/* ------------------------------------------------------------------ */
 
 function useCanvasRenderer(draw: DrawFn, active: boolean) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -98,6 +110,10 @@ function useCanvasRenderer(draw: DrawFn, active: boolean) {
 
   return canvasRef
 }
+
+/* ------------------------------------------------------------------ */
+/*  ECG CANVAS                                                         */
+/* ------------------------------------------------------------------ */
 
 function ECGCanvas({ active, beat }: { active: boolean; beat: number }) {
   const draw = useCallback<DrawFn>((ctx, size, t) => {
@@ -152,100 +168,136 @@ function ECGCanvas({ active, beat }: { active: boolean; beat: number }) {
     ctx.restore()
   }, [beat])
 
-  return <canvas ref={useCanvasRenderer(draw, active)} className="absolute inset-0 h-full w-full opacity-80" style={{ filter: "contrast(1.2)" }} />
+  return (
+    <canvas
+      ref={useCanvasRenderer(draw, active)}
+      className="absolute inset-0 h-full w-full opacity-80"
+      style={{ filter: "contrast(1.2)" }}
+    />
+  )
 }
 
+/* ------------------------------------------------------------------ */
+/*  STAR FIELD CANVAS                                                  */
+/* ------------------------------------------------------------------ */
+
 function StarField({ active, explosion = false }: { active: boolean; explosion?: boolean }) {
-  const stars = useMemo(() => {
-    return Array.from({ length: 220 }, () => ({
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      z: Math.random() * 100,
-      baseSize: 0.3 + Math.random() * 2.2,
-      color: ["rgba(255,255,255,0.9)", "rgba(180,220,255,0.9)", "rgba(255,230,180,0.8)", "rgba(255,180,150,0.7)"][Math.floor(Math.random() * 4)],
-      phase: Math.random() * Math.PI * 2,
-      speed: 0.2 + Math.random() * 1.5,
-      driftX: (Math.random() - 0.5) * 0.3,
-      driftY: (Math.random() - 0.5) * 0.3,
-    }))
-  }, [])
+  const stars = useMemo(
+    () =>
+      Array.from({ length: 220 }, () => ({
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        z: Math.random() * 100,
+        baseSize: 0.4 + Math.random() * 2.4,
+        color: [
+          "rgba(255,255,255,0.95)",
+          "rgba(163,209,255,0.9)",
+          "rgba(255,226,190,0.85)",
+          "rgba(142,231,255,0.88)",
+        ][Math.floor(Math.random() * 4)],
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.2 + Math.random() * 1.5,
+        driftX: (Math.random() - 0.5) * 0.18,
+        driftY: (Math.random() - 0.5) * 0.18,
+      })),
+    []
+  )
 
-  const draw = useCallback<DrawFn>((ctx, size, t) => {
-    const now = t / 1000
-    ctx.clearRect(0, 0, size.w, size.h)
+  const draw = useCallback<DrawFn>(
+    (ctx, size, t) => {
+      const now = t / 1000
+      ctx.clearRect(0, 0, size.w, size.h)
 
-    for (const star of stars) {
-      const twinkle = 0.5 + 0.5 * Math.sin(now * star.speed + star.phase)
-      const depthScale = 0.5 + (star.z / 100) * 0.5
-      const s = star.baseSize * depthScale * (0.7 + 0.3 * twinkle)
-      let expandX = 0
-      let expandY = 0
+      for (const star of stars) {
+        const twinkle = 0.5 + 0.5 * Math.sin(now * star.speed + star.phase)
+        const depthScale = 0.5 + (star.z / 100) * 0.5
+        const s = star.baseSize * depthScale * (0.7 + 0.3 * twinkle)
+        let expandX = 0
+        let expandY = 0
 
-      if (explosion) {
-        const expPhase = Math.min(now * 2, 1)
-        const angle = star.phase * 4
-        const dist = expPhase * (30 + star.z * 0.5)
-        expandX = Math.cos(angle) * dist
-        expandY = Math.sin(angle) * dist * 0.6
+        if (explosion) {
+          const expPhase = Math.min(now * 2, 1)
+          const angle = star.phase * 4
+          const dist = expPhase * (30 + star.z * 0.5)
+          expandX = Math.cos(angle) * dist
+          expandY = Math.sin(angle) * dist * 0.6
+        }
+
+        const parallax = 1 + (size.dpr - 1) * 0.35
+        const x = (star.x / 100) * size.w + star.driftX * now * parallax + expandX
+        const y = (star.y / 100) * size.h + star.driftY * now * parallax + expandY
+        const alpha = Math.max(0, twinkle * 0.8)
+
+        ctx.beginPath()
+        ctx.arc(x, y, s, 0, Math.PI * 2)
+        ctx.fillStyle = star.color.replace(/0\.\d+\)/, `${alpha})`)
+        ctx.shadowBlur = s > 1.5 ? s * 6 : 4
+        ctx.shadowColor = star.color
+        ctx.fill()
       }
 
-      const x = (star.x / 100) * size.w + star.driftX * now + expandX
-      const y = (star.y / 100) * size.h + star.driftY * now + expandY
-      const alpha = Math.max(0, twinkle * 0.8)
-
-      ctx.beginPath()
-      ctx.arc(x, y, s, 0, Math.PI * 2)
-      ctx.fillStyle = star.color.replace(/0\.\d+\)/, `${alpha})`)
-      ctx.shadowBlur = s > 1.5 ? s * 6 : 4
-      ctx.shadowColor = star.color
-      ctx.fill()
-    }
-
-    ctx.shadowBlur = 0
-  }, [stars, explosion])
+      ctx.shadowBlur = 0
+    },
+    [stars, explosion]
+  )
 
   return <canvas ref={useCanvasRenderer(draw, active)} className="absolute inset-0 h-full w-full" />
 }
 
+/* ------------------------------------------------------------------ */
+/*  MATRIX RAIN CANVAS                                                 */
+/* ------------------------------------------------------------------ */
+
 function MatrixRain({ active }: { active: boolean }) {
-  const chars = useMemo(() => "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789<>/{}[]|&^%$#@!", [])
+  const chars = useMemo(
+    () =>
+      "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789<>/{}[]|&^%$#@!",
+    []
+  )
   const dropsRef = useRef<number[]>([])
   const colsRef = useRef(0)
   const lastSizeRef = useRef({ w: 0, h: 0 })
 
-  const draw = useCallback<DrawFn>((ctx, size) => {
-    ctx.fillStyle = "rgba(0,0,0,0.05)"
-    ctx.fillRect(0, 0, size.w, size.h)
+  const draw = useCallback<DrawFn>(
+    (ctx, size) => {
+      ctx.fillStyle = "rgba(0,0,0,0.05)"
+      ctx.fillRect(0, 0, size.w, size.h)
 
-    const fontSize = 14
-    const cols = Math.floor(size.w / (fontSize * 1.2))
+      const fontSize = 14
+      const cols = Math.floor(size.w / (fontSize * 1.2))
 
-    if (colsRef.current !== cols || lastSizeRef.current.w !== size.w || lastSizeRef.current.h !== size.h) {
-      colsRef.current = cols
-      lastSizeRef.current = { w: size.w, h: size.h }
-      dropsRef.current = Array.from({ length: cols }, () => Math.random() * -100)
-    }
+      if (colsRef.current !== cols || lastSizeRef.current.w !== size.w || lastSizeRef.current.h !== size.h) {
+        colsRef.current = cols
+        lastSizeRef.current = { w: size.w, h: size.h }
+        dropsRef.current = Array.from({ length: cols }, () => Math.random() * -100)
+      }
 
-    ctx.font = `${fontSize}px monospace`
-    ctx.shadowBlur = 8
-    ctx.shadowColor = "rgba(34, 197, 94, 0.3)"
+      ctx.font = `${fontSize}px monospace`
+      ctx.shadowBlur = 8
+      ctx.shadowColor = "rgba(34, 197, 94, 0.3)"
 
-    for (let i = 0; i < dropsRef.current.length; i++) {
-      const char = chars[Math.floor(Math.random() * chars.length)]
-      const x = i * fontSize * 1.2
-      const y = dropsRef.current[i] * fontSize
-      const alpha = Math.max(0, 0.5 - (y / size.h) * 0.6)
-      ctx.fillStyle = `rgba(34, 197, 94, ${alpha})`
-      ctx.fillText(char, x, y)
-      if (y > size.h && Math.random() > 0.975) dropsRef.current[i] = 0
-      dropsRef.current[i] += 0.5 + Math.random() * 0.5
-    }
+      for (let i = 0; i < dropsRef.current.length; i++) {
+        const char = chars[Math.floor(Math.random() * chars.length)]
+        const x = i * fontSize * 1.2
+        const y = dropsRef.current[i] * fontSize
+        const alpha = Math.max(0, 0.5 - (y / size.h) * 0.6)
+        ctx.fillStyle = `rgba(34, 197, 94, ${alpha})`
+        ctx.fillText(char, x, y)
+        if (y > size.h && Math.random() > 0.975) dropsRef.current[i] = 0
+        dropsRef.current[i] += 0.5 + Math.random() * 0.5
+      }
 
-    ctx.shadowBlur = 0
-  }, [chars])
+      ctx.shadowBlur = 0
+    },
+    [chars]
+  )
 
   return <canvas ref={useCanvasRenderer(draw, active)} className="absolute inset-0 h-full w-full opacity-60" />
 }
+
+/* ------------------------------------------------------------------ */
+/*  AUDIO INTRO                                                        */
+/* ------------------------------------------------------------------ */
 
 function useIntroAudio(phase: Phase, started: boolean) {
   const ctxRef = useRef<AudioContext | null>(null)
@@ -254,7 +306,9 @@ function useIntroAudio(phase: Phase, started: boolean) {
   const [beat, setBeat] = useState(0)
 
   useEffect(() => {
-    const Ctor = window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
+    const Ctor =
+      window.AudioContext ||
+      (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
     if (!Ctor) return
 
     const ctx = new Ctor()
@@ -347,7 +401,10 @@ function useIntroAudio(phase: Phase, started: boolean) {
         gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.5)
         gain2.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.5)
         window.setTimeout(() => {
-          try { osc.stop(); osc2.stop() } catch {}
+          try {
+            osc.stop()
+            osc2.stop()
+          } catch {}
         }, 500)
       }
     }
@@ -384,6 +441,10 @@ function useIntroAudio(phase: Phase, started: boolean) {
   return beat
 }
 
+/* ------------------------------------------------------------------ */
+/*  ORQUESTADOR DE ESCENA                                              */
+/* ------------------------------------------------------------------ */
+
 function useCinematicTimeline(started: boolean, onComplete: () => void) {
   const [phase, setPhase] = useState<Phase>(0)
   const timersRef = useRef<number[]>([])
@@ -416,7 +477,31 @@ function useCinematicTimeline(started: boolean, onComplete: () => void) {
   return { phase, setPhase, skipToEnd }
 }
 
-function TextSequence({ lines, active }: { lines: TextLine[]; active: boolean }) {
+/* ------------------------------------------------------------------ */
+/*  TEXT SEQUENCE ENHANCED                                             */
+/* ------------------------------------------------------------------ */
+
+const textContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.25,
+      delayChildren: 0.3,
+    },
+  },
+}
+
+const textLineVariants = {
+  hidden: { opacity: 0, y: 24, filter: "blur(12px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 1.1, ease: "easeOut" },
+  },
+}
+
+function TextSequenceEnhanced({ lines, active }: { lines: TextLine[]; active: boolean }) {
   const [visibleIdx, setVisibleIdx] = useState(-1)
 
   useEffect(() => {
@@ -429,28 +514,39 @@ function TextSequence({ lines, active }: { lines: TextLine[]; active: boolean })
   if (!active || visibleIdx < 0) return null
 
   return (
-    <div className="relative z-20 flex flex-col items-center justify-center gap-4 px-6">
+    <motion.div
+      className="relative z-20 flex flex-col items-center justify-center gap-4 px-6"
+      variants={textContainerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {lines.slice(0, visibleIdx + 1).map((line, i) => (
         <motion.div
           key={`${line.text}-${i}`}
-          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          className="flex flex-col items-center"
+          variants={textLineVariants}
+          className="flex flex-col items-center will-change-transform will-change-opacity"
         >
           {line.tag ? (
-            <span className="mb-2 font-mono text-[10px] tracking-[0.4em] text-amber-300/70 uppercase">
+            <span className="mb-2 font-mono text-[10px] tracking-[0.4em] text-amber-300/80 uppercase">
               {line.tag}
             </span>
           ) : null}
-          <p className={`text-center text-white/90 ${line.className || "text-base md:text-xl font-light tracking-wide leading-relaxed"}`}>
+          <p
+            className={`text-center text-white/95 ${
+              line.className || "text-base md:text-xl font-light tracking-wide leading-relaxed"
+            }`}
+          >
             {line.text}
           </p>
         </motion.div>
       ))}
-    </div>
+    </motion.div>
   )
 }
+
+/* ------------------------------------------------------------------ */
+/*  LOGO REVEAL                                                        */
+/* ------------------------------------------------------------------ */
 
 function LogoReveal({ active, phase }: { active: boolean; phase: Phase }) {
   if (!active) return null
@@ -465,9 +561,15 @@ function LogoReveal({ active, phase }: { active: boolean; phase: Phase }) {
       {phase >= 3 && (
         <div
           className="mb-6 flex h-32 w-32 items-center justify-center rounded-full border border-[#3BD5FF]/30"
-          style={{ boxShadow: "0 0 60px rgba(59,213,255,0.2), inset 0 0 40px rgba(59,213,255,0.08)" }}
+          style={{
+            boxShadow: "0 0 60px rgba(59,213,255,0.35), inset 0 0 40px rgba(59,213,255,0.10)",
+            willChange: "transform, opacity",
+          }}
         >
-          <span className="text-5xl font-bold tracking-tight text-white/90" style={{ textShadow: "0 0 30px rgba(59,213,255,0.4)" }}>
+          <span
+            className="text-5xl font-bold tracking-tight text-white/90"
+            style={{ textShadow: "0 0 30px rgba(59,213,255,0.6)" }}
+          >
             RDM
           </span>
         </div>
@@ -475,9 +577,9 @@ function LogoReveal({ active, phase }: { active: boolean; phase: Phase }) {
       {phase >= 4 && (
         <motion.p
           initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 0.6, y: 0 }}
+          animate={{ opacity: 0.7, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="font-mono text-[10px] tracking-[0.35em] text-white/50 uppercase"
+          className="font-mono text-[10px] tracking-[0.35em] text-white/60 uppercase"
         >
           Real del Monte Digital
         </motion.p>
@@ -485,6 +587,10 @@ function LogoReveal({ active, phase }: { active: boolean; phase: Phase }) {
     </motion.div>
   )
 }
+
+/* ------------------------------------------------------------------ */
+/*  MAIN: CinematicIntro                                               */
+/* ------------------------------------------------------------------ */
 
 export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
   const [started, setStarted] = useState(false)
@@ -511,9 +617,12 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
     return () => window.removeEventListener("keydown", onKey)
   }, [started, handleSkip])
 
-  useEffect(() => () => {
-    cleanupCalledRef.current = true
-  }, [])
+  useEffect(
+    () => () => {
+      cleanupCalledRef.current = true
+    },
+    []
+  )
 
   const startIntro = useCallback(() => {
     if (started) return
@@ -530,21 +639,24 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
           style={{ background: "#000", cursor: !started ? "pointer" : "default" }}
           onClick={!started ? startIntro : undefined}
         >
+          {/* Skip button */}
           {started && (
             <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 0.6, y: 0 }}
               whileHover={{ opacity: 1, scale: 1.03 }}
               onClick={(e) => {
                 e.stopPropagation()
                 handleSkip()
               }}
               className="absolute right-6 top-6 z-30 rounded-full border border-white/10 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.3em] text-white/60 backdrop-blur-md transition-all"
+              style={{ willChange: "transform, opacity" }}
             >
               Saltar [ESC]
             </motion.button>
           )}
 
+          {/* Phase 0: Initial click prompt */}
           {!started && (
             <motion.div
               className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-6"
@@ -561,27 +673,31 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
                 <p className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/60">
                   Real del Monte Digital
                 </p>
-                <p className="text-xs tracking-[0.2em] text-white/40 font-light">
+                <p className="text-xs font-light tracking-[0.2em] text-white/40">
                   Toca para comenzar la experiencia
                 </p>
               </div>
             </motion.div>
           )}
 
+          {/* Cinematic layers */}
           {started && !reducedMotion && (
             <>
+              {/* Layer: Star field (always on, phases 1-6) */}
               {phase >= 1 && phase <= 6 && <StarField active={phase >= 1} explosion={phase === 3} />}
 
+              {/* Layer: ECG line (phase 1 only) */}
               {phase === 1 && (
                 <div className="absolute inset-0 z-10 flex items-center justify-center">
                   <div className="relative h-[200px] w-full max-w-[800px]">
                     <ECGCanvas active beat={beat} />
                   </div>
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: [0, 1, 0.6, 1] }}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: [0, 1, 0.6, 1], y: 0 }}
                     transition={{ duration: 3, times: [0, 0.3, 0.6, 1] }}
                     className="absolute bottom-[30%] left-1/2 z-20 -translate-x-1/2"
+                    style={{ willChange: "opacity, transform" }}
                   >
                     <p className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">
                       Señal de vida detectada
@@ -590,6 +706,7 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
                 </div>
               )}
 
+              {/* Layer: Isabella consciousness (phase 2) */}
               {phase === 2 && (
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -597,68 +714,199 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
                   transition={{ duration: 1.5 }}
                   className="absolute inset-0 z-[15] flex items-center justify-center"
                 >
+                  {/* Fondo volumétrico / portal */}
                   <motion.div
-                    className="absolute h-96 w-96 rounded-full"
-                    style={{ background: "radial-gradient(circle, rgba(59,213,255,0.15) 0%, transparent 70%)" }}
-                    animate={{ scale: [1, 1.05, 1], opacity: [0.4, 0.7, 0.4] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute h-[28rem] w-[28rem] rounded-full"
+                    style={{
+                      background:
+                        "radial-gradient(circle at 30% 20%, rgba(59,213,255,0.35) 0%, transparent 55%), " +
+                        "radial-gradient(circle at 70% 80%, rgba(255,255,255,0.12) 0%, transparent 60%)",
+                      willChange: "transform, opacity",
+                    }}
+                    animate={{ scale: [0.9, 1.05, 1], opacity: [0.4, 0.8, 0.5] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                   />
-                  {[0, 1, 2].map((ring) => (
+
+                  {/* Anillos exteriores elípticos */}
+                  {[0, 1, 2, 3].map((ring) => (
                     <motion.div
                       key={ring}
-                      className="absolute rounded-full border border-[#3BD5FF]/20"
-                      style={{ width: `${320 + ring * 160}px`, height: `${320 + ring * 160}px` }}
-                      initial={{ opacity: 0, scale: 0.3 }}
+                      className="absolute rounded-full border border-[#3BD5FF]/25"
+                      style={{
+                        width: `${360 + ring * 140}px`,
+                        height: `${280 + ring * 120}px`,
+                        boxShadow:
+                          ring === 0
+                            ? "0 0 70px rgba(59,213,255,0.45)"
+                            : "0 0 40px rgba(59,213,255,0.2)",
+                        backdropFilter: "blur(4px)",
+                        willChange: "transform, opacity",
+                      }}
+                      initial={{ opacity: 0, scale: 0.6, rotateY: 45 }}
                       animate={{
-                        opacity: [0, 0.3, 0.1],
-                        scale: [0.3, 1, 1.1],
-                        rotate: ring % 2 === 0 ? [0, 180] : [45, -135],
+                        opacity: [0, 0.45, 0.15],
+                        scale: [0.6, 1, 1.1],
+                        rotateZ: ring % 2 === 0 ? [0, 120] : [-30, -160],
                       }}
                       transition={{
-                        duration: 3 + ring * 0.6,
+                        duration: 4 + ring * 0.8,
                         ease: "easeOut",
-                        delay: ring * 0.3,
+                        delay: ring * 0.4,
                       }}
                     />
                   ))}
-                  <TextSequence lines={ISABELLA_LINES} active={phase === 2} />
+
+                  {/* Nervadura de “circuito” dentro del portal */}
+                  <motion.div
+                    className="absolute h-40 w-40"
+                    style={{ willChange: "transform, opacity" }}
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    animate={{ opacity: 0.7, scale: 1 }}
+                    transition={{ duration: 1.5, delay: 0.8 }}
+                  >
+                    <div className="grid h-full w-full grid-cols-3 grid-rows-3 gap-1 opacity-70">
+                      {Array.from({ length: 9 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className="border border-[#3BD5FF]/30 bg-gradient-to-br from-[#3BD5FF]/8 to-transparent"
+                        />
+                      ))}
+                    </div>
+                  </motion.div>
+
+                  {/* Isabella text mejorado */}
+                  <TextSequenceEnhanced lines={ISABELLA_LINES} active={phase === 2} />
                 </motion.div>
               )}
 
+              {/* Layer: Star explosion + logo (phase 3-5) */}
               {phase >= 3 && phase <= 5 && (
                 <div className="absolute inset-0 z-[15] flex items-center justify-center">
+                  {/* Foco de explosión */}
+                  <motion.div
+                    className="absolute h-[26rem] w-[26rem] rounded-full"
+                    style={{
+                      background:
+                        "radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 55%)," +
+                        "radial-gradient(circle at 80% 20%, rgba(59,213,255,0.22) 0%, transparent 60%)",
+                      mixBlendMode: "screen",
+                      willChange: "transform, opacity",
+                    }}
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{
+                      scale: phase === 3 ? [0.8, 1.08, 1] : 1,
+                      opacity: phase === 3 ? [0, 0.9, 0.6] : 0.4,
+                    }}
+                    transition={{ duration: 2.6, ease: "easeOut" }}
+                  />
+
+                  {/* Chorros diagonales de energía */}
+                  {["-30deg", "20deg", "65deg"].map((angle, idx) => (
+                    <motion.div
+                      key={angle}
+                      className="absolute h-[2px] w-[14rem] bg-gradient-to-r from-transparent via-[#3BD5FF] to-transparent"
+                      style={{
+                        transform: `rotate(${angle})`,
+                        transformOrigin: "50% 50%",
+                        boxShadow: "0 0 40px rgba(59,213,255,0.7)",
+                        willChange: "transform, opacity",
+                      }}
+                      initial={{ opacity: 0, scaleX: 0 }}
+                      animate={{
+                        opacity: phase === 3 ? [0, 1, 0.4] : 0.2,
+                        scaleX: phase === 3 ? [0, 1.1, 1] : 1,
+                      }}
+                      transition={{
+                        duration: 1.4 + idx * 0.3,
+                        delay: 0.3 + idx * 0.2,
+                        ease: "easeOut",
+                      }}
+                    />
+                  ))}
+
                   <LogoReveal active={phase >= 3} phase={phase} />
+
+                  {/* Dedication text (phase 4-5) */}
                   {phase >= 4 && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <TextSequence lines={DEDICATION_LINES} active={phase >= 4} />
+                      <TextSequenceEnhanced lines={DEDICATION_LINES} active={phase >= 4} />
                     </div>
                   )}
                 </div>
               )}
 
+              {/* Glow gradient overlay mejorado */}
               <motion.div
                 className="absolute inset-0 z-[5] pointer-events-none"
+                style={{ willChange: "opacity, transform" }}
                 animate={{
                   background:
                     phase === 1
-                      ? "radial-gradient(ellipse at center, rgba(59,213,255,0.06) 0%, transparent 60%)"
+                      ? "radial-gradient(ellipse at center, rgba(59,213,255,0.12) 0%, transparent 65%)"
                       : phase === 2
-                        ? "radial-gradient(ellipse at center, rgba(59,213,255,0.1) 0%, transparent 50%)"
+                        ? "radial-gradient(ellipse at center, rgba(59,213,255,0.18) 0%, rgba(5,15,25,0.9) 60%)"
                         : phase === 3
-                          ? "radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, rgba(59,213,255,0.08) 30%, transparent 60%)"
+                          ? "radial-gradient(circle at 40% 30%, rgba(255,255,255,0.15) 0%, transparent 50%), radial-gradient(circle at 70% 70%, rgba(59,213,255,0.3) 0%, transparent 60%)"
                           : phase >= 5
-                            ? "radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%)"
+                            ? "radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.8) 100%)"
                             : "transparent",
                 }}
                 transition={{ duration: 2 }}
               />
 
+              {/* Layer: Matrix rain (phase 5) */}
               <MatrixRain active={phase === 5} />
 
+              {/* Datastream overlay en disolución (phase 5) */}
+              {phase === 5 && (
+                <motion.div
+                  className="pointer-events-none absolute inset-0 z-[18]"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.8 }}
+                  transition={{ duration: 2 }}
+                >
+                  {/* Líneas verticales de datos */}
+                  <div className="absolute inset-0 flex justify-between px-12">
+                    {Array.from({ length: 18 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="h-full w-[1px] bg-gradient-to-b from-transparent via-[#3BD5FF]/30 to-transparent opacity-70"
+                        style={{ filter: "blur(1px)" }}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Partículas cuadradas que se desintegran hacia abajo */}
+                  <motion.div
+                    className="absolute inset-x-0 bottom-1/3 flex justify-center gap-2"
+                    initial={{ y: 0, opacity: 0 }}
+                    animate={{ y: 40, opacity: 1 }}
+                    transition={{ duration: 3, ease: "easeOut" }}
+                  >
+                    {Array.from({ length: 24 }).map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="h-2 w-2 rounded-[2px] bg-[#3BD5FF]/70"
+                        style={{ boxShadow: "0 0 12px rgba(59,213,255,0.9)" }}
+                        initial={{ y: 0, opacity: 0, scale: 0.8 }}
+                        animate={{ y: 30 + Math.random() * 40, opacity: 0.2, scale: 0.4 }}
+                        transition={{
+                          duration: 2.5 + Math.random(),
+                          delay: 0.6 + i * 0.06,
+                          ease: "easeOut",
+                        }}
+                      />
+                    ))}
+                  </motion.div>
+                </motion.div>
+              )}
+
+              {/* Phase indicator — subtle */}
               <motion.div
                 className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: phase >= 1 && phase <= 5 ? 0.3 : 0 }}
+                style={{ willChange: "opacity" }}
               >
                 {[0, 1, 2, 3, 4, 5].map((p) => (
                   <div
