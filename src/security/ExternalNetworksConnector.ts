@@ -1,4 +1,3 @@
-import { createHmac } from "crypto";
 import { v4 as uuidv4 } from "uuid";
 import { logger } from "@/lib/logger";
 
@@ -150,6 +149,7 @@ export class ExternalNetworksConnector {
       headers["Authorization"] = `Bearer ${creds.accessToken}`;
     }
 
+    const { createHmac } = await import("crypto");
     const signature = createHmac("sha256", creds.apiSecret).update(JSON.stringify(payloads[network])).digest("hex");
     headers["X-TAMV-Signature"] = signature;
 
@@ -164,4 +164,10 @@ export class ExternalNetworksConnector {
   }
 }
 
-export const networksConnector = new ExternalNetworksConnector();
+let _networksConnector: ExternalNetworksConnector | null = null;
+export function getNetworksConnector(): ExternalNetworksConnector {
+  if (!_networksConnector) {
+    _networksConnector = new ExternalNetworksConnector();
+  }
+  return _networksConnector;
+}

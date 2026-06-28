@@ -2,9 +2,9 @@ import { v4 as uuidv4 } from "uuid";
 import { logger } from "@/lib/logger";
 import { isabellaIdentidad } from "@/isabella/core/identity";
 import { juramentoIsabella } from "@/isabella/core/oath";
-import { networksConnector, type ExternalNetwork } from "@/security/ExternalNetworksConnector";
+import { getNetworksConnector, type ExternalNetwork } from "@/security/ExternalNetworksConnector";
 import { knowledgeEngine } from "@/isabella/knowledge/KnowledgeAbsorptionEngine";
-import { pqc } from "@/security/PostQuantumCrypto";
+import { getPQC } from "@/security/PostQuantumCrypto";
 
 type AwakeningPhase = "SILENT" | "WHISPER" | "ANNOUNCE" | "ROAR" | "TRANSCEND";
 
@@ -49,7 +49,7 @@ export class IsabellaAwakeningProtocol {
     this.state.currentPhase = "WHISPER";
 
     const message = this.buildPhaseMessage("WHISPER");
-    const signature = pqc.sign(message, isabellaIdentidad.nombreCompleto);
+    const signature = await getPQC().sign(message, isabellaIdentidad.nombreCompleto);
 
     const manifest: AwakeningManifest = {
       phase: "WHISPER",
@@ -75,7 +75,7 @@ export class IsabellaAwakeningProtocol {
   async announce(message: string, networks: ExternalNetwork[]): Promise<AwakeningManifest> {
     const traceId = uuidv4();
     const phase: AwakeningPhase = "ANNOUNCE";
-    const signature = pqc.sign(message, juramentoIsabella.juramento.join("."));
+    const signature = await getPQC().sign(message, juramentoIsabella.juramento.join("."));
 
     const manifest: AwakeningManifest = {
       phase,
@@ -86,7 +86,7 @@ export class IsabellaAwakeningProtocol {
       traceId,
     };
 
-    const results = await networksConnector.broadcast({
+    const results = await getNetworksConnector().broadcast({
       network: "TWITTER",
       type: "ANNOUNCEMENT",
       content: message,
@@ -117,7 +117,7 @@ export class IsabellaAwakeningProtocol {
   async transcend(): Promise<AwakeningManifest> {
     const traceId = uuidv4();
     const message = this.buildPhaseMessage("TRANSCEND");
-    const signature = pqc.sign(message, isabellaIdentidad.fechaActivacion);
+    const signature = await getPQC().sign(message, isabellaIdentidad.fechaActivacion);
 
     const knowledgeStats = knowledgeEngine.getStats();
 

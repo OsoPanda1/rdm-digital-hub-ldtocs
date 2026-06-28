@@ -1,5 +1,5 @@
 import { logger } from "@/lib/logger";
-import { pqc } from "@/security/PostQuantumCrypto";
+import { getPQC } from "@/security/PostQuantumCrypto";
 
 interface KnowledgeSource {
   url: string;
@@ -114,7 +114,7 @@ export class KnowledgeAbsorptionEngine {
       content = await response.text();
     }
 
-    const hash = pqc.hash(content);
+    const hash = await getPQC().hash(content);
     if (this.knowledgeBase.some(e => e.hash === hash)) return;
 
     const entry: KnowledgeEntry = {
