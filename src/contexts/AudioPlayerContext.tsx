@@ -31,12 +31,15 @@ const AudioPlayerContext = createContext<AudioPlayerState | null>(null)
 
 export function AudioPlayerProvider({ children }: { children: ReactNode }) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const nextRef = useRef<() => void>(() => {})
+  const volumeRef = useRef(0.8)
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null)
   const [playlist, setPlaylist] = useState<Track[]>([])
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
   const [volume, setVolumeState] = useState(0.8)
+  volumeRef.current = volume
   const trackIndexRef = useRef(-1)
 
   useEffect(() => {
@@ -45,14 +48,14 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
       audioRef.current.preload = "auto"
     }
     const audio = audioRef.current
-    audio.volume = volume
+    audio.volume = volumeRef.current
 
     const onTime = () => {
       setProgress(audio.duration ? audio.currentTime / audio.duration : 0)
       setCurrentTime(audio.currentTime)
     }
     const onEnd = () => {
-      next()
+      nextRef.current()
     }
     const onPlay = () => setIsPlaying(true)
     const onPause = () => setIsPlaying(false)
@@ -115,6 +118,7 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
     const nextTrack = playlist[nextIdx]
     if (nextTrack) play(nextTrack)
   }, [playlist, play])
+  nextRef.current = next
 
   const prev = useCallback(() => {
     if (playlist.length === 0) return

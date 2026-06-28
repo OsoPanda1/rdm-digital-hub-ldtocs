@@ -145,11 +145,10 @@ export default function Musica() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount }),
       });
+      if (!res.ok) { setDonating(false); return; }
       const { url } = await res.json();
       if (url) window.location.href = url;
     } catch {
-      window.location.href = "/gracias-donativo";
-    } finally {
       setDonating(false);
     }
   };
