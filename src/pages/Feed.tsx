@@ -70,7 +70,7 @@ export default function Feed() {
                     className="rounded-2xl border border-[hsl(var(--border)/0.4)] bg-[hsl(var(--background))] p-5 hover:border-[hsl(var(--rdm-amber)/0.3)] transition-colors">
                     <div className="flex items-start gap-3 mb-3">
                       <div className="w-10 h-10 rounded-full bg-[hsl(var(--rdm-amber)/0.2)] flex items-center justify-center text-xs font-bold text-[hsl(var(--rdm-amber))] overflow-hidden">
-                        <img src={post.author.avatar} alt="" className="w-full h-full object-cover" onError={(e) => { (e.currentTarget).style.display = "none" }} />
+                        <img src={post.author.avatar} alt="" loading="lazy" className="w-full h-full object-cover" onError={(e) => { (e.currentTarget).style.display = "none" }} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">

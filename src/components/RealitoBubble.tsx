@@ -158,7 +158,7 @@ const RealitoBubble = () => {
         {open ? (
           <span className="text-lg font-bold text-night-900">✕</span>
         ) : (
-          <img src={logoImg} alt="Realito" className="w-8 h-8 object-contain" />
+          <img src={logoImg} alt="Realito" loading="lazy" className="w-8 h-8 object-contain" />
         )}
       </motion.button>
 
@@ -181,7 +181,7 @@ const RealitoBubble = () => {
             <div className="px-5 py-4 flex items-center gap-3" style={{ borderBottom: "1px solid hsla(43, 80%, 55%, 0.1)" }}>
               <div className="w-9 h-9 rounded-full flex items-center justify-center pulse-gold overflow-hidden"
                 style={{ background: "radial-gradient(circle, hsl(43, 80%, 55%), hsl(43, 60%, 35%))" }}>
-                <img src={logoImg} alt="Realito" className="w-6 h-6 object-contain" />
+                <img src={logoImg} alt="Realito" loading="lazy" className="w-6 h-6 object-contain" />
               </div>
               <div className="flex-1">
                 <h4 className="font-display text-sm text-foreground flex items-center gap-1.5">

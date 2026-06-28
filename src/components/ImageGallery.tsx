@@ -210,7 +210,7 @@ export const ImageGallery = () => {
               <img
                 src={selectedImage.src}
                 alt={selectedImage.title}
-                className="max-w-full max-h-[80vh] object-contain rounded-lg"
+                loading="lazy" className="max-w-full max-h-[80vh] object-contain rounded-lg"
               />
               
               <div className="absolute -bottom-20 left-0 right-0 text-center">

@@ -278,7 +278,7 @@ function MapaPageContent() {
               <div className="rdm-glass rounded-2xl border border-[hsl(var(--border)/0.4)] p-4">
                 {selected ? (
                   <>
-                    <img src={selected.image} alt={selected.name} className="mb-3 h-40 w-full rounded-xl object-cover" />
+                    <img src={selected.image} alt={selected.name} loading="lazy" className="mb-3 h-40 w-full rounded-xl object-cover" />
                     <h2 className="text-xl font-semibold text-[hsl(var(--foreground))]" style={{ fontFamily: "var(--font-display)" }}>{selected.name}</h2>
                     <p className="mt-2 text-sm text-[hsl(var(--muted-foreground))]" style={{ fontFamily: "var(--font-body)" }}>{selected.description}</p>
                     <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-[hsl(var(--muted-foreground))]">

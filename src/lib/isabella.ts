@@ -219,6 +219,20 @@ export function generarSesionTurista(): string {
 }
 
 // ============================================================================
+// FUNCION ADICIONAL para compatibilidad con barrel exports
+// ============================================================================
+
+let _lastDecision: { traceId: string; territory: string; decision?: import('@/core/models').IsabellaDecision } | null = null;
+
+export function getLastDecision() {
+  return _lastDecision;
+}
+
+export function setLastDecision(d: typeof _lastDecision) {
+  _lastDecision = d;
+}
+
+// ============================================================================
 // EXPORTACIONES
 // ============================================================================
 

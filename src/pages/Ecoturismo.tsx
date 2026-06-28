@@ -347,7 +347,7 @@ const EcoturismoPage = () => {
               <img 
                 src={heroPrincipalPng}
                 alt="Real del Monte"
-                className="w-full h-[400px] object-cover"
+                loading="lazy" className="w-full h-[400px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-forest/90 to-forest/70 flex items-center">
                 <div className="px-8 md:px-16 max-w-xl">
@@ -378,7 +378,7 @@ const EcoturismoPage = () => {
               <img
                 src={rdmInfografia}
                 alt="Infografía Real del Monte"
-                className="max-w-full h-auto mx-auto rounded-xl"
+                loading="lazy" className="max-w-full h-auto mx-auto rounded-xl"
                 style={{ maxHeight: "500px" }}
               />
               <p className="text-xs text-muted-foreground mt-4">

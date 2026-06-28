@@ -172,7 +172,7 @@ const MapaVivo = () => {
             onMouseMove={(e) => handleMove(e.clientX, e.clientY)}
             onTouchMove={(e) => handleMove(e.touches[0].clientX, e.touches[0].clientY)}
           >
-            <img src={aerialImg} alt="Mapa aéreo de Real del Monte" className="w-full h-full object-cover" />
+            <img src={aerialImg} alt="Mapa aéreo de Real del Monte" loading="lazy" className="w-full h-full object-cover" />
 
             {/* Fog canvas */}
             <canvas

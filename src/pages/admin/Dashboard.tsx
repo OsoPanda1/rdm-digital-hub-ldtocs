@@ -523,7 +523,7 @@ s y contenido de RDM Digital
                           <img 
                             src={business.imageUrl} 
                             alt={business.name}
-                            className="w-full h-full object-cover"
+                            loading="lazy" className="w-full h-full object-cover"
                           />
                         </div>
                         
@@ -896,7 +896,7 @@ s y contenido de RDM Digital
                     />
                     {formData.imageUrl && (
                       <div className="w-full h-16 rounded overflow-hidden">
-                        <img src={formData.imageUrl} alt="" className="w-full h-full object-cover" />
+                        <img src={formData.imageUrl} alt="" loading="lazy" className="w-full h-full object-cover" />
                       </div>
                     )}
                   </div>
@@ -907,9 +907,9 @@ s y contenido de RDM Digital
                       onChange={handleInputChange}
                       placeholder="URL Imagen 2"
                     />
-                    {formData.imageUrl2 && (
+                      {formData.imageUrl2 && (
                       <div className="w-full h-16 rounded overflow-hidden">
-                        <img src={formData.imageUrl2} alt="" className="w-full h-full object-cover" />
+                        <img src={formData.imageUrl2} alt="" loading="lazy" className="w-full h-full object-cover" />
                       </div>
                     )}
                   </div>
@@ -922,7 +922,7 @@ s y contenido de RDM Digital
                     />
                     {formData.imageUrl3 && (
                       <div className="w-full h-16 rounded overflow-hidden">
-                        <img src={formData.imageUrl3} alt="" className="w-full h-full object-cover" />
+                        <img src={formData.imageUrl3} alt="" loading="lazy" className="w-full h-full object-cover" />
                       </div>
                     )}
                   </div>

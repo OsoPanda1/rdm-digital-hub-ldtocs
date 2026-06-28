@@ -22,7 +22,7 @@ export default function EventosPage() {
 
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
-        <img src={RDM_IMAGES.festivalPaste} alt="Festival del Paste" className="absolute inset-0 w-full h-full object-cover" />
+        <img src={RDM_IMAGES.festivalPaste} alt="Festival del Paste" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--background))] via-black/40 to-black/20" />
         <div className="relative z-10 h-full flex items-end pb-12 px-6 md:px-16 lg:px-24">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>

@@ -70,7 +70,7 @@ const Navbar = () => {
               <img
                 src={logoRdm}
                 alt="RDM Digital"
-                className="relative w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-105"
+                loading="lazy" className="relative w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-105"
                 style={{ filter: "drop-shadow(0 0 8px hsla(210,100%,55%,0.3))" }}
               />
             </div>

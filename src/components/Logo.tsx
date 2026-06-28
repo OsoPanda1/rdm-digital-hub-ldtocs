@@ -28,7 +28,7 @@ const Logo = ({ variant = "default", size = "md", className = "", linkClassName 
     <img
       src="/lovable-uploads/fbe48ba3-319f-4b17-b3b5-61d51d87c80d.png"
       alt="GÉNESIS DIGYTAMV"
-      className={cn("object-contain transition-all hover:scale-105", sizeClasses[size].logo, className)}
+      loading="lazy" className={cn("object-contain transition-all hover:scale-105", sizeClasses[size].logo, className)}
       onError={() => setImgError(true)}
     />
   );

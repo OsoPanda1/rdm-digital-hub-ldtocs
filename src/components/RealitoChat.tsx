@@ -121,7 +121,7 @@ export default function RealitoChat({ initialOpen = false }: RealitoChatProps) {
             className="fixed bottom-24 right-6 z-50 flex h-[520px] w-[360px] max-w-[calc(100vw-48px)] flex-col overflow-hidden rounded-2xl border border-white/10 bg-night-900/95 shadow-2xl"
           >
             <div className="flex items-center gap-3 border-b border-white/10 bg-night-800 px-4 py-3">
-              <img src={logoRdm} alt="REALITO" className="h-8 w-8 rounded-full" />
+              <img src={logoRdm} alt="REALITO" loading="lazy" className="h-8 w-8 rounded-full" />
               <div className="flex-1">
                 <p className="text-sm font-semibold text-silver-300">REALITO</p>
                 <p className="text-xs text-silver-500">Asistente digital · Núcleo ISABELLA TAMV</p>

@@ -105,7 +105,7 @@ const QuienesSomos = () => {
                   <img
                     src={ceoTamvImg}
                     alt="Edwin Oswaldo Castillo Trejo — CEO TAMV Online"
-                    className="w-40 h-40 md:w-48 md:h-48 rounded-2xl object-cover border-2 border-primary/30 shadow-xl shadow-primary/10"
+                    loading="lazy" className="w-40 h-40 md:w-48 md:h-48 rounded-2xl object-cover border-2 border-primary/30 shadow-xl shadow-primary/10"
                   />
                 </div>
                 <div>

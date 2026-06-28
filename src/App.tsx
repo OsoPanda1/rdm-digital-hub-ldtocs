@@ -142,8 +142,6 @@ const queryClient = new QueryClient({
   },
 })
 
-// Isabella AI — fusión territorial al arranque
-import { fusionEngine } from '@/core/territorial/TerritorialFusionEngine'
 
 // Fallback visible y accesible para loads de rutas
 const RouteFallback = () => (
@@ -296,11 +294,13 @@ const AppInner = () => {
     setIntroComplete(true)
   }, [])
 
-  // Arranque de Isabella AI al montar la app
+  // Arranque dinámico de Isabella AI — FusionEngine se importa bajo demanda
   useEffect(() => {
     const isBrowser = typeof window !== 'undefined'
     if (!isBrowser) return
-    fusionEngine.start()
+    import('@/core/territorial/TerritorialFusionEngine').then(({ fusionEngine }) => {
+      fusionEngine.start()
+    }).catch(() => {})
   }, [])
 
   const [showIntro] = useState(() => {
