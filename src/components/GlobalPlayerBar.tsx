@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { useAudioPlayer } from "@/contexts/AudioPlayerContext"
 import {
-  Play, Pause, SkipBack, SkipForward, Disc3, Volume2,
+  Play, Pause, SkipBack, SkipForward, Disc3, Volume2, RefreshCw, AlertCircle,
 } from "lucide-react"
 
 function formatDuration(secs: number): string {
@@ -12,8 +12,8 @@ function formatDuration(secs: number): string {
 
 export default function GlobalPlayerBar() {
   const {
-    currentTrack, isPlaying, progress, currentTime, volume,
-    togglePlay, next, prev, setVolume, seek,
+    currentTrack, isPlaying, progress, currentTime, volume, error,
+    togglePlay, next, prev, setVolume, seek, retry,
   } = useAudioPlayer()
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -38,6 +38,15 @@ export default function GlobalPlayerBar() {
                 <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             </div>
+            {error && (
+              <div className="flex items-center gap-2 mb-2 px-1">
+                <AlertCircle className="w-3 h-3 text-red-400 shrink-0" />
+                <span className="text-[11px] text-red-300/80 truncate flex-1">{error}</span>
+                <button onClick={retry} className="text-[11px] text-white/50 hover:text-white flex items-center gap-1 shrink-0">
+                  <RefreshCw className="w-3 h-3" /> Reintentar
+                </button>
+              </div>
+            )}
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3 flex-1 min-w-0">
                 <div className="w-9 h-9 rounded-lg bg-[hsl(var(--rdm-amber)/0.15)] flex items-center justify-center shrink-0">
@@ -49,13 +58,13 @@ export default function GlobalPlayerBar() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <button onClick={prev} disabled={false} className="text-white/40 hover:text-white disabled:opacity-20 transition-colors">
+                <button onClick={prev} className="text-white/40 hover:text-white disabled:opacity-20 transition-colors">
                   <SkipBack className="w-5 h-5" />
                 </button>
                 <button onClick={togglePlay} className="w-11 h-11 rounded-full bg-gradient-to-br from-[hsl(var(--rdm-amber))] to-amber-500 text-white flex items-center justify-center hover:scale-110 transition-transform shadow-lg shadow-[hsl(var(--rdm-amber)/0.4)]">
                   {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                 </button>
-                <button onClick={next} disabled={false} className="text-white/40 hover:text-white disabled:opacity-20 transition-colors">
+                <button onClick={next} className="text-white/40 hover:text-white disabled:opacity-20 transition-colors">
                   <SkipForward className="w-5 h-5" />
                 </button>
               </div>

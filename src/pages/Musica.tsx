@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { RDMLayout } from "@/components/rdm/RDMLayout"
 import { SEOMeta } from "@/components/SEOMeta"
 import { motion, AnimatePresence } from "framer-motion"
@@ -20,15 +20,16 @@ import ReactMarkdown from "react-markdown"
 import { useAudioPlayer, type Track } from "@/contexts/AudioPlayerContext"
 import playlistMd from "@/assets/musica/playlist.md?raw"
 
-// Paleta base (comentarios para referencia visual)
-// navy blue dark:      #0b1020
-// azul petróleo negro: #050814
-// azul eléctrico metal: #00D4FF
-// verde limón:         #A7F300
-// rojo cereza:         #FF1744
-// platino:             #E5E7EB
-
-const R2_BASE = "https://media.visitarealdelmonte.online"
+import aMimadreMp3 from "@/assets/musica/a_mimadre.mp3"
+import reinaTrejoMp3 from "@/assets/musica/reina_trejo.mp3"
+import tumiradaMp3 from "@/assets/musica/tumirada.mp3"
+import adictedToyouMp3 from "@/assets/musica/adicted_toyou).mp3"
+import cadaNocheMp3 from "@/assets/musica/cada_noche.mp3"
+import elSenaladoMp3 from "@/assets/musica/el_señalado.mp3"
+import legadoMp3 from "@/assets/musica/Legado (1).mp3"
+import patioDetierraMp3 from "@/assets/musica/patio_detierra.mp3"
+import puroDolorMp3 from "@/assets/musica/puro_dolor.mp3"
+import shootingStarMp3 from "@/assets/musica/shooting_star.mp3"
 
 const PLAYLIST: Track[] = [
   {
@@ -36,7 +37,7 @@ const PLAYLIST: Track[] = [
     title: "El Real (Legend)",
     artist: "Edwin Castillo",
     description: "Tema principal del intro de la plataforma.",
-    src: `${R2_BASE}/a_mimadre.mp3`,
+    src: aMimadreMp3,
     duration: 210,
     bpm: 70,
     mood: "Emotivo",
@@ -46,7 +47,7 @@ const PLAYLIST: Track[] = [
     title: "A Mi Madre",
     artist: "RDM Digital",
     description: "Homenaje musical a mi madre, al amor incondicional y al sacrificio silencioso.",
-    src: `${R2_BASE}/reina_trejo.mp3`,
+    src: reinaTrejoMp3,
     duration: 275,
     bpm: 70,
     mood: "Emotivo",
@@ -56,7 +57,7 @@ const PLAYLIST: Track[] = [
     title: "Tu Mirada",
     artist: "RDM Digital",
     description: "Melodía íntima que captura la esencia de una mirada que lo dice todo.",
-    src: `${R2_BASE}/tumirada.mp3`,
+    src: tumiradaMp3,
     duration: 240,
     bpm: 72,
     mood: "Melancólico",
@@ -67,7 +68,7 @@ const PLAYLIST: Track[] = [
     artist: "Edwin Castillo",
     description:
       "Canción que explora la adicción emocional que nace del corazón y se niega a soltar los recuerdos del ayer.",
-    src: `${R2_BASE}/adicted_toyou.mp3`,
+    src: adictedToyouMp3,
     duration: 220,
     bpm: 85,
     mood: "Pasional",
@@ -77,7 +78,7 @@ const PLAYLIST: Track[] = [
     title: "Cada Noche",
     artist: "Edwin Castillo",
     description: "Ritmo nocturno que evoca las madrugadas de insomnio y reflexión.",
-    src: `${R2_BASE}/cada_noche.mp3`,
+    src: cadaNocheMp3,
     duration: 230,
     bpm: 78,
     mood: "Nocturno",
@@ -87,7 +88,7 @@ const PLAYLIST: Track[] = [
     title: "El Señalado",
     artist: "Edwin Castillo",
     description: "Narrativa musical sobre llevar una marca distinta y encontrar fuerza en la propia identidad.",
-    src: `${R2_BASE}/el_señalado.mp3`,
+    src: elSenaladoMp3,
     duration: 240,
     bpm: 82,
     mood: "Intenso",
@@ -98,7 +99,7 @@ const PLAYLIST: Track[] = [
     artist: "RDM Digital",
     description:
       "Como deseo ser recordado, que dejo como legado, una pregunta que vive a diario en mi mente.",
-    src: `${R2_BASE}/legado_1.mp3`,
+    src: legadoMp3,
     duration: 260,
     bpm: 80,
     mood: "Épico",
@@ -108,7 +109,7 @@ const PLAYLIST: Track[] = [
     title: "Patio de Tierra",
     artist: "Edwin Castillo",
     description: "Melodía que evoca los patios de las casas antiguas y las memorias que ahí habitan.",
-    src: `${R2_BASE}/patio_detierra.mp3`,
+    src: patioDetierraMp3,
     duration: 200,
     bpm: 65,
     mood: "Nostálgico",
@@ -118,7 +119,7 @@ const PLAYLIST: Track[] = [
     title: "Puro Dolor",
     artist: "Edwin Castillo",
     description: "Balada que transforma el dolor en arte y catarsis musical.",
-    src: `${R2_BASE}/puro_dolor.mp3`,
+    src: puroDolorMp3,
     duration: 250,
     bpm: 68,
     mood: "Triste",
@@ -129,7 +130,7 @@ const PLAYLIST: Track[] = [
     artist: "Edwin Castillo",
     description:
       "Inspirado en la estrella fugaz que iluminó mi andar y cruza el cielo de Real del Monte.",
-    src: `${R2_BASE}/shooting_star.mp3`,
+    src: shootingStarMp3,
     duration: 225,
     bpm: 88,
     mood: "Inspirador",
@@ -139,7 +140,7 @@ const PLAYLIST: Track[] = [
     title: "Tu Mirada (Estudio)",
     artist: "Edwin Castillo",
     description: "Versión de estudio con arreglos acústicos.",
-    src: `${R2_BASE}/tumirada_musica.mp3`,
+    src: tumiradaMp3,
     duration: 235,
     bpm: 72,
     mood: "Melancólico",

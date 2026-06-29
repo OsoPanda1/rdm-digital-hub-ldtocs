@@ -1,4 +1,5 @@
 import { createContext, useContext, useRef, useState, useCallback, useEffect, type ReactNode } from "react"
+import { logger } from "@/lib/logger"
 
 export interface Track {
   id: string
@@ -18,6 +19,7 @@ interface AudioPlayerState {
   progress: number
   currentTime: number
   volume: number
+  error: string | null
   play: (track: Track, playlist?: Track[]) => void
   togglePlay: () => void
   pause: () => void
@@ -25,6 +27,7 @@ interface AudioPlayerState {
   prev: () => void
   seek: (time: number) => void
   setVolume: (v: number) => void
+  retry: () => void
 }
 
 const AudioPlayerContext = createContext<AudioPlayerState | null>(null)
@@ -33,12 +36,14 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const nextRef = useRef<() => void>(() => {})
   const volumeRef = useRef(0.8)
+  const lastTrackRef = useRef<Track | null>(null)
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null)
   const [playlist, setPlaylist] = useState<Track[]>([])
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
   const [volume, setVolumeState] = useState(0.8)
+  const [error, setError] = useState<string | null>(null)
   volumeRef.current = volume
   const trackIndexRef = useRef(-1)
 
@@ -57,25 +62,35 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
     const onEnd = () => {
       nextRef.current()
     }
-    const onPlay = () => setIsPlaying(true)
+    const onPlay = () => { setIsPlaying(true); setError(null) }
     const onPause = () => setIsPlaying(false)
+    const onError = () => {
+      const msg = audio.src ? `Error al cargar audio: ${audio.src.split('/').pop()}` : 'Error de reproducción'
+      setError(msg)
+      logger.warn('[AudioPlayer]', msg)
+    }
 
     audio.addEventListener("timeupdate", onTime)
     audio.addEventListener("ended", onEnd)
     audio.addEventListener("play", onPlay)
     audio.addEventListener("pause", onPause)
+    audio.addEventListener("error", onError)
 
     return () => {
       audio.removeEventListener("timeupdate", onTime)
       audio.removeEventListener("ended", onEnd)
       audio.removeEventListener("play", onPlay)
       audio.removeEventListener("pause", onPause)
+      audio.removeEventListener("error", onError)
     }
   }, [])
 
   const play = useCallback((track: Track, newPlaylist?: Track[]) => {
     const audio = audioRef.current
     if (!audio) return
+
+    lastTrackRef.current = track
+    setError(null)
 
     if (newPlaylist) {
       setPlaylist(newPlaylist)
@@ -87,18 +102,29 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
 
     audio.src = track.src
     audio.currentTime = 0
-    audio.play().catch(() => {})
+    audio.play().catch((err) => {
+      setError(`No se pudo reproducir: ${err.message || 'error desconocido'}`)
+      setIsPlaying(false)
+    })
     setCurrentTrack(track)
     setIsPlaying(true)
     setProgress(0)
     setCurrentTime(0)
   }, [playlist])
 
+  const retry = useCallback(() => {
+    if (!lastTrackRef.current) return
+    play(lastTrackRef.current)
+  }, [play])
+
   const togglePlay = useCallback(() => {
     const audio = audioRef.current
     if (!audio || !currentTrack) return
     if (audio.paused) {
-      audio.play().catch(() => {})
+      audio.play().catch((err) => {
+        setError(`No se pudo reanudar: ${err.message}`)
+        setIsPlaying(false)
+      })
       setIsPlaying(true)
     } else {
       audio.pause()
@@ -145,6 +171,7 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
       progress,
       currentTime,
       volume,
+      error,
       play,
       togglePlay,
       pause,
@@ -152,6 +179,7 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
       prev,
       seek,
       setVolume: setVolumeFn,
+      retry,
     }}>
       {children}
     </AudioPlayerContext.Provider>
