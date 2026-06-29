@@ -9,6 +9,8 @@ import BrumaHeader from "@/components/BrumaHeader";
 import BrumaFooter from "@/components/BrumaFooter";
 import FloatingParticles from "@/components/FloatingParticles";
 import RealitoBubble from "@/components/RealitoBubble";
+import { supabase as supabaseClient } from "@/integrations/supabase/client";
+import { useRDMAuth } from "@/contexts/RDMAuthContext";
 import { toast } from "sonner";
 
 const giros = [
@@ -63,6 +65,8 @@ const RegistroComercio = () => {
     website: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const { user } = useRDMAuth();
 
   const selectedGiro = giros.find(g => g.value === formData.giro);
 
@@ -95,9 +99,30 @@ const RegistroComercio = () => {
     if (idx > 0) setStep(steps[idx - 1])
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.ownerName || !formData.businessName || !formData.giro || !formData.phone) {
       toast.error("Por favor completa todos los campos obligatorios");
+      return;
+    }
+    setSaving(true);
+    const { error } = await supabaseClient.from("businesses").insert({
+      owner_id: user?.id ?? null,
+      owner_name: formData.ownerName,
+      name: formData.businessName,
+      description: formData.description,
+      giro: formData.giro,
+      phone: formData.phone,
+      email: formData.email,
+      address: formData.address,
+      schedule_display: formData.schedule,
+      website: formData.website,
+      status: "pending",
+      is_active: false,
+      category: (giros.find(g => g.value === formData.giro)?.label ?? "OTROS").toUpperCase().replace(/[\s\/]/g, "_").slice(0, 20),
+    });
+    setSaving(false);
+    if (error) {
+      toast.error("Error al guardar: " + error.message);
       return;
     }
     setSubmitted(true);
