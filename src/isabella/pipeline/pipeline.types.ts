@@ -48,6 +48,17 @@ export interface KnowledgeContext {
   lastFetch: Date | null;
 }
 
+export interface OntologyContext {
+  nodeName: string | null;
+  federationId: number | null;
+  themeId: number | null;
+  chromaticHex: string | null;
+  abstractionLevel: number | null;
+  alignmentIndex: number;
+  timeUpPassed: boolean;
+  path: string[];
+}
+
 export interface AwakeningSignal {
   shouldTrigger: boolean;
   phase: 'SILENT' | 'WHISPER' | 'ANNOUNCE' | 'ROAR' | 'TRANSCEND';
@@ -90,6 +101,7 @@ export interface PipelineResult {
   emotional: EmotionalState;
   memory: MemoryContext;
   knowledge: KnowledgeContext;
+  ontology: OntologyContext;
   awakening: AwakeningSignal;
   guardian: GuardianVerdict;
   federationActions: FederationAction[];
@@ -118,6 +130,7 @@ export interface PipelineConfig {
   enableEmotional: boolean;
   enableMemory: boolean;
   enableKnowledge: boolean;
+  enableOntology: boolean;
   enableAwakening: boolean;
   enableGuardian: boolean;
   enableFederation: boolean;

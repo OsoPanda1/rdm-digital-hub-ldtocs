@@ -8,6 +8,7 @@ import { awakeningProtocol } from '@/isabella/protocols/IsabellaAwakeningProtoco
 import { isabellaTerritorialMind } from '@/isabella/territorial/IsabellaTerritorialMind';
 import { federationBus } from '@/federaciones/FederationBus';
 import { isabellaGuardian } from '@/core/ai/isabella-guardian';
+import { locateNode } from '@/isabella/ontology';
 import type { SystemMetrics } from '@/core/models';
 import type {
   PipelineInput,
@@ -16,6 +17,7 @@ import type {
   EmotionalState,
   MemoryContext,
   KnowledgeContext,
+  OntologyContext,
   AwakeningSignal,
   GuardianVerdict,
   FederationAction,
@@ -30,6 +32,7 @@ const DEFAULT_CONFIG: PipelineConfig = {
   enableEmotional: true,
   enableMemory: true,
   enableKnowledge: true,
+  enableOntology: true,
   enableAwakening: true,
   enableGuardian: true,
   enableFederation: true,
@@ -83,6 +86,7 @@ export class IsabellaConsciousnessPipeline {
     let emotional: EmotionalState = { emotion: 'neutral', intensity: 0.5, valence: 0.5, resonance: 0.5, suggestedResponse: '' };
     let memory: MemoryContext = { lastEmotion: null, lastContext: null, pattern: {}, totalInteractions: 0 };
     let knowledge: KnowledgeContext = { relevantEntries: [], totalEntries: 0, lastFetch: null };
+    let ontology: OntologyContext = { nodeName: null, federationId: null, themeId: null, chromaticHex: null, abstractionLevel: null, alignmentIndex: 0, timeUpPassed: false, path: [] };
     const awakening: AwakeningSignal = { shouldTrigger: false, phase: 'SILENT', reason: '', territorialActivityLevel: 0 };
     let guardian: GuardianVerdict = { action: 'enable_cache_boost', severity: 'normal', federationsImpacted: [], reason: 'default' };
     const federationActions: FederationAction[] = [];
@@ -175,7 +179,31 @@ export class IsabellaConsciousnessPipeline {
       };
     }
 
-    // 5. AWAKENING PROTOCOL CHECK
+    // 5. ONTOLOGICAL LOCALIZATION (Grafo de Abstracción)
+    if (this.config.enableOntology && inputText) {
+      try {
+        const targetFed = this.inferFederationFromInput(input);
+        const targetTheme = this.inferThemeFromInput(input);
+        const result = await locateNode(inputText.slice(0, 100), targetFed, targetTheme);
+        ontology = {
+          nodeName: result.node?.nodeName ?? null,
+          federationId: result.node?.federationId ?? targetFed,
+          themeId: result.node?.themeId ?? targetTheme,
+          chromaticHex: result.node?.chromaticHex ?? null,
+          abstractionLevel: result.node?.abstractionLevel ?? null,
+          alignmentIndex: result.alignment.index,
+          timeUpPassed: result.timeUp.allowed,
+          path: result.path.map(n => n.nodeName),
+        };
+        if (result.node) {
+          logger.info('[PIPELINE] Ontología localizada', { node: result.node.nodeName, alignment: result.alignment.index, timeUp: result.timeUp.allowed });
+        }
+      } catch (error) {
+        logger.warn('[PIPELINE] Error en localización ontológica', { error });
+      }
+    }
+
+    // 7. AWAKENING PROTOCOL CHECK
     if (this.config.enableAwakening && awakening.shouldTrigger) {
       try {
         const manifest = await awakeningProtocol.activate(['TWITTER', 'DISCORD', 'TELEGRAM']);
@@ -188,7 +216,7 @@ export class IsabellaConsciousnessPipeline {
       }
     }
 
-    // 6. GUARDIAN EVALUATION (System health + antifragile)
+    // 8. GUARDIAN EVALUATION (System health + antifragile)
     if (this.config.enableGuardian) {
       const metrics = this.getSystemMetrics();
       const decision = isabellaGuardian(metrics);
@@ -212,7 +240,7 @@ export class IsabellaConsciousnessPipeline {
       }
     }
 
-    // 7. FEDERATION BUS ROUTING
+    // 9. FEDERATION BUS ROUTING
     if (this.config.enableFederation) {
       // Route emotional insight to ANUBIS (F2 - INTEL)
       if (emotional.emotion !== 'neutral' && emotional.intensity > 0.6) {
@@ -276,7 +304,7 @@ export class IsabellaConsciousnessPipeline {
       }
     }
 
-    // 8. TERRITORIAL ACTIONS
+    // 10. TERRITORIAL ACTIONS
     if (this.config.enableTerritorial) {
       if (input.type === 'territorial_contribution') {
         territorialActions.push({
@@ -298,7 +326,7 @@ export class IsabellaConsciousnessPipeline {
       }
     }
 
-    // 9. CALL INPUT PORTS
+    // 11. CALL INPUT PORTS
     for (const port of this.inputPorts) {
       if (port.accept(input)) {
         try {
@@ -321,6 +349,7 @@ export class IsabellaConsciousnessPipeline {
       emotional,
       memory,
       knowledge,
+      ontology,
       awakening,
       guardian,
       federationActions,
@@ -329,7 +358,7 @@ export class IsabellaConsciousnessPipeline {
       traceId,
     };
 
-    // 10. CALL OUTPUT PORTS
+    // 12. CALL OUTPUT PORTS
     for (const port of this.outputPorts) {
       try {
         await port.handle(result);
@@ -420,6 +449,43 @@ export class IsabellaConsciousnessPipeline {
       case 'disable_animations': return ['KAOS_HYPERRENDER'];
       case 'degrade_map_quality': return ['KAOS_HYPERRENDER'];
       default: return ['PHOENIX'];
+    }
+  }
+
+  private inferFederationFromInput(input: PipelineInput): 1 | 2 | 3 | 4 | 5 | 6 | 7 {
+    switch (input.type) {
+      case 'territorial_contribution': return 3;
+      case 'federation_event': return 1;
+      case 'zone_event': return 3;
+      case 'user_query': {
+        const text = input.query.toLowerCase();
+        if (text.includes('token') || text.includes('blockchain') || text.includes('crypto')) return 6;
+        if (text.includes('mapa') || text.includes('lugar') || text.includes('coordenadas')) return 3;
+        if (text.includes('quien eres') || text.includes('que haces') || text.includes('propósito')) return 4;
+        if (text.includes('error') || text.includes('fallo') || text.includes('no funciona')) return 7;
+        if (text.includes('interfaz') || text.includes('diseno') || text.includes('ui')) return 5;
+        return 1;
+      }
+      default: return 1;
+    }
+  }
+
+  private inferThemeFromInput(input: PipelineInput): 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 {
+    switch (input.type) {
+      case 'territorial_contribution': return 2;
+      case 'federation_event': return 5;
+      case 'zone_event': return 2;
+      case 'user_query': {
+        const text = input.query.toLowerCase();
+        if (text.includes('ayuda') || text.includes('reporte')) return 6;
+        if (text.includes('etica') || text.includes('privacidad') || text.includes('consentimiento')) return 1;
+        if (text.includes('historia') || text.includes('patrimonio') || text.includes('leyenda')) return 3;
+        if (text.includes('negocio') || text.includes('comercio') || text.includes('membresia')) return 4;
+        if (text.includes('identidad') || text.includes('login') || text.includes('registro')) return 8;
+        if (text.includes('documentacion') || text.includes('document') || text.includes('wiki')) return 9;
+        return 5;
+      }
+      default: return 5;
     }
   }
 }
