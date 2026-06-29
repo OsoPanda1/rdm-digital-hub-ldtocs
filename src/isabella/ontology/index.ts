@@ -3,7 +3,7 @@ export * from "./alignment";
 export * from "./timeup";
 
 import { supabase } from "@/integrations/supabase/client";
-import type { OntologyNode, FederationId, ThemeId } from "./types";
+import type { OntologyNode, FederationId, ThemeId, AbstractionLevel } from "./types";
 import { evaluateAlignment } from "./alignment";
 import { evaluateTimeUp } from "./timeup";
 
@@ -27,7 +27,7 @@ export async function locateNode(
     .maybeSingle();
 
   if (!node) {
-    const alignment = evaluateAlignment({ federationId: targetFederationId, themeId: targetThemeId, abstractionLevel: 1 as any });
+    const alignment = evaluateAlignment({ federationId: targetFederationId, themeId: targetThemeId, abstractionLevel: 1 as AbstractionLevel });
     return {
       node: null,
       alignment,
@@ -74,7 +74,7 @@ export async function locateNode(
   };
 }
 
-function mapRow(row: any): OntologyNode {
+function mapRow(row: Record<string, unknown>): OntologyNode {
   return {
     nodeId: row.node_id,
     parentNodeId: row.parent_node_id,
