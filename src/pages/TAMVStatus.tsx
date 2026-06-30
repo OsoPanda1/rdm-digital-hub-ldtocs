@@ -4,10 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Activity, Cpu, Database, Shield, Radio } from "lucide-react";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/Navbar";
 import { FooterSection } from "@/components/FooterSection";
 import SEOMeta from "@/components/SEOMeta";
-import { apiGet } from "@/lib/apiClient";
+import { apiClient } from "@/lib/apiClient";
 
 interface MsrStatus {
   node: string;
@@ -33,7 +33,7 @@ const TAMVStatus = () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await apiGet<MsrStatus>("/api/tamv/msr/status");
+      const data = await apiClient.get<MsrStatus>("/api/tamv/msr/status");
       setStatus(data);
     } catch (e) {
       // Backend offline → mostrar estado simulado del nodo cero

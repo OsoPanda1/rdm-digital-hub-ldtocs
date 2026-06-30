@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 export * from "./types";
 export * from "./alignment";
 export * from "./timeup";

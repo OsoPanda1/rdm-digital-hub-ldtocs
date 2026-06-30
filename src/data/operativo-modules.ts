@@ -13,6 +13,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     completion: 90,
     spec: "docs/backend-operativo-api.md",
     notes: "Rutas Express activas en server/src/routes/*",
+    route: "",
   },
   {
     id: "fusion-ecosystem",
@@ -22,6 +23,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     completion: 95,
     spec: "docs/fusion-funcional-rdmx.md",
     route: "/fusion",
+    notes: "",
   },
   {
     id: "ecosystem-repos",
@@ -31,6 +33,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     completion: 100,
     spec: "docs/osopanda-related-repos.json",
     route: "/fusion",
+    notes: "",
   },
   {
     id: "geointel-ai",
@@ -40,6 +43,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     completion: 60,
     spec: "docs/geolocalizacion-ia-rdm-implementacion.md",
     notes: "Endpoints /api/geolocation activos, recomendación IA pendiente",
+    route: "",
   },
   {
     id: "digital-twins",
@@ -49,6 +53,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     completion: 70,
     spec: "docs/integracion-gemelos-digitales-rdmx.md",
     route: "/tenochtitlan",
+    notes: "",
   },
   {
     id: "merchant-payments",
@@ -58,6 +63,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     completion: 75,
     route: "/comercios/registro",
     notes: "Webhooks listos, falta proveedor real (Stripe propio o Paddle)",
+    spec: "docs/merchant-payments.md",
   },
   {
     id: "realito-cloud",
@@ -66,6 +72,8 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     status: "done",
     completion: 90,
     notes: "Edge function realito-chat operativa con fallback heurístico",
+    route: "",
+    spec: "",
   },
   {
     id: "operativo-dashboard",
@@ -75,6 +83,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     completion: 100,
     spec: "docs/rdm-documento-maestro-operativo.md",
     route: "/operativo",
+    notes: "",
   },
   {
     id: "evolucion-dashboard",
@@ -84,6 +93,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     completion: 100,
     spec: "docs/rdmx-evolucion-mega-analisis.md",
     route: "/evolucion",
+    notes: "",
   },
   {
     id: "roadmap-executable",
@@ -93,6 +103,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     completion: 50,
     spec: "docs/roadmap-rdmx-executable.yaml",
     notes: "Script tools/rdmx-roadmap.ts genera resumen JSON; sync de issues opcional",
+    route: "",
   },
   {
     id: "deployment-baseline",
@@ -101,6 +112,8 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     status: "in-progress",
     completion: 65,
     spec: "docs/backlog-operativo-rdmx.md",
+    route: "",
+    notes: "",
   },
 ];
 

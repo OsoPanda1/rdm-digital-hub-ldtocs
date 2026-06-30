@@ -52,7 +52,16 @@ export const SECURITY_PROTOCOLS: SecurityProtocol[] = [
   },
 ];
 
-export function generateFederationHash(content: string): string {
+export const FEDERATION_COLORS = {
+  info: "hsl(var(--electric))",
+  success: "hsl(var(--success))",
+  warning: "hsl(var(--warning))",
+  danger: "hsl(var(--destructive))",
+  critical: "hsl(0 100% 50%)",
+  neutral: "hsl(var(--muted-foreground))",
+} as const;
+
+export function generateFederationHash(content = ''): string {
   // Simple hash for client-side — real hash uses SHA-256 on backend
   let hash = 0;
   for (let i = 0; i < content.length; i++) {

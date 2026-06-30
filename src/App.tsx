@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AnimatePresence } from 'framer-motion'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { RouteErrorBoundary } from '@/components/RouteErrorBoundary'
-import CinematicIntro from '@/components/CinematicIntro'
+import { CinematicIntro } from '@/components/CinematicIntro'
 import MicroPageIntro from '@/components/MicroPageIntro'
 import RealitoChatLauncher from './components/RealitoChatLauncher'
 import AmbientLayer from '@/components/AmbientLayer'
@@ -386,7 +386,7 @@ const AppInner = () => {
         <Toaster />
         <Sonner />
         {showIntro && !introComplete && (
-          <CinematicIntro onComplete={handleIntroComplete} />
+          <CinematicIntro onEnter={handleIntroComplete} />
         )}
           {(!showIntro || introComplete) && (
             <>

@@ -76,7 +76,7 @@ export const ArchivoSonoro: React.FC = () => {
               return (
                 <button
                   key={track.slug}
-                  onClick={() => { if (isActive) { togglePlay(); } else { play(idx); } }}
+                  onClick={() => { if (isActive) { togglePlay(); } else { play(); } }}
                   className={`flex items-start gap-3 p-3 rounded-lg border text-left transition
                     ${
                       isActive

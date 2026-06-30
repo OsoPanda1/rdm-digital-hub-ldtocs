@@ -1,10 +1,17 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { track } from "@/core/hooks/useTracking";
 
-/**
- * Trackea cada cambio de ruta. Montar una sola vez dentro del Router.
- */
+function track(data: { event_type: string; route: string }) {
+  try {
+    fetch("/api/track", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {}
+}
+
 export function RouteTracker() {
   const { pathname } = useLocation();
   useEffect(() => {

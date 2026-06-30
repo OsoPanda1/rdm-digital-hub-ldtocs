@@ -44,7 +44,7 @@ export class PostQuantumCrypto {
   async keygen(identity?: string): Promise<PQCKeyPair> {
     const seedInput = identity ? new TextEncoder().encode(identity + (this.kemSeed ?? "")) : crypto.getRandomValues(new Uint8Array(32));
     const seedHash = identity ? await sha256(seedInput) : seedInput.buffer;
-    const publicKey = hex(await sha512(identity ? seedHash : seedInput));
+    const publicKey = hex(await sha512(identity ? new Uint8Array(seedHash) : seedInput));
     const secretKey = publicKey.split("").reverse().join("");
     return { publicKey, secretKey };
   }

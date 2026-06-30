@@ -31,7 +31,7 @@ export const TELEMETRIA_CONFIG = {
   // Sesión de depuración en producción (agresivo en desarrollo, rudo en producción)
   debug: {
     // Solo activo en entorno de desarrollo para permitir captura detallada
-    enabled: process.env.NODE_ENV === 'development',
+    enabled: import.meta.env.DEV,
     // Intervalo de bloqueo de captura (ms) para aislar perfiles, evitar muchos off-tick
     captureIntervalMs: 1000,
   },

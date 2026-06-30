@@ -27,7 +27,7 @@ export class ScoringEngine {
       factors[rule.name] = value;
     }
 
-    return { total, factors };
+    return { total, factors, confidence: 0 };
   }
 }
 

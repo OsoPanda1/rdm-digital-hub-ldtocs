@@ -174,7 +174,7 @@ export function registrarFeedback(
     consentimiento: consentimiento ?? null,
     created_at: new Date().toISOString(),
   }).then(({ error }: { error: unknown }) => {
-    if (error) logger.error("[Isabella] Error al persistir feedback", error);
+    if (error) logger.error("[Isabella] Error al persistir feedback", { error });
   });
 }
 

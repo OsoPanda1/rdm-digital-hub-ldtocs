@@ -169,6 +169,7 @@ export class KnowledgeAbsorptionEngine {
   private generateSummary(content: string): string {
     const clean = content
       .replace(/<[^>]*>/g, "")
+      // eslint-disable-next-line no-control-regex
       .replace(new RegExp("[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F]", "g"), "")
       .replace(/\s+/g, " ")
       .trim();

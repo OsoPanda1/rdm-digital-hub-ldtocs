@@ -27,25 +27,25 @@ export class BlockchainConnector {
   constructor() {
     this.configs = {
       POLYGON: {
-        rpcUrl: process.env.POLYGON_RPC_URL || "https://polygon-rpc.com",
+        rpcUrl: "https://polygon-rpc.com",
         chainId: 137,
         explorerUrl: "https://polygonscan.com",
         gasLimit: 300000,
       },
       MSR: {
-        rpcUrl: process.env.MSR_RPC_URL || "https://msr-blockchain.internal",
+        rpcUrl: "https://msr-blockchain.internal",
         chainId: 42,
         explorerUrl: "https://msr.explorer",
         gasLimit: 500000,
       },
       ETHEREUM: {
-        rpcUrl: process.env.ETH_RPC_URL || "https://mainnet.infura.io/v3/placeholder",
+        rpcUrl: "https://mainnet.infura.io/v3/placeholder",
         chainId: 1,
         explorerUrl: "https://etherscan.io",
         gasLimit: 300000,
       },
       BSC: {
-        rpcUrl: process.env.BSC_RPC_URL || "https://bsc-dataseed.binance.org",
+        rpcUrl: "https://bsc-dataseed.binance.org",
         chainId: 56,
         explorerUrl: "https://bscscan.com",
         gasLimit: 300000,

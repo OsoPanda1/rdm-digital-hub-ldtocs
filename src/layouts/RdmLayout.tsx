@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom";
-import DedicationBand from "@/components/rdm/DedicationBand";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { GlobalSidebar } from "@/components/rdm/GlobalSidebar";
 
@@ -25,7 +24,9 @@ export function RdmLayout() {
           <div className="relative z-10 p-6 md:p-8 flex-1">
             <Outlet />
           </div>
-          <DedicationBand />
+          <div className="border-t border-white/5 py-2 text-center text-[10px] text-muted-foreground">
+            © 2026 RDM Digital · Tecnología al servicio de la memoria
+          </div>
         </SidebarInset>
       </div>
     </SidebarProvider>

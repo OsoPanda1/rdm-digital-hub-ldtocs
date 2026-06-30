@@ -46,7 +46,7 @@ export function handleApiError(error: unknown): Response {
   }
 
   const message = error instanceof Error ? error.message : 'Error interno del servidor';
-  logger.error('[API] Error no manejado', error);
+  logger.error('[API] Error no manejado', { error });
 
   return Response.json(
     { success: false, error: 'Error interno del servidor', code: 'INTERNAL_ERROR' },

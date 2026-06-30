@@ -88,15 +88,17 @@ export class TerritorialFusionEngine {
     knowledgeEngine.startAbsorptionCycle(300000);
 
     logger.info('[FusionEngine] TERRITORIAL FUSION ENGINE ACTIVADO');
-    logger.info('[FusionEngine] Sistemas conectados:', [
-      'ConsciousnessPipeline',
-      'TerritorialCollector',
-      'FederationBus',
-      'Geofencer',
-      'IsabellaTerritorialMind',
-      'KnowledgeAbsorption',
-      'AwakeningProtocol',
-    ]);
+    logger.info('[FusionEngine] Sistemas conectados', {
+      systems: [
+        'ConsciousnessPipeline',
+        'TerritorialCollector',
+        'FederationBus',
+        'Geofencer',
+        'IsabellaTerritorialMind',
+        'KnowledgeAbsorption',
+        'AwakeningProtocol',
+      ],
+    });
   }
 
   stop(): void {

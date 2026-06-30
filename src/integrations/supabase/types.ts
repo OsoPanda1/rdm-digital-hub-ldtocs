@@ -46,58 +46,94 @@ export type Database = {
       }
       businesses: {
         Row: {
+          address: string | null
+          category: string | null
           contact_email: string | null
           contact_phone: string | null
           created_at: string
           description: string | null
+          email: string | null
+          giro: string | null
           icon: string | null
           id: string
           image_url: string | null
           is_active: boolean | null
+          is_premium: boolean | null
           is_subscribed: boolean | null
+          is_verified: boolean | null
           lat: number | null
           lng: number | null
           monthly_fee: number | null
           name: string
           owner_id: string | null
+          owner_name: string | null
+          phone: string | null
+          premium_expires_at: string | null
+          schedule_display: string | null
           sector: string
+          status: string | null
           updated_at: string
+          website: string | null
         }
         Insert: {
+          address?: string | null
+          category?: string | null
           contact_email?: string | null
           contact_phone?: string | null
           created_at?: string
           description?: string | null
+          email?: string | null
+          giro?: string | null
           icon?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          is_premium?: boolean | null
           is_subscribed?: boolean | null
+          is_verified?: boolean | null
           lat?: number | null
           lng?: number | null
           monthly_fee?: number | null
           name: string
           owner_id?: string | null
+          owner_name?: string | null
+          phone?: string | null
+          premium_expires_at?: string | null
+          schedule_display?: string | null
           sector: string
+          status?: string | null
           updated_at?: string
+          website?: string | null
         }
         Update: {
+          address?: string | null
+          category?: string | null
           contact_email?: string | null
           contact_phone?: string | null
           created_at?: string
           description?: string | null
+          email?: string | null
+          giro?: string | null
           icon?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          is_premium?: boolean | null
           is_subscribed?: boolean | null
+          is_verified?: boolean | null
           lat?: number | null
           lng?: number | null
           monthly_fee?: number | null
           name?: string
           owner_id?: string | null
+          owner_name?: string | null
+          phone?: string | null
+          premium_expires_at?: string | null
+          schedule_display?: string | null
           sector?: string
+          status?: string | null
           updated_at?: string
+          website?: string | null
         }
         Relationships: []
       }

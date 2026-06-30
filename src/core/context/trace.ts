@@ -3,7 +3,7 @@ export function createTraceId() {
     if ("randomUUID" in crypto) return crypto.randomUUID();
     if ("getRandomValues" in crypto) {
       const buf = new Uint8Array(16);
-      crypto.getRandomValues(buf);
+      (crypto as Crypto).getRandomValues(buf);
       return Array.from(buf).map(b => b.toString(16).padStart(2, "0")).join("");
     }
   }

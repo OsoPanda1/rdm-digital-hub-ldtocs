@@ -105,7 +105,7 @@ export class ExperienceOrchestrator {
     const dist = fastDistance(t.coords, nearest);
 
     const rawSpeed = t.prevCoords ? fastDistance(t.prevCoords, t.coords) / 5 : 0;
-    const speed = this.movement.smooth(rawSpeed);
+    const speed = this.movement.update(rawSpeed);
 
     const inactivity = (started - t.activityTimestamps.lastInteractionAt.getTime()) / 60_000;
 
@@ -138,7 +138,7 @@ export class ExperienceOrchestrator {
       distanceToExit: dist,
       speedMps: speed,
       coords: t.coords,
-      timestamp: this.clock.now(),
+      timestamp: new Date(this.clock.now()),
       score: fullScore,
       payload: {
         titulo: retentionIntent === "SAFE_EXIT" ? "Salida segura sugerida" : "Experiencia desbloqueada",

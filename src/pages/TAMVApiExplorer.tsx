@@ -4,10 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Play, Code2 } from "lucide-react";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/Navbar";
 import { FooterSection } from "@/components/FooterSection";
 import SEOMeta from "@/components/SEOMeta";
-import { apiGet } from "@/lib/apiClient";
+import { apiClient } from "@/lib/apiClient";
 
 interface Endpoint {
   method: "GET" | "POST";
@@ -45,7 +45,7 @@ const TAMVApiExplorer = () => {
     setLoading(ep.path);
     try {
       if (ep.method === "GET") {
-        const data = await apiGet(ep.path);
+        const data = await apiClient.get(ep.path);
         setResults((r) => ({ ...r, [ep.path]: data }));
       } else {
         // demo-only POST sample bodies

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Activity, Shield, Eye, Cpu, Sparkles, Network } from "lucide-react";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/Navbar";
 import { FooterSection } from "@/components/FooterSection";
 import SEOMeta from "@/components/SEOMeta";
 import {

@@ -29,7 +29,7 @@ export class TerritorialGeofencer {
 
   defineZones(zones: TerritorialZone[]): void {
     this.zones = zones;
-    logger.info('[Geofencer] Zonas territoriales definidas:', zones.length);
+    logger.info('[Geofencer] Zonas territoriales definidas', { count: zones.length });
   }
 
   addZone(zone: TerritorialZone): void {

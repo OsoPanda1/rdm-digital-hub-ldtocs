@@ -222,7 +222,7 @@ export default function SmartSidebar() {
                       onClick={() => setOpenSection(isOpen ? "" : section.id)}
                       className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-sm transition-all hover:bg-white/5"
                     >
-                      <Icon className="h-4 w-4 shrink-0" style={{ color: section.color ?? "#fff" }} />
+                      <Icon className="h-4 w-4 shrink-0" />
                       <span className="flex-1 text-left text-xs font-medium text-white/80">{section.label}</span>
                       {section.badge && (
                         <span className="px-1.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-400 text-[8px] font-bold text-black uppercase tracking-wider">
