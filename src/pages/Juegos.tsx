@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Gamepad2, Brain, HelpCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Gamepad2, Brain, HelpCircle, Gift, Trophy, ArrowRight } from "lucide-react";
 import MemoryGame from "@/modules/games/MemoryGame";
 import TriviaGame from "@/modules/games/TriviaGame";
 
@@ -13,6 +14,7 @@ const GAMES: { id: GameId; label: string; icon: typeof Brain; description: strin
 
 export default function Juegos() {
   const [active, setActive] = useState<GameId>("memoria");
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen pt-28 pb-24 px-6 lg:px-12">
@@ -28,11 +30,34 @@ export default function Juegos() {
             Jugar <span className="text-gradient-gold">Real del Monte</span>
           </h1>
           <p className="mt-3 text-sm font-body text-muted-foreground max-w-xl">
-            Explora el territorio jugando. Memoria, conocimiento y rutas convertidos en experiencia.
+            Explora el territorio jugando. Gana puntos canjeables por pastes, micheladas,
+            joyería de plata, cenas románticas, hospedaje y tours.
           </p>
         </motion.div>
 
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-3">
+        {/* Points info bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-6 flex flex-wrap items-center gap-3 rounded-2xl border border-gold/20 bg-gold/5 p-4"
+        >
+          <Trophy className="h-5 w-5 text-gold shrink-0" />
+          <span className="text-xs text-foreground/80">
+            Completa partidas para ganar puntos canjeables en la{" "}
+            <button onClick={() => navigate("/premium")} className="text-gold underline-offset-2 hover:underline font-semibold">
+              Bolsa de Premios
+            </button>
+            . Los puntos se acreditan automáticamente al terminar cada juego.
+          </span>
+          <button
+            onClick={() => navigate("/premium")}
+            className="ml-auto flex items-center gap-1 rounded-full border border-gold/30 px-3 py-1 text-[10px] font-mono uppercase tracking-widest text-gold hover:bg-gold/10"
+          >
+            Ver premios <ArrowRight className="h-3 w-3" />
+          </button>
+        </motion.div>
+
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3">
           {GAMES.map((g) => (
             <button
               key={g.id}

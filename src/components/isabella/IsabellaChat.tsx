@@ -5,23 +5,26 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Send, 
-  Sparkles, 
-  Shield, 
-  Zap, 
-  Brain, 
+import {
+  Send,
+  Sparkles,
+  Shield,
+  Zap,
+  Brain,
   Heart,
   AlertTriangle,
   RefreshCw,
   X,
-  ChevronDown
+  ChevronDown,
+  Volume2,
+  VolumeX,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useIsabella, IsabellaMessage } from '@/hooks/useIsabella';
+import { useIsabellaVoice } from '@/hooks/useIsabellaVoice';
 import { SECURITY_PROTOCOLS, ISABELLA_CORE_IDENTITY } from '@/lib/federation';
 
 const IsabellaChat = () => {
@@ -36,6 +39,7 @@ const IsabellaChat = () => {
     cancelRequest
   } = useIsabella();
 
+  const voice = useIsabellaVoice();
   const [input, setInput] = useState('');
   const [showProtocols, setShowProtocols] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -280,6 +284,20 @@ const IsabellaChat = () => {
             className="min-h-[44px] max-h-32 resize-none"
             rows={1}
           />
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={() => {
+              if (voice.isSpeaking) { voice.stop(); return; }
+              const lastAi = [...messages].reverse().find((m) => m.role === "assistant");
+              if (lastAi) voice.speak(lastAi.content);
+            }}
+            className="shrink-0"
+            title={voice.isSpeaking ? "Detener voz" : "Leer último mensaje"}
+          >
+            {voice.isSpeaking ? <VolumeX className="w-4 h-4 text-purple-400" /> : <Volume2 className="w-4 h-4" />}
+          </Button>
           <Button 
             type="submit" 
             disabled={!input.trim() || isLoading}

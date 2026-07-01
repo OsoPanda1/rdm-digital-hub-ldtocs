@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import tumirada from "@/assets/musica/tumirada.mp3";
 
@@ -13,84 +13,82 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({
 }) => {
   const [exiting, setExiting] = useState(false);
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
-  const [audioReady, setAudioReady] = useState(false);
+  const [audioBlocked, setAudioBlocked] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const exitingRef = useRef(false);
+  const userInteractedRef = useRef(false);
+
+  const startAudio = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio || userInteractedRef.current) return;
+    userInteractedRef.current = true;
+
+    audio.volume = 0.01;
+    audio.play().then(() => {
+      setAudioBlocked(false);
+      const fadeIn = () => {
+        const target = isAudioEnabled ? 0.7 : 0;
+        if (audio.volume < target) {
+          audio.volume = Math.min(audio.volume + 0.05, target);
+          requestAnimationFrame(fadeIn);
+        }
+      };
+      requestAnimationFrame(fadeIn);
+    }).catch((err: DOMException) => {
+      console.warn("[CinematicIntro] Autoplay bloqueado:", err.message);
+      setAudioBlocked(true);
+    });
+  }, [isAudioEnabled]);
 
   useEffect(() => {
     const audio = new Audio(tumirada);
     audioRef.current = audio;
     audio.loop = false;
-    audio.volume = 0;
+    audio.volume = 0.01;
+    audio.preload = "auto";
+
+    const onInteraction = () => {
+      if (!userInteractedRef.current) startAudio();
+    };
+    document.addEventListener("click", onInteraction, { once: true });
+    document.addEventListener("touchstart", onInteraction, { once: true });
+    document.addEventListener("keydown", onInteraction, { once: true });
+
     audio.addEventListener("canplaythrough", () => {
-      setAudioReady(true);
-    });
+      if (autoPlayAudio) startAudio();
+    }, { once: true });
+
+    if (audio.readyState >= 3 && autoPlayAudio) {
+      startAudio();
+    }
+
     return () => {
       audio.pause();
       audioRef.current = null;
+      document.removeEventListener("click", onInteraction);
+      document.removeEventListener("touchstart", onInteraction);
+      document.removeEventListener("keydown", onInteraction);
     };
-  }, []);
-
-  useEffect(() => {
-    if (!audioReady) return;
-    if (!autoPlayAudio) return;
-    if (!audioRef.current) return;
-
-    const audio = audioRef.current;
-    let frame: number;
-    const durationMs = 1800;
-    const start = performance.now();
-
-    const fadeIn = (now: number) => {
-      const elapsed = now - start;
-      const t = Math.min(elapsed / durationMs, 1);
-      audio.volume = isAudioEnabled ? 0.45 * t : 0;
-      if (elapsed < durationMs) {
-        frame = requestAnimationFrame(fadeIn);
-      }
-    };
-
-    audio
-      .play()
-      .then(() => {
-        frame = requestAnimationFrame(fadeIn);
-      })
-      .catch(() => {
-      });
-
-    return () => {
-      cancelAnimationFrame(frame);
-    };
-  }, [audioReady, autoPlayAudio, isAudioEnabled]);
+  }, [autoPlayAudio, startAudio]);
 
   const handleEnter = () => {
     if (exitingRef.current) return;
     exitingRef.current = true;
     setExiting(true);
 
-    // Fade out audio
     if (audioRef.current) {
       const audio = audioRef.current;
-      let frame: number;
-      const durationMs = 1500;
-      const start = performance.now();
-      const initialVolume = audio.volume;
-
-      const fadeOut = (now: number) => {
-        const elapsed = now - start;
-        const t = Math.min(elapsed / durationMs, 1);
-        audio.volume = initialVolume * (1 - t);
-        if (elapsed < durationMs) {
-          frame = requestAnimationFrame(fadeOut);
+      const fadeOut = () => {
+        if (audio.volume > 0.01) {
+          audio.volume = Math.max(audio.volume - 0.05, 0);
+          requestAnimationFrame(fadeOut);
         } else {
           audio.pause();
         }
       };
-
-      frame = requestAnimationFrame(fadeOut);
+      requestAnimationFrame(fadeOut);
     }
 
-    // Wait for exit animation, then unmount
     setTimeout(() => {
       if (onEnter) onEnter();
     }, 800);
@@ -101,6 +99,7 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({
       const next = !prev;
       if (audioRef.current) {
         audioRef.current.muted = !next;
+        if (next && !userInteractedRef.current) startAudio();
       }
       return next;
     });
@@ -222,11 +221,17 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({
           <span className="inline-block h-4 w-4 rounded-full border border-slate-500 flex items-center justify-center">
             <span
               className={`h-2 w-2 rounded-full ${
-                isAudioEnabled ? "bg-emerald-400" : "bg-slate-600"
+                audioBlocked ? "bg-amber-400 animate-pulse" : isAudioEnabled ? "bg-emerald-400" : "bg-slate-600"
               }`}
             />
           </span>
-          <span>{isAudioEnabled ? "Sonido activado" : "Sonido desactivado"}</span>
+          <span>
+            {audioBlocked
+              ? "Toca la pantalla para activar sonido"
+              : isAudioEnabled
+              ? "Sonido activado"
+              : "Sonido desactivado"}
+          </span>
         </button>
       </motion.div>
 

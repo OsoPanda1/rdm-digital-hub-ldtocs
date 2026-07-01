@@ -398,7 +398,7 @@ const HistoriaPage = () => {
         </div>
 
         {/* Introduction Stats */}
-        <section className="py-16 bg-muted/20">
+        <section className="py-16 bg-gradient-to-b from-[hsl(var(--crystal-clear)/0.2)] to-[hsl(var(--crystal-clear)/0.05)]">
           <div className="container mx-auto px-4 md:px-8">
             <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {[
@@ -668,8 +668,13 @@ const HistoriaPage = () => {
                           <span className="text-muted-foreground">{figure.period}</span>
                         </div>
                         <p className="text-sm text-muted-foreground mb-3">{figure.description}</p>
-                        <div className="p-3 rounded-lg bg-muted/50">
-                          <span className="text-xs text-muted-foreground">
+                        <div className="p-3 rounded-lg"
+                          style={{
+                            background: 'linear-gradient(135deg, hsl(var(--crystal-clear)/0.7), hsl(var(--crystal-glow)/0.5))',
+                            border: '1px solid hsl(var(--crystal-border)/0.4)',
+                          }}
+                        >
+                          <span className="text-xs text-[hsl(var(--deep-black))/0.8]">
                             <strong>Legado:</strong> {figure.contribution}
                           </span>
                         </div>
@@ -822,9 +827,15 @@ const HistoriaPage = () => {
                   <p className="text-muted-foreground leading-relaxed mb-4">
                     Con el estallido de la Revolución Maderista en 1911, Bell huyó con su familia hacia Nueva York. Una tormenta de nieve empeoró su condición de salud. El domingo <strong>12 de marzo de 1911</strong>, a los 53 años, Ricardo Bell exhaló su último aliento. Fue sepultado en Nueva York. Su propia hija, Sylvia Bell, lo confirmó en su libro biográfico de 1984.
                   </p>
-                  <div className="p-4 rounded-lg bg-muted/50 mb-4">
-                    <h4 className="font-bold text-foreground mb-2">El Enigma Resuelto:</h4>
-                    <p className="text-sm text-muted-foreground">
+                  <div className="p-4 rounded-lg mb-4"
+                    style={{
+                      background: 'linear-gradient(135deg, hsl(var(--crystal-clear)/0.8), hsl(var(--crystal-glow)/0.6))',
+                      border: '1px solid hsl(var(--crystal-border)/0.5)',
+                      boxShadow: '0 5px 20px hsl(var(--crystal-glow)/0.2), inset 0 0 20px hsl(var(--crystal-clear)/0.3)',
+                    }}
+                  >
+                    <h4 className="font-bold text-[hsl(var(--deep-black))] mb-2">El Enigma Resuelto:</h4>
+                    <p className="text-sm text-[hsl(var(--deep-black))/0.8]">
                       La <strong>tumba 55</strong> pertenece en realidad a un minero británico llamado <strong>Richard Bell</strong>, originario de Middleton, Teesdale, Inglaterra. Este minero falleció el <strong>25 de octubre de 1875</strong>, a los 63 años. ¿Por qué está volteada? No fue un acto de rebeldía. La historia forense sugiere que un deslizamiento de tierra o un error de los sepultureros locales alteró la orientación de la cantera.
                     </p>
                   </div>
@@ -885,7 +896,11 @@ const HistoriaPage = () => {
         </section>
 
         {/* Multimedia Gallery */}
-        <section className="py-24 bg-muted/30">
+        <section className="py-24"
+          style={{
+            background: 'linear-gradient(135deg, hsl(var(--crystal-clear)/0.25), transparent 60%)',
+          }}
+        >
           <div className="container mx-auto px-4 md:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

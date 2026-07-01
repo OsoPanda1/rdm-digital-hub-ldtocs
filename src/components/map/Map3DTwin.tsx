@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
-import * as THREE from "three";
+import { PlaneGeometry, ShaderMaterial, FogExp2 } from "three";
 import type { MapMarkerData, MapViewportState } from "@/features/places/mapTypes";
 
 const GEO_LNG_OFFSET = 98.6732;
@@ -30,7 +30,7 @@ function isWebGLAvailable() {
 
 function FoggyTerrain({ points }: { points: MapMarkerData[] }) {
   const geom = useMemo(() => {
-    const geometry = new THREE.PlaneGeometry(18, 18, 120, 120);
+    const geometry = new PlaneGeometry(18, 18, 120, 120);
     const positions = geometry.attributes.position;
     for (let i = 0; i < positions.count; i += 1) {
       const x = positions.getX(i);
@@ -77,7 +77,7 @@ function FoggyTerrain({ points }: { points: MapMarkerData[] }) {
 function FogPlane() {
   const material = useMemo(
     () =>
-      new THREE.ShaderMaterial({
+      new ShaderMaterial({
         transparent: true,
         depthWrite: false,
         uniforms: {
@@ -117,7 +117,7 @@ function FogPlane() {
 
 function Atmosphere() {
   const { scene } = useThree();
-  const fogRef = useRef(new THREE.FogExp2("#0b1323", 0.055));
+  const fogRef = useRef(new FogExp2("#0b1323", 0.055));
 
   useEffect(() => {
     scene.fog = fogRef.current;

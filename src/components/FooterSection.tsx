@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mountain, MapPin, Mail, Phone } from "lucide-react";
+import { Mountain, MapPin, Mail, Phone, Heart } from "lucide-react";
 import mistyMountains from "@/assets/misty-mountains.jpg";
 
 export function FooterSection() {
@@ -74,6 +74,12 @@ export function FooterSection() {
                   {item}
                 </a>
               ))}
+              <a
+                href="/donar"
+                className="flex items-center gap-1 text-sm text-rose-400 font-body hover:text-rose-300 transition-colors"
+              >
+                <Heart className="w-3.5 h-3.5" /> Apoyar
+              </a>
             </div>
           </div>
         </div>

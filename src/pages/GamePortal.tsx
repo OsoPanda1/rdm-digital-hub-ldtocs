@@ -13,6 +13,8 @@ import {
   Medal,
   Swords,
   Users,
+  Check,
+  ArrowRight,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -188,20 +190,26 @@ export default function GamePortal() {
   );
 
   // ---------- PREMIUM HANDLERS ----------
-  const handleActivatePremium = async () => {
+  const [selectedTier, setSelectedTier] = useState<"99" | "129">("99");
+  const [busyTier, setBusyTier] = useState<string | null>(null);
+
+  const handleActivatePremium = async (tier: string) => {
     if (!user) {
       navigate("/auth");
       return;
     }
+    setBusyTier(tier);
     try {
       const { data, error } = await supabase.functions.invoke(
         "create-premium-checkout",
+        { body: { tier } },
       );
       if (error) throw error;
       if (data?.url) window.location.href = data.url;
     } catch (e: any) {
       toast.error(e?.message || "No se pudo iniciar el pago");
     }
+    setBusyTier(null);
   };
 
   const handleManageSubscription = async () => {
@@ -449,37 +457,67 @@ export default function GamePortal() {
           <h3 className="text-3xl font-display font-bold">
             Activa Veta Soberana Premium
           </h3>
-          <p className="mt-3 mx-auto max-w-xl text-sm font-body text-muted-foreground">
-            Por{" "}
-            <span className="text-gradient-gold font-bold">$99 MXN/mes</span>{" "}
-            desbloqueas: minería remota, multiplicadores x2, acceso completo a
-            la bolsa de premios y misiones avanzadas.
+          <p className="mt-3 mx-auto max-w-2xl text-sm font-body text-muted-foreground">
+            Elige tu plan y desbloquea minería digital, multiplicadores y acceso
+            completo a la bolsa de premios.
           </p>
-          <div className="mt-6 mx-auto grid max-w-sm gap-3 text-left">
+
+          {/* Tier selector */}
+          <div className="mx-auto mt-6 grid max-w-lg gap-4 sm:grid-cols-2">
             {[
-              "Minería digital geolocalizada en RDM",
-              "Premios reales en hoteles, restaurantes y artesanías",
-              "Sin pérdida para la plataforma: comercio aporta el premio",
-              "Cooldown justo y stock limitado por premio",
-            ].map((b) => (
-              <p
-                key={b}
-                className="flex items-center gap-2 text-[12px] font-body text-foreground/90"
+              {
+                id: "99" as const,
+                name: "Básico",
+                price: "$99",
+                features: ["Minería digital", "Bolsa de premios", "Misiones diarias"],
+              },
+              {
+                id: "129" as const,
+                name: "Minero",
+                price: "$129",
+                highlight: true,
+                features: ["Multiplicador x2", "Minería remota", "Premios de alto valor", "Insignia exclusiva"],
+              },
+            ].map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setSelectedTier(t.id)}
+                className={cn(
+                  "rounded-2xl border p-5 text-left transition-all",
+                  selectedTier === t.id
+                    ? "border-gold/60 bg-gold/10 shadow-gold"
+                    : "border-border/30 bg-black/20 hover:border-gold/30",
+                )}
               >
-                <ShieldCheck className="h-3.5 w-3.5 text-gold shrink-0" />
-                {b}
-              </p>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">{t.name}</span>
+                  {selectedTier === t.id && <Check className="h-4 w-4 text-gold" />}
+                </div>
+                <p className="text-3xl font-display font-bold text-gradient-gold">{t.price}<span className="text-xs font-mono text-muted-foreground">/mes</span></p>
+                <ul className="mt-3 space-y-1">
+                  {t.features.map((f) => (
+                    <li key={f} className="flex items-center gap-1.5 text-[11px] text-foreground/70">
+                      <ShieldCheck className="h-3 w-3 text-teal shrink-0" />{f}
+                    </li>
+                  ))}
+                </ul>
+              </button>
             ))}
           </div>
+
           <button
-            onClick={handleActivatePremium}
+            onClick={() => handleActivatePremium(selectedTier)}
+            disabled={busyTier === selectedTier}
             className="mt-6 inline-flex items-center gap-2 rounded-xl gradient-gold px-6 py-3 text-sm font-body font-semibold text-primary-foreground shadow-gold hover:shadow-elevated transition-all"
           >
             <Crown className="h-4 w-4" />
-            {user ? "Activar Premium" : "Iniciar sesión y activar"}
+            {busyTier === selectedTier ? "Procesando..." : user ? `Activar ${selectedTier === "129" ? "Minero" : "Básico"}` : "Iniciar sesión y activar"}
           </button>
           <p className="mt-3 text-[10px] font-mono text-muted-foreground">
-            Pago seguro con Stripe · Cancela cuando quieras desde el portal
+            Pago seguro con Stripe · Cancela cuando quieras ·{" "}
+            <button onClick={() => navigate("/premium")} className="text-gold underline-offset-2 hover:underline">
+              Ver todos los planes
+            </button>
           </p>
         </motion.div>
       )}

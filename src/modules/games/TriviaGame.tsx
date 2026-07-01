@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { Check, X, Trophy, RotateCcw } from "lucide-react";
+import { Check, X, Trophy, RotateCcw, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface Q { id: string; question: string; options: string[]; correct_index: number; category: string; explanation?: string | null; }
 
@@ -20,8 +21,36 @@ export default function TriviaGame() {
   const [picked, setPicked] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
+  const [pointsAwarded, setPointsAwarded] = useState(false);
+  const pointsAwardedRef = useRef(false);
 
-  useEffect(() => { setIdx(0); setPicked(null); setScore(0); setDone(false); }, [shuffled.length]);
+  useEffect(() => { setIdx(0); setPicked(null); setScore(0); setDone(false); setPointsAwarded(false); pointsAwardedRef.current = false; }, [shuffled.length]);
+
+  useEffect(() => {
+    if (!done || pointsAwardedRef.current) return;
+    pointsAwardedRef.current = true;
+    awardPoints();
+  }, [done]);
+
+  const awardPoints = async () => {
+    const total = shuffled.length;
+    const pct = total > 0 ? score / total : 0;
+    let action = "trivia_game_score_50";
+    if (pct >= 1) action = "trivia_game_perfect";
+    else if (pct >= 0.8) action = "trivia_game_score_80";
+    try {
+      const { error } = await supabase.functions.invoke("award-points", {
+        body: { action, metadata: { score, total } },
+      });
+      if (!error) {
+        setPointsAwarded(true);
+        const pts = action === "trivia_game_perfect" ? 75 : action === "trivia_game_score_80" ? 35 : 15;
+        toast.success(`+${pts} puntos por Trivia Territorial`);
+      }
+    } catch {
+      // Silently fail
+    }
+  };
 
   if (isLoading) return <div className="glass-card rounded-2xl p-6 border border-border/20 text-center text-muted-foreground text-sm">Cargando trivia…</div>;
   if (shuffled.length === 0) return <div className="glass-card rounded-2xl p-6 border border-border/20 text-center text-muted-foreground text-sm">No hay preguntas disponibles.</div>;
@@ -39,14 +68,17 @@ export default function TriviaGame() {
     }, 1400);
   };
 
-  const reset = () => { setIdx(0); setPicked(null); setScore(0); setDone(false); };
+  const reset = () => { setIdx(0); setPicked(null); setScore(0); setDone(false); setPointsAwarded(false); pointsAwardedRef.current = false; };
 
   return (
     <div className="glass-card rounded-2xl p-6 border border-border/20">
       <div className="flex items-center justify-between mb-4">
         <span className="text-[11px] font-mono uppercase tracking-wider text-muted-foreground">Pregunta {Math.min(idx + 1, shuffled.length)}/{shuffled.length}</span>
         <div className="flex items-center gap-3">
-          <span className="text-[11px] font-mono text-gold flex items-center gap-1"><Trophy className="h-3 w-3" />{score}</span>
+          <span className="text-[11px] font-mono text-gold flex items-center gap-1">
+            <Trophy className="h-3 w-3" />{score}
+            {pointsAwarded && <Sparkles className="h-3 w-3 text-emerald" />}
+          </span>
           <button onClick={reset} className="text-[11px] text-muted-foreground hover:text-gold flex items-center gap-1"><RotateCcw className="h-3 w-3" />Reiniciar</button>
         </div>
       </div>
@@ -58,6 +90,11 @@ export default function TriviaGame() {
           <p className="text-sm text-muted-foreground mt-2">
             {score === shuffled.length ? "¡Maestro del territorio!" : score >= shuffled.length / 2 ? "Buen conocimiento territorial." : "Sigue explorando RDM."}
           </p>
+          {pointsAwarded && (
+            <p className="text-xs text-emerald mt-2 flex items-center justify-center gap-1">
+              <Sparkles className="h-3 w-3" /> Puntos canjeables añadidos a tu cuenta
+            </p>
+          )}
         </motion.div>
       ) : (
         <AnimatePresence mode="wait">

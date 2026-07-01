@@ -89,7 +89,11 @@ export const ImageGallery = () => {
   };
 
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="py-20"
+      style={{
+        background: 'linear-gradient(135deg, hsl(var(--crystal-clear)/0.2), transparent 60%)',
+      }}
+    >
       <div className="container mx-auto px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

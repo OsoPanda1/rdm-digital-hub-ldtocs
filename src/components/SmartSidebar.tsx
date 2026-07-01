@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import {
   ChevronLeft, ChevronRight, Compass, MapPin, BookOpen, Users,
   Building2, Sparkles, Music2, Camera, History, Mountain,
-  Store, Gamepad2, Shield,
+  Store, Gamepad2, Shield, ScrollText, Heart, HandCoins,
 } from "lucide-react"
 
 interface SidebarLink { to: string; label: string; icon?: React.ComponentType<{ className?: string }> }
@@ -75,6 +75,7 @@ const SECTIONS: SidebarSection[] = [
       { to: "/juegos", label: "Mini juegos", icon: Gamepad2 },
       { to: "/gamification", label: "Canjear realitos", icon: Sparkles },
       { to: "/leaderboard", label: "Ranking", icon: Shield },
+      { to: "/premium", label: "Planes premium", icon: Crown },
     ],
   },
   {
@@ -89,13 +90,21 @@ const SECTIONS: SidebarSection[] = [
     links: [
       { to: "/admin", label: "Panel", icon: Shield },
       { to: "/isabella-ai", label: "Isabella AI", icon: Sparkles },
+      { to: "/rfcs", label: "RFCs", icon: ScrollText },
+    ],
+  },
+  {
+    id: "donar", label: "Apoyar", icon: Heart, color: "#f43f5e",
+    badge: "DONAR",
+    links: [
+      { to: "/donar", label: "Donar ahora", icon: HandCoins },
     ],
   },
 ]
 
 const ICON_FOR_SECTION: Record<string, React.ComponentType<{ className?: string }>> = {
   explora: MapPin, guia: BookOpen, cultura: Music2, comercio: Building2,
-  juegos: Gamepad2, comunidad: Users, admin: Sparkles,
+  juegos: Gamepad2, comunidad: Users, admin: Sparkles, donar: Heart,
 }
 
 const STORAGE_KEY = "rdm.sidebar.collapsed"

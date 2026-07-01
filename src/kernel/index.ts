@@ -5,8 +5,8 @@ import { ledger } from './engine/Ledger';
 import { federationBus } from "@/federaciones/FederationBus";
 import { logger } from "@/lib/logger";
 
-const databaseUrl = process.env.DATABASE_URL;
-const redisUrl = process.env.REDIS_URL;
+const databaseUrl = typeof process !== "undefined" ? process.env.DATABASE_URL : undefined;
+const redisUrl = typeof process !== "undefined" ? process.env.REDIS_URL : undefined;
 
 const mockDb: QueryableDb = {
   async query() {
@@ -20,30 +20,51 @@ const mockPubSub: PublishClient = {
   },
 };
 
-if (!databaseUrl || !redisUrl) {
+if (databaseUrl && !redisUrl) {
   logger.warn('[KERNEL] DATABASE_URL y REDIS_URL no configurados. Se usará modo mock local.');
 }
 
 const chronus = new ChronusEngine({ db: mockDb, pubsub: mockPubSub });
 export const mdx5 = new MDX5Kernel({ pollIntervalMs: 1000 }, chronus, federationBus);
 
-mdx5.start();
+let autopoiesisTimer: ReturnType<typeof setInterval> | null = null;
+let started = false;
 
-setInterval(async () => {
-  try {
-    await chronus.calcularSaturacionZonal('centro_historico', {
-      clima: 'despejado',
-      eventos_activos: [],
-      turistas_concurrentes: 0,
-    });
-  } catch (error) {
-    logger.error('[KERNEL] Error en ciclo de autopoiesis', error);
+export function startKernel() {
+  if (started) return;
+  started = true;
+
+  mdx5.start();
+
+  autopoiesisTimer = setInterval(async () => {
+    try {
+      await chronus.calcularSaturacionZonal('centro_historico', {
+        clima: 'despejado',
+        eventos_activos: [],
+        turistas_concurrentes: 0,
+      });
+    } catch (error) {
+      logger.error('[KERNEL] Error en ciclo de autopoiesis', error);
+    }
+  }, 60_000);
+
+  logger.info('[KERNEL] MD-X5 activo en modo soberano edge-first.');
+  logger.info('[KERNEL] TIME UP engine cargado con', { politicas: 10 });
+  logger.info('[KERNEL] Ledger listo para registrar acciones críticas');
+}
+
+export function stopKernel() {
+  mdx5.stop();
+  if (autopoiesisTimer) {
+    clearInterval(autopoiesisTimer);
+    autopoiesisTimer = null;
   }
-}, 60_000);
+  started = false;
+}
 
-logger.info('[KERNEL] MD-X5 activo en modo soberano edge-first.');
-logger.info('[KERNEL] TIME UP engine cargado con', { politicas: 10 });
-logger.info('[KERNEL] Ledger listo para registrar acciones críticas');
+if (typeof window !== "undefined") {
+  startKernel();
+}
 
 export { chronus, timeUpEngine, ledger };
 

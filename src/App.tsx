@@ -149,12 +149,16 @@ const Evolucion = lazy(() => import('./pages/Evolucion'))
 const FAQ = lazy(() => import('./pages/FAQ'))
 const FusionEcosystem = lazy(() => import('./pages/FusionEcosystem'))
 const Membresias = lazy(() => import('./pages/Membresias'))
+const PremiumPlans = lazy(() => import('./pages/PremiumPlans'))
 const Mina = lazy(() => import('./pages/Mina'))
 const Operativo = lazy(() => import('./pages/Operativo'))
 const TAMVApiExplorer = lazy(() => import('./pages/TAMVApiExplorer'))
 const TAMVHub = lazy(() => import('./pages/TAMVHub'))
 const TAMVStatus = lazy(() => import('./pages/TAMVStatus'))
 const TAMVThesis = lazy(() => import('./pages/TAMVThesis'))
+const RFCList = lazy(() => import('./pages/RFCList'))
+const RFCDetail = lazy(() => import('./pages/RFCDetail'))
+const TelemetryDashboard = lazy(() => import('./pages/TelemetryDashboard'))
 const Tenochtitlan = lazy(() => import('./pages/Tenochtitlan'))
 
 const queryClient = new QueryClient({
@@ -338,6 +342,7 @@ const AnimatedRoutes = () => {
           <Route path="/faq" element={<RouteErrorBoundary route="/faq"><FAQ /></RouteErrorBoundary>} />
           <Route path="/fusion-ecosystem" element={<RouteErrorBoundary route="/fusion-ecosystem"><FusionEcosystem /></RouteErrorBoundary>} />
           <Route path="/membresias" element={<RouteErrorBoundary route="/membresias"><Membresias /></RouteErrorBoundary>} />
+          <Route path="/premium" element={<RouteErrorBoundary route="/premium"><PremiumPlans /></RouteErrorBoundary>} />
           <Route path="/mina" element={<RouteErrorBoundary route="/mina"><Mina /></RouteErrorBoundary>} />
           <Route path="/operativo" element={<RouteErrorBoundary route="/operativo"><Operativo /></RouteErrorBoundary>} />
           <Route path="/tamv-api" element={<RouteErrorBoundary route="/tamv-api"><TAMVApiExplorer /></RouteErrorBoundary>} />
@@ -345,6 +350,9 @@ const AnimatedRoutes = () => {
           <Route path="/tamv-status" element={<RouteErrorBoundary route="/tamv-status"><TAMVStatus /></RouteErrorBoundary>} />
           <Route path="/tamv-thesis" element={<RouteErrorBoundary route="/tamv-thesis"><TAMVThesis /></RouteErrorBoundary>} />
           <Route path="/tenochtitlan" element={<RouteErrorBoundary route="/tenochtitlan"><Tenochtitlan /></RouteErrorBoundary>} />
+          <Route path="/rfcs" element={<RouteErrorBoundary route="/rfcs"><RFCList /></RouteErrorBoundary>} />
+          <Route path="/rfc/:id" element={<RouteErrorBoundary route="/rfc/:id"><RFCDetail /></RouteErrorBoundary>} />
+          <Route path="/telemetry" element={<RouteErrorBoundary route="/telemetry"><TelemetryDashboard /></RouteErrorBoundary>} />
           <Route path="*" element={<RouteErrorBoundary route="*"><NotFound /></RouteErrorBoundary>} />
         </Routes>
       </Suspense>

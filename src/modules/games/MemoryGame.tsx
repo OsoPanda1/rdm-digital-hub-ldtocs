@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { RotateCcw, Trophy, Timer } from "lucide-react";
+import { RotateCcw, Trophy, Timer, Sparkles } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const SYMBOLS = ["⛰️", "⛏️", "🥟", "☕", "🕯️", "✝️", "🌫️", "🪙"];
 
@@ -21,6 +23,7 @@ export default function MemoryGame() {
   const [moves, setMoves] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [done, setDone] = useState(false);
+  const [pointsAwarded, setPointsAwarded] = useState(false);
 
   useEffect(() => {
     if (done) return;
@@ -43,7 +46,26 @@ export default function MemoryGame() {
     }
   }, [flipped, deck]);
 
-  useEffect(() => { if (deck.every((c) => c.matched)) setDone(true); }, [deck]);
+  useEffect(() => {
+    if (deck.every((c) => c.matched) && !pointsAwarded) {
+      setDone(true);
+      awardPoints();
+    }
+  }, [deck, pointsAwarded]);
+
+  const awardPoints = async () => {
+    try {
+      const { error } = await supabase.functions.invoke("award-points", {
+        body: { action: "memory_game_complete", metadata: { score, moves, seconds } },
+      });
+      if (!error) {
+        setPointsAwarded(true);
+        toast.success(`+${score} puntos por completar Memoria Minera`);
+      }
+    } catch {
+      // Silently fail — points are a bonus
+    }
+  };
 
   const click = (i: number) => {
     if (flipped.length >= 2 || deck[i].flipped || deck[i].matched) return;
@@ -51,7 +73,7 @@ export default function MemoryGame() {
     setFlipped((f) => [...f, i]);
   };
 
-  const reset = () => { setDeck(buildDeck()); setFlipped([]); setMoves(0); setSeconds(0); setDone(false); };
+  const reset = () => { setDeck(buildDeck()); setFlipped([]); setMoves(0); setSeconds(0); setDone(false); setPointsAwarded(false); };
   const score = useMemo(() => Math.max(0, 1000 - moves * 20 - seconds * 5), [moves, seconds]);
 
   return (
@@ -60,7 +82,12 @@ export default function MemoryGame() {
         <div className="flex items-center gap-4 text-[11px] font-mono uppercase tracking-wider">
           <span className="flex items-center gap-1 text-electric"><Timer className="h-3 w-3" />{seconds}s</span>
           <span className="text-muted-foreground">Movs: {moves}</span>
-          {done && <span className="flex items-center gap-1 text-gold"><Trophy className="h-3 w-3" />Score {score}</span>}
+          {done && (
+            <span className="flex items-center gap-2 text-gold">
+              <Trophy className="h-3 w-3" />Score {score}
+              {pointsAwarded && <Sparkles className="h-3 w-3 text-emerald" />}
+            </span>
+          )}
         </div>
         <button onClick={reset} className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-body glass hover:text-gold transition">
           <RotateCcw className="h-3 w-3" /> Reiniciar

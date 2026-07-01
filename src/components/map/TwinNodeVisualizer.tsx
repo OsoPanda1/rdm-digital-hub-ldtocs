@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import { Color, Mesh, MeshStandardMaterial, MathUtils } from "three";
 
 export interface TwinVisualizerData {
   id: string;
@@ -10,19 +10,19 @@ export interface TwinVisualizerData {
   adoptionIndex: number;
 }
 
-function healthColor(health: number): THREE.Color {
-  if (health >= 0.8) return new THREE.Color(0x22c55e);
-  if (health >= 0.6) return new THREE.Color(0xeab308);
-  return new THREE.Color(0xef4444);
+function healthColor(health: number): Color {
+  if (health >= 0.8) return new Color(0x22c55e);
+  if (health >= 0.6) return new Color(0xeab308);
+  return new Color(0xef4444);
 }
 
 export function TwinNode({ data }: { data: TwinVisualizerData }) {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const materialRef = useRef<THREE.MeshStandardMaterial>(null);
+  const meshRef = useRef<Mesh>(null);
+  const materialRef = useRef<MeshStandardMaterial>(null);
 
   const baseColor = useMemo(() => healthColor(data.meshHealth), [data.meshHealth]);
   const glowStrength = useMemo(
-    () => THREE.MathUtils.lerp(0.1, 2.0, data.adoptionIndex),
+    () => MathUtils.lerp(0.1, 2.0, data.adoptionIndex),
     [data.adoptionIndex],
   );
 
