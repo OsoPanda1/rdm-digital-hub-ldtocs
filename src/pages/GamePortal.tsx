@@ -94,11 +94,21 @@ export default function GamePortal() {
   useEffect(() => {
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_e, s) => setUser(s?.user ?? null));
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
     supabase.auth
       .getSession()
-      .then(({ data }) => setUser(data.session?.user ?? null));
-    return () => subscription.unsubscribe();
+      .then(({ data }) => setUser(data.session?.user ?? null))
+      .catch(() => {
+        // Harden: no romper UI si falla la sesión
+        setUser(null);
+      });
+
+    return () => {
+      subscription?.unsubscribe();
+    };
   }, []);
 
   // ---------- QUERIES ----------
@@ -106,15 +116,18 @@ export default function GamePortal() {
     queryKey: ["profile", user?.id],
     queryFn: async () => {
       if (!user) return null;
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from("profiles")
         .select(
           "user_id, total_minerals, level, xp, xp_to_next, streak_days, last_mine_at",
         )
         .eq("user_id", user.id)
         .maybeSingle();
-      if (error) throw error;
-      return (data ?? null) as unknown as RdmProfile | null;
+      if (error) {
+        console.error("Error loading profile", error);
+        return null;
+      }
+      return (data ?? null) as RdmProfile | null;
     },
     enabled: !!user,
   });
@@ -128,8 +141,11 @@ export default function GamePortal() {
         .select("status")
         .eq("user_id", user.id)
         .maybeSingle();
-      if (error) throw error;
-      return data as PremiumSub | null;
+      if (error) {
+        console.error("Error loading premium", error);
+        return null;
+      }
+      return (data ?? null) as PremiumSub | null;
     },
     enabled: !!user,
   });
@@ -142,8 +158,11 @@ export default function GamePortal() {
         .select("*, businesses(name, sector, icon)")
         .eq("is_active", true)
         .order("points_cost");
-      if (error) throw error;
-      return (data || []) as unknown as Reward[];
+      if (error) {
+        console.error("Error loading rewards", error);
+        return [];
+      }
+      return (data || []) as Reward[];
     },
   });
 
@@ -151,12 +170,15 @@ export default function GamePortal() {
     queryKey: ["missions", user?.id],
     queryFn: async () => {
       if (!user) return [];
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from("missions_view")
         .select("*")
         .eq("user_id", user.id);
-      if (error) throw error;
-      return (data || []) as unknown as Mission[];
+      if (error) {
+        console.error("Error loading missions", error);
+        return [];
+      }
+      return (data || []) as Mission[];
     },
     enabled: !!user,
   });
@@ -165,14 +187,17 @@ export default function GamePortal() {
     queryKey: ["achievements", user?.id],
     queryFn: async () => {
       if (!user) return [];
-      const { data, error } = await (supabase as any)
+      const { data, error } = await supabase
         .from("achievements_view")
         .select("*")
         .eq("user_id", user.id)
         .order("unlocked_at", { ascending: false })
         .limit(6);
-      if (error) throw error;
-      return (data || []) as unknown as Achievement[];
+      if (error) {
+        console.error("Error loading achievements", error);
+        return [];
+      }
+      return (data || []) as Achievement[];
     },
     enabled: !!user,
   });
@@ -191,78 +216,147 @@ export default function GamePortal() {
 
   // ---------- PREMIUM HANDLERS ----------
   const [selectedTier, setSelectedTier] = useState<"99" | "129">("99");
-  const [busyTier, setBusyTier] = useState<string | null>(null);
+  const [busyTier, setBusyTier] = useState<"99" | "129" | null>(null);
 
-  const handleActivatePremium = async (tier: string) => {
+  const handleActivatePremium = async (tier: "99" | "129") => {
     if (!user) {
+      toast.error("Inicia sesión para activar Premium");
       navigate("/auth");
       return;
     }
+
+    if (busyTier === tier) {
+      // Harden: evitar doble clic / doble petición
+      return;
+    }
+
     setBusyTier(tier);
     try {
-      const { data, error } = await supabase.functions.invoke(
-        "create-premium-checkout",
-        { body: { tier } },
-      );
-      if (error) throw error;
-      if (data?.url) window.location.href = data.url;
-    } catch (e: any) {
-      toast.error(e?.message || "No se pudo iniciar el pago");
+      const { data, error } = await supabase.functions.invoke("create-premium-checkout", {
+        body: { tier },
+      });
+
+      if (error) {
+        console.error("Error create-premium-checkout", error);
+        throw error;
+      }
+
+      if (data?.url && typeof data.url === "string") {
+        window.location.href = data.url;
+      } else {
+        toast.error("No se recibió una URL válida de checkout");
+      }
+    } catch (e: unknown) {
+      const message =
+        e instanceof Error ? e.message : "No se pudo iniciar el pago";
+      toast.error(message);
+    } finally {
+      setBusyTier(null);
     }
-    setBusyTier(null);
   };
 
   const handleManageSubscription = async () => {
+    if (!user) {
+      toast.error("Inicia sesión para gestionar tu suscripción");
+      navigate("/auth");
+      return;
+    }
+
     try {
-      const { data, error } = await supabase.functions.invoke(
-        "customer-portal",
-      );
-      if (error) throw error;
-      if (data?.url) window.open(data.url, "_blank");
-    } catch (e: any) {
-      toast.error(e?.message || "No se pudo abrir el portal");
+      const { data, error } = await supabase.functions.invoke("customer-portal");
+
+      if (error) {
+        console.error("Error customer-portal", error);
+        throw error;
+      }
+
+      if (data?.url && typeof data.url === "string") {
+        window.open(data.url, "_blank", "noopener,noreferrer");
+      } else {
+        toast.error("No se recibió una URL válida de portal");
+      }
+    } catch (e: unknown) {
+      const message =
+        e instanceof Error ? e.message : "No se pudo abrir el portal";
+      toast.error(message);
     }
   };
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("premium") === "success" && user) {
-      supabase.functions.invoke("check-subscription").then(() => {
-        toast.success("¡Premium activado!");
-        window.history.replaceState({}, "", "/game");
-      });
+      supabase.functions
+        .invoke("check-subscription")
+        .then(() => {
+          toast.success("¡Premium activado!");
+          window.history.replaceState({}, "", "/game");
+        })
+        .catch(() => {
+          toast.error("No se pudo verificar la suscripción");
+        });
     }
   }, [user]);
 
   // ---------- REDEEM ----------
   const handleRedeem = async (reward: Reward) => {
-    if (!user || !isPremium) {
+    if (!user) {
+      toast.error("Inicia sesión para canjear premios");
+      navigate("/auth");
+      return;
+    }
+
+    if (!isPremium) {
       toast.error("Necesitas Premium para canjear");
       return;
     }
+
+    if (reward.stock <= 0) {
+      toast.error("Este premio ya no tiene stock disponible");
+      return;
+    }
+
     if (totalMinerals < reward.points_cost) {
       toast.error("No tienes suficientes minerales");
       return;
     }
-    const { data, error } = await supabase
-      .from("reward_redemptions")
-      .insert({
-        user_id: user.id,
-        reward_id: reward.id,
-      })
-      .select()
-      .single();
-    if (error) {
-      toast.error("No se pudo canjear");
-      return;
+
+    try {
+      const { data, error } = await supabase
+        .from("reward_redemptions")
+        .insert({
+          user_id: user.id,
+          reward_id: reward.id,
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error("Error reward_redemptions insert", error);
+        toast.error("No se pudo canjear el premio");
+        return;
+      }
+
+      // Harden: validar que data tenga code
+      const code =
+        (data as { code?: string } | null)?.code ?? "sin código visible";
+      toast.success(`¡Canjeado! Código: ${code}`);
+
+      const { error: updateError } = await supabase
+        .from("profiles")
+        .update({
+          total_minerals: totalMinerals - reward.points_cost,
+        })
+        .eq("user_id", user.id);
+
+      if (updateError) {
+        console.error("Error profiles update", updateError);
+        toast.error("Premio canjeado, pero no se pudo actualizar tus minerales");
+      }
+    } catch (e: unknown) {
+      const message =
+        e instanceof Error ? e.message : "Error inesperado al canjear";
+      toast.error(message);
     }
-    await supabase
-      .from("profiles")
-      .update({
-        total_minerals: totalMinerals - reward.points_cost,
-      })
-      .eq("user_id", user.id);
-    toast.success(`¡Canjeado! Código: ${data.code}`);
   };
 
   const xpProgress = Math.min(100, Math.round((xp / xpToNext) * 100));
@@ -427,11 +521,12 @@ export default function GamePortal() {
                 </button>
               ) : (
                 <button
-                  onClick={handleActivatePremium}
+                  onClick={() => handleActivatePremium(selectedTier)}
+                  disabled={busyTier === selectedTier}
                   className="mt-1 inline-flex items-center gap-1 rounded-lg bg-gold/10 px-2 py-1 text-[10px] font-mono uppercase tracking-[0.18em] text-gold hover:bg-gold/15"
                 >
                   <Crown className="h-3 w-3" />
-                  Activar
+                  {busyTier === selectedTier ? "Procesando..." : "Activar"}
                 </button>
               )}
             </div>
@@ -489,15 +584,28 @@ export default function GamePortal() {
                     : "border-border/30 bg-black/20 hover:border-gold/30",
                 )}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">{t.name}</span>
-                  {selectedTier === t.id && <Check className="h-4 w-4 text-gold" />}
+                <div className="flex items-center justify_between mb-2">
+                  <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                    {t.name}
+                  </span>
+                  {selectedTier === t.id && (
+                    <Check className="h-4 w-4 text-gold" />
+                  )}
                 </div>
-                <p className="text-3xl font-display font-bold text-gradient-gold">{t.price}<span className="text-xs font-mono text-muted-foreground">/mes</span></p>
+                <p className="text-3xl font-display font-bold text-gradient-gold">
+                  {t.price}
+                  <span className="text-xs font-mono text-muted-foreground">
+                    /mes
+                  </span>
+                </p>
                 <ul className="mt-3 space-y-1">
                   {t.features.map((f) => (
-                    <li key={f} className="flex items-center gap-1.5 text-[11px] text-foreground/70">
-                      <ShieldCheck className="h-3 w-3 text-teal shrink-0" />{f}
+                    <li
+                      key={f}
+                      className="flex items-center gap-1.5 text-[11px] text-foreground/70"
+                    >
+                      <ShieldCheck className="h-3 w-3 text-teal shrink-0" />
+                      {f}
                     </li>
                   ))}
                 </ul>
@@ -511,11 +619,20 @@ export default function GamePortal() {
             className="mt-6 inline-flex items-center gap-2 rounded-xl gradient-gold px-6 py-3 text-sm font-body font-semibold text-primary-foreground shadow-gold hover:shadow-elevated transition-all"
           >
             <Crown className="h-4 w-4" />
-            {busyTier === selectedTier ? "Procesando..." : user ? `Activar ${selectedTier === "129" ? "Minero" : "Básico"}` : "Iniciar sesión y activar"}
+            {busyTier === selectedTier
+              ? "Procesando..."
+              : user
+              ? `Activar ${
+                  selectedTier === "129" ? "Minero" : "Básico"
+                }`
+              : "Iniciar sesión y activar"}
           </button>
           <p className="mt-3 text-[10px] font-mono text-muted-foreground">
             Pago seguro con Stripe · Cancela cuando quieras ·{" "}
-            <button onClick={() => navigate("/premium")} className="text-gold underline-offset-2 hover:underline">
+            <button
+              onClick={() => navigate("/premium")}
+              className="text-gold underline-offset-2 hover:underline"
+            >
               Ver todos los planes
             </button>
           </p>
@@ -701,7 +818,7 @@ export default function GamePortal() {
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {(rewards || []).map((r) => {
-            const canRedeem = isPremium && totalMinerals >= r.points_cost;
+            const canRedeem = isPremium && user && totalMinerals >= r.points_cost && r.stock > 0;
             return (
               <motion.div
                 key={r.id}
@@ -747,7 +864,8 @@ export default function GamePortal() {
                     </p>
                   </div>
                   <p className="text-[10px] font-mono text-muted-foreground">
-                    ~${Number(r.monetary_value).toLocaleString()} MXN
+                    ~$
+                    {Number(r.monetary_value).toLocaleString()} MXN
                   </p>
                 </div>
                 <button
@@ -760,12 +878,14 @@ export default function GamePortal() {
                       : "cursor-not-allowed bg-secondary/30 text-muted-foreground",
                   )}
                 >
-                  {!isPremium
-                    ? "Requiere Premium"
-                    : !user
+                  {!user
                     ? "Inicia sesión"
+                    : !isPremium
+                    ? "Requiere Premium"
                     : totalMinerals < r.points_cost
                     ? "Faltan minerales"
+                    : r.stock <= 0
+                    ? "Sin stock"
                     : "Canjear"}
                 </button>
               </motion.div>
@@ -787,21 +907,10 @@ export default function GamePortal() {
         </h3>
         <p className="mt-2 text-[12px] font-body text-muted-foreground leading-relaxed">
           Cada premio tiene un{" "}
-          <span className="font-mono text-gold">points_cost</span> Gana Premios Reales por Descubrir Real del Monte
-
-RDM Digital conecta a visitantes y comercios locales a través de experiencias, promociones y recompensas reales.
-
-Al participar dentro de la plataforma podrás acceder a descuentos, productos, servicios, promociones especiales y premios proporcionados por establecimientos participantes de nuestro Pueblo Mágico.
-
-Cada beneficio representa una oportunidad para descubrir nuevos lugares, apoyar negocios locales y vivir experiencias auténticas mientras recorres Real del Monte.
-
-Nuestro objetivo es impulsar el turismo, fortalecer la economía local y generar una comunidad donde visitantes y comercios crezcan juntos.
-
-Participa, descubre, explora y gana.
-
-RDM Digital
-
-Real del Monte, déjate llevar.
+          <span className="font-mono text-gold">points_cost</span> asociado que
+          refleja su valor dentro de la economía federada. Al recorrer Real del
+          Monte, ganar minerales y canjearlos en la bolsa de premios, impulsas
+          comercios locales y activas una red de turismo sostenible.
         </p>
       </motion.div>
     </div>
