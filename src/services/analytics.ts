@@ -1,8 +1,8 @@
 // Lightweight analytics façade — no-op unless a real provider is wired.
 import { logger } from "@/lib/logger";
 
-export function trackPerfMetric(name: string, value: number, meta?: Record<string, unknown>): void {
-  logger.debug(`perf: ${name}`, { value, ...(meta ?? {}) });
+export function trackPerfMetric(name: string, payload?: number | Record<string, unknown>): void {
+  logger.debug(`perf: ${name}`, typeof payload === "number" ? { value: payload } : payload);
 }
 
 export function trackEvent(name: string, props?: Record<string, unknown>): void {
