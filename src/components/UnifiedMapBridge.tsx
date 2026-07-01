@@ -1,9 +1,9 @@
 import React from "react"
-import { type LSMRenderProps } from "@/components/LSMRenderEngine" // ajusta la ruta real
-import LSMRenderEngine from "@/components/LSMRenderEngine"
+import { type LSMRenderProps } from "@/components/map/LSMRenderEngine"
+import LSMRenderEngine from "@/components/map/LSMRenderEngine"
 import TerritorialSVGMap, {
   type TerritorialSVGMapProps,
-} from "@/components/TerritorialSVGMap"
+} from "@/components/map/TerritorialSVGMap"
 
 export interface UnifiedMapBridgeProps {
   /** Configuración de la capa LSM (movilidad, turismo, etc.) */
