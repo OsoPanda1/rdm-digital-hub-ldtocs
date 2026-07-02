@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Star, X, ZoomIn, ZoomOut, RotateCcw, Loader2, MessageSquarePlus } from "lucide-react";

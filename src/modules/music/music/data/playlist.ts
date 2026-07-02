@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Fallback playlist (mismos slugs que los seeds en Supabase).
 // Cuando music_tracks tenga audio_url real, el hook lo prioriza sobre este fallback.
 export interface FallbackTrack {

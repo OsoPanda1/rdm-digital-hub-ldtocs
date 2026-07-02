@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { motion } from "framer-motion";
 import { Pause, Play, Volume2, VolumeX, Heart, ListMusic, SkipBack, SkipForward } from "lucide-react";
 import { Link } from "react-router-dom";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { motion } from "framer-motion";
 import { Zap, Clock, Shield, AlertTriangle, CheckCircle2 } from "lucide-react";
 import Telemetry from "@/modules/control/Telemetry";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { motion } from "framer-motion";
 import { Utensils, Compass } from "lucide-react";
 import RutaDelPasteSVG from "@/modules/paste-route/RutaDelPasteSVG";

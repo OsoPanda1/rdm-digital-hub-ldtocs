@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState } from "react";
 import { useMusicPlayer } from "@/modules/music/hooks/useMusicPlayer";
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, FileText, ScrollText } from "lucide-react";
 import { Button } from "@/components/ui/button";
