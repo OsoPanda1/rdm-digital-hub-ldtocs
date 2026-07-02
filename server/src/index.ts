@@ -55,7 +55,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
       userAgent: req.get("user-agent") ?? undefined,
     };
 
-    // eslint-disable-next-line no-console
+     
     console.log(JSON.stringify(entry));
   });
 
@@ -179,7 +179,7 @@ app.use(errorHandler);
 
 export function startServer(port = config.port) {
   const server = app.listen(port, () => {
-    // eslint-disable-next-line no-console
+     
     console.log(
       JSON.stringify({
         ts: new Date().toISOString(),
@@ -191,7 +191,7 @@ export function startServer(port = config.port) {
   });
 
   const shutdown = (signal: NodeJS.Signals) => {
-    // eslint-disable-next-line no-console
+     
     console.log(
       JSON.stringify({
         ts: new Date().toISOString(),
@@ -203,7 +203,7 @@ export function startServer(port = config.port) {
 
     server.close((error) => {
       if (error) {
-        // eslint-disable-next-line no-console
+         
         console.error(
           JSON.stringify({
             ts: new Date().toISOString(),
@@ -215,7 +215,7 @@ export function startServer(port = config.port) {
         process.exit(1);
       }
 
-      // eslint-disable-next-line no-console
+       
       console.log(
         JSON.stringify({
           ts: new Date().toISOString(),

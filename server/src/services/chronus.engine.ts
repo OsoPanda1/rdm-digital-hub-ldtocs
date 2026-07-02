@@ -122,7 +122,7 @@ export class ChronusEngine {
 
     if (alerta && enableWarnings) {
       // En producción puedes enchufar aquí un logger externo.
-      // eslint-disable-next-line no-console
+       
       console.warn(
         `[CHRONUS] ALERTA: Saturación crítica (${(presion * 100).toFixed(
           1,

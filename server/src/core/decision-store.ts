@@ -48,7 +48,7 @@ const logDecision = (record: DecisionRecord) => {
     source: record.source,
   };
 
-  // eslint-disable-next-line no-console
+   
   console.log(JSON.stringify(entry));
 };
 

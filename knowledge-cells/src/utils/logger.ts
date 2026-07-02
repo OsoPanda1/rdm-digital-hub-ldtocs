@@ -75,24 +75,28 @@ export class Logger {
 
   debug(message: string, context?: Record<string, unknown>): void {
     if (!this.shouldLog('debug')) return;
+    // eslint-disable-next-line no-console
     console.debug(this.formatMessage('debug', message, context));
     this.write({ timestamp: new Date().toISOString(), level: 'debug', message, context });
   }
 
   info(message: string, context?: Record<string, unknown>): void {
     if (!this.shouldLog('info')) return;
+    // eslint-disable-next-line no-console
     console.info(this.formatMessage('info', message, context));
     this.write({ timestamp: new Date().toISOString(), level: 'info', message, context });
   }
 
   warn(message: string, context?: Record<string, unknown>): void {
     if (!this.shouldLog('warn')) return;
+    // eslint-disable-next-line no-console
     console.warn(this.formatMessage('warn', message, context));
     this.write({ timestamp: new Date().toISOString(), level: 'warn', message, context });
   }
 
   error(message: string, context?: Record<string, unknown>, error?: Error): void {
     if (!this.shouldLog('error')) return;
+    // eslint-disable-next-line no-console
     console.error(this.formatMessage('error', message, context), error?.stack || '');
     this.write({
       timestamp: new Date().toISOString(),

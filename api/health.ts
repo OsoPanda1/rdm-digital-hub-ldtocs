@@ -27,7 +27,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const supabaseUrl = process.env.SUPABASE_URL;
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    let federationStatuses = [
+    const federationStatuses = [
       { name: 'F1 - Gobernanza', status: 'operational' },
       { name: 'F2 - Identidad y Acceso', status: 'operational' },
       { name: 'F3 - Datos Territoriales', status: 'operational' },

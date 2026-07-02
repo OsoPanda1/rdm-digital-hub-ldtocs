@@ -24,7 +24,7 @@ export function errorHandler(err: unknown, _req: Request, res: Response, _next: 
     return sendError(res, err.status, err.code, err.message, err.details);
   }
 
-  // eslint-disable-next-line no-console
+   
   console.error("Unhandled API error", err);
   return sendError(res, 500, "INTERNAL_ERROR", "Internal server error");
 }
