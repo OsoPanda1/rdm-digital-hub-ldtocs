@@ -20,7 +20,7 @@
 
 - [x] **P1-01** `package.json`: vite anclado en `^7.1.0` (ya resuelto)
 - [ ] **P1-02** `package-lock.json`: eliminar si se migra a bun, o decidir gestor único
-- [x] **P1-03** `vercel.json`: installCommand actualizado a `npm install` (sin --legacy-peer-deps)
+- [x] **P1-03** `vercel.json`: installCommand requiere `--legacy-peer-deps` por conflictos de peer deps (no remover)
 - [ ] **P1-04** `scripts/audit-rls.sql`: crear script de auditoría RLS (patch 04)
 - [ ] **P1-05** `.github/workflows/rls-audit.yml`: crear workflow CI para RLS gate (patch 04)
 
