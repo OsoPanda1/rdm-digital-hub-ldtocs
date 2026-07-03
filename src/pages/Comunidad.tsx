@@ -93,7 +93,7 @@ const Comunidad = () => {
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps -- intentional: subscribe once, use ref for expandedPost // eslint-disable-line react-hooks/exhaustive-deps -- realtime subscription: mount-only by design
 
   const fetchPosts = async () => {
     const { data, error } = await supabase

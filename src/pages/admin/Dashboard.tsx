@@ -100,7 +100,7 @@ const AdminDashboard = () => {
       await refreshBusinesses();
       setLoading(false);
     })();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps -- intentional: fetch once on mount
   const [isEditing, setIsEditing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");

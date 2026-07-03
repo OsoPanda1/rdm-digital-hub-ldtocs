@@ -91,6 +91,7 @@ function sanitizeAttributes(tag: string, rawAttrs: string): string {
       const normalized = value
         .trim()
         .toLowerCase()
+        // eslint-disable-next-line no-control-regex -- intentional: strip control chars to prevent URL bypass
         .replace(/[\u0000-\u0020]+/g, "");
       if (DANGEROUS_URL_SCHEMES.some((scheme) => normalized.startsWith(scheme))) continue;
     }
