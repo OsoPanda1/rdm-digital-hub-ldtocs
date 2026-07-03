@@ -1,25 +1,9 @@
-// api/_shared/auth.ts — Autenticación unificada para Vercel Serverless/Edge Functions
+// api/_shared/auth.js — Autenticación unificada para Vercel Serverless/Edge Functions
 // Verifica JWT del usuario (Supabase) o CRON_SECRET para cron jobs
 
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 
-export interface AuthResult {
-  authenticated: boolean;
-  userId?: string;
-  email?: string;
-  role?: string;
-  supabase?: SupabaseClient;
-  errorMessage?: string;
-}
-
-export interface AuthResultWithResponse extends AuthResult {
-  errorResponse?: Response;
-}
-
-/**
- * Verifica la autenticación de un request.
- */
-export async function verifyAuth(request: Request): Promise<AuthResult> {
+export async function verifyAuth(request) {
   const authHeader = request.headers.get("authorization");
 
   if (!authHeader) {
@@ -32,13 +16,11 @@ export async function verifyAuth(request: Request): Promise<AuthResult> {
     return { authenticated: false, errorMessage: "Invalid Authorization scheme (use Bearer)" };
   }
 
-  // 1) CRON_SECRET check
   const cronSecret = process.env.CRON_SECRET;
   if (cronSecret && token === cronSecret) {
     return { authenticated: true, role: "cron" };
   }
 
-  // 2) Supabase JWT verification
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
@@ -72,11 +54,7 @@ export async function verifyAuth(request: Request): Promise<AuthResult> {
   }
 }
 
-/**
- * Middleware helper: retorna AuthResultWithResponse.
- * Si no está autenticado, errorResponse contiene la Response 401.
- */
-export async function requireAuth(request: Request): Promise<AuthResultWithResponse> {
+export async function requireAuth(request) {
   const result = await verifyAuth(request);
 
   if (!result.authenticated) {
@@ -98,13 +76,7 @@ export async function requireAuth(request: Request): Promise<AuthResultWithRespo
   return result;
 }
 
-/**
- * Verifica que el usuario tenga un rol específico.
- */
-export async function requireRole(
-  request: Request,
-  allowedRoles: string[],
-): Promise<AuthResultWithResponse> {
+export async function requireRole(request, allowedRoles) {
   const result = await requireAuth(request);
 
   if (result.errorResponse) return result;

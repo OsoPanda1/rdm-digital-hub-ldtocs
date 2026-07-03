@@ -11,8 +11,8 @@
 - [ ] **P0-03** `supabase/functions/isabella-ai/index.ts`: agregar origin allowlist en CORS (hoy usa `*`)
 - [ ] **P0-04** `supabase/functions/realito-chat/index.ts`: mismos 3 fixes que P0-01/02/03 (gemela de isabella-ai)
 - [ ] **P0-05** `.env.example`: actualizar comentario `GOOGLE_GENAI_API_KEY` → `GEMINI_API_KEY` (`:25`)
-- [ ] **P0-06** `supabase/functions/_shared/stripe.ts`: crear helper compartido con `verifyStripeEvent` + `alreadyProcessed` + `safeError` (patch 03)
-- [ ] **P0-07** `supabase/migrations/20260701000000_stripe_events_idempotency.sql`: crear migración para tabla `stripe_events` (patch 03)
+- [x] **P0-06** `supabase/functions/_shared/stripe.ts`: crear helper compartido con `verifyStripeEvent` + `alreadyProcessed` + `safeError` (patch 03)
+- [x] **P0-07** `supabase/migrations/20260701000000_stripe_events_idempotency.sql`: crear migración para tabla `stripe_events` (patch 03)
 
 ---
 

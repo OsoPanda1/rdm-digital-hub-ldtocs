@@ -2,8 +2,8 @@
 // Endpoint perimetral de telemetría del Nodo Cero
 // Auth + Rate limiting + CORS unificados
 
-import { getCorsHeaders, corsPreflightResponse, corsJsonResponse } from "./_shared/cors.ts";
-import { checkRateLimit, RATE_LIMITS } from "./_shared/rate-limit.ts";
+import { getCorsHeaders, corsPreflightResponse, corsJsonResponse } from "./_shared/cors.js";
+import { checkRateLimit, RATE_LIMITS } from "./_shared/rate-limit.js";
 
 const ORIGIN_ALLOWLIST = [
   "https://www.visitarealdelmonte.online",

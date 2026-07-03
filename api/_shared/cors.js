@@ -1,4 +1,4 @@
-// api/_shared/cors.ts — CORS unificado para Vercel Serverless/Edge Functions
+// api/_shared/cors.js — CORS unificado para Vercel Serverless/Edge Functions
 // Fuente de verdad para CORS en api/
 
 const PRODUCTION_ORIGINS = [
@@ -13,12 +13,12 @@ const DEV_ORIGINS = [
   "http://localhost:8888",
 ];
 
-function getAllOrigins(): string[] {
+function getAllOrigins() {
   const isProd = process.env.NODE_ENV === "production";
   return isProd ? PRODUCTION_ORIGINS : [...PRODUCTION_ORIGINS, ...DEV_ORIGINS];
 }
 
-export function getCorsHeaders(request: Request): Record<string, string> {
+export function getCorsHeaders(request) {
   const origin = request.headers.get("origin");
   const allowed = getAllOrigins();
   const allowedOrigin = origin && allowed.includes(origin) ? origin : allowed[0];
@@ -31,7 +31,7 @@ export function getCorsHeaders(request: Request): Record<string, string> {
   };
 }
 
-export function corsPreflightResponse(request: Request): Response {
+export function corsPreflightResponse(request) {
   return new Response(null, {
     status: 204,
     headers: {
@@ -41,21 +41,16 @@ export function corsPreflightResponse(request: Request): Response {
   });
 }
 
-export function corsJsonResponse(
-  request: Request,
-  body: unknown,
-  status = 200,
-  extraHeaders: Record<string, string> = {},
-): Response {
+export function corsJsonResponse(request, body, status, extraHeaders) {
   return new Response(JSON.stringify(body), {
-    status,
+    status: status || 200,
     headers: {
       "Content-Type": "application/json",
       "X-Content-Type-Options": "nosniff",
       "X-Frame-Options": "DENY",
       "Cache-Control": "no-store, max-age=0, must-revalidate",
       ...getCorsHeaders(request),
-      ...extraHeaders,
+      ...(extraHeaders || {}),
     },
   });
 }
