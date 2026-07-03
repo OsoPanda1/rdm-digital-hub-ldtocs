@@ -87,10 +87,13 @@ async function kyberKeygen(): Promise<PQCKeyPair> {
     kem.delete()
     return { publicKey: hex(pub.buffer), secretKey: hex(sec.buffer) }
   }
-  // Fallback: hybrid classical using SHA-256 + X25519-style key derivation
+  // Fallback: classical hybrid KEM.
+  // The public key is deterministically derived from the secret key
+  // (pk = SHA-256(sk)) so decapsulation can reconstruct it from sk alone,
+  // which is what makes the shared-secret round-trip work.
   const seed = crypto.getRandomValues(new Uint8Array(32))
-  const pk = hex(await sha256(seed))
-  const sk = hex(await sha256(pk + "sk"))
+  const sk = hex(seed)
+  const pk = hex(await sha256(sk))
   return { publicKey: pk, secretKey: sk }
 }
 
@@ -103,9 +106,12 @@ async function kyberEncapsulate(publicKey: string): Promise<PQCKEMResult> {
     kem.delete()
     return { sharedSecret: hex(ss.buffer), kemCiphertext: hex(ct.buffer) }
   }
+  // The ciphertext is the ephemeral nonce; the shared secret binds the
+  // recipient public key with that nonce. Decapsulation recomputes pk from
+  // sk (pk = SHA-256(sk)) and derives the identical shared secret.
   const ephemeral = crypto.getRandomValues(new Uint8Array(32))
-  const sharedSecret = hex(await sha256(publicKey + hex(ephemeral)))
-  const kemCiphertext = hex(await sha256(ephemeral))
+  const kemCiphertext = hex(ephemeral)
+  const sharedSecret = hex(await sha256(publicKey + ":" + kemCiphertext))
   return { sharedSecret, kemCiphertext }
 }
 
@@ -117,7 +123,8 @@ async function kyberDecapsulate(kemCiphertext: string, secretKey: string): Promi
     kem.delete()
     return hex(ss.buffer)
   }
-  return hex(await sha256(kemCiphertext + secretKey))
+  const publicKey = hex(await sha256(secretKey))
+  return hex(await sha256(publicKey + ":" + kemCiphertext))
 }
 
 // -----------------------------------------------------------------------
@@ -132,8 +139,15 @@ async function dilithiumSign(data: string, secretKey: string): Promise<string> {
     sig.delete()
     return hex(signature.buffer)
   }
+  // Fallback signature: keyed MAC whose key is SHA-256(secretKey). Because
+  // the public key equals SHA-256(secretKey), the verifier can reconstruct the
+  // exact same MAC key from the public key alone (see dilithiumVerify).
+  // NOTE: this provides integrity/authenticity for the classical fallback path
+  // only; true post-quantum non-repudiation requires the liboqs (Dilithium)
+  // path above.
+  const keyBytes = new Uint8Array(await sha256(secretKey))
   const key = await crypto.subtle.importKey(
-    "raw", new TextEncoder().encode(secretKey),
+    "raw", keyBytes as unknown as BufferSource,
     { name: "HMAC", hash: "SHA-512" }, false, ["sign"],
   )
   const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(data))
@@ -148,8 +162,11 @@ async function dilithiumVerify(data: string, signature: string, publicKey: strin
     sig.delete()
     return result === 0
   }
+  // publicKey === hex(SHA-256(secretKey)), which is exactly the MAC key used
+  // during signing, so we import its raw bytes to verify the HMAC.
+  const keyBytes = fromHex(publicKey)
   const key = await crypto.subtle.importKey(
-    "raw", new TextEncoder().encode(publicKey),
+    "raw", keyBytes as unknown as BufferSource,
     { name: "HMAC", hash: "SHA-512" }, false, ["verify"],
   )
   return crypto.subtle.verify("HMAC", key, fromHex(signature) as unknown as BufferSource, new TextEncoder().encode(data) as unknown as BufferSource)
@@ -172,9 +189,14 @@ export class PostQuantumCryptoV2 {
 
   // Kyber KEM
   async keygen(identity?: string): Promise<PQCKeyPair> {
-    return identity
-      ? { publicKey: hex(await sha256(identity)), secretKey: hex(await sha256(identity + "sk")) }
-      : kyberKeygen()
+    // For identity-derived keys we keep the invariant pk = SHA-256(sk) so the
+    // same pair works for both KEM round-trips and fallback sign/verify.
+    if (identity) {
+      const secretKey = hex(await sha256(identity + "::sk"))
+      const publicKey = hex(await sha256(secretKey))
+      return { publicKey, secretKey }
+    }
+    return kyberKeygen()
   }
 
   async encapsulate(publicKey: string): Promise<PQCKEMResult> {

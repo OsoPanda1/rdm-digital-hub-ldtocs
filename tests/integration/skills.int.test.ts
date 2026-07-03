@@ -20,8 +20,8 @@ describe('ISA-API Skills Integration', () => {
       { researchRequest: 'Historia minera de Real del Monte', sources: ['test'], depthLevel: 1, constraints: {} },
       { userId: 'test', sessionId: 's1', isAuthenticated: false, permissions: [], traceId: 'test-trace' },
     );
-    expect(result.synthesis).toBeDefined();
-    expect(result.synthesis.length).toBeGreaterThan(0);
+    expect(result.summary).toBeDefined();
+    expect(result.summary.length).toBeGreaterThan(0);
   });
 
   it('ARGUS debe simular escenarios', async () => {
@@ -30,7 +30,7 @@ describe('ISA-API Skills Integration', () => {
       { userId: 'test', sessionId: 's1', isAuthenticated: false, permissions: [], traceId: 'test-trace' },
     );
     expect(result.simulations.length).toBeGreaterThan(0);
-    expect(result.risks).toBeDefined();
+    expect(result.riskProfile).toBeDefined();
   });
 
   it('MNEMOS debe tener estadísticas de canon', () => {
