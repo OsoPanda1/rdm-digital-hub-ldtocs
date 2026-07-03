@@ -6,30 +6,56 @@ import { useIsabellaVoice } from "@/hooks/useIsabellaVoice";
 class MockAudio {
   src = "";
   currentTime = 0;
-  onplay?: () => void;
-  onended?: () => void;
-  onerror?: () => void;
+  private listeners: Record<string, Array<() => void>> = {};
+  addEventListener = vi.fn((type: string, cb: () => void) => {
+    (this.listeners[type] ||= []).push(cb);
+  });
+  removeEventListener = vi.fn((type: string, cb: () => void) => {
+    this.listeners[type] = (this.listeners[type] || []).filter((fn) => fn !== cb);
+  });
+  private emit(type: string) {
+    (this.listeners[type] || []).forEach((fn) => fn());
+  }
   play = vi.fn().mockImplementation(function (this: MockAudio) {
-    if (this.onplay) this.onplay();
-    setTimeout(() => { if (this.onended) this.onended(); }, 10);
+    this.emit("play");
+    setTimeout(() => this.emit("ended"), 10);
     return Promise.resolve();
   });
   pause = vi.fn();
 }
 
+class MockSpeechSynthesisUtterance {
+  text: string;
+  lang = "";
+  rate = 1;
+  pitch = 1;
+  volume = 1;
+  onstart: ((e: Event) => void) | null = null;
+  onend: ((e: Event) => void) | null = null;
+  onerror: ((e: Event) => void) | null = null;
+  constructor(text = "") {
+    this.text = text;
+  }
+}
+
 describe("useIsabellaVoice", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
-    (globalThis as any).window = {
-      speechSynthesis: {
-        cancel: vi.fn(),
-        speak: vi.fn((utterance: SpeechSynthesisUtterance) => {
-          if (utterance.onstart) utterance.onstart(new Event("start"));
-          if (utterance.onend) utterance.onend(new Event("end"));
-        }),
-      },
+    // Stub only the APIs the hook needs, keeping the jsdom `window`/document
+    // intact so React and Testing Library continue to work.
+    const speechSynthesis = {
+      cancel: vi.fn(),
+      speak: vi.fn((utterance: SpeechSynthesisUtterance) => {
+        // Fire start synchronously but end asynchronously, mirroring real
+        // speech playback so the enqueued clip is observable while "playing".
+        if (utterance.onstart) utterance.onstart(new Event("start"));
+        setTimeout(() => { if (utterance.onend) utterance.onend(new Event("end")); }, 10);
+      }),
     };
-    (globalThis as any).Audio = MockAudio;
+    vi.stubGlobal("speechSynthesis", speechSynthesis);
+    (window as any).speechSynthesis = speechSynthesis;
+    vi.stubGlobal("SpeechSynthesisUtterance", MockSpeechSynthesisUtterance);
+    vi.stubGlobal("Audio", MockAudio);
   });
 
   it("no habla si consentAudio=false", () => {

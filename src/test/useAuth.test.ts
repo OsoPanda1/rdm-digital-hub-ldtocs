@@ -8,9 +8,9 @@ import { Session, User } from '@supabase/supabase-js';
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
     auth: {
-      onAuthStateChange: (callback: (event: string, session: Session | null) => void) => ({
+      onAuthStateChange: vi.fn(() => ({
         data: { subscription: { unsubscribe: vi.fn() } },
-      }),
+      })),
       getSession: vi.fn(),
     },
   },

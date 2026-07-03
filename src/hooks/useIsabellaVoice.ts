@@ -58,12 +58,22 @@ export function useIsabellaVoice(options: UseIsabellaVoiceOptions = {}) {
     }
   }, []);
 
+  // Removes the finished clip from the head of the queue and starts the next.
+  const finishCurrentClip = useCallback(() => {
+    isPlayingRef.current = false;
+    setIsSpeaking(false);
+    setQueue((prev) => prev.slice(1));
+  }, []);
+
   const playNextFromQueue = useCallback(() => {
+    // The currently-playing clip stays at the head of the queue while it plays
+    // and is only removed once playback ends (see finishCurrentClip), so the
+    // queue always reflects pending + in-flight clips.
     setQueue((prev) => {
       if (prev.length === 0) return prev;
       if (isPlayingRef.current) return prev;
 
-      const [next, ...rest] = prev;
+      const next = prev[0];
       isPlayingRef.current = true;
       setIsSpeaking(true);
 
@@ -72,7 +82,7 @@ export function useIsabellaVoice(options: UseIsabellaVoiceOptions = {}) {
           isPlayingRef.current = false;
           setIsSpeaking(false);
           setError("Web Speech API no disponible");
-          return rest;
+          return prev.slice(1);
         }
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(next.text);
@@ -86,10 +96,10 @@ export function useIsabellaVoice(options: UseIsabellaVoiceOptions = {}) {
           utterance.pitch = 1.05;
         }
         utterance.onstart = () => { isPlayingRef.current = true; setIsSpeaking(true); };
-        utterance.onend = () => { isPlayingRef.current = false; setIsSpeaking(false); playNextFromQueue(); };
-        utterance.onerror = () => { isPlayingRef.current = false; setIsSpeaking(false); setError("Error en síntesis local"); };
+        utterance.onend = () => { finishCurrentClip(); playNextFromQueue(); };
+        utterance.onerror = () => { finishCurrentClip(); setError("Error en síntesis local"); };
         window.speechSynthesis.speak(utterance);
-        return rest;
+        return prev;
       }
 
       if (next.mode === "cloud" && next.audioUrl) {
@@ -98,25 +108,22 @@ export function useIsabellaVoice(options: UseIsabellaVoiceOptions = {}) {
         if (!audioEl) {
           isPlayingRef.current = false;
           setIsSpeaking(false);
-          return rest;
+          return prev.slice(1);
         }
         audioEl.src = next.audioUrl;
         audioEl.currentTime = 0;
         audioEl.onplay = () => { isPlayingRef.current = true; setIsSpeaking(true); };
-        audioEl.onended = () => { isPlayingRef.current = false; setIsSpeaking(false); playNextFromQueue(); };
-        audioEl.onerror = () => { isPlayingRef.current = false; setIsSpeaking(false); setError("Error reproduciendo cloud TTS"); };
-        audioEl.play().catch(() => {
-          isPlayingRef.current = false;
-          setIsSpeaking(false);
-        });
-        return rest;
+        audioEl.onended = () => { finishCurrentClip(); playNextFromQueue(); };
+        audioEl.onerror = () => { finishCurrentClip(); setError("Error reproduciendo cloud TTS"); };
+        audioEl.play().catch(() => { finishCurrentClip(); });
+        return prev;
       }
 
       isPlayingRef.current = false;
       setIsSpeaking(false);
-      return rest;
+      return prev.slice(1);
     });
-  }, [hasWebSpeech, ensureAudioElement]);
+  }, [hasWebSpeech, ensureAudioElement, finishCurrentClip]);
 
   const fetchCloudTts = useCallback(async (
     text: string,
