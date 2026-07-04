@@ -76,6 +76,28 @@ export default tseslint.config(
     ],
     rules: { "no-console": "off" },
   },
+  // UI components, contexts, hooks — export components + hooks/constants (standard pattern)
+  {
+    files: [
+      "src/components/NotificationSystem.tsx",
+      "src/components/SEOMeta.tsx",
+      "src/components/ui/badge.tsx",
+      "src/components/ui/button.tsx",
+      "src/components/ui/form.tsx",
+      "src/components/ui/navigation-menu.tsx",
+      "src/components/ui/sidebar.tsx",
+      "src/components/ui/sonner.tsx",
+      "src/components/ui/toggle.tsx",
+      "src/contexts/AudioPlayerContext.tsx",
+      "src/contexts/RDMAuthContext.tsx",
+      "src/contexts/VisualContext.tsx",
+      "src/hooks/useMapSync.tsx",
+      "src/integrations/observability/posthog.tsx",
+    ],
+    rules: {
+      "react-refresh/only-export-components": "off",
+    },
+  },
   // Config files that use require()
   {
     files: ["tailwind.config.ts"],

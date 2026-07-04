@@ -153,14 +153,12 @@ export default function PremiumPlans() {
       });
 
       if (error) {
-        // eslint-disable-next-line no-console
         logger.error("Error en checkout premium:", { error });
         throw new Error(error.message || "Error en la función de pago");
       }
 
       const url = data?.url;
       if (typeof url !== "string" || !url.startsWith("http")) {
-        // eslint-disable-next-line no-console
         logger.error("URL de checkout inválida:", { url });
         throw new Error("Respuesta de pago inválida. Intenta más tarde.");
       }
