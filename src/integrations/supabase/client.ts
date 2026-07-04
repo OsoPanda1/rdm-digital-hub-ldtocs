@@ -25,6 +25,7 @@ const SUPABASE_ANON_KEY =
   import.meta.env.VITE_NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 const isDev = import.meta.env.DEV
+const isProd = import.meta.env.PROD
 
 // Storage seguro (browser vs Workers/SSR).
 const storage =
@@ -50,6 +51,10 @@ function createSupabaseClient(): SupabaseClient<Database> {
       '[supabase] Configuración incompleta. Define VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY ' +
       'en .env.local, o configura DATABASE_SUPABASE_URL y DATABASE_SUPABASE_ANON_KEY ' +
       'en las variables de entorno de Vercel (Supabase Integration).'
+
+    if (isProd) {
+      throw new Error(MISSING_MSG)
+    }
 
     if (isDev) {
       logger.error(MISSING_MSG)
