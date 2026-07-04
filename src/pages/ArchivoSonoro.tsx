@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useMusicPlayer } from "@/modules/music/hooks/useMusicPlayer";
+import { logger } from "@/lib/logger";
 
 interface DonationOption {
   amount: number;
@@ -33,7 +34,7 @@ export const ArchivoSonoro: React.FC = () => {
       });
 
       if (!res.ok) {
-        console.error("Error iniciando donación");
+        logger.error("Error iniciando donación");
         return;
       }
 
@@ -42,7 +43,7 @@ export const ArchivoSonoro: React.FC = () => {
         window.location.href = data.checkoutUrl;
       }
     } catch (err) {
-      console.error("Error en donación", err);
+      logger.error("Error en donación", { error: err });
     }
   };
 

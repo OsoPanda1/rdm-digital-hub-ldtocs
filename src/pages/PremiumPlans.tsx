@@ -19,6 +19,7 @@ import { SEOMeta } from "@/components/SEOMeta";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { logger } from "@/lib/logger";
 
 type Tab = "usuarios" | "comercios";
 
@@ -153,14 +154,14 @@ export default function PremiumPlans() {
 
       if (error) {
         // eslint-disable-next-line no-console
-        console.error("Error en checkout premium:", error);
+        logger.error("Error en checkout premium:", { error });
         throw new Error(error.message || "Error en la función de pago");
       }
 
       const url = data?.url;
       if (typeof url !== "string" || !url.startsWith("http")) {
         // eslint-disable-next-line no-console
-        console.error("URL de checkout inválida:", url);
+        logger.error("URL de checkout inválida:", { url });
         throw new Error("Respuesta de pago inválida. Intenta más tarde.");
       }
 
