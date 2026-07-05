@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { RDMLayout } from "@/components/rdm/RDMLayout"
 import { SEOMeta } from "@/components/SEOMeta"
 import { motion, AnimatePresence } from "framer-motion"
@@ -15,10 +15,25 @@ import {
   BookOpen,
   ExternalLink,
   ChevronDown,
+  Globe,
+  Radio,
+  Waves,
+  Calendar,
+  MapPin,
+  Users,
 } from "lucide-react"
 import ReactMarkdown from "react-markdown"
 import { useAudioPlayer, type Track } from "@/contexts/AudioPlayerContext"
 import playlistMd from "@/assets/musica/playlist.md?raw"
+
+// Ecos Música — New system components
+import { SpatialPlayer } from "@/features/music/components/SpatialPlayer"
+import { CronicaPanel } from "@/features/music/components/CronicaPanel"
+import { MecenasPanel } from "@/features/music/components/MecenasPanel"
+import { MOCK_TRACKS, MOCK_CRONICAS, MOCK_EVENTS } from "@/features/music/api"
+import { recommendTracks, recommendCronicas, recommendEvents } from "@/features/music/engine"
+import { recordMusicAction } from "@/features/music/api"
+import type { MusicTrack, MusicCronica, MusicEvent } from "@/features/music/types"
 
 import aMimadreMp3 from "@/assets/musica/a_mimadre.mp3"
 import reinaTrejoMp3 from "@/assets/musica/reina_trejo.mp3"
@@ -389,6 +404,284 @@ function NowPlayingBadge() {
 }
 
 /* ------------------------------------------------------------------ */
+/*  ECOS MUSICA — Spatial audio, crónicas, events                      */
+/* ------------------------------------------------------------------ */
+
+const recommendedTracks = recommendTracks(MOCK_TRACKS, { territory_id: "rdm" }, 4)
+const recommendedCronicas = recommendCronicas(MOCK_CRONICAS, {}, 3)
+const recommendedEvents = recommendEvents(MOCK_EVENTS, 3)
+
+function EcosMusicaSection() {
+  const [activeTab, setActiveTab] = useState<"player" | "cronicas" | "eventos">("player")
+  const [selectedTrack, setSelectedTrack] = useState<MusicTrack>(recommendedTracks[0] || MOCK_TRACKS[0])
+  const [trackIndex, setTrackIndex] = useState(0)
+  const [xpToast, setXpToast] = useState<string | null>(null)
+
+  const handleXpEarned = (xp: number) => {
+    setXpToast(`+${xp} XP Cultura`)
+    setTimeout(() => setXpToast(null), 2500)
+  }
+
+  const handleNextTrack = () => {
+    const next = (trackIndex + 1) % recommendedTracks.length
+    setTrackIndex(next)
+    setSelectedTrack(recommendedTracks[next])
+    recordMusicAction("track_play", {
+      track_id: recommendedTracks[next].id,
+      spatial_mode: "archivo",
+    })
+  }
+
+  const handlePrevTrack = () => {
+    const prev = trackIndex > 0 ? trackIndex - 1 : recommendedTracks.length - 1
+    setTrackIndex(prev)
+    setSelectedTrack(recommendedTracks[prev])
+  }
+
+  const handlePlayCronica = (cronica: MusicCronica) => {
+    recordMusicAction("cronica_complete", {
+      cronica_id: cronica.id,
+      tracks_completed: cronica.trackCount ?? 0,
+    })
+    handleXpEarned(50)
+  }
+
+  return (
+    <section className="py-16 px-6 md:px-16 bg-[#050814] relative overflow-hidden">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 20% 30%, rgba(0,212,255,0.12) 0%, transparent 50%), " +
+            "radial-gradient(circle at 80% 70%, rgba(167,243,0,0.08) 0%, transparent 50%)",
+        }}
+      />
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-10"
+        >
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#A7F300]/30 bg-[#A7F300]/10 px-4 py-1.5 text-[9px] uppercase tracking-[0.25em] text-[#A7F300] mb-4">
+            <Waves className="h-3 w-3" />
+            <span>Ecos Musica — Sistema Sonoro Territorial</span>
+          </div>
+          <h2
+            className="text-[2rem] md:text-[2.8rem] font-bold text-white tracking-tight"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Archivo Sonoro de
+            <span className="bg-gradient-to-r from-[#00D4FF] to-[#A7F300] bg-clip-text text-transparent">
+              {" "}Real del Monte
+            </span>
+          </h2>
+          <p className="mt-3 text-sm text-[#9CA3AF] max-w-xl">
+            Tres modos de escucha: Archivo (lossless puro), Espacio (acustica de las minas), y
+            Metaverso (experiencia XR espacial). Cada track es un fragmento del territorio.
+          </p>
+        </motion.div>
+
+        {/* Tab selector */}
+        <div className="flex gap-2 mb-8">
+          {[
+            { key: "player" as const, label: "Reproductor", icon: Disc3 },
+            { key: "cronicas" as const, label: "Cronicas", icon: BookOpen },
+            { key: "eventos" as const, label: "Eventos", icon: Calendar },
+          ].map((tab) => {
+            const Icon = tab.icon
+            return (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                  activeTab === tab.key
+                    ? "bg-[#A7F300] text-[#050814]"
+                    : "bg-white/5 text-[#9CA3AF] hover:bg-white/10"
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                {tab.label}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* XP toast */}
+        <AnimatePresence>
+          {xpToast && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="fixed top-20 right-6 z-50 px-4 py-2 rounded-xl bg-[#A7F300] text-[#050814] text-xs font-bold shadow-lg"
+            >
+              {xpToast}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence mode="wait">
+          {activeTab === "player" && (
+            <motion.div
+              key="player"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+            >
+              {/* Spatial Player */}
+              <SpatialPlayer
+                track={selectedTrack}
+                queue={recommendedTracks}
+                currentIndex={trackIndex}
+                onPrev={handlePrevTrack}
+                onNext={handleNextTrack}
+                onXpEarned={handleXpEarned}
+              />
+
+              {/* Recommended tracks */}
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[#A7F300]/60 mb-3">
+                  Recomendados para ti
+                </p>
+                <div className="space-y-2">
+                  {recommendedTracks.map((track, idx) => (
+                    <button
+                      key={track.id}
+                      onClick={() => {
+                        setSelectedTrack(track)
+                        setTrackIndex(idx)
+                      }}
+                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${
+                        selectedTrack.id === track.id
+                          ? "bg-white/10 border border-[#A7F300]/30"
+                          : "bg-white/5 border border-transparent hover:bg-white/8"
+                      }`}
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-[#A7F300]/15 flex items-center justify-center shrink-0">
+                        <span className="text-[10px] font-bold text-[#A7F300]">
+                          {String(idx + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-semibold text-white truncate">{track.title}</p>
+                        <p className="text-[10px] text-[#9CA3AF]">{track.artist?.name}</p>
+                      </div>
+                      <span className="text-[9px] text-[#9CA3AF] tabular-nums">
+                        {Math.round(track.duration_ms / 60000)}:{String(Math.round((track.duration_ms % 60000) / 1000)).padStart(2, "0")}
+                      </span>
+                      <span
+                        className={`text-[8px] px-1.5 py-0.5 rounded-full uppercase tracking-wider ${
+                          track.canonical_level === "historical"
+                            ? "bg-amber-500/20 text-amber-400"
+                            : track.canonical_level === "artistic"
+                            ? "bg-purple-500/20 text-purple-400"
+                            : "bg-blue-500/20 text-blue-400"
+                        }`}
+                      >
+                        {track.canonical_level}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === "cronicas" && (
+            <motion.div
+              key="cronicas"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+            >
+              <CronicaPanel
+                cronicas={recommendedCronicas}
+                onPlay={handlePlayCronica}
+                onFork={(c) => handleXpEarned(25)}
+              />
+            </motion.div>
+          )}
+
+          {activeTab === "eventos" && (
+            <motion.div
+              key="eventos"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="space-y-4"
+            >
+              {recommendedEvents.map((evt, idx) => (
+                <motion.div
+                  key={evt.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.08 }}
+                  className="rounded-xl border border-white/10 bg-white/5 p-5 hover:border-[#A7F300]/30 transition-colors"
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span
+                          className={`text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider font-bold ${
+                            evt.status === "live"
+                              ? "bg-red-500/20 text-red-400"
+                              : "bg-[#00D4FF]/20 text-[#00D4FF]"
+                          }`}
+                        >
+                          {evt.status === "live" ? "En vivo" : "Proximo"}
+                        </span>
+                        <span className="text-[9px] text-[#9CA3AF] capitalize">{evt.event_type.replace("_", " ")}</span>
+                      </div>
+                      <h4 className="text-sm font-bold text-white">{evt.title}</h4>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-[10px] text-[#9CA3AF]">
+                        {new Date(evt.starts_at).toLocaleDateString("es-MX", {
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </p>
+                      <p className="text-[10px] text-[#9CA3AF]">
+                        {new Date(evt.starts_at).toLocaleTimeString("es-MX", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-[#9CA3AF] leading-relaxed mb-3">{evt.description}</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3 text-[10px] text-[#9CA3AF]">
+                      <span className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3" />
+                        {evt.location_name}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Users className="w-3 h-3" />
+                        {evt.current_participants}/{evt.max_participants}
+                      </span>
+                    </div>
+                    {evt.reward_json.xp && (
+                      <span className="text-[9px] px-2 py-0.5 rounded-full bg-[#A7F300]/15 text-[#A7F300] font-bold">
+                        +{evt.reward_json.xp} XP
+                      </span>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </section>
+  )
+}
+
+/* ------------------------------------------------------------------ */
 /*  PAGE: Música streaming híbrido sobre fondo blanco                  */
 /* ------------------------------------------------------------------ */
 
@@ -602,6 +895,9 @@ export default function Musica() {
           </div>
         </div>
       </section>
+
+      {/* Ecos Musica — Spatial audio, crónicas, events */}
+      <EcosMusicaSection />
     </RDMLayout>
   )
 }

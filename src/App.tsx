@@ -127,6 +127,7 @@ const Wiki = lazy(() => import('./pages/Wiki'))
 const ControlCenter = lazy(() => import('./pages/ControlCenter'))
 const B2BPortal = lazy(() => import('./pages/B2BPortal'))
 const GamePortal = lazy(() => import('./pages/GamePortal'))
+const GameHub = lazy(() => import('./pages/GameHub'))
 const Juegos = lazy(() => import('./pages/Juegos'))
 const LTOS = lazy(() => import('./pages/LTOS'))
 const Mitos = lazy(() => import('./pages/Mitos'))
@@ -373,6 +374,7 @@ const AnimatedRoutes = () => {
           <Route path="/control" element={<RouteErrorBoundary route="/control"><ControlCenter /></RouteErrorBoundary>} />
           <Route path="/b2b" element={<RouteErrorBoundary route="/b2b"><B2BPortal /></RouteErrorBoundary>} />
           <Route path="/games" element={<RouteErrorBoundary route="/games"><GamePortal /></RouteErrorBoundary>} />
+          <Route path="/game-hub" element={<RouteErrorBoundary route="/game-hub"><GameHub /></RouteErrorBoundary>} />
           <Route path="/juegos" element={<RouteErrorBoundary route="/juegos"><Juegos /></RouteErrorBoundary>} />
           <Route path="/ltos" element={<RouteErrorBoundary route="/ltos"><LTOS /></RouteErrorBoundary>} />
           <Route path="/mitos" element={<RouteErrorBoundary route="/mitos"><Mitos /></RouteErrorBoundary>} />
