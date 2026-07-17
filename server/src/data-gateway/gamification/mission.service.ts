@@ -8,6 +8,7 @@ import type {
 } from "../types.js";
 import { playerService } from "./player.service.js";
 import { guardianService } from "./guardian.service.js";
+import { cattleyaService } from "../cattleya/tier.service.js";
 
 interface QuestLogRecord extends GamificationQuestLogData {
   playerId: number;
@@ -39,6 +40,31 @@ const seedMissions: GamificationMissionData[] = [
     id: 5, code: "XR_EXPLORADOR_RDM", title: "Explorador 4D de Real del Monte",
     description: "Entra a un Dreamspace XR, explora tres escenas y encuentra los símbolos de cooperación y cuidado.",
     context: "xr", xpReward: 200, virtueReward: 60, maxCompletions: 1, isActive: true,
+  },
+  {
+    id: 6, code: "T2_CONSUMO_REGISTRO_DIARIO", title: "Registro consciente de gasto",
+    description: "Durante 7 días, registra un gasto diario en tu diario de consumo con Isabella: qué compraste, por qué y cómo te hizo sentir.",
+    context: "financiera", xpReward: 180, virtueReward: 50, maxCompletions: 7, isActive: true,
+  },
+  {
+    id: 7, code: "T2_COMPARA_OPCIONES", title: "Compara dos opciones de compra",
+    description: "Antes de una compra significativa, compara dos opciones (precio, calidad, impacto local). Escribe con Isabella por qué elegiste una.",
+    context: "financiera", xpReward: 130, virtueReward: 35, maxCompletions: 3, isActive: true,
+  },
+  {
+    id: 8, code: "T2_NEGOCIO_LOCAL", title: "Apoyo a negocio local consciente",
+    description: "Realiza una compra en un negocio local aliado de RDM Digital que priorice prácticas justas. Deja un feedback respetuoso y constructivo.",
+    context: "financiera", xpReward: 160, virtueReward: 45, maxCompletions: 5, isActive: true,
+  },
+  {
+    id: 9, code: "T2_SEMANA_SIN_IMPULSOS", title: "Semana sin compras impulsivas",
+    description: "Durante 7 días, anota cuando sientas deseos de comprar algo por impulso y decide esperar 24 horas. Cuenta a Isabella cómo cambió tu decisión.",
+    context: "financiera", xpReward: 200, virtueReward: 60, maxCompletions: 3, isActive: true,
+  },
+  {
+    id: 10, code: "T2_PLAN_AHORRO_SIMPLE", title: "Plan simple de ahorro",
+    description: "Define un objetivo (curso, experiencia, herramienta) y construye con Isabella un plan simple de ahorro. Completa al menos 3 pasos de ese plan.",
+    context: "financiera", xpReward: 250, virtueReward: 70, maxCompletions: 1, isActive: true,
   },
 ];
 
@@ -133,7 +159,11 @@ export const missionService = {
       progress: 1,
     });
 
-    const player = await playerService.addXp(playerId, mission.xpReward);
+    const playerData = await playerService.getById(playerId);
+    const adjustedXp = playerData
+      ? cattleyaService.applyXpMultiplier(playerData.reputationScore, mission.xpReward)
+      : mission.xpReward;
+    const player = await playerService.addXp(playerId, adjustedXp);
     await playerService.addVirtuePoints(playerId, mission.virtueReward);
 
     const rewards: GamificationRewardData[] = [];

@@ -230,6 +230,13 @@ function MapaPageContent() {
                   >
                     <Layers className="h-4 w-4" /> Negocios
                   </button>
+                  <Link
+                    to="/weather-sandbox"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.5)] px-3 py-2 text-sm text-[hsl(var(--muted-foreground))] transition hover:border-[hsl(var(--rdm-amber)/0.3)] hover:text-[hsl(var(--foreground))]"
+                    style={{ fontFamily: "var(--font-body)" }}
+                  >
+                    <Activity className="h-4 w-4" /> Clima
+                  </Link>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2 text-xs">
                   {["all", "place", "business"].map((item) => (

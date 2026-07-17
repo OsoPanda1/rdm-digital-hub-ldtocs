@@ -21,7 +21,9 @@ export default async function handler(request) {
   }
 
   // Rate limit
-  const rateLimit = checkRateLimit(request, RATE_LIMITS.telemetry);
+  const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const rateLimitKey = `telemetry:${clientIp}`;
+  const rateLimit = checkRateLimit(rateLimitKey, RATE_LIMITS.telemetry.limit, RATE_LIMITS.telemetry.windowMs);
   if (!rateLimit.allowed) {
     return new Response(
       JSON.stringify({ error: "Rate limit exceeded", retryAfter: rateLimit.retryAfter }),
@@ -29,7 +31,7 @@ export default async function handler(request) {
         status: 429,
         headers: {
           "Content-Type": "application/json",
-          ...rateLimit.headers,
+          "Retry-After": String(Math.ceil(rateLimit.retryAfter / 1000)),
         },
       },
     );

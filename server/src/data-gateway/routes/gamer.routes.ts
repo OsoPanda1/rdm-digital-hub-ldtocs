@@ -5,6 +5,7 @@ import { playerService } from "../gamification/player.service.js";
 import { missionService } from "../gamification/mission.service.js";
 import { guardianService } from "../gamification/guardian.service.js";
 import { journalService } from "../services/journal.service.js";
+import { cattleyaService } from "../cattleya/tier.service.js";
 
 const router = Router();
 
@@ -33,10 +34,25 @@ router.get("/player/:id", requireAuth, async (req: AuthenticatedRequest, res) =>
 router.get("/missions", requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
     const context = req.query.context as string | undefined;
-    const allowed = ["turismo", "comercio", "emociones", "xr"];
-    const missions = await missionService.getAvailable(
+    const playerId = req.query.playerId ? Number(req.query.playerId) : undefined;
+    const allowed = ["turismo", "comercio", "emociones", "xr", "financiera"];
+
+    let missions = await missionService.getAvailable(
       context && allowed.includes(context) ? context as any : undefined
     );
+
+    if (playerId) {
+      const player = await playerService.getById(playerId);
+      if (player) {
+        const { tier } = cattleyaService.computeTier(player.reputationScore);
+        const premiumTiers = ["GUARDIAN", "EMBAJADOR"];
+        const benefits = cattleyaService.getBenefits(player.reputationScore);
+        if (!benefits.accessToPremiumMissions) {
+          missions = missions.filter((m) => m.context !== "financiera" || m.xpReward < 200);
+        }
+      }
+    }
+
     return res.json({ data: missions, total: missions.length });
   } catch (e) {
     return res.status(500).json({ error: e instanceof Error ? e.message : "Missions error" });
@@ -121,6 +137,30 @@ router.post("/guardian/assign", requireAuth, async (req: AuthenticatedRequest, r
     return res.json(result);
   } catch (e) {
     return res.status(500).json({ error: e instanceof Error ? e.message : "Guardian error" });
+  }
+});
+
+router.get("/cattleya/tier", requireAuth, async (req: AuthenticatedRequest, res) => {
+  try {
+    const playerId = Number(req.query.playerId);
+    if (!playerId) return res.status(400).json({ error: "playerId required" });
+
+    const player = await playerService.getById(playerId);
+    if (!player) return res.status(404).json({ error: "Player not found" });
+
+    const cattleya = cattleyaService.computeTier(player.reputationScore);
+    return res.json({
+      ...cattleya,
+      reputationScore: player.reputationScore,
+      nextTier: cattleya.tier === "BASE" ? "CUIDADO (900 pts)" :
+                cattleya.tier === "CUIDADO" ? "GUARDIAN (1300 pts)" :
+                cattleya.tier === "GUARDIAN" ? "EMBAJADOR (1700 pts)" : "Máximo nivel alcanzado",
+      misionsRecomendadas: cattleya.tier === "BASE" ? ["Completa misiones educativas para subir a CUIDADO"] :
+                           cattleya.tier === "CUIDADO" ? ["T2_CONSUMO_REGISTRO_DIARIO", "T2_COMPARA_OPCIONES", "T2_NEGOCIO_LOCAL"] :
+                           cattleya.tier === "GUARDIAN" ? ["XR_EXPLORADOR_RDM", "T2_PLAN_AHORRO_SIMPLE"] : [],
+    });
+  } catch (e) {
+    return res.status(500).json({ error: e instanceof Error ? e.message : "Cattleya error" });
   }
 });
 

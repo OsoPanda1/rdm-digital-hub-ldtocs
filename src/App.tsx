@@ -163,6 +163,7 @@ const Music = lazy(() => import('./pages/Music'))
 const RealitoAI = lazy(() => import('./pages/RealitoAI'))
 const RegistrarComercio = lazy(() => import('./pages/RegistrarComercio'))
 const InahRealDelMonte = lazy(() => import('./pages/InahRealDelMonte'))
+const WeatherSandbox = lazy(() => import('./pages/WeatherSandbox'))
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -286,6 +287,7 @@ const AnimatedRoutes = () => {
         <Routes location={location}>
           <Route path="/" element={<RouteErrorBoundary route="/"><Index /></RouteErrorBoundary>} />
           <Route path="/mapa" element={<RouteErrorBoundary route="/mapa"><Mapa /></RouteErrorBoundary>} />
+          <Route path="/weather-sandbox" element={<RouteErrorBoundary route="/weather-sandbox"><WeatherSandbox /></RouteErrorBoundary>} />
           <Route path="/lugares" element={<RouteErrorBoundary route="/lugares"><Lugares /></RouteErrorBoundary>} />
           <Route path="/directorio" element={<RouteErrorBoundary route="/directorio"><Directorio /></RouteErrorBoundary>} />
           <Route path="/eventos" element={<RouteErrorBoundary route="/eventos"><Eventos /></RouteErrorBoundary>} />

@@ -418,11 +418,31 @@ model GamificationCattleyaLink {
   id             Int      @id @default(autoincrement())
   playerId       Int
   cattleyaUserId Int
+  tier           String   @default("BASE")
+  discountRate   Float    @default(0)
+  cashbackRate   Float    @default(0)
+  xpMultiplier   Float    @default(1)
   createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   player         GamificationPlayer @relation(fields: [playerId], references: [id])
 
   @@unique([playerId, cattleyaUserId])
+}
+
+model CattleyaReputationEvent {
+  id             Int      @id @default(autoincrement())
+  playerId       Int
+  eventType      String
+  scoreDelta     Int
+  reason         String   @db.Text
+  metadata       Json     @default("{}")
+  createdAt      DateTime @default(now())
+
+  player         GamificationPlayer @relation(fields: [playerId], references: [id])
+
+  @@index([playerId, createdAt])
+  @@index([eventType, createdAt])
 }
 
 // =====================================================

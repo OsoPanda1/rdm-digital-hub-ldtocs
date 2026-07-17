@@ -7,7 +7,7 @@ export function getStripe(): Stripe {
   if (!stripeInstance) {
     const key = process.env.STRIPE_SECRET_KEY;
     if (!key) throw new Error("STRIPE_SECRET_KEY is not set");
-    stripeInstance = new Stripe(key, { apiVersion: "2025-06-30.basil" });
+    stripeInstance = new Stripe(key, { apiVersion: "2025-06-30.basil" as any });
   }
   return stripeInstance;
 }
@@ -16,7 +16,7 @@ export function getMppStripe(): Stripe {
   if (!mppInstance) {
     const key = process.env.STRIPE_SECRET_KEY;
     if (!key) throw new Error("STRIPE_SECRET_KEY is not set");
-    mppInstance = new Stripe(key, { apiVersion: "2026-03-04.preview" });
+    mppInstance = new Stripe(key, { apiVersion: "2026-03-04.preview" as any });
   }
   return mppInstance;
 }

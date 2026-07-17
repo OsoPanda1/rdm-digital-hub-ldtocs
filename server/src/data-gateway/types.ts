@@ -94,7 +94,19 @@ export interface JournalEntry {
 
 export type QuestStatus = "PENDING" | "IN_PROGRESS" | "COMPLETED" | "ARCHIVED";
 export type RewardType = "BADGE" | "SKIN" | "XR_ACCESS" | "CATTLEYA_BENEFIT";
-export type MissionContext = "turismo" | "comercio" | "emociones" | "xr";
+export type MissionContext = "turismo" | "comercio" | "emociones" | "xr" | "financiera";
+
+export type CattleyaTier = "BASE" | "CUIDADO" | "GUARDIAN" | "EMBAJADOR";
+
+export interface CattleyaBenefits {
+  tier: CattleyaTier;
+  discountRate: number;
+  cashbackRate: number;
+  xpMultiplier: number;
+  accessToPremiumMissions: boolean;
+  accessToXREarly: boolean;
+  invitationToCoDesign: boolean;
+}
 
 export interface GamificationPlayerData {
   id: number;

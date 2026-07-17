@@ -94,7 +94,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // Rate limit
-  const rateLimit = checkRateLimit(webRequest, RATE_LIMITS.model);
+  const clientIp = webRequest.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const rateLimitKey = `model:${clientIp}`;
+  const rateLimit = checkRateLimit(rateLimitKey, RATE_LIMITS.model.limit, RATE_LIMITS.model.windowMs);
   if (!rateLimit.allowed) {
     return res.status(429).json({
       error: "Rate limit exceeded",

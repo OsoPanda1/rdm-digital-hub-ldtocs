@@ -1,5 +1,3 @@
-import { createClient } from "@vercel/edge-config";
-
 const FLAG_DEFAULTS = {
   crypto_payments_enabled: false,
   crypto_subscriptions_enabled: false,
@@ -8,50 +6,49 @@ const FLAG_DEFAULTS = {
   tax_automatic: true,
   maintenance_mode: false,
   new_checkout_flow: true,
-} as const;
+} as const
 
-type FlagKey = keyof typeof FLAG_DEFAULTS;
+type FlagKey = keyof typeof FLAG_DEFAULTS
 
-let edgeConfigClient: ReturnType<typeof createClient> | null = null;
+type EdgeConfigClient = { get: (key: string) => Promise<unknown>; getAll: () => Promise<Record<string, unknown>> }
 
-function getClient() {
-  if (!edgeConfigClient) {
-    const connectionString = process.env.EDGE_CONFIG;
-    if (connectionString) {
-      edgeConfigClient = createClient(connectionString);
-    }
+async function getClient(): Promise<EdgeConfigClient | null> {
+  const connectionString = import.meta.env.VITE_EDGE_CONFIG || process.env.EDGE_CONFIG
+  if (!connectionString) return null
+  try {
+    const { createClient } = await import("@vercel/edge-config")
+    return createClient(connectionString) as unknown as EdgeConfigClient
+  } catch {
+    return null
   }
-  return edgeConfigClient;
 }
 
 export async function getFlag<T extends FlagKey>(key: T): Promise<(typeof FLAG_DEFAULTS)[T]> {
-  const client = getClient();
-  if (!client) return FLAG_DEFAULTS[key];
+  const client = await getClient()
+  if (!client) return FLAG_DEFAULTS[key]
   try {
-    const value = await client.get(key);
-    return (value ?? FLAG_DEFAULTS[key]) as (typeof FLAG_DEFAULTS)[T];
+    const value = await client.get(key)
+    return (value ?? FLAG_DEFAULTS[key]) as (typeof FLAG_DEFAULTS)[T]
   } catch {
-    return FLAG_DEFAULTS[key];
+    return FLAG_DEFAULTS[key]
   }
 }
 
 export async function getAllFlags(): Promise<Record<FlagKey, boolean>> {
-  const client = getClient();
-  if (!client) return { ...FLAG_DEFAULTS };
+  const client = await getClient()
+  if (!client) return { ...FLAG_DEFAULTS }
   try {
-    const stored = await client.getAll();
-    const result = { ...FLAG_DEFAULTS };
+    const stored = await client.getAll()
+    const result = { ...FLAG_DEFAULTS }
     for (const key of Object.keys(FLAG_DEFAULTS) as FlagKey[]) {
-      if (stored[key] !== undefined) {
-        result[key] = Boolean(stored[key]);
-      }
+      if (stored[key] !== undefined) result[key] = Boolean(stored[key])
     }
-    return result;
+    return result
   } catch {
-    return { ...FLAG_DEFAULTS };
+    return { ...FLAG_DEFAULTS }
   }
 }
 
 export async function isMaintenanceMode(): Promise<boolean> {
-  return getFlag("maintenance_mode");
+  return getFlag("maintenance_mode")
 }

@@ -22,6 +22,9 @@ dist-ssr
 .nitro
 *.local
 
+# Extracted archive copies
+real-del-monte-digital-hub-*/
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars

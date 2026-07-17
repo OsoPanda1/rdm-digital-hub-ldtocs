@@ -4,10 +4,13 @@ import type {
   GamificationGuardianData,
   GamificationRewardData,
   EmotionStateData,
+  CattleyaBenefits,
 } from "../types.js";
+import { cattleyaService } from "../cattleya/tier.service.js";
 
 interface GamificationPlayerRecord extends GamificationPlayerData {
   rewards: GamificationRewardData[];
+  cattleya?: CattleyaBenefits;
 }
 
 class GamificationPlayerStore {
@@ -79,15 +82,22 @@ export const playerService = {
     if (!player) {
       player = await playerStore.create({ supabaseUserId, displayName });
     }
-    return player;
+    const cattleya = cattleyaService.computeTier(player.reputationScore);
+    return { ...player, cattleya };
   },
 
   async getById(id: number): Promise<GamificationPlayerData | null> {
-    return playerStore.findById(id);
+    const player = await playerStore.findById(id);
+    if (!player) return null;
+    const cattleya = cattleyaService.computeTier(player.reputationScore);
+    return { ...player, cattleya };
   },
 
   async getBySupabaseId(supabaseUserId: string): Promise<GamificationPlayerData | null> {
-    return playerStore.findBySupabaseId(supabaseUserId);
+    const player = await playerStore.findBySupabaseId(supabaseUserId);
+    if (!player) return null;
+    const cattleya = cattleyaService.computeTier(player.reputationScore);
+    return { ...player, cattleya };
   },
 
   async addXp(playerId: number, amount: number): Promise<GamificationPlayerData | null> {
