@@ -1,6 +1,7 @@
-export const config = { runtime: "edge" };
+export const config = { runtime: "nodejs" };
 
 import { getCorsHeaders } from "../_shared/cors";
+import { verifyWebhookSignature } from "../_shared/stripe";
 
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== "POST") {
@@ -20,7 +21,6 @@ export default async function handler(req: Request): Promise<Response> {
   try {
     const body = await req.text();
 
-    const { verifyWebhookSignature } = await import("../_shared/stripe");
     const event = verifyWebhookSignature(body, sig, webhookSecret);
 
     switch (event.type) {
