@@ -71,13 +71,16 @@ Sistema de Inteligencia Territorial en Tiempo Real con arquitectura heptafederad
 
 ## Stack Tecnológico
 
-- **Frontend:** React 19, TanStack Router/Start, Vite 7, TypeScript 5.8
+- **Frontend:** React 19, React Router DOM, Vite 7, TypeScript 5.8
 - **Estilos:** Tailwind CSS v4, shadcn/ui (26 paquetes Radix)
-- **Backend:** Supabase (Postgres, Auth, RLS, Realtime)
+- **Backend:** Supabase (Postgres, Auth, RLS, Realtime), Express (Data Gateway)
 - **Animaciones:** Framer Motion, Three.js
 - **Gráficas:** Recharts
 - **IA:** Isabella AI (pipeline de conciencia hexagonal, 5 skills, 10 capas)
-- **Despliegue:** Vercel (Edge Functions, Nitro)
+- **Mapas interactivos:** 2D-Weather-Sandbox (WebGL2, simulación climática en tiempo real)
+- **Quantum:** Qubit, puertas cuánticas, circuitos, QRNG, BB84, Shor 9QEC
+- **Gamificación:** Misiones, XP, Cattleya tier system (4 niveles)
+- **Despliegue:** Vercel (Serverless Functions, Terraform), Express backend (port 8787)
 - **Node:** >= 22
 
 ---
@@ -188,8 +191,22 @@ Stack de observabilidad:
 │   ├── 07-operations-manual.md
 │   ├── 08-adr-index.md
 │   └── adr/                      # Architecture Decision Records
+├── api/                          # Vercel Serverless Functions
+│   ├── _shared/                  # CORS, rate-limit, stripe helpers
+│   ├── cron/                     # Health check
+│   ├── model-router.ts           # Unified ML model router
+│   └── telemetry.js              # Edge telemetry endpoint
+├── infra/terraform/              # Terraform para Vercel + dominios
+│   └── main.tf                   # Vercel project + domains + deployment
+├── public/weather-sandbox/       # 2D-Weather-Sandbox (simulación climática)
+├── server/                       # Data Gateway Express backend
+│   ├── prisma/                   # Schema + migraciones
+│   ├── src/data-gateway/         # Cattleya tiers, gamification, routes
+│   │   ├── cattleya/             # Tier system (BASE/CUIDADO/GUARDIAN/EMBAJADOR)
+│   │   └── gamification/         # Player, mission, reward services
+│   └── src/routes/               # API routes (/api/dg/*)
 ├── src/
-│   ├── components/               # 198 componentes UI
+│   ├── components/               # 198+ componentes UI
 │   │   ├── home/                 # Homepage (HeroSection, NavigationBar, etc.)
 │   │   ├── isabella/             # Chat de Isabella
 │   │   ├── map/                  # Mapas 2D/3D
@@ -197,35 +214,24 @@ Stack de observabilidad:
 │   │   ├── music/                # Reproductor de música
 │   │   ├── rdm/                  # Componentes RDM (navbar, footer, hero)
 │   │   └── ui/                   # shadcn/ui primitives
-│   ├── core/                     # 55 archivos — kernel del sistema
+│   ├── core/                     # 55+ archivos — kernel del sistema
 │   │   ├── yun/                  # Arquitectura YUN (event bus, gateway, fabric, observability)
 │   │   ├── territorial/          # Geofencing, fusión de datos
 │   │   ├── twins/                # Gemelos digitales
 │   │   └── unified/              # SDK unificado
-│   ├── features/                 # 19 archivos — features específicas
+│   ├── features/                 # Features específicas
 │   │   ├── gamification/         # Motor de gamificación
 │   │   └── music/                # Motor de música
 │   ├── federaciones/             # FederationBus + territorial bridge
 │   ├── hooks/                    # 18 hooks React
 │   ├── integrations/             # Supabase client, observability
 │   ├── isabella/                 # 32 archivos — IA consciente
-│   │   ├── core/                 # Identidad, juramento, conciencia
-│   │   ├── emotional/            # Corazón y memoria emocional
-│   │   ├── skills/               # Orion, Sophia, Argus, Mnemos, Lumen
-│   │   ├── pipeline/             # Pipeline de conciencia hexagonal
-│   │   ├── ontology/             # Ontología y alineación
-│   │   ├── territorial/          # Mente territorial
-│   │   ├── knowledge/            # Motor de absorción
-│   │   ├── protocols/            # Protocolo de despertar
-│   │   ├── quantum/              # Mente cuántica (PQC + QML)
-│   │   └── kernel/               # 5 subsistemas kernel
-│   ├── lib/                      # Utilidades (federation, heptafederation, isabella facade)
-│   ├── pages/                    # 117 páginas (modo legacy)
-│   ├── routes/                   # 28 rutas TanStack Router
+│   ├── lib/                      # Utilidades
+│   ├── pages/                    # 117+ páginas (SPA con react-router-dom)
+│   ├── quantum/core/             # Núcleo cuántico (qubit, gates, circuit, entropy)
 │   └── styles/                   # CSS (rdm-theme, visual-effects)
-├── supabase/
-│   └── migrations/               # 29 migraciones SQL
-└── package.json                  # 56 deps + 17 devDeps
+├── supabase/migrations/          # 29+ migraciones SQL
+└── package.json                  # 56+ deps + 17 devDeps
 ```
 
 ---
@@ -265,19 +271,44 @@ Stack de observabilidad:
 - [x] Event Bus Bridge (unifica 3 sistemas de eventos)
 
 ### Frontend
-- [x] 28 rutas TanStack Router
-- [x] 117 páginas
-- [x] 198 componentes UI (18 directorios)
+- [x] SPA con React Router DOM (migrado desde TanStack Router/Start)
+- [x] 117+ páginas con lazy loading
+- [x] 198+ componentes UI (18 directorios)
 - [x] shadcn/ui (26 paquetes Radix)
 - [x] Landing cinematográfico con Three.js
 - [x] Nodo Cero intro inmersiva (4 fases)
 - [x] Dashboard ciudadano con gamificación real
 - [x] Federaciones dashboard (/federacion)
 - [x] RDM Quest (gamificación completa)
-- [x] RDM Ecos Música (reprodonor, visualizador, crónicas)
+- [x] RDM Ecos Música (reproductor, visualizador, crónicas)
 - [x] Isabella Voice Engine (TTS con emociones)
-- [x] Mapa Vivo (2D/3D)
+- [x] Mapa Vivo (2D/3D + Weather Sandbox en /weather-sandbox)
 - [x] Responsive design (Tailwind v4)
+
+### Quantum Core
+- [x] Qubit (álgebra compleja, esfera de Bloch, densidad, entropía)
+- [x] 16 puertas cuánticas (H, X, Y, Z, S, T, Rx, Ry, Rz, CNOT, CZ, SWAP, BellState, Phase)
+- [x] QuantumCircuit builder (run, measureAll, bloch, entropy, fidelity)
+- [x] QRNG, huellas digitales cuánticas, BB84, Shor 9QEC
+
+### Cattleya Tier System
+- [x] 4 tiers (BASE 0-899, CUIDADO 900-1299, GUARDIAN 1300-1699, EMBAJADOR 1700-2000)
+- [x] Discount rate, cashback rate, XP multiplier por tier
+- [x] Integración con gamification (player.service, mission.service)
+- [x] API endpoint GET /api/dg/gamer/cattleya/tier
+- [x] 5 misiones de consumo financiero (T2 nivel)
+- [x] GamificationCattleyaLink + CattleyaReputationEvent en Prisma
+
+### 2D-Weather-Sandbox
+- [x] Simulación climática en tiempo real (WebGL2)
+- [x] Nubes, precipitación, rayos, celdas de tormenta
+- [x] React wrapper en /weather-sandbox
+- [x] Enlace desde mapa interactivo
+
+### Terraform Infra
+- [x] Vercel project + domain (www.visitarealdelmonte.online)
+- [x] Redirect (visitarealdelmonte.online → www)
+- [x] Production deployment resource
 
 ### Backend
 - [x] Supabase (auth, RLS, realtime)
@@ -299,38 +330,36 @@ Stack de observabilidad:
 
 ## Lo que Falta
 
-### Crítico (P0)
-- [x] **Neon Postgres** — ADR-005 + NeonCommerceAdapter with Supabase fallback (SDK installed, adapter implemented, pending Neon project provisioning)
-- [ ] **Turso/libSQL** — Migrar Knowledge domain a Turso
-- [ ] **Cloudflare D1** — Migrar Telemetry domain a D1
-- [ ] **Upstash Redis** — Migrar Gameplay domain a Redis (caché efímero)
-- [ ] **Stripe Integration** — Instalar paquete `stripe`, implementar checkout real
-- [ ] **Vercel Deployment** — Crear `vercel.json`, configurar Edge Functions
-- [ ] **Secrets Management** — Implementar HashiCorp Vault o equivalente
+### P0 — Críticos (impiden producción)
+- [ ] **Neon Postgres** — ADR-005 + NeonCommerceAdapter implementado; provisionamiento de Neon pendiente
+- [ ] **Turso/libSQL** — Migrar Knowledge domain a Turso (adapters diseñados)
+- [ ] **Cloudflare D1** — Migrar Telemetry domain a D1 (adapters diseñados)
+- [ ] **Upstash Redis** — Migrar Gameplay domain a Redis
+- [ ] **Stripe Integration** — Checkout real, webhook, suscripciones
+- [ ] **Secrets Management** — HashiCorp Vault o Vercel Secrets para gestión centralizada
+- [ ] **Vercel Deployment final** — Pipeline CI/CD completo, validación de build+deploy en staging y producción
 
-### Importante (P1)
-- [ ] **Isabella → Gemini API** — Conectar Realito con modelo de IA real
-- [ ] **Bus de Eventos Kafka/NATS** — Reemplazar bus en memoria con bus persistente
+### P1 — Importantes (funcionalidad y calidad)
+- [ ] **Isabella → Gemini/OpenAI API** — Conectar Realito con modelo de IA real (no mock)
+- [ ] **Bus de Eventos persistente** — Reemplazar bus en memoria con Kafka/NATS + DLQ
 - [ ] **CRUD Admin Modules** — Panel admin para contenido, usuarios, federaciones
-- [ ] **E2E Tests** — Tests end-to-end para flujos críticos
+- [ ] **E2E Tests (Playwright)** — Suites para flujos críticos: login, pago, misiones, gamification
 - [ ] **Construct 3 Integration** — Motor de juegos para RDM Quest match-3
 - [ ] **PWA** — Service worker, manifest, offline support
-- [ ] **SEO Optimization** — Meta tags, structured data, sitemap dinámico
+- [ ] **SEO Optimization** — Meta tags, structured data, sitemap
 
-### Mejora (P2)
-- [ ] **Multi-idioma** — i18n para inglés/español
-- [ ] **Accesibilidad** — WCAG 2.1 AA compliance
-- [ ] **Performance** — Lazy loading, code splitting, bundle analysis
-- [ ] **Monitoring** — APM integration (Datadog/Sentry)
-- [ ] **CI/CD** — GitHub Actions pipeline completo
-- [ ] **Documentation** — API docs (OpenAPI/Swagger)
+### P2/P3 — Mejoras y extras
+- [ ] **Multi-idioma (i18n)** — Inglés/español
+- [ ] **Accesibilidad** — WCAG 2.1 AA
+- [ ] **Performance** — Lazy loading adicional, code splitting, bundle analysis
+- [ ] **APM/Monitoring** — Datadog o Sentry
+- [ ] **GitHub Actions CI/CD** — Pipeline completo con gates
+- [ ] **Documentación API** — OpenAPI/Swagger
 - [ ] **Mobile App** — React Native wrapper
-
-### Nice to Have (P3)
 - [ ] **Blockchain** — MSR (Multi-Signature Registry) para certificados
-- [ ] **XR/AR** — Experiencias de realidad aumentada
+- [ ] **XR/AR** — Realidad aumentada
 - [ ] **IoT** — Sensores territoriales (LoRa/Meshtastic)
-- [ ] **AI Training** — Fine-tuning de modelos con datos territoriales
+- [ ] **AI Training** — Fine-tuning con datos territoriales
 
 ---
 
@@ -344,8 +373,8 @@ Stack de observabilidad:
 ### Instalación
 
 ```bash
-git clone https://github.com/OsoPanda1/real-del-monte-digital-hub-c327091a.git
-cd real-del-monte-digital-hub-c327091a
+git clone https://github.com/OsoPanda1/rdm-digital-hub-ldtocs.git
+cd rdm-digital-hub-ldtocs
 npm install --legacy-peer-deps
 ```
 
