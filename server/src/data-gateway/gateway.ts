@@ -37,7 +37,9 @@ export class DataGateway {
   }
 
   private getSource(_entityType: EntityType): DataSource {
-    return this.sources.get("in-memory-store")!;
+    const source = this.sources.get("in-memory-store");
+    if (!source) throw new Error("DataGateway: no hay DataSource registrado");
+    return source;
   }
 
   private getSensitivity(entityType: EntityType): SensitivityLevel {

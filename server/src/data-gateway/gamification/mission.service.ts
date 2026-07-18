@@ -167,8 +167,8 @@ export const missionService = {
     await playerService.addVirtuePoints(playerId, mission.virtueReward);
 
     const rewards: GamificationRewardData[] = [];
-    if (newCount === 1) {
-      const reward = await guardianService.evaluateAndReward(playerId, mission);
+    if (newCount === 1 && playerData) {
+      const reward = await guardianService.evaluateAndReward(playerData, mission);
       if (reward) rewards.push(reward);
     }
 
@@ -180,7 +180,7 @@ export const missionService = {
     return {
       player: updatedPlayer,
       mission,
-      xpGained: mission.xpReward,
+      xpGained: adjustedXp,
       virtueGained: mission.virtueReward,
       rewards,
       newLevel: updatedPlayer.level,

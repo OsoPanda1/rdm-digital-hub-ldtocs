@@ -316,6 +316,8 @@ Stack de observabilidad:
 - [x] Vercel Edge Functions (health check, stripe webhook)
 - [x] CORS/rate-limit helpers
 - [x] RLS hardening (P0)
+- [x] Data Gateway audit + bugfixes (XP multiplier, evaluateAndReward, avatar, getSource, CattleyaBenefits, setGuardian)
+- [x] Data Gateway tests (38 tests — cache, audit, journal, store, cattleya tiers, guardian, player, mission)
 
 ### Data
 - [x] 7 federaciones definidas con dominios
@@ -327,6 +329,17 @@ Stack de observabilidad:
 - [x] Voice Logs (isabella_voice_logs)
 
 ---
+
+### Protocolo de Congelamiento (por Fases)
+- [x] **Fase 0** — Fixes de deploy (process.env, Buffer, CORS, rate-limit, JS/TS duplicados)
+- [x] **Fase 1** — YUN + YUN BE (18 archivos, 67 tests)
+- [x] **Fase 2a** — DB Core (18 archivos, Prisma/schema corregido, env placeholders)
+- [x] **Fase 2b** — Data Gateway (17 archivos, 38 tests, bugs corregidos)
+- [ ] **Fase 2c** — FederationBus (audit + tests)
+- [ ] **Fase 3** — Isabella (32 archivos auditados)
+- [ ] **Fase 4** — Conexiones + Vercel deploy production
+- [ ] **Fase 5** — Frontend (páginas, componentes, hooks)
+- [ ] **Fase 6** — Pendientes
 
 ## Lo que Falta
 

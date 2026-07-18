@@ -22,20 +22,26 @@ export const guardianService = {
     let targetGuardian: GamificationGuardianData;
     let reason: string;
 
+    const defaultGuardian: GamificationGuardianData = {
+      id: 1, code: "GUARDIAN_OBSERVADOR", name: "Guardian Observador",
+      description: "Estás comenzando tu viaje.", archetype: "observador", primaryVirtue: "curiosidad",
+    };
+    const currentGuardian = player.avatar ?? defaultGuardian;
+
     if (player.virtuePoints >= 300 && player.xp >= 1500) {
-      targetGuardian = await playerService.findGuardianByCode("GUARDIAN_SABIDURIA") ?? player.avatar!;
+      targetGuardian = await playerService.findGuardianByCode("GUARDIAN_SABIDURIA") ?? currentGuardian;
       reason = "Has acumulado sabiduría a través de acciones consistentes.";
     } else if (player.virtuePoints >= 200 && player.level >= 5) {
-      targetGuardian = await playerService.findGuardianByCode("GUARDIAN_COMUNIDAD") ?? player.avatar!;
+      targetGuardian = await playerService.findGuardianByCode("GUARDIAN_COMUNIDAD") ?? currentGuardian;
       reason = "Tu impacto en la comunidad es cada vez mayor.";
     } else if (player.virtuePoints >= 150 && player.xp >= 800) {
-      targetGuardian = await playerService.findGuardianByCode("GUARDIAN_RESILIENCIA") ?? player.avatar!;
+      targetGuardian = await playerService.findGuardianByCode("GUARDIAN_RESILIENCIA") ?? currentGuardian;
       reason = "Has demostrado resiliencia frente a los desafíos.";
     } else if (player.virtuePoints >= 80 && player.level >= 3) {
-      targetGuardian = await playerService.findGuardianByCode("GUARDIAN_CREACION") ?? player.avatar!;
+      targetGuardian = await playerService.findGuardianByCode("GUARDIAN_CREACION") ?? currentGuardian;
       reason = "Tu creatividad florece en cada acción.";
     } else if (player.virtuePoints >= 30 && player.level >= 2) {
-      targetGuardian = await playerService.findGuardianByCode("GUARDIAN_CALMA") ?? player.avatar!;
+      targetGuardian = await playerService.findGuardianByCode("GUARDIAN_CALMA") ?? currentGuardian;
       reason = "Has cultivado calma en tu viaje.";
     } else {
       targetGuardian = await playerService.findGuardianByCode("GUARDIAN_OBSERVADOR") ?? {

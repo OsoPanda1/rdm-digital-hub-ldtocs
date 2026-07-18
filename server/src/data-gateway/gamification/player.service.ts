@@ -4,13 +4,15 @@ import type {
   GamificationGuardianData,
   GamificationRewardData,
   EmotionStateData,
-  CattleyaBenefits,
 } from "../types.js";
-import { cattleyaService } from "../cattleya/tier.service.js";
+import { cattleyaService, type CattleyaTier, type TierBenefits } from "../cattleya/tier.service.js";
+
+type CattleyaResult = { tier: CattleyaTier; benefits: TierBenefits };
+export type GamificationPlayerWithCattleya = GamificationPlayerData & { cattleya: CattleyaResult };
 
 interface GamificationPlayerRecord extends GamificationPlayerData {
   rewards: GamificationRewardData[];
-  cattleya?: CattleyaBenefits;
+  cattleya?: CattleyaResult;
 }
 
 class GamificationPlayerStore {
@@ -77,7 +79,7 @@ const guardianSeeds: GamificationGuardianData[] = [
 ];
 
 export const playerService = {
-  async getOrCreate(supabaseUserId: string, displayName?: string): Promise<GamificationPlayerData> {
+  async getOrCreate(supabaseUserId: string, displayName?: string): Promise<GamificationPlayerWithCattleya> {
     let player = await playerStore.findBySupabaseId(supabaseUserId);
     if (!player) {
       player = await playerStore.create({ supabaseUserId, displayName });
@@ -86,14 +88,14 @@ export const playerService = {
     return { ...player, cattleya };
   },
 
-  async getById(id: number): Promise<GamificationPlayerData | null> {
+  async getById(id: number): Promise<GamificationPlayerWithCattleya | null> {
     const player = await playerStore.findById(id);
     if (!player) return null;
     const cattleya = cattleyaService.computeTier(player.reputationScore);
     return { ...player, cattleya };
   },
 
-  async getBySupabaseId(supabaseUserId: string): Promise<GamificationPlayerData | null> {
+  async getBySupabaseId(supabaseUserId: string): Promise<GamificationPlayerWithCattleya | null> {
     const player = await playerStore.findBySupabaseId(supabaseUserId);
     if (!player) return null;
     const cattleya = cattleyaService.computeTier(player.reputationScore);
@@ -117,7 +119,7 @@ export const playerService = {
   },
 
   async setGuardian(playerId: number, guardianId: number): Promise<GamificationPlayerData | null> {
-    return playerStore.update(playerId, { avatarId: guardianId } as Partial<GamificationPlayerRecord>);
+    return playerStore.update(playerId, { avatarId: guardianId });
   },
 
   async getGuardians(): Promise<GamificationGuardianData[]> {
