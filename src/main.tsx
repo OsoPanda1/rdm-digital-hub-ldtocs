@@ -45,20 +45,9 @@ const BootstrapFallback = ({
   </div>
 )
 
-function initSentry() {
-  const dsn = import.meta.env.VITE_SENTRY_DSN;
-  if (dsn) {
-    console.log('[Sentry] DSN configured');
-  } else {
-    console.debug('[Sentry] No DSN configured — skipping');
-  }
-}
-
 async function bootstrap() {
   try {
     const { default: App } = await import('./App')
-
-    initSentry()
 
     root.render(
       <React.StrictMode>

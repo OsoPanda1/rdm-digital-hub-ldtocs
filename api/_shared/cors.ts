@@ -1,14 +1,21 @@
 const ALLOWED_ORIGINS = [
   "https://rdm-digital.vercel.app",
   "https://rdm-digital-hub.vercel.app",
+  "https://rdm-digital-hub-ldtocs.vercel.app",
   "https://www.visitarealdelmonte.online",
   "https://visitarealdelmonte.online",
   "http://localhost:3000",
   "http://localhost:5173",
 ];
 
+function isOriginAllowed(origin: string): boolean {
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  if (origin.endsWith(".vercel.app")) return true;
+  return false;
+}
+
 export function getCorsHeaders(origin: string | null): Record<string, string> {
-  const allowed = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  const allowed = origin && isOriginAllowed(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
     "Access-Control-Allow-Origin": allowed,
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",

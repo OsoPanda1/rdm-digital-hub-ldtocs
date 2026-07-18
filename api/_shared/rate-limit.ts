@@ -1,4 +1,15 @@
 const hits = new Map<string, { count: number; resetAt: number }>();
+let lastCleanup = Date.now();
+const CLEANUP_INTERVAL_MS = 60_000;
+
+function cleanupExpired(): void {
+  const now = Date.now();
+  if (now - lastCleanup < CLEANUP_INTERVAL_MS) return;
+  lastCleanup = now;
+  for (const [key, entry] of hits) {
+    if (now > entry.resetAt) hits.delete(key);
+  }
+}
 
 export const RATE_LIMITS = {
   SCE_INGEST: { limit: 120, windowMs: 60000 },
@@ -16,6 +27,7 @@ export function checkRateLimit(
   limit = 60,
   windowMs = 60_000,
 ): { allowed: boolean; remaining: number; retryAfter?: number } {
+  cleanupExpired();
   const now = Date.now();
   const entry = hits.get(key);
 

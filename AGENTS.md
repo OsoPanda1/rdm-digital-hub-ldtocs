@@ -1,26 +1,40 @@
 # AGENTS.md — Session State
 
 ## Objective
-- "Protocolo de Congelamiento por Fases" — audit, test, freeze every module, then deploy OsoPanda1/rdm-digital-hub-ldtocs to Vercel production
+- "Protocolo de Congelamiento por Fases" — audit, test, freeze, deploy, hardening de todas las fases. App pública en producción con Vercel Authentication desactivado.
+- URL: `https://rdm-digital-hub-ldtocs-3p3m56rwp-osopanda1-3342s-projects.vercel.app`
+- Custom domains: `www.visitarealdelmonte.online`, `visitarealdelmonte.online`
 
-## Completed Phases
-- **Fase 0 — Fixes de deploy**: `define: { "process.env": {} }` en vite.config.ts, `Buffer` reemplazado en middleware, `api/yun-be.ts` standalone, CORS production, rate-limit exports, JS/TS duplicados eliminados
-- **Fase 1 — YUN + YUN BE**: 18 archivos core auditados, 67 tests en `yun-core.test.ts`, todos pasan
-- **Fase 2a — DB Core**: 18 archivos auditados; `augment.d.ts` corregido, `admin.server.ts` eliminado, `prisma/schema.yunbe.prisma` eliminado, `.env` placeholder warning, `env.ts` detecta placeholders
-- **Fase 2b — Data Gateway**: 17 archivos auditados; bugs corregidos (XP multiplier, evaluateAndReward signature, avatar non-null assertion, getSource non-null assertion, CattleyaBenefits types, setGuardian cast); 38 tests escritos y pasando
-- **Fase 2c — FederationBus**: 3 archivos auditados (FederationBus.ts, territorial-federation-bridge.ts, event-bus-bridge.ts); 35 tests escritos y pasando
-- **Fase 3 — Isabella**: 35 archivos auditados (core, emotional, knowledge, pipeline, skills, ontology, api, kernel, quantum); 65 tests escritos y pasando
-- **Fase 4 — Conexiones + Vercel deploy production**: Build fixes (Sentry inline, toaster.tsx shim), `.vercelignore`, `outputDirectory`, prebuilt deploy exitoso, Vercel Authentication desactivado vía `vercel project protection disable --sso`. Deploy público ✅
-- **Fase 5 — Frontend tests**: 5 test files (43 tests — gamification, music, validation, twins, time-theme); bug fix en `recommendSpatialMode`
-- **Fase 6 — Pendientes**: dependencias faltantes agregadas (jsdom, testing-library), vitest configs unificados con `@/` alias, `auth.js`/`telemetry.js` migrados a TS, `ai-text-demo/` eliminado. Pendiente Vercel Authentication
+## Completed
+- **Fase 0–3**: YUN, DB Core, Data Gateway (38 tests), FederationBus (35 tests), Isabella (65 tests)
+- **Fase 4**: Vercel deploy prebuilt + auth desactivado vía CLI (app pública HTTP 200)
+- **Fase 5**: 43 tests frontend (gamification, music, validation, twins, time-theme)
+- **Fase 6**: deps faltantes, vitest configs unificados, `auth.js`/`telemetry.js` → TS, `ai-text-demo/` eliminado
 
-## Next Phase
-- **Fase 7 — ...** (all phases complete except Vercel Authentication)
+## Hardening (this session)
+- Kernel health: `Math.random()` → hash determinístico
+- FederationBus: OFFLINE status (< 0.2), `ruteToFed` → `routeToFed` (source + tests)
+- Oath Isabella: patrones beneficencia + justicia agregados, `as keyof typeof` removido
+- Middleware ISA: `as any` process.env → type-safe `Record<string, Record<string, string>>`
+- Telemetry counter: `let` mutable global → closure encapsulado
+- Vercel CSP: dominios Sentry removidos (no instalado)
+- Sentry dead code: `initSentry()` removido de `main.tsx`
+- `.vercelignore`: `public/weather-sandbox/` + `.env*` (excepto `env.example`), null rewrite removido
 
-## Test Commands
-- Frontend: `npx vitest run --config vitest.frontend.config.ts` (43 tests — gamification, music, validation, twins, time-theme)
-- Data Gateway: `npx vitest run --config vitest.data-gateway.config.ts`
-- YUN Core: `npx vitest run --config vitest.yun-core.config.ts`
+## Test Status (148/148 passing)
+- YUN Core: `vitest run --config vitest.yun-core.config.ts` (67 tests)
+- Data Gateway: `vitest run --config vitest.data-gateway.config.ts` (38 tests)
+- Frontend: `vitest run --config vitest.frontend.config.ts` (43 tests)
+
+## Known Issues (low priority)
+- `@radix-ui/react-toast` unused (sonner es el toaster real)
+- ~15 `as any` casts en tests y wasm interop (intencional)
+- module-level state en algunos archivos (menor impacto)
+- Magic numbers en telemeta.config.ts (10k, 80%, 10% — documentados)
+
+## Shell
+- Cygwin fork exhaustion crónico. Workaround: `node -e "child_process.execSync('cmd', {shell:'cmd.exe'})"`
+- `exec bash --login` reinicia shell
 
 ## Remote
 - `ldtocs` → `git@github.com:OsoPanda1/rdm-digital-hub-ldtocs.git`

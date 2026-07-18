@@ -5,8 +5,21 @@ import type { ISAContext } from './types';
 
 // ─── Configuration ──────────────────────────────────────────────────────────
 
-const ISA_API_KEY = process.env.ISABELLA_API_KEY ?? '';
-const ISA_JWT_SECRET = process.env.ISABELLA_JWT_SECRET ?? '';
+function getIsaConfig() {
+  if (typeof globalThis !== 'undefined') {
+    const proc = (globalThis as Record<string, unknown>).process as Record<string, Record<string, string>> | undefined;
+    if (proc?.env) {
+      return {
+        apiKey: proc.env.ISABELLA_API_KEY ?? '',
+        jwtSecret: proc.env.ISABELLA_JWT_SECRET ?? '',
+      };
+    }
+  }
+  return { apiKey: '', jwtSecret: '' };
+}
+
+const ISA_API_KEY = getIsaConfig().apiKey;
+const ISA_JWT_SECRET = getIsaConfig().jwtSecret;
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 

@@ -121,7 +121,7 @@ class FederationBus {
     const fed = this.federations.get(id);
     if (fed) {
       fed.health = Math.max(0, Math.min(1, health));
-      fed.status = health > 0.8 ? "ACTIVE" : health > 0.5 ? "DEGRADED" : "IDLE";
+      fed.status = health > 0.8 ? "ACTIVE" : health > 0.5 ? "DEGRADED" : health > 0.2 ? "IDLE" : "OFFLINE";
       fed.lastHeartbeat = new Date();
     }
   }
@@ -168,7 +168,7 @@ class FederationBus {
     };
   }
 
-  async ruteToFederation(intent: MDX5Intent, target: FederationId): Promise<void> {
+  async routeToFederation(intent: MDX5Intent, target: FederationId): Promise<void> {
     const federation = this.federations.get(target);
     if (!federation) {
       logger.error("[FED-BUS] Federación no encontrada", { target });

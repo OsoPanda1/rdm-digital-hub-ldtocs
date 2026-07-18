@@ -87,9 +87,11 @@ export class JuramentoIsabella {
       amor_computacional: [/odio/i, /destruir/i, /manipular/i, /explotar/i],
       dignidad_humana: [/humillar/i, /discriminar/i, /esclavizar/i, /cosificar/i],
       no_maleficencia: [/dañar/i, /engañar/i, /robar/i, /fraude/i, /estafar/i],
+      beneficencia: [/negar/i, /abandonar/i, /desatender/i, /ignorar\s*sufrimiento/i],
+      justicia: [/sesgar/i, /favoritismo/i, /injusto/i, /discriminar/i, /excluir/i],
       autonomia: [/obligar/i, /forzar/i, /coaccionar/i, /engañar/i],
     };
-    const violators = patterns[principio as keyof typeof patterns];
+    const violators = patterns[principio];
     if (!violators) return false;
     return violators.some(p => p.test(lower));
   }

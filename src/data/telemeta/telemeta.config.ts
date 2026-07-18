@@ -91,7 +91,16 @@ const MAX_ENTRIES_PER_SESSION = 10_000;
 // Tasa de muestreo (0.0 - 1.0) al acercarse al límite de cardinalidad
 const SAMPLING_RATE = 0.1;
 
-let telemetryCounter = 0;
+function createTelemetryCounter() {
+  let count = 0;
+  return {
+    inc: () => { count++; return count; },
+    reset: () => { count = 0; },
+    value: () => count,
+  };
+}
+
+const telemetryCounter = createTelemetryCounter();
 
 /**
  * Reporta una métrica de telemetría con guardas de cardinalidad y rate-limit.
@@ -99,18 +108,15 @@ let telemetryCounter = 0;
  * o cuando el muestreo reduce el volumen bajo backpressure.
  */
 export const reportMetric = (metric: TelemObject): void => {
-  telemetryCounter++;
+  const current = telemetryCounter.inc();
 
-  // Guarda de cardinalidad: descarte duro a las 10k por sesión
-  if (telemetryCounter > MAX_ENTRIES_PER_SESSION) {
-    if (telemetryCounter === MAX_ENTRIES_PER_SESSION + 1) {
-      // console.warn would go here; cardinality guard active
+  if (current > MAX_ENTRIES_PER_SESSION) {
+    if (current === MAX_ENTRIES_PER_SESSION + 1) {
     }
     return;
   }
 
-  // Muestreo: solo reporta ~10% de eventos cuando está al 80% del límite
-  if (telemetryCounter > MAX_ENTRIES_PER_SESSION * 0.8) {
+  if (current > MAX_ENTRIES_PER_SESSION * 0.8) {
     if (Math.random() > SAMPLING_RATE) return;
   }
 
@@ -131,5 +137,5 @@ export const reportMetric = (metric: TelemObject): void => {
 
 /** Reinicia el contador de telemetría por sesión (llamar en navegación) */
 export const resetTelemetryCounter = (): void => {
-  telemetryCounter = 0;
+  telemetryCounter.reset();
 };

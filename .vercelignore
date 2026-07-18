@@ -10,6 +10,8 @@ AGENTS.md
 docs/
 tsconfig.json
 tsconfig.*.json
-public/weather-sandbox/src/
+public/weather-sandbox/
 docker-compose.yml
 Dockerfile
+.env*
+!env.example

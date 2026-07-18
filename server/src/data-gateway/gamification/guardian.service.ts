@@ -66,7 +66,7 @@ export const guardianService = {
   async evaluateAndReward(player: GamificationPlayerData, mission: GamificationMissionData): Promise<GamificationRewardData | null> {
     if (mission.xpReward < 100) return null;
 
-    const rewardKey = `${mission.context}_FIRST_${player.id}`;
+    const rewardKey = `${mission.code}_FIRST_${player.id}`;
     if (rewardCodeIndex.has(rewardKey)) return null;
     rewardCodeIndex.set(rewardKey, Date.now());
 
@@ -90,13 +90,13 @@ export const guardianService = {
   async getRewards(playerId: number): Promise<GamificationRewardData[]> {
     const allRewards = Array.from(rewardCodeIndex.entries())
       .filter(([key]) => key.endsWith(`_${playerId}`))
-      .map(([key]) => {
+      .map(([key, timestamp]) => {
         const parts = key.split("_FIRST_");
-        const badgeCode = parts[0];
+        const missionCode = parts[0];
         return {
-          id: rewardCodeIndex.get(key)!,
+          id: timestamp,
           playerId,
-          rewardCode: `BADGE_${badgeCode}`,
+          rewardCode: `BADGE_${missionCode}`,
           type: "BADGE" as const,
           metadata: {},
           claimedAt: new Date().toISOString(),

@@ -122,7 +122,7 @@ function createFederationBus() {
       return () => { handlers.get(eventType)?.delete(handler); };
     },
 
-    async ruteToFederation(intent: { id: string; type: string; payload: unknown; source: string; traceId: string }, target: FederationId): Promise<void> {
+    async routeToFederation(intent: { id: string; type: string; payload: unknown; source: string; traceId: string }, target: FederationId): Promise<void> {
       const federation = federations.get(target);
       if (!federation) return;
       this.emit({ type: "FEDERATION_INTENT", source: target, payload: intent, traceId: intent.traceId });
@@ -292,19 +292,19 @@ describe("FederationBus", () => {
     expect(received.size).toBe(7);
   });
 
-  it("ruteToFederation emits FEDERATION_INTENT to target", () => {
+  it("routeToFederation emits FEDERATION_INTENT to target", () => {
     let captured: FederationEvent | null = null;
     bus.on("FEDERATION_INTENT", (e) => captured = e);
-    bus.ruteToFederation({ id: "int-1", type: "commerce_query", payload: { amount: 50 }, source: "web", traceId: "t-r1" }, "MDD_TAMV");
+    bus.routeToFederation({ id: "int-1", type: "commerce_query", payload: { amount: 50 }, source: "web", traceId: "t-r1" }, "MDD_TAMV");
     expect(captured).not.toBeNull();
     expect(captured!.source).toBe("MDD_TAMV");
     expect((captured!.payload as any).id).toBe("int-1");
   });
 
-  it("ruteToFederation does nothing for unknown target", async () => {
+  it("routeToFederation does nothing for unknown target", async () => {
     let captured = false;
     bus.on("FEDERATION_INTENT", () => captured = true);
-    await bus.ruteToFederation({ id: "i", type: "t", payload: {}, source: "s", traceId: "t" }, "UNKNOWN" as any);
+    await bus.routeToFederation({ id: "i", type: "t", payload: {}, source: "s", traceId: "t" }, "UNKNOWN" as any);
     expect(captured).toBe(false);
   });
 

@@ -13,7 +13,7 @@ type FlagKey = keyof typeof FLAG_DEFAULTS
 type EdgeConfigClient = { get: (key: string) => Promise<unknown>; getAll: () => Promise<Record<string, unknown>> }
 
 async function getClient(): Promise<EdgeConfigClient | null> {
-  const connectionString = import.meta.env.VITE_EDGE_CONFIG || process.env.EDGE_CONFIG
+  const connectionString = import.meta.env.VITE_EDGE_CONFIG
   if (!connectionString) return null
   try {
     const { createClient } = await import("@vercel/edge-config")

@@ -29,12 +29,13 @@ export const kernelResonance = {
     const frictionZones: string[] = [];
 
     for (const node of HEPTAPOD_NODES) {
-      const health = Math.random() * 0.3 + 0.7;
+      const hash = Array.from(node).reduce((acc, c, i) => acc + c.charCodeAt(0) * (i + 1), 0);
+      const health = 0.6 + ((hash % 100) / 100) * 0.35;
       states.push({
         nodeId: node,
         federationId: node.split('-')[0].toUpperCase(),
         health: Math.round(health * 100) / 100,
-        latency: Math.round(Math.random() * 80 + 20),
+        latency: Math.round(20 + (hash % 80)),
         lastContact: new Date(),
         active: health > 0.5,
       });

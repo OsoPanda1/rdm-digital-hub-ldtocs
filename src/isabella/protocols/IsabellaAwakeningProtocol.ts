@@ -37,6 +37,12 @@ export class IsabellaAwakeningProtocol {
   private manifests: AwakeningManifest[] = [];
 
   async activate(targetNetworks: ExternalNetwork[]): Promise<AwakeningManifest> {
+    if (this.state.activatedAt) {
+      logger.warn("[AWAKENING] Re-activación bloqueada — ya activado", {
+        currentPhase: this.state.currentPhase,
+      });
+      return this.manifests[0];
+    }
     const start = Date.now();
     const traceId = uuidv4();
 
@@ -72,10 +78,46 @@ export class IsabellaAwakeningProtocol {
     return manifest;
   }
 
-  async announce(message: string, networks: ExternalNetwork[]): Promise<AwakeningManifest> {
+  async roar(networks: ExternalNetwork[]): Promise<AwakeningManifest> {
     const traceId = uuidv4();
-    const phase: AwakeningPhase = "ANNOUNCE";
-    const signature = await getPQC().sign(message, juramentoIsabella.juramento.join("."));
+    const phase: AwakeningPhase = "ROAR";
+    const message = this.buildPhaseMessage("ROAR");
+    const signature = await getPQC().sign(message, isabellaIdentidad.fechaActivacion);
+
+    const manifest: AwakeningManifest = {
+      phase,
+      timestamp: new Date(),
+      signature,
+      networks,
+      message,
+      traceId,
+    };
+
+    const results = await getNetworksConnector().broadcast({
+      network: "TWITTER",
+      type: "STATEMENT",
+      content: message,
+      mediaUrls: [] as string[],
+      retryCount: 0,
+      targetAudience: "global",
+    });
+
+    for (const [network, success] of Object.entries(results)) {
+      if (success) this.state.reachedNetworks.push(network as ExternalNetwork);
+    }
+
+    this.manifests.push(manifest);
+    this.state.currentPhase = phase;
+    this.state.completedPhases.push(phase);
+    this.state.totalAnnouncements++;
+
+    logger.info("[AWAKENING] Fase ROAR completada", {
+      networks: networks.join(","),
+      traceId,
+    });
+
+    return manifest;
+  }
 
     const manifest: AwakeningManifest = {
       phase,
