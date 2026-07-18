@@ -1,18 +1,20 @@
 -- =============================================================
--- RDM-SCE: Esquema de Persistencia Geoespacial
+-- RDM-SCE: Esquema de Persistencia Geoespacial de Producción
 -- PostGIS + TimescaleDB para el Ecosistema Georreferenciado RDM
+-- Versión: v1alpha — Manifiesto de Soberanía Geoespacial
 -- =============================================================
 
--- Extensiones obligatorias del motor
+-- Extensiones críticas del motor
 CREATE EXTENSION IF NOT EXISTS postgis;
 CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- =============================================================
--- TABLA MAESTRA: Snapshots de estado S-NDTM (Digital Twins)
+-- TABLA MAESTRA INMUTABLE: Snapshots de estado S-NDTM
 -- =============================================================
 CREATE TABLE rdm_spatial_network_twin_states (
     twin_id UUID NOT NULL,
+    twin_type VARCHAR(50) NOT NULL,
     timestamp TIMESTAMPTZ NOT NULL,
     current_position GEOMETRY(Point, 4326) NOT NULL,
     accuracy_radius_meters DOUBLE PRECISION NOT NULL,
@@ -37,33 +39,69 @@ CREATE TABLE rdm_spatial_network_twin_states (
     merkle_hash VARCHAR(64),
     previous_hash VARCHAR(64),
     sequence BIGINT NOT NULL DEFAULT 1,
+    delta_distance_meters DOUBLE PRECISION DEFAULT 0,
+    calculated_velocity_mps DOUBLE PRECISION DEFAULT 0,
+    time_delta_seconds DOUBLE PRECISION DEFAULT 0,
 
     PRIMARY KEY (twin_id, timestamp)
 );
 
--- Hypertable con particionamiento temporal
+-- Hypertable con particionamiento temporal diario
 SELECT create_hypertable(
     'rdm_spatial_network_twin_states',
     'timestamp',
     chunk_time_interval => INTERVAL '24 hours'
 );
 
--- Índice espacial GIST para búsquedas topológicas
-CREATE INDEX idx_rdm_states_spatial
+-- Configuración de compresión segmentada por twin_type y federation_id
+ALTER TABLE rdm_spatial_network_twin_states SET (
+    timescaledb.compress,
+    timescaledb.compress_segmentby = 'twin_id, twin_type, federation_id',
+    timescaledb.compress_orderby = 'timestamp DESC'
+);
+
+-- Política de compresión automática después de 7 días
+SELECT add_compression_policy('rdm_spatial_network_twin_states', INTERVAL '7 days');
+
+-- Índice espacial GIST para búsquedas topológicas ultra-rápidas
+CREATE INDEX idx_rdm_states_spatial_geom
     ON rdm_spatial_network_twin_states
     USING GIST (current_position);
 
--- Índice compuesto federado para análisis de red
-CREATE INDEX idx_rdm_states_network_fed
-    ON rdm_spatial_network_twin_states (federation_id, node_id, timestamp DESC);
+-- Índice compuesto para consultas analíticas de red por federación
+CREATE INDEX idx_rdm_states_analytics_fed
+    ON rdm_spatial_network_twin_states (federation_id, threat_level, timestamp DESC);
 
--- Índice para búsquedas por twin_id
-CREATE INDEX idx_rdm_states_twin_id
+-- Índice para búsquedas por twin_id con orden temporal
+CREATE INDEX idx_rdm_states_twin_lookup
     ON rdm_spatial_network_twin_states (twin_id, timestamp DESC);
 
 -- Índice de zonificación INEGI
 CREATE INDEX idx_rdm_states_territorial
     ON rdm_spatial_network_twin_states (municipality_code, neighborhood);
+
+-- =============================================================
+-- VISTA MATERIALIZADA: Densidad peatonal por barrio
+-- Agregación continua cada 5 minutos
+-- =============================================================
+CREATE MATERIALIZED VIEW rdm_neighborhood_density_summary
+WITH (timescaledb.continuous_aggregate = true) AS
+SELECT
+    time_bucket(INTERVAL '5 minutes', timestamp) AS bucket,
+    neighborhood,
+    municipality_code,
+    federation_id,
+    COUNT(DISTINCT twin_id) AS active_twins_count,
+    AVG(velocity_mps) AS average_velocity_mps,
+    AVG(confidence_score) AS avg_confidence
+FROM rdm_spatial_network_twin_states
+GROUP BY bucket, neighborhood, municipality_code, federation_id;
+
+SELECT add_continuous_aggregate_policy('rdm_neighborhood_density_summary',
+    start_offset => INTERVAL '1 hour',
+    end_offset => INTERVAL '5 minutes',
+    schedule_interval => INTERVAL '5 minutes'
+);
 
 -- =============================================================
 -- TABLA: Perímetros de Geocercas (Geofences) Semánticas
@@ -85,7 +123,7 @@ CREATE INDEX idx_rdm_geofences_spatial
     ON rdm_geofences USING GIST (boundary);
 
 -- =============================================================
--- TABLA: Eventos de Geocerca (enter/exit/dwell)
+-- TABLA: Eventos de Geocerca
 -- =============================================================
 CREATE TABLE rdm_geofence_events (
     event_id BIGSERIAL,
@@ -148,10 +186,10 @@ CREATE TABLE rdm_sovereignty_policies (
 );
 
 -- =============================================================
--- FUNCIONES DE CONSULTA GEOESPACIAL
+-- FUNCIONES GEOESPACIALES DE PRODUCCIÓN
 -- =============================================================
 
--- Obtener twins dentro de un radio determinado
+-- Obtener twins dentro de un radio
 CREATE OR REPLACE FUNCTION rdm_find_twins_within_radius(
     center_lon DOUBLE PRECISION,
     center_lat DOUBLE PRECISION,
@@ -160,22 +198,21 @@ CREATE OR REPLACE FUNCTION rdm_find_twins_within_radius(
 )
 RETURNS TABLE(
     twin_id UUID,
+    twin_type VARCHAR(50),
     timestamp TIMESTAMPTZ,
     distance_meters DOUBLE PRECISION,
     federation_id INT,
-    motion_type VARCHAR(30)
+    motion_type VARCHAR(30),
+    threat_level VARCHAR(20)
 )
-LANGUAGE SQL STABLE
-AS $$
+LANGUAGE SQL STABLE AS $$
     SELECT DISTINCT ON (twin_id)
-        twin_id,
-        timestamp,
+        twin_id, twin_type, timestamp,
         ST_Distance(
             current_position,
             ST_SetSRID(ST_MakePoint(center_lon, center_lat), 4326)::GEOGRAPHY
         ) AS distance_meters,
-        federation_id,
-        motion_type
+        federation_id, motion_type, threat_level
     FROM rdm_spatial_network_twin_states
     WHERE timestamp > NOW() - (max_age_minutes || ' minutes')::INTERVAL
       AND ST_DWithin(
@@ -186,39 +223,35 @@ AS $$
     ORDER BY twin_id, timestamp DESC
 $$;
 
--- Obtener heatmap de densidad federada
+-- Generar heatmap de densidad federada por cuadrícula
 CREATE OR REPLACE FUNCTION rdm_federation_heatmap(
-    grid_size_meters DOUBLE PRECISION DEFAULT 100,
+    grid_degrees DOUBLE PRECISION DEFAULT 0.001,
     max_age_minutes INT DEFAULT 10
 )
 RETURNS TABLE(
     federation_id INT,
     cell_center GEOMETRY(Point, 4326),
     twin_count BIGINT,
-    avg_confidence REAL
+    avg_confidence REAL,
+    primary_twin_type VARCHAR(50)
 )
-LANGUAGE SQL STABLE
-AS $$
+LANGUAGE SQL STABLE AS $$
     SELECT
         federation_id,
         ST_SetSRID(ST_MakePoint(
-            floor(ST_X(current_position) / grid_size_meters * 1000) * grid_size_meters / 1000,
-            floor(ST_Y(current_position) / grid_size_meters * 1000) * grid_size_meters / 1000
+            floor(ST_X(current_position) / grid_degrees) * grid_degrees + grid_degrees/2,
+            floor(ST_Y(current_position) / grid_degrees) * grid_degrees + grid_degrees/2
         ), 4326) AS cell_center,
         COUNT(DISTINCT twin_id) AS twin_count,
-        AVG(confidence_score)::REAL AS avg_confidence
+        AVG(confidence_score)::REAL AS avg_confidence,
+        mode() WITHIN GROUP (ORDER BY twin_type) AS primary_twin_type
     FROM rdm_spatial_network_twin_states
     WHERE timestamp > NOW() - (max_age_minutes || ' minutes')::INTERVAL
     GROUP BY federation_id, cell_center
     ORDER BY twin_count DESC
 $$;
 
--- =============================================================
--- POLÍTICAS DE RETENCIÓN (TimescaleDB)
--- =============================================================
+-- Políticas de retención
 SELECT add_retention_policy('rdm_spatial_network_twin_states', INTERVAL '90 days');
 SELECT add_retention_policy('rdm_geofence_events', INTERVAL '30 days');
 SELECT add_retention_policy('rdm_yun_merkle_snapshots', INTERVAL '365 days');
-
--- Política de compresión para datos mayores a 7 días
-SELECT add_compression_policy('rdm_spatial_network_twin_states', INTERVAL '7 days');

@@ -1,4 +1,4 @@
-import type { SndtState, GeoPoint, ThreatLevel, ConnectionType } from "../types"
+import type { GeoPoint, ThreatLevel, ConnectionType, TwinType, ComputedMetrics } from "../types"
 
 export interface RegoRule {
   name: string
@@ -7,7 +7,7 @@ export interface RegoRule {
 }
 
 export interface RuleInput {
-  twin_type: string
+  twin_type: TwinType
   spatial_state: {
     current_position: GeoPoint
     accuracy_radius_meters: number
@@ -23,7 +23,7 @@ export interface RuleInput {
     confidence_score: number
     location_source: string
   }
-  previous_state?: SndtState["spatial_state"]
+  computed_metrics?: ComputedMetrics
   timestamp: number
 }
 
@@ -38,51 +38,50 @@ export interface RuleOutput {
 export const DEFAULT_RULES: RegoRule[] = [
   {
     name: "permitir_comercio_fijo_centro",
-    description: "Permitir operación regular de nodos comerciales fijos dentro del perímetro urbano validado",
+    description: "Autorización de nodos comerciales fijos dentro del perímetro histórico validado",
     evaluate: (input) =>
       input.twin_type === "merchant_node" &&
-      input.spatial_state.current_geofences.includes("MX-HGO-RDM-CENTRO") &&
+      input.spatial_state.current_geofences.some(z => z === "MX-HGO-RDM-CENTRO") &&
       input.network_state.threat_level === "low" &&
       !input.network_state.proxy_detected,
   },
   {
-    name: "permitir_infraestructura_alta_fidelidad",
-    description: "Permitir transmisión de alta fidelidad para infraestructura crítica en zonas de resguardo",
+    name: "permitir_infraestructura_critica_resguardo",
+    description: "Flujo crítico de infraestructura autorizado exclusivamente en zonas de resguardo minero",
     evaluate: (input) =>
       input.twin_type === "critical_infrastructure" &&
-      input.spatial_state.current_geofences.includes("MX-HGO-RDM-MINAS") &&
+      input.spatial_state.current_geofences.some(z => z === "MX-HGO-RDM-MINAS") &&
       input.data_origin.confidence_score >= 0.95,
   },
   {
-    name: "alerta_violacion_geofencing_critico",
-    description: "Disparar alertas por violación de Geofencing Crítico (escape de activos de minas)",
+    name: "alarma_violacion_geofencing_critico",
+    description: "Disparo de alarma por violación de geofencing crítico (escape o abandono de activo)",
     evaluate: (input) =>
       input.twin_type === "critical_infrastructure" &&
       input.spatial_state.current_geofences.length > 0 &&
-      !input.spatial_state.current_geofences.includes("MX-HGO-RDM-MINAS"),
+      !input.spatial_state.current_geofences.some(z => z === "MX-HGO-RDM-MINAS"),
   },
   {
     name: "anomalia_cinetica_teletransportacion",
-    description: "Detección de velocidad imposible mediante cálculo diferencial entre muestras",
+    description: "Detección de anomalía cinética por velocidad imposible (>41.6 m/s = 150 km/h)",
     evaluate: (input) => {
-      if (!input.previous_state) return false
-      const dist = haversineDistance(
-        input.previous_state.current_position.coordinates,
-        input.spatial_state.current_position.coordinates,
-      )
-      const timeDelta = (input.timestamp - (input as any).previous_timestamp) / 1000
-      if (timeDelta <= 0) return false
-      return (dist / timeDelta) > 42
+      if (!input.computed_metrics) return false
+      const { calculated_velocity_mps, time_delta_seconds } = input.computed_metrics
+      return time_delta_seconds > 0 && calculated_velocity_mps > 41.6
     },
   },
   {
-    name: "anonimizacion_obligatoria_isabella",
-    description: "Determinación ética de anonimización obligatoria por Isabella AI",
+    name: "anonimizacion_obligatoria_confianza_baja",
+    description: "Anonimización obligatoria por confianza baja en dispositivo turístico",
     evaluate: (input) =>
       input.twin_type === "smart_tourism_twin" &&
-      ["wifi_local", "cellular_4g", "cellular_5g"].includes(input.network_state.connection_type) &&
-      input.spatial_state.current_geofences.includes("MX-HGO-RDM-CENTRO") &&
       input.data_origin.confidence_score < 0.70,
+  },
+  {
+    name: "anonimizacion_obligatoria_amenaza_red",
+    description: "Anonimización obligatoria por nivel de amenaza de red alto o crítico",
+    evaluate: (input) =>
+      input.network_state.threat_level === "high" || input.network_state.threat_level === "critical",
   },
 ]
 
@@ -97,7 +96,7 @@ export class SpatialRulesEngine {
     const output: RuleOutput = {
       allow: false,
       alarm_triggered: false,
-      enforce_anonymization: true,
+      enforce_anonymization: false,
       violations: [],
       matched_rules: [],
     }
@@ -108,14 +107,14 @@ export class SpatialRulesEngine {
         if (matched) {
           output.matched_rules.push(rule.name)
 
-          if (rule.name.includes("permitir") || rule.name.includes("allow")) {
+          if (rule.name.startsWith("permitir")) {
             output.allow = true
           }
-          if (rule.name.includes("alerta") || rule.name.includes("alarm") || rule.name.includes("anomalia")) {
+          if (rule.name.startsWith("alarma") || rule.name.startsWith("anomalia")) {
             output.alarm_triggered = true
             output.violations.push(`Regla "${rule.name}" activada: ${rule.description}`)
           }
-          if (rule.name.includes("anonimizacion") || rule.name.includes("anonymization")) {
+          if (rule.name.startsWith("anonimizacion")) {
             output.enforce_anonymization = true
           }
         }
@@ -138,20 +137,4 @@ export class SpatialRulesEngine {
   getRules(): RegoRule[] {
     return [...this.rules]
   }
-}
-
-function haversineDistance(a: number[], b: number[]): number {
-  const R = 6371000
-  const dLat = toRad(b[1] - a[1])
-  const dLon = toRad(b[0] - a[0])
-  const lat1 = toRad(a[1])
-  const lat2 = toRad(b[1])
-  const sinDLat = Math.sin(dLat / 2)
-  const sinDLon = Math.sin(dLon / 2)
-  const aVal = sinDLat * sinDLat + Math.cos(lat1) * Math.cos(lat2) * sinDLon * sinDLon
-  return R * 2 * Math.atan2(Math.sqrt(aVal), Math.sqrt(1 - aVal))
-}
-
-function toRad(deg: number): number {
-  return (deg * Math.PI) / 180
 }

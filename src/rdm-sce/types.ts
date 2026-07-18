@@ -1,3 +1,7 @@
+export type TwinType =
+  | "merchant_node" | "smart_tourism_twin"
+  | "critical_infrastructure" | "local_logistics_asset"
+
 export type ConnectionType =
   | "cellular_2g" | "cellular_3g" | "cellular_4g"
   | "cellular_5g" | "wifi_local" | "ethernet_mesh"
@@ -20,6 +24,8 @@ export type LocationSource =
 export type SyncMode = "online_synchronized" | "offline_autonomous" | "degraded_isolation"
 
 export type FederationId = 1 | 2 | 3 | 4 | 5 | 6 | 7
+
+export type IsabellaVerdict = "ALLOW_PURE_RESOLUTION" | "DEGRADE_SPATIAL_GRANULARITY" | "DENY_AND_ANONYMIZE"
 
 export interface GeoPoint {
   type: "Point"
@@ -76,8 +82,16 @@ export interface DataOrigin {
   cryptographic_signature: string
 }
 
+export interface ComputedMetrics {
+  delta_distance_meters: number
+  delta_altitude_meters: number
+  calculated_velocity_mps: number
+  time_delta_seconds: number
+}
+
 export interface SndtState {
   twin_id: string
+  twin_type: TwinType
   timestamp: number
   spatial_state: SpatialState
   network_state: NetworkState
@@ -85,6 +99,7 @@ export interface SndtState {
   territorial_state: TerritorialState
   federation_state: FederationState
   data_origin: DataOrigin
+  computed_metrics?: ComputedMetrics
 }
 
 export interface SndtSnapshot {
@@ -126,4 +141,20 @@ export interface SovereigntyRule {
   action: string
   target_providers?: string[]
   force_obfuscation_mask?: string
+}
+
+export interface CognitiveEvaluationContext {
+  twin_type: TwinType
+  confidence_score: number
+  network_risk_level: ThreatLevel
+  requested_accuracy: string
+  timestamp: number
+}
+
+export interface IsabellaDecision {
+  policy_id: string
+  verdict: IsabellaVerdict
+  applied_mask_bits: number
+  required_obfuscation: boolean
+  rationale: string
 }

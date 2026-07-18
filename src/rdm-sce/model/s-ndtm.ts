@@ -2,7 +2,8 @@ import type {
   SndtState, SpatialState, NetworkState, MobilityState,
   TerritorialState, FederationState, DataOrigin,
   GeoPoint, ConnectionType, ThreatLevel, MotionType,
-  ZoneType, LocationSource, SyncMode, FederationId, VectorClock,
+  ZoneType, LocationSource, SyncMode, FederationId, VectorClock, TwinType,
+  ComputedMetrics,
 } from "../types"
 
 const FEDERATION_MAX = 7
@@ -95,8 +96,41 @@ export function buildFederationState(
   }
 }
 
+export function computeMetrics(
+  current: { lon: number; lat: number; alt: number; timestamp: number },
+  previous?: { lon: number; lat: number; alt: number; timestamp: number },
+): ComputedMetrics | undefined {
+  if (!previous) return undefined
+  const timeDelta = (current.timestamp - previous.timestamp) / 1000
+  if (timeDelta <= 0) return undefined
+  const dist = haversineDistance(
+    [previous.lon, previous.lat],
+    [current.lon, current.lat],
+  )
+  return {
+    delta_distance_meters: dist,
+    delta_altitude_meters: current.alt - previous.alt,
+    calculated_velocity_mps: dist / timeDelta,
+    time_delta_seconds: timeDelta,
+  }
+}
+
+function haversineDistance(a: number[], b: number[]): number {
+  const R = 6371000
+  const dLat = toRad(b[1] - a[1])
+  const dLon = toRad(b[0] - a[0])
+  const lat1 = toRad(a[1])
+  const lat2 = toRad(b[1])
+  const s = Math.sin(dLat / 2)
+  const s2 = Math.sin(dLon / 2)
+  return R * 2 * Math.atan2(Math.sqrt(s * s + Math.cos(lat1) * Math.cos(lat2) * s2 * s2), Math.sqrt(1 - (s * s + Math.cos(lat1) * Math.cos(lat2) * s2 * s2)))
+}
+
+function toRad(deg: number): number { return (deg * Math.PI) / 180 }
+
 export function buildSndtState(params: {
   twin_id: string
+  twin_type?: TwinType
   lon: number
   lat: number
   altitude?: number
@@ -122,10 +156,18 @@ export function buildSndtState(params: {
   confidence: number
   isabella_policy_id: string
   signature: string
+  previous_state?: { lon: number; lat: number; alt: number; timestamp: number }
 }): SndtState {
+  const now = Date.now()
+  const alt = params.altitude ?? 0
+  const metrics = computeMetrics(
+    { lon: params.lon, lat: params.lat, alt, timestamp: now },
+    params.previous_state,
+  )
   return {
     twin_id: params.twin_id,
-    timestamp: Date.now(),
+    twin_type: params.twin_type ?? "smart_tourism_twin",
+    timestamp: now,
     spatial_state: {
       current_position: createGeoPoint(params.lon, params.lat, params.altitude),
       accuracy_radius_meters: params.accuracy ?? 50,
@@ -156,6 +198,7 @@ export function buildSndtState(params: {
       isabella_policy_id: params.isabella_policy_id,
       cryptographic_signature: params.signature,
     },
+    computed_metrics: metrics,
   }
 }
 
