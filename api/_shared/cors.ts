@@ -1,6 +1,8 @@
 const ALLOWED_ORIGINS = [
   "https://rdm-digital.vercel.app",
   "https://rdm-digital-hub.vercel.app",
+  "https://www.visitarealdelmonte.online",
+  "https://visitarealdelmonte.online",
   "http://localhost:3000",
   "http://localhost:5173",
 ];

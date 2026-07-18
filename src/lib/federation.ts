@@ -77,3 +77,7 @@ export const HEPTA_LAYERS: FederationLayer[] = [
 
 export const federationColor = (k: string) =>
   HEPTA_LAYERS.find((l) => l.key === k)?.color ?? "oklch(0.5 0.05 260)";
+
+export const FEDERATION_COLORS: Record<string, string> = Object.fromEntries(
+  HEPTA_LAYERS.map((l) => [l.key, l.color]),
+);

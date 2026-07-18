@@ -4,8 +4,6 @@
    Inspiración: neblina serrana, minería de plata, dorados discretos
 */
 
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap");
-
 /* Paleta base en HSL (sin alpha) para facilitar reutilización. */
 :root {
   /* Acentos RDM */

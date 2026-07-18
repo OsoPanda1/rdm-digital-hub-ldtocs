@@ -5,6 +5,9 @@ import tsconfigPaths from "vite-tsconfig-paths"
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), tsconfigPaths()],
+  define: {
+    "process.env": {},
+  },
   build: {
     rollupOptions: {
       output: {

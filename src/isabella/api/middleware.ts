@@ -33,6 +33,17 @@ export interface HexagonResult {
   traceId: string;
 }
 
+// ─── Base64URL Decoder (browser-compatible, no Buffer dependency) ──────────
+
+function decodeBase64Url(str: string): string {
+  const base64 = str.replace(/-/g, "+").replace(/_/g, "/")
+  const padded = base64 + "=".repeat((4 - (base64.length % 4)) % 4)
+  const binStr = atob(padded)
+  const bytes = new Uint8Array(binStr.length)
+  for (let i = 0; i < binStr.length; i++) bytes[i] = binStr.charCodeAt(i)
+  return new TextDecoder("utf-8").decode(bytes)
+}
+
 // ─── API Key Validation ─────────────────────────────────────────────────────
 
 export function validateApiKey(key: string | null): boolean {
@@ -54,7 +65,8 @@ export function validateTerritorialToken(token: string | null): { valid: boolean
     const parts = raw.split('.');
     if (parts.length !== 3) return { valid: false, error: 'Invalid JWT format' };
 
-    const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf-8'));
+    const decoded = decodeBase64Url(parts[1])
+    const payload = JSON.parse(decoded)
 
     // Check expiration
     if (payload.exp && payload.exp * 1000 < Date.now()) {

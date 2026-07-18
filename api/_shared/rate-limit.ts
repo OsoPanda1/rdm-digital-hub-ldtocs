@@ -1,5 +1,14 @@
 const hits = new Map<string, { count: number; resetAt: number }>();
 
+export const RATE_LIMITS = {
+  SCE_INGEST: { limit: 120, windowMs: 60000 },
+  SCE_QUERY: { limit: 300, windowMs: 60000 },
+  TAMV_ECONOMY: { limit: 60, windowMs: 60000 },
+  ISABELLA_INFERENCE: { limit: 30, windowMs: 60000 },
+  YUNBE_JOURNAL: { limit: 60, windowMs: 60000 },
+  TELEMETRY_INGEST: { limit: 60, windowMs: 60000 },
+} as const;
+
 export function checkRateLimit(
   key: string,
   limit = 60,
