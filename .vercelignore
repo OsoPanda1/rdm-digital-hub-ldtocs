@@ -1,0 +1,15 @@
+# Vercel deploy exclusions
+infra/
+knowledge-cells/
+server/
+tests/
+*.test.ts
+vitest.*.config.ts
+eslint.config.js
+AGENTS.md
+docs/
+tsconfig.json
+tsconfig.*.json
+public/weather-sandbox/src/
+docker-compose.yml
+Dockerfile
