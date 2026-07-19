@@ -1,147 +1,70 @@
 openapi: 3.0.3
 info:
   title: RDM Digital Unified API
-  version: 1.0.0
+  version: 1.1.0
   description: |
     API unificada del Gemelo Digital de Real del Monte.
     Endpoints territoriales, de federación, donaciones y métricas.
     La ISA-API de Isabella se documenta en isabella_openapi_genesis.yaml.
 
+    Seguridad:
+      - API key para clientes públicos (apps web / móviles).
+      - Bearer JWT para operaciones privilegiadas (cron, administración).
 servers:
   - url: /api
     description: RDM Digital API base
 
-paths:
-  /unified/state:
-    get:
-      summary: Estado global del sistema unificado
-      tags: [Unified]
-      responses:
-        '200':
-          description: Estado completo del sistema, readiness, eventos, fusión y persistencia
-    post:
-      summary: Acciones de control del sistema
-      tags: [Unified]
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                action:
-                  type: string
-                  enum: [restart, stop, clear_events]
-      responses:
-        '200':
-          description: Acción ejecutada
-
-  /unified/contribute:
-    post:
-      summary: Registrar contribución territorial
-      tags: [Unified]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ContributionRequest'
-      responses:
-        '201':
-          description: Contribución registrada
-        '400':
-          description: Datos inválidos
-        '429':
-          description: Demasiadas solicitudes
-
-  /unified/query:
-    post:
-      summary: Consultar territorio
-      tags: [Unified]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/QueryRequest'
-      responses:
-        '200':
-          description: Resultado de la consulta
-
-  /isabella/recommendations:
-    post:
-      summary: Recomendaciones de Isabella
-      tags: [Isabella]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                query:
-                  type: string
-                territory:
-                  type: string
-                traceId:
-                  type: string
-      responses:
-        '200':
-          description: Recomendaciones con narrativa y decisiones
-
-  /isabella/feedback:
-    post:
-      summary: Enviar feedback
-      tags: [Isabella]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/FeedbackRequest'
-      responses:
-        '200':
-          description: Feedback registrado
-
-  /isabella/stream:
-    get:
-      summary: Stream SSE de decisiones de Isabella
-      tags: [Isabella]
-      responses:
-        '200':
-          description: Conexión SSE establecida
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: text/event-stream
-
-  /metrics:
-    get:
-      summary: Métricas Prometheus
-      tags: [System]
-      responses:
-        '200':
-          description: Texto de métricas en formato Prometheus
-
-  /donations/checkout:
-    post:
-      summary: Crear sesión de donación Stripe
-      tags: [Donations]
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                amount:
-                  type: number
-                  minimum: 1
-      responses:
-        '200':
-          description: URL de checkout creada
+tags:
+  - name: Unified
+    description: Sistema Unificado — estado, contribuciones y consultas territoriales
+  - name: Isabella
+    description: Isabella Villaseñor AI — recomendaciones, feedback y streaming
+  - name: System
+    description: Métricas del sistema
+  - name: Donations
+    description: Donaciones vía Stripe
+  - name: Admin
+    description: Operaciones administrativas / cron
 
 components:
+  securitySchemes:
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-RDM-API-Key
+      description: API key pública con límites de rate para clientes web/móvil.
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT emitido por el sistema de identidad (ANUBIS / F2).
+
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+        traceId:
+          type: string
+          description: ID de traza para correlación entre servicios.
+      required: [error]
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          minimum: 1
+        pageSize:
+          type: integer
+          minimum: 1
+        total:
+          type: integer
+          minimum: 0
     ContributionRequest:
       type: object
       required: [userId, type, coords, payload]
@@ -151,7 +74,15 @@ components:
           description: ID del usuario
         type:
           type: string
-          enum: [checkin, review, photo, rating, tip, event_report, route_trace, poi_suggestion]
+          enum:
+            - checkin
+            - review
+            - photo
+            - rating
+            - tip
+            - event_report
+            - route_trace
+            - poi_suggestion
         coords:
           type: object
           required: [lat, lng]
@@ -164,14 +95,35 @@ components:
               type: number
               minimum: -180
               maximum: 180
-        territorio:
+        territory:
           type: string
+          enum: [RDM, PACHUCA, HIDALGO]
           default: RDM
         payload:
           type: object
+          description: Datos específicos de la contribución (texto, fotos, etc.)
         poiId:
           type: string
-
+          nullable: true
+    ContributionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        userId:
+          type: string
+        type:
+          type: string
+        territory:
+          type: string
+        coords:
+          $ref: '#/components/schemas/ContributionRequest/properties/coords'
+        payload:
+          type: object
+      required: [id, createdAt, userId, type, territory, coords]
     QueryRequest:
       type: object
       required: [text, userId]
@@ -188,7 +140,19 @@ components:
               type: number
             lng:
               type: number
-
+        territory:
+          type: string
+          enum: [RDM, PACHUCA, HIDALGO]
+          default: RDM
+    QueryResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
     FeedbackRequest:
       type: object
       properties:
@@ -207,13 +171,309 @@ components:
         comment:
           type: string
           maxLength: 280
+        traceId:
+          type: string
+          description: ID de traza para enlazar feedback con recomendaciones previas.
+    FeedbackResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        territory:
+          type: string
+        rating:
+          type: integer
+          nullable: true
+        comment:
+          type: string
+          nullable: true
 
-tags:
-  - name: Unified
-    description: Sistema Unificado — estado, contribuciones y consultas territoriales
-  - name: Isabella
-    description: Isabella Villaseñor AI — recomendaciones, feedback y streaming
-  - name: System
-    description: Métricas del sistema
-  - name: Donations
-    description: Donaciones vía Stripe
+    IsabellaRecommendationRequest:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+        territory:
+          type: string
+          enum: [RDM, PACHUCA, HIDALGO]
+          default: RDM
+        traceId:
+          type: string
+        userId:
+          type: string
+          description: Usuario origen, si está autenticado.
+    IsabellaRecommendationResponse:
+      type: object
+      properties:
+        narrative:
+          type: string
+        decisions:
+          type: array
+          items:
+            type: object
+        traceId:
+          type: string
+
+    StripeCheckoutRequest:
+      type: object
+      required: [amount]
+      properties:
+        amount:
+          type: number
+          minimum: 1
+        currency:
+          type: string
+          default: mxn
+        territory:
+          type: string
+          enum: [RDM, PACHUCA, HIDALGO]
+          default: RDM
+    StripeCheckoutResponse:
+      type: object
+      properties:
+        checkoutUrl:
+          type: string
+          format: uri
+        sessionId:
+          type: string
+
+paths:
+  /unified/state:
+    get:
+      operationId: getUnifiedState
+      summary: Estado global del sistema unificado
+      tags: [Unified]
+      security:
+        - ApiKeyHeader: []
+      responses:
+        '200':
+          description: Estado completo del sistema, readiness, eventos, fusión y persistencia
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: API key inválida o ausente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: controlUnifiedState
+      summary: Acciones de control del sistema
+      tags: [Unified, Admin]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum: [restart, stop, clear_events]
+      responses:
+        '200':
+          description: Acción ejecutada
+        '401':
+          description: Autenticación requerida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /unified/contribute:
+    post:
+      operationId: createContribution
+      summary: Registrar contribución territorial
+      tags: [Unified]
+      security:
+        - ApiKeyHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContributionRequest'
+      responses:
+        '201':
+          description: Contribución registrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContributionResponse'
+        '400':
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Demasiadas solicitudes (rate limit)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /unified/query:
+    post:
+      operationId: queryTerritory
+      summary: Consultar territorio
+      tags: [Unified]
+      security:
+        - ApiKeyHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Resultado de la consulta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '400':
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /isabella/recommendations:
+    post:
+      operationId: getIsabellaRecommendations
+      summary: Recomendaciones de Isabella
+      tags: [Isabella]
+      security:
+        - ApiKeyHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IsabellaRecommendationRequest'
+      responses:
+        '200':
+          description: Recomendaciones con narrativa y decisiones
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IsabellaRecommendationResponse'
+        '400':
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /isabella/feedback:
+    post:
+      operationId: submitIsabellaFeedback
+      summary: Enviar feedback
+      tags: [Isabella]
+      security:
+        - ApiKeyHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeedbackRequest'
+      responses:
+        '200':
+          description: Feedback registrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedbackResponse'
+        '400':
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /isabella/stream:
+    get:
+      operationId: streamIsabellaDecisions
+      summary: Stream SSE de decisiones de Isabella
+      tags: [Isabella]
+      security:
+        - ApiKeyHeader: []
+      responses:
+        '200':
+          description: Conexión SSE establecida
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: text/event-stream
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                description: >
+                  Flujo SSE con eventos "data:" y "event:" según el protocolo SSE.
+        '401':
+          description: API key inválida o ausente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /metrics:
+    get:
+      operationId: getMetrics
+      summary: Métricas Prometheus
+      tags: [System]
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Texto de métricas en formato Prometheus
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          description: Autenticación requerida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /donations/checkout:
+    post:
+      operationId: createDonationCheckout
+      summary: Crear sesión de donación Stripe
+      tags: [Donations]
+      security:
+        - ApiKeyHeader: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StripeCheckoutRequest'
+      responses:
+        '200':
+          description: URL de checkout creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeCheckoutResponse'
+        '400':
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
