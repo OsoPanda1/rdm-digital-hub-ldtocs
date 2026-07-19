@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Gamepad2, Trophy, Target, Star, Users, Flame,
-  ChevronRight, Shield, Zap, MapPin, Compass
+  ChevronRight, Shield, Zap, MapPin, Compass, User
 } from "lucide-react";
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { SEOMeta } from "@/components/SEOMeta";

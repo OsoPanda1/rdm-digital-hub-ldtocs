@@ -61,9 +61,9 @@ export function connectIsabellaPipeline(): void {
         const decision: IsabellaDecision = {
           traceId,
           territory: 'RDM',
-          level: 'MODERADO',
+          level: 'INFO',
           retentionIntent: 'ENGAGEMENT',
-          score: { total: 0.6, scores: { proximity: 0.5, movement: 0.5, inactivity: 0.5, visitDuration: 0.5, nearbyPOIs: 0.5, zoneSaturation: 0.5 }, details: {} },
+          score: { total: 0.6, factors: { proximity: 0.5, movement: 0.5, inactivity: 0.5, visitDuration: 0.5, nearbyPOIs: 0.5, zoneSaturation: 0.5 }, confidence: 0.8 },
           pattern: 'EXPLORING',
           distanceToExit: 200,
           speedMps: 0.5,

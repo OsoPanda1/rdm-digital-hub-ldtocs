@@ -112,7 +112,7 @@ function NotificationItem({
   notification: Notification;
   onRemove: () => void;
 }) {
-  const Icon = notification.icon || notificationIcons[notification.type];
+  const Icon = (notification.icon || notificationIcons[notification.type]) as React.ComponentType<{ className?: string }>;
   const gradientClass = notificationColors[notification.type];
 
   return (

@@ -90,9 +90,10 @@ export class TerritorialDataCollector {
     const contribution = this.contributions.get(id);
     if (!contribution) return null;
 
+    const currentScore = contribution.verificationScore ?? 0;
     const verificationScore = verified
-      ? Math.min(1, contribution.verificationScore + 0.3)
-      : Math.max(0, contribution.verificationScore - 0.5);
+      ? Math.min(1, currentScore + 0.3)
+      : Math.max(0, currentScore - 0.5);
 
     const newStatus: ContributionStatus = verificationScore >= this.config.verificationThreshold
       ? 'verified'

@@ -120,7 +120,7 @@ export default function AtlasMaximus() {
                   <p className="text-sm font-semibold">{c.nombre}</p>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-[hsl(var(--rdm-amber)/0.15)] text-[hsl(var(--rdm-amber))]">{c.membresia}</span>
                 </div>
-                <p className="text-xs text-muted-foreground">{comercioCategoriaLabel[c.categoria] ?? c.categoria}</p>
+                <p className="text-xs text-muted-foreground">{comercioCategoriaLabel[c.categoria as keyof typeof comercioCategoriaLabel] ?? c.categoria}</p>
               </div>
             ))}
           </div>

@@ -27,13 +27,15 @@ export type { IPContext, Jurisdiction, GeolocationProvider } from "./ip-context/
 
 export { MobilityStreamService } from "./mobility/stream-service"
 export { MOBILITY_PROFILES, getProfileForTwin } from "./mobility/profiles"
-export type { MobilitySample, SamplingConfig, SamplingProfile } from "./mobility/stream-service"
+export type { MobilitySample } from "./mobility/stream-service"
+export type { SamplingConfig, SamplingProfile } from "./mobility/profiles"
 
 export { FederationStateManager } from "./federation/state-manager"
 export { VectorClockManager } from "./federation/vector-clock"
 export { FEDERATION_MATRIX, getFederationForZone, getFederationById, getFederationsBySyncMode } from "./federation/matrix"
 export { SyncModeMachine, SYNC_MODE_PRIORITY, ALLOWED_TRANSITIONS, canTransition } from "./federation/sync-modes"
-export type { FederationMatrixEntry, FederationEvent, FederationNodeHealth } from "./federation/state-manager"
+export type { FederationEvent, FederationNodeHealth } from "./federation/state-manager"
+export type { FederationMatrixEntry } from "./federation/matrix"
 export type { SyncModeTransition } from "./federation/sync-modes"
 
 export {

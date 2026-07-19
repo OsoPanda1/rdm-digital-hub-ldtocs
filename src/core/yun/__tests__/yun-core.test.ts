@@ -539,7 +539,7 @@ describe("YUN BE Agent", () => {
 });
 
 // ─── YUN BE Adapters ───────────────────────────────────────────────────
-import { createDefaultYunBeStorage, InMemoryYunBeStorage } from "../be/adapters";
+import { createDefaultYunBeStorage } from "../be/adapters";
 
 describe("YUN BE Adapters", () => {
   it("createDefaultYunBeStorage returns InMemory without env vars", () => {

@@ -114,7 +114,7 @@ export function DashboardView() {
           <p className={cardTitle}>Distribución por Categoría</p>
           <div className="space-y-2">
             {Object.entries(categoryCounts).map(([cat, count]) => {
-              const Icon = INTENT_ICONS[cat] || MapPin;
+              const Icon = (INTENT_ICONS[cat] || MapPin) as React.ComponentType<{ className?: string }>;
               return (
                 <div key={cat} className="flex items-center gap-2">
                   <Icon className="w-3.5 h-3.5 text-secondary" />
@@ -179,7 +179,7 @@ export function DashboardView() {
             </thead>
             <tbody>
               {places.map((place) => {
-                const Icon = INTENT_ICONS[place.category] || MapPin;
+                const Icon = (INTENT_ICONS[place.category] || MapPin) as React.ComponentType<{ className?: string }>;
                 return (
                   <tr key={place.id} className="border-b border-border last:border-0 hover:bg-muted/50 transition-colors">
                     <td className="py-2.5 font-medium">{place.name}</td>
@@ -191,7 +191,7 @@ export function DashboardView() {
                     </td>
                     <td className="py-2.5 text-accent">★ {place.rating}</td>
                     <td className="py-2.5 text-muted-foreground text-xs font-mono hidden md:table-cell">
-                      {place.lat.toFixed(3)}, {place.lng.toFixed(3)}
+                      {place.lat?.toFixed(3) ?? "—"}, {place.lng?.toFixed(3) ?? "—"}
                     </td>
                   </tr>
                 );

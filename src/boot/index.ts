@@ -28,10 +28,8 @@ export async function bootSystem(): Promise<void> {
 
     bootstrapCoreEvents();
 
-    const { default: kernel } = await import('@/kernel/index');
-    if (kernel && typeof kernel.start === 'function') {
-      kernel.start();
-    }
+    const kernel = await import('@/kernel/index');
+    kernel.startKernel();
 
     const elapsed = performance.now() - start;
     logger.info('[BOOT] Sistema inicializado correctamente', { elapsedMs: Math.round(elapsed) });
