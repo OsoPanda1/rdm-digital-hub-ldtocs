@@ -73,9 +73,6 @@ export function Navbar() {
                 key={n.to}
                 to={n.to}
                 className="px-3 py-2 rounded-full text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/60"
-                activeProps={{
-                  className: "px-3 py-2 rounded-full text-sm text-foreground bg-secondary",
-                }}
               >
                 {n.label}
               </Link>

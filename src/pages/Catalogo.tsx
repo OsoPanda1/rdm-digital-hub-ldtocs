@@ -292,7 +292,7 @@ const CatalogoPage = () => {
                     <div className="p-6">
                       <div className="flex items-center gap-3 mb-4">
                         <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${tier.color} flex items-center justify-center`}>
-                          <tier.icon className="w-5 h-5 text-white" />
+                          {(() => { const TierIcon = tier.icon as React.ComponentType<{ className?: string }>; return <TierIcon className="w-5 h-5 text-white" />; })()}
                         </div>
                         <h3 className="font-semibold text-foreground text-sm leading-tight">
                           {tier.category}

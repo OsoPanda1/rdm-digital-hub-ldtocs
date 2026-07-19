@@ -498,7 +498,7 @@ const AppInner = () => {
         {/* Banner global de estado de auth/Supabase */}
         <AuthStatusBanner />
         <Toaster />
-        <Sonner />
+        <Toaster />
         <AnimatedOutlet>
           {showIntro && !introComplete && (
             <Suspense fallback={<RouteFallback />}>

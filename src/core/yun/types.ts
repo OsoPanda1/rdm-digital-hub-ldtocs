@@ -41,6 +41,7 @@ export type YunEventType =
   | `yun.${string}.${string}.updated`
   | `yun.${string}.${string}.deleted`
   | `yun.${string}.${string}.archived`
+  | `yun.test.${string}`
   | `yun.system.health`
   | `yun.system.mode-changed`
   | `yun.system.overload`

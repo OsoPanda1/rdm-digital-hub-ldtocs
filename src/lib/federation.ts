@@ -81,3 +81,18 @@ export const federationColor = (k: string) =>
 export const FEDERATION_COLORS: Record<string, string> = Object.fromEntries(
   HEPTA_LAYERS.map((l) => [l.key, l.color]),
 );
+
+export const ISABELLA_CORE_IDENTITY = {
+  name: "Isabella",
+  purpose: "Asistente territorial federada para conocimiento, cultura y servicios de Real del Monte.",
+} as const;
+
+export const SECURITY_PROTOCOLS = {
+  guardian: { name: "Guardian", level: "high" },
+  context: { name: "Context Isolation", level: "medium" },
+  sovereignty: { name: "Sovereignty", level: "critical" },
+} as const;
+
+export function generateFederationHash(): string {
+  return `fed_${Date.now().toString(36)}_${crypto.randomUUID().replaceAll("-", "").slice(0, 12)}`;
+}

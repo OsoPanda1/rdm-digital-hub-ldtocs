@@ -103,6 +103,7 @@ export interface MusicCronica {
   metadata: Record<string, unknown>;
   created_at: string;
   tracks?: CronicaTrack[];
+  trackCount?: number;
 }
 
 export interface CronicaTrack {

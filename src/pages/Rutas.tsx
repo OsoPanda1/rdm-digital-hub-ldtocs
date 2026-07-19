@@ -486,7 +486,7 @@ const touristRoutes: TouristRoute[] = [
 ];
 
 const RouteCard = ({ route, isSelected, onClick }: { route: TouristRoute; isSelected: boolean; onClick: () => void }) => {
-  const Icon = route.icon;
+  const Icon = route.icon as React.ComponentType<{ className?: string }>;
   
   return (
     <motion.div
@@ -526,7 +526,7 @@ const RouteCard = ({ route, isSelected, onClick }: { route: TouristRoute; isSele
 };
 
 const RouteDetail = ({ route }: { route: TouristRoute }) => {
-  const Icon = route.icon;
+  const Icon = route.icon as React.ComponentType<{ className?: string }>;
   
   return (
     <motion.div
@@ -892,7 +892,7 @@ const RutasPage = () => {
                     <tr key={route.id} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
                       <td className="py-4 px-4">
                         <div className="flex items-center gap-3">
-                          <route.icon className={`w-5 h-5 ${route.color}`} />
+                          {(() => { const RouteIcon = route.icon as React.ComponentType<{ className?: string }>; return <RouteIcon className={`w-5 h-5 ${route.color}`} />; })()}
                           <div>
                             <div className="font-medium text-foreground">{route.name}</div>
                             <div className="text-xs text-muted-foreground">{route.tagline}</div>

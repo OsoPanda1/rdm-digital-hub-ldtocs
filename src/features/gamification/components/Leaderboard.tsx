@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Trophy, Medal, Crown, Star, TrendingUp, Users, Flame
+  Trophy, Medal, Crown, Star, TrendingUp, Users, Flame, Shield
 } from "lucide-react";
 import { getLeaderboard } from "../api";
 import type { LeaderboardEntry, XpTrack, GamificationSeason } from "../types";

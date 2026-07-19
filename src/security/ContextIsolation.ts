@@ -92,6 +92,10 @@ export class ContextIsolation {
     return session.allowedActions.has(action);
   }
 
+  isolate(sessionId: string): void {
+    this.destroySession(sessionId);
+  }
+
   destroySession(sessionId: string): void {
     this.sessions.delete(sessionId);
     logger.info("[CONTEXT] Sesión destruida", { sessionId: sessionId.slice(0, 8) });

@@ -125,7 +125,7 @@ export class RdmSceApiBridge {
     const zones = resolveZone(input.lon, input.lat, input.altitude)
       .map(z => z.id)
 
-    const previousState = input.previous_lon !== undefined && input.previous_timestamp
+    const previousState = input.previous_lon !== undefined && input.previous_lat !== undefined && input.previous_timestamp
       ? { lon: input.previous_lon, lat: input.previous_lat, alt: input.previous_alt ?? 0, timestamp: input.previous_timestamp }
       : undefined
 

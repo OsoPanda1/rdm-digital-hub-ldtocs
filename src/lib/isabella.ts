@@ -20,6 +20,7 @@ import {
   applyDecisionToHeptafederation,
   getGlobalHealth,
   getTelemetry,
+  getFederationStats,
 } from './heptafederation';
 import { shutdownProtocol } from '@/security';
 import { tokenVault } from '@/connect';
@@ -87,7 +88,6 @@ export async function evaluarTurista(context: IsabellaContext): Promise<Isabella
       userId: context.turistaId,
       query: context.query ?? kernel?.narrative ?? '',
       coords: context.coords,
-      timestamp: new Date(),
     };
     void consciousnessPipeline.processInput(pipelineInput).catch(err =>
       logger.warn('[Isabella] Error en pipeline de conciencia', err)
@@ -237,11 +237,10 @@ export async function procesarContribucionTerritorial(
   contribution: Omit<PipelineInputType & { type: 'territorial_contribution' }, 'type'>['contribution'],
   userId: string
 ): Promise<void> {
+  void userId;
   const input: PipelineInputType = {
     type: 'territorial_contribution',
-    userId,
     contribution,
-    timestamp: new Date(),
   };
   await consciousnessPipeline.processInput(input);
 }

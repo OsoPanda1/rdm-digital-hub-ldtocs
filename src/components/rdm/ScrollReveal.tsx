@@ -1,4 +1,4 @@
-import { useEffect, useRef, ReactNode } from "react";
+import { createElement, useEffect, useRef, type ElementType, type ReactNode } from "react";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -6,7 +6,7 @@ interface ScrollRevealProps {
   direction?: "up" | "down" | "left" | "right" | "scale";
   delay?: number;
   stagger?: boolean;
-  as?: keyof JSX.IntrinsicElements;
+  as?: ElementType;
 }
 
 export function ScrollReveal({
@@ -50,14 +50,10 @@ export function ScrollReveal({
           ? "rdm-reveal-scale"
           : "rdm-reveal";
 
-  return (
-    // @ts-expect-error Tag is a valid HTML element
-    <Tag
-      ref={ref}
-      className={`${dirClass} ${stagger ? "rdm-stagger" : ""} ${className}`}
-    >
-      {children}
-    </Tag>
+  return createElement(
+    Tag,
+    { ref, className: `${dirClass} ${stagger ? "rdm-stagger" : ""} ${className}` },
+    children,
   );
 }
 

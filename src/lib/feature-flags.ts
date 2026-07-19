@@ -39,7 +39,7 @@ export async function getAllFlags(): Promise<Record<FlagKey, boolean>> {
   if (!client) return { ...FLAG_DEFAULTS }
   try {
     const stored = await client.getAll()
-    const result = { ...FLAG_DEFAULTS }
+    const result: Record<FlagKey, boolean> = { ...FLAG_DEFAULTS }
     for (const key of Object.keys(FLAG_DEFAULTS) as FlagKey[]) {
       if (stored[key] !== undefined) result[key] = Boolean(stored[key])
     }

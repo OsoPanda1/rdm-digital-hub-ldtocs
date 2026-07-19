@@ -25,6 +25,22 @@ export class SessionTicketClient {
     this.current = undefined;
   }
 
+  public async verify(): Promise<boolean> {
+    if (!this.isActive || !this.current || !this.baseUrl) return false;
+    try {
+      const response = await fetch(`${this.baseUrl.replace(/\/$/, "")}/sessions/${encodeURIComponent(this.current.sessionId)}/verify`, {
+        method: "POST",
+        headers: { "x-rdm-session-id": this.current.sessionId },
+        cache: "no-store",
+      });
+      if (!response.ok) return false;
+      const result = await response.json() as { valid?: boolean };
+      return result.valid === true;
+    } catch {
+      return false;
+    }
+  }
+
   public attachToHeaders(headers: Record<string, string>): Record<string, string> {
     if (!this.isActive || !this.current) return headers;
     return {

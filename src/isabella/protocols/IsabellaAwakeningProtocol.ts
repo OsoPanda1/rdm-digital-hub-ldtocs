@@ -95,7 +95,7 @@ export class IsabellaAwakeningProtocol {
 
     const results = await getNetworksConnector().broadcast({
       network: "TWITTER",
-      type: "STATEMENT",
+      type: "ANNOUNCEMENT",
       content: message,
       mediaUrls: [] as string[],
       retryCount: 0,

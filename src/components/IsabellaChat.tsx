@@ -88,7 +88,7 @@ export function IsabellaChat() {
         }
       }
     } catch (e) {
-      logger.error(e);
+      logger.error(e instanceof Error ? e.message : String(e));
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: "Lo siento, hubo un error al procesar tu consulta. Intenta de nuevo." },
