@@ -10,7 +10,7 @@ import {
   useCallback,
 } from 'react'
 import type { Session, User } from '@supabase/supabase-js'
-import { supabase } from '@/integrations/supabase/client'
+import { isSupabaseConfigured, supabase } from '@/integrations/supabase/client'
 
 export interface Profile {
   id: string
@@ -113,6 +113,15 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let isMounted = true
+
+    if (!isSupabaseConfigured) {
+      setIsSupabaseReady(false)
+      setLoading(false)
+      setError(null)
+      return () => {
+        isMounted = false
+      }
+    }
 
     setIsSupabaseReady(true)
 
