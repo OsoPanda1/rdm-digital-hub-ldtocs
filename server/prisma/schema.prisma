@@ -504,3 +504,212 @@ model MusicTrack {
   @@index([active, createdAt])
   @@index([artist, active])
 }
+
+// =====================================================
+// AUDIO GATEWAY · SPEECH-TO-TEXT / TEXT-TO-SPEECH
+// =====================================================
+
+model HeritageAudioSession {
+  id                String   @id @default(cuid())
+  supabaseUserId    String?
+  heritageSiteId    String
+  audioType         AudioType @default(NARRATION)
+  
+  /// Duración en milisegundos
+  durationMs        Int?
+  
+  /// Versión del modelo AI Gateway usado
+  gatewayModelVersion String?
+  
+  metadata          Json     @default("{}")
+  
+  // Relaciones
+  transcriptions    AudioTranscription[]
+  audioFiles        AudioFile[]
+  gatewayLogs       AiGatewayLog[]
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([heritageSiteId, createdAt])
+  @@index([audioType, createdAt])
+  @@index([supabaseUserId, createdAt])
+}
+
+enum AudioType {
+  NARRATION           // Pre-generated heritage site narrations
+  USER_RECORDING      // User-uploaded voice recordings
+  TOUR_GUIDE          // Automated tour guide audio
+  ACCESSIBILITY       // Audio descriptions for accessibility
+}
+
+model AudioTranscription {
+  id                String   @id @default(cuid())
+  sessionId         String
+  session           HeritageAudioSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  /// Texto transcrito del audio
+  textContent       String   @db.Text
+  
+  /// Confianza del modelo (0-1)
+  confidenceScore   Float    @default(0.95)
+  
+  /// Idioma detectado (ej: 'es', 'en', 'fr')
+  detectedLanguage  String   @default("es")
+  
+  /// Tokens utilizados en transcripción
+  tokensUsed        Int?
+  
+  /// Latencia en ms del API
+  latencyMs         Int?
+  
+  metadata          Json     @default("{}")
+  
+  createdAt         DateTime @default(now())
+  
+  @@index([sessionId, createdAt])
+  @@index([detectedLanguage])
+}
+
+model AudioFile {
+  id                String   @id @default(cuid())
+  sessionId         String
+  session           HeritageAudioSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  /// Ruta en Supabase Storage (ej: "heritage/site_001/narration_abc123.mp3")
+  supabasePath      String   @unique
+  
+  /// Tipo de archivo ('mp3', 'wav', 'm4a', etc.)
+  fileType          String   @default("mp3")
+  
+  /// Tamaño en bytes
+  sizeBytes         Int
+  
+  /// URL pública para descargar (si aplica)
+  publicUrl         String?
+  
+  /// Duración estimada en segundos (si está disponible)
+  durationSeconds   Int?
+  
+  /// Checksum MD5 para deduplicación
+  checksumMd5       String?
+  
+  metadata          Json     @default("{}")
+  
+  createdAt         DateTime @default(now())
+  expiresAt         DateTime? // Para manejo de retención
+  
+  @@index([sessionId, createdAt])
+  @@index([supabasePath])
+}
+
+model AiGatewayLog {
+  id                String   @id @default(cuid())
+  sessionId         String
+  session           HeritageAudioSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  supabaseUserId    String?
+  
+  /// Tipo de operación ('speech_generation', 'transcription')
+  operationType     String   @default("speech_generation")
+  
+  /// Modelo usado ('openai/tts-1', 'openai/whisper-1')
+  model              String
+  
+  /// Tokens de entrada
+  inputTokens       Int?
+  
+  /// Tokens de salida
+  outputTokens      Int?
+  
+  /// Latencia en ms
+  latencyMs         Int
+  
+  /// Estado ('success', 'error', 'timeout')
+  status            String   @default("success")
+  
+  /// Mensaje de error si aplica
+  errorMessage      String?
+  
+  /// Código de error de AI Gateway
+  errorCode         String?
+  
+  /// Datos de auditoría (IP, user-agent, región)
+  auditData         Json     @default("{}")
+  
+  metadata          Json     @default("{}")
+  
+  createdAt         DateTime @default(now())
+  
+  @@index([operationType, status, createdAt])
+  @@index([supabaseUserId, createdAt])
+  @@index([status, createdAt])
+  @@index([model, createdAt])
+}
+
+model HeritageAudioNarration {
+  id                String   @id @default(cuid())
+  
+  /// Slug único para la narración (ej: 'real-del-monte-historic-town')
+  slug              String   @unique
+  
+  /// Sitio patrimonial
+  siteName          String
+  siteDescription   String?
+  
+  /// Texto a ser convertido a voz
+  narrationText     String   @db.Text
+  
+  /// Idioma original de la narración
+  language          String   @default("es")
+  
+  /// Voz seleccionada ('alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer')
+  voiceId           String   @default("nova")
+  
+  /// Último session_id que generó este narración
+  lastGeneratedSessionId String?
+  
+  /// URLs de archivos de audio por calidad/idioma
+  audioVersions     Json     @default("{}") // { "es_normal": "url", "es_hq": "url" }
+  
+  /// Contar reproducciones
+  playCount         Int      @default(0)
+  
+  /// Active/Inactive para distribución
+  isActive          Boolean  @default(true)
+  
+  metadata          Json     @default("{}")
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([slug])
+  @@index([isActive, createdAt])
+  @@index([language])
+}
+
+model AudioUsageMetrics {
+  id                String   @id @default(cuid())
+  
+  /// Referencia al usuario
+  supabaseUserId    String?
+  
+  /// Tipo de operación
+  operationType     String   @default("transcription")
+  
+  /// Contador de tokens usados
+  tokensUsed        Int      @default(0)
+  
+  /// Costo estimado en USD
+  estimatedCostUsd  Float    @default(0.0)
+  
+  /// Período de agregación (YYYY-MM)
+  billingPeriod     String
+  
+  metadata          Json     @default("{}")
+  
+  createdAt         DateTime @default(now())
+  
+  @@unique([supabaseUserId, operationType, billingPeriod])
+  @@index([billingPeriod, createdAt])
+}
