@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Navigation, Layers, Search, X, MapPin, Clock, Zap, Star } from "lucide-react";
 import BrumaHeader from "@/components/BrumaHeader";
 import FloatingParticles from "@/components/FloatingParticles";
@@ -16,16 +16,16 @@ interface POI {
 }
 
 const allPois: POI[] = [
-  { id: "1", name: "Mina de Acosta", description: "Desciende 400 metros al corazón de la montaña. La experiencia más emblemática del pueblo.", x: 35, y: 40, category: "historia", rating: 4.9, time: "2h", energy: "Alta" },
-  { id: "2", name: "Panteón Inglés", description: "El único cementerio en México con tumbas que miran hacia Cornwall, Inglaterra.", x: 62, y: 28, category: "historia", rating: 4.8, time: "1h", energy: "Baja" },
-  { id: "3", name: "Pastes El Portal", description: "Los pastes más antiguos del pueblo. Receta familiar de 4 generaciones.", x: 48, y: 55, category: "gastronomia", rating: 4.8, time: "30min", energy: "Baja" },
-  { id: "4", name: "Parroquia de la Asunción", description: "Cantera labrada del siglo XVIII que desafía la niebla desde lo alto.", x: 45, y: 45, category: "arquitectura", rating: 4.7, time: "45min", energy: "Baja" },
-  { id: "5", name: "Peña del Cuervo", description: "El mirador más alto. Vista panorámica de 360° sobre el valle.", x: 78, y: 35, category: "naturaleza", rating: 4.6, time: "2.5h", energy: "Alta" },
-  { id: "6", name: "Museo de Medicina", description: "Historia de la salud en un pueblo donde la altitud dictaba las reglas.", x: 28, y: 60, category: "historia", rating: 4.3, time: "1h", energy: "Baja" },
-  { id: "7", name: "Platería La Veta", description: "Joyería artesanal en plata con diseños inspirados en la herencia minera.", x: 52, y: 50, category: "comercio", rating: 4.5, time: "30min", energy: "Baja" },
-  { id: "8", name: "Hotel Mina Real", description: "Boutique hotel en antigua casona minera con vista panorámica.", x: 40, y: 48, category: "comercio", rating: 4.9, time: "—", energy: "Baja" },
-  { id: "9", name: "Cascada Estanzuela", description: "Sendero entre oyameles que lleva a una cascada cristalina.", x: 85, y: 60, category: "naturaleza", rating: 4.5, time: "3h", energy: "Alta" },
-  { id: "10", name: "Centro Cultural", description: "Exposiciones temporales, talleres y eventos culturales.", x: 43, y: 42, category: "arquitectura", rating: 4.2, time: "1.5h", energy: "Baja" },
+  { id: "1", name: "Mina de Acosta", description: "Desciende 400 metros al corazón de la montaña. La experiencia más emblemática del pueblo.", x: 25, y: 35, category: "historia", rating: 4.9, time: "2h", energy: "Alta" },
+  { id: "2", name: "Panteón Inglés", description: "El único cementerio en México con tumbas que miran hacia Cornwall, Inglaterra.", x: 75, y: 20, category: "historia", rating: 4.8, time: "1h", energy: "Baja" },
+  { id: "3", name: "Pastes El Portal", description: "Los pastes más antiguos del pueblo. Receta familiar de 4 generaciones.", x: 50, y: 70, category: "gastronomia", rating: 4.8, time: "30min", energy: "Baja" },
+  { id: "4", name: "Parroquia de la Asunción", description: "Cantera labrada del siglo XVIII que desafía la niebla desde lo alto.", x: 40, y: 45, category: "arquitectura", rating: 4.7, time: "45min", energy: "Baja" },
+  { id: "5", name: "Peña del Cuervo", description: "El mirador más alto. Vista panorámica de 360° sobre el valle.", x: 85, y: 30, category: "naturaleza", rating: 4.6, time: "2.5h", energy: "Alta" },
+  { id: "6", name: "Museo de Medicina", description: "Historia de la salud en un pueblo donde la altitud dictaba las reglas.", x: 15, y: 65, category: "historia", rating: 4.3, time: "1h", energy: "Baja" },
+  { id: "7", name: "Platería La Veta", description: "Joyería artesanal en plata con diseños inspirados en la herencia minera.", x: 55, y: 50, category: "comercio", rating: 4.5, time: "30min", energy: "Baja" },
+  { id: "8", name: "Hotel Mina Real", description: "Boutique hotel en antigua casona minera con vista panorámica.", x: 35, y: 55, category: "comercio", rating: 4.9, time: "—", energy: "Baja" },
+  { id: "9", name: "Cascada Estanzuela", description: "Sendero entre oyameles que lleva a una cascada cristalina.", x: 90, y: 75, category: "naturaleza", rating: 4.5, time: "3h", energy: "Alta" },
+  { id: "10", name: "Centro Cultural", description: "Exposiciones temporales, talleres y eventos culturales.", x: 50, y: 35, category: "arquitectura", rating: 4.2, time: "1.5h", energy: "Baja" },
 ];
 
 const categoryInfo: Record<string, { color: string; label: string }> = {
@@ -45,18 +45,40 @@ const MapaVivo = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const revealPoints = useRef<Array<{ x: number; y: number; r: number }>>([]);
   const [fogCleared, setFogCleared] = useState(false);
+  const navigate = useNavigate();
+
+  // Real del Monte bounds: lat 20.08-20.15, lng -98.7 to -98.64
+  const normalizeCoordinates = (lat: number, lng: number) => {
+    const x = ((lng - (-98.7)) / ((-98.64) - (-98.7))) * 100;
+    const y = ((20.15 - lat) / (20.15 - 20.08)) * 100;
+    return { x: Math.max(0, Math.min(100, x)), y: Math.max(0, Math.min(100, y)) };
+  };
 
   useEffect(() => {
     navigator.geolocation?.getCurrentPosition(
       (pos) => {
-        const x = ((pos.coords.longitude - (-98.68)) / ((-98.64) - (-98.68))) * 100;
-        const y = ((20.15 - pos.coords.latitude) / (20.15 - 20.12)) * 100;
-        if (x >= 0 && x <= 100 && y >= 0 && y <= 100) setUserLocation({ x, y });
+        const normalized = normalizeCoordinates(pos.coords.latitude, pos.coords.longitude);
+        setUserLocation(normalized);
       },
       () => {},
       { enableHighAccuracy: true }
     );
   }, []);
+
+  // ESC key to go back or clear selection
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (selectedPOI) {
+          setSelectedPOI(null);
+        } else {
+          navigate("/");
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedPOI, navigate]);
 
   const drawFog = useCallback(() => {
     const canvas = canvasRef.current;
@@ -108,12 +130,19 @@ const MapaVivo = () => {
       <BrumaHeader />
 
       <div className="pt-20 flex flex-col h-screen">
-        {/* Top bar */}
+        {/* Top bar with back button */}
         <div className="flex items-center gap-4 px-6 py-3 glass-nav">
-          <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors">
+          <motion.button
+            onClick={() => navigate("/")}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors p-2 rounded-lg hover:bg-gold/10"
+            aria-label="Volver al inicio"
+            title="Presiona para volver (Esc también funciona)"
+          >
             <ArrowLeft className="w-4 h-4" />
             <span className="font-body text-xs tracking-wider uppercase hidden sm:inline">Inicio</span>
-          </Link>
+          </motion.button>
           <div className="h-4 w-px bg-border" />
           <h1 className="font-display text-lg text-gradient-gold">Mapa Vivo</h1>
           <div className="flex-1" />
@@ -185,21 +214,31 @@ const MapaVivo = () => {
             />
 
             {/* POI Markers */}
-            <div className={`absolute inset-0 transition-opacity duration-700 ${fogCleared ? "opacity-100" : "opacity-0"}`}>
+            <div className={`absolute inset-0 transition-opacity duration-700 pointer-events-none ${fogCleared ? "opacity-100 pointer-events-auto" : "opacity-0"}`}>
               {filtered.map((poi) => (
                 <button
                   key={poi.id}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10 group"
+                  className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10 group focus:outline-none cursor-pointer"
                   style={{ left: `${poi.x}%`, top: `${poi.y}%` }}
                   onClick={() => setSelectedPOI(selectedPOI?.id === poi.id ? null : poi)}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelectedPOI(selectedPOI?.id === poi.id ? null : poi); } }}
+                  aria-label={`${poi.name}: ${poi.description}`}
+                  title={poi.name}
                 >
-                  <div
-                    className={`w-4 h-4 rounded-full pulse-gold transition-transform ${selectedPOI?.id === poi.id ? "scale-150" : "group-hover:scale-125"}`}
+                  <motion.div
+                    className={`w-4 h-4 rounded-full transition-all ${selectedPOI?.id === poi.id ? "scale-150 shadow-lg" : "group-hover:scale-125 group-hover:shadow-md"}`}
                     style={{ backgroundColor: categoryInfo[poi.category]?.color }}
+                    animate={{ scale: selectedPOI?.id === poi.id ? 1.5 : 1 }}
+                    whileHover={{ scale: 1.25 }}
                   />
-                  <span className="absolute -top-6 left-1/2 -translate-x-1/2 font-body text-[9px] text-foreground/80 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity glass rounded px-1.5 py-0.5">
+                  <motion.span 
+                    className="absolute -top-7 left-1/2 -translate-x-1/2 font-body text-[9px] text-foreground/90 whitespace-nowrap glass rounded px-2 py-1 pointer-events-none shadow-md"
+                    initial={{ opacity: 0, y: 2 }}
+                    animate={{ opacity: selectedPOI?.id === poi.id ? 1 : 0, y: selectedPOI?.id === poi.id ? 0 : 2 }}
+                    transition={{ duration: 0.2 }}
+                  >
                     {poi.name}
-                  </span>
+                  </motion.span>
                 </button>
               ))}
 

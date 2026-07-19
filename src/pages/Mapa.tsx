@@ -112,8 +112,17 @@ function MapaPageContent() {
     <RDMLayout>
       <SEOMeta {...PAGE_SEO.mapa} />
 
+        {/* Navigation bar with back button */}
+        <div className="fixed top-0 left-0 right-0 z-50 flex items-center gap-3 px-6 py-4 glass-nav border-b border-[hsl(var(--border)/0.2)]">
+          <Link to="/" className="flex items-center gap-2 text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--rdm-amber))] transition-colors font-body text-sm uppercase tracking-wider">
+            <ArrowLeft className="w-4 h-4" /> Volver
+          </Link>
+          <div className="h-4 w-px bg-border/40" />
+          <h1 className="font-display text-lg text-gradient-gold">Explorador de Territorios</h1>
+        </div>
+
         {/* Hero del Mapa */}
-        <section className="relative overflow-hidden pt-24 pb-10 bg-[hsl(var(--background))]">
+        <section className="relative overflow-hidden pt-32 pb-10 bg-[hsl(var(--background))]">
           <div className="absolute inset-0 bg-cover bg-center opacity-10" style={{ backgroundImage: `url(${callesImg})` }} />
 
           <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-6">
