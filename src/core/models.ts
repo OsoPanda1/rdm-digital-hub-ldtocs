@@ -130,45 +130,108 @@ export interface ExitPoint {
 }
 
 // ============================================================================
-// SISTEMA HEPTAFEDERADO
+// SISTEMA HEPTAFEDERADO — YUN Canonical (Fed1–Fed7)
 // ============================================================================
 
-// ============================================================================
-// FEDERACIONES CANONICAS TAMV (F1-F7)
-// ============================================================================
-
+/**
+ * YUN Canonical Federation IDs (Fed1–Fed7)
+ * This is the authoritative federation model per ADR-004.
+ * TAMV GEN-7 names are maintained as legacy aliases for backwards compatibility.
+ */
 export type FederationId =
-  | 'DEKATEOTL'     // F1: DATA - Vault / PostGIS / TimeSeries
-  | 'ANUBIS'        // F2: INTEL - Cognitive & Agentic AI
-  | 'BOOKPI_DATAGIT'// F3: SEC - PQC / Zero-Trust / Q-Cells
-  | 'PHOENIX'       // F4: GOV - Executable Governance
-  | 'MDD_TAMV'      // F5: ECON - Economía local / phygital
-  | 'KAOS_HYPERRENDER' // F6: VIS - GeoEngine 2D/3D
-  | 'CHRONOS';      // F7: TERRITORY - Edge / IoT / Human mesh
+  | 'fed1_commerce_local'
+  | 'fed2_tourism_culture'
+  | 'fed3_academia_science'
+  | 'fed4_local_government'
+  | 'fed5_tech_infra'
+  | 'fed6_community_orgs'
+  | 'fed7_metaverse_xr';
 
 export type FederationNumber = 'F1' | 'F2' | 'F3' | 'F4' | 'F5' | 'F6' | 'F7';
 
+/**
+ * Maps FederationNumber to canonical YUN FederationId
+ */
 export const FEDERATION_MAP: Record<FederationNumber, FederationId> = {
-  F1: 'DEKATEOTL',
-  F2: 'ANUBIS',
-  F3: 'BOOKPI_DATAGIT',
-  F4: 'PHOENIX',
-  F5: 'MDD_TAMV',
-  F6: 'KAOS_HYPERRENDER',
-  F7: 'CHRONOS',
+  F1: 'fed1_commerce_local',
+  F2: 'fed2_tourism_culture',
+  F3: 'fed3_academia_science',
+  F4: 'fed4_local_government',
+  F5: 'fed5_tech_infra',
+  F6: 'fed6_community_orgs',
+  F7: 'fed7_metaverse_xr',
 };
 
+/**
+ * Canonical domain mapping per YUN Federation
+ */
 export const FEDERATION_DOMAIN: Record<FederationId, string> = {
-  DEKATEOTL: 'data.rdm.tamv',
-  ANUBIS: 'intel.rdm.tamv',
-  BOOKPI_DATAGIT: 'sec.rdm.tamv',
-  PHOENIX: 'gov.rdm.tamv',
-  MDD_TAMV: 'econ.rdm.tamv',
-  KAOS_HYPERRENDER: 'vis.rdm.tamv',
-  CHRONOS: 'territory.rdm.tamv',
+  fed1_commerce_local: 'commerce.rdm.tamv',
+  fed2_tourism_culture: 'knowledge.rdm.tamv',
+  fed3_academia_science: 'knowledge.rdm.tamv',
+  fed4_local_government: 'identity.rdm.tamv',
+  fed5_tech_infra: 'telemetry.rdm.tamv',
+  fed6_community_orgs: 'knowledge.rdm.tamv',
+  fed7_metaverse_xr: 'gameplay.rdm.tamv',
 };
 
+/**
+ * Human-readable names for each federation
+ */
 export const FEDERATION_NAMES: Record<FederationId, string> = {
+  fed1_commerce_local: 'Federación de Comercio Local (Fed1)',
+  fed2_tourism_culture: 'Federación de Turismo y Cultura (Fed2)',
+  fed3_academia_science: 'Federación de Academia y Ciencia (Fed3)',
+  fed4_local_government: 'Federación de Gobierno Local (Fed4)',
+  fed5_tech_infra: 'Federación de Tecnología e Infraestructura (Fed5)',
+  fed6_community_orgs: 'Federación de Comunidad y Organizaciones (Fed6)',
+  fed7_metaverse_xr: 'Federación de Metaverso y XR (Fed7)',
+};
+
+/**
+ * TAMV GEN-7 Legacy Federation IDs (backwards compatibility)
+ * @deprecated Use FederationId (Fed1–Fed7) instead
+ */
+export type TamvFederationId =
+  | 'DEKATEOTL'
+  | 'ANUBIS'
+  | 'BOOKPI_DATAGIT'
+  | 'PHOENIX'
+  | 'MDD_TAMV'
+  | 'KAOS_HYPERRENDER'
+  | 'CHRONOS';
+
+/**
+ * Maps TAMV GEN-7 legacy IDs to YUN canonical Fed1–Fed7
+ */
+export const TAMV_TO_YUN_FEDERATION: Record<TamvFederationId, FederationId> = {
+  DEKATEOTL: 'fed1_commerce_local',
+  ANUBIS: 'fed2_tourism_culture',
+  BOOKPI_DATAGIT: 'fed3_academia_science',
+  PHOENIX: 'fed4_local_government',
+  MDD_TAMV: 'fed5_tech_infra',
+  KAOS_HYPERRENDER: 'fed6_community_orgs',
+  CHRONOS: 'fed7_metaverse_xr',
+};
+
+/**
+ * Maps YUN canonical Fed1–Fed7 to TAMV GEN-7 legacy IDs
+ */
+export const YUN_TO_TAMV_FEDERATION: Record<FederationId, TamvFederationId> = {
+  fed1_commerce_local: 'DEKATEOTL',
+  fed2_tourism_culture: 'ANUBIS',
+  fed3_academia_science: 'BOOKPI_DATAGIT',
+  fed4_local_government: 'PHOENIX',
+  fed5_tech_infra: 'MDD_TAMV',
+  fed6_community_orgs: 'KAOS_HYPERRENDER',
+  fed7_metaverse_xr: 'CHRONOS',
+};
+
+/**
+ * TAMV GEN-7 legacy names (for display/compatibility)
+ * @deprecated Use FEDERATION_NAMES with FederationId instead
+ */
+export const TAMV_FEDERATION_NAMES: Record<TamvFederationId, string> = {
   DEKATEOTL: 'Federación de Datos (DATA)',
   ANUBIS: 'Federación de Inteligencia (INTEL)',
   BOOKPI_DATAGIT: 'Federación de Seguridad (SEC)',
@@ -177,6 +240,15 @@ export const FEDERATION_NAMES: Record<FederationId, string> = {
   KAOS_HYPERRENDER: 'Federación Visual (VIS)',
   CHRONOS: 'Federación Territorial (TERRITORY)',
 };
+
+/**
+ * Resolves a federation identifier (legacy or canonical) to canonical YUN FederationId
+ */
+export function resolveFederationId(input: FederationId | TamvFederationId): FederationId {
+  if (input in FEDERATION_DOMAIN) return input as FederationId;
+  if (input in TAMV_TO_YUN_FEDERATION) return TAMV_TO_YUN_FEDERATION[input as TamvFederationId];
+  return 'fed4_local_government'; // fallback
+}
 
 export type FederationStatus = 'ACTIVE' | 'IDLE' | 'DEGRADED' | 'OFFLINE';
 

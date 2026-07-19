@@ -16,7 +16,7 @@ export type ModuleStatus =
   | "integrated"
   | "partial"
   | "planned"
-  | "deprecated";
+  | | "deprecated";
 
 export type CriticalityLevel = "core" | "high" | "medium" | "low";
 
@@ -93,7 +93,7 @@ const normalizePath = (p: string): string =>
   p.replace(/\\/g, "/").replace(/\/+/g, "/");
 
 // ============================================================================
-// Manifiesto de módulos — población basada en la lista original + YUN
+// Manifiesto de módulos — población exhaustiva con YUN completo
 // ============================================================================
 
 export const RDMX_MODULES: RepoModule[] = [
@@ -128,6 +128,7 @@ export const RDMX_MODULES: RepoModule[] = [
         produces: [
           "knowledge.events.explorer_viewed",
           "knowledge.events.route_selected",
+          "telemetry.events.explorer_session_started",
         ],
         consumes: [
           "telemetry.events.incident_reported",
@@ -138,7 +139,7 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal", "degraded-federation"],
         degradedBehavior:
-          "Modo lectura con indicación de estado degradado de Fed2; sin nuevas operaciones críticas de comercio.",
+          "Modo lectura con rutas y contenidos; sin nuevas operaciones críticas de comercio; avisos explícitos de degradación de Fed2.",
       },
       governance: {
         constitutionVersion: "YUN Constitution – v1.0",
@@ -172,6 +173,7 @@ export const RDMX_MODULES: RepoModule[] = [
         produces: [
           "telemetry.events.twin_telemetry",
           "telemetry.events.territorial_graph_updated",
+          "telemetry.events.flow_model_updated",
         ],
         consumes: [
           "federations.events.policy_updated",
@@ -182,7 +184,7 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal", "degraded-domain", "degraded-federation"],
         degradedBehavior:
-          "Mantiene telemetría agregada; suspende cálculos complejos de flujo hasta recuperación.",
+          "Mantiene telemetría agregada y grafo estático; suspende recomputaciones intensivas hasta recuperación.",
       },
       governance: {
         constitutionVersion: "YUN Constitution – v1.0",
@@ -214,19 +216,21 @@ export const RDMX_MODULES: RepoModule[] = [
       federation: "fed1_commerce_local",
       events: {
         produces: [
+          "identity.events.user_created",
           "commerce.events.payment_initiated",
           "commerce.events.payment_settled",
+          "telemetry.events.payment_audit_logged",
         ],
         consumes: [
-          "identity.events.user_created",
           "telemetry.events.security_alert",
+          "federations.events.kernel_alert",
         ],
       },
       sensitivity: "P0",
       resilience: {
         supportedModes: ["normal", "degraded-domain"],
         degradedBehavior:
-          "Suspende nuevas transacciones; mantiene lectura de historial y estados consolidados.",
+          "Suspende nuevas operaciones de pago; mantiene lectura del historial y estado consolidado de donaciones.",
       },
       governance: {
         constitutionVersion: "YUN Constitution – v1.0",
@@ -260,6 +264,7 @@ export const RDMX_MODULES: RepoModule[] = [
         produces: [
           "telemetry.events.smartcity_sensor",
           "telemetry.events.governance_dashboard_viewed",
+          "telemetry.events.smartcity_alert",
         ],
         consumes: [
           "federations.events.kernel_alert",
@@ -270,7 +275,444 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal", "degraded-federation"],
         degradedBehavior:
-          "Paneles en modo lectura; suspensión de controles automatizados al territorio hasta estabilización.",
+          "Dashboards en modo lectura, sin aplicar nuevas órdenes sobre territorio físico; toda acción requiere confirmación manual.",
+      },
+      governance: {
+        constitutionVersion: "YUN Constitution – v1.0",
+        adrRefs: ["ADR-003-yun-architecture", "ADR-004-heptafederation"],
+      },
+    },
+  },
+  {
+    id: "real-del-monte-elevated",
+    repo: "https://github.com/OsoPanda1/real-del-monte-elevated.git",
+    path: normalizePath("packages/real-del-monte-elevated"),
+    type: "ui",
+    description:
+      "Sistema de diseño cinematográfico elevated — CinematicIntro, VisualEffects, SectionHeader.",
+    entryPoints: ["src/components/CinematicIntro.tsx", "src/components/VisualEffects.tsx"],
+    status: "integrated",
+    criticality: "medium",
+    domain: "cultural",
+    hardening: {
+      threatModel: ["xss", "ui-supply-chain"],
+      hasZeroTrustLayer: true,
+      hasSignedArtifacts: true,
+      hasRuntimeGuards: true,
+    },
+    dependencies: ["real-del-monte-explorer"],
+    tags: ["ElevatedDesign", "CinematicUX"],
+    yun: {
+      domain: "knowledge",
+      federation: "fed2_tourism_culture",
+      events: {
+        produces: ["telemetry.events.elevated_experience_rendered"],
+        consumes: ["knowledge.events.explorer_viewed"],
+      },
+      sensitivity: "P2",
+      resilience: {
+        supportedModes: ["normal", "degraded-federation"],
+        degradedBehavior:
+          "Degrada efectos visuales y animaciones; mantiene narrativa base y estructura de contenido.",
+      },
+      governance: {
+        constitutionVersion: "YUN Constitution – v1.0",
+        adrRefs: ["ADR-003-yun-architecture"],
+      },
+    },
+  },
+  {
+    id: "citemesh-roots",
+    repo: "https://github.com/OsoPanda1/citemesh-roots.git",
+    path: normalizePath("packages/citemesh-roots"),
+    type: "content",
+    description:
+      "Wiki semántica y malla de contenidos territoriales — WikiLayout, WikiSearch, IsabellaChat.",
+    entryPoints: ["src/components/WikiLayout.tsx", "src/services/wikiSearch.ts"],
+    status: "partial",
+    criticality: "medium",
+    domain: "cultural",
+    hardening: {
+      threatModel: ["content-poisoning", "prompt-injection"],
+      hasZeroTrustLayer: true,
+      hasSignedArtifacts: false,
+      hasRuntimeGuards: true,
+    },
+    dependencies: ["genesis-digytamv-nexus", "quantum-system-tamv"],
+    tags: ["SemanticWiki", "KnowledgeGraph", "Isabella"],
+    yun: {
+      domain: "knowledge",
+      federation: "fed2_tourism_culture",
+      events: {
+        produces: [
+          "knowledge.events.article_created",
+          "knowledge.events.article_updated",
+        ],
+        consumes: [
+          "identity.events.user_created",
+          "telemetry.events.content_flagged",
+        ],
+      },
+      sensitivity: "P2",
+      resilience: {
+        supportedModes: ["normal", "degraded-federation"],
+        degradedBehavior:
+          "Wiki en modo sólo lectura cuando Fed2 está degradada; bloquea nuevas contribuciones hasta estabilización.",
+      },
+      governance: {
+        constitutionVersion: "YUN Constitution – v1.0",
+        adrRefs: ["ADR-003-yun-architecture"],
+      },
+    },
+  },
+  {
+    id: "genesis-digytamv-nexus",
+    repo: "https://github.com/OsoPanda1/genesis-digytamv-nexus.git",
+    path: normalizePath("packages/genesis-digytamv-nexus"),
+    type: "ai",
+    description:
+      "Módulos avanzados TAMV — IsabellaOrb, BancoTAMV, Marketplace, Universidad Digital.",
+    entryPoints: ["src/modules/isabella/index.ts", "src/modules/banco/index.ts"],
+    status: "partial",
+    criticality: "high",
+    domain: "civilizational",
+    hardening: {
+      threatModel: ["ai-model-poisoning", "data-exfiltration", "economic-fraud"],
+      hasZeroTrustLayer: true,
+      hasSignedArtifacts: true,
+      hasRuntimeGuards: true,
+    },
+    dependencies: ["quantum-system-tamv", "civilizational-core"],
+    tags: ["TAMV", "Isabella", "Marketplace", "BancoTAMV"],
+    yun: {
+      domain: "commerce",
+      federation: "fed1_commerce_local",
+      events: {
+        produces: [
+          "commerce.events.marketplace_listing_created",
+          "commerce.events.banco_operation",
+        ],
+        consumes: [
+          "identity.events.user_created",
+          "telemetry.events.security_alert",
+        ],
+      },
+      sensitivity: "P0",
+      resilience: {
+        supportedModes: ["normal", "degraded-domain", "degraded-federation"],
+        degradedBehavior:
+          "Suspende operaciones financieras automatizadas; mantiene lectura de balances y estados educativos/marketplace.",
+      },
+      governance: {
+        constitutionVersion: "YUN Constitution – v1.0",
+        adrRefs: ["ADR-001-supabase", "ADR-002-event-driven"],
+      },
+    },
+  },
+  {
+    id: "civilizational-core",
+    repo: "https://github.com/OsoPanda1/civilizational-core.git",
+    path: normalizePath("packages/civilizational-core"),
+    type: "infra",
+    description:
+      "Núcleo civilizacional — protocolos éticos, BookPI, módulos de gobernanza digital.",
+    entryPoints: ["src/protocols/index.ts"],
+    status: "partial",
+    criticality: "core",
+    domain: "civilizational",
+    hardening: {
+      threatModel: ["protocol-drift", "governance-capture"],
+      hasZeroTrustLayer: true,
+      hasSignedArtifacts: true,
+      hasRuntimeGuards: true,
+    },
+    dependencies: ["tenochtitlan-kernel"],
+    tags: ["BookPI", "Governance", "EthicalProtocols"],
+    yun: {
+      domain: "telemetry",
+      federation: "fed4_local_government",
+      events: {
+        produces: [
+          "federations.events.policy_updated",
+          "security.events.governance_violation",
+        ],
+        consumes: [
+          "telemetry.events.system_health_changed",
+          "federations.events.incident",
+        ],
+      },
+      sensitivity: "P1",
+      resilience: {
+        supportedModes: ["normal", "degraded-domain", "degraded-federation"],
+        degradedBehavior:
+          "Mantiene registro de políticas pero suspende aplicación automática de cambios hasta revisión humana.",
+      },
+      governance: {
+        constitutionVersion: "YUN Constitution – v1.0",
+        adrRefs: ["ADR-003-yun-architecture", "ADR-004-heptafederation"],
+      },
+    },
+  },
+  {
+    id: "quantum-system-tamv",
+    repo: "https://github.com/OsoPanda1/quantum-system-tamv.git",
+    path: normalizePath("packages/quantum-system-tamv"),
+    type: "ai",
+    description:
+      "Sistema quantum TAMV — Isabella AI, ChronusEngine, DecisionStore, agentes turismo/cultura/comercio.",
+    entryPoints: ["src/main.py", "lib/isabella.ts"],
+    status: "integrated",
+    criticality: "core",
+    domain: "ai",
+    hardening: {
+      threatModel: ["ai-model-poisoning", "prompt-injection", "data-exfiltration"],
+      hasZeroTrustLayer: true,
+      hasSignedArtifacts: true,
+      hasRuntimeGuards: true,
+    },
+    dependencies: ["civilizational-core"],
+    tags: ["QuantumAI", "ChronusEngine", "DecisionStore", "Isabella"],
+    yun: {
+      domain: "knowledge",
+      federation: "fed3_academia_science",
+      events: {
+        produces: [
+          "knowledge.events.isabella_insight",
+          "telemetry.events.ai_decision_logged",
+        ],
+        consumes: [
+          "identity.events.user_context_updated",
+          "federations.events.policy_updated",
+        ],
+      },
+      sensitivity: "P1",
+      resilience: {
+        supportedModes: ["normal", "degraded-domain", "degraded-federation"],
+        degradedBehavior:
+          "Sólo explicación sobre datos ya existentes; desactiva decisiones automatizadas y recomendaciones de alto impacto.",
+      },
+      governance: {
+        constitutionVersion: "YUN Constitution – v1.0",
+        adrRefs: ["ADR-003-yun-architecture"],
+      },
+    },
+  },
+  {
+    id: "tamv-online-nextgen",
+    repo: "lovable://projects/e7d6549a-68e6-44f5-b5af-c602adada6bc",
+    path: normalizePath("packages/tamv-online-nextgen"),
+    type: "ai",
+    description:
+      "TAMV Online NextGen™ — Civilization Hub, Isabella emocional, MSR Bridge, DreamSpaces, Phoenix 20·30·50, BABAS, Fénix Rex, ANUBIS-ZK.",
+    entryPoints: [
+      "src/pages/TAMVHub.tsx",
+      "src/stores/tamv/isabellaStore.ts",
+      "server/src/routes/tamv.ts",
+    ],
+    status: "integrated",
+    criticality: "core",
+    domain: "civilizational",
+    hardening: {
+      threatModel: ["cross-federation-breach", "identity-corruption", "ai-abuse"],
+      hasZeroTrustLayer: true,
+      hasSignedArtifacts: true,
+      hasRuntimeGuards: true,
+    },
+    dependencies: ["quantum-system-tamv", "civilizational-core", "tenochtitlan-kernel"],
+    tags: ["TAMVHub", "MSRBridge", "ANUBIS-ZK", "Phoenix203050"],
+    yun: {
+      domain: "knowledge",
+      federation: "fed7_metaverse_xr",
+      events: {
+        produces: [
+          "federations.events.hub_state_changed",
+          "telemetry.events.metaverse_session",
+        ],
+        consumes: [
+          "identity.events.user_created",
+          "telemetry.events.system_health_changed",
+        ],
+      },
+      sensitivity: "P1",
+      resilience: {
+        supportedModes: ["normal", "degraded-federation"],
+        degradedBehavior:
+          "Mantiene experiencias XR en modo seguro/limitado; desactiva funciones que dependen de federaciones degradadas.",
+      },
+      governance: {
+        constitutionVersion: "YUN Constitution – v1.0",
+        adrRefs: ["ADR-003-yun-architecture", "ADR-004-heptafederation"],
+      },
+    },
+  },
+  {
+    id: "rdm-digital-nodo-cero",
+    repo: "https://github.com/OsoPanda1/rdm-digital-nodo-cero.git",
+    path: normalizePath("packages/rdm-digital-nodo-cero"),
+    type: "infra",
+    description:
+      "Nodo Cero — manifiesto soberano de RDM Digital, anclajes BookPI y constitución civilizacional.",
+    entryPoints: ["src/pages/TAMVThesis.tsx", "server/src/routes/tamv-thesis.ts"],
+    status: "integrated",
+    criticality: "high",
+    domain: "civilizational",
+    hardening: {
+      threatModel: ["protocol-drift", "constitutional-tampering"],
+      hasZeroTrustLayer: true,
+      hasSignedArtifacts: true,
+      hasRuntimeGuards: true,
+    },
+    dependencies: ["civilizational-core", "tenochtitlan-kernel"],
+    tags: ["NodoCero", "Thesis", "BookPIAnchors"],
+    yun: {
+      domain: "telemetry",
+      federation: "fed4_local_government",
+      events: {
+        produces: [
+          "federations.events.nodo_cero_thesis_updated",
+          "telemetry.events.constitution_change_logged",
+        ],
+        consumes: [
+          "federations.events.kernel_alert",
+          "security.events.governance_violation",
+        ],
+      },
+      sensitivity: "P1",
+      resilience: {
+        supportedModes: ["normal", "degraded-domain", "degraded-federation"],
+        degradedBehavior:
+          "Permite lectura de tesis y manifiesto; suspende cambios estructurales hasta recuperar plena gobernanza.",
+      },
+      governance: {
+        constitutionVersion: "YUN Constitution – v1.0",
+        adrRefs: ["ADR-003-yun-architecture", "ADR-004-heptafederation"],
+      },
+    },
+  },
+  {
+    id: "real-del-monte-explorer-11b3982a",
+    repo: "https://github.com/OsoPanda1/real-del-monte-explorer-11b3982a.git",
+    path: normalizePath("packages/real-del-monte-explorer-11b3982a"),
+    type: "ui",
+    description:
+      "Variante elevated del explorer (fork 11b3982a) — fusionada en páginas y componentes principales.",
+    entryPoints: ["src/pages/Index.tsx"],
+    status: "integrated",
+    criticality: "low",
+    domain: "territorial",
+    hardening: {
+      threatModel: ["ui-supply-chain"],
+      hasZeroTrustLayer: true,
+      hasSignedArtifacts: false,
+      hasRuntimeGuards: true,
+    },
+    dependencies: ["real-del-monte-explorer", "real-del-monte-elevated"],
+    tags: ["Fork", "Variant", "ElevatedExplorer"],
+    yun: {
+      domain: "knowledge",
+      federation: "fed2_tourism_culture",
+      events: {
+        produces: ["telemetry.events.explorer_variant_loaded"],
+        consumes: ["knowledge.events.explorer_viewed"],
+      },
+      sensitivity: "P2",
+      resilience: {
+        supportedModes: ["normal", "degraded-federation"],
+        degradedBehavior:
+          "Se desactiva en modo degradado de Fed2, delegando al explorer principal.",
+      },
+      governance: {
+        constitutionVersion: "YUN Constitution – v1.0",
+        adrRefs: ["ADR-003-yun-architecture"],
+      },
+    },
+  },
+  {
+    id: "rdm-digital-2026",
+    repo: "https://github.com/OsoPanda1/RDM-DIGITAL2026.git",
+    path: normalizePath("packages/rdm-digital-2026"),
+    type: "content",
+    description:
+      "Roadmap visual 2026 de RDM Digital — hoja de ruta operativa ejecutable.",
+    entryPoints: ["docs/roadmap-rdmx-executable.yaml"],
+    status: "integrated",
+    criticality: "medium",
+    domain: "civilizational",
+    hardening: {
+      threatModel: ["roadmap-tampering"],
+      hasZeroTrustLayer: true,
+      hasSignedArtifacts: true,
+      hasRuntimeGuards: true,
+    },
+    dependencies: ["civilizational-core"],
+    tags: ["Roadmap2026", "ExecutableSpec"],
+    yun: {
+      domain: "telemetry",
+      federation: "fed5_tech_infra",
+      events: {
+        produces: ["telemetry.events.roadmap_update_logged"],
+        consumes: ["telemetry.events.system_health_changed"],
+      },
+      sensitivity: "P2",
+      resilience: {
+        supportedModes: ["normal", "degraded-federation"],
+        degradedBehavior:
+          "Roadmap accesible en modo lectura; se bloquean cambios hasta restablecer salud de Fed5.",
+      },
+      governance: {
+        constitutionVersion: "YUN Constitution – v1.0",
+        adrRefs: ["ADR-003-yun-architecture"],
+      },
+    },
+  },
+  {
+    id: "tenochtitlan-kernel",
+    repo: "rdm-digital://core/tenochtitlan",
+    path: normalizePath("server/src/services/tenochtitlan"),
+    type: "backend",
+    description:
+      "Kernel soberano Tenochtitlán: panteón centinela, radares paralelos, ID-NVIDA, EOCT, BookPI hash-chained, MD-X4 y los 48 nodos funcionales.",
+    entryPoints: ["server/src/routes/tenochtitlan.ts", "src/pages/Tenochtitlan.tsx"],
+    status: "integrated",
+    criticality: "core",
+    domain: "civilizational",
+    hardening: {
+      threatModel: [
+        "identity-corruption",
+        "governance-capture",
+        "hash-chain-tampering",
+        "cross-federation-breach",
+      ],
+      hasZeroTrustLayer: true,
+      hasSignedArtifacts: true,
+      hasRuntimeGuards: true,
+    },
+    dependencies: [
+      "rdm-digital-2dbd42b0",
+      "civilizational-core",
+      "quantum-system-tamv",
+      "tamv-online-nextgen",
+    ],
+    tags: ["Kernel", "BookPI", "MD-X4", "SentinelPantheon", "48Nodes"],
+    yun: {
+      domain: "telemetry",
+      federation: "fed4_local_government",
+      events: {
+        produces: [
+          "federations.events.kernel_alert",
+          "security.events.governance_violation",
+          "telemetry.events.bookpi_hash_chain_updated",
+        ],
+        consumes: [
+          "telemetry.events.system_health_changed",
+          "federations.events.incident",
+        ],
+      },
+      sensitivity: "P1",
+      resilience: {
+        supportedModes: ["normal", "degraded-domain", "degraded-federation"],
+        degradedBehavior:
+          "Mantiene vigilancia reducida; suspende cambios profundos en gobernanza hasta confirmación humana.",
       },
       governance: {
         constitutionVersion: "YUN Constitution – v1.0",
@@ -406,7 +848,7 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal"],
         degradedBehavior:
-          "El event bus opera in-memory; si falla, los productores reintentican con backoff exponencial.",
+          "El event bus opera in-memory; si falla, los productores reintentan con backoff exponencial.",
       },
       governance: {
         constitutionVersion: "YUN Constitution – v1.0",

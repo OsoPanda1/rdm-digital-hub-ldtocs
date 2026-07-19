@@ -9,6 +9,37 @@ import type {
 } from "@/core/models";
 import { FEDERATION_MAP, FEDERATION_NAMES } from "@/core/models";
 
+// YUN canonical federation type (Fed1-Fed7 standard)
+export type YunFederationId =
+  | "fed1_commerce_local"
+  | "fed2_tourism_culture"
+  | "fed3_academia_science"
+  | "fed4_local_government"
+  | "fed5_tech_infra"
+  | "fed6_community_orgs"
+  | "fed7_metaverse_xr";
+
+// TAMV GEN-7 federation mapping to YUN standard
+const TAMV_TO_YUN_FEDERATION: Record<string, YunFederationId> = {
+  DEKATEOTL: "fed1_commerce_local",
+  ANUBIS: "fed2_tourism_culture",
+  BOOKPI_DATAGIT: "fed3_academia_science",
+  PHOENIX: "fed4_local_government",
+  MDD_TAMV: "fed5_tech_infra",
+  KAOS_HYPERRENDER: "fed6_community_orgs",
+  CHRONOS: "fed7_metaverse_xr",
+};
+
+const TAMV_FEDERATION_NAMES: Record<string, string> = {
+  DEKATEOTL: "Federación de Datos (DATA)",
+  ANUBIS: "Federación de Inteligencia (INTEL)",
+  BOOKPI_DATAGIT: "Federación de Seguridad (SEC)",
+  PHOENIX: "Federación de Gobernanza (GOV)",
+  MDD_TAMV: "Federación Económica (ECON)",
+  KAOS_HYPERRENDER: "Federación Visual (VIS)",
+  CHRONOS: "Federación Territorial (TERRITORY)",
+};
+
 export interface FederationEvent {
   id: string;
   type: string;
@@ -89,10 +120,10 @@ class FederationBus {
     ];
 
     for (const spec of specs) {
-      this.federations.set(spec.id, {
+      const module: FederationModule = {
         id: spec.id,
         federationNumber: spec.number,
-        name: FEDERATION_NAMES[spec.id],
+        name: TAMV_FEDERATION_NAMES[spec.id] || spec.id,
         specialty: spec.specialty,
         stack: spec.stack,
         role: spec.role,
@@ -100,13 +131,38 @@ class FederationBus {
         health: 1.0,
         operationalScore: 1.0,
         lastHeartbeat: new Date(),
-      });
+      };
+
+      this.federations.set(spec.id, module);
       this.federationQueues.set(spec.id, []);
     }
 
-    logger.info("[FED-BUS] 7 federaciones inicializadas", {
+    logger.info("[FED-BUS] 7 federaciones TAMV GEN-7 inicializadas", {
       federaciones: Array.from(this.federations.keys()),
     });
+  }
+
+  /**
+   * Resolves a TAMV GEN-7 federation ID to its YUN canonical federation ID
+   */
+  static toYunFederation(tamvId: FederationId): YunFederationId {
+    return TAMV_TO_YUN_FEDERATION[tamvId] ?? "fed4_local_government";
+  }
+
+  /**
+   * Resolves a YUN canonical federation ID to its TAMV GEN-7 equivalent
+   */
+  static toTamvFederation(yunId: YunFederationId): FederationId {
+    const reverse: Record<YunFederationId, FederationId> = {
+      fed1_commerce_local: "DEKATEOTL",
+      fed2_tourism_culture: "ANUBIS",
+      fed3_academia_science: "BOOKPI_DATAGIT",
+      fed4_local_government: "PHOENIX",
+      fed5_tech_infra: "MDD_TAMV",
+      fed6_community_orgs: "KAOS_HYPERRENDER",
+      fed7_metaverse_xr: "CHRONOS",
+    };
+    return reverse[yunId];
   }
 
   getFederation(id: FederationId): FederationModule | undefined {
@@ -168,7 +224,7 @@ class FederationBus {
     };
   }
 
-  async ruteToFederation(intent: MDX5Intent, target: FederationId): Promise<void> {
+  async routeToFederation(intent: MDX5Intent, target: FederationId): Promise<void> {
     const federation = this.federations.get(target);
     if (!federation) {
       logger.error("[FED-BUS] Federación no encontrada", { target });

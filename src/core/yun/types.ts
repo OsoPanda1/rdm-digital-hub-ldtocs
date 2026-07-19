@@ -4,6 +4,9 @@
  *
  * Immutable types for the YUN governance model.
  * These are constitutional constants, not recommendations.
+ *
+ * UNIFIED FEDERATION MODEL: Uses Fed1-Fed7 standard (fed1_commerce_local ... fed7_metaverse_xr)
+ * This aligns with ADR-004 Heptafederation and the rdmxManifest module registry.
  */
 
 // ============================================================================
@@ -14,19 +17,46 @@ export const YUN_DOMAINS = ['identity', 'commerce', 'knowledge', 'telemetry', 'g
 export type YunDomain = (typeof YUN_DOMAINS)[number];
 
 // ============================================================================
-// YUN FEDERATIONS (7 organizational units)
+// YUN FEDERATIONS (7 organizational units) — Canonical Fed1-Fed7
 // ============================================================================
 
 export const YUN_FEDERATIONS = [
-  'comercio',
-  'turismo_cultura',
-  'academia',
-  'gobierno',
-  'tech_infra',
-  'comunidad',
-  'metaverso_xr',
+  'fed1_commerce_local',
+  'fed2_tourism_culture',
+  'fed3_academia_science',
+  'fed4_local_government',
+  'fed5_tech_infra',
+  'fed6_community_orgs',
+  'fed7_metaverse_xr',
 ] as const;
 export type YunFederation = (typeof YUN_FEDERATIONS)[number];
+
+// ============================================================================
+// FEDERATION ALIASES (for backwards compatibility with TAMV GEN-7 names)
+// ============================================================================
+
+export const FEDERATION_ALIASES: Record<string, YunFederation> = {
+  // TAMV GEN-7 names → Fed standard
+  'DEKATEOTL': 'fed1_commerce_local',
+  'ANUBIS': 'fed2_tourism_culture',
+  'BOOKPI_DATAGIT': 'fed3_academia_science',
+  'PHOENIX': 'fed4_local_government',
+  'MDD_TAMV': 'fed5_tech_infra',
+  'KAOS_HYPERRENDER': 'fed6_community_orgs',
+  'CHRONOS': 'fed7_metaverse_xr',
+  // Spanish names → Fed standard
+  'comercio': 'fed1_commerce_local',
+  'turismo_cultura': 'fed2_tourism_culture',
+  'academia': 'fed3_academia_science',
+  'gobierno': 'fed4_local_government',
+  'tech_infra': 'fed5_tech_infra',
+  'comunidad': 'fed6_community_orgs',
+  'metaverso_xr': 'fed7_metaverse_xr',
+} as const;
+
+export function resolveFederation(input: string): YunFederation | null {
+  return FEDERATION_ALIASES[input as keyof typeof FEDERATION_ALIASES] ?? null;
+}
 
 // ============================================================================
 // DATA CLASSIFICATION (4 levels)
@@ -55,21 +85,22 @@ export const DOMAIN_STORAGE: Record<YunDomain, StorageEngine> = {
 } as const;
 
 // ============================================================================
-// FEDERATION → DOMAIN OWNERSHIP
+// FEDERATION → DOMAIN OWNERSHIP (aligned with Fed1-Fed7)
 // ============================================================================
 
 export const FEDERATION_DOMAINS: Record<YunFederation, YunDomain[]> = {
-  comercio: ['commerce'],
-  turismo_cultura: ['knowledge'],
-  academia: ['knowledge'],
-  gobierno: ['identity', 'telemetry'],
-  tech_infra: ['telemetry', 'identity'],
-  comunidad: ['knowledge', 'gameplay'],
-  metaverso_xr: ['gameplay'],
+  fed1_commerce_local: ['commerce'],
+  fed2_tourism_culture: ['knowledge'],
+  fed3_academia_science: ['knowledge'],
+  fed4_local_government: ['identity', 'telemetry'],
+  fed5_tech_infra: ['telemetry', 'identity'],
+  fed6_community_orgs: ['knowledge', 'gameplay'],
+  fed7_metaverse_xr: ['gameplay'],
 } as const;
 
 // ============================================================================
-// YUN EVENT TYPES
+// YUN EVENT TYPES (Constitutional event naming)
+// Pattern: yun.{domain}.{entity}.{action} | yun.{system|federation}.{event}
 // ============================================================================
 
 export type YunEventType =
@@ -96,7 +127,71 @@ export type YunEventType =
   | `yun.isabella.voice.log`;
 
 // ============================================================================
-// YUN EVENT ENVELOPE (per 06-event-standard)
+// YUN EVENT STANDARD (per 06-event-standard.md & ADR-002)
+// Canonical event shape: event_type, domain, federation_id, entity_id, trace_id, timestamp, severity, payload
+// ============================================================================
+
+export type YunEventSeverity = 'DEBUG' | 'INFO' | 'WARN' | 'ERROR' | 'CRITICAL';
+
+export interface YunEventPayload {
+  // Payload MUST be controlled, no raw PII.
+  // Use small objects with specific fields.
+  [key: string]: unknown;
+}
+
+/**
+ * Canonical YUN Event — the nervous system standard.
+ * All domain events, federation events, and system events MUST conform to this shape.
+ */
+export interface YunEvent {
+  event_type: string;          // e.g., "commerce.payment.initiated"
+  domain: YunDomain;           // identity, commerce, knowledge, telemetry, gameplay
+  federation_id: YunFederation | null; // Fed1–Fed7 or null for cross-cutting
+  entity_id: string;           // Logical ID of affected entity
+  trace_id: string;            // Cross-service traceability
+  timestamp: string;           // ISO 8601 with ms precision
+  severity: YunEventSeverity;
+  payload: YunEventPayload;
+}
+
+/**
+ * Creates a YUN-compliant event with timestamp auto-filled.
+ */
+export function createYunEvent(params: Omit<YunEvent, 'timestamp'>): YunEvent {
+  return {
+    ...params,
+    timestamp: new Date().toISOString(),
+  };
+}
+
+/**
+ * Creates a YUN event from a domain/entity action.
+ */
+export function createDomainEvent(
+  domain: YunDomain,
+  entity: string,
+  action: 'created' | 'updated' | 'deleted' | 'archived',
+  entityId: string,
+  traceId: string,
+  payload: YunEventPayload,
+  options: {
+    federation?: YunFederation | null;
+    severity?: YunEventSeverity;
+  } = {}
+): YunEvent {
+  return createYunEvent({
+    event_type: `${domain}.events.${entity}_${action}`,
+    domain,
+    federation_id: options.federation ?? null,
+    entity_id: entityId,
+    trace_id: traceId,
+    severity: options.severity ?? 'INFO',
+    payload,
+  });
+}
+
+// ============================================================================
+// YUN EVENT ENVELOPE (internal bus transport wrapper)
 // ============================================================================
 
 export interface YunEventEnvelope<T = unknown> {
@@ -210,4 +305,40 @@ export interface YunADR {
   decision: string;
   consequences: string[];
   superseded_by?: string;
+}
+
+// ============================================================================
+// YUN RESILIENCE MODES
+// ============================================================================
+
+export type ResilienceMode = 'normal' | 'degraded-domain' | 'degraded-federation';
+
+export interface YunResilienceConfig {
+  supportedModes: ResilienceMode[];
+  degradedBehavior: string;
+}
+
+// ============================================================================
+// YUN GOVERNANCE
+// ============================================================================
+
+export interface YunGovernanceConfig {
+  constitutionVersion: string;
+  adrRefs: string[];
+}
+
+// ============================================================================
+// YUN BINDING (module → domain/federation/events)
+// ============================================================================
+
+export interface YunBinding {
+  domain: YunDomain | null;
+  federation: YunFederation | null;
+  events: {
+    produces: string[];
+    consumes: string[];
+  };
+  sensitivity: 'P0' | 'P1' | 'P2';
+  resilience: YunResilienceConfig;
+  governance: YunGovernanceConfig;
 }
