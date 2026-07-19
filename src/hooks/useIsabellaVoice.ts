@@ -39,7 +39,6 @@ export function useIsabellaVoice(options: UseIsabellaVoiceOptions = {}) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const speechUtteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const isPlayingRef = useRef(false);
-  const playNextFromQueueRef = useRef<() => void>(() => {});
 
   const hasWebSpeech = typeof window !== "undefined" && "speechSynthesis" in window;
 
@@ -52,20 +51,9 @@ export function useIsabellaVoice(options: UseIsabellaVoiceOptions = {}) {
 
   const ensureAudioElement = useCallback(() => {
     if (!audioRef.current) {
-      const audio = new Audio();
-      audioRef.current = audio;
-      audio.addEventListener("ended", () => {
-        isPlayingRef.current = false;
-        setIsSpeaking(false);
-        playNextFromQueueRef.current();
-      });
-      audio.addEventListener("error", () => {
-        finishCurrentClip();
-        setError("Error reproduciendo cloud TTS");
-        playNextFromQueueRef.current();
-      });
+      audioRef.current = new Audio();
     }
-  }, [finishCurrentClip]);
+  }, []);
 
   const playNextFromQueue = useCallback(() => {
     // The currently-playing clip stays at the head of the queue while it plays
@@ -119,11 +107,11 @@ export function useIsabellaVoice(options: UseIsabellaVoiceOptions = {}) {
         audioEl.onerror = () => {
           finishCurrentClip();
           setError("Error reproduciendo cloud TTS");
-          playNextFromQueueRef.current();
+          playNextFromQueue();
         };
         audioEl.play().catch(() => {
           finishCurrentClip();
-          playNextFromQueueRef.current();
+          playNextFromQueue();
         });
         return prev;
       }
@@ -133,9 +121,6 @@ export function useIsabellaVoice(options: UseIsabellaVoiceOptions = {}) {
       return prev.slice(1);
     });
   }, [hasWebSpeech, ensureAudioElement, finishCurrentClip]);
-
-  // Keep ref in sync so ensureAudioElement can call playNextFromQueue without a dep cycle
-  playNextFromQueueRef.current = playNextFromQueue;
 
   const fetchCloudTts = useCallback(async (
     text: string,

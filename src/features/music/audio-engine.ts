@@ -72,7 +72,7 @@ export function applySpatialProfile(profile: SpatialProfile, mode: SpatialMode):
 
   // Create convolver for reverb
   convolverNode = ctx.createConvolver();
-  const reverbLength = ctx.sampleRate * (profile.reverb * 3);
+  const reverbLength = Math.max(1, Math.floor(ctx.sampleRate * (profile.reverb * 3)));
   const impulse = ctx.createBuffer(2, reverbLength, ctx.sampleRate);
   for (let channel = 0; channel < 2; channel++) {
     const data = impulse.getChannelData(channel);
@@ -199,10 +199,12 @@ export function playTrack(track: MusicTrack, mode: SpatialMode = 'archivo'): voi
     ctx.resume();
   }
 
-  // Create source if needed
-  if (!sourceNode) {
-    sourceNode = ctx.createMediaElementSource(audioElement);
+  // Create source if needed (must disconnect old one first to avoid InvalidStateError)
+  if (sourceNode) {
+    try { sourceNode.disconnect(); } catch { /* ignore */ }
+    sourceNode = null;
   }
+  sourceNode = ctx.createMediaElementSource(audioElement);
 
   // Set audio source (use MP3 for now, FLAC when available)
   const src = track.file_mp3_320 || track.file_mp3_128 || track.file_flac || '';
@@ -214,7 +216,9 @@ export function playTrack(track: MusicTrack, mode: SpatialMode = 'archivo'): voi
   const profile = track.spatial_profiles?.[mode] || { reverb: 0.1 };
   applySpatialProfile(profile, mode);
 
-  audioElement.play();
+  audioElement.play().catch((err) => {
+    console.warn('[audio-engine] play failed:', err);
+  });
 }
 
 export function pauseTrack(): void {
@@ -222,7 +226,9 @@ export function pauseTrack(): void {
 }
 
 export function resumeTrack(): void {
-  audioElement.play();
+  audioElement.play().catch((err) => {
+    console.warn('[audio-engine] resume failed:', err);
+  });
 }
 
 export function seekTo(timeMs: number): void {
@@ -276,29 +282,68 @@ export function getAverageFrequency(): number {
 }
 
 // ============================================================================
-// EVENT LISTENERS
+// EVENT LISTENERS (tracked for cleanup)
 // ============================================================================
 
-export function onTrackEnd(callback: () => void): void {
-  audioElement.addEventListener('ended', callback);
+const trackEndListeners = new Set<() => void>();
+const timeUpdateListeners = new Set<(timeMs: number) => void>();
+const errorListeners = new Set<(error: string) => void>();
+
+function handleTimeUpdate(): void {
+  const timeMs = audioElement.currentTime * 1000;
+  for (const cb of timeUpdateListeners) cb(timeMs);
 }
 
-export function onTimeUpdate(callback: (timeMs: number) => void): void {
-  audioElement.addEventListener('timeupdate', () => {
-    callback(audioElement.currentTime * 1000);
-  });
+function handleError(): void {
+  const msg = audioElement.error?.message || 'Unknown error';
+  for (const cb of errorListeners) cb(msg);
 }
 
-export function onError(callback: (error: string) => void): void {
-  audioElement.addEventListener('error', () => {
-    callback(audioElement.error?.message || 'Unknown error');
-  });
+export function onTrackEnd(callback: () => void): () => void {
+  const handler = () => callback();
+  audioElement.addEventListener('ended', handler);
+  trackEndListeners.add(handler);
+  return () => {
+    audioElement.removeEventListener('ended', handler);
+    trackEndListeners.delete(handler);
+  };
+}
+
+export function onTimeUpdate(callback: (timeMs: number) => void): () => void {
+  timeUpdateListeners.add(callback);
+  if (timeUpdateListeners.size === 1) {
+    audioElement.addEventListener('timeupdate', handleTimeUpdate);
+  }
+  return () => {
+    timeUpdateListeners.delete(callback);
+    if (timeUpdateListeners.size === 0) {
+      audioElement.removeEventListener('timeupdate', handleTimeUpdate);
+    }
+  };
+}
+
+export function onError(callback: (error: string) => void): () => void {
+  errorListeners.add(callback);
+  if (errorListeners.size === 1) {
+    audioElement.addEventListener('error', handleError);
+  }
+  return () => {
+    errorListeners.delete(callback);
+    if (errorListeners.size === 0) {
+      audioElement.removeEventListener('error', handleError);
+    }
+  };
 }
 
 // Clean up
 export function destroy(): void {
   audioElement.pause();
   audioElement.src = '';
+  trackEndListeners.clear();
+  timeUpdateListeners.clear();
+  errorListeners.clear();
+  audioElement.removeEventListener('timeupdate', handleTimeUpdate);
+  audioElement.removeEventListener('error', handleError);
   disconnectSpatial();
   audioContext?.close();
   audioContext = null;

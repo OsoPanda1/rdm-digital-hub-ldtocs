@@ -17,6 +17,9 @@ export function useAuth() {
       setSession(data.session);
       setUser(data.session?.user ?? null);
       setLoading(false);
+    }).catch((err) => {
+      console.error('[useAuth] getSession failed:', err);
+      setLoading(false);
     });
     return () => sub.subscription.unsubscribe();
   }, []);

@@ -44,7 +44,7 @@ export function startKernel() {
         turistas_concurrentes: 0,
       });
     } catch (error) {
-      logger.error('[KERNEL] Error en ciclo de autopoiesis', error);
+      logger.error('[KERNEL] Error en ciclo de autopoiesis', error as Record<string, unknown>);
     }
   }, 60_000);
 

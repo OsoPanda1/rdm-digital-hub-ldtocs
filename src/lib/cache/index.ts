@@ -83,6 +83,7 @@ class RedisCache implements CacheAdapter {
 
   async connect(url: string): Promise<void> {
     try {
+      // @ts-ignore -- redis is an optional runtime dependency
       const { createClient } = await import('redis');
       this.client = createClient({ url }) as unknown as RedisCache['client'];
       (this.client as unknown as { connect: () => Promise<void> }).connect();

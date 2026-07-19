@@ -329,7 +329,7 @@ export function processGameEvent(
 
   for (const quest of activeQuests) {
     if (quest.status !== 'active') continue;
-    if (quest.quest_type !== request.event_type && quest.quest_type !== 'narrative' && quest.quest_type !== 'territorial') continue;
+    if (quest.quest_type !== (request.event_type as string) && quest.quest_type !== 'narrative' && quest.quest_type !== 'territorial') continue;
 
     const pq = playerQuests.find(p => p.quest_code === quest.code);
     const result = evaluateQuestCriteria(

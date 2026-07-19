@@ -121,7 +121,7 @@ export default function RealitoChat({ initialOpen = false }: RealitoChatProps) {
           }
         }
       } catch (error) {
-        logger.error("RealitoChat error", error);
+        logger.error("RealitoChat error", error as Record<string, unknown>);
         const fallback = localFallbackReply(content);
         assistantContent = fallback;
         setMessages((prev) => [...prev, { id: assistantId, role: "assistant", content: fallback }]);

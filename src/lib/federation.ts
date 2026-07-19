@@ -77,3 +77,30 @@ export const HEPTA_LAYERS: FederationLayer[] = [
 
 export const federationColor = (k: string) =>
   HEPTA_LAYERS.find((l) => l.key === k)?.color ?? "oklch(0.5 0.05 260)";
+
+export const FEDERATION_COLORS: Record<string, string> = Object.fromEntries(
+  HEPTA_LAYERS.map((l) => [l.key, l.color]),
+);
+
+export const SECURITY_PROTOCOLS: Record<string, { name: string; description: string; color: string }> = {
+  FENIX_REX: { name: "Phoenix Rex", description: "Recuperación de datos", color: "oklch(0.62 0.18 30)" },
+  INICIACION: { name: "Iniciación", description: "Primer nivel de seguridad", color: "oklch(0.55 0.13 220)" },
+  HOYO_NEGRO: { name: "Hoyo Negro", description: "Protección avanzada", color: "oklch(0.5 0.16 330)" },
+};
+
+export const ISABELLA_CORE_IDENTITY = {
+  name: "Isabella",
+  role: "Asistente Territorial",
+  federation: "MDD_TAMV" as const,
+  version: "1.0.0",
+};
+
+export function generateFederationHash(input: string): string {
+  let hash = 0;
+  for (let i = 0; i < input.length; i++) {
+    const char = input.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash |= 0;
+  }
+  return `fed_${Math.abs(hash).toString(36)}`;
+}

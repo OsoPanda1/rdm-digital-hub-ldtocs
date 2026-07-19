@@ -1,7 +1,10 @@
 import { createCipheriv, createDecipheriv, randomBytes, scryptSync } from "node:crypto";
 
 const ALGO = "aes-256-gcm";
-const KEY = scryptSync(process.env.SOVEREIGN_GATEWAY_KEY || "rdmx-dev-key", "rdmx-salt", 32);
+if (!process.env.SOVEREIGN_GATEWAY_KEY) {
+  throw new Error("SOVEREIGN_GATEWAY_KEY environment variable is required for crypto operations");
+}
+const KEY = scryptSync(process.env.SOVEREIGN_GATEWAY_KEY, "rdmx-salt", 32);
 
 export function encryptPayload(payload: object): string {
   const iv = randomBytes(12);

@@ -305,7 +305,7 @@ export class IsabellaConsciousnessPipeline {
 
         // Also publish to YUN unified event bus
         publishUnified(
-          `yun.isabella.${action.eventType.toLowerCase()}`,
+          `yun.isabella.${action.eventType.toLowerCase()}.pipeline` as UnifiedYunEventType,
           `isabella-pipeline:${traceId}`,
           action.payload,
           { traceId: action.traceId },

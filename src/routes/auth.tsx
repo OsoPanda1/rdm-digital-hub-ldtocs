@@ -18,7 +18,7 @@ function AuthPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => { if (data.session) navigate({ to: "/" }); });
+    supabase.auth.getSession().then(({ data }) => { if (data.session) navigate({ to: "/" }); }).catch(() => {});
   }, [navigate]);
 
   const handleEmail = async (e: React.FormEvent) => {

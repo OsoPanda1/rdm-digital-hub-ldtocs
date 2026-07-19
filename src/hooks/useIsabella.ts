@@ -102,7 +102,7 @@ export const useIsabella = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
         body: JSON.stringify({
           messages: apiMessages,
@@ -157,7 +157,7 @@ export const useIsabella = () => {
           if (!line.startsWith('data: ')) continue;
 
           const jsonStr = line.slice(6).trim();
-          if (jsonStr === '[DONE]') break;
+          if (!jsonStr || jsonStr === '[DONE]') break;
 
           try {
             const parsed = JSON.parse(jsonStr);

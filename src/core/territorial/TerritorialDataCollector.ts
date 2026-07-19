@@ -296,7 +296,7 @@ export class TerritorialDataCollector {
   private notifyListeners(contribution: UserContribution): void {
     for (const listener of this.listeners) {
       try { listener(contribution); } catch (e) {
-        logger.error('[TerritorialCollector] Error en listener:', e);
+        logger.error('[TerritorialCollector] Error en listener:', e as Record<string, unknown>);
       }
     }
   }

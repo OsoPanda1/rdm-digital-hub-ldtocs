@@ -37,8 +37,8 @@ export function ExplorerView() {
 
         {/* Place markers */}
         {places.map((place, i) => {
-          const offsetX = ((place.lng + 98.675) * 8000) + 50;
-          const offsetY = ((20.142 - place.lat) * 8000) + 50;
+          const offsetX = ((place.lng! + 98.675) * 8000) + 50;
+          const offsetY = ((20.142 - place.lat!) * 8000) + 50;
           return (
             <motion.div
               key={place.id}

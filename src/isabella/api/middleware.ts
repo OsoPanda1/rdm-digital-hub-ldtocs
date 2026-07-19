@@ -1,6 +1,7 @@
 // ISA-API v.1.0.0-evolved — Double Hexagon Security Middleware
 // Validates API Key, JWT token, and double hexagon authorization
 
+import { createHmac } from 'node:crypto';
 import type { ISAContext } from './types';
 
 // ─── Configuration ──────────────────────────────────────────────────────────
@@ -40,21 +41,43 @@ export function validateApiKey(key: string | null): boolean {
   return key === ISA_API_KEY;
 }
 
-// ─── JWT Token Validation (simplified) ──────────────────────────────────────
+// ─── JWT Token Validation ───────────────────────────────────────────────────
 
 export function validateTerritorialToken(token: string | null): { valid: boolean; payload?: Record<string, unknown>; error?: string } {
-  if (!ISA_JWT_SECRET) return { valid: true }; // No secret configured = open mode
+  if (!ISA_JWT_SECRET) {
+    if (process.env.NODE_ENV === 'production') {
+      return { valid: false, error: 'JWT secret not configured' };
+    }
+    return { valid: true }; // Dev fallback only outside production
+  }
   if (!token) return { valid: false, error: 'Missing bearer token' };
 
   // Strip "Bearer " prefix
   const raw = token.startsWith('Bearer ') ? token.slice(7) : token;
 
   try {
-    // Simplified JWT decode (in production use jsonwebtoken or jose)
     const parts = raw.split('.');
     if (parts.length !== 3) return { valid: false, error: 'Invalid JWT format' };
 
+    // Verify signature using HMAC-SHA256
+    const base64UrlEncode = (obj: object): string =>
+      Buffer.from(JSON.stringify(obj))
+        .toString('base64url')
+        .replace(/=+$/, '');
+
+    const header = JSON.parse(Buffer.from(parts[0], 'base64url').toString('utf-8'));
     const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf-8'));
+
+    // Verify HMAC signature
+    const signature = parts[2];
+    const expectedSig = createHmac('sha256', ISA_JWT_SECRET)
+      .update(`${parts[0]}.${parts[1]}`)
+      .digest('base64url')
+      .replace(/=+$/, '');
+
+    if (signature !== expectedSig) {
+      return { valid: false, error: 'Invalid JWT signature' };
+    }
 
     // Check expiration
     if (payload.exp && payload.exp * 1000 < Date.now()) {
@@ -68,7 +91,7 @@ export function validateTerritorialToken(token: string | null): { valid: boolean
 
     return { valid: true, payload };
   } catch (err) {
-    return { valid: false, error: `Token decode failed: ${(err as Error).message}` };
+    return { valid: false, error: `Token validation failed: ${(err as Error).message}` };
   }
 }
 

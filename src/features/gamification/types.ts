@@ -13,7 +13,7 @@
 export type XpTrack = 'cultura' | 'comunidad' | 'juego';
 export type QuestType = 'puzzle' | 'narrative' | 'territorial' | 'community';
 export type QuestDifficulty = 'easy' | 'medium' | 'hard' | 'legendary';
-export type QuestStatus = 'active' | 'paused' | 'completed' | 'archived';
+export type QuestStatus = 'active' | 'in_progress' | 'paused' | 'completed' | 'archived';
 export type PlayerQuestStatus = 'in_progress' | 'completed' | 'failed' | 'expired';
 export type BadgeRarity = 'common' | 'rare' | 'epic' | 'legendary';
 export type BadgeCategory = 'cultural' | 'community' | 'gameplay' | 'territorial';

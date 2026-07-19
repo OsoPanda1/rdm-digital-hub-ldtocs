@@ -28,7 +28,7 @@ spec:
                 secretKeyRef:
                   name: supabase-credentials
                   key: url
-            - name: VITE_SUPABASE_ANON_KEY
+            - name: VITE_SUPABASE_PUBLISHABLE_KEY
               valueFrom:
                 secretKeyRef:
                   name: supabase-credentials

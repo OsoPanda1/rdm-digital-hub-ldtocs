@@ -22,6 +22,8 @@ export function ShareRatingsButton({ pois }: { pois: Poi[] }) {
       const { user, ratings } = await fetchMine();
       if (!user) { toast.error("Inicia sesión para exportar"); return; }
       if (!ratings.length) { toast.error("Aún no tienes valoraciones"); return; }
+      const escapeHtml = (s: string) =>
+        s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
       const poiMap = Object.fromEntries(pois.map((p) => [p.id, p.name]));
       const html = `<!doctype html><html><head><meta charset="utf-8"><title>Mis valoraciones · Ruta del Paste</title>
         <style>
@@ -35,13 +37,13 @@ export function ShareRatingsButton({ pois }: { pois: Poi[] }) {
           footer{margin-top:40px;text-align:center;color:#999;font-size:11px;font-style:italic}
         </style></head><body>
         <h1>Mis valoraciones · Ruta del Paste</h1>
-        <p class="meta">Real del Monte, Hidalgo · ${user.email ?? "Usuario"} · ${new Date().toLocaleString("es-MX")}</p>
+        <p class="meta">Real del Monte, Hidalgo · ${escapeHtml(user.email ?? "Usuario")} · ${new Date().toLocaleString("es-MX")}</p>
         ${ratings.map((r) => `
           <div class="item">
             <span class="date">${new Date(r.created_at).toLocaleDateString("es-MX")}</span>
-            <div class="name">${poiMap[r.poi_id] ?? "POI"}</div>
+            <div class="name">${escapeHtml(poiMap[r.poi_id] ?? "POI")}</div>
             <div class="stars">${"★".repeat(r.score)}${"☆".repeat(5 - r.score)}</div>
-            ${r.review ? `<p>${r.review}</p>` : ""}
+            ${r.review ? `<p>${escapeHtml(r.review)}</p>` : ""}
           </div>`).join("")}
         <footer>Orgullosamente Realmontenses · Proyecto dedicado a Reyna Trejo Serrano</footer>
         </body></html>`;

@@ -95,6 +95,7 @@ export interface MusicCronica {
   cronica_type: CronicaType;
   route_id: string | null;
   canonical_level: CanonicalLevel;
+  trackCount?: number;
   play_count: number;
   like_count: number;
   fork_count: number;

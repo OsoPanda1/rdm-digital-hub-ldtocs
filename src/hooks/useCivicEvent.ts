@@ -10,7 +10,7 @@ export function useCivicEvent() {
         occurredAt: event.occurredAt ?? new Date().toISOString(),
       });
     } catch (error) {
-      logger.error("Event failed", error);
+      logger.error("Event failed", error as Record<string, unknown>);
     }
   };
 }

@@ -15,6 +15,17 @@ import { NotificationProvider } from '@/components/NotificationSystem'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import { Analytics } from '@vercel/analytics/react'
 import { logger } from '@/lib/logger'
+import { captureException as sentryCaptureException } from '@/integrations/observability/sentry'
+
+const captureException = sentryCaptureException
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen w-full flex items-center justify-center bg-background">
+      <div className="animate-pulse text-muted-foreground">Cargando...</div>
+    </div>
+  )
+}
 
 // Componentes pesados: lazy loading para reducir bundle inicial (~126KB)
 const CinematicIntro = lazy(() => import('@/components/CinematicIntro').then((m) => ({ default: m.CinematicIntro })))
