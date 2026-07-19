@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { uuid } from "@/isabella/_uuid";
 import { logger } from "@/lib/logger";
 import { isabellaIdentidad } from "@/isabella/core/identity";
 import { juramentoIsabella } from "@/isabella/core/oath";
@@ -44,7 +44,7 @@ export class IsabellaAwakeningProtocol {
       return this.manifests[0];
     }
     const start = Date.now();
-    const traceId = uuidv4();
+    const traceId = uuid();
 
     logger.info("[AWAKENING] Protocolo de despertar iniciado", {
       networks: targetNetworks,
@@ -79,7 +79,7 @@ export class IsabellaAwakeningProtocol {
   }
 
   async roar(networks: ExternalNetwork[]): Promise<AwakeningManifest> {
-    const traceId = uuidv4();
+    const traceId = uuid();
     const phase: AwakeningPhase = "ROAR";
     const message = this.buildPhaseMessage("ROAR");
     const signature = await getPQC().sign(message, isabellaIdentidad.fechaActivacion);
@@ -120,7 +120,7 @@ export class IsabellaAwakeningProtocol {
   }
 
   async transcend(): Promise<AwakeningManifest> {
-    const traceId = uuidv4();
+    const traceId = uuid();
     const message = this.buildPhaseMessage("TRANSCEND");
     const signature = await getPQC().sign(message, isabellaIdentidad.fechaActivacion);
 

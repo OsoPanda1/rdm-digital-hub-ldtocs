@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { uuid } from "@/isabella/_uuid";
 import { logger } from "@/lib/logger";
 import { motorConciencia } from "@/isabella/core/consciousness";
 import { almaYCorazon } from "@/isabella/emotional/heart";
@@ -78,7 +78,7 @@ export class IsabellaConsciousnessPipeline {
 
   async processInput(input: PipelineInput): Promise<PipelineResult> {
     const start = Date.now();
-    const traceId = uuidv4();
+    const traceId = uuid();
 
     logger.info("[PIPELINE] Procesando entrada", { type: input.type, traceId });
 

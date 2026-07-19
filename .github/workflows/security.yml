@@ -39,13 +39,13 @@ jobs:
 
     steps:
       - name: Hardened checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           fetch-depth: 0
 
       - name: Run Gitleaks
         if: matrix.scanner == 'gitleaks'
-        uses: gitleaks/gitleaks-action@v3
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3
         with:
           args: detect --source=. --report-format sarif --report-path gitleaks.sarif
         env:
@@ -54,13 +54,13 @@ jobs:
 
       - name: Upload Gitleaks SARIF
         if: matrix.scanner == 'gitleaks' && always() && hashFiles('gitleaks.sarif') != ''
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@7188fc363630916deb702c7fdcf4e481b751f97a # v4
         with:
           sarif_file: gitleaks.sarif
 
       - name: TruffleHog (PR diff)
         if: matrix.scanner == 'trufflehog' && github.event_name == 'pull_request'
-        uses: trufflesecurity/trufflehog@main
+        uses: trufflesecurity/trufflehog@8708801319700a16c56abb86628803ba766d5563 # main
         with:
           path: .
           base: ${{ github.event.pull_request.base.sha }}
@@ -69,7 +69,7 @@ jobs:
 
       - name: TruffleHog (full branch)
         if: matrix.scanner == 'trufflehog' && github.event_name != 'pull_request'
-        uses: trufflesecurity/trufflehog@main
+        uses: trufflesecurity/trufflehog@8708801319700a16c56abb86628803ba766d5563 # main
         with:
           path: .
           base: ""
@@ -89,12 +89,12 @@ jobs:
 
     steps:
       - name: Hardened checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           fetch-depth: 1
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
@@ -132,7 +132,7 @@ jobs:
 
     steps:
       - name: Hardened checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           fetch-depth: 1
 

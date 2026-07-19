@@ -33,13 +33,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           fetch-depth: 1
 
       - name: Set CodeQL languages matrix (auto-detect)
         id: set-matrix
-        uses: advanced-security/set-codeql-languages@v1
+        uses: advanced-security/set-codeql-language-matrix@9f9ba17a61d34c97baaf17e96276389a0cd73392 # v1
         with:
           excluded-languages: ""
 
@@ -60,7 +60,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           # fetch-depth: 0 recomendado para CodeQL (historial completo)
           fetch-depth: 0
@@ -68,14 +68,14 @@ jobs:
       # Setup específico para JS/TS (si aplica)
       - name: Setup Node.js
         if: matrix.language == 'javascript-typescript'
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           # Usa la versión fijada en package.json, o ajusta según necesidad
           node-version-file: "package.json"
           cache: "npm"
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
+        uses: github/codeql-action/init@7188fc363630916deb702c7fdcf4e481b751f97a # v4
         with:
           languages: ${{ matrix.language }}
           # Si en el futuro necesitas build para lenguajes compilados,
@@ -84,7 +84,7 @@ jobs:
           queries: "+security-extended,security-and-quality"
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4
+        uses: github/codeql-action/analyze@7188fc363630916deb702c7fdcf4e481b751f97a # v4
         with:
           category: "${{ env.CODEQL_CATEGORY_PREFIX }}/language:${{ matrix.language }}"
           upload: true
