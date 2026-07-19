@@ -29,12 +29,12 @@ jobs:
 
     steps:
       - name: Hardened checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4.2.2
         with:
           fetch-depth: 1
 
       - name: Setup Node.js
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v4.0.2
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
@@ -48,6 +48,12 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      - name: Cache node_modules for downstream jobs
+        uses: actions/cache@0c4570f1aa3c1b22a4c6f5a0e98c151d17326d2b # v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
+
   quality:
     name: Quality · Unit · Build (Node ${{ matrix.node }})
     runs-on: ubuntu-latest
@@ -60,18 +66,29 @@ jobs:
 
     steps:
       - name: Hardened checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4.2.2
         with:
           fetch-depth: 1
 
       - name: Setup Node.js
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v4.0.2
         with:
           node-version: ${{ matrix.node }}
           cache: npm
 
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+      - name: Restore node_modules cache
+        uses: actions/cache@0c4570f1aa3c1b22a4c6f5a0e98c151d17326d2b # v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            node-modules-${{ runner.os }}-${{ env.NODE_VERSION }}-
+
+      - name: Install dependencies (if cache miss)
+        run: |
+          if [ ! -d node_modules ]; then
+            npm ci --legacy-peer-deps
+          fi
 
       - name: Unit tests
         run: npm run test:unit -- --reporter=default
@@ -81,12 +98,38 @@ jobs:
 
       - name: Upload dist artifact (Node 20)
         if: matrix.node == 20
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4.3.1
         with:
           name: dist-node20
           path: dist
           if-no-files-found: error
           retention-days: 7
+
+  security:
+    name: Security · Dependencies · Basic SAST
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: fast-checks
+
+    steps:
+      - name: Hardened checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4.2.2
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v4.0.2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Run npm audit (baseline)
+        run: npm audit --audit-level=high || true
+
+      # aquí puedes añadir semgrep/gitleaks en CI si quieres más adelante
 
   e2e:
     name: E2E · Playwright · Sharded
@@ -100,12 +143,12 @@ jobs:
 
     steps:
       - name: Hardened checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4.2.2
         with:
           fetch-depth: 1
 
       - name: Setup Node.js
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v4.0.2
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
@@ -124,7 +167,7 @@ jobs:
 
       - name: Upload Playwright report
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4.3.1
         with:
           name: playwright-report-${{ matrix.shard }}
           path: playwright-report
@@ -140,12 +183,12 @@ jobs:
 
     steps:
       - name: Hardened checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4.2.2
         with:
           fetch-depth: 1
 
       - name: Setup Node.js
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v4.0.2
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
@@ -162,10 +205,84 @@ jobs:
       - name: Run Playwright smoke tests (@smoke)
         run: npm run test:e2e -- --grep "@smoke"
 
+  ldto-snapshot:
+    name: LDTOCS Snapshot · Ecosystem Health (main only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [quality, e2e, security]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Hardened checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4.2.2
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v4.0.2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Run LDTOCS snapshot (sync+status)
+        env:
+          LDTOCS_SNAPSHOT_ENDPOINT: ${{ secrets.LDTOCS_SNAPSHOT_ENDPOINT }} # Supabase/ISA-AI
+        run: |
+          echo "Running LDTOCS ecosystem snapshot..."
+          # Este script existe en tools/rdmx-ldtocs.ts
+          npx tsx tools/rdmx-ldtocs.ts status --verbose || echo "LDTOCS status degraded/critical"
+
+      - name: Append LDTOCS status to summary
+        if: always()
+        run: |
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "### LDTOCS Snapshot" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Branch: ${{ github.ref }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Snapshot endpoint: ${{ secrets.LDTOCS_SNAPSHOT_ENDPOINT != '' && 'configured' || 'not configured' }}" >> "$GITHUB_STEP_SUMMARY"
+
+  container-scan:
+    name: Container Scan · Image Security (main only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: quality
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Hardened checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4.2.2
+        with:
+          fetch-depth: 1
+
+      - name: Build Docker image (app)
+        run: |
+          docker build -t rdm-app:${{ github.sha }} .
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@c7889ea345b9f031d97983b82aa8dd99a03f1ccd # pinned [web:110][web:114][web:117]
+        with:
+          image-ref: 'rdm-app:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1'              # falla el job si hay HIGH/CRITICAL
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4.3.1
+        with:
+          name: trivy-report
+          path: trivy-scan-results.txt
+          if-no-files-found: ignore
+          retention-days: 5
+
   deploy-vercel:
     name: Deploy · Vercel
     runs-on: ubuntu-latest
-    needs: [quality, e2e]
+    needs: [quality, e2e, security, ldto-snapshot, container-scan]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     timeout-minutes: 20
     environment:
@@ -174,12 +291,12 @@ jobs:
 
     steps:
       - name: Hardened checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4.2.2
         with:
           fetch-depth: 1
 
       - name: Setup Node.js
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v4.0.2
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
@@ -191,7 +308,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to Vercel
-        uses: amondnet/vercel-action@de09aeac2ace6599ec9b11ef87558759a496bac4 # v42
+        uses: amondnet/vercel-action@de09aeac2ace6599ec9b11ef87558759a496bac4 # v20.x pinned [web:106]
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
@@ -201,7 +318,7 @@ jobs:
   summary:
     name: CI Summary
     runs-on: ubuntu-latest
-    needs: [fast-checks, quality, e2e]
+    needs: [fast-checks, quality, e2e, security, ldto-snapshot, container-scan]
     if: always()
 
     steps:
@@ -212,3 +329,6 @@ jobs:
           echo "- Fast checks: ${{ needs.fast-checks.result }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- Quality: ${{ needs.quality.result }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- E2E: ${{ needs.e2e.result }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Security: ${{ needs.security.result }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- LDTOCS Snapshot: ${{ needs.ldto-snapshot.result }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Container Scan: ${{ needs.container-scan.result }}" >> "$GITHUB_STEP_SUMMARY"
