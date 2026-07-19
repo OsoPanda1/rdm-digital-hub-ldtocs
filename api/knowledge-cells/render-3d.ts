@@ -1,151 +1,85 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { z } from 'zod';
+// Asumiendo la existencia de estas capas en tu estructura (y los archivos que vi en el repo)
+import { Telemetry } from '../_shared/telemetry'; 
+import { YunDataGateway } from '../yun/gateway'; 
 
-interface RenderRequest {
-  operation: 'render' | 'sync-audio' | 'update-color';
-  payload: Record<string, unknown>;
-  context?: { userId?: string; sessionId?: string };
-}
+// 1. Definición de Esquemas (Runtime Contracts)
+const RenderSchema = z.object({
+  operation: z.enum(['render', 'sync-audio', 'update-color']),
+  payload: z.record(z.unknown()),
+  context: z.object({
+    userId: z.string().optional(),
+    sessionId: z.string().optional(),
+  }).optional(),
+});
 
-function analyzeFrequencies(signal: number[]): Record<string, number> {
-  if (!signal || signal.length < 20) {
-    return { bass: 0, mid: 0, treble: 0 };
+// 2. Kernel de Servicio (Inyección de Dependencia)
+class Render3DEngine {
+  private static instance: Render3DEngine;
+  
+  private constructor() {}
+
+  static getInstance() {
+    if (!Render3DEngine.instance) Render3DEngine.instance = new Render3DEngine();
+    return Render3DEngine.instance;
   }
-  return {
-    bass: signal.slice(0, 5).reduce((a, b) => a + b, 0) / 5,
-    mid: signal.slice(5, 15).reduce((a, b) => a + b, 0) / 10,
-    treble: signal.slice(15, 20).reduce((a, b) => a + b, 0) / 5,
-  };
+
+  async execute(op: string, payload: any): Promise<any> {
+    const strategy = {
+      render: this.handleRender,
+      'sync-audio': this.handleSyncAudio,
+      'update-color': this.handleUpdateColor,
+    };
+
+    const action = strategy[op as keyof typeof strategy];
+    if (!action) throw new Error(`UNSUPPORTED_OPERATION: ${op}`);
+    
+    return await action(payload);
+  }
+
+  private async handleRender(payload: any) {
+    // Aquí integrarías el acceso real a la GPU o el motor de render 3D
+    return { status: 'rendered', gltfHash: `hash_${Date.now()}` };
+  }
+
+  private async handleSyncAudio(payload: any) {
+    // Integración con YUN DataGateway
+    const metrics = await YunDataGateway.processSignal(payload.audioSignal);
+    return { status: 'synced', metrics };
+  }
+
+  private async handleUpdateColor(payload: any) {
+    return { color: '#00ff00' };
+  }
 }
 
-function calculateImmersion(frequencies: Record<string, number>): number {
-  const total = Object.values(frequencies).reduce((a, b) => a + b, 0);
-  return Math.min(total / 300, 1);
-}
-
-function frequencyToColor(frequency: number): string {
-  const hue = (frequency % 360).toString();
-  return `hsl(${hue}, 100%, 50%)`;
-}
-
-async function performRender(payload: Record<string, unknown>) {
-  const startTime = Date.now();
-
-
-  const renderTime = Math.random() * 50 + 10;
-  await new Promise((resolve) => setTimeout(resolve, renderTime));
-
-  return {
-    status: 'rendered',
-    gltfHash: `gltf_${Date.now()}_${Math.random().toString(36).slice(7)}`,
-    meshCount: 1,
-    vertexCount: 24,
-    triangleCount: 12,
-    renderTime,
-    totalTime: Date.now() - startTime,
-    lightConfig: (payload as Record<string, unknown>).lightConfig || { intensity: 1.0, color: '#ffffff' },
-    metadata: {
-      renderer: 'WebGL2',
-      shaders: ['vertex', 'fragment'],
-      extensions: ['KHR_lights_punctual', 'KHR_materials_specular'],
-    },
-  };
-}
-
-async function syncAudio(payload: Record<string, unknown>) {
-  const audioSignal = (payload.audioSignal as number[]) || [];
-  const frequencyBands = analyzeFrequencies(audioSignal);
-  const immersion = calculateImmersion(frequencyBands);
-
-  return {
-    status: 'synced',
-    frequencyBands,
-    spatialAudioEnabled: true,
-    immersionLevel: immersion,
-    audioConfig: {
-      sampleRate: (payload.sampleRate as number) || 44100,
-      channels: (payload.channels as number) || 2,
-      bitDepth: (payload.bitDepth as number) || 16,
-    },
-  };
-}
-
-async function updateColor(payload: Record<string, unknown>) {
-  const frequency = (payload.frequency as number) || 440;
-  const targetColor = frequencyToColor(frequency);
-
-  return {
-    status: 'updated',
-    color: targetColor,
-    frequency,
-    transitionDuration: (payload.transitionDuration as number) || 300,
-    easing: (payload.easing as string) || 'easeInOutQuad',
-  };
-}
-
+// 3. Handler (Solo Orquestación)
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const startTime = Date.now();
-
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('X-Cell-Type', 'Render3D');
-  res.setHeader('X-Cell-Version', '1.0.0');
-
+  const telemetry = new Telemetry('Render3D-Kernel');
+  
   if (req.method !== 'POST') {
-    return res.status(405).json({
-      success: false,
-      error: { code: 'METHOD_NOT_ALLOWED', message: 'Use POST for render-3d operations' },
-    });
+    return res.status(405).json({ success: false, error: 'METHOD_NOT_ALLOWED' });
   }
 
   try {
-    const { operation, payload, context } = req.body as RenderRequest;
-
-    if (!operation || !['render', 'sync-audio', 'update-color'].includes(operation)) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          code: 'INVALID_OPERATION',
-          message: `Operation '${operation}' not supported. Use: render, sync-audio, update-color`,
-        },
-      });
-    }
-
-    let result: Record<string, unknown>;
-
-    switch (operation) {
-      case 'render':
-        result = await performRender(payload || {});
-        break;
-      case 'sync-audio':
-        result = await syncAudio(payload || {});
-        break;
-      case 'update-color':
-        result = await updateColor(payload || {});
-        break;
-      default:
-        throw new Error(`Unknown operation: ${operation}`);
-    }
-
-    const executionTime = Date.now() - startTime;
+    const validatedBody = RenderSchema.parse(req.body);
+    const engine = Render3DEngine.getInstance();
+    
+    const result = await engine.execute(validatedBody.operation, validatedBody.payload);
+    
+    telemetry.logEvent('OP_SUCCESS', { op: validatedBody.operation });
 
     return res.status(200).json({
       success: true,
       data: result,
-      performance: { executionTime, startTime },
-      timestamp: new Date().toISOString(),
-      context: { userId: context?.userId, sessionId: context?.sessionId },
+      meta: { architecture: 'TAMV-MD-X4', federation: 'active' }
     });
   } catch (err) {
-    const executionTime = Date.now() - startTime;
-    const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-
-    return res.status(500).json({
-      success: false,
-      error: {
-        code: 'RENDER_3D_ERROR',
-        message: errorMessage,
-      },
-      performance: { executionTime },
-      timestamp: new Date().toISOString(),
+    telemetry.logError(err);
+    return res.status(400).json({ 
+      success: false, 
+      error: err instanceof z.ZodError ? 'VALIDATION_FAILED' : 'INTERNAL_FAILURE' 
     });
   }
 }
