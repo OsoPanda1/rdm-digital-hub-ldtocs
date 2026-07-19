@@ -1,10 +1,82 @@
 {
   "$schema": "https://openapi.vercel.sh/microfrontends.json",
+  // Manifiesto de microfrontends del ecosistema RDM Digital.
+  // Este archivo se despliega con la aplicación por defecto del grupo
+  // y controla cómo se enrutan las zonas (hub, docs, admin, explorer, etc.). [web:147][web:148]
+
   "applications": {
+    // 1. Hub principal — Real del Monte Digital Hub / Explorer
     "rdm-digital-hub-ldtocs": {
+      "packageName": "rdm-digital-hub-ldtocs",
+
       "development": {
+        // Fallback cuando el hub no está corriendo en local:
+        // se usa el dominio principal ya desplegado.
         "fallback": "https://www.visitarealdelmonte.online"
-      }
+      },
+
+      // Rutas que deben ser servidas por este microfrontend. [web:159][web:162]
+      "routing": [
+        {
+          "group": "hub-root",
+          "paths": ["/", "/explorer/:path*", "/hub/:path*"]
+        },
+        {
+          "group": "territorial",
+          "paths": ["/territorio/:path*", "/rdm/:path*"]
+        }
+      ]
+    },
+
+    // 2. Documentación / Storybook / Manual civilizatorio
+    "rdm-digital-docs": {
+      "packageName": "rdm-digital-docs",
+
+      "development": {
+        "fallback": "https://docs.visitarealdelmonte.online"
+      },
+
+      "routing": [
+        {
+          "group": "docs",
+          "paths": ["/docs/:path*", "/manual/:path*"]
+        }
+      ]
+    },
+
+    // 3. Panel administrativo — observabilidad, salud federaciones, LDTOCS dashboards
+    "rdm-digital-admin": {
+      "packageName": "rdm-digital-admin",
+
+      "development": {
+        "fallback": "https://admin.visitarealdelmonte.online"
+      },
+
+      "routing": [
+        {
+          "group": "admin",
+          "paths": ["/admin/:path*", "/ops/:path*", "/yun/:path*"]
+        }
+      ]
+    },
+
+    // 4. Aplicación de donaciones / commerce
+    "rdm-digital-donations": {
+      "packageName": "rdm-digital-donations",
+
+      "development": {
+        "fallback": "https://donaciones.visitarealdelmonte.online"
+      },
+
+      "routing": [
+        {
+          "group": "donations",
+          "paths": ["/donaciones/:path*", "/donations/:path*"]
+        }
+      ]
     }
+
+    // Si en algún momento omites routing para una app, esa app se convierte
+    // en la "default application" que captura rutas no asignadas. [web:159]
   }
 }
