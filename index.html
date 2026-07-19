@@ -2,10 +2,19 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <meta name="theme-color" content="#1a1009" />
-    <title>RDM Digital Hub — Real del Monte, Pueblo Mágico | Plataforma Territorial</title>
-    <meta name="description" content="RDM Digital Hub: plataforma inteligente territorial de Real del Monte, Hidalgo. Mapa interactivo, historia minera, gastronomía, eventos culturales, directorio de negocios y más." />
+
+    <title>
+      RDM Digital Hub — Real del Monte, Pueblo Mágico | Plataforma Territorial Inteligente
+    </title>
+    <meta
+      name="description"
+      content="RDM Digital Hub: plataforma territorial inteligente de Real del Monte, Hidalgo. Mapa interactivo, historia minera, gastronomía, eventos culturales, rutas y directorio vivo de negocios locales."
+    />
     <meta name="author" content="RDM Digital — TAMV Online" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://visitarealdelmonte.online/" />
@@ -14,53 +23,148 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://tile.openstreetmap.org" />
+    <link rel="preconnect" href="https://visitarealdelmonte.online" />
     <link rel="preconnect" href="https://*.supabase.co" />
-    <!-- Google Fonts: DM Sans + Playfair Display únicamente (2 familias, no Cormorant/Montserrat/JetBrains) -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" as="style" fetchpriority="high" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" media="print" onload="this.media='all';this.onload=null" crossorigin />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" crossorigin /></noscript>
+
+    <!-- Google Fonts: DM Sans + Playfair Display (carga no bloqueante) -->
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap"
+      as="style"
+      fetchpriority="high"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap"
+      media="print"
+      onload="this.media='all';this.onload=null"
+      crossorigin
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap"
+        crossorigin
+      />
+    </noscript>
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://visitarealdelmonte.online/" />
-    <meta property="og:title" content="RDM Digital Hub — Real del Monte, Pueblo Mágico" />
-    <meta property="og:description" content="Plataforma territorial inteligente de Real del Monte. Mapa, historia, gastronomía, eventos y directorio de negocios." />
+    <meta
+      property="og:title"
+      content="RDM Digital Hub — Real del Monte, Pueblo Mágico"
+    />
+    <meta
+      property="og:description"
+      content="Plataforma territorial inteligente de Real del Monte. Mapa, historia minera, gastronomía, eventos, rutas y directorio de negocios."
+    />
     <meta property="og:image" content="/images/rdm-hero.png" />
+    <meta property="og:image:alt" content="Vista panorámica de Real del Monte y su entorno minero." />
     <meta property="og:locale" content="es_MX" />
     <meta property="og:site_name" content="RDM Digital Hub" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@visitarealdelmonte" />
-    <meta name="twitter:title" content="RDM Digital Hub — Real del Monte, Pueblo Mágico" />
-    <meta name="twitter:description" content="Plataforma territorial inteligente de Real del Monte. Mapa, historia, gastronomía, eventos y directorio." />
+    <meta
+      name="twitter:title"
+      content="RDM Digital Hub — Real del Monte, Pueblo Mágico"
+    />
+    <meta
+      name="twitter:description"
+      content="Plataforma territorial inteligente de Real del Monte. Mapa, historia, gastronomía, eventos y directorio de negocios locales."
+    />
     <meta name="twitter:image" content="/images/rdm-hero.png" />
 
-    <!-- Schema.org TouristDestination -->
+    <!-- Aplicación web / PWA -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="application-name" content="RDM Digital Hub" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="RDM Digital Hub" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+
+    <!-- Preload del bundle principal para mejorar LCP -->
+    <link rel="modulepreload" href="/src/main.tsx" />
+
+    <!-- Schema.org TouristDestination + TouristTrip + WebSite para SEO semántico -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "TouristDestination",
-      "name": "Real del Monte",
-      "description": "Pueblo Mágico de Hidalgo, México. Famoso por su historia minera, pastes y arquitectura inglesa.",
-      "url": "https://visitarealdelmonte.online",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Real del Monte",
-        "addressRegion": "Hidalgo",
-        "addressCountry": "MX"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 20.1295,
-        "longitude": -98.6734
-      },
-      "touristType": ["Historia", "Gastronomía", "Aventura", "Cultura", "Ecoturismo"]
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://visitarealdelmonte.online#website",
+          "name": "RDM Digital Hub",
+          "url": "https://visitarealdelmonte.online",
+          "description": "Plataforma territorial inteligente de Real del Monte, Pueblo Mágico de Hidalgo.",
+          "publisher": {
+            "@type": "Organization",
+            "name": "RDM Digital — TAMV Online",
+            "url": "https://visitarealdelmonte.online"
+          }
+        },
+        {
+          "@type": "TouristDestination",
+          "@id": "https://visitarealdelmonte.online#destination",
+          "name": "Real del Monte",
+          "description": "Pueblo Mágico de Hidalgo, México. Famoso por su historia minera, pastes y arquitectura inglesa.",
+          "url": "https://visitarealdelmonte.online",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Real del Monte",
+            "addressRegion": "Hidalgo",
+            "addressCountry": "MX"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 20.1295,
+            "longitude": -98.6734
+          },
+          "touristType": [
+            "Historia",
+            "Gastronomía",
+            "Aventura",
+            "Cultura",
+            "Ecoturismo"
+          ]
+        },
+        {
+          "@type": "TouristTrip",
+          "@id": "https://visitarealdelmonte.online#trip",
+          "name": "Ruta Minera y Gastronomía en Real del Monte",
+          "description": "Itinerario sugerido de visita por minas históricas, miradores y casas de pastes.",
+          "touristType": "Historia y Gastronomía",
+          "url": "https://visitarealdelmonte.online/explorer",
+          "itemListElement": [
+            {
+              "@type": "TouristAttraction",
+              "name": "Mina de Acosta",
+              "url": "https://visitarealdelmonte.online/explorer/mina-acosta"
+            },
+            {
+              "@type": "TouristAttraction",
+              "name": "Mina de la Dificultad",
+              "url": "https://visitarealdelmonte.online/explorer/mina-dificultad"
+            },
+            {
+              "@type": "TouristAttraction",
+              "name": "Casa del Paste",
+              "url": "https://visitarealdelmonte.online/explorer/casa-del-paste"
+            }
+          ]
+        }
+      ]
     }
     </script>
-</head>
+  </head>
 
   <body>
     <div id="root"></div>
+
+    <!-- Script principal de la aplicación (Vite/React) -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
