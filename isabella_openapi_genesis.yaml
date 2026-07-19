@@ -6,7 +6,15 @@ info:
     ISA-API v.GENESIS define la interfaz interna soberana de Isabella Villaseñor AI
     como sistema operativo cognitivo del ecosistema TAMV Online / RDM Digital.
     No depende de ningún proveedor externo de IA; describe funciones de skills,
-    kernel y gobernanza, y permite orquestación de agentes y servicios territoriales.
+    kernel y gobernanza, y permite la orquestación de agentes y servicios territoriales.
+
+    Esta especificación es de uso interno soberano y se considera parte de la
+    Constitución Técnica de Isabella. No se expone directamente a clientes externos.
+
+    Gobernanza:
+      - Todas las llamadas deben usar HTTPS y autenticación fuerte.
+      - Se exige validación estricta de esquema de entrada y salida.
+      - Las respuestas de error siguen el formato ErrorResponse estándar.
 
 servers:
   - url: https://isabella.internal.api
@@ -28,211 +36,55 @@ tags:
   - name: TOPOLOGY
     description: Arquitectura de la Heptafederación TAMV y Nodo Cero
 
-paths:
-  /isabella/orion/search:
-    post:
-      summary: Arqueología cognitiva de contexto
-      tags: [ORION]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OrionSearchRequest'
-      responses:
-        '200':
-          description: Resultados de búsqueda y relaciones
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrionSearchResponse'
-
-  /isabella/orion/artifact/{artifact_id}:
-    get:
-      summary: Obtener artefacto y trazabilidad
-      tags: [ORION]
-      parameters:
-        - name: artifact_id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Artefacto y su historia
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Artifact'
-
-  /isabella/sophia/research:
-    post:
-      summary: Investigación profunda y síntesis
-      tags: [SOPHIA]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SophiaResearchRequest'
-      responses:
-        '200':
-          description: Síntesis investigativa y referencias
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SophiaResearchResponse'
-
-  /isabella/argus/simulate:
-    post:
-      summary: Simulación de escenarios e impacto
-      tags: [ARGUS]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ArgusSimulationRequest'
-      responses:
-        '200':
-          description: Escenarios, perfil de riesgo y recomendaciones
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ArgusSimulationResponse'
-
-  /isabella/mnemos/record:
-    post:
-      summary: Registrar evento en memoria civilizatoria
-      tags: [MNEMOS]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MnemosRecordRequest'
-      responses:
-        '201':
-          description: Registro creado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MnemosRecordResponse'
-
-  /isabella/mnemos/record/{record_id}:
-    get:
-      summary: Obtener registro canónico
-      tags: [MNEMOS]
-      parameters:
-        - name: record_id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Entrada canónica y su grafo de trazabilidad
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MnemosRecordCanonical'
-
-  /isabella/lumen/evaluate:
-    post:
-      summary: Evaluar acción según gobernanza constitucional
-      tags: [LUMEN]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LumenEvaluateRequest'
-      responses:
-        '200':
-          description: Decisión, racional y log de auditoría
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LumenEvaluateResponse'
-
-  /isabella/kernel/resonance/update:
-    post:
-      summary: Actualizar estado de Resonancia Somática Heptafederada
-      tags: [KERNEL, TOPOLOGY]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ResonanceUpdateRequest'
-      responses:
-        '200':
-          description: Estado de resonancia, zonas de fricción y plan de redirección
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResonanceUpdateResponse'
-
-  /isabella/kernel/timeup/anchor:
-    post:
-      summary: Anclar y recuperar estado temporal (Crono-Anamnesis)
-      tags: [KERNEL]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TimeUpAnchorRequest'
-      responses:
-        '200':
-          description: Snapshot de estado y análisis de diferencias
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TimeUpAnchorResponse'
-
-  /isabella/topology/heptafederation:
-    get:
-      summary: Descripción de nodos de la Heptafederación TAMV
-      tags: [TOPOLOGY]
-      responses:
-        '200':
-          description: Mapa de nodos, roles y enlaces
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HeptafederationTopology'
-
-  /isabella/topology/nodo_cero:
-    get:
-      summary: Estado y flujo de trabajo del Nodo Cero (Real del Monte)
-      tags: [TOPOLOGY]
-      responses:
-        '200':
-          description: Pipeline operativo del Nodo Cero
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NodoCeroWorkflow'
-
 components:
   securitySchemes:
     IsabellaApiKey:
       type: apiKey
       in: header
       name: X-Isabella-Api-Key
+      description: API key interna para orquestación de servicios dentro de la red TAMV/RDM.
     IsabellaTerritorialToken:
       type: http
       scheme: bearer
       bearerFormat: JWT
+      description: Token territorial (JWT) emitido por ANUBIS/F2 para acciones ligadas a territorio.
 
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+        trace_id:
+          type: string
+          description: ID de traza interno para correlación entre subsistemas.
+      required: [error]
+      examples:
+        unauthorized:
+          summary: Token inválido o ausente
+          value:
+            error: "UNAUTHORIZED"
+            code: "AUTH_401"
+            message: "Token territorial inválido o no proporcionado"
+            trace_id: "trace-xyz-123"
+        bad_request:
+          summary: Petición inválida
+          value:
+            error: "BAD_REQUEST"
+            code: "REQ_400"
+            message: "El cuerpo de la petición no cumple el esquema requerido"
+            trace_id: "trace-abc-789"
 
     OrionSearchRequest:
       type: object
       properties:
         context_id:
           type: string
+          description: Contexto lógico (territorio, proyecto, federación).
         query:
           type: string
         scopes:
@@ -241,6 +93,7 @@ components:
             type: string
         filters:
           type: object
+      required: [query]
 
     OrionSearchResponse:
       type: object
@@ -274,6 +127,7 @@ components:
         confidence_score:
           type: number
           format: float
+      required: [artifact_id, title]
 
     Relation:
       type: object
@@ -287,6 +141,7 @@ components:
         strength:
           type: number
           format: float
+      required: [from_artifact_id, to_artifact_id, relation_type]
 
     Gap:
       type: object
@@ -297,6 +152,7 @@ components:
           type: string
         suggested_action:
           type: string
+      required: [description]
 
     SophiaResearchRequest:
       type: object
@@ -311,6 +167,7 @@ components:
           type: integer
         constraints:
           type: object
+      required: [research_request]
 
     SophiaResearchResponse:
       type: object
@@ -354,6 +211,7 @@ components:
             type: string
         constraints:
           type: object
+      required: [scenario_definition]
 
     ArgusSimulationResponse:
       type: object
@@ -418,6 +276,7 @@ components:
             type: object
         retention_policy:
           type: string
+      required: [event, category]
 
     MnemosRecordResponse:
       type: object
@@ -458,6 +317,7 @@ components:
           type: object
         risk_level:
           type: string
+      required: [action_request]
 
     LumenEvaluateResponse:
       type: object
@@ -482,6 +342,7 @@ components:
         timestamp:
           type: string
           format: date-time
+      required: [federation_nodes, mesh_state, timestamp]
 
     ResonanceUpdateResponse:
       type: object
@@ -544,6 +405,7 @@ components:
           type: string
         reason:
           type: string
+      required: [anchor_id]
 
     TimeUpAnchorResponse:
       type: object
@@ -614,6 +476,282 @@ components:
           type: array
           items:
             type: string
+
+paths:
+  /isabella/orion/search:
+    post:
+      operationId: orionSearch
+      summary: Arqueología cognitiva de contexto
+      tags: [ORION]
+      security:
+        - IsabellaApiKey: []
+        - IsabellaTerritorialToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrionSearchRequest'
+      responses:
+        '200':
+          description: Resultados de búsqueda y relaciones
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrionSearchResponse'
+        '400':
+          description: Petición inválida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /isabella/orion/artifact/{artifact_id}:
+    get:
+      operationId: getOrionArtifact
+      summary: Obtener artefacto y trazabilidad
+      tags: [ORION]
+      security:
+        - IsabellaApiKey: []
+        - IsabellaTerritorialToken: []
+      parameters:
+        - name: artifact_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Artefacto y su historia
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artifact'
+        '404':
+          description: Artefacto no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /isabella/sophia/research:
+    post:
+      operationId: sophiaResearch
+      summary: Investigación profunda y síntesis
+      tags: [SOPHIA]
+      security:
+        - IsabellaApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SophiaResearchRequest'
+      responses:
+        '200':
+          description: Síntesis investigativa y referencias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SophiaResearchResponse'
+        '400':
+          description: Petición inválida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /isabella/argus/simulate:
+    post:
+      operationId: argusSimulate
+      summary: Simulación de escenarios e impacto
+      tags: [ARGUS]
+      security:
+        - IsabellaApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArgusSimulationRequest'
+      responses:
+        '200':
+          description: Escenarios, perfil de riesgo y recomendaciones
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArgusSimulationResponse'
+        '400':
+          description: Petición inválida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /isabella/mnemos/record:
+    post:
+      operationId: mnemosRecord
+      summary: Registrar evento en memoria civilizatoria
+      tags: [MNEMOS]
+      security:
+        - IsabellaApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MnemosRecordRequest'
+      responses:
+        '201':
+          description: Registro creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MnemosRecordResponse'
+        '400':
+          description: Petición inválida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /isabella/mnemos/record/{record_id}:
+    get:
+      operationId: getMnemosRecord
+      summary: Obtener registro canónico
+      tags: [MNEMOS]
+      security:
+        - IsabellaApiKey: []
+      parameters:
+        - name: record_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Entrada canónica y su grafo de trazabilidad
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MnemosRecordCanonical'
+        '404':
+          description: Registro no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /isabella/lumen/evaluate:
+    post:
+      operationId: lumenEvaluate
+      summary: Evaluar acción según gobernanza constitucional
+      tags: [LUMEN]
+      security:
+        - IsabellaApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LumenEvaluateRequest'
+      responses:
+        '200':
+          description: Decisión, racional y log de auditoría
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LumenEvaluateResponse'
+        '400':
+          description: Petición inválida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /isabella/kernel/resonance/update:
+    post:
+      operationId: kernelResonanceUpdate
+      summary: Actualizar estado de Resonancia Somática Heptafederada
+      tags: [KERNEL, TOPOLOGY]
+      security:
+        - IsabellaApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResonanceUpdateRequest'
+      responses:
+        '200':
+          description: Estado de resonancia, zonas de fricción y plan de redirección
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResonanceUpdateResponse'
+        '400':
+          description: Petición inválida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /isabella/kernel/timeup/anchor:
+    post:
+      operationId: kernelTimeUpAnchor
+      summary: Anclar y recuperar estado temporal (Crono-Anamnesis)
+      tags: [KERNEL]
+      security:
+        - IsabellaApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeUpAnchorRequest'
+      responses:
+        '200':
+          description: Snapshot de estado y análisis de diferencias
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeUpAnchorResponse'
+        '400':
+          description: Petición inválida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /isabella/topology/heptafederation:
+    get:
+      operationId: getHeptafederationTopology
+      summary: Descripción de nodos de la Heptafederación TAMV
+      tags: [TOPOLOGY]
+      security:
+        - IsabellaApiKey: []
+      responses:
+        '200':
+          description: Mapa de nodos, roles y enlaces
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeptafederationTopology'
+
+  /isabella/topology/nodo_cero:
+    get:
+      operationId: getNodoCeroWorkflow
+      summary: Estado y flujo de trabajo del Nodo Cero (Real del Monte)
+      tags: [TOPOLOGY]
+      security:
+        - IsabellaApiKey: []
+      responses:
+        '200':
+          description: Pipeline operativo del Nodo Cero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NodoCeroWorkflow'
 
 security:
   - IsabellaApiKey: []
