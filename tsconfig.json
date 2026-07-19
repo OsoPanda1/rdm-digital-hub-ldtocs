@@ -1,28 +1,72 @@
 {
-  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts", "eslint.config.js"],
-  "exclude": ["src/routes", "src/routeTree.gen.ts", "src/app"],
   "compilerOptions": {
+    /* Target y módulo: modernos, alineados con Vite y navegadores actuales */
     "target": "ES2022",
-    "jsx": "react-jsx",
     "module": "ESNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
+
+    /* React + JSX */
+    "jsx": "react-jsx",
+
+    /* Tipos globales */
     "types": ["vite/client", "node"],
 
-    /* Bundler mode */
+    /* Modo bundler (Vite + TS >= 5) */
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": false,
     "noEmit": true,
 
-    /* Linting */
-    "skipLibCheck": true,
+    /* Paths y alias — alineados con vite.config.ts */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
+    /* Strict mode y calidad de tipos */
     "strict": true,
+    "skipLibCheck": true,
+
+    /* Linting a nivel de compilador */
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "paths": {
-      "@/*": ["./src/*"]
+
+    /* Mejores errores y tooling */
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true,
+    "useUnknownInCatchVariables": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    /* Source maps solo para herramientas (Vite controla el build real) */
+    "sourceMap": true
+  },
+
+  /* Incluimos código app + configs relevantes para tipos */
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts",
+    "vite.config.ts",
+    "eslint.config.js"
+  ],
+
+  /* Excluimos código generado o directorios que gestionan otras herramientas */
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/routes",
+    "src/routeTree.gen.ts",
+    "src/app"
+  ],
+
+  /* Referencias opcionales si usas tsconfig.node.json o similares para scripts de build */
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
     }
-  }
+  ]
 }
