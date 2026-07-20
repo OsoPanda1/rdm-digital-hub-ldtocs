@@ -1,13 +1,13 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+import type { Request, Response } from "express";
 
-function absoluteUrl(req: VercelRequest): string {
+function absoluteUrl(req: Request): string {
   const host = req.headers.host || "localhost";
   const proto = (req.headers["x-forwarded-proto"] as string | undefined) || "https";
   const url = req.url || "/";
   return url.startsWith("http") ? url : `${proto}://${host}${url}`;
 }
 
-function normalizeHeaders(headers: VercelRequest["headers"]): Headers {
+function normalizeHeaders(headers: Request["headers"]): Headers {
   const next = new Headers();
   for (const [key, value] of Object.entries(headers)) {
     if (Array.isArray(value)) {
@@ -19,7 +19,7 @@ function normalizeHeaders(headers: VercelRequest["headers"]): Headers {
   return next;
 }
 
-export function vercelRequestToWebRequest(req: VercelRequest): Request {
+export function vercelRequestToWebRequest(req: Request): Request {
   const method = req.method || "GET";
   const hasBody = !["GET", "HEAD"].includes(method.toUpperCase());
   const body = hasBody && req.body !== undefined
@@ -35,7 +35,7 @@ export function vercelRequestToWebRequest(req: VercelRequest): Request {
   });
 }
 
-export async function sendWebResponse(res: VercelResponse, response: Response) {
+export async function sendWebResponse(res: Response, response: Response) {
   response.headers.forEach((value, key) => res.setHeader(key, value));
   const text = await response.text();
   return res.status(response.status).send(text);

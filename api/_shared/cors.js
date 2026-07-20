@@ -31,11 +31,22 @@ export function getCorsHeaders(request) {
   };
 }
 
+// Alias for compatibility with TypeScript imports
+export const getCorsHeaders = getCorsHeaders;
+
+export function handleCors(request) {
+  if (request.method === "OPTIONS") {
+    return corsPreflightResponse(request);
+  }
+  return null;
+}
+
 export function corsPreflightResponse(request) {
+  const headers = getCorsHeaders(request);
   return new Response(null, {
     status: 204,
     headers: {
-      ...getCorsHeaders(request),
+      ...headers,
       "Cache-Control": "no-store, max-age=0, must-revalidate",
     },
   });

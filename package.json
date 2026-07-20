@@ -94,7 +94,8 @@
     "uuid": "^14.0.1",
     "vaul": "^1.1.2",
     "zod": "^3.24.2",
-    "zustand": "^5.0.14"
+    "zustand": "^5.0.14",
+    "@vercel/blob": "^0.23.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
@@ -116,6 +117,7 @@
     "prettier": "^3.7.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.56.1",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "@vercel/node": "^3.0.0"
   }
 }

@@ -7,20 +7,33 @@ import '../config/app_config.dart';
 import '../models/user.dart';
 import '../models/game_session.dart';
 import '../models/game_config.dart';
+import '../models/game_config.dart';
 
 class GameProvider extends ChangeNotifier {
   GameConfig? _gameConfig;
   GameSession? _currentSession;
   UserProfile? _userProfile;
+  GameDailyUsage? _todayUsage;
   bool _isLoading = false;
   String? _error;
 
   GameConfig? get gameConfig => _gameConfig;
   GameSession? get currentSession => _currentSession;
   UserProfile? get userProfile => _userProfile;
+  GameDailyUsage? get todayUsage => _todayUsage;
   bool get isLoading => _isLoading;
   String? get error => _error;
   bool get hasActiveSession => _currentSession != null && !_currentSession!.isCompleted;
+  
+  // Computed getters
+  int get remainingFreeRuns {
+    if (_todayUsage == null || _gameConfig == null) return 2;
+    return (_gameConfig!.config.freeRunsPerDay - _todayUsage!.runsUsed).clamp(0, _gameConfig!.config.freeRunsPerDay);
+  }
+  
+  bool get canPlayFree => remainingFreeRuns > 0;
+  
+  String get userTier => _userProfile?.tier ?? 'BASE';
 
   Future<void> loadGameConfig() async {
     _setLoading(true);
@@ -41,6 +54,28 @@ class GameProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> loadUserProfile() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('auth_token');
+      
+      final response = await http.get(
+        Uri.parse('${AppConfig.apiBaseUrl}/users/profile'),
+        headers: {
+          'Content-Type': 'application/json',
+          if (token != null) 'Authorization': 'Bearer $token',
+        },
+      );
+      
+      if (response.statusCode == 200) {
+        _userProfile = UserProfile.fromJson(json.decode(response.body));
+        notifyListeners();
+      }
+    } catch (e) {
+      _error = 'Error cargando perfil: $e';
+    }
+  }
+
   Future<void> startSession() async {
     if (_gameConfig == null) return;
     
@@ -58,7 +93,9 @@ class GameProvider extends ChangeNotifier {
       );
       
       if (response.statusCode == 200) {
-        _currentSession = GameSession.fromJson(json.decode(response.body)['session']);
+        final data = json.decode(response.body);
+        _currentSession = GameSession.fromJson(data['session']);
+        _todayUsage = GameDailyUsage.fromJson(data['dailyUsage']);
         notifyListeners();
       }
     } catch (e) {
@@ -109,32 +146,11 @@ class GameProvider extends ChangeNotifier {
           durationMs: durationMs,
           endedAt: DateTime.now(),
         );
+        _todayUsage = GameDailyUsage.fromJson(data['dailyUsage']);
         notifyListeners();
       }
     } catch (e) {
       _error = 'Error completando sesión: $e';
-    }
-  }
-
-  Future<void> loadUserProfile() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('auth_token');
-      
-      final response = await http.get(
-        Uri.parse('${AppConfig.apiBaseUrl}/users/profile'),
-        headers: {
-          'Content-Type': 'application/json',
-          if (token != null) 'Authorization': 'Bearer $token',
-        },
-      );
-      
-      if (response.statusCode == 200) {
-        _userProfile = UserProfile.fromJson(json.decode(response.body));
-        notifyListeners();
-      }
-    } catch (e) {
-      _error = 'Error cargando perfil: $e';
     }
   }
 

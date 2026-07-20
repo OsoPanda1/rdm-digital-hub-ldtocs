@@ -391,3 +391,105 @@ Proyecto privado — TAMV Online / RDM Digital Hub
 ---
 
 > *"Always by your side"* — YUN
+
+---
+
+## Anexo: Infraestructura con Terraform y Vercel (`infra/terraform`)
+
+La infraestructura de **rdm-live-web** se gestiona como código usando Terraform y el provider oficial de Vercel.
+
+### Estructura de archivos
+
+```
+infra/
+  terraform/
+    main.tf          # Punto de entrada, referencia a los módulos
+    providers.tf     # Provider de Vercel y backend de estado
+    variables.tf     # Variables (dominios, repos, URLs de API, Supabase)
+    rdm-live-web.tf  # Recursos de Vercel para rdm-live-web
+    outputs.tf       # Outputs útiles (IDs, dominios, etc.)
+```
+
+En la rama **main** se añade un archivo `.tfvars` (por ejemplo `rdm-live-web.tfvars` o `rdm-live-web.auto.tfvars`) con los valores reales:
+
+```hcl
+# Ejemplo de .tfvars
+
+supabase_url      = "https://xxxxx.supabase.co"
+supabase_anon_key = "TU_SUPABASE_ANON_KEY"
+api_base_url      = "https://api.rdm-digital.com"
+gamer_api_url     = "https://api.rdm-digital.com/gamification"
+
+# Opcionalmente puedes sobreescribir:
+# project_name   = "rdm-live-web"
+# github_repo    = "tamvo/rdm-live-web"
+# primary_domain = "www.visitarealdelmonte.online"
+# root_domain    = "visitarealdelmonte.online"
+```
+
+### Cómo aplicar la infraestructura
+
+1. Clonar el repositorio y cambiar a la rama adecuada:
+
+```bash
+git clone https://github.com/OsoPanda1/rdm-digital-hub-ldtocs.git
+cd rdm-digital-hub-ldtocs
+# Si trabajas en la rama de infra específica:
+git checkout mineral-del-monte-tourism
+```
+
+2. Posicionarse en la carpeta de Terraform:
+
+```bash
+cd infra/terraform
+```
+
+3. Configurar el token de Vercel en el entorno:
+
+```bash
+export VERCEL_API_TOKEN="TU_TOKEN_DE_VERCEL"
+```
+
+4. Inicializar Terraform:
+
+```bash
+terraform init
+```
+
+5. Revisar el plan de cambios:
+
+```bash
+terraform plan -var-file="../rdm-live-web.tfvars"
+# o si usas *.auto.tfvars, basta con:
+# terraform plan
+```
+
+6. Aplicar la configuración:
+
+```bash
+terraform apply -var-file="../rdm-live-web.tfvars"
+# o simplemente:
+# terraform apply
+```
+
+Solo escribe `yes` cuando estés de acuerdo con los cambios propuestos.
+
+### Qué se crea con este Terraform
+
+- **Proyecto** `rdm-live-web` en Vercel (framework Vite) vinculado a `tamvo/rdm-live-web` (o el repo que definas).
+- **Dominios**:
+  - `www.visitarealdelmonte.online` como dominio principal.
+  - `visitarealdelmonte.online` como dominio que redirige a www.
+- **Variables de entorno en Vercel**:
+  - `VITE_API_BASE_URL` → backend RDM.
+  - `VITE_GAMER_API_URL` → Kernel GAMER.
+  - `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` → Auth Supabase.
+  - `VITE_ENV` → nombre de entorno (production/preview).
+
+---
+
+Con este anexo en el README.md, queda documentado:
+
+- Dónde está la infra (`infra/terraform`).
+- Cómo se conectan ramas (main con `.tfvars`, `mineral-del-monte-tourism` con los `.tf`).
+- Cómo cualquier persona (o agente) puede reproducir el despliegue de **rdm-live-web** en Vercel de forma segura y modular.

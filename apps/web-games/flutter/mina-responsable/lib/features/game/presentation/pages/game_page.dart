@@ -357,10 +357,120 @@ class _GamePageState extends State<GamePage> with WidgetsBindingObserver {
   }
 
   void _showPurchaseDialog() {
-    // Mostrar diálogo de compra de pack
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Comprar Pack de Juego'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Elige un pack para desbloquear más partidas:'),
+            const SizedBox(height: 16),
+            _buildPackOption(
+              'PACK_STARTER',
+              'Pack Inicio',
+              '129 MXN',
+              '20 partidas extra + 10% XP',
+            ),
+            _buildPackOption(
+              'PACK_EXPLORER',
+              'Pack Explorador',
+              '299 MXN',
+              '50 partidas extra + 25% XP + Skin exclusiva',
+            ),
+            _buildPackOption(
+              'PACK_MASTER',
+              'Pack Maestro',
+              '599 MXN',
+              'Partidas ilimitadas + 50% XP + Booster semanal',
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPackOption(String packType, String name, String price, String description) {
+    return ListTile(
+      title: Text(name, style: const TextStyle(fontWeight: FontWeight.w600)),
+      subtitle: Text(description),
+      trailing: Text(price, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.amber)),
+      onTap: () {
+        Navigator.pop(context);
+        provider.purchasePack(packType);
+      },
+    );
   }
 
   void _showBoosterDialog() {
-    // Mostrar diálogo de compra de booster
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Comprar Potenciador'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Mejora tu experiencia con boosters:'),
+            const SizedBox(height: 16),
+            _buildBoosterOption(
+              'BOOSTER_XP_SMALL',
+              'Impulso XP Pequeño',
+              '49 MXN',
+              '1.5x XP por 3 partidas',
+            ),
+            _buildBoosterOption(
+              'BOOSTER_XP_MEDIUM',
+              'Impulso XP Mediano',
+              '99 MXN',
+              '2x XP por 7 partidas + Skin temporal',
+            ),
+            _buildBoosterOption(
+              'BOOSTER_XP_LARGE',
+              'Impulso XP Grande',
+              '199 MXN',
+              '3x XP por 15 partidas + Acceso a modo especial',
+            ),
+            _buildBoosterOption(
+              'BOOSTER_TIME_EXTEND',
+              'Extensión de Tiempo',
+              '79 MXN',
+              '+10 min por partida por 5 partidas',
+            ),
+            _buildBoosterOption(
+              'BOOSTER_HINT',
+              'Pista Maestra',
+              '59 MXN',
+              'Revela la mejor jugada 3 veces',
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBoosterOption(String boosterType, String name, String price, String description) {
+    return ListTile(
+      title: Text(name, style: const TextStyle(fontWeight: FontWeight.w600)),
+      subtitle: Text(description),
+      trailing: Text(price, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.amber)),
+      onTap: () {
+        Navigator.pop(context);
+        provider.purchaseBooster(boosterType);
+      },
+    );
   }
 }
