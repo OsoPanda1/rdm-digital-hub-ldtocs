@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("NEON_DATABASE_URL")
+}
+
+enum GameType {
+  MINA_RESPONSABLE
+  RUTA_GUARDIAN
+}
+
+enum GameSessionStatus {
+  ACTIVE
+  COMPLETED
+  ABANDONED
+  FAILED
+}
+
+enum PurchaseType {
+  PACK_STARTER
+  PACK_EXPLORER
+  PACK_MASTER
+  BOOSTER_XP_SMALL
+  BOOSTER_XP_MEDIUM
+  BOOSTER_XP_LARGE
+  BOOSTER_TIME_EXTEND
+  BOOSTER_HINT
+}
+
+enum PurchaseStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+model Game {
+  id            String   @id @default(cuid())
+  type          GameType @unique
+  slug          String   @unique
+  name          String
+  description   String
+  thumbnailUrl  String?
+  iframeUrl     String
+  isActive      Boolean  @default(true)
+  config        Json     @default("{}")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  sessions      GameSession[]
+  dailyUsage    GameDailyUsage[]
+  purchases     GamePackPurchase[]
+
+  @@index [type]
+  @@map("games")
+}
+
+model GameSession {
+  id           String            @id @default(cuid())
+  gameId       String
+  userId       String
+  status       GameSessionStatus @default(ACTIVE)
+  score        Int               @default(0)
+  xpEarned     Int               @default(0)
+  coinsEarned  Int               @default(0)
+  durationMs   Int               @default(0)
+  metadata     Json              @default("{}")
+  startedAt    DateTime          @default(now())
+  endedAt      DateTime?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  game         Game              @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index [gameId]
+  @@index [userId]
+  @@index [status]
+  @@index [startedAt]
+  @@map("game_sessions")
+}
+
+model GameDailyUsage {
+  id        String   @id @default(cuid())
+  gameId    String
+  userId    String
+  date      DateTime @db.Date
+  runsUsed  Int      @default(0)
+  runsLimit Int      @default(2)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  game      Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([gameId, userId, date])
+  @@index [userId]
+  @@index [date]
+  @@map("game_daily_usage")
+}
+
+model GamePackPurchase {
+  id              String         @id @default(cuid())
+  gameId          String
+  userId          String
+  type            PurchaseType
+  status          PurchaseStatus @default(PENDING)
+  amount          Int
+  currency        String         @default("MXN")
+  stripeSessionId String?
+  stripePaymentId String?
+  metadata        Json           @default("{}")
+  completedAt     DateTime?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  game            Game           @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index [gameId]
+  @@index [userId]
+  @@index [status]
+  @@index [stripeSessionId]
+  @@map("game_pack_purchases")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  supabaseId    String?  @unique
+  displayName   String?
+  avatarUrl     String?
+  tier          String   @default("BASE")
+  totalXp       Int      @default(0)
+  totalCoins    Int      @default(0)
+  federatedId   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  gameSessions  GameSession[]
+  dailyUsage    GameDailyUsage[]
+  purchases     GamePackPurchase[]
+
+  @@index [email]
+  @@index [supabaseId]
+  @@map("users")
+}
+
+model FederatedStatsSnapshot {
+  id        String   @id @default(cuid())
+  gameId    String
+  date      DateTime @db.Date
+  totalRuns Int
+  totalXp   Int
+  avgScore  Float
+  metadata  Json     @default("{}")
+  createdAt DateTime @default(now())
+
+  @@unique([gameId, date])
+  @@index [date]
+  @@map("federated_stats_snapshots")
+}

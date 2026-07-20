@@ -98,3 +98,11 @@ export const DICHO_CATS = [
   { id: "VIDA_COTIDIANA", label: "Vida Cotidiana", icon: "🏛️" },
   { id: "MINERIA", label: "Minería", icon: "💎" },
 ];
+
+export const TAG_CONFIG: Record<string, { color: string; icon: string; label: string }> = {
+  Gobernanza: { color: "oklch(0.55 0.13 220)", icon: "📖", label: "Gobernanza" },
+  Tecnología: { color: "oklch(0.6 0.14 80)", icon: "⚡", label: "Tecnología" },
+  Gastronomía: { color: "oklch(0.62 0.18 30)", icon: "🍽️", label: "Gastronomía" },
+  Cultura: { color: "oklch(0.5 0.16 330)", icon: "🎵", label: "Cultura" },
+  Comunidad: { color: "oklch(0.58 0.15 130)", icon: "👥", label: "Comunidad" },
+};

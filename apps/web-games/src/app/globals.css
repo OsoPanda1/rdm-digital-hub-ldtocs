@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 45 33% 97%;
+    --foreground: 220 15% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 8%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 8%;
+    --primary: 43 74% 53%;
+    --primary-foreground: 220 15% 8%;
+    --secondary: 43 30% 90%;
+    --secondary-foreground: 220 15% 8%;
+    --muted: 43 20% 85%;
+    --muted-foreground: 220 10% 40%;
+    --accent: 43 60% 45%;
+    --accent-foreground: 220 15% 8%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 43 25% 82%;
+    --input: 43 25% 82%;
+    --ring: 43 74% 53%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 220 15% 8%;
+    --foreground: 43 30% 95%;
+    --card: 220 15% 10%;
+    --card-foreground: 43 30% 95%;
+    --popover: 220 15% 10%;
+    --popover-foreground: 43 30% 95%;
+    --primary: 43 74% 53%;
+    --primary-foreground: 220 15% 8%;
+    --secondary: 220 10% 20%;
+    --secondary-foreground: 43 30% 95%;
+    --muted: 220 10% 20%;
+    --muted-foreground: 43 20% 60%;
+    --accent: 43 60% 45%;
+    --accent-foreground: 43 30% 95%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 43 30% 95%;
+    --border: 220 10% 20%;
+    --input: 220 10% 20%;
+    --ring: 43 74% 53%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .text-gradient-copper {
+    @apply bg-gradient-to-r from-amber-600 to-amber-800 bg-clip-text text-transparent;
+  }
+  
+  .bg-gradient-copper {
+    @apply bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800;
+  }
+  
+  .glass {
+    @apply bg-white/80 backdrop-blur-md border border-amber-200/50;
+  }
+  
+  .shadow-sovereign {
+    box-shadow: 0 10px 40px -10px rgba(212, 175, 55, 0.3), 0 4px 20px -4px rgba(15, 23, 42, 0.1);
+  }
+  
+  .animate-pulse-ring {
+    animation: pulse-ring 2s ease-out infinite;
+  }
+  
+  @keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    background-size: 200% 100%;
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('https://fonts.gstatic.com/s/playfairdisplay/v30/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvUDXbtY.woff2') format('woff2');
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('https://fonts.gstatic.com/s/dmsans/v16/rP2Hp2ywxg089UriCZOIGZ8.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('https://fonts.gstatic.com/s/jetbrainsmono/v23/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yK0.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}

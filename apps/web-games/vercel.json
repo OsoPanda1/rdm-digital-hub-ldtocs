@@ -1,0 +1,65 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "name": "rdm-web-games",
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install --legacy-peer-deps",
+  "regions": ["iad1"],
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30,
+      "memory": 1024
+    }
+  },
+  "headers": [
+    {
+      "source": "/flutter/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "Cross-Origin-Embedder-Policy", "value": "require-corp" },
+        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/flutter/mina-responsable/:path*",
+      "destination": "/flutter/mina-responsable/:path*"
+    },
+    {
+      "source": "/flutter/ruta-guardian/:path*",
+      "destination": "/flutter/ruta-guardian/:path*"
+    },
+    {
+      "source": "/games/mina-responsable/play",
+      "destination": "/games/mina-responsable/play"
+    },
+    {
+      "source": "/games/ruta-guardian/play",
+      "destination": "/games/ruta-guardian/play"
+    }
+  ],
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
+    "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY": "@supabase_anon_key",
+    "NEXT_PUBLIC_API_GATEWAY": "@api_gateway",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "@stripe_publishable_key",
+    "NEXT_PUBLIC_GAMER_API_URL": "@gamer_api_url",
+    "NEXT_PUBLIC_CATTLEYA_API_URL": "@cattleya_api_url",
+    "NEXT_PUBLIC_APP_URL": "https://www.visitarealdelmonte.online"
+  },
+  "github": {
+    "enabled": true,
+    "autoAlias": true,
+    "silent": false
+  }
+}

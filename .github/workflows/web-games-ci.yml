@@ -1,0 +1,301 @@
+name: CI/CD · RDM Web Games
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'apps/web-games/**'
+      - 'packages/**'
+      - 'turbo.json'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'apps/web-games/**'
+      - 'packages/**'
+      - 'turbo.json'
+
+permissions:
+  contents: read
+  checks: write
+  security-events: write
+  id-token: write
+
+env:
+  NODE_VERSION: '20'
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+jobs:
+  # 1. Fast checks - lint + typecheck
+  fast-checks:
+    name: Fast Checks · Lint · Typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Hardened checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Lint (web-games only)
+        run: npx turbo run lint --filter=web-games...
+
+      - name: Typecheck (web-games only)
+        run: npx turbo run typecheck --filter=web-games...
+
+  # 2. Quality - Unit tests
+  quality:
+    name: Quality · Unit Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: fast-checks
+    steps:
+      - name: Hardened checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Unit tests (web-games)
+        run: npx turbo run test --filter=web-games...
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-web-games
+          path: apps/web-games/coverage
+          retention-days: 7
+
+  # 3. Build
+  build:
+    name: Build · Next.js + Flutter
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: quality
+    steps:
+      - name: Hardened checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Generate Prisma Client
+        run: npx turbo run db:generate --filter=web-games...
+
+      - name: Build Flutter web (Mina Responsable)
+        run: |
+          cd apps/web-games/flutter/mina-responsable
+          flutter build web --release --dart-define=API_BASE_URL=${{ secrets.API_BASE_URL }} --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }} --dart-define=STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+
+      - name: Build Flutter web (Ruta Guardian)
+        run: |
+          cd apps/web-games/flutter/ruta-guardian
+          flutter build web --release --dart-define=API_BASE_URL=${{ secrets.API_BASE_URL }} --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }} --dart-define=STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+
+      - name: Copy Flutter builds to public
+        run: |
+          mkdir -p apps/web-games/public/flutter/mina-responsable
+          mkdir -p apps/web-games/public/flutter/ruta-guardian
+          cp -r apps/web-games/flutter/mina-responsable/build/web/* apps/web-games/public/flutter/mina-responsable/
+          cp -r apps/web-games/flutter/ruta-guardian/build/web/* apps/web-games/public/flutter/ruta-guardian/
+
+      - name: Build Next.js
+        run: npx turbo run build --filter=web-games...
+
+      - name: Upload Next.js build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nextjs-build-web-games
+          path: apps/web-games/.next
+          retention-days: 7
+
+      - name: Upload Flutter builds artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: flutter-builds
+          path: apps/web-games/public/flutter
+          retention-days: 7
+
+  # 4. E2E tests
+  e2e:
+    name: E2E · Playwright
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    needs: build
+    steps:
+      - name: Hardened checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: nextjs-build-web-games
+          path: apps/web-games/.next
+
+      - name: Download Flutter builds
+        uses: actions/download-artifact@v4
+        with:
+          name: flutter-builds
+          path: apps/web-games/public/flutter
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright E2E (web-games)
+        run: |
+          cd apps/web-games
+          npm run test:e2e -- --shard=1/2
+
+      - name: Run Playwright E2E shard 2 (web-games)
+        run: |
+          cd apps/web-games
+          npm run test:e2e -- --shard=2/2
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-web-games
+          path: apps/web-games/playwright-report
+          retention-days: 7
+
+  # 5. Security scan
+  security:
+    name: Security · Trivy · SAST
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: fast-checks
+    steps:
+      - name: Hardened checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: 'apps/web-games'
+          format: 'sarif'
+          output: 'trivy-web-games.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-web-games.sarif'
+
+      - name: npm audit
+        run: |
+          cd apps/web-games
+          npm audit --audit-level=high || true
+
+  # 6. Deploy to Vercel (Preview)
+  deploy-preview:
+    name: Deploy Preview · Vercel
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [build, e2e, security]
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Hardened checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Deploy to Vercel Preview
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB_GAMES }}
+          vercel-args: '--prod=false'
+          working-directory: ./apps/web-games
+
+  # 7. Deploy to Production
+  deploy-production:
+    name: Deploy Production · Vercel
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [build, e2e, security]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: production
+      url: https://www.visitarealdelmonte.online
+    steps:
+      - name: Hardened checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Deploy to Vercel Production
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB_GAMES }}
+          vercel-args: '--prod'
+          working-directory: ./apps/web-games
+
+      - name: Run post-deploy smoke tests
+        if: success()
+        run: |
+          sleep 30
+          curl -f https://www.visitarealdelmonte.online/api/health || exit 1
+          curl -f https://www.visitarealdelmonte.online/games/mina-responsable || exit 1
+          curl -f https://www.visitarealdelmonte.online/games/ruta-guardian || exit 1
+
+      - name: Notify deployment success
+        if: success()
+        run: |
+          echo "✅ Web Games deployed to production"
+          echo "🌐 https://www.visitarealdelmonte.online/games"
+
+      - name: Notify deployment failure
+        if: failure()
+        run: |
+          echo "❌ Web Games production deployment failed"
+          # Add Slack/Discord notification here
