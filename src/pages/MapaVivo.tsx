@@ -16,16 +16,16 @@ interface POI {
 }
 
 const allPois: POI[] = [
-  { id: "1", name: "Mina de Acosta", description: "Desciende 400 metros al corazón de la montaña. La experiencia más emblemática del pueblo.", x: 35, y: 40, category: "historia", rating: 4.9, time: "2h", energy: "Alta" },
-  { id: "2", name: "Panteón Inglés", description: "El único cementerio en México con tumbas que miran hacia Cornwall, Inglaterra.", x: 62, y: 28, category: "historia", rating: 4.8, time: "1h", energy: "Baja" },
-  { id: "3", name: "Pastes El Portal", description: "Los pastes más antiguos del pueblo. Receta familiar de 4 generaciones.", x: 48, y: 55, category: "gastronomia", rating: 4.8, time: "30min", energy: "Baja" },
-  { id: "4", name: "Parroquia de la Asunción", description: "Cantera labrada del siglo XVIII que desafía la niebla desde lo alto.", x: 45, y: 45, category: "arquitectura", rating: 4.7, time: "45min", energy: "Baja" },
-  { id: "5", name: "Peña del Cuervo", description: "El mirador más alto. Vista panorámica de 360° sobre el valle.", x: 78, y: 35, category: "naturaleza", rating: 4.6, time: "2.5h", energy: "Alta" },
-  { id: "6", name: "Museo de Medicina", description: "Historia de la salud en un pueblo donde la altitud dictaba las reglas.", x: 28, y: 60, category: "historia", rating: 4.3, time: "1h", energy: "Baja" },
-  { id: "7", name: "Platería La Veta", description: "Joyería artesanal en plata con diseños inspirados en la herencia minera.", x: 52, y: 50, category: "comercio", rating: 4.5, time: "30min", energy: "Baja" },
-  { id: "8", name: "Hotel Mina Real", description: "Boutique hotel en antigua casona minera con vista panorámica.", x: 40, y: 48, category: "comercio", rating: 4.9, time: "—", energy: "Baja" },
-  { id: "9", name: "Cascada Estanzuela", description: "Sendero entre oyameles que lleva a una cascada cristalina.", x: 85, y: 60, category: "naturaleza", rating: 4.5, time: "3h", energy: "Alta" },
-  { id: "10", name: "Centro Cultural", description: "Exposiciones temporales, talleres y eventos culturales.", x: 43, y: 42, category: "arquitectura", rating: 4.2, time: "1.5h", energy: "Baja" },
+  { id: "1", name: "Mina de Acosta", description: "Desciende 400 metros al corazón de la montaña. La experiencia más emblemática del pueblo.", x: 20, y: 30, category: "historia", rating: 4.9, time: "2h", energy: "Alta" },
+  { id: "2", name: "Panteón Inglés", description: "El único cementerio en México con tumbas que miran hacia Cornwall, Inglaterra.", x: 75, y: 20, category: "historia", rating: 4.8, time: "1h", energy: "Baja" },
+  { id: "3", name: "Pastes El Portal", description: "Los pastes más antiguos del pueblo. Receta familiar de 4 generaciones.", x: 50, y: 70, category: "gastronomia", rating: 4.8, time: "30min", energy: "Baja" },
+  { id: "4", name: "Parroquia de la Asunción", description: "Cantera labrada del siglo XVIII que desafía la niebla desde lo alto.", x: 50, y: 40, category: "arquitectura", rating: 4.7, time: "45min", energy: "Baja" },
+  { id: "5", name: "Peña del Cuervo", description: "El mirador más alto. Vista panorámica de 360° sobre el valle.", x: 82, y: 35, category: "naturaleza", rating: 4.6, time: "2.5h", energy: "Alta" },
+  { id: "6", name: "Museo de Medicina", description: "Historia de la salud en un pueblo donde la altitud dictaba las reglas.", x: 15, y: 60, category: "historia", rating: 4.3, time: "1h", energy: "Baja" },
+  { id: "7", name: "Platería La Veta", description: "Joyería artesanal en plata con diseños inspirados en la herencia minera.", x: 60, y: 55, category: "comercio", rating: 4.5, time: "30min", energy: "Baja" },
+  { id: "8", name: "Hotel Mina Real", description: "Boutique hotel en antigua casona minera con vista panorámica.", x: 35, y: 50, category: "comercio", rating: 4.9, time: "—", energy: "Baja" },
+  { id: "9", name: "Cascada Estanzuela", description: "Sendero entre oyameles que lleva a una cascada cristalina.", x: 88, y: 75, category: "naturaleza", rating: 4.5, time: "3h", energy: "Alta" },
+  { id: "10", name: "Centro Cultural", description: "Exposiciones temporales, talleres y eventos culturales.", x: 45, y: 35, category: "arquitectura", rating: 4.2, time: "1.5h", energy: "Baja" },
 ];
 
 const categoryInfo: Record<string, { color: string; label: string }> = {
@@ -110,10 +110,12 @@ const MapaVivo = () => {
       <div className="pt-20 flex flex-col h-screen">
         {/* Top bar */}
         <div className="flex items-center gap-4 px-6 py-3 glass-nav">
-          <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors">
-            <ArrowLeft className="w-4 h-4" />
-            <span className="font-body text-xs tracking-wider uppercase hidden sm:inline">Inicio</span>
-          </Link>
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+            <Link to="/" className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gold/10 text-muted-foreground hover:text-gold transition-all">
+              <ArrowLeft className="w-5 h-5" />
+              <span className="font-body text-xs tracking-wider uppercase hidden sm:inline">Atrás</span>
+            </Link>
+          </motion.div>
           <div className="h-4 w-px bg-border" />
           <h1 className="font-display text-lg text-gradient-gold">Mapa Vivo</h1>
           <div className="flex-1" />
