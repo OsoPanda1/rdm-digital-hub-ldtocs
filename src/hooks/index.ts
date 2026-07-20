@@ -43,3 +43,4 @@ export { useCivicEvent } from './useCivicEvent';
 export { useApi } from './useApi';
 export { useToast } from './use-toast';
 export { useDemoMode } from './useDemoMode';
+export { useResizeObserver } from './useResizeObserver';

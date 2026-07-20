@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Navigation, MapPin, Search, Car } from "lucide-react";
 import { REAL_DEL_MONTE_SITES, CATEGORY_COLORS } from "@/lib/rdm-data";
 import { ESTACIONAMIENTOS, ALL_TERRITORIAL_SITES } from "@/data/rdm-territorial";
 import "leaflet/dist/leaflet.css";
+import { useResizeObserver } from "@/hooks/useResizeObserver";
 
 type MapPlace = { id: string; name: string; category: string; lat: number; lng: number; rating: number | null; description: string | null; };
 type MoodFilter = "all" | "tranquilo" | "aventura" | "familiar" | "romantico";
@@ -18,9 +19,13 @@ const MOOD_CATEGORIES: Record<MoodFilter, string[]> = {
 
 export function RDMInteractiveMap() {
   const mapRef = useRef<HTMLDivElement>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
   const leafletMapRef = useRef<any>(null);
   const leafletLibRef = useRef<any>(null);
   const markersLayerRef = useRef<any>(null);
+  const initAttemptedRef = useRef(false);
+
+  const { width, height } = useResizeObserver(mapContainerRef);
 
   const [places] = useState<MapPlace[]>([
     ...REAL_DEL_MONTE_SITES.map(s => ({ ...s, rating: s.rating, description: s.description })),
@@ -35,37 +40,81 @@ export function RDMInteractiveMap() {
     return places.filter((p) => allowed.has(p.category)).filter((p) => !searchTerm || p.name.toLowerCase().includes(searchTerm.toLowerCase()));
   }, [places, selectedMood, searchTerm]);
 
+  // Initialize map when container has dimensions
   useEffect(() => {
-    if (!mapRef.current || leafletMapRef.current) return;
+    if (initAttemptedRef.current) return;
+    if (!mapContainerRef.current || leafletMapRef.current) return;
+    if (width === 0 || height === 0) return;
+
+    initAttemptedRef.current = true;
     let cancelled = false;
+
     import("leaflet").then((L) => {
-      if (cancelled || !mapRef.current) return;
+      if (cancelled || !mapContainerRef.current) return;
       leafletLibRef.current = L;
       delete (L.Icon.Default.prototype as any)._getIconUrl;
-      L.Icon.Default.mergeOptions({ iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png", iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png", shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png" });
-      const map = L.map(mapRef.current!, { center: [20.138, -98.671], zoom: 15, zoomControl: false });
+      L.Icon.Default.mergeOptions({ 
+        iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png", 
+        iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png", 
+        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png" 
+      });
+      
+      const map = L.map(mapContainerRef.current!, { 
+        center: [20.138, -98.671], 
+        zoom: 15, 
+        zoomControl: false 
+      });
+      
       L.control.zoom({ position: "bottomright" }).addTo(map);
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", { attribution: '&copy; OSM &copy; CARTO', maxZoom: 19 }).addTo(map);
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", { 
+        attribution: '&copy; OSM &copy; CARTO', 
+        maxZoom: 19 
+      }).addTo(map);
+      
       markersLayerRef.current = L.layerGroup().addTo(map);
       leafletMapRef.current = map;
       setMapReady(true);
-      setTimeout(() => map.invalidateSize(), 250);
+      
+      // Force size validation after a brief delay
+      requestAnimationFrame(() => {
+        map.invalidateSize();
+      });
     });
-    return () => { cancelled = true; leafletMapRef.current?.remove(); leafletMapRef.current = null; };
-  }, []);
+    
+    return () => { 
+      cancelled = true; 
+      leafletMapRef.current?.remove(); 
+      leafletMapRef.current = null; 
+    };
+  }, [width, height]);
 
+  // Update markers when filtered places change
   useEffect(() => {
     if (!mapReady || !leafletLibRef.current || !markersLayerRef.current) return;
     const L = leafletLibRef.current;
     markersLayerRef.current.clearLayers();
     filteredPlaces.forEach((site) => {
       const color = CATEGORY_COLORS[site.category] ?? "hsl(24 72% 50%)";
-      const marker = L.marker([site.lat, site.lng], { icon: L.divIcon({ className: "rdm-map-marker", html: `<div class="rdm-map-pin" style="--pin-color: ${color}"></div>`, iconSize: [28, 28], iconAnchor: [14, 14] }) }).addTo(markersLayerRef.current);
+      const marker = L.marker([site.lat, site.lng], { 
+        icon: L.divIcon({ 
+          className: "rdm-map-marker", 
+          html: `<div class="rdm-map-pin" style="--pin-color: ${color}"></div>`, 
+          iconSize: [28, 28], 
+          iconAnchor: [14, 14] 
+        }) 
+      }).addTo(markersLayerRef.current);
       marker.bindPopup(`<div class="rdm-popup-card"><div class="rdm-popup-kicker"><span class="rdm-popup-dot" style="background:${color}"></span>${site.category}</div><h3 class="rdm-popup-title">${site.name}</h3><p class="rdm-popup-desc">${site.description ?? "Experiencia territorial."}</p><div class="rdm-popup-meta"><span>★ ${(site.rating ?? 4.5).toFixed(1)}</span></div></div>`, { className: "rdm-popup" });
     });
     // Parking markers
     ESTACIONAMIENTOS.forEach((est) => {
-      const marker = L.marker([est.lat, est.lng], { icon: L.divIcon({ className: "rdm-map-marker", html: `<div class="rdm-map-pin" style="--pin-color: hsl(210 100% 55%)"></div>`, iconSize: [20, 20], iconAnchor: [10, 10] }) }).addTo(markersLayerRef.current);
+      const marker = L.marker([est.lat, est.lng], { 
+        icon: L.divIcon({ 
+          className: "rdm-map-marker", 
+          html: `<div class="rdm-map-pin" style="--pin-color: hsl(210 100% 55%)"></div>`, 
+          iconSize: [20, 20], 
+          iconAnchor: [10, 10] 
+        }) 
+      }).addTo(markersLayerRef.current);
       marker.bindPopup(`<div class="rdm-popup-card"><div class="rdm-popup-kicker"><span class="rdm-popup-dot" style="background:hsl(210 100% 55%)"></span>estacionamiento</div><h3 class="rdm-popup-title">${est.nombre}</h3><p class="rdm-popup-desc">${est.capacidad}</p></div>`, { className: "rdm-popup" });
     });
     if (filteredPlaces.length > 1) {
@@ -73,6 +122,15 @@ export function RDMInteractiveMap() {
       leafletMapRef.current.fitBounds(bounds, { padding: [24, 24], maxZoom: 16 });
     }
   }, [filteredPlaces, mapReady]);
+
+  // Handle container resize
+  useEffect(() => {
+    if (!mapReady || !leafletMapRef.current) return;
+    const map = leafletMapRef.current;
+    const handleResize = () => map.invalidateSize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [mapReady]);
 
   return (
     <section className="px-6 py-16 md:px-16 lg:px-24">
@@ -96,7 +154,7 @@ export function RDMInteractiveMap() {
       </div>
 
       <div className="max-w-6xl mx-auto rounded-2xl overflow-hidden rdm-glass" style={{ height: "500px" }}>
-        <div ref={mapRef} className="w-full h-full" />
+        <div ref={mapContainerRef} className="w-full h-full relative" />
       </div>
 
       <div className="max-w-6xl mx-auto mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">

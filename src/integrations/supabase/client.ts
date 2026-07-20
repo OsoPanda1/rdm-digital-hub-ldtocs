@@ -6,35 +6,43 @@ function createSupabaseClient() {
   // Use import.meta.env for client-side (Vite build-time replacement)
   // Fall back to process.env for SSR (server-side rendering)
   const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-  const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY;
+  const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+  const SUPABASE_REDIRECT_URL = import.meta.env.VITE_NEXT_PUBLIC_SUPABASE_REDIRECT_URL || process.env.NEXT_PUBLIC_SUPABASE_REDIRECT_URL;
 
-  if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     const missing = [
-      ...(!SUPABASE_URL ? ['SUPABASE_URL'] : []),
-      ...(!SUPABASE_PUBLISHABLE_KEY ? ['SUPABASE_PUBLISHABLE_KEY'] : []),
+      ...(!SUPABASE_URL ? ['VITE_SUPABASE_URL'] : []),
+      ...(!SUPABASE_ANON_KEY ? ['VITE_SUPABASE_ANON_KEY'] : []),
     ];
     const message = `Missing Supabase environment variable(s): ${missing.join(', ')}. Connect Supabase in Lovable Cloud.`;
     console.error(`[Supabase] ${message}`);
     throw new Error(message);
   }
 
-  return createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+  return createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
     auth: {
       storage: typeof window !== 'undefined' ? localStorage : undefined,
       persistSession: true,
       autoRefreshToken: true,
-    }
+      // Disable flow redirect URL handling here - handled by auth context
+      flowType: 'pkce',
+    },
+    global: {
+      headers: {
+        'X-Client-Info': 'rdm-digital-hub',
+      },
+    },
   });
 }
 
-let _supabase: ReturnType<typeof createSupabaseClient> | undefined;
+// Create client instance
+let _supabase: ReturnType<typeof createSupabaseClient> | null = null;
 
-// Import the supabase client like this:
-// import { supabase } from "@/integrations/supabase/client";
-export const supabase = new Proxy({} as ReturnType<typeof createSupabaseClient>, {
-  get(_, prop, receiver) {
-    if (!_supabase) _supabase = createSupabaseClient();
-    return Reflect.get(_supabase, prop, receiver);
+export const supabase = {
+  get() {
+    if (!_supabase) {
+      _supabase = createSupabaseClient();
+    }
+    return _supabase;
   },
-});
-
+} as ReturnType<typeof createSupabaseClient>;

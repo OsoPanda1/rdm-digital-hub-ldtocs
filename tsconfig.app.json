@@ -31,7 +31,6 @@
     "src"
   ],
   "exclude": [
-    "src/app",
     "src/integrations/supabase/types.ts",
     "src/integrations/supabase/admin.server.ts",
     "src/kernel",
