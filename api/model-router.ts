@@ -2,7 +2,7 @@
 // Unified entry point for open-source models (Hugging Face, OpenLLM, etc.)
 // Auth + Rate limiting + CORS unified
 
-import type { VercelRequest, VercelResponse } from "@vercel/nodenext";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { requireAuth } from "./_shared/auth.js";
 import { checkRateLimit, RATE_LIMITS } from "./_shared/rate-limit.js";
 import { sendWebResponse, vercelRequestToWebRequest } from "./_edge-adapter.js";
