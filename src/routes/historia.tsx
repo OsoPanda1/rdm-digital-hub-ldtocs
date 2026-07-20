@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import React from "react";
 import { motion } from "framer-motion";
 import { PageHero } from "@/components/site/PageHero";
 import { TIMELINE } from "@/data/content";

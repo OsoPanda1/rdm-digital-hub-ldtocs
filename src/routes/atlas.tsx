@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, Layers, Search, X, Navigation, Star, Zap, Clock, Globe, Compass } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { MapPin, Layers, Search, X, Navigation, Star, Zap, Clock, Globe, Compass, ChevronLeft } from "lucide-react";
 import { UnifiedMap, RDM_BOUNDS } from "@/components/visualization";
 import { HEPTA_LAYERS, federationColor } from "@/lib/federation";
 import { REAL_DEL_MONTE_SITES } from "@/lib/kernel";
@@ -308,8 +310,3 @@ function AtlasPage() {
     </>
   );
 }
-
-// Import missing icons
-import { useState, useEffect } from "react";
-import { motion, ChevronLeft } from "framer-motion";
-import { Search, X, Navigation, Layers, MapPin, Star, Zap, Clock, Globe, Compass, ChevronLeft } from "lucide-react";

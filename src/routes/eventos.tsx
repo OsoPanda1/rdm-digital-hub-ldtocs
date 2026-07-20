@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { PageHero } from "@/components/site/PageHero";
 import { EVENTS } from "@/data/content";
-import { Calendar, MapPin, Tag, Clock, ChevronRight, Users, Zap, BookOpen, Music, Award, Globe, Sparkles } from "lucide-react";
+import { Calendar, MapPin, Tag, Clock, ChevronRight, Users, Zap, BookOpen, Music, Award, Globe, Sparkles, Share2, X, List, CalendarDays, UtensilsCrossed } from "lucide-react";
 
 export const Route = createFileRoute("/eventos")({
   head: () => ({
@@ -296,8 +297,3 @@ function EventosPage() {
     </>
   );
 }
-
-// Missing imports
-import { useState } from "react";
-import { Share2, X, List, CalendarDays, UtensilsCrossed } from "lucide-react";
-import { TAG_CONFIG } from "@/data/content"; // Need to add this

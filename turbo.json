@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**", "build/**"],
@@ -36,11 +36,11 @@
     }
   },
   "globalEnv": [
-    "NEXT_PUBLIC_SUPABASE_URL",
-    "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
-    "NEXT_PUBLIC_API_GATEWAY",
-    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
-    "NEXT_PUBLIC_GAMER_API_URL",
-    "NEXT_PUBLIC_CATTLEYA_API_URL"
+    "VITE_SUPABASE_URL",
+    "VITE_SUPABASE_PUBLISHABLE_KEY",
+    "VITE_API_GATEWAY",
+    "VITE_STRIPE_PUBLISHABLE_KEY",
+    "VITE_GAMER_API_URL",
+    "VITE_CATTLEYA_API_URL"
   ]
 }
