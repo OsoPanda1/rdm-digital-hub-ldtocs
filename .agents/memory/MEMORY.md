@@ -1,0 +1,2 @@
+- [Supabase null-safe client](supabase-null-safe.md) — export supabase as null when VITE_SUPABASE_URL/ANON_KEY are missing; guard all auth context usages with null checks.
+- [node:crypto in browser](node-crypto-browser.md) — server-only files imported transitively by client code must not use node:crypto; shim createHmac or remove the import.

@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "RDM Digital Hub"
+version = "1.0.0"
+id = "artifacts/rdm-hub"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22942
+
+[services.development]
+run = "pnpm --filter @workspace/rdm-hub run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/rdm-hub", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/rdm-hub/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22942"
+BASE_PATH = "/"
