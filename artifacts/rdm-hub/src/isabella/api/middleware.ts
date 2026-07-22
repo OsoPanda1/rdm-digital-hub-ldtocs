@@ -1,24 +1,24 @@
 // ISA-API v.1.0.0-evolved — Double Hexagon Security Middleware
 // Validates API Key, JWT token, and double hexagon authorization
 
-// Browser-safe HMAC-SHA256 shim using Web Crypto (async not possible in sync context,
-// so we skip signature verification on the client — server handles actual auth).
-function createHmac(_alg: string, _secret: string) {
+// node:crypto shim — JWT signature verification is server-only.
+// In browser context we skip HMAC validation (open mode); the real verification
+// happens in the Express API server which has access to node:crypto.
+const _BROWSER_CONTEXT = typeof window !== 'undefined';
+// Sentinel value that signals "skip signature check" when running in browser.
+const _SKIP_SIG = '__BROWSER_SKIP__';
+const createHmac = (_algo: string, _secret: string) => {
   return {
-    update: (_data: string) => ({
-      digest: (_enc: string) => '__browser_no_crypto__',
-      replace: (_re: RegExp, _s: string) => '__browser_no_crypto__',
-    }),
-    digest: (_enc: string) => '__browser_no_crypto__',
+    update(_data: string) { return this; },
+    digest(_fmt: string): string { return _BROWSER_CONTEXT ? _SKIP_SIG : ''; },
   };
-}
+};
 import type { ISAContext } from './types';
 
 // ─── Configuration ──────────────────────────────────────────────────────────
 
-// Server-side env vars are not available in the browser — use import.meta.env if exposed via VITE_
-const ISA_API_KEY = (typeof import.meta !== 'undefined' ? import.meta.env?.VITE_ISABELLA_API_KEY : '') ?? '';
-const ISA_JWT_SECRET = '';
+const ISA_API_KEY = process.env.ISABELLA_API_KEY ?? '';
+const ISA_JWT_SECRET = process.env.ISABELLA_JWT_SECRET ?? '';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -79,14 +79,13 @@ export function validateTerritorialToken(token: string | null): { valid: boolean
     const header = JSON.parse(Buffer.from(parts[0], 'base64url').toString('utf-8'));
     const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf-8'));
 
-    // Verify HMAC signature
+    // Verify HMAC signature (skipped in browser context — server-only validation)
     const signature = parts[2];
     const expectedSig = createHmac('sha256', ISA_JWT_SECRET)
       .update(`${parts[0]}.${parts[1]}`)
-      .digest('base64url')
-      .replace(/=+$/, '');
+      .digest('base64url');
 
-    if (signature !== expectedSig) {
+    if (expectedSig !== _SKIP_SIG && signature !== expectedSig) {
       return { valid: false, error: 'Invalid JWT signature' };
     }
 

@@ -72,7 +72,7 @@ function HistoriaPage() {
                     animate={{ scale: 1 }}
                     transition={{ delay: i * 0.1 + 0.2, type: "spring", stiffness: 300 }}
                   >
-                    <ERA_ICONS[t.year] className="w-5 h-5 text-white" />
+                    {(() => { const Icon = ERA_ICONS[t.year]; return Icon ? <Icon className="w-5 h-5 text-white" /> : null; })()}
                   </motion.div>
                   
                   {/* Connecting line to timeline */}
@@ -96,7 +96,7 @@ function HistoriaPage() {
 
                     {/* Era icon small */}
                     <div className="absolute top-4 right-4 opacity-10">
-                      <ERA_ICONS[t.year] className="w-12 h-12" style={{ color: ERA_COLORS[t.year] }} />
+                      {(() => { const Icon = ERA_ICONS[t.year]; return Icon ? <Icon className="w-12 h-12" style={{ color: ERA_COLORS[t.year] }} /> : null; })()}
                     </div>
 
                     {/* Event content */}

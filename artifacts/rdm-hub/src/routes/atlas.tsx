@@ -307,6 +307,6 @@ function AtlasPage() {
           )}
         </div>
       </motion.aside>
-    </>
+    </section>
   );
 }

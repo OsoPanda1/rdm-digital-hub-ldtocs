@@ -70,22 +70,18 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
 
   const loadProfileAndRoles = useCallback(
     async (uid: string) => {
-      if (!supabase) {
-        setProfile(null)
-        setRoles([])
-        return
-      }
+      if (!supabase) return
       try {
         const [
           { data: profileData, error: profileError },
           { data: rolesData, error: rolesError },
         ] = await Promise.all([
           withTimeout(
-            Promise.resolve(supabase!.from('profiles').select('*').eq('id', uid).maybeSingle()),
+            Promise.resolve(supabase.from('profiles').select('*').eq('id', uid).maybeSingle()),
             'profiles',
           ),
           withTimeout(
-            Promise.resolve(supabase!.from('user_roles').select('role').eq('user_id', uid)),
+            Promise.resolve(supabase.from('user_roles').select('role').eq('user_id', uid)),
             'user_roles',
           ),
         ])
@@ -119,12 +115,10 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let isMounted = true
 
-    // If Supabase credentials are not configured, mark auth as unavailable and
-    // let the app continue in unauthenticated mode.
     if (!supabase) {
+      // Supabase not configured — auth is disabled
       setIsSupabaseReady(false)
       setLoading(false)
-      setError('Supabase no está configurado en este entorno. La autenticación está deshabilitada.')
       return
     }
 
@@ -199,6 +193,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
   }, [loadProfileAndRoles])
 
   const signInEmail = async (email: string, password: string) => {
+    if (!supabase) return { error: 'Auth no disponible — configura VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY' }
     setLoading(true)
     setError(null)
     try {
@@ -238,6 +233,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
     password: string,
     displayName: string,
   ) => {
+    if (!supabase) return { error: 'Auth no disponible — configura VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY' }
     setLoading(true)
     setError(null)
     try {
@@ -287,6 +283,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
   }
 
   const signInGoogle = async () => {
+    if (!supabase) return { error: 'Auth no disponible — configura VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY' }
     setError(null)
 
     try {
@@ -315,6 +312,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
   }
 
   const signOut = async () => {
+    if (!supabase) return
     setLoading(true)
     setError(null)
     try {

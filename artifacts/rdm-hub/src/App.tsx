@@ -12,9 +12,7 @@ import { RouteErrorBoundary } from '@/components/RouteErrorBoundary'
 import { AudioPlayerProvider } from '@/contexts/AudioPlayerContext'
 import { RDMAuthProvider, useRDMAuth } from '@/contexts/RDMAuthContext'
 import { NotificationProvider } from '@/components/NotificationSystem'
-// Vercel analytics removed — not available on Replit
-const SpeedInsights = () => null
-const Analytics = (_props: { debug?: boolean }) => null
+// Vercel analytics removed — not needed on Replit
 import { logger } from '@/lib/logger'
 import { captureException as sentryCaptureException } from '@/integrations/observability/sentry'
 
@@ -525,13 +523,7 @@ const AppInner = () => {
             </>
           )}
           <Suspense fallback={<LoadingFallback />}><RealitoChatLauncher /></Suspense>
-          {/* SpeedInsights + Analytics: diferidos al primer idle del navegador */}
-          {analyticsReady && (
-            <Suspense fallback={<LoadingFallback />}>
-              <SpeedInsights />
-              <Analytics debug={import.meta.env.DEV} />
-            </Suspense>
-          )}
+          {/* Vercel analytics removed on Replit */}
       </TooltipProvider>
     </ErrorBoundary>
   )

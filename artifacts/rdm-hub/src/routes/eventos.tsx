@@ -211,8 +211,9 @@ function EventosPage() {
                     </div>
                   </motion.li>
                 );
-              })}
-            </motion.div>
+              })
+            )}
+          </motion.div>
           ) : (
             // Calendar View (simplified)
             <motion.div
@@ -264,7 +265,7 @@ function EventosPage() {
                     </div>
                     <div>
                       <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full font-mono text-[9px] tracking-widest uppercase" style={{ backgroundColor: `${TAG_CONFIG[selectedEvent.tag]?.color}22`, color: TAG_CONFIG[selectedEvent.tag]?.color }}>
-                        <TAG_CONFIG[selectedEvent.tag]?.icon className="w-2.5 h-2.5" /> {TAG_CONFIG[selectedEvent.tag]?.label}
+                        {(() => { const Ic = TAG_CONFIG[selectedEvent.tag]?.icon; return Ic ? <Ic className="w-2.5 h-2.5" /> : null; })()} {TAG_CONFIG[selectedEvent.tag]?.label}
                       </div>
                     </div>
                   </div>

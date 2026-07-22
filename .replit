@@ -11,6 +11,23 @@ env = { "CI" = "true" }
 [workflows]
 runButton = "Project"
 
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "artifacts/rdm-hub: web"
+
+[[workflows.workflow]]
+name = "artifacts/rdm-hub: web"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PORT=22942 BASE_PATH=/ pnpm --filter @workspace/rdm-hub run dev"
+
 [agent]
 stack = "PNPM_WORKSPACE"
 expertMode = true
