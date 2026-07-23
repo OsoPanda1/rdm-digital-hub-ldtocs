@@ -1,72 +1,35 @@
-import app from "./app";
-import { logger } from "./lib/logger";
+import { Router } from "express";
+import { registerHealthRoutes } from "./health";
+import { registerTerritoryRoutes } from "./territory";
+// Futuro: añadir más federaciones cuando estén listas:
+// import { registerIsabellaRoutes } from "./isabella";
+// import { registerGamificationRoutes } from "./gamification";
+// import { registerTelemetryRoutes } from "./telemetry";
+// import { registerPaymentsRoutes } from "./payments";
 
-// --------- LECTURA DE ENTORNO ---------
+const router = Router();
 
-const rawPort = process.env["PORT"];
+// --------- RUTAS PÚBLICAS BASE ---------
 
-if (!rawPort) {
-  throw new Error(
-    'PORT environment variable is required but was not provided. ' +
-      "Ensure that artifact.toml and Replit Secrets define PORT correctly.",
-  );
-}
+// Health: usado por Replit y monitoreo.
+registerHealthRoutes(router);
 
-const port = Number(rawPort);
-
-if (Number.isNaN(port) || port <= 0) {
-  throw new Error(`Invalid PORT value: "${rawPort}"`);
-}
-
-const NODE_ENV = process.env["NODE_ENV"] || "development";
-const FEDERATION_MODE =
-  process.env["RDM_FEDERATION_MODE"] || "heptafederado-dev";
-const SECURITY_PROFILE =
-  process.env["RDM_SECURITY_PROFILE"] || "dev-relaxed";
-const OBSERVABILITY_MODE =
-  process.env["RDM_OBSERVABILITY_MODE"] || "verbose";
-
-logger.info(
-  {
-    port,
-    NODE_ENV,
-    FEDERATION_MODE,
-    SECURITY_PROFILE,
-    OBSERVABILITY_MODE,
-  },
-  "Booting RDM Heptafederation API Gateway",
-);
-
-// --------- ARRANQUE DEL SERVIDOR ---------
-
-const server = app.listen(port, (err?: Error) => {
-  if (err) {
-    logger.error({ err }, "Error listening on port");
-    process.exit(1);
-  }
-
-  logger.info({ port }, "Server listening");
-});
-
-// Manejo explícito de errores en el socket.
-server.on("error", (err: unknown) => {
-  logger.error({ err }, "Server error after listen");
-  process.exit(1);
-});
-
-// Shutdown limpio en señales (útil en producción).
-process.on("SIGTERM", () => {
-  logger.info("Received SIGTERM, closing server gracefully");
-  server.close(() => {
-    logger.info("Server closed");
-    process.exit(0);
+// Status mínimo del gateway en /api/
+router.get("/", (_req, res) => {
+  res.status(200).json({
+    status: "ok",
+    message: "RDM Heptafederation API Gateway",
   });
 });
 
-process.on("SIGINT", () => {
-  logger.info("Received SIGINT, closing server gracefully");
-  server.close(() => {
-    logger.info("Server closed");
-    process.exit(0);
-  });
-});
+// --------- FEDERACIÓN TERRITORIAL ---------
+
+registerTerritoryRoutes(router);
+
+// --------- FUTURAS FEDERACIONES ---------
+// registerIsabellaRoutes(router);     // /api/isabella/*
+// registerGamificationRoutes(router); // /api/gamification/*
+// registerTelemetryRoutes(router);    // /api/telemetry/*
+// registerPaymentsRoutes(router);     // /api/payments/*
+
+export default router;
