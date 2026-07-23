@@ -22,7 +22,7 @@ app.use(
   pinoHttp({
     logger,
     autoLogging: {
-      ignorePaths: ["/api/healthz"], // menos ruido en logs de health.
+      ignorePaths: ["/api/healthz"], // menos ruido para health.
     },
     serializers: {
       req(req) {
