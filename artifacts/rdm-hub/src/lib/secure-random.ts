@@ -32,10 +32,9 @@ export function secureRandomId(byteLength = 16): string {
   const bytes = new Uint8Array(byteLength);
   crypto.getRandomValues(bytes);
   let b64: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if (typeof (globalThis as any).Buffer !== "undefined") {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    b64 = (globalThis as any).Buffer.from(bytes).toString("base64");
+  const nodeBuffer = (globalThis as { Buffer?: typeof Buffer }).Buffer;
+  if (typeof nodeBuffer !== "undefined") {
+    b64 = nodeBuffer.from(bytes).toString("base64");
   } else {
     b64 = btoa(String.fromCharCode(...bytes));
   }

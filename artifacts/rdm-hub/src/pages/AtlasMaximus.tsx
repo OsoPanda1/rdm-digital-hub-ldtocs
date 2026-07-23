@@ -1,12 +1,11 @@
-// @ts-nocheck
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { MapPin, Pickaxe, BookOpen, Sparkles, Compass, Calendar, Building2, Quote, Network } from "lucide-react";
-import { RDM_TERRITORY_POIS, mines, pastes, streets, legends, routes, events, territoryStats } from "@/data/atlas/territory-pois";
+import { RDM_TERRITORY_POIS, mines, pastes, streets, legends, routes, events, territoryStats, type TerritoryPOI, type Mine, type Paste, type Street, type Legend, type Route, type Event as TerritorialEvent } from "@/data/atlas/territory-pois";
 import { RDM_CORPUS } from "@/data/atlas/corpus";
 import { comercios, comercioCategoriaLabel } from "@/data/atlas/comercios-catalog";
-import { dichos } from "@/data/atlas/dichos";
+import { dichos, type Dicho } from "@/data/atlas/dichos";
 
 const TABS = [
   { id: "pois", label: "POIs Canónicos", icon: MapPin },
@@ -26,21 +25,21 @@ export default function AtlasMaximus() {
   const content = useMemo(() => {
     switch (tab) {
       case "pois":
-        return RDM_TERRITORY_POIS.map((p: any) => ({ title: p.name, sub: p.category, body: p.description, meta: `Importancia ${p.importance ?? "-"}` }));
+        return RDM_TERRITORY_POIS.map((p: TerritoryPOI) => ({ title: p.name, sub: p.category, body: p.description, meta: `Importancia ${p.importance ?? "-"}` }));
       case "mines":
-        return mines.map((m: any) => ({ title: m.name, sub: m.status, body: m.description, meta: m.depth ? `${m.depth}m` : "" }));
+        return mines.map((m: Mine) => ({ title: m.name, sub: m.status, body: m.description, meta: m.depth ? `${m.depth}m` : "" }));
       case "pastes":
-        return pastes.map((p: any) => ({ title: p.name, sub: p.origin, body: p.description, meta: p.price ? `$${p.price}` : "" }));
+        return pastes.map((p: Paste) => ({ title: p.name, sub: p.origin, body: p.description, meta: p.price ? `$${p.price}` : "" }));
       case "streets":
-        return streets.map((s: any) => ({ title: s.name, sub: s.era ?? "", body: s.description, meta: "" }));
+        return streets.map((s: Street) => ({ title: s.name, sub: s.era ?? "", body: s.description, meta: "" }));
       case "legends":
-        return legends.map((l: any) => ({ title: l.name, sub: "Leyenda", body: l.summary ?? l.description, meta: "" }));
+        return legends.map((l: Legend) => ({ title: l.name, sub: "Leyenda", body: l.summary ?? l.description, meta: "" }));
       case "routes":
-        return routes.map((r: any) => ({ title: r.name, sub: r.difficulty, body: r.description, meta: r.distanceKm ? `${r.distanceKm} km` : "" }));
+        return routes.map((r: Route) => ({ title: r.name, sub: r.difficulty, body: r.description, meta: r.distanceKm ? `${r.distanceKm} km` : "" }));
       case "events":
-        return events.map((e: any) => ({ title: e.name, sub: e.month ?? e.date ?? "", body: e.description, meta: "" }));
+        return events.map((e: TerritorialEvent) => ({ title: e.name, sub: e.date, body: e.description, meta: e.place }));
       case "dichos":
-        return dichos.map((d: any) => ({ title: d.jerga ?? d.texto ?? d.title, sub: d.personaje ?? d.autor ?? "Anónimo", body: d.significado ?? d.contexto ?? "", meta: d.inicial ? `Letra ${d.inicial}` : "" }));
+        return dichos.map((d: Dicho) => ({ title: d.jerga, sub: d.personaje, body: d.significado, meta: d.inicial ? `Letra ${d.inicial}` : "" }));
       default:
         return [];
     }

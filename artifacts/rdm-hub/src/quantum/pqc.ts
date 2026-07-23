@@ -38,8 +38,8 @@ async function sha256(data: string | Uint8Array): Promise<ArrayBuffer> {
 // -----------------------------------------------------------------------
 // WASM loader for liboqs (browser-compatible)
 // -----------------------------------------------------------------------
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let oqsWasmModule: any = null
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+let oqsWasmModule: Record<string, Function> | null = null
 let wasmLoadAttempted = false
 let wasmAvailable = false
 

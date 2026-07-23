@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * Sentry initialization (client).
  *
@@ -16,6 +15,7 @@ type SentryGlobal = {
   captureException?: (e: unknown, c?: unknown) => void;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare const Sentry: SentryGlobal | undefined;
 
 let initialized = false;
@@ -40,19 +40,20 @@ export async function initSentry(): Promise<void> {
 
   try {
     await loadScript("https://browser.sentry-cdn.com/10.62.0/bundle.tracing.replay.min.js");
-    const SentryGlobal = globalThis as { Sentry?: SentryGlobal };
-    SentryGlobal.Sentry?.init({
+    const sentryGlobal = (globalThis as { Sentry?: SentryGlobal }).Sentry;
+    sentryGlobal?.init({
       dsn,
       environment: clientEnv.VITE_APP_ENV,
       tracesSampleRate: isProd ? 0.1 : 1.0,
       replaysSessionSampleRate: isProd ? 0.05 : 0,
       replaysOnErrorSampleRate: 1.0,
       integrations: [
-        SentryGlobal.Sentry.browserTracingIntegration?.(),
-        SentryGlobal.Sentry.replayIntegration?.({ maskAllText: true, blockAllMedia: true }),
+        sentryGlobal.browserTracingIntegration?.(),
+        sentryGlobal.replayIntegration?.({ maskAllText: true, blockAllMedia: true }),
       ].filter(Boolean),
       sendDefaultPii: false,
-      beforeSend(event) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      beforeSend(event: any) {
         if (event.request?.url) {
           event.request.url = event.request.url.split("?")[0];
         }
