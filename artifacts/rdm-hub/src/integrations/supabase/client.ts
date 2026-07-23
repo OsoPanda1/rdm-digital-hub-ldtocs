@@ -15,7 +15,7 @@ if (!isConfigured) {
   );
 }
 
-export const supabase: SupabaseClient<Database> | null = isConfigured
+const configuredSupabase = isConfigured
   ? createClient<Database>(SUPABASE_URL!, SUPABASE_ANON_KEY!, {
       auth: {
         storage: typeof window !== 'undefined' ? localStorage : undefined,
@@ -28,6 +28,19 @@ export const supabase: SupabaseClient<Database> | null = isConfigured
       },
     })
   : null;
+
+function requireSupabaseClient(): SupabaseClient<Database> {
+  if (!configuredSupabase) {
+    throw new Error('[Supabase] Client is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+  }
+  return configuredSupabase;
+}
+
+export const supabase: SupabaseClient<Database> = new Proxy({} as SupabaseClient<Database>, {
+  get(_, prop, receiver) {
+    return Reflect.get(requireSupabaseClient(), prop, receiver);
+  },
+});
 
 /** True when Supabase is properly configured (env vars present). */
 export const isSupabaseConfigured = isConfigured;

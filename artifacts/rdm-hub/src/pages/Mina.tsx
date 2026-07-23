@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Pickaxe, Zap, Gem, LogOut, Gift } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import MainLayout from "@/components/layout/MainLayout";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { SEOMeta } from "@/components/SEOMeta";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -85,7 +85,7 @@ export default function Mina() {
   const energyPct = balance ? Math.min(100, (balance.energy / ENERGY_MAX) * 100) : 0;
 
   return (
-    <MainLayout>
+    <RDMLayout>
         <SEOMeta title="Mina RDM · Subsuelo Digital de Real del Monte" description="Mina oro, plata, cuarzo y carbón digitales y canjea tus puntos por productos reales de Real del Monte." />
         {/* Hero Banner */}
         <div className="relative h-48 w-full overflow-hidden">
@@ -194,6 +194,6 @@ export default function Mina() {
           </div>
         )}
       </section>
-    </MainLayout>
+    </RDMLayout>
   );
 }

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Activity, GitCommitHorizontal, Layers3, Network, TrendingUp } from "lucide-react";
-import MainLayout from "@/components/layout/MainLayout";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -66,7 +66,7 @@ const Evolucion = () => {
   ];
 
   return (
-    <MainLayout>
+    <RDMLayout>
       <SEOMeta
         title="Evolución RDM·X — Mega-análisis del ecosistema"
         description="Línea de tiempo, métricas de adopción de módulos y trayectoria del ecosistema RDM Digital Nexus."
@@ -133,7 +133,7 @@ const Evolucion = () => {
           </CardContent>
         </Card>
       </section>
-    </MainLayout>
+    </RDMLayout>
   );
 };
 

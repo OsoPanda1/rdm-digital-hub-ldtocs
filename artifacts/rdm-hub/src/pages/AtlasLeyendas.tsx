@@ -1,11 +1,11 @@
-import MainLayout from "@/components/layout/MainLayout";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { AtlasPageHeader } from "@/components/atlas/AtlasPageHeader";
 import { legends } from "@/data/atlas-territory";
 
 export default function AtlasLeyendas() {
   return (
-    <MainLayout>
+    <RDMLayout>
       <SEOMeta
         title="Leyendas — Real del Monte"
         description="Las leyendas de Real del Monte: la novia de la mina, la campana de Cornualles, el conde y la veta perdida."
@@ -32,6 +32,6 @@ export default function AtlasLeyendas() {
           ))}
         </div>
       </section>
-    </MainLayout>
+    </RDMLayout>
   );
 }

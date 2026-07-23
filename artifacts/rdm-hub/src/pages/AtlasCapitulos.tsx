@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import MainLayout from "@/components/layout/MainLayout";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { AtlasPageHeader } from "@/components/atlas/AtlasPageHeader";
 import { chapters, territoryStats } from "@/data/atlas-territory";
@@ -14,7 +14,7 @@ const slugToRoute: Record<string, string> = {
 
 export default function AtlasCapitulos() {
   return (
-    <MainLayout>
+    <RDMLayout>
       <SEOMeta
         title="Atlas territorial — Real del Monte"
         description="Cuatro capas para entender Real del Monte: subsuelo, memoria comestible, memoria silenciosa y superficie."
@@ -71,6 +71,6 @@ export default function AtlasCapitulos() {
           </Link>
         </div>
       </section>
-    </MainLayout>
+    </RDMLayout>
   );
 }

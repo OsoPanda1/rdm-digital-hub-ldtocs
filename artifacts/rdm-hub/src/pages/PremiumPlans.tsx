@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import MainLayout from "@/components/layout/MainLayout";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { SEOMeta } from "@/components/SEOMeta";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -174,7 +174,7 @@ export default function PremiumPlans() {
   };
 
   return (
-    <MainLayout>
+    <RDMLayout>
       <SEOMeta
         title="Planes Premium · RDM Digital"
         description="Planes premium para usuarios y comercios en Real del Monte. Desde $99 MXN/mes."
@@ -415,6 +415,6 @@ export default function PremiumPlans() {
           </p>
         </div>
       </section>
-    </MainLayout>
+    </RDMLayout>
   );
 }

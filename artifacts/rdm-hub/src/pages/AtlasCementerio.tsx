@@ -1,11 +1,11 @@
-import MainLayout from "@/components/layout/MainLayout";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { AtlasPageHeader } from "@/components/atlas/AtlasPageHeader";
 import img from "@/assets/chapter-cementerio.jpg";
 
 export default function AtlasCementerio() {
   return (
-    <MainLayout>
+    <RDMLayout>
       <SEOMeta
         title="El cementerio inglés — Real del Monte"
         description="El Panteón Inglés de Real del Monte: las cruces que miran hacia Cornualles."
@@ -64,6 +64,6 @@ export default function AtlasCementerio() {
           </p>
         </blockquote>
       </section>
-    </MainLayout>
+    </RDMLayout>
   );
 }

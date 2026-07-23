@@ -1,4 +1,4 @@
-import MainLayout from "@/components/layout/MainLayout";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { AtlasPageHeader } from "@/components/atlas/AtlasPageHeader";
 import { streets } from "@/data/atlas-territory";
@@ -6,7 +6,7 @@ import img from "@/assets/chapter-calles.jpg";
 
 export default function AtlasCalles() {
   return (
-    <MainLayout>
+    <RDMLayout>
       <SEOMeta
         title="Las calles — Real del Monte"
         description="Las calles de Real del Monte: nombres, esquinas y memoria."
@@ -38,6 +38,6 @@ export default function AtlasCalles() {
           ))}
         </div>
       </section>
-    </MainLayout>
+    </RDMLayout>
   );
 }

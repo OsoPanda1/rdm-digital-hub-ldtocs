@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2, Circle, Clock3, Layers3 } from "lucide-react";
-import MainLayout from "@/components/layout/MainLayout";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,7 +36,7 @@ const Operativo = () => {
   const domains = summarizeByDomain();
 
   return (
-    <MainLayout>
+    <RDMLayout>
       <SEOMeta
         title="Operativo RDM·X — Estado de módulos en producción"
         description="Tablero vivo del documento maestro: módulos backend, frontend, IA, gemelos digitales y plataforma con su nivel de completitud."
@@ -164,7 +164,7 @@ const Operativo = () => {
           })}
         </div>
       </section>
-    </MainLayout>
+    </RDMLayout>
   );
 };
 

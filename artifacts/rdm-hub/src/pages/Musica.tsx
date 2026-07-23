@@ -38,15 +38,15 @@ import type { MusicTrack, MusicCronica, MusicEvent } from "@/features/music/type
 import aMimadreMp3 from "@/assets/musica/a_mimadre.mp3"
 import reinaTrejoMp3 from "@/assets/musica/reina_trejo.mp3"
 import tumiradaMp3 from "@/assets/musica/tumirada.mp3"
-import adictedToyouMp3 from "@/assets/musica/adicted_toyou).mp3"
+import adictedToyouMp3 from "@/assets/musica/adicted_toyou.mp3"
 import cadaNocheMp3 from "@/assets/musica/cada_noche.mp3"
 import elSenaladoMp3 from "@/assets/musica/el_señalado.mp3"
-import legadoMp3 from "@/assets/musica/Legado (1).mp3"
+import legadoMp3 from "@/assets/musica/legado_1.mp3"
 import patioDetierraMp3 from "@/assets/musica/patio_detierra.mp3"
 import puroDolorMp3 from "@/assets/musica/puro_dolor.mp3"
 import shootingStarMp3 from "@/assets/musica/shooting_star.mp3"
 import rdmYoteadoroMp3 from "@/assets/musica/rdm_yoteadoro.mp3"
-import rdmintroMp3 from "@/assets/musica/rdmintro (2).mp3"
+import rdmintroMp3 from "@/assets/musica/rdmintro_2.mp3"
 
 const PLAYLIST: Track[] = [
   {

@@ -39,7 +39,8 @@ async function sha256(data: string | Uint8Array): Promise<ArrayBuffer> {
 // WASM loader for liboqs (browser-compatible)
 // -----------------------------------------------------------------------
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-let oqsWasmModule: Record<string, Function> | null = null
+type OqsWasmExports = Record<string, (...args: unknown[]) => unknown>
+let oqsWasmModule: { exports: OqsWasmExports } | null = null
 let wasmLoadAttempted = false
 let wasmAvailable = false
 
@@ -62,7 +63,7 @@ async function loadOqsWasm(): Promise<boolean> {
         },
       },
     })
-    oqsWasmModule = module.instance
+    oqsWasmModule = module.instance as unknown as { exports: OqsWasmExports }
     wasmAvailable = true
   } catch {
     wasmAvailable = false
@@ -78,9 +79,9 @@ function isWasmAvailable(): boolean {
 // Kyber KEM (Key Encapsulation Mechanism)
 // -----------------------------------------------------------------------
 async function kyberKeygen(): Promise<PQCKeyPair> {
-  if (isWasmAvailable()) {
+  if (isWasmAvailable() && oqsWasmModule) {
     // liboqs Kyber512 keygen
-    const kem = oqsWasmModule.exports.OQS_KEM_new("Kyber512")
+    const kem = oqsWasmModule.exports.OQS_KEM_new("Kyber512") as { keygen: (pub: Uint8Array, sec: Uint8Array) => void; delete: () => void }
     const pub = new Uint8Array(800)
     const sec = new Uint8Array(1632)
     kem.keygen(pub, sec)
@@ -98,8 +99,8 @@ async function kyberKeygen(): Promise<PQCKeyPair> {
 }
 
 async function kyberEncapsulate(publicKey: string): Promise<PQCKEMResult> {
-  if (isWasmAvailable()) {
-    const kem = oqsWasmModule.exports.OQS_KEM_new("Kyber512")
+  if (isWasmAvailable() && oqsWasmModule) {
+    const kem = oqsWasmModule.exports.OQS_KEM_new("Kyber512") as { encapsulate: (ct: Uint8Array, ss: Uint8Array, publicKey: Uint8Array) => void; delete: () => void }
     const ct = new Uint8Array(768)
     const ss = new Uint8Array(32)
     kem.encapsulate(ct, ss, fromHex(publicKey))
@@ -116,8 +117,8 @@ async function kyberEncapsulate(publicKey: string): Promise<PQCKEMResult> {
 }
 
 async function kyberDecapsulate(kemCiphertext: string, secretKey: string): Promise<string> {
-  if (isWasmAvailable()) {
-    const kem = oqsWasmModule.exports.OQS_KEM_new("Kyber512")
+  if (isWasmAvailable() && oqsWasmModule) {
+    const kem = oqsWasmModule.exports.OQS_KEM_new("Kyber512") as { decapsulate: (ss: Uint8Array, ct: Uint8Array, secretKey: Uint8Array) => void; delete: () => void }
     const ss = new Uint8Array(32)
     kem.decapsulate(ss, fromHex(kemCiphertext), fromHex(secretKey))
     kem.delete()
@@ -131,8 +132,8 @@ async function kyberDecapsulate(kemCiphertext: string, secretKey: string): Promi
 // Dilithium signatures
 // -----------------------------------------------------------------------
 async function dilithiumSign(data: string, secretKey: string): Promise<string> {
-  if (isWasmAvailable()) {
-    const sig = oqsWasmModule.exports.OQS_SIG_new("Dilithium2")
+  if (isWasmAvailable() && oqsWasmModule) {
+    const sig = oqsWasmModule.exports.OQS_SIG_new("Dilithium2") as { sign: (signature: Uint8Array, msg: Uint8Array, secretKey: Uint8Array) => void; delete: () => void }
     const msg = new TextEncoder().encode(data)
     const signature = new Uint8Array(2420)
     sig.sign(signature, msg, fromHex(secretKey))
@@ -155,8 +156,8 @@ async function dilithiumSign(data: string, secretKey: string): Promise<string> {
 }
 
 async function dilithiumVerify(data: string, signature: string, publicKey: string): Promise<boolean> {
-  if (isWasmAvailable()) {
-    const sig = oqsWasmModule.exports.OQS_SIG_new("Dilithium2")
+  if (isWasmAvailable() && oqsWasmModule) {
+    const sig = oqsWasmModule.exports.OQS_SIG_new("Dilithium2") as { verify: (signature: Uint8Array, msg: Uint8Array, publicKey: Uint8Array) => number; delete: () => void }
     const msg = new TextEncoder().encode(data)
     const result = sig.verify(fromHex(signature), msg, fromHex(publicKey))
     sig.delete()

@@ -81,3 +81,11 @@ Plataforma de soberanía digital, turismo inteligente e infraestructura federada
 - [LICENSE-KORIMA.md](./LICENSE-KORIMA.md) — TAMV‑KÓRIMA (Bienes públicos con reciprocidad)
 - [DATA-SOVEREIGNTY-DPA.md](./DATA-SOVEREIGNTY-DPA.md) — Soberanía de datos
 - `pnpm-workspace.yaml` — catálogo de versiones y overrides de seguridad
+
+## Actualización operacional 2026-07-23
+
+- Frontend: `pnpm --filter @workspace/rdm-hub run dev`.
+- API: `pnpm --filter @workspace/api-server run dev`.
+- Verificación total: `pnpm run typecheck && pnpm --filter @workspace/api-server run build && pnpm --filter @workspace/rdm-hub run build`.
+- Rutas API activas: `/healthz`, `/places`, `/commerce`, `/ai/ask`.
+- Hardening 5 capas: supply-chain, tipos, validación API, Supabase bearer, PQC/Web Crypto.
