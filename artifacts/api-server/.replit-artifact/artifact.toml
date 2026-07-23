@@ -6,10 +6,10 @@ id = "3B4_FFSkEVBkAeYMFRJ2e"
 # El API Gateway del RDM Digital Hub expone las federaciones:
 # - Territorial (territory / twins / yun / unified)
 # - IA (Isabella core + guardian)
-# - Gamificación y música (game engines, cronicas, quests)
+# - Gamificación y música
 # - Monetización (Stripe, Whop, B2B)
-# - Telemetría y seguridad (metrics, PQC, audit)
-# Este servicio es el punto de entrada único para el frontend RDM Hub y para agentes externos.
+# - Telemetría y seguridad
+# Es el punto de entrada único para el frontend RDM Hub y para agentes externos.
 
 previewPath = "/api" # Debe servir un endpoint público mínimo (status o doc base).
 
@@ -53,7 +53,7 @@ NODE_ENV = "production"
 RDM_FEDERATION_MODE = "heptafederado-prod"
 RDM_SECURITY_PROFILE = "prod-hardened"
 RDM_OBSERVABILITY_MODE = "balanced"
-# Secrets de DB, JWT, Stripe, Whop, Supabase, PQC, etc. se gestionan desde Secrets de Replit.
+# Secrets para DB, JWT, Stripe, Whop, Supabase, PQC, etc. se gestionan desde Secrets de Replit.
 # No deben estar hardcodeados aquí.
 
 # --- HEALTH CHECKS Y FILTROS BÁSICOS ---
@@ -67,8 +67,8 @@ periodic.path = "/api/healthz"
 periodic.intervalSeconds = 30
 periodic.expectedStatus = 200
 
-# Convenciones:
-# - /api/healthz: endpoint público mínimo, sin auth, sin acceso a DB pesada.
-# - /api/public/*: lectura controlada de contenido (ej. algunos datos de territorio).
-# - /api/private/*: requiere autenticación (RDMAuthContext, JWT, Supabase Auth).
-# - /api/system/*: reservado para internos (telemetría, seguridad, admin); no exponer a clientes normales.
+# Convenciones de paths:
+# - /api/healthz          : endpoint público mínimo, sin auth.
+# - /api/public/*         : lectura controlada de contenido (ej. datos territoriales básicos).
+# - /api/private/*        : requiere autenticación (supabase auth, RDMAuthContext, JWT).
+# - /api/system/*         : reservado para internos (telemetría, seguridad, admin).
