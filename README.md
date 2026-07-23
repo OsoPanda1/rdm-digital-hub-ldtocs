@@ -171,15 +171,15 @@ Build:            Vite 7 + esbuild, 3,437 módulos, ~55s
 | ✅ **RESUELTO** | pnpm-workspace cross-platform | Overrides win32 removidos | `pnpm-workspace.yaml` |
 | ✅ **RESUELTO** | Build CI configurado | GitHub Actions | `.github/workflows/ci.yml` |
 | ✅ **RESUELTO** | Tags HTML rotos (QuienesSomos, Tenochtitlan) | Build fixes | `QuienesSomos.tsx`, `Tenochtitlan.tsx` |
-| 🟠 **ALTO** | 4 archivos importan `@tanstack/react-start` (eliminado) | Build falla si se incluyen en tsconfig | `auth-middleware.ts`, `auth-attacher.ts`, `example.functions.ts`, `telemetry.functions.ts` |
+| ✅ **RESUELTO** | 4 imports de React Start erradicados | Funciones migradas a runtime Vite/React Router | `auth-middleware.ts`, `auth-attacher.ts`, `example.functions.ts`, `telemetry.functions.ts` |
 | 🟠 **ALTO** | ~60+ componentes nunca importados | Dead code, peso muerto en bundle | Componentes root `/components/*` |
 | 🟠 **ALTO** | 13 archivos `src/data/imported/*.ts` nunca importados | Datos duplicados, inconsistencia | Todo `data/imported/` |
-| 🟠 **ALTO** | 6 sistemas de layout diferentes | Complejidad arquitectónica innecesaria | `PublicLayout`, `RdmLayout`, `MainLayout`, `RDMLayout`, `AppShell`, `SovereignPageShell` |
+| ✅ **RESUELTO PARCIAL** | Flujos activos migrados a `RDMLayout` | Shims heredados no usados quedan para compatibilidad | `MainLayout` → `RDMLayout` |
 | 🟡 **MEDIO** | 9 pares de componentes duplicados | Código redundante, mantenimiento duplicado | `UnifiedMap`, `IsabellaVoiceEngine`, `IsabellaChat`, `BusinessCard`, `PostCard`, `HeroSection`, `Footer`, etc. |
-| 🟡 **MEDIO** | wouter en catálogo pero no usado | Dependencia innecesaria | `pnpm-workspace.yaml` |
+| ✅ **RESUELTO** | `wouter` eliminado del catálogo, frontend y lockfile | Menos superficie de dependencia | `pnpm-workspace.yaml`, `artifacts/rdm-hub/package.json` |
 | 🟢 **BAJO** | 5 archivos de seguridad nunca importados | Código diseñado pero no integrado | `security/` (5 files) |
 | 🟢 **BAJO** | 2 hooks nunca importados | Funcionalidad no expuesta | `use-isabella-voice-engine.ts`, `use-gamification.ts` |
-| 🟢 **BAJO** | Nombre de archivo con paréntesis y espacios | Potenciales issues en Linux | `adicted_toyou).mp3`, `Legado (1).mp3`, `rdmintro (2).mp3` |
+| ✅ **RESUELTO** | Audio renombrado sin espacios/paréntesis | Rutas Linux/Replit seguras | `adicted_toyou.mp3`, `legado_1.mp3`, `rdmintro_2.mp3` |
 
 ### Deuda Documental
 
@@ -240,10 +240,10 @@ Mantenibilidad:       🟡 Media-alta — Fase 1 y 2 completadas
 - [ ] Eliminar ~60+ componentes nunca importados (tercera pasada)
 - [ ] Eliminar 13 archivos data/imported/ duplicados
 - [ ] Fusionar 9 pares de componentes duplicados
-- [ ] Consolidar 6 layouts a 1 (RDMLayout)
+- [x] Migrar flujos activos de `MainLayout` a `RDMLayout`
 - [ ] Alcanzar >10% test coverage
 - [ ] Configurar lint estricto (eslint + prettier)
-- [ ] Renombrar archivos con espacios/parentesis
+- [x] Renombrar archivos con espacios/paréntesis
 
 ### Fase 4: Producción y Escalamiento (Q1 2027)
 - [ ] Conectar api-server Express con frontend
@@ -340,3 +340,34 @@ Para reportar vulnerabilidades, ver [SECURITY.md](./SECURITY.md).
 <p align="center">
   <sub>Hecho con ❤️ para Real del Monte, Hidalgo, México y todas las comunidades que merecen soberanía digital.</sub>
 </p>
+
+### Bitácora de actualización disciplinada — 2026-07-23
+
+**Fase 3 reforzada (Replit operativo):**
+
+- ✅ Erradicadas las 4 dependencias fantasma de `@tanstack/react-start`: los helpers de Supabase, telemetría y ejemplo server-side ahora son funciones TypeScript runtime-agnostic compatibles con React Router/Vite y handlers HTTP.
+- ✅ Layout operacional consolidado: las páginas que aún dependían de `MainLayout` fueron migradas a `RDMLayout`; `MainLayout` queda sólo como shim heredado no usado para no romper imports externos.
+- ✅ Dependencia `wouter` retirada del catálogo workspace, del paquete frontend y del lockfile; el estándar activo queda en React Router.
+- ✅ Audio normalizado para Linux/Replit: `adicted_toyou.mp3`, `legado_1.mp3`, `rdmintro_2.mp3`; las importaciones de `Musica.tsx` apuntan a nombres seguros sin espacios ni paréntesis.
+- ✅ Conexión API bidireccional inicial: `api-server` expone `/healthz`, `/places`, `/commerce` y `/ai/ask` con validación de entrada tipada, listo para consumo por `VITE_API_URL=/api/v1` o proxy Replit.
+- ✅ Hardening híbrido 5 capas activado en código/documentación: (1) supply-chain pnpm minimumReleaseAge + overrides, (2) TypeScript estricto sin TanStack Start fantasma, (3) validación de frontera API, (4) Supabase bearer verification runtime-agnostic, (5) módulo PQC híbrido con fallback Web Crypto.
+- ✅ Triple revisión ejecutada: búsqueda de imports prohibidos, typecheck frontend y build API antes del commit.
+
+**Comandos Replit recomendados:**
+
+```bash
+pnpm install
+pnpm --filter @workspace/api-server run dev
+pnpm --filter @workspace/rdm-hub run dev
+pnpm run build
+```
+
+**Variables mínimas:**
+
+```bash
+VITE_SUPABASE_URL=...
+VITE_SUPABASE_ANON_KEY=...
+SUPABASE_URL=...
+SUPABASE_PUBLISHABLE_KEY=...
+VITE_API_URL=/api/v1
+```

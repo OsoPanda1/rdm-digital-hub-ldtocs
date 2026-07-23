@@ -25,17 +25,17 @@ export default function AtlasMaximus() {
   const content = useMemo(() => {
     switch (tab) {
       case "pois":
-        return RDM_TERRITORY_POIS.map((p: TerritoryPOI) => ({ title: p.name, sub: p.category, body: p.description, meta: `Importancia ${p.importance ?? "-"}` }));
+        return RDM_TERRITORY_POIS.map((p: TerritoryPOI) => ({ title: p.name, sub: p.category, body: p.description, meta: `Relevancia ${p.relevance}` }));
       case "mines":
-        return mines.map((m: Mine) => ({ title: m.name, sub: m.status, body: m.description, meta: m.depth ? `${m.depth}m` : "" }));
+        return mines.map((m: Mine) => ({ title: m.name, sub: m.status, body: m.description, meta: m.founded }));
       case "pastes":
-        return pastes.map((p: Paste) => ({ title: p.name, sub: p.origin, body: p.description, meta: p.price ? `$${p.price}` : "" }));
+        return pastes.map((p: Paste) => ({ title: p.name, sub: p.origin, body: p.note, meta: p.filling }));
       case "streets":
-        return streets.map((s: Street) => ({ title: s.name, sub: s.era ?? "", body: s.description, meta: "" }));
+        return streets.map((s: Street) => ({ title: s.name, sub: s.era ?? "", body: s.story, meta: "" }));
       case "legends":
-        return legends.map((l: Legend) => ({ title: l.name, sub: "Leyenda", body: l.summary ?? l.description, meta: "" }));
+        return legends.map((l: Legend) => ({ title: l.title, sub: l.era, body: l.body, meta: "" }));
       case "routes":
-        return routes.map((r: Route) => ({ title: r.name, sub: r.difficulty, body: r.description, meta: r.distanceKm ? `${r.distanceKm} km` : "" }));
+        return routes.map((r: Route) => ({ title: r.title, sub: r.difficulty, body: r.steps.join(" → "), meta: r.duration }));
       case "events":
         return events.map((e: TerritorialEvent) => ({ title: e.name, sub: e.date, body: e.description, meta: e.place }));
       case "dichos":
@@ -120,7 +120,7 @@ export default function AtlasMaximus() {
                   <p className="text-sm font-semibold">{c.nombre}</p>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-[hsl(var(--rdm-amber)/0.15)] text-[hsl(var(--rdm-amber))]">{c.membresia}</span>
                 </div>
-                <p className="text-xs text-muted-foreground">{comercioCategoriaLabel[c.categoria] ?? c.categoria}</p>
+                <p className="text-xs text-muted-foreground">{comercioCategoriaLabel[c.categoria as keyof typeof comercioCategoriaLabel] ?? c.categoria}</p>
               </div>
             ))}
           </div>

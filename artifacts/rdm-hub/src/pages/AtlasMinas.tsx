@@ -1,4 +1,4 @@
-import MainLayout from "@/components/layout/MainLayout";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { AtlasPageHeader } from "@/components/atlas/AtlasPageHeader";
 import { mines } from "@/data/atlas-territory";
@@ -6,7 +6,7 @@ import img from "@/assets/chapter-minas.jpg";
 
 export default function AtlasMinas() {
   return (
-    <MainLayout>
+    <RDMLayout>
       <SEOMeta
         title="Las minas — Real del Monte"
         description="Las minas que sostienen el suelo de Real del Monte: Acosta, Dolores, Santa Inés, San Juan Pachuca. Memoria viva del ciclo de la plata."
@@ -62,6 +62,6 @@ export default function AtlasMinas() {
           ))}
         </div>
       </section>
-    </MainLayout>
+    </RDMLayout>
   );
 }

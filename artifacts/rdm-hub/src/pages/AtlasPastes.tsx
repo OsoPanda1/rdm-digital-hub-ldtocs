@@ -1,4 +1,4 @@
-import MainLayout from "@/components/layout/MainLayout";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { AtlasPageHeader } from "@/components/atlas/AtlasPageHeader";
 import { pastes } from "@/data/atlas-territory";
@@ -12,7 +12,7 @@ const tags: Record<string, string> = {
 
 export default function AtlasPastes() {
   return (
-    <MainLayout>
+    <RDMLayout>
       <SEOMeta
         title="Los pastes — Memoria comestible"
         description="Los pastes de Real del Monte: la negociación cotidiana entre Cornualles y la sierra de Hidalgo."
@@ -58,6 +58,6 @@ export default function AtlasPastes() {
           </p>
         </div>
       </section>
-    </MainLayout>
+    </RDMLayout>
   );
 }

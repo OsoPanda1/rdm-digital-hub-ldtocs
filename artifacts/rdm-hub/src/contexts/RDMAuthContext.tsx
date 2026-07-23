@@ -48,8 +48,8 @@ interface RDMAuthContextValue {
 const RDMAuthContext = createContext<RDMAuthContextValue | undefined>(undefined)
 const AUTH_QUERY_TIMEOUT_MS = 5_000
 
-function guardSupabase(): SupabaseClient<Database, 'http', unknown> {
-  if (!supabase) {
+function guardSupabase(): SupabaseClient<Database> {
+  if (!isSupabaseConfigured) {
     throw new Error('[auth] Supabase no está configurado (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY ausentes)')
   }
   return supabase

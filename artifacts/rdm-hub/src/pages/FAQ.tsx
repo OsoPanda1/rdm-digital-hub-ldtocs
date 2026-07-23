@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, HelpCircle, Search, MessageCircle } from "lucide-react";
-import MainLayout from "@/components/layout/MainLayout";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { SEOMeta } from "@/components/SEOMeta";
 
 type FaqItemData = { q: string; a: string };
@@ -100,7 +100,7 @@ export default function FAQ() {
   };
 
   return (
-    <MainLayout>
+    <RDMLayout>
       <SEOMeta title="Preguntas Frecuentes · RDM Digital" description="Centro de ayuda con artículos por categoría sobre turismo, historia, comunidad, membresías y pagos en Real del Monte, con buscador inteligente." />
       {/* Hero Banner */}
       <div className="relative h-48 w-full overflow-hidden">
@@ -181,6 +181,6 @@ export default function FAQ() {
           </motion.div>
         </div>
       </section>
-    </MainLayout>
+    </RDMLayout>
   );
 }

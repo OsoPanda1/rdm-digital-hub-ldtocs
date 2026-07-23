@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2, ExternalLink, GitBranch, Layers3, Network } from "lucide-react";
-import MainLayout from "@/components/layout/MainLayout";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,7 +28,7 @@ const FusionEcosystem = () => {
   const readiness = getFusionReadiness();
 
   return (
-    <MainLayout>
+    <RDMLayout>
       <SEOMeta
         title="Fusión Funcional RDM·X — Nodo Cero, Turismo, Twin y CiteMesh"
         description="Panel operativo que unifica RDM Digital Nodo Cero, RDM Turismo Digital, Real del Monte Twin y CiteMesh Roots dentro de RDM Digital Nexus."
@@ -182,7 +182,7 @@ const FusionEcosystem = () => {
           </CardContent>
         </Card>
       </section>
-    </MainLayout>
+    </RDMLayout>
   );
 };
 
