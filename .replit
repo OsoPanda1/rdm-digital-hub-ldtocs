@@ -43,3 +43,8 @@ channel = "stable-25_05"
 
 [userenv.shared]
 DATABASE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxiYmlqemltbnlkdm9kdGZiam96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3ODk3ODMsImV4cCI6MjA5ODM2NTc4M30.xAddScAljKE_Duq_fNyXiIHnuuguMF3ACaaiWSmQ3fo"
+DATABASE_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_WMDEJLTID6O0xJkG7uAohA_coPV_Reb"
+DATABASE_SUPABASE_URL = "https://lbbijzimnydvodtfbjoz.supabase.co"
+DATABASE_POSTGRES_DATABASE = "postgres"
+DATABASE_POSTGRES_HOST = "db.lbbijzimnydvodtfbjoz.supabase.co"
+DATABASE_POSTGRES_PASSWORD = "dHgjv5O3rSlMyrjP"

@@ -3,12 +3,22 @@ import { RDMHero } from "@/components/rdm/RDMHero";
 import { RDMInteractiveMap } from "@/components/rdm/RDMInteractiveMap";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Pickaxe, Utensils, TreePine, MapPin, Compass, Car, Calendar, Users, Star, Camera, Heart, Lightbulb, Bed, Palette, Store } from "lucide-react";
+import { Pickaxe, Utensils, TreePine, MapPin, Compass, Car, Calendar, Users, Star, Camera, Heart, Lightbulb, Bed, Palette, Store, Radio } from "lucide-react";
 import { SEOMeta } from "@/components/SEOMeta";
 import { RUTAS_TEMATICAS, FICHA_TECNICA } from "@/data/rdm-territorial";
 import { EVENTOS_RDM, DATOS_CURIOSOS, SABIAS_QUE } from "@/data/rdm-events";
 import { RDM_IMAGES, GALLERY_SECTIONS } from "@/data/rdm-images";
 import { useState, useEffect } from "react";
+
+import realitoGastro from '@assets/realito-gastronomia_1784832222165.png';
+import realitoArte from '@assets/realito-arte_1784832222166.png';
+import realitoHistoria from '@assets/realito-historia_1784832222167.png';
+import realitoCultura from '@assets/realito-cultura_1784832222168.png';
+import realitoEco from '@assets/realito-ecoturismo_1784832222169.png';
+import realitoPlaterias from '@assets/realito-platerias_1784832222169.png';
+import realitoBares from '@assets/realito-bares_1784832222170.png';
+import realitoMinas from '@assets/realito-minas_1784832222173.png';
+import tamvBanner from '@assets/Gemini_Generated_Image_a3vb18a3vb18a3vb_1784832222162.png';
 
 const QUICK_ACCESS = [
   { icon: MapPin, label: "Mapa", desc: "Puntos de interés", to: "/mapa", color: "hsl(var(--rdm-amber))" },
@@ -19,6 +29,17 @@ const QUICK_ACCESS = [
   { icon: Car, label: "Cómo llegar", desc: "Estacionamiento", to: "/estacionamientos", color: "hsl(var(--rdm-red))" },
   { icon: Calendar, label: "Eventos", desc: "Agenda cultural", to: "/eventos", color: "hsl(var(--rdm-blue))" },
   { icon: Store, label: "Registra tu Negocio", desc: "Únete al directorio", to: "/registro-comercio", color: "hsl(var(--rdm-amber))" },
+];
+
+const REALITOS = [
+  { img: realitoGastro, cat: "Gastronomía", sub: "Pastes y sabores", to: "/gastronomia" },
+  { img: realitoArte, cat: "Arte", sub: "Creadores locales", to: "/arte" },
+  { img: realitoHistoria, cat: "Historia", sub: "Legado minero", to: "/historia" },
+  { img: realitoCultura, cat: "Cultura", sub: "Tradición viva", to: "/cultura" },
+  { img: realitoEco, cat: "Ecoturismo", sub: "Bosque de niebla", to: "/ecoturismo" },
+  { img: realitoPlaterias, cat: "Platerías", sub: "Joyas de plata", to: "/arte" },
+  { img: realitoMinas, cat: "Minas", sub: "Túneles y leyendas", to: "/historia" },
+  { img: realitoBares, cat: "Bares", sub: "Cantinas y mezcal", to: "/gastronomia" },
 ];
 
 const EXPERIENCIAS = [
@@ -68,8 +89,8 @@ const Index = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
             {QUICK_ACCESS.map((item, i) => (
               <motion.div key={item.label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
-                <Link to={item.to} className="block rdm-glass rounded-xl p-4 text-center hover:shadow-md transition-all group">
-                  <div className="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center" style={{ background: `${item.color}15` }}>
+                <Link to={item.to} className="block rdm-glass rounded-xl p-4 text-center hover:shadow-md transition-all group h-full">
+                  <div className="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center transition-colors group-hover:bg-white" style={{ background: `${item.color}15` }}>
                     <item.icon className="w-5 h-5" style={{ color: item.color }} />
                   </div>
                   <h3 className="font-semibold text-sm mb-0.5 group-hover:text-[hsl(var(--rdm-amber))] transition-colors" style={{ fontFamily: "var(--font-display)" }}>{item.label}</h3>
@@ -78,6 +99,71 @@ const Index = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* SECTION A: Realito te guía */}
+      <section className="py-20 px-6 md:px-16 lg:px-24 bg-[hsl(220_30%_8%)] text-white overflow-hidden relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(220_30%_5%)] to-transparent opacity-80" />
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-center gap-4 mb-12">
+            <div className="w-12 h-12 rounded-full bg-[hsl(var(--rdm-amber)/0.2)] border border-[hsl(var(--rdm-amber)/0.5)] flex items-center justify-center shrink-0">
+               <img src={realitoCultura} alt="Realito Icon" className="w-8 h-8 object-contain" />
+            </div>
+            <div>
+              <p className="text-xs tracking-[0.2em] uppercase text-[hsl(var(--rdm-amber))]" style={{ fontFamily: "var(--font-body)" }}>Tu guía local</p>
+              <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--font-display)" }}>Realito te invita a descubrir</h2>
+            </div>
+          </motion.div>
+          
+          <div className="flex overflow-x-auto pb-8 -mx-6 px-6 gap-6 snap-x hide-scrollbar">
+            {REALITOS.map((r, i) => (
+              <motion.div 
+                key={r.cat}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="snap-start shrink-0 w-[240px] md:w-[280px]"
+              >
+                <Link to={r.to} className="block group h-full">
+                  <div className="relative h-[320px] rounded-2xl overflow-hidden bg-gradient-to-t from-black/80 to-[hsl(220_30%_12%)] border border-white/10 group-hover:border-[hsl(var(--rdm-amber)/0.6)] transition-colors shadow-xl">
+                    <img src={r.img} alt={r.cat} className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 object-contain origin-bottom group-hover:scale-110 transition-transform duration-500" />
+                    <div className="absolute top-0 left-0 right-0 p-5 bg-gradient-to-b from-black/80 to-transparent">
+                      <h3 className="text-xl font-bold text-white group-hover:text-[hsl(var(--rdm-amber))] transition-colors" style={{ fontFamily: "var(--font-display)" }}>{r.cat}</h3>
+                      <p className="text-xs text-white/70" style={{ fontFamily: "var(--font-body)" }}>{r.sub}</p>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION B: TAMV 92.5 Radio promo strip */}
+      <section className="relative h-[240px] md:h-[300px] w-full overflow-hidden flex items-center px-6 md:px-16 lg:px-24">
+        <motion.div 
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+          className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${tamvBanner})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[hsl(220_30%_5%)] via-[hsl(220_30%_6%/0.8)] to-transparent" />
+        <div className="relative z-10 max-w-4xl">
+          <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/50 mb-4 backdrop-blur-sm">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-red-100">En Vivo</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-3 drop-shadow-md" style={{ fontFamily: "var(--font-display)" }}>
+              TAMV 92.5 Radio Digital
+            </h2>
+            <p className="text-sm md:text-base text-white/80 mb-6 drop-shadow-md" style={{ fontFamily: "var(--font-body)" }}>
+              La voz de Real del Monte · Escucha la magia de la sierra
+            </p>
+            <Link to="/musica" className="inline-flex items-center gap-2 bg-[hsl(var(--rdm-amber))] text-white px-6 py-3 rounded-full font-semibold text-sm hover:scale-105 transition-transform shadow-[0_0_20px_hsla(43,80%,55%,0.3)]" style={{ fontFamily: "var(--font-body)" }}>
+              <Radio className="w-4 h-4" /> Sintonizar ahora
+            </Link>
+          </motion.div>
         </div>
       </section>
 

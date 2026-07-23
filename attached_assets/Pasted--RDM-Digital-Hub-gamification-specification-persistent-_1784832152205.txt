@@ -1,0 +1,59 @@
+**RDM Digital Hub gamification specification:** persistent **phygital territorial progression system** for Real del Monte, implemented as a stateful, event-driven, season-based game layer over the tourism platform. The gameplay loop is **geo-discovery → interaction/checkout → validation → reward minting → XP accrual → rank progression → mission unlock → seasonal leaderboard placement**.
+
+**Core domain model**
+- **Player**: authenticated Supabase user with persistent profile, avatar, rank, season stats, inventory, quest state, and reputation.
+- **POI**: geolocated point of interest with type, faction, access rules, reward profile, and mission hooks.
+- **Commerce**: merchant entity with category, membership tier, QR identity, validation policy, and reward multipliers.
+- **Quest**: narrative or transactional objective with prerequisites, completion conditions, reward bundle, and expiry.
+- **Reward**: XP, RDM Points, cosmetic loot, badge, access token, or leaderboard bonus.
+- **Season**: 90-day progression window with leaderboard snapshot, decay/reset rules, and festival settlement.
+- **Inventory**: persistent collection of cosmetics, badges, skins, titles, and unlock flags.
+- **Event**: validated domain event such as check-in, purchase, quest completion, streak bonus, rank-up, or season close.
+
+**Gameplay mechanics**
+- **Exploration layer**: users traverse Real del Monte via map-based geofencing and POI discovery.
+- **Validation layer**: actions are confirmed by QR scan, geofence proximity, or signed merchant event, with antifraud and idempotency constraints.
+- **Progression layer**: each validated action emits XP and RDM Points, updates player state, and advances a nonlinear level curve.
+- **Quest layer**: missions are structured as narrative chains, visit sequences, thematic routes, or merchant-linked objectives.
+- **Reward layer**: completions grant deterministic and probabilistic outputs, including cosmetics, badges, seasonal bonuses, and access unlocks.
+- **Ranking layer**: seasonal leaderboard is computed from weighted XP, mission score, merchant diversity, streaks, and contribution metrics.
+
+**Progression schema**
+- **Rank tiers**: `explorer`, `chronicler`, `legendary_miner`, `guardian_of_the_town`.
+- **Leveling**: XP-based, monotonic, with increasing marginal cost per level and milestone unlocks.
+- **Currency**: RDM Points as soft currency for cosmetic or access unlocks.
+- **Streaks**: consecutive validated sessions, check-ins, or purchases amplify reward coefficients.
+- **Cosmetics**: avatar skins, titles, auras, map halos, particles, and seasonal insignias.
+- **Seasonal logic**: every 90 days the leaderboard is frozen, settlement rewards are emitted, and a new season starts with partial persistence.
+
+**System surfaces**
+- **Map view**: POI discovery, quest markers, merchant halos, and geolocation feedback.
+- **Profile view**: level, rank, XP, RDM Points, quest completion, inventory, and season stats.
+- **Quest hub**: mission catalog, prerequisites, progression states, and reward previews.
+- **Leaderboard**: seasonal ranking, score breakdown, and event contributions.
+- **Merchant panel**: QR generation, validation status, reward policy, and player throughput.
+- **Membership layer**: premium access, bonus multipliers, exclusive quests, and gated rewards.
+
+**Backend event contract**
+- `player.registered`
+- `poi.discovered`
+- `merchant.checked_in`
+- `purchase.validated`
+- `quest.started`
+- `quest.completed`
+- `reward.granted`
+- `xp.awarded`
+- `level.up`
+- `rank.promoted`
+- `season.closed`
+- `leaderboard.snapshot`
+
+**Operational rules**
+- All reward issuance must be **server-authoritative**.
+- All state transitions must be **idempotent** and **auditable**.
+- All merchant interactions must be **signed, validated, and antifraud-checked**.
+- All player progression must be **persistent across sessions** and **season-aware**.
+- All leaderboard computations must be **deterministic** and **replayable**.
+
+**Design intent**
+This is **not** a casual minigame. It is a **territorial tourism RPG-lite with cooperative competition, persistent progression, geospatial interaction, and seasonal reward economics**, built to convert real-world movement and local commerce into structured gameplay.

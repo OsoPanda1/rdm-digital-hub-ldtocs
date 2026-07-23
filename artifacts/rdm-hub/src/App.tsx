@@ -132,6 +132,10 @@ const Perfil = lazy(() => import('./pages/Perfil'))
 const Leaderboard = lazy(() => import('./pages/Leaderboard'))
 const TerritorialDashboard = lazy(() => import('./pages/TerritorialDashboard'))
 
+// ===== Gamification & Marketing =====
+const GamificationPortal = lazy(() => import('./pages/GamificationPortal'))
+const AdminMarketing = lazy(() => import('./pages/admin/Marketing'))
+
 // ===== Absorbed from rdm-digital-soul / real-del-monte-digital =====
 const Wiki = lazy(() => import('./pages/Wiki'))
 const ControlCenter = lazy(() => import('./pages/ControlCenter'))
@@ -307,6 +311,7 @@ const AnimatedRoutes = () => {
           <Route path="/reglamento" element={<RouteErrorBoundary route="/reglamento"><Reglamento /></RouteErrorBoundary>} />
           <Route path="/admin" element={<RouteErrorBoundary route="/admin"><AdminDashboard /></RouteErrorBoundary>} />
           <Route path="/admin/musica" element={<RouteErrorBoundary route="/admin/musica"><AdminMusica /></RouteErrorBoundary>} />
+          <Route path="/admin/marketing" element={<RouteErrorBoundary route="/admin/marketing"><AdminMarketing /></RouteErrorBoundary>} />
           <Route path="/musica" element={<RouteErrorBoundary route="/musica"><Musica /></RouteErrorBoundary>} />
           <Route path="/dichos" element={<RouteErrorBoundary route="/dichos"><Dichos /></RouteErrorBoundary>} />
           <Route path="/dichos-mineros" element={<RouteErrorBoundary route="/dichos-mineros"><Dichos /></RouteErrorBoundary>} />
@@ -379,6 +384,7 @@ const AnimatedRoutes = () => {
           <Route path="/perfil" element={<RouteErrorBoundary route="/perfil"><Perfil /></RouteErrorBoundary>} />
           <Route path="/leaderboard" element={<RouteErrorBoundary route="/leaderboard"><Leaderboard /></RouteErrorBoundary>} />
           <Route path="/ranking" element={<RouteErrorBoundary route="/ranking"><Leaderboard /></RouteErrorBoundary>} />
+          <Route path="/gamificacion" element={<RouteErrorBoundary route="/gamificacion"><GamificationPortal /></RouteErrorBoundary>} />
           {/* === Absorbed routes === */}
           <Route path="/wiki" element={<RouteErrorBoundary route="/wiki"><Wiki /></RouteErrorBoundary>} />
           <Route path="/control" element={<RouteErrorBoundary route="/control"><ControlCenter /></RouteErrorBoundary>} />

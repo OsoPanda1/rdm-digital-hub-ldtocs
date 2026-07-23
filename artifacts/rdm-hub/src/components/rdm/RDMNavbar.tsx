@@ -33,9 +33,11 @@ import {
   Star,
   Car,
   Crown,
+  Zap,
 } from "lucide-react";
 import { useRDMAuth } from "@/contexts/RDMAuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { GamificationHUD } from "@/components/rdm/GamificationHUD";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -90,6 +92,7 @@ const MEGA_CATEGORIES: MegaCategory[] = [
       { path: "/comunidad",          label: "Foro",                icon: MessageSquare, desc: "Publicaciones y noticias" },
       { path: "/musica",             label: "Música RDM",          icon: Music2,        desc: "Escucha y descarga" },
       { path: "/directorio",         label: "Directorio",          icon: Store,         desc: "Negocios locales" },
+      { path: "/gamificacion",        label: "Gamificación",        icon: Zap,           desc: "XP, rangos y misiones" },
       { path: "/leaderboard",        label: "Tabla de Honor",      icon: Trophy,        desc: "Ranking de exploradores" },
       { path: "/perfil",             label: "Mi Perfil",           icon: UserIcon,      desc: "Puntos y logros" },
       { path: "/registro-comercio",  label: "Registra tu Negocio", icon: ShoppingBag,   desc: "Únete al directorio" },
@@ -361,6 +364,11 @@ export function RDMNavbar() {
 
           {/* ── Right actions ── */}
           <div className="flex items-center gap-2 shrink-0">
+            {/* Gamification HUD */}
+            <div className="hidden lg:block">
+              <GamificationHUD />
+            </div>
+
             {/* Donar CTA */}
             <Link
               to="/donar"
