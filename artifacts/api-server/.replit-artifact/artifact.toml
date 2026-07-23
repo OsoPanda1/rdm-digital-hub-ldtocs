@@ -1,16 +1,31 @@
 kind = "api"
-previewPath = "/api" # TODO - should be excluded from preview in the first place
-title = "API Server"
-version = "1.0.0"
+title = "RDM API Server"
+version = "2.0.0"
 id = "3B4_FFSkEVBkAeYMFRJ2e"
 
+# El API Server expone la capa de servicios del RDM Digital Hub.
+# Todas las federaciones (Isabella, Phygital, Monetización, Telemetría, etc.)
+# deben hablar con este módulo usando rutas bien definidas y autenticadas.
+
+previewPath = "/api" # Vista base del API; debe exponer doc mínima o status.
+
 [[services]]
+name = "RDM API Server"
 localPort = 8080
-name = "API Server"
 paths = ["/api"]
+
+# --- ENTORNO DE DESARROLLO ---
 
 [services.development]
 run = "pnpm --filter @workspace/api-server run dev"
+
+[services.development.env]
+NODE_ENV = "development"
+PORT = "8080"
+RDM_FEDERATION_MODE = "heptafederado-dev"
+RDM_SECURITY_PROFILE = "dev-relaxed"
+
+# --- ENTORNO DE PRODUCCIÓN ---
 
 [services.production]
 
@@ -19,14 +34,32 @@ args = ["pnpm", "--filter", "@workspace/api-server", "run", "build"]
 
 [services.production.build.env]
 NODE_ENV = "production"
+RDM_FEDERATION_MODE = "heptafederado-prod"
+RDM_SECURITY_PROFILE = "prod-hardened"
 
 [services.production.run]
-# we don't run through pnpm to make startup faster in production
+# Arranque directo con node para minimizar overhead.
 args = ["node", "--enable-source-maps", "artifacts/api-server/dist/index.mjs"]
 
 [services.production.run.env]
 PORT = "8080"
 NODE_ENV = "production"
+RDM_FEDERATION_MODE = "heptafederado-prod"
+RDM_SECURITY_PROFILE = "prod-hardened"
+# Claves y secretos sensibles (DB, JWT, Stripe, Whop, Supabase, etc.)
+# se gestionan exclusivamente desde el panel de Secrets de Replit.
 
-[services.production.health.startup]
-path = "/api/healthz"
+# --- HEALTH CHECKS Y FILTROS BÁSICOS ---
+
+[services.production.health]
+startup.path = "/api/healthz"
+startup.timeoutSeconds = 5
+startup.expectedStatus = 200
+
+periodic.path = "/api/healthz"
+periodic.intervalSeconds = 30
+periodic.expectedStatus = 200
+
+# Filtro de acceso al API:
+# Este módulo NO debe exponer rutas críticas sin autenticación ni rate limiting.
+# Todas las rutas bajo /api/private/* requieren JWT válido y se protegen por middleware.
