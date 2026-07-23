@@ -305,6 +305,7 @@ const Tenochtitlan = () => {
 `}</pre>
         </section>
       </div>
+      </div>
     </RDMLayout>
   );
 };

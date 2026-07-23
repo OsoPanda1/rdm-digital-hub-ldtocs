@@ -124,14 +124,14 @@ Build:            esbuild (CJS bundle), TypeScript estricto
 ┌─────────────────────────────────────┬──────────┬──────────────────────────┐
 │ Componente                         │  Avance  │  Estado                  │
 ├─────────────────────────────────────┼──────────┼──────────────────────────┤
-│ Pages implementadas                │  110     │  todas en App.tsx        │
-│ Componentes activos                │  40+     │  +60 UI shadcn           │
-│ Hooks activos                      │  20      │  barrel file removed     │
-│ Archivos de datos                  │  15      │  limpios, sin duplicados │
-│ Tests                              │  0       │  eliminados (eran placeholder)│
-│ Coverage                           │  0%      │  Sin CI/CD de tests      │
+│ Pages implementadas                │  121     │  110 únicas en App.tsx   │
+│ Componentes activos                │  85+     │  +60 UI shadcn           │
+│ Hooks activos                      │  24      │  22 importados           │
+│ Archivos de datos                  │  28      │  13 muertos (data/imported)│
+│ Tests                              │  6       │  Críticamente bajo       │
+│ Coverage                           │  <1%     │  Sin CI/CD de tests      │
 │ TypeScript strict                  │  Parcial  │  20 as any, 29 :any     │
-│ Dead code eliminado                │  ~120+   │  Fase 1 completada       │
+│ Build (tsc --noEmit)               │  No probado │ Pendiente en Replit   │
 └─────────────────────────────────────┴──────────┴──────────────────────────┘
 ```
 
@@ -147,13 +147,13 @@ Build:            esbuild (CJS bundle), TypeScript estricto
 | **Mapas** | 75% | Visualización funciona, falta edición territorial y datos en vivo |
 | **Federación** | 15% | Arquitectura definida, implementación básica, no operativa |
 | **Gamificación** | 25% | Puntos y quests definidos, UI parcial, sin engine operativo |
-| **Seguridad** | 25% | Archivos muertos eliminados, Post-quantum mantiene estructura |
-| **Pruebas** | 0% | Tests placeholder eliminados en Fase 1 |
-| **Documentación** | 30% | Community standards + RFC-0001 completados |
+| **Seguridad** | 30% | Post-quantum definido, sanitize listo, falta integración en APIs |
+| **Pruebas** | 3% | Solo 6 tests, sin coverage, sin CI |
+| **Documentación** | 15% | README nuevo, replit.md pendiente, falta documentación técnica |
 | **DevOps/CI** | 10% | Replit autoscale configurado, sin CI/CD pipeline fuera de Replit |
 | **Producción estable** | 35% | Despliegue en Replit, sin dominio propio, sin SSL dedicado |
 
-**Promedio de madurez general: ~42%** (+4% post-Fase 1)
+**Promedio de madurez general: ~38%**
 
 ---
 
@@ -163,19 +163,19 @@ Build:            esbuild (CJS bundle), TypeScript estricto
 
 | Prioridad | Ítem | Impacto | Archivos |
 |-----------|------|---------|----------|
-| ~~🔴 **CRÍTICO** 20 archivos Next.js~~ | ✅ Eliminado Fase 1 | — | — |
-| ~~🔴 **CRÍTICO** 4 archivos TanStack Start~~ | ✅ Eliminado Fase 1 | — | — |
-| 🔴 **CRÍTICO** | 7 unguarded Supabase env vars | Runtime error si faltan variables | `RealitoBubble.tsx`, `RealitoOrb.tsx`, `RealitoChat.tsx`, `RealitoAI.tsx`, `useIsabella.ts` (+2 legacy TTS) |
-| ~~🟠 **ALTO** ~60+ componentes muertos~~ | ✅ Eliminado Fase 1 | — | — |
-| ~~🟠 **ALTO** 7 páginas huérfanas~~ | ✅ Eliminado Fase 1 | — | — |
-| ~~🟠 **ALTO** 13 archivos data/imported/ .ts~~ | ✅ Eliminado Fase 1 | — | — |
-| ~~🟠 **ALTO** 6 layouts diferentes~~ | ✅ Consolidado a 1 (RDMLayout) | — | — |
-| ~~🟡 **MEDIO** 9 pares duplicados~~ | ✅ Mayoría eliminada Fase 1 | — | — |
+| 🔴 **CRÍTICO** | 20 archivos Next.js (`src/app/api/`) muertos | Confusión, peso muerto, posible builds rotos | `src/app/api/*/route.ts` |
+| 🔴 **CRÍTICO** | 4 archivos importan `@tanstack/react-start` (eliminado) | Build falla si se incluyen en tsconfig | `auth-middleware.ts`, `auth-attacher.ts`, `example.functions.ts`, `telemetry.functions.ts` |
+| 🔴 **CRÍTICO** | 7 unguarded Supabase env vars | Runtime error si faltan variables | `IsabellaChat.tsx`, `RealitoBubble.tsx`, `RealitoOrb.tsx`, `RealitoChat.tsx`, `RealitoAI.tsx`, `useIsabella.ts`, TTS API route |
+| 🟠 **ALTO** | ~60+ componentes nunca importados | Dead code, peso muerto en bundle | Componentes root `/components/*` |
+| 🟠 **ALTO** | 7 páginas huérfanas no enlazadas desde App.tsx | Contenido invisible | `ComunidadPage.tsx`, `Documentation.tsx`, `MapaVivo.tsx`, `Membership.tsx`, `RegistrarComercio.tsx`, `WikiTAMV.tsx`, `not-found.tsx` |
+| 🟠 **ALTO** | 13 archivos `src/data/imported/*.ts` nunca importados | Datos duplicados, inconsistencia | Todo `data/imported/` |
+| 🟠 **ALTO** | 6 sistemas de layout diferentes | Complejidad arquitectónica innecesaria | `PublicLayout`, `RdmLayout`, `MainLayout`, `RDMLayout`, `AppShell`, `SovereignPageShell` |
+| 🟡 **MEDIO** | 9 pares de componentes duplicados | Código redundante, mantenimiento duplicado | `UnifiedMap`, `IsabellaVoiceEngine`, `IsabellaChat`, `BusinessCard`, `PostCard`, `HeroSection`, `Footer`, etc. |
 | 🟡 **MEDIO** | 20 `as any` + 29 `: any` type annotations | Type safety erosionado | Dispersos en 15+ archivos |
 | 🟡 **MEDIO** | `@ts-nocheck` en sentry.ts | Tipo bypass total | `sentry.ts` |
 | 🟡 **MEDIO** | wouter en catálogo pero no usado | Dependencia innecesaria | `pnpm-workspace.yaml` |
-| ~~🟢 **BAJO** 5 security files~~ | ✅ Eliminados Fase 1 | — | — |
-| ~~🟢 **BAJO** 2 hooks nunca importados~~ | ✅ Eliminados Fase 1 | — | — |
+| 🟢 **BAJO** | 5 archivos de seguridad nunca importados | Código diseñado pero no integrado | `security/` (5 files) |
+| 🟢 **BAJO** | 2 hooks nunca importados | Funcionalidad no expuesta | `use-isabella-voice-engine.ts`, `use-gamification.ts` |
 | 🟢 **BAJO** | ~51 override de plataformas esbuild en pnpm-workspace | Mantenimiento excesivo | `pnpm-workspace.yaml` (lines 77-157) |
 | 🟢 **BAJO** | Nombre de archivo con paréntesis y espacios | Potenciales issues en Linux | `adicted_toyou).mp3`, `Legado (1).mp3`, `rdmintro (2).mp3` |
 
@@ -200,37 +200,33 @@ Build:            esbuild (CJS bundle), TypeScript estricto
 ### Resumen de Salud del Proyecto
 
 ```
-Salud General:        🟡 60/100 — "Fase 1 completada, estabilizando"
-Código activo:        🟢 90% del código es funcional
-Dead code:            🟢 ~5% (residual, Fase 1 completada)
+Salud General:        🟡 45/100 — "En rehabilitación activa"
+Código activo:        🟢 70% del código es funcional
+Dead code:            🔴 ~20% (est. 100+ archivos muertos)
 Type Safety:          🟡 ~70% tipado, 30% any/bypass
-Test Coverage:        🔴 0% (tests placeholder eliminados)
-Documentación:        🟡 30% cubierto (community standards + RFC-0001)
+Test Coverage:        🔴 <1% (emergencia)
+Documentación:        🔴 15% cubierto
 Producción:           🟡 35% — funciona en Replit pero no en producción real
-Mantenibilidad:       🟢 Alta — arquitectura limpia, un solo layout
+Mantenibilidad:       🟡 Media — requiere refactor fase 1
 ```
 
 ---
 
 ## Roadmap
 
-### Fase 1: Sanitización (Completada — 100%)
+### Fase 1: Sanitización (En Progreso — 70%)
 - [x] Eliminar TanStack Router, routes/, start.ts, server.ts
 - [x] Eliminar componentes site/ (Navbar, Footer, ModulePortal, PageHero)
 - [x] Eliminar Navbar.tsx, Footer.tsx, FooterSection.tsx, BrumaFooter.tsx
 - [x] Unificar layout a RDMLayout (12 páginas + 2 layouts)
 - [x] Limpiar referencias a Lovable, Vercel, Netlify, Cloudflare
-- [x] Eliminar `src/app/api/` (20 archivos Next.js muertos)
-- [x] Eliminar 4 archivos TanStack Start residuales
-- [x] Eliminar ~60+ componentes nunca importados
-- [x] Eliminar 13 archivos data/imported/ .ts duplicados (+ otros 3 data/)
-- [x] Eliminar 2 layouts muertos (PublicLayout, RdmLayout)
-- [x] Eliminar 7 páginas huérfanas
-- [x] Eliminar dead code: lib/agent, lib/\_\_tests\_\_, federaciones/, infra/, realito/, security/ (5/7), hooks (2), test/
-- [x] Eliminar pares duplicados: components/isabella/, business/, packages/, map/TwinNodeVisualizer, metaverse/TAMVTrixField
-- [x] Consolidar layouts a 1 (RDMLayout activo)
-- [x] Integrar RFC-0001 / Community Standards
 - [x] Commit y push a main
+- [ ] Eliminar `src/app/api/` (20 archivos Next.js muertos) ⬅️ **SIGUIENTE**
+- [ ] Eliminar 4 archivos TanStack Start residuales
+- [ ] Eliminar ~60+ componentes nunca importados
+- [ ] Eliminar 13 archivos data/imported/ duplicados
+- [ ] Fusionar 9 pares de componentes duplicados
+- [ ] Consolidar 6 layouts a 1 (RDMLayout)
 
 ### Fase 2: Estabilización Técnica (Q3 2026)
 - [ ] Corregir 7 unguarded Supabase env vars

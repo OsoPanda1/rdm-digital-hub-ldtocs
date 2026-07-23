@@ -296,7 +296,7 @@ const QuienesSomos = () => {
           </motion.div>
         </div>
       </div>
-    </section>
+      </div>
 
     <RealitoOrb />
     </RDMLayout>
