@@ -1,16 +1,20 @@
 kind = "api"
-title = "RDM API Server"
-version = "2.0.0"
+title = "RDM Heptafederation API Gateway"
+version = "3.0.0"
 id = "3B4_FFSkEVBkAeYMFRJ2e"
 
-# El API Server expone la capa de servicios del RDM Digital Hub.
-# Todas las federaciones (Isabella, Phygital, Monetización, Telemetría, etc.)
-# deben hablar con este módulo usando rutas bien definidas y autenticadas.
+# El API Gateway del RDM Digital Hub expone las federaciones:
+# - Territorial (territory / twins / yun / unified)
+# - IA (Isabella core + guardian)
+# - Gamificación y música (game engines, cronicas, quests)
+# - Monetización (Stripe, Whop, B2B)
+# - Telemetría y seguridad (metrics, PQC, audit)
+# Este servicio es el punto de entrada único para el frontend RDM Hub y para agentes externos.
 
-previewPath = "/api" # Vista base del API; debe exponer doc mínima o status.
+previewPath = "/api" # Debe servir un endpoint público mínimo (status o doc base).
 
 [[services]]
-name = "RDM API Server"
+name = "RDM API Gateway"
 localPort = 8080
 paths = ["/api"]
 
@@ -24,6 +28,7 @@ NODE_ENV = "development"
 PORT = "8080"
 RDM_FEDERATION_MODE = "heptafederado-dev"
 RDM_SECURITY_PROFILE = "dev-relaxed"
+RDM_OBSERVABILITY_MODE = "verbose"
 
 # --- ENTORNO DE PRODUCCIÓN ---
 
@@ -36,9 +41,10 @@ args = ["pnpm", "--filter", "@workspace/api-server", "run", "build"]
 NODE_ENV = "production"
 RDM_FEDERATION_MODE = "heptafederado-prod"
 RDM_SECURITY_PROFILE = "prod-hardened"
+RDM_OBSERVABILITY_MODE = "balanced"
 
 [services.production.run]
-# Arranque directo con node para minimizar overhead.
+# Arranque directo con node para minimizar overhead y tiempos de startup.
 args = ["node", "--enable-source-maps", "artifacts/api-server/dist/index.mjs"]
 
 [services.production.run.env]
@@ -46,8 +52,9 @@ PORT = "8080"
 NODE_ENV = "production"
 RDM_FEDERATION_MODE = "heptafederado-prod"
 RDM_SECURITY_PROFILE = "prod-hardened"
-# Claves y secretos sensibles (DB, JWT, Stripe, Whop, Supabase, etc.)
-# se gestionan exclusivamente desde el panel de Secrets de Replit.
+RDM_OBSERVABILITY_MODE = "balanced"
+# Secrets de DB, JWT, Stripe, Whop, Supabase, PQC, etc. se gestionan desde Secrets de Replit.
+# No deben estar hardcodeados aquí.
 
 # --- HEALTH CHECKS Y FILTROS BÁSICOS ---
 
@@ -60,6 +67,8 @@ periodic.path = "/api/healthz"
 periodic.intervalSeconds = 30
 periodic.expectedStatus = 200
 
-# Filtro de acceso al API:
-# Este módulo NO debe exponer rutas críticas sin autenticación ni rate limiting.
-# Todas las rutas bajo /api/private/* requieren JWT válido y se protegen por middleware.
+# Convenciones:
+# - /api/healthz: endpoint público mínimo, sin auth, sin acceso a DB pesada.
+# - /api/public/*: lectura controlada de contenido (ej. algunos datos de territorio).
+# - /api/private/*: requiere autenticación (RDMAuthContext, JWT, Supabase Auth).
+# - /api/system/*: reservado para internos (telemetría, seguridad, admin); no exponer a clientes normales.
