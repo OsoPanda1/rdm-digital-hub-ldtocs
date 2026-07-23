@@ -1,0 +1,86 @@
+name: Issue Triage & Labeling
+
+on:
+  issues:
+    types: [opened, edited]
+
+# Solo permite escritura de labels y comentarios, no más
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  triage:
+    name: Clasificación y hardening de issues
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validar repositorio de origen
+        id: repo-check
+        run: |
+          OWNER="${{ github.repository_owner }}"
+          REPO="${{ github.event.repository.name }}"
+
+          echo "Repository: $OWNER/$REPO"
+
+          # Si quisieras limitar a una org específica, puedes hacer:
+          if [ "$OWNER" != "OsoPanda1" ] && [ "$OWNER" != "RDM-Digital" ]; then
+            echo "Repositorio no autorizado para este flujo de triage. Saliendo."
+            echo "authorized=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "authorized=true" >> $GITHUB_OUTPUT
+
+      - name: Determinar tipo de issue por título
+        id: classify
+        if: steps.repo-check.outputs.authorized == 'true'
+        run: |
+          TITLE="${{ github.event.issue.title }}"
+          LABELS=""
+          SECURITY_LABELS=""
+
+          # Normalizar título a mayúsculas para comparación segura
+          NTITLE="$(echo "$TITLE" | tr '[:lower:]' '[:upper:]')"
+
+          echo "Issue title: $TITLE"
+          echo "Normalized title: $NTITLE"
+
+          # Clasificación básica por prefijo / token
+          if echo "$NTITLE" | grep -q "\[BUG\]"; then
+            LABELS="$LABELS bug"
+          fi
+
+          if echo "$NTITLE" | grep -q "\[FEATURE\]"; then
+            LABELS="$LABELS enhancement"
+          fi
+
+          if echo "$NTITLE" | grep -q "\[SECURITY\]"; then
+            LABELS="$LABELS security"
+            SECURITY_LABELS="$SECURITY_LABELS needs-triage security-review"
+          fi
+
+          if echo "$NTITLE" | grep -q "\[ARCH\]"; then
+            LABELS="$LABELS architecture md-x4"
+          fi
+
+          # Nunca confiar solo en el título: siempre aseguramos needs-triage
+          LABELS="$LABELS needs-triage"
+
+          # Exportar resultados
+          echo "labels=$LABELS" >> $GITHUB_OUTPUT
+          echo "security_labels=$SECURITY_LABELS" >> $GITHUB_OUTPUT
+
+      - name: Aplicar etiquetas base
+        if: steps.repo-check.outputs.authorized == 'true'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ github.token }}
+          labels: ${{ steps.classify.outputs.labels }}
+
+      - name: Aplicar etiquetas adicionales para issues de seguridad
+        if: steps.repo-check.outputs.authorized == 'true' && steps.classify.outputs.security_labels != ''
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ github.token }}
+          labels: ${{ steps.classify.outputs.security_labels }}
