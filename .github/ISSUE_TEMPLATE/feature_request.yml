@@ -1,0 +1,66 @@
+name: Solicitud de Funcionalidad
+description: Sugiere una idea para el proyecto
+title: "[FEATURE] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por sugerir una mejora. Cuanto más detalle, mejor podremos evaluarla.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema Relacionado
+      description: ¿Hay algún problema que esta funcionalidad resolvería?
+      placeholder: "Siempre me frustra cuando..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solución Propuesta
+      description: Describe la funcionalidad que te gustaría ver.
+      placeholder: "Me gustaría que hubiera un botón que..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas Consideradas
+      description: ¿Has considerado otras soluciones o workarounds?
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Alcance
+      description: ¿A qué área afecta esta funcionalidad?
+      options:
+        - Portal Turístico
+        - Mapa Interactivo
+        - Isabella AI
+        - Gamificación
+        - Membresías / Pagos
+        - Comercios / Directorio
+        - Autenticación
+        - Infraestructura / DevOps
+        - Documentación
+        - Otro
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto Adicional
+      description: Mockups, capturas de pantalla, o cualquier otro contexto útil.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Verificaciones
+      options:
+        - label: He verificado que no existe una solicitud similar
+          required: true
+        - label: He descrito claramente el problema y la solución
+          required: true

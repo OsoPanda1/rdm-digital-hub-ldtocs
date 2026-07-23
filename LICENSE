@@ -1,0 +1,46 @@
+# MIT License — Capa de Documentación y Componentes Abiertos
+## Parte del Marco de Licenciamiento Híbrido TAMV Online Network™
+
+MIT License — Copyright (c) 2026 RDM Digital · OsoPanda1 · Edwin Oswaldo Castillo Trejo
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+**IMPORTANTE**: Este proyecto opera bajo un **régimen de licenciamiento híbrido por capas**.
+La licencia MIT aplica exclusivamente a:
+- Documentación pública
+- Componentes marcados como KÓRIMA
+- Contenido científico indexado bajo DOI/FAIR
+
+El resto del ecosistema está cubierto por licencias específicas más restrictivas:
+
+| Régimen | Archivo | Aplica a |
+|---------|---------|----------|
+| **TAMV‑PRCL v1.0** (Propietario) | [LICENSE-PRCL.md](./LICENSE-PRCL.md) | `src/core/`, `src/kernel/`, `src/quantum/` |
+| **TAMV‑EOL v1.0** (Ética) | [LICENSE-EOL.md](./LICENSE-EOL.md) | `src/isabella/` (Isabella Villaseñor AI™) |
+| **TAMV‑KÓRIMA** (Reciprocidad) | [LICENSE-KORIMA.md](./LICENSE-KORIMA.md) | `src/connect/`, `src/skills/` |
+| **DPA** (Soberanía de datos) | [DATA-SOVEREIGNTY-DPA.md](./DATA-SOVEREIGNTY-DPA.md) | Datos personales y territoriales |
+
+**Documento rector**: [RFC-0001-MANIFEST.md](./RFC-0001-MANIFEST.md) — Manifiesto de Licenciamiento Híbrido, Estatuto Constitutivo y Blindaje Jurídico-Técnico del Nodo Cero.
+
+Al usar, copiar, modificar o distribuir cualquier parte de este software,
+aceptas los términos de la licencia aplicable a cada componente. El uso no
+autorizado de componentes bajo TAMV‑PRCL o TAMV‑EOL puede resultar en
+acciones legales, incluyendo reclamaciones por violación de secreto industrial.

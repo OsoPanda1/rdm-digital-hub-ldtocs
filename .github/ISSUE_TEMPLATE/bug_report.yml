@@ -1,0 +1,85 @@
+name: Reporte de Bug
+description: Reporta un error para ayudarnos a mejorar
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por tomar el tiempo de reportar este bug. Por favor llena la siguiente información.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción del Bug
+      description: Describe clara y concisamente el error.
+      placeholder: Al hacer clic en X, la página se queda en blanco...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Pasos para Reproducir
+      description: Pasos exactos para reproducir el error.
+      placeholder: |
+        1. Ir a '...'
+        2. Hacer clic en '...'
+        3. Scroll hasta '...'
+        4. Ver el error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamiento Esperado
+      description: ¿Qué esperabas que pasara?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Comportamiento Actual
+      description: ¿Qué pasó realmente?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Entorno
+      description: ¿Dónde ocurre el error?
+      options:
+        - Replit (producción)
+        - Replit (preview)
+        - Local (desarrollo)
+        - Otro
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Navegador
+      description: ¿Qué navegador usas?
+      placeholder: Chrome 120, Firefox 121, etc.
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Console Output
+      description: Si tienes errores de consola, pégarlos aquí.
+      render: shell
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Verificaciones
+      options:
+        - label: He verificado que no existe un issue similar abierto
+          required: true
+        - label: He incluido todos los pasos necesarios para reproducir
+          required: true
+        - label: He incluido logs de consola si están disponibles
