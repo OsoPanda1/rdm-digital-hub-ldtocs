@@ -1,19 +1,57 @@
-name: Reporte de Bug
-description: Reporta un error para ayudarnos a mejorar
-title: "[BUG] "
-labels: ["bug"]
+name: "Reporte de Bug"
+description: "Reporta un error en RDM Digital Hub para fortalecer la infraestructura territorial."
+title: "[BUG] <describe brevemente el problema>"
+labels: ["bug", "needs-triage"]
+assignees: []
 body:
   - type: markdown
     attributes:
       value: |
-        Gracias por tomar el tiempo de reportar este bug. Por favor llena la siguiente información.
+        Gracias por tomar el tiempo de reportar este bug en **RDM Digital Hub — LDTOCS (MD-X4)**.
+        Por favor completa la siguiente información de forma precisa. Mientras más contexto tengamos,
+        más rápido podremos reproducirlo y corregirlo.
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severidad del Bug
+      description: ¿Qué tan crítico es el impacto del bug?
+      options:
+        - Crítico (caída de sistema, corrupción/pérdida de datos, vulneración de soberanía)
+        - Alto (funcionalidad principal rota, impacto directo en producción)
+        - Medio (funcionalidad secundaria rota, workaround posible)
+        - Bajo (detalle visual, texto, micro-interacción)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: subsystem
+    attributes:
+      label: Subsistema / Módulo afectado
+      description: ¿En qué parte del sistema ocurre?
+      options:
+        - Frontend (RDM Hub SPA)
+        - Backend API (api-server / Express)
+        - Auth / Supabase
+        - Mapas / Leaflet
+        - Gamificación Phygital
+        - Isabella AI / Agents
+        - Federación YUN / Eventos
+        - Infraestructura Replit / Deploy
+        - Datos Territoriales / DPA
+        - Otro / No estoy seguro
+    validations:
+      required: true
 
   - type: textarea
     id: description
     attributes:
       label: Descripción del Bug
       description: Describe clara y concisamente el error.
-      placeholder: Al hacer clic en X, la página se queda en blanco...
+      placeholder: |
+        Ejemplo:
+        - Al hacer clic en "Iniciar Recorrido", el mapa deja de responder.
+        - La respuesta de /api/territory/places regresa 500 en producción.
     validations:
       required: true
 
@@ -21,12 +59,12 @@ body:
     id: steps
     attributes:
       label: Pasos para Reproducir
-      description: Pasos exactos para reproducir el error.
+      description: Lista paso a paso cómo reproducir el error.
       placeholder: |
         1. Ir a '...'
         2. Hacer clic en '...'
         3. Scroll hasta '...'
-        4. Ver el error
+        4. Ver el error (qué ves exactamente)
     validations:
       required: true
 
@@ -34,7 +72,11 @@ body:
     id: expected
     attributes:
       label: Comportamiento Esperado
-      description: ¿Qué esperabas que pasara?
+      description: ¿Qué esperabas que sucediera en lugar del error?
+      placeholder: |
+        Ejemplo:
+        - Esperaba que el mapa mostrara los POIs del territorio.
+        - Esperaba recibir status 200 con la lista de comercios.
     validations:
       required: true
 
@@ -42,7 +84,11 @@ body:
     id: actual
     attributes:
       label: Comportamiento Actual
-      description: ¿Qué pasó realmente?
+      description: ¿Qué está sucediendo realmente?
+      placeholder: |
+        Ejemplo:
+        - El mapa se queda en blanco y la consola muestra un error de JavaScript.
+        - La API responde 500 con mensaje "Internal Server Error".
     validations:
       required: true
 
@@ -53,33 +99,65 @@ body:
       description: ¿Dónde ocurre el error?
       options:
         - Replit (producción)
-        - Replit (preview)
+        - Replit (preview / branch temporal)
         - Local (desarrollo)
-        - Otro
+        - Otro / No estoy seguro
     validations:
       required: true
 
   - type: input
+    id: app_version
+    attributes:
+      label: Versión / Commit del Hub
+      description: Si conoces el commit o tag, inclúyelo (footer de la app o `git rev-parse HEAD`).
+      placeholder: 0.4.3-territorial-mdx4 / commit abcd1234
+
+  - type: input
     id: browser
     attributes:
-      label: Navegador
-      description: ¿Qué navegador usas?
-      placeholder: Chrome 120, Firefox 121, etc.
+      label: Navegador y versión
+      description: ¿Qué navegador y versión estás usando?
+      placeholder: Chrome 120, Firefox 121, Edge 120, Safari 17, etc.
+
+  - type: input
+    id: os
+    attributes:
+      label: Sistema Operativo
+      description: Sistema operativo donde se reproduce el bug.
+      placeholder: Windows 11, macOS 14, Ubuntu 22.04, Android 14, iOS 17, etc.
 
   - type: textarea
     id: logs
     attributes:
       label: Logs / Console Output
-      description: Si tienes errores de consola, pégarlos aquí.
+      description: Pega aquí cualquier error de consola, stack trace o respuesta de la API relacionada.
       render: shell
+      placeholder: |
+        Ejemplo:
+        [2026-07-23T12:34:56.789Z] ERROR territory:places - TypeError: Cannot read properties of undefined...
+    validations:
+      required: false
+
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Capturas de pantalla / Adjuntos
+      description: Si tienes capturas, GIFs o enlaces a grabaciones (Loom, etc.), descríbelos o añádelos aquí.
+      placeholder: |
+        - Screenshot: error-en-mapas.png
+        - Video: https://loom.com/...
 
   - type: checkboxes
     id: checks
     attributes:
-      label: Verificaciones
+      label: Verificaciones previas
+      description: Confirma estas verificaciones antes de enviar el bug.
       options:
         - label: He verificado que no existe un issue similar abierto
           required: true
-        - label: He incluido todos los pasos necesarios para reproducir
+        - label: He incluido todos los pasos necesarios para reproducir el bug
           required: true
-        - label: He incluido logs de consola si están disponibles
+        - label: He añadido logs de consola y/o respuestas de API si están disponibles
+          required: true
+        - label: He indicado claramente el entorno (Replit producción / preview / local)
+          required: true
