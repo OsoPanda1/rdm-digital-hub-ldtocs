@@ -1,8 +1,25 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
+
 contact_links:
-  - name: Discord / Comunidad
+  - name: Comunidad y Discusiones (RDM Digital Hub)
     url: https://github.com/OsoPanda1/rdm-digital-hub-ldtocs/discussions
-    about: Preguntas generales, discusiones y ayuda comunitaria
-  - name: Seguridad
+    about: Preguntas generales, ideas, feedback y diálogo comunitario sobre el territorio y la plataforma.
+
+  - name: Seguridad y Vulnerabilidades (Canal Oficial)
     url: https://github.com/OsoPanda1/rdm-digital-hub-ldtocs/security/advisories
-    about: Reportar vulnerabilidades de seguridad
+    about: Reportar vulnerabilidades de seguridad, problemas de soberanía de datos y cuestiones críticas de PQC/BookPI.
+
+  - name: Documentación Técnica y Arquitectura MD-X4
+    url: https://github.com/OsoPanda1/rdm-digital-hub-ldtocs/tree/main/docs
+    about: Consulta la documentación de arquitectura, federaciones TAMV, gamificación phygital y guías de contribución antes de abrir un issue.
+
+  - name: Estado de CI/CD y Deploy (Replit / GitHub Actions)
+    url: https://github.com/OsoPanda1/rdm-digital-hub-ldtocs/actions
+    about: Revisa el estado de los pipelines de CI/CD y despliegues antes de reportar fallos de infraestructura o build.
+
+- name: Colaboracion y Propuestas (TAMV ONLINE NETWOEK)
+    url: https://tamvonline-oficial.odoo.com
+    about: Contacto con la pagina web para desarrollo, colaboraciones, posibles contrataciones, o alianzas
+
+ 
+
