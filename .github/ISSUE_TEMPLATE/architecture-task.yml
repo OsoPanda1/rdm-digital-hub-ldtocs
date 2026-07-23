@@ -1,0 +1,103 @@
+name: "Tarea de Arquitectura MD-X4"
+description: "Seguimiento de tareas de arquitectura, refactorización y diseño sistémico en el kernel MD-X4."
+title: "[ARCH] <resumen de la tarea de arquitectura>"
+labels: ["architecture", "md-x4", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Este template está diseñado para tareas de arquitectura, diseño sistémico,
+        refactorización de módulos y decisiones estructurales en **TAMV MD-X4 / LDTOCS**.
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objetivo arquitectónico
+      description: Describe el objetivo de la tarea de arquitectura (qué se busca mejorar o cambiar).
+      placeholder: |
+        Ejemplo:
+        - Unificar manejo de contexto territorial en un módulo central.
+        - Refactorizar la capa de seguridad PQC para integrar BookPI.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Capa de arquitectura afectada
+      description: Selecciona la capa principal que aborda esta tarea.
+      options:
+        - Capa de Presentación (Frontend / RDM Hub)
+        - Capa de Dominio Territorial (Mapas, Gamificación, Rutas)
+        - Capa de Aplicación / Servicios (API Gateway, Orquestación)
+        - Capa de Datos (Supabase, DPA, BookPI)
+        - Capa de Infraestructura (Replit, CI/CD, Nix)
+        - Capa de Seguridad (PQC, Auth, Hardening)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: federation
+    attributes:
+      label: Federación TAMV relacionada
+      description: ¿Qué federación TAMV se ve más impactada por esta decisión arquitectónica?
+      options:
+        - F1: Identidad Soberana & Pasaportes Digitales
+        - F2: Patrimonio, Cultura & Memoria Colectiva
+        - F3: Turismo Inteligente & Redes Territoriales
+        - F4: Economía Local, Comercios & Protocolo Alamexa
+        - F5: Gemelos Digitales, Telemetría & Sensores
+        - F6: Inteligencia Colectiva (Isabella AI & Agents Core)
+        - F7: Resiliencia, Criptografía PQC & BookPI
+        - Multi-federación
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Alcance de la tarea
+      description: Define qué queda dentro y fuera del alcance de esta tarea.
+      placeholder: |
+        - Incluye: módulos afectados, repos, servicios.
+        - Excluye: funcionalidades que se abordarán en otras tareas.
+    validations:
+      required: true
+
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Entregables esperados
+      description: Lista los entregables (código, documentos, diagramas, decisiones).
+      placeholder: |
+        - PR de refactorización en /artifacts/api-server/src/...
+        - Actualización de ARCHITECTURE.md
+        - Diagrama Mermaid de flujo de eventos YUN
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Prioridad de arquitectura
+      description: Qué tan urgente/estratégica es esta tarea.
+      options:
+        - P0 (crítica para despliegues actuales o seguridad)
+        - P1 (alta, mejora sistémica clave)
+        - P2 (media, mejora importante a medio plazo)
+        - P3 (baja, optimización y limpieza)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Verificaciones
+      options:
+        - label: He revisado ARCHITECTURE.md y docs relevantes antes de proponer esta tarea
+          required: true
+        - label: He definido objetivo, alcance y entregables de forma clara
+          required: true
+        - label: He indicado la capa de arquitectura y federación TAMV impactada
+          required: true
