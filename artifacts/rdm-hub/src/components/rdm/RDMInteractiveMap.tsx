@@ -128,7 +128,7 @@ export function RDMInteractiveMap() {
   useEffect(() => {
     if (!mapReady || !leafletMapRef.current) return;
     const map = leafletMapRef.current;
-    const handleResize = () => map.invalidateSize();
+    const handleResize = () => { try { map.invalidateSize(); } catch { /* map may be unmounted */ } };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [mapReady]);

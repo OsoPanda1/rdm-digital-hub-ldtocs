@@ -82,6 +82,13 @@ Plataforma de soberanía digital, turismo inteligente e infraestructura federada
 - [DATA-SOVEREIGNTY-DPA.md](./DATA-SOVEREIGNTY-DPA.md) — Soberanía de datos
 - `pnpm-workspace.yaml` — catálogo de versiones y overrides de seguridad
 
+## Replit setup (2026-07-23)
+
+- Frontend runs via workflow `artifacts/rdm-hub: web` on the port assigned by Replit (`$PORT`).
+- API runs via workflow `artifacts/api-server: RDM API Gateway`; entry point is `artifacts/api-server/src/index.ts` (starts the HTTP listener). Routes live in `artifacts/api-server/src/routes/`.
+- `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` must be set as Replit secrets for auth/data features. Without them the app runs in demo mode.
+- Gamification layer (geo-discovery → XP → rank → missions → leaderboard) is next planned feature.
+
 ## Actualización operacional 2026-07-23
 
 - Frontend: `pnpm --filter @workspace/rdm-hub run dev`.
