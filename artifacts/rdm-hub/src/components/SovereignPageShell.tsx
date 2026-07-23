@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ReactNode, useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import PageTransition from "@/components/PageTransition";
 import { ModuleCinematicIntro } from "@/components/ModuleCinematicIntro";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +19,7 @@ export function SovereignPageShell({ eyebrow, title, description, bullets, child
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-background">
+      <RDMLayout>
         <AnimatePresence>
           {showTrailer && (
             <ModuleCinematicIntro
@@ -32,9 +31,7 @@ export function SovereignPageShell({ eyebrow, title, description, bullets, child
           )}
         </AnimatePresence>
 
-        <Navbar />
-
-        <main className="pt-28 pb-8">
+        <div className="pt-28 pb-8">
           <section className="container mx-auto px-4 md:px-8 relative overflow-hidden">
             <div
               className="absolute inset-0 pointer-events-none"
@@ -79,10 +76,8 @@ export function SovereignPageShell({ eyebrow, title, description, bullets, child
           </section>
 
           {children && <section className="container mx-auto px-4 md:px-8 mt-8">{children}</section>}
-        </main>
-
-        <Footer />
-      </div>
+        </div>
+      </RDMLayout>
     </PageTransition>
   );
 }

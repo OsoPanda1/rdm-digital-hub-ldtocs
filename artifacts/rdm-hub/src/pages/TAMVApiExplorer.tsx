@@ -4,8 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Play, Code2 } from "lucide-react";
-import NavBar from "@/components/Navbar";
-import { FooterSection } from "@/components/FooterSection";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { apiClient } from "@/lib/apiClient";
 
@@ -81,15 +80,12 @@ const TAMVApiExplorer = () => {
   };
 
   return (
-    <>
-      <SEOMeta
-        title="Explorador de API TAMV — RDM Digital"
-        description="Explorador interactivo de la API TAMV Blockchain MSR: identidad, gobernanza, economía, IA ética y metaverso."
-      />
-      <div className="min-h-screen bg-background">
-        <NavBar />
-
-        <main className="container mx-auto px-6 pt-32 pb-24">
+      <RDMLayout>
+        <SEOMeta
+          title="Explorador de API TAMV — RDM Digital"
+          description="Explorador interactivo de la API TAMV Blockchain MSR: identidad, gobernanza, economía, IA ética y metaverso."
+        />
+        <div className="container mx-auto px-6 pt-32 pb-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -149,11 +145,8 @@ const TAMVApiExplorer = () => {
               </Card>
             ))}
           </div>
-        </main>
-
-        <FooterSection />
-      </div>
-    </>
+        </div>
+      </RDMLayout>
   );
 };
 

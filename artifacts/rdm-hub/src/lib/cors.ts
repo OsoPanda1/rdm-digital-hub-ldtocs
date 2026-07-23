@@ -8,10 +8,8 @@ export function getCorsHeaders(request: Request): Record<string, string> {
   const allowedOrigins = [
     "https://www.visitarealdelmonte.online",
     "https://visitarealdelmonte.online",
-    "https://rdm-digital-hub.vercel.app",
     "http://localhost:5173",
     "http://localhost:3000",
-    "http://localhost:8888",
   ];
   
   const allowedOrigin = origin && allowedOrigins.includes(origin) ? origin : allowedOrigins[0];

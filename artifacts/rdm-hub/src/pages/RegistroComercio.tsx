@@ -5,8 +5,7 @@ import {
   ArrowLeft, Check, Store, User, Phone, Mail, MapPin, Clock,
   ChevronRight, ChevronLeft, CreditCard, Building2, Shield,
 } from "lucide-react";
-import BrumaHeader from "@/components/BrumaHeader";
-import BrumaFooter from "@/components/BrumaFooter";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import FloatingParticles from "@/components/FloatingParticles";
 import RealitoBubble from "@/components/RealitoBubble";
 import { supabase as supabaseClient } from "@/integrations/supabase/client";
@@ -131,39 +130,39 @@ const RegistroComercio = () => {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center px-6">
-        <FloatingParticles />
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="glass-card rounded-2xl p-12 text-center max-w-md"
-        >
-          <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center mx-auto mb-6">
-            <Check className="w-8 h-8 text-gold" />
-          </div>
-          <h2 className="font-display text-3xl text-gradient-gold mb-4">¡Solicitud Recibida!</h2>
-          <p className="font-body text-sm text-muted-foreground mb-6">
-            Tu registro está <span className="text-gold font-semibold">pendiente de aprobación</span>. Te contactaremos pronto al <strong>{formData.phone}</strong>.
-          </p>
-          {selectedGiro && (
-            <div className="glass-gold rounded-xl p-4 mb-6">
-              <p className="text-xs text-gold/70 uppercase tracking-wider mb-1">Plan contratado</p>
-              <p className="font-display text-lg text-gradient-gold">{selectedGiro.label}</p>
-              <p className="text-sm text-gold/80">${selectedGiro.price} MXN / mes</p>
+      <RDMLayout>
+        <div className="flex items-center justify-center px-6 py-32">
+          <FloatingParticles />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="glass-card rounded-2xl p-12 text-center max-w-md"
+          >
+            <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center mx-auto mb-6">
+              <Check className="w-8 h-8 text-gold" />
             </div>
-          )}
-          <Link to="/comercios" className="btn-premium inline-block">Ver Directorio</Link>
-        </motion.div>
-      </div>
+            <h2 className="font-display text-3xl text-gradient-gold mb-4">¡Solicitud Recibida!</h2>
+            <p className="font-body text-sm text-muted-foreground mb-6">
+              Tu registro está <span className="text-gold font-semibold">pendiente de aprobación</span>. Te contactaremos pronto al <strong>{formData.phone}</strong>.
+            </p>
+            {selectedGiro && (
+              <div className="glass-gold rounded-xl p-4 mb-6">
+                <p className="text-xs text-gold/70 uppercase tracking-wider mb-1">Plan contratado</p>
+                <p className="font-display text-lg text-gradient-gold">{selectedGiro.label}</p>
+                <p className="text-sm text-gold/80">${selectedGiro.price} MXN / mes</p>
+              </div>
+            )}
+            <Link to="/comercios" className="btn-premium inline-block">Ver Directorio</Link>
+          </motion.div>
+        </div>
+      </RDMLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <RDMLayout>
       <FloatingParticles />
-      <BrumaHeader />
-
       <section className="container mx-auto px-6 md:px-12 py-32 max-w-2xl">
         <Link to="/comercios" className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8 text-muted-foreground hover:text-gold transition-colors">
           <ArrowLeft className="w-4 h-4" />
@@ -473,9 +472,8 @@ const RegistroComercio = () => {
         </div>
       </section>
 
-      <BrumaFooter />
       <RealitoBubble />
-    </div>
+    </RDMLayout>
   );
 };
 

@@ -8,8 +8,7 @@ import {
   Shield, Wallet, Users, Globe, Activity, Zap, TrendingUp, Crown, Sparkles,
   Network, Cpu, ScrollText, Database, Radio, Lock,
 } from "lucide-react";
-import NavBar from "@/components/Navbar";
-import { FooterSection } from "@/components/FooterSection";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { useIsabellaStore } from "@/stores/tamv/isabellaStore";
 import { useEconomyStore } from "@/stores/tamv/economyStore";
@@ -42,16 +41,13 @@ const TAMVHub = () => {
     { name: "ANUBIS-ZK", desc: "Pruebas Zero Knowledge", icon: Shield },
   ];
 
-  return (
-    <>
-      <SEOMeta
-        title="TAMV Civilization Hub — Nodo Cero Real del Monte"
-        description="Centro de mando del ecosistema TAMV Blockchain MSR. Triple Federado conceptual, legal y técnico. Despliegue del Nodo Cero en Real del Monte."
-      />
-      <div className="min-h-screen bg-background relative">
-        <NavBar />
-
-        <main className="container mx-auto px-6 pt-32 pb-24 relative z-10">
+    return (
+      <RDMLayout>
+        <SEOMeta
+          title="TAMV Civilization Hub — Nodo Cero Real del Monte"
+          description="Centro de mando del ecosistema TAMV Blockchain MSR. Triple Federado conceptual, legal y técnico. Despliegue del Nodo Cero en Real del Monte."
+        />
+        <div className="container mx-auto px-6 pt-32 pb-24 relative z-10">
           {/* Hero */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -327,11 +323,8 @@ const TAMVHub = () => {
               </div>
             </CardContent>
           </Card>
-        </main>
-
-        <FooterSection />
-      </div>
-    </>
+        </div>
+      </RDMLayout>
   );
 };
 

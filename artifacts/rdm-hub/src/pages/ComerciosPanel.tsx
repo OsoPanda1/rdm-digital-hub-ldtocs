@@ -1,11 +1,9 @@
-import Navbar from "@/components/Navbar";
-import { FooterSection } from "@/components/FooterSection";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 
 export default function ComerciosPanel() {
   return (
-    <div>
-      <Navbar />
-      <main className="container mx-auto px-6 pt-28 pb-20 space-y-6">
+    <RDMLayout>
+      <div className="container mx-auto px-6 pt-28 pb-20 space-y-6">
         <header>
           <h1 className="text-3xl font-bold">Panel de Comerciante</h1>
           <p className="text-muted-foreground">Resumen operativo y métricas base de tu negocio en RDM·X.</p>
@@ -31,8 +29,7 @@ export default function ComerciosPanel() {
             calidad de ficha.
           </p>
         </section>
-      </main>
-      <FooterSection />
-    </div>
+      </div>
+    </RDMLayout>
   );
 }

@@ -2,8 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import NavBar from "@/components/Navbar";
-import { FooterSection } from "@/components/FooterSection";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -46,9 +45,8 @@ export default function ComerciosCheckout() {
   };
 
   return (
-    <div>
-      <NavBar />
-      <main className="container mx-auto px-6 pt-28 pb-20 max-w-2xl">
+    <RDMLayout>
+      <div className="container mx-auto px-6 pt-28 pb-20 max-w-2xl">
         <h1 className="text-3xl font-bold">Checkout</h1>
         {!payment || !merchant ? (
           <p className="text-muted-foreground mt-4">Cargando información…</p>
@@ -69,8 +67,7 @@ export default function ComerciosCheckout() {
             <Link to="/catalogo" className="text-sm underline block text-center">Volver al catálogo</Link>
           </div>
         )}
-      </main>
-      <FooterSection />
-    </div>
+      </div>
+    </RDMLayout>
   );
 }

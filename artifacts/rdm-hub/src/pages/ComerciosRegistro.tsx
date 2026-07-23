@@ -2,8 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import NavBar from "@/components/Navbar";
-import { FooterSection } from "@/components/FooterSection";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -78,9 +77,8 @@ export default function ComerciosRegistro() {
   };
 
   return (
-    <div>
-      <NavBar />
-      <main className="container mx-auto px-6 pt-28 pb-20 max-w-3xl">
+    <RDMLayout>
+      <div className="container mx-auto px-6 pt-28 pb-20 max-w-3xl">
         <header className="mb-8">
           <h1 className="text-4xl font-bold">Registra tu negocio</h1>
           <p className="text-muted-foreground mt-2">
@@ -166,8 +164,7 @@ export default function ComerciosRegistro() {
             </p>
           </form>
         )}
-      </main>
-      <FooterSection />
-    </div>
+      </div>
+    </RDMLayout>
   );
 }

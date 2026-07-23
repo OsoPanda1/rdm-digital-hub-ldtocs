@@ -2,8 +2,7 @@ import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Activity, Shield, Eye, Cpu, Sparkles, Network } from "lucide-react";
-import NavBar from "@/components/Navbar";
-import { FooterSection } from "@/components/FooterSection";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import {
   SENTINELS_MIRROR,
@@ -39,21 +38,20 @@ const Tenochtitlan = () => {
   const totalDetections = RADARS_MIRROR.reduce((a, r) => a + r.detections, 0);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <SEOMeta
-        title="System Tenochtitlán · Kernel Soberano"
-        description="Dashboard en vivo del Sistema Tenochtitlán: 9 centinelas, 6 radares y 48 nodos funcionales del Nodo Cero RDM Digital."
-        url="/tenochtitlan"
-      />
-        <NavBar />
-
+      <RDMLayout>
+        <SEOMeta
+          title="System Tenochtitlán · Kernel Soberano"
+          description="Dashboard en vivo del Sistema Tenochtitlán: 9 centinelas, 6 radares y 48 nodos funcionales del Nodo Cero RDM Digital."
+          url="/tenochtitlan"
+        />
+        <div className="container mx-auto px-6 pt-32 pb-24">
         {/* Hero Banner */}
         <div className="relative h-48 w-full overflow-hidden">
           <img src="/images/plaza-principal.jpg" alt="Plaza principal de Real del Monte" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
         </div>
 
-        <main className="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <div className="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
         <Link
           to="/"
           className="inline-flex items-center gap-2 font-body text-[11px] tracking-[0.2em] uppercase text-muted-foreground hover:text-[hsl(var(--gold))] transition-colors mb-10"
@@ -306,10 +304,8 @@ const Tenochtitlan = () => {
    └────────────┴──────────┴──────────────┘
 `}</pre>
         </section>
-      </main>
-
-      <FooterSection />
-    </div>
+      </div>
+    </RDMLayout>
   );
 };
 

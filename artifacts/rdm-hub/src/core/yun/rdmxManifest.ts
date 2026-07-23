@@ -500,7 +500,7 @@ export const RDMX_MODULES: RepoModule[] = [
   },
   {
     id: "tamv-online-nextgen",
-    repo: "lovable://projects/e7d6549a-68e6-44f5-b5af-c602adada6bc",
+    repo: "https://github.com/OsoPanda1/rdm-digital-hub-ldtocs",
     path: normalizePath("packages/tamv-online-nextgen"),
     type: "ai",
     description:

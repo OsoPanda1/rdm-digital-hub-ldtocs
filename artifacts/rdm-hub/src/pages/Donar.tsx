@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { toast } from "sonner";
-import NavBar from "@/components/Navbar";
-import { FooterSection } from "@/components/FooterSection";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 
 const suggestedAmounts = [50, 100, 250, 500];
 
@@ -37,8 +36,7 @@ export default function Donar() {
   };
 
   return (
-    <div>
-      <NavBar />
+    <RDMLayout>
       {/* Hero Banner */}
       <div className="relative h-56 w-full overflow-hidden">
         <img src="/images/plaza-noche.jpg" alt="Plaza de Real del Monte de noche" className="h-full w-full object-cover" />
@@ -48,7 +46,7 @@ export default function Donar() {
           <p className="text-white/80 mt-1">Tu donativo fortalece el patrimonio cultural</p>
         </div>
       </div>
-      <main className="container mx-auto px-6 pt-8 pb-20">
+      <div className="container mx-auto px-6 pt-8 pb-20">
         <section className="max-w-2xl mx-auto glass-surface-strong p-8 space-y-6">
           <h1 className="text-3xl font-bold">Asegura el brillo de nuestro legado</h1>
           <p className="text-muted-foreground">
@@ -76,8 +74,7 @@ export default function Donar() {
             {isLoading ? "Conectando checkout..." : `Donar $${amount} MXN`}
           </button>
         </section>
-      </main>
-      <FooterSection />
-    </div>
+      </div>
+    </RDMLayout>
   );
 }

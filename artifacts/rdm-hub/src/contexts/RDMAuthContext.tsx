@@ -9,7 +9,8 @@ import {
   ReactNode,
   useCallback,
 } from 'react'
-import type { Session, User } from '@supabase/supabase-js'
+import type { Session, User, SupabaseClient } from '@supabase/supabase-js'
+import type { Database } from '@/integrations/supabase/types'
 import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client'
 
 export interface Profile {
@@ -47,6 +48,13 @@ interface RDMAuthContextValue {
 const RDMAuthContext = createContext<RDMAuthContextValue | undefined>(undefined)
 const AUTH_QUERY_TIMEOUT_MS = 5_000
 
+function guardSupabase(): SupabaseClient<Database, 'http', unknown> {
+  if (!supabase) {
+    throw new Error('[auth] Supabase no está configurado (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY ausentes)')
+  }
+  return supabase
+}
+
 function withTimeout<T>(promise: Promise<T>, label: string): Promise<T> {
   return Promise.race([
     promise,
@@ -71,16 +79,17 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
   const loadProfileAndRoles = useCallback(
     async (uid: string) => {
       try {
+        const sb = guardSupabase()
         const [
           { data: profileData, error: profileError },
           { data: rolesData, error: rolesError },
         ] = await Promise.all([
           withTimeout(
-            Promise.resolve(supabase.from('profiles').select('*').eq('id', uid).maybeSingle()),
+            Promise.resolve(sb.from('profiles').select('*').eq('id', uid).maybeSingle()),
             'profiles',
           ),
           withTimeout(
-            Promise.resolve(supabase.from('user_roles').select('role').eq('user_id', uid)),
+            Promise.resolve(sb.from('user_roles').select('role').eq('user_id', uid)),
             'user_roles',
           ),
         ])
@@ -121,11 +130,12 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
     }
 
     setIsSupabaseReady(true)
+    const sb = guardSupabase()
 
     // 1. Listener de cambios de auth (sign‑in, sign‑out, refresh).
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_evt, s) => {
+    } = sb.auth.onAuthStateChange((_evt, s) => {
       if (!isMounted) return
 
       setSession(s)
@@ -148,7 +158,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
         const {
           data: { session: currentSession },
           error: sessionError,
-        } = await withTimeout(supabase.auth.getSession(), 'auth.getSession')
+        } = await withTimeout(sb.auth.getSession(), 'auth.getSession')
 
         if (!isMounted) return
 
@@ -194,10 +204,11 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
     setLoading(true)
     setError(null)
     try {
+      const sb = guardSupabase()
       const {
         data: { session: newSession },
         error,
-      } = await supabase.auth.signInWithPassword({ email, password })
+      } = await sb.auth.signInWithPassword({ email, password })
 
       if (error) {
         const msg = `[auth] Error al iniciar sesión: ${error.message}`
@@ -233,6 +244,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
     setLoading(true)
     setError(null)
     try {
+      const sb = guardSupabase()
       const isDev = import.meta.env.DEV
 
       // En desarrollo: si no hay redirect URL configurada, no esperar confirmación de email
@@ -242,7 +254,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
         : (import.meta.env.VITE_NEXT_PUBLIC_SUPABASE_REDIRECT_URL ??
           (typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : undefined))
 
-      const { error, data } = await supabase.auth.signUp({
+      const { error, data } = await sb.auth.signUp({
         email,
         password,
         options: {
@@ -260,7 +272,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
       // En dev: si no hay redirect URL y el usuario se creó, intentar auto sign-in
       // (funciona si email confirmations están deshabilitadas en Supabase dashboard)
       if (isDev && data.user && !data.session && !redirectUrl) {
-        const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
+        const { error: signInError } = await sb.auth.signInWithPassword({ email, password })
         if (!signInError) {
           return { error: null }
         }
@@ -282,11 +294,12 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
     setError(null)
 
     try {
+      const sb = guardSupabase()
       const redirectTo =
         import.meta.env.VITE_NEXT_PUBLIC_SUPABASE_REDIRECT_URL ??
         (typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : undefined)
 
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { error } = await sb.auth.signInWithOAuth({
         provider: 'google',
         options: { redirectTo },
       })
@@ -310,7 +323,8 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
     setLoading(true)
     setError(null)
     try {
-      const { error } = await supabase.auth.signOut()
+      const sb = guardSupabase()
+      const { error } = await sb.auth.signOut()
       if (error) {
         setError(`[auth] Error al cerrar sesión: ${error.message}`)
         return

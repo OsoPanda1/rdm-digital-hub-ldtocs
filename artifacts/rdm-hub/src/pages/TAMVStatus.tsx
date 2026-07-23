@@ -4,8 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Activity, Cpu, Database, Shield, Radio } from "lucide-react";
-import NavBar from "@/components/Navbar";
-import { FooterSection } from "@/components/FooterSection";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { apiClient } from "@/lib/apiClient";
 
@@ -62,15 +61,12 @@ const TAMVStatus = () => {
   }, []);
 
   return (
-    <>
-      <SEOMeta
-        title="Estado del Nodo Cero TAMV — Real del Monte"
-        description="Telemetría en tiempo real del Nodo Cero TAMV: capas federadas, protocolos de soberanía, MSR Bridge y BookPI."
-      />
-      <div className="min-h-screen bg-background">
-        <NavBar />
-
-        <main className="container mx-auto px-6 pt-32 pb-24">
+      <RDMLayout>
+        <SEOMeta
+          title="Estado del Nodo Cero TAMV — Real del Monte"
+          description="Telemetría en tiempo real del Nodo Cero TAMV: capas federadas, protocolos de soberanía, MSR Bridge y BookPI."
+        />
+        <div className="container mx-auto px-6 pt-32 pb-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -197,11 +193,8 @@ const TAMVStatus = () => {
               </Card>
             </div>
           )}
-        </main>
-
-        <FooterSection />
-      </div>
-    </>
+        </div>
+      </RDMLayout>
   );
 };
 

@@ -12,8 +12,7 @@ import {
   HeartHandshake,
   Compass,
 } from "lucide-react";
-import NavBar from "@/components/Navbar";
-import { FooterSection } from "@/components/FooterSection";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { SEOMeta } from "@/components/SEOMeta";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -37,16 +36,13 @@ const STATUS_STYLE: Record<string, string> = {
 const TAMVThesis = () => {
   const t = TAMV_THESIS;
 
-  return (
-    <>
-      <SEOMeta
-        title="Tesis Soberana TAMV — Nodo Cero Real del Monte"
-        description="Documento maestro público del primer Sistema Operativo Civilizatorio Triple-Federado. Anclajes verificables: ORCID, Zenodo DOI, GitHub, BookPI."
-      />
-      <div className="min-h-screen bg-background relative">
-        <NavBar />
-
-        <main className="container mx-auto px-6 pt-32 pb-24 relative z-10">
+    return (
+      <RDMLayout>
+        <SEOMeta
+          title="Tesis Soberana TAMV — Nodo Cero Real del Monte"
+          description="Documento maestro público del primer Sistema Operativo Civilizatorio Triple-Federado. Anclajes verificables: ORCID, Zenodo DOI, GitHub, BookPI."
+        />
+        <div className="container mx-auto px-6 pt-32 pb-24 relative z-10">
           {/* HERO */}
           <motion.section
             initial={{ opacity: 0, y: 30 }}
@@ -362,11 +358,8 @@ const TAMVThesis = () => {
               Volver al Civilization Hub
             </Link>
           </section>
-        </main>
-
-        <FooterSection />
-      </div>
-    </>
+        </div>
+      </RDMLayout>
   );
 };
 

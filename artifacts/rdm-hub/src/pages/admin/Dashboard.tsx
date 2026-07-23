@@ -5,8 +5,7 @@ import {
   Clock, Star, MapPin, Phone,
   Plus, Search, Edit, Trash2, Eye, EyeOff
 } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import PageTransition from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -305,8 +304,7 @@ const AdminDashboard = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-background">
-        <Navbar />
+      <RDMLayout>
         
         {/* Admin Header */}
         <div className="bg-gradient-to-r from-amber-600 to-orange-700 pt-28 pb-12">
@@ -914,8 +912,7 @@ s y contenido de RDM Digital
           </DialogContent>
         </Dialog>
 
-        <Footer />
-      </div>
+      </RDMLayout>
     </PageTransition>
   );
 };

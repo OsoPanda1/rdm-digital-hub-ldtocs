@@ -5,8 +5,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import NavBar from "@/components/Navbar";
-import { FooterSection } from "@/components/FooterSection";
+import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { RealitoOrb } from "@/components/RealitoOrb";
 import ceoTamvImg from "@/assets/ceo_tamv.jpg";
 
@@ -63,10 +62,8 @@ const QuienesSomos = () => {
   const { works, loading: orcidLoading } = useOrcidWorks(ORCID_ID);
 
   return (
-  <div className="min-h-screen bg-background text-foreground selection:bg-primary/30">
-    <NavBar />
-
-    <section className="pt-32 pb-24 overflow-hidden">
+    <RDMLayout>
+      <div className="pt-32 pb-24 overflow-hidden">
       <div className="container mx-auto px-6">
         {/* Header de la Misión */}
         <motion.div 
@@ -301,9 +298,8 @@ const QuienesSomos = () => {
       </div>
     </section>
 
-    <FooterSection />
     <RealitoOrb />
-  </div>
+    </RDMLayout>
   );
 };
 

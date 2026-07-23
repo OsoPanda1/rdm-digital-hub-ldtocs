@@ -17,8 +17,9 @@ import type { ISAContext } from './types';
 
 // ─── Configuration ──────────────────────────────────────────────────────────
 
-const ISA_API_KEY = process.env.ISABELLA_API_KEY ?? '';
-const ISA_JWT_SECRET = process.env.ISABELLA_JWT_SECRET ?? '';
+const ISA_API_KEY = (typeof import.meta !== 'undefined' ? import.meta.env.VITE_ISABELLA_API_KEY : '') ?? '';
+const ISA_JWT_SECRET = (typeof import.meta !== 'undefined' ? import.meta.env.VITE_ISABELLA_JWT_SECRET : '') ?? '';
+const ISA_NODE_ENV = typeof process !== 'undefined' && process.env ? process.env.NODE_ENV : 'development';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -54,9 +55,22 @@ export function validateApiKey(key: string | null): boolean {
 
 // ─── JWT Token Validation ───────────────────────────────────────────────────
 
+function base64UrlDecode(str: string): string {
+  try {
+    return decodeURIComponent(
+      atob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/\s/g, ''))
+        .split('')
+        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join(''),
+    );
+  } catch {
+    return atob(str.replace(/-/g, '+').replace(/_/g, '/'));
+  }
+}
+
 export function validateTerritorialToken(token: string | null): { valid: boolean; payload?: Record<string, unknown>; error?: string } {
   if (!ISA_JWT_SECRET) {
-    if (process.env.NODE_ENV === 'production') {
+    if (ISA_NODE_ENV === 'production') {
       return { valid: false, error: 'JWT secret not configured' };
     }
     return { valid: true }; // Dev fallback only outside production
@@ -70,14 +84,8 @@ export function validateTerritorialToken(token: string | null): { valid: boolean
     const parts = raw.split('.');
     if (parts.length !== 3) return { valid: false, error: 'Invalid JWT format' };
 
-    // Verify signature using HMAC-SHA256
-    const base64UrlEncode = (obj: object): string =>
-      Buffer.from(JSON.stringify(obj))
-        .toString('base64url')
-        .replace(/=+$/, '');
-
-    const header = JSON.parse(Buffer.from(parts[0], 'base64url').toString('utf-8'));
-    const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf-8'));
+    const header = JSON.parse(base64UrlDecode(parts[0]));
+    const payload = JSON.parse(base64UrlDecode(parts[1]));
 
     // Verify HMAC signature (skipped in browser context — server-only validation)
     const signature = parts[2];
