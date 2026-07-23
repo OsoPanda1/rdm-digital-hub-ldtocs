@@ -1,0 +1,101 @@
+name: "Solicitud de Funcionalidad"
+description: "Propón una nueva funcionalidad o mejora para RDM Digital Hub — LDTOCS."
+title: "[FEATURE] <nombre corto de la funcionalidad>"
+labels: ["enhancement", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por proponer una mejora para **RDM Digital Hub — LDTOCS (MD-X4)**.
+        Este formulario está diseñado para capturar necesidades territoriales, de usuarios
+        y de arquitectura de forma clara y accionable.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Resumen de la funcionalidad
+      description: Describe en 1–3 frases qué funcionalidad quieres añadir.
+      placeholder: |
+        Ejemplo:
+        - Añadir un panel de misiones phygital con progreso por jugador.
+        - Incorporar métricas de telemetría ambiental en el mapa principal.
+    validations:
+      required: true
+
+  - type: textarea
+    id: user_value
+    attributes:
+      label: Valor para usuarios / territorio
+      description: Explica qué problema resuelve y para quién (visitantes, comerciantes, gobierno, comunidad).
+      placeholder: |
+        Ejemplo:
+        - Los comerciantes podrán ver el impacto real de la gamificación en sus ventas.
+        - Los visitantes tendrán rutas más claras y coherentes con la historia local.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: federation
+    attributes:
+      label: Federación TAMV impactada
+      description: ¿Qué federación del modelo TAMV se ve más impactada por esta funcionalidad?
+      options:
+        - F1: Identidad Soberana & Pasaportes Digitales
+        - F2: Patrimonio, Cultura & Memoria Colectiva
+        - F3: Turismo Inteligente & Redes Territoriales
+        - F4: Economía Local, Comercios & Protocolo Alamexa
+        - F5: Gemelos Digitales, Telemetría & Sensores
+        - F6: Inteligencia Colectiva (Isabella AI & Agents Core)
+        - F7: Resiliencia, Criptografía PQC & BookPI
+        - Multi-federación
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Prioridad propuesta
+      description: ¿Qué tan prioritaria debería ser esta funcionalidad?
+      options:
+        - P0 (crítica estratégica, imprescindible para despliegues actuales)
+        - P1 (alta, mejora clave para usuarios o gobernanza)
+        - P2 (media, mejora importante pero no bloqueante)
+        - P3 (baja, nice-to-have, exploratoria)
+    validations:
+      required: true
+
+  - type: textarea
+    id: functional_spec
+    attributes:
+      label: Especificación funcional (alto nivel)
+      description: Describe el comportamiento esperado, flujos principales y casos de uso.
+      placeholder: |
+        - Actor principal, acciones, vistas involucradas, reglas de negocio.
+        - Ejemplo: flujo de activación de membresía, flujo de escaneo de QR, etc.
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical_notes
+    attributes:
+      label: Notas técnicas (si las tienes)
+      description: Indica ideas técnicas, integraciones, APIs, o impactos en el stack.
+      placeholder: |
+        - Impacto en frontend (nuevos componentes / vistas).
+        - Impacto en backend (nuevos endpoints / modelos).
+        - Consideraciones de seguridad o PQC.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Verificaciones previas
+      options:
+        - label: He revisado la documentación existente para asegurar que esta funcionalidad no existe ya
+          required: true
+        - label: He descrito claramente el valor para usuarios, territorio y/o gobernanza
+          required: true
+        - label: He indicado la federación TAMV principal impactada
+          required: true
