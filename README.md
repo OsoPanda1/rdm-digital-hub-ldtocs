@@ -9,7 +9,7 @@
 <p align="center">
   <em>“La tecnología es el puente entre el patrimonio y el futuro.”</em><br/>
   <em>“Nosotros no imitamos el futuro, nosotros somos el futuro. Lo soñamos, lo creamos, lo sentimos y definitivamente lo vivimos.”</em><br/>
-  <strong>Anubis Villaseñor, Urban Legent · Alianzas LATAM 2020–2025</strong>
+  <strong>Anubis Villaseñor, ♛ Urban Legent · Alianzas LATAM 2020–2025 ♛</strong>
 </p>
 
 <p align="center">
