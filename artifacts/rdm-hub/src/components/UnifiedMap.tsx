@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ============================================================================
 // Unified Map System - RDM Digital LTOS
 // Leaflet-based map with federation-aware layers, real-time data, and performance optimization

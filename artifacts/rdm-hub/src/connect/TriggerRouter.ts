@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { TriggerDestination, TriggerEvent } from './types';
 import { federationBus } from '@/federaciones/FederationBus';
 

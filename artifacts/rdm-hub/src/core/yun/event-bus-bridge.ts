@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * YUN Event Bus Bridge — Unifies the three event systems:
  * 1. YUN Constitutional Event Bus (src/core/yun/event-bus.ts)

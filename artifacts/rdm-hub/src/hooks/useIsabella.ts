@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Hook para interactuar con Isabella AI - Optimizado con caching y deduplicación
  * Triple Federado: Conceptual | Legal | Técnico

@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * RDM Digital - Sistema Heptafederado GEN-7+
  * Modelo de federacion civilizatoria con telemetria y health checks

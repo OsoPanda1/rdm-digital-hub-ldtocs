@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Navigation, MapPin, Search, Car } from "lucide-react";

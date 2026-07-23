@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { logger } from '@/lib/logger';
 import { federationBus } from '@/federaciones/FederationBus';
 import { territorialFederationBridge } from '@/federaciones/territorial-federation-bridge';

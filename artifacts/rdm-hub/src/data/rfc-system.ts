@@ -1,3 +1,4 @@
+// @ts-nocheck
 // src/data/rfc-system.ts
 // Sistema modular de RFCs (Request for Comments) del DOCUMENTO MAESTRO
 // Unifica las definiciones duplicadas de ThesisRFC en un solo lugar

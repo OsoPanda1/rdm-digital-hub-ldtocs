@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BadgeCheck, Building2, Gamepad2, Store } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";

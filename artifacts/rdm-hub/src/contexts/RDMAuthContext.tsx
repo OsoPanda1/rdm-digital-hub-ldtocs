@@ -10,7 +10,7 @@ import {
   useCallback,
 } from 'react'
 import type { Session, User } from '@supabase/supabase-js'
-import { supabase } from '@/integrations/supabase/client'
+import { supabase, isSupabaseConfigured } from '@/integrations/supabase/client'
 
 export interface Profile {
   id: string
@@ -70,7 +70,6 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
 
   const loadProfileAndRoles = useCallback(
     async (uid: string) => {
-      if (!supabase) return
       try {
         const [
           { data: profileData, error: profileError },
@@ -115,8 +114,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let isMounted = true
 
-    if (!supabase) {
-      // Supabase not configured — auth is disabled
+    if (!isSupabaseConfigured) {
       setIsSupabaseReady(false)
       setLoading(false)
       return
@@ -150,7 +148,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
         const {
           data: { session: currentSession },
           error: sessionError,
-        } = await withTimeout(supabase!.auth.getSession(), 'auth.getSession')
+        } = await withTimeout(supabase.auth.getSession(), 'auth.getSession')
 
         if (!isMounted) return
 
@@ -193,7 +191,6 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
   }, [loadProfileAndRoles])
 
   const signInEmail = async (email: string, password: string) => {
-    if (!supabase) return { error: 'Auth no disponible — configura VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY' }
     setLoading(true)
     setError(null)
     try {
@@ -233,7 +230,6 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
     password: string,
     displayName: string,
   ) => {
-    if (!supabase) return { error: 'Auth no disponible — configura VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY' }
     setLoading(true)
     setError(null)
     try {
@@ -283,7 +279,6 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
   }
 
   const signInGoogle = async () => {
-    if (!supabase) return { error: 'Auth no disponible — configura VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY' }
     setError(null)
 
     try {
@@ -312,7 +307,6 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
   }
 
   const signOut = async () => {
-    if (!supabase) return
     setLoading(true)
     setError(null)
     try {

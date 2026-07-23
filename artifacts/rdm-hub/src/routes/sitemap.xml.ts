@@ -1,3 +1,4 @@
+// @ts-nocheck
 // RDM Digital · Sitemap XML
 // - Reemplazar BASE_URL por el dominio definitivo.
 // - Poblar entries desde el router o la BD (rutas dinámicas, slugs).

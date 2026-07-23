@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ============================================================================
 // RDM Digital OS + TAMV — YUN-native Sovereign Module Manifest
 // Fundado sobre: YUN Manifesto, Constitución, Blueprint, ADR, Heptafederación

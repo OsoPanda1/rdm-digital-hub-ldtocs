@@ -469,6 +469,7 @@ const AppInner = () => {
       const timer = setTimeout(() => setIntroComplete(true), 5000)
       return () => clearTimeout(timer)
     }
+    return undefined
   }, [showIntro, introComplete])
 
   // Analytics post-pintado: se montan vía requestIdleCallback para no bloquear el main thread

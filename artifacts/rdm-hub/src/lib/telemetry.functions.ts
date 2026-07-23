@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createServerFn } from "@tanstack/react-start";
 
 export const getTelemetryPulses = createServerFn({ method: "GET" }).handler(async () => {

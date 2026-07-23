@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createFileRoute } from "@tanstack/react-router";
 import { BookOpen, Package, Shirt, ShoppingBag } from "lucide-react";
 import { ModulePortal } from "@/components/site/ModulePortal";

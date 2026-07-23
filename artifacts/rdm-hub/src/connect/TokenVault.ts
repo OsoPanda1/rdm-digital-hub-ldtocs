@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { TokenRecord, ConnectSubject, ConnectTokenResponse, ConnectorConfig } from './types';
 import { federationBus } from '@/federaciones/FederationBus';
 

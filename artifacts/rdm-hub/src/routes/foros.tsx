@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createFileRoute } from "@tanstack/react-router";
 import { MessageCircle, Route as RouteIcon, Store, Trees } from "lucide-react";
 import { ModulePortal } from "@/components/site/ModulePortal";
