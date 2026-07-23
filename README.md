@@ -1,5 +1,16 @@
 <p align="center">
-  <a href="https://raw.githubusercontent.com/OsoPanda1/rdm-digital-hub-ldtocs/main/public/rdm-digital-nexus-logo.png" target="_blank">
+  <p align="center">
+  <a href="https://github.com/OsoPanda1/rdm-digital-hub-ldtocs">
+    <img src="public/tamv-rdm-framework-logo.svg" alt="TAMV Online Network — RDM Digital Hub Header" width="100%">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://orcid.org/0009-0008-5050-1539"><img src="https://img.shields.io/badge/ORCID-0009--0008--5050--1539-A6CE39?style=for-the-badge&logo=orcid&logoColor=white" alt="ORCID"></a>
+  <a href="https://doi.org/10.5281/zenodo.20606361"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.20606361-0298C5?style=for-the-badge&logo=doi&logoColor=white" alt="DOI Zenodo"></a>
+  <a href="https://replit.com/"><img src="https://img.shields.io/badge/Platform-Replit_Autoscale-0F7BFF?style=for-the-badge&logo=replit&logoColor=white" alt="Replit Autoscale"></a>
+  <a href="./LICENSE-PRCL.md"><img src="https://img.shields.io/badge/License-TAMV--PRCL-blueviolet?style=for-the-badge" alt="License: TAMV-PRCL"></a>
+</p>
     <img src="https://raw.githubusercontent.com/OsoPanda1/rdm-digital-hub-ldtocs/main/public/rdm-digital-nexus-logo.png" alt="RDM Digital Hub Logo" height="120">
   </a>
 </p>
