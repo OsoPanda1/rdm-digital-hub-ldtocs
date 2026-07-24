@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { RDMLayout } from "@/components/rdm/RDMLayout"
 import { SEOMeta } from "@/components/SEOMeta"
 import { motion, AnimatePresence } from "framer-motion"
@@ -16,12 +16,10 @@ import {
   ExternalLink,
   ChevronDown,
   Globe,
-  Radio,
   Waves,
   Calendar,
   MapPin,
   Users,
-  Volume2,
 } from "lucide-react"
 import ReactMarkdown from "react-markdown"
 import { useAudioPlayer, type Track } from "@/contexts/AudioPlayerContext"
@@ -682,38 +680,11 @@ function EcosMusicaSection() {
 /*  PAGE: Música streaming híbrido sobre fondo blanco                  */
 /* ------------------------------------------------------------------ */
 
-import tamvBanner from '@assets/Gemini_Generated_Image_a3vb18a3vb18a3vb_1784832222162.png';
-
 export default function Musica() {
   const { currentTrack, isPlaying, play, togglePlay } = useAudioPlayer()
   const [donationAmount, setDonationAmount] = useState<number | null>(null)
   const [customAmount, setCustomAmount] = useState("")
   const [donating, setDonating] = useState(false)
-
-  const TAMV_STREAM = import.meta.env.VITE_TAMV_STREAM_URL || 'https://tamv925.caster.fm/stream';
-  const [isRadioPlaying, setIsRadioPlaying] = useState(false);
-  const [radioVolume, setRadioVolume] = useState(0.8);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = radioVolume;
-    }
-  }, [radioVolume]);
-
-  const toggleRadioPlay = () => {
-    if (audioRef.current) {
-      if (isRadioPlaying) {
-        audioRef.current.pause();
-        setIsRadioPlaying(false);
-      } else {
-        if (isPlaying) togglePlay(); // pause main player
-        audioRef.current.play().then(() => {
-          setIsRadioPlaying(true);
-        }).catch(err => console.error("Stream play failed:", err));
-      }
-    }
-  };
 
   const handleDonation = async () => {
     const amount = donationAmount ?? (customAmount ? parseInt(customAmount) : null)
@@ -741,67 +712,9 @@ export default function Musica() {
   return (
     <RDMLayout>
       <SEOMeta
-        title="Archivo Histórico Musical — RDM Digital"
+        title="Música de Real del Monte — RDM Digital"
         description="Archivo histórico musical del Pueblo Mágico. Melodías que capturan el espíritu de Real del Monte. Apoya con una donación."
       />
-
-      {/* TAMV 92.5 Live Radio Section */}
-      <section className="relative pt-24 pb-16 px-6 md:px-16 overflow-hidden bg-[hsl(220_30%_8%)] text-white border-b border-white/10">
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <img src={tamvBanner} alt="TAMV 92.5 Banner" className="w-full h-full object-cover opacity-20" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[hsl(220_30%_8%)] via-[hsl(220_30%_8%/0.8)] to-transparent" />
-        </div>
-        <div className="max-w-5xl mx-auto relative z-10 mt-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col md:flex-row items-center gap-8">
-            <div className="w-48 h-48 md:w-64 md:h-64 rounded-2xl overflow-hidden shadow-2xl border border-[hsl(var(--rdm-amber)/0.3)] shrink-0 relative group">
-              <img src={tamvBanner} alt="TAMV 92.5" className="w-full h-full object-cover" />
-              {isRadioPlaying && (
-                <div className="absolute inset-0 bg-[hsl(var(--rdm-amber)/0.2)] mix-blend-overlay animate-pulse" />
-              )}
-            </div>
-            <div className="flex-1 text-center md:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-4 backdrop-blur-sm">
-                <span className={`w-2.5 h-2.5 rounded-full ${isRadioPlaying ? 'bg-red-500 animate-pulse' : 'bg-gray-500'}`} />
-                <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/80">
-                  {isRadioPlaying ? 'En Vivo Ahora' : 'Transmisión 24/7'}
-                </span>
-              </div>
-              <h1 className="text-4xl md:text-6xl font-bold mb-2 text-white drop-shadow-lg" style={{ fontFamily: "var(--font-display)" }}>
-                TAMV 92.5
-              </h1>
-              <p className="text-lg md:text-xl text-[hsl(var(--rdm-amber))] font-medium mb-8" style={{ fontFamily: "var(--font-body)" }}>
-                La voz de Real del Monte
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-center gap-6 justify-center md:justify-start">
-                <button
-                  onClick={toggleRadioPlay}
-                  className="flex items-center gap-3 bg-[hsl(var(--rdm-amber))] text-white px-8 py-4 rounded-full font-bold text-sm hover:scale-105 transition-transform shadow-[0_0_30px_-5px_hsla(43,80%,55%,0.5)]"
-                >
-                  {isRadioPlaying ? (
-                    <><Pause className="w-5 h-5" /> Pausar Radio</>
-                  ) : (
-                    <><Play className="w-5 h-5" /> Escuchar en Vivo</>
-                  )}
-                </button>
-                
-                <div className="flex items-center gap-3 w-40">
-                  <Volume2 className="w-4 h-4 text-white/60" />
-                  <input 
-                    type="range" 
-                    min="0" max="1" step="0.01" 
-                    value={radioVolume}
-                    onChange={(e) => setRadioVolume(parseFloat(e.target.value))}
-                    className="w-full accent-[hsl(var(--rdm-amber))] h-1.5 bg-white/20 rounded-full appearance-none outline-none"
-                  />
-                </div>
-              </div>
-              
-              <audio ref={audioRef} src={TAMV_STREAM} preload="none" />
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
       {/* Fondo blanco + halo superior de color */}
       <section className="relative pt-24 pb-12 px-6 md:px-16 overflow-hidden bg-white">

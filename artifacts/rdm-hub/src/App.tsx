@@ -152,7 +152,7 @@ const AdminPanel = lazy(() => import('./pages/Admin'))
 const DemoChecklist = lazy(() => import('./pages/DemoChecklist'))
 const RealitoAIPage = lazy(() => import('./pages/RealitoAI'))
 
-// ===== Absorbed from RDM-LIVOS-MEXICO =====
+// ===== TAMV 92.5 Radio Digital =====
 const ArchivoSonoro = lazy(() => import('./pages/ArchivoSonoro'))
 const ComerciosCheckout = lazy(() => import('./pages/ComerciosCheckout'))
 const ComerciosRegistroPage = lazy(() => import('./pages/ComerciosRegistro'))
