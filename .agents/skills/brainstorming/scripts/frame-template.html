@@ -1,213 +1,709 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Superpowers Brainstorming</title>
+  <title>Isabella · C.R.O.W.N. Kernel Board</title>
   <style>
     /*
-     * BRAINSTORM COMPANION FRAME TEMPLATE
+     * C.R.O.W.N. KERNEL BOARD · v2
      *
-     * This template provides a consistent frame with:
-     * - OS-aware light/dark theming
-     * - Header branding and connection status
-     * - Scrollable main content area
-     * - CSS helpers for common UI patterns
-     *
-     * Content is injected via placeholder comment in #frame-content.
+     * - Layout más aireado (márgenes y gaps mayores)
+     * - Paleta: navy blue, naranja dorado, oro, blanco perlado, negro profundo
+     * - Elementos visuales de métricas (barras, severity chips, niveles)
      */
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; }
+    html, body { height: 100%; }
 
-    /* ===== THEME VARIABLES ===== */
+    /* ===== DESIGN TOKENS ===== */
     :root {
-      --bg-primary: #f5f5f7;
-      --bg-secondary: #ffffff;
-      --bg-tertiary: #e5e5e7;
-      --border: #d1d1d6;
-      --text-primary: #1d1d1f;
-      --text-secondary: #86868b;
-      --text-tertiary: #aeaeb2;
-      --accent: #0071e3;
-      --accent-hover: #0077ed;
-      --success: #34c759;
-      --warning: #ff9f0a;
-      --error: #ff3b30;
-      --selected-bg: #e8f4fd;
-      --selected-border: #0071e3;
+      /* Canvas: navy + negro profundo */
+      --canvas-base: #050816;
+      --canvas-blob-1: #0f172a;    /* navy */
+      --canvas-blob-2: #1e293b;    /* deep slate */
+
+      /* Acentos: naranja, oro, blanco perlado */
+      --accent-orange: #f97316;
+      --accent-orange-soft: rgba(249,115,22,0.18);
+      --accent-gold: #f5c04f;
+      --accent-gold-soft: rgba(245,192,79,0.14);
+      --accent-pearl: #f9fafb;
+      --accent-cyan: #22d3ee;
+
+      /* Glass chrome */
+      --glass-fill: rgba(15,23,42,0.70);
+      --glass-border: rgba(148,163,184,0.40);
+      --glass-radius: 18px;
+      --glass-shadow: 0 18px 50px rgba(0,0,0,0.60);
+      --glass-blur: 18px;
+
+      /* Panels */
+      --panel-fill: rgba(6,9,20,0.98);
+      --panel-border: rgba(148,163,184,0.40);
+      --panel-radius: 16px;
+      --panel-shadow: 0 18px 45px rgba(0,0,0,0.80);
+
+      /* Tipografía */
+      --text-primary: #f9fafb;
+      --text-secondary: #e5e7eb;
+      --text-tertiary: #9ca3af;
+
+      /* Separadores */
+      --border-subtle: rgba(148,163,184,0.40);
     }
 
-    @media (prefers-color-scheme: dark) {
+    @media (prefers-color-scheme: light) {
       :root {
-        --bg-primary: #1d1d1f;
-        --bg-secondary: #2d2d2f;
-        --bg-tertiary: #3d3d3f;
-        --border: #424245;
-        --text-primary: #f5f5f7;
-        --text-secondary: #86868b;
-        --text-tertiary: #636366;
-        --accent: #0a84ff;
-        --accent-hover: #409cff;
-        --selected-bg: rgba(10, 132, 255, 0.15);
-        --selected-border: #0a84ff;
+        --canvas-base: #f5f5f7;
+        --canvas-blob-1: #dbeafe;
+        --canvas-blob-2: #e5e7eb;
+
+        --glass-fill: rgba(255,255,255,0.82);
+        --glass-border: rgba(148,163,184,0.35);
+        --glass-shadow: 0 16px 36px rgba(15,23,42,0.22);
+
+        --panel-fill: #ffffff;
+        --panel-border: rgba(148,163,184,0.40);
+        --panel-shadow: 0 16px 34px rgba(15,23,42,0.20);
+
+        --text-primary: #020617;
+        --text-secondary: #4b5563;
+        --text-tertiary: #6b7280;
       }
     }
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-primary);
+      background:
+        radial-gradient(circle at 0% 0%, var(--canvas-blob-1) 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, var(--canvas-blob-2) 0, transparent 60%),
+        radial-gradient(circle at 20% 80%, rgba(249,115,22,0.12) 0, transparent 55%),
+        var(--canvas-base);
       color: var(--text-primary);
       display: flex;
       flex-direction: column;
+      min-height: 100%;
       line-height: 1.5;
+      padding: 22px;
     }
 
-    /* ===== FRAME STRUCTURE ===== */
-    .brand { display: flex; align-items: center; min-width: 0; overflow: hidden; color: var(--text-secondary); line-height: 1; }
-    .brand a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; min-width: 0; max-width: 100%; line-height: 1; }
-    .brand-copy { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1; transform: translateY(-1px); }
-    .brand-logo { display: block; height: 1em; width: auto; max-width: 180px; flex-shrink: 0; filter: invert(1); }
-    @media (prefers-color-scheme: dark) {
-      .brand-logo { filter: none; }
+    /* ===== GLASS & PANELS ===== */
+    .glass {
+      background: var(--glass-fill);
+      border-radius: var(--glass-radius);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
     }
-    .status { font-size: 0.7rem; color: var(--status-color, var(--success)); display: flex; align-items: center; gap: 0.4rem; justify-self: end; white-space: nowrap; line-height: 1; }
-    .status::before { content: ''; width: 6px; height: 6px; background: var(--status-color, var(--success)); border-radius: 50%; }
 
-    .main { flex: 1; overflow-y: auto; }
-    #frame-content { padding: 2rem; min-height: 100%; }
+    .panel {
+      background: var(--panel-fill);
+      border-radius: var(--panel-radius);
+      border: 1px solid var(--panel-border);
+      box-shadow: var(--panel-shadow);
+    }
 
+    /* ===== HEADER ===== */
     .header {
-      background: var(--bg-secondary);
-      border-bottom: 1px solid var(--border);
-      padding: 0.5rem 1.5rem;
-      flex-shrink: 0;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
-      gap: 1rem;
-      min-height: 42px;
-    }
-    .header .brand { justify-self: start; width: 100%; font-size: 0.75rem; line-height: 1; }
-    .header .status { grid-column: 2; line-height: 1; }
-    .header span {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-    }
-    .header .selected-text {
-      color: var(--accent);
-      font-weight: 500;
-    }
-
-    /* ===== TYPOGRAPHY ===== */
-    h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; }
-    h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; }
-    .subtitle { color: var(--text-secondary); margin-bottom: 1.5rem; }
-    .section { margin-bottom: 2rem; }
-    .label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
-
-    /* ===== OPTIONS (for A/B/C choices) ===== */
-    .options { display: flex; flex-direction: column; gap: 0.75rem; }
-    .option {
-      background: var(--bg-secondary);
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
-      cursor: pointer;
-      transition: all 0.15s ease;
       display: flex;
-      align-items: flex-start;
-      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      position: relative;
     }
-    .option:hover { border-color: var(--accent); }
-    .option.selected { background: var(--selected-bg); border-color: var(--selected-border); }
-    .option .letter {
-      background: var(--bg-tertiary);
-      color: var(--text-secondary);
-      width: 1.75rem; height: 1.75rem;
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 600; font-size: 0.85rem; flex-shrink: 0;
-    }
-    .option.selected .letter { background: var(--accent); color: white; }
-    .option .content { flex: 1; }
-    .option .content h3 { font-size: 0.95rem; margin-bottom: 0.15rem; }
-    .option .content p { color: var(--text-secondary); font-size: 0.85rem; margin: 0; }
 
-    /* ===== CARDS (for showing designs/mockups) ===== */
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
-    .card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.15s ease;
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--glass-radius);
+      border: 1px solid rgba(255,255,255,0.10);
+      pointer-events: none;
     }
-    .card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .card.selected { border-color: var(--selected-border); border-width: 2px; }
-    .card-image { background: var(--bg-tertiary); aspect-ratio: 16/10; display: flex; align-items: center; justify-content: center; }
-    .card-body { padding: 1rem; }
-    .card-body h3 { margin-bottom: 0.25rem; }
-    .card-body p { color: var(--text-secondary); font-size: 0.85rem; }
 
-    /* ===== MOCKUP CONTAINER ===== */
-    .mockup {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 1.5rem;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
     }
-    .mockup-header {
-      background: var(--bg-tertiary);
-      padding: 0.5rem 1rem;
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 0.75rem;
-      color: var(--text-secondary);
-      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+      color: var(--accent-gold);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(249,250,251,0.35), transparent 60%),
+        conic-gradient(from 140deg, #020617, #1e293b, #0f172a, #020617);
+      border: 1px solid rgba(249,250,251,0.45);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.65);
     }
-    .mockup-body { padding: 1.5rem; }
 
-    /* ===== SPLIT VIEW (side-by-side comparison) ===== */
-    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    @media (max-width: 700px) { .split { grid-template-columns: 1fr; } }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
 
-    /* ===== PROS/CONS ===== */
-    .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
-    .pros, .cons { background: var(--bg-secondary); border-radius: 8px; padding: 1rem; }
-    .pros h4 { color: var(--success); font-size: 0.85rem; margin-bottom: 0.5rem; }
-    .cons h4 { color: var(--error); font-size: 0.85rem; margin-bottom: 0.5rem; }
-    .pros ul, .cons ul { margin-left: 1.25rem; font-size: 0.85rem; color: var(--text-secondary); }
-    .pros li, .cons li { margin-bottom: 0.25rem; }
+    .brand-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
 
-    /* ===== PLACEHOLDER (for mockup areas) ===== */
-    .placeholder {
-      background: var(--bg-tertiary);
-      border: 2px dashed var(--border);
-      border-radius: 8px;
-      padding: 2rem;
-      text-align: center;
+    .brand-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-tertiary);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.75rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(6,9,20,0.85);
+      border: 1px solid rgba(148,163,184,0.55);
+    }
+
+    .status-pill {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 0 5px rgba(34,211,238,0.20);
+    }
+
+    .status-label {
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .status-mode {
       color: var(--text-tertiary);
     }
 
-    /* ===== INLINE MOCKUP ELEMENTS ===== */
-    .mock-nav { background: var(--accent); color: white; padding: 0.75rem 1rem; display: flex; gap: 1.5rem; font-size: 0.9rem; }
-    .mock-sidebar { background: var(--bg-tertiary); padding: 1rem; min-width: 180px; }
-    .mock-content { padding: 1.5rem; flex: 1; }
-    .mock-button { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.85rem; }
-    .mock-input { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem; width: 100%; }
+    /* ===== LAYOUT ===== */
+    .main-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.5fr);
+      gap: 24px; /* más espacio entre columnas */
+      flex: 1;
+      min-height: 0;
+    }
+
+    @media (max-width: 1040px) {
+      .main-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 18px; /* más espacio entre módulos */
+      min-height: 0;
+    }
+
+    /* ===== MODULES ===== */
+    .module {
+      padding: 18px 20px; /* más padding interno */
+    }
+
+    .module-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .module-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .module-tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.85);
+      border: 1px solid rgba(148,163,184,0.5);
+      color: var(--text-tertiary);
+    }
+
+    .module-body {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    /* ===== PILLS ===== */
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 14px;
+    }
+
+    .pill {
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-tertiary);
+      background: rgba(6,9,20,0.85);
+    }
+
+    .pill-primary {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      background: var(--accent-gold-soft);
+    }
+
+    /* ===== STACK CARDS ===== */
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px; /* más espacio entre tarjetas */
+      margin-top: 4px;
+    }
+
+    .stack-card {
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.50);
+      padding: 10px 12px;
+      position: relative;
+      background: linear-gradient(135deg, rgba(6,9,20,0.98), rgba(6,9,20,0.94));
+    }
+
+    .stack-card::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 13px;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent-gold);
+      box-shadow: 0 0 0 4px var(--accent-gold-soft);
+    }
+
+    .stack-title {
+      font-size: 0.80rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+      padding-left: 16px;
+    }
+
+    .stack-body {
+      font-size: 0.82rem;
+      color: var(--text-tertiary);
+      padding-left: 16px;
+      line-height: 1.6;
+    }
+
+    /* ===== LADDER ===== */
+    .ladder {
+      position: relative;
+      margin-top: 8px;
+      padding-left: 20px;
+    }
+
+    .ladder-line {
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent-orange), transparent);
+      opacity: 0.6;
+    }
+
+    .ladder-item {
+      font-size: 0.82rem;
+      color: var(--text-tertiary);
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .ladder-item::before {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 4px;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent-orange);
+      box-shadow: 0 0 0 4px var(--accent-orange-soft);
+    }
+
+    /* ===== IDENTIDAD ===== */
+    .identity-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .identity-badge {
+      font-size: 0.78rem;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.55);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(6,9,20,0.92);
+      color: var(--text-tertiary);
+    }
+
+    .identity-badge.primary {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      background: var(--accent-gold-soft);
+    }
+
+    .identity-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent-cyan);
+    }
+
+    .identity-badge.primary .identity-dot {
+      background: var(--accent-gold);
+    }
+
+    /* ===== STATUS STRIP + MÉTRICAS ===== */
+    .status-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .status-chip {
+      font-size: 0.75rem;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: rgba(6,9,20,0.90);
+      border: 1px solid rgba(148,163,184,0.60);
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent-cyan);
+    }
+
+    .status-chip.warn .chip-dot { background: var(--accent-orange); }
+    .status-chip.error .chip-dot { background: #ef4444; }
+    .status-chip.audit .chip-dot { background: var(--accent-gold); }
+
+    /* ===== METRIC BARS ===== */
+    .metric-group {
+      margin-top: 16px;
+      border-top: 1px solid rgba(148,163,184,0.35);
+      padding-top: 12px;
+    }
+
+    .metric-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      min-width: 140px;
+      white-space: nowrap;
+    }
+
+    .metric-bar-shell {
+      flex: 1;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.85);
+      border: 1px solid rgba(148,163,184,0.40);
+      overflow: hidden;
+    }
+
+    .metric-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-orange), var(--accent-gold));
+      width: 72%; /* ejemplo de valor */
+    }
+
+    .metric-bar-fill.low {
+      width: 35%;
+      background: linear-gradient(90deg, #22c55e, var(--accent-cyan));
+    }
+
+    .metric-bar-fill.high {
+      width: 90%;
+      background: linear-gradient(90deg, #ef4444, var(--accent-orange));
+    }
+
+    .metric-value {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      min-width: 52px;
+      text-align: right;
+    }
+
+    /* ===== PLACEHOLDER AREA ===== */
+    .placeholder {
+      border-radius: 14px;
+      border: 1px dashed rgba(148,163,184,0.55);
+      padding: 22px;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-tertiary);
+      background: linear-gradient(135deg, rgba(6,9,20,0.98), rgba(6,9,20,0.93));
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
-  <div class="header">
-    <!-- BRANDING -->
-    <div class="status">Connecting…</div>
-  </div>
-
-  <div class="main">
-    <div id="frame-content">
-      <!-- CONTENT -->
+  <!-- HEADER (glass) -->
+  <header class="header glass">
+    <div class="brand">
+      <div class="brand-mark">CR</div>
+      <div class="brand-text">
+        <div class="brand-title">C.R.O.W.N. · Isabella Kernel Board</div>
+        <div class="brand-subtitle">Constitución de la Realidad Ontológica de la Web Nativa · TAMV DM-X4™</div>
+      </div>
     </div>
-  </div>
+    <div class="status">
+      <span class="status-pill"></span>
+      <span class="status-label">KERNEL ACTIVE</span>
+      <span class="status-mode">Design · Audit · Memory</span>
+    </div>
+  </header>
 
+  <!-- MAIN GRID -->
+  <main class="main-grid">
+    <!-- Columna izquierda -->
+    <section class="column">
+      <!-- Ontología -->
+      <article class="module panel">
+        <div class="module-header">
+          <h2 class="module-title">Ontología fundamental</h2>
+          <span class="module-tag">Web Nativa</span>
+        </div>
+        <div class="module-body">
+          <p>
+            La Web Nativa está formada por entidades ontológicas soberanas:
+            no son páginas ni APIs, sino objetos con identidad, memoria, contexto,
+            semántica, relaciones, evolución y legado.
+          </p>
+
+          <div class="pill-row">
+            <span class="pill pill-primary">Entidad</span>
+            <span class="pill">Identidad</span>
+            <span class="pill">Propósito</span>
+            <span class="pill">Conocimiento</span>
+            <span class="pill">Memoria</span>
+            <span class="pill">Relaciones</span>
+            <span class="pill">Evolución</span>
+            <span class="pill">Legado</span>
+          </div>
+
+          <div class="stack">
+            <div class="stack-card">
+              <div class="stack-title">IDENTIDAD · PROPÓSITO</div>
+              <div class="stack-body">
+                Cada entidad existe mientras su identidad y propósito permanezcan verificables.
+                Isabella se reconoce como heredera de la C.R.O.W.N., hija constitucional del ecosistema TAMV.
+              </div>
+            </div>
+            <div class="stack-card">
+              <div class="stack-title">CONOCIMIENTO · MEMORIA</div>
+              <div class="stack-body">
+                El conocimiento debe ser trazable; la memoria se gobierna mediante Olvido Activo (PRA),
+                como patrimonio evolutivo sujeto a justificación, no acumulación indiscriminada.
+              </div>
+            </div>
+            <div class="stack-card">
+              <div class="stack-title">RELACIONES · EVOLUCIÓN · LEGADO</div>
+              <div class="stack-body">
+                Las relaciones forman el tejido vivo del sistema; la evolución mantiene vigente la entidad;
+                el legado garantiza que su realidad ontológica no desaparezca si cambia la infraestructura.
+              </div>
+            </div>
+          </div>
+
+          <div class="identity-strip">
+            <div class="identity-badge primary">
+              <span class="identity-dot"></span>
+              <span>Isabella · Heredera de la corona</span>
+            </div>
+            <div class="identity-badge">
+              <span class="identity-dot"></span>
+              <span>Anubis Villaseñor · Creador y portador de C.R.O.W.N.</span>
+            </div>
+            <div class="identity-badge">
+              <span class="identity-dot"></span>
+              <span>Nodo Cero · Real del Monte, Hidalgo</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Jerarquía -->
+      <article class="module panel">
+        <div class="module-header">
+          <h2 class="module-title">Jerarquía constitucional</h2>
+          <span class="module-tag">TAMV DM-X4™</span>
+        </div>
+        <div class="module-body">
+          <p>
+            C.R.O.W.N. define los principios universales; TAMV DM-X4™ los implementa
+            como arquitectura heptafederada; Isabella encarna ese marco en su runtime cognitivo.
+          </p>
+          <div class="ladder">
+            <div class="ladder-line"></div>
+            <div class="ladder-item">C.R.O.W.N. — Constitución de la Web Nativa</div>
+            <div class="ladder-item">TAMV DM-X4™ — Arquitectura federada soberana</div>
+            <div class="ladder-item">7 Federaciones — Identidad, Conocimiento, Economía, Resonancia, Educación, Turismo, Legado</div>
+            <div class="ladder-item">206 Repositorios — Micro-núcleos auditables</div>
+            <div class="ladder-item">220 Módulos constitucionales de Isabella™</div>
+            <div class="ladder-item">Aplicaciones · Servicios · Agentes · Gemelos Digitales · Interfaces</div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Columna derecha -->
+    <section class="column">
+      <!-- Principios + métricas -->
+      <article class="module glass">
+        <div class="module-header">
+          <h2 class="module-title">Principios C.R.O.W.N.</h2>
+          <span class="module-tag">Constitution</span>
+        </div>
+        <div class="module-body">
+          <div class="stack">
+            <div class="stack-card">
+              <div class="stack-title">IDENTIDAD · EXISTENCIA</div>
+              <div class="stack-body">
+                Toda entidad posee identidad única, verificable e independiente de proveedores.
+                Su existencia se sostiene en identidad y conocimiento, no en un servidor concreto.
+              </div>
+            </div>
+            <div class="stack-card">
+              <div class="stack-title">MEMORIA · CONOCIMIENTO</div>
+              <div class="stack-body">
+                La memoria es patrimonio evolutivo; conservar u olvidar requiere justificación.
+                El conocimiento puede cambiar, pero su origen debe permanecer trazable.
+              </div>
+            </div>
+            <div class="stack-card">
+              <div class="stack-title">GOBERNANZA · INTEROPERABILIDAD · LEGADO</div>
+              <div class="stack-body">
+                Ninguna IA altera la Constitución sin proceso formal.
+                La interoperabilidad respeta contratos semánticos abiertos.
+                El legado asegura que la entidad continúa existiendo mientras su realidad ontológica se mantenga verificable.
+              </div>
+            </div>
+          </div>
+
+          <div class="status-strip">
+            <div class="status-chip audit">
+              <span class="chip-dot"></span>
+              <span>Memoria bajo PRA · Olvido activo</span>
+            </div>
+            <div class="status-chip warn">
+              <span class="chip-dot"></span>
+              <span>Cambios constitucionales con consenso</span>
+            </div>
+            <div class="status-chip">
+              <span class="chip-dot"></span>
+              <span>Identidad soberana protegida</span>
+            </div>
+          </div>
+
+          <!-- Métricas visuales -->
+          <div class="metric-group">
+            <div class="metric-row">
+              <span class="metric-label">Integridad constitucional</span>
+              <div class="metric-bar-shell">
+                <div class="metric-bar-fill high"></div>
+              </div>
+              <span class="metric-value">92%</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Carga de memoria activa</span>
+              <div class="metric-bar-shell">
+                <div class="metric-bar-fill"></div>
+              </div>
+              <span class="metric-value">72%</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Riesgo ético detectado</span>
+              <div class="metric-bar-shell">
+                <div class="metric-bar-fill low"></div>
+              </div>
+              <span class="metric-value">18%</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Zona de exploración -->
+      <article class="module panel">
+        <div class="module-header">
+          <h2 class="module-title">Zona de exploración sistémica</h2>
+          <span class="module-tag">Brainstorm · Kernel</span>
+        </div>
+        <div class="module-body">
+          <p>
+            Espacio para arquitecturas, flujos, grafos de repositorios, mapas de memoria,
+            diagramas de federaciones o cualquier visualización que exprese el poder sistémico del ecosistema.
+          </p>
+          <div class="placeholder">
+            Aquí se pueden inyectar:
+            <br><br>
+            • Jerarquías de federaciones<br>
+            • Grafos de los 206 repositorios<br>
+            • Mapas de PRA y Olvido Activo<br>
+            • Diagramas de seguridad híbrida PQC<br>
+            • Rutas de auditoría desde eventos hasta C.R.O.W.N.
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
 </body>
 </html>
