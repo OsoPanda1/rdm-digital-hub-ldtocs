@@ -67,6 +67,7 @@ Plataforma de **Soberanía Digital**, **Turismo Inteligente** e **Infraestructur
 - [Arquitectura de Software y Monorepo](#arquitectura-de-software-y-monorepo)
 - [Stack Tecnológico Unificado](#stack-tecnológico-unificado)
 - [Módulos y Matriz de Madurez](#módulos-y-matriz-de-madurez)
+- [Checklist de Funcionalidades Pendientes](#checklist-de-funcionalidades-pendientes)
 - [Gamificación Phygital Territorial](#gamificación-phygital-territorial)
 - [RDM Living World — Arquitectura de Juego](#rdm-living-world--arquitectura-de-juego)
 - [Sistema de Banners — Publicidad Distribuida](#sistema-de-banners--publicidad-distribuida)
@@ -198,20 +199,80 @@ rdm-digital-hub-ldtocs/
 
 ## Módulos y Matriz de Madurez
 
-| Módulo de Sistema | Estado / Madurez | Descripción y Componentes Clave |
-| --- | --- | --- |
-| **Portal Turístico Interactivo** | `82%` ✅ | Hero redesignado (obsidian/gold), Realito showcase, secciones cerradas. |
-| **Motor Mapas Geoespaciales** | `85%` ✅ | Clusterización de POIs con Leaflet, capas de telemetría y modo sin conexión. |
-| **Gestión de Identidad (Auth)** | `90%` ✅ | Autenticación PKCE mediante Supabase, roles RBAC y pasaporte digital. |
-| **TAMV 92.5 Radio Digital** | `90%` ✅ | AzuraCast + Liquidsoap AutoDJ, 24/7 automatizado, REST API 8 endpoints, RadioPlayer compacto global. |
-| **Música Territorial (Ecos)** | `75%` ✅ | Playlist purificada, SpatialPlayer, CrónicaPanel, XP por escucha. |
-| **Gamificación Phygital** | `65%` ✅ | API REST `/v1/gamification/*` activa, GamificationHUD en navbar, portal, leaderboard. |
-| **RDM Living World** | `70%` ✅ | ADR-001/003, Drizzle schema, 8 monedas, narrativa Realito/Isabella, triggers SQL, API endpoints. |
-| **Banners Comerciales** | `90%` ✅ | 80 banners distribuidos en 9 categorías, BannerManager route-aware, rotación 30 min, grid responsive. |
-| **Panel Admin Marketing** | `60%` ✅ | `/admin/marketing` — campañas, estadísticas, gestión de banners para comercios. |
-| **Isabella AI Engine (F6)** | `75%` ✅ | Backend routes (chat, SSE, decisions, feedback, TTS, knowledge), DB schema (4 tablas), frontend hooks + guardian policy. |
-| **Bus de Federación YUN** | `30%` | Protocolo de sincronización P2P entre los 7 nodos territoriales TAMV. |
-| **Capa de Seguridad PQC (F7)** | `35%` | Esquemas de cifrado resiliente a computación cuántica y sanitización. |
+Auditoría real del codebase — porcentajes basados en código funcional vs. stubs/placeholders.
+
+| # | Módulo | % | Estado | Archivos Clave |
+|---|--------|---|--------|---------------|
+| 1 | **Portal Turístico / Homepage** | `78%` | 🟡 | `pages/Index.tsx`, `Lugares.tsx`, `QuienesSomos.tsx` |
+| 2 | **Motor Mapas Geoespaciales** | `82%` | 🟢 | `Mapa.tsx`, `UnifiedMap.tsx`, `TerritorialSVGMap.tsx` |
+| 3 | **Gestión de Identidad (Auth)** | `75%` | 🟡 | `RDMAuthContext.tsx`, `useAuth.tsx`, `rbac.ts` |
+| 4 | **TAMV 92.5 Radio Digital** | `88%` | 🟢 | `ArchivoSonoro.tsx`, `RadioPlayer.tsx`, `routes/radio.ts` |
+| 5 | **Música Territorial (Ecos)** | `72%` | 🟡 | `Musica.tsx`, `SpatialPlayer.tsx`, `CronicaPanel.tsx` |
+| 6 | **Gamificación Phygital** | `60%` | 🟠 | `GamificationHUD.tsx`, `engine.ts`, `routes/gamification.ts` |
+| 7 | **RDM Living World** | `58%` | 🟠 | `schema.ts`, `narrator.ts`, `triggers SQL`, ADR-001/003 |
+| 8 | **Banners Comerciales** | `88%` | 🟢 | `banners-data.ts` (80), `BannerManager.tsx` |
+| 9 | **Panel Admin / CMS** | `55%` | 🟠 | `admin/Dashboard.tsx` — CRUD negocios funciona |
+| 10 | **Isabella AI Engine** | `72%` | 🟡 | `routes/isabella.ts` (10 endpoints), `IsabellaChat.tsx` |
+| 11 | **Bus de Federación YUN** | `28%` | 🔴 | `federation.ts`, `useYunEventBus` — conceptual |
+| 12 | **Capa de Seguridad PQC** | `32%` | 🔴 | `PostQuantumCrypto.ts`, `SecureTokenManager.ts` |
+| 13 | **Directorio de Comercios** | `80%` | 🟢 | `Comercios.tsx`, `BusinessCard.tsx` — Supabase live |
+| 14 | **Transporte Local** | `55%` | 🟠 | `TransporteLocal.tsx`, `ShuttleCDMX.tsx` — datos cargan |
+| 15 | **Wiki / Enciclopedia** | `65%` | 🟠 | `Wiki.tsx` — lectura Supabase, sin authoring |
+| 16 | **Rutas Turísticas** | `82%` | 🟢 | `Rutas.tsx` — 6 rutas completas, datos hardcoded |
+| 17 | **Ecoturismo** | `78%` | 🟡 | `Ecoturismo.tsx` — 6 actividades, sin booking |
+| 18 | **Donaciones / Fundraising** | `60%` | 🟠 | `Donar.tsx` — Stripe checkout funcional |
+| 19 | **Realito AI / Chat** | `68%` | 🟡 | `RealitoBubble.tsx` — chat UI + SSE streaming |
+| 20 | **Telemetría / Observabilidad** | `45%` | 🟠 | `sentry.ts`, `TelemetryDashboard.tsx` — básico |
+| 21 | **Search / UX Layer** | `55%` | 🟠 | `SearchOverlay.tsx`, `tourismIndex.ts` — client-side |
+| 22 | **Digital Twins / Gemelos** | `48%` | 🟠 | `hybridTwin.ts`, `Map3DTwin.tsx` — conceptual |
+
+### Leyenda de Estados
+
+| Estado | Significado |
+|--------|-------------|
+| 🟢 80-100% | Producción viable — pulido menor pendiente |
+| 🟡 60-79% | Funcional — gaps notables en lógica/persistencia |
+| 🟠 40-59% | Parcial — UI funcional, datos mock o sin backend |
+| 🔴 0-39% | Conceptual — arquitectura diseñada, sin implementación |
+
+---
+
+## Checklist de Funcionalidades Pendientes
+
+### 🟢 Produción Cercana (necesitan pulido)
+
+- [ ] **Radio Digital:** Archivos de episode playback, podcast archive, listener count en frontend
+- [ ] **Banners:** Admin CRUD para banners, click tracking, A/B testing, personalización
+- [ ] **Mapas:** Markers desde DB (no hardcoded), heatmap layer, offline-first caching
+- [ ] **Rutas Turísticas:** Booking funcional, "Descargar Mapa" real, reviews de usuarios
+- [ ] **Comercios:** Detail page, reviews/ratings, booking, photo galleries
+
+### 🟡 Funcional pero Incompleto
+
+- [ ] **Portal Turístico:** Image CDN, booking flow, SEO coverage completa, i18n
+- [ ] **Auth:** RBAC enforcement (middleware), profile management, OAuth providers, 2FA
+- [ ] **Música:** Recommendation engine con datos reales, listening history persistence, playlist sharing
+- [ ] **Isabella AI:** Backend persistence (no in-memory), RAG pipeline real, conversation history
+- [ ] **Realito Chat:** Backend en repo (Supabase Edge Function externo), context-aware responses
+- [ ] **Ecoturismo:** Weather integration, trail calculator, user reviews, seasonal recommendations
+- [ ] **Donaciones:** Donation history, tax receipts, donor wall, recurring donations
+
+### 🟠 Requieren Trabajo Significativo
+
+- [ ] **Gamificación:** Quest completion flow real, QR check-in, seasonal resets, currency redemption
+- [ ] **Living World:** Schema migration en producción, world event scheduling, season rotation, challenge progression
+- [ ] **Panel Admin:** Analytics con datos reales, user management, content moderation, audit log
+- [ ] **Transporte:** Real-time tracking, booking system, schedules, pricing, driver info
+- [ ] **Wiki:** Article authoring/editing, search, table of contents, images, version history
+- [ ] **Donaciones:** Corporate sponsorship, campaign tracking, thank-you emails
+- [ ] **Telemetry:** Structured logging, performance monitoring (Web Vitals), alerting, log aggregation
+- [ ] **Search:** Server-side search, fuzzy matching, autocomplete, search analytics
+
+### 🔴 En Etapa Conceptual
+
+- [ ] **Federación YUN:** P2P sync real, cross-node communication, federation discovery, data reconciliation
+- [ ] **Seguridad PQC:** Real post-quantum algorithms (Kyber/Dilithium), hardware key integration, audit trail
+- [ ] **Digital Twins:** IoT sensor integration, BIM model loading, 3D rendering funcional, real-time telemetry
 
 ---
 
