@@ -60,9 +60,9 @@ const UploadVisualizer = ({
   const getStatusColor = () => {
     switch (status) {
       case "idle": return "text-muted-foreground";
-      case "uploading": return "text-quantum-300";
-      case "complete": return "text-crystal-300";
-      case "error": return "text-nebula-300";
+      case "uploading": return "text-electric";
+      case "complete": return "text-gold";
+      case "error": return "text-terracotta";
     }
   };
   
@@ -114,7 +114,7 @@ const UploadVisualizer = ({
         {status === "uploading" && (
           <div className="mt-1 h-1 w-full bg-muted/50 rounded overflow-hidden">
             <div 
-              className="h-full bg-quantum-300 rounded transition-all duration-300"
+              className="h-full bg-electric rounded transition-all duration-300"
               style={{ width: `${progress}%` }}
             ></div>
           </div>

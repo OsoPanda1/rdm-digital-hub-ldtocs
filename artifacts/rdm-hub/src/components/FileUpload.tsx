@@ -183,7 +183,7 @@ const FileUpload = ({
         variant="quantum"
         className={cn(
           "h-40 flex flex-col items-center justify-center transition-all duration-300",
-          isDragging ? "border-quantum-300 shadow-prismatic" : "",
+          isDragging ? "border-electric shadow-gold" : "",
           isUploading ? "opacity-50 pointer-events-none" : ""
         )}
         onDragOver={handleDragOver}
@@ -195,10 +195,10 @@ const FileUpload = ({
           "flex flex-col items-center justify-center text-center transition-transform duration-300",
           isDragging ? "scale-105" : ""
         )}>
-          <div className="h-12 w-12 rounded-full bg-quantum-300/10 flex items-center justify-center mb-2">
+          <div className="h-12 w-12 rounded-full bg-electric/10 flex items-center justify-center mb-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-quantum-300"
+              className="h-6 w-6 text-electric"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -246,7 +246,7 @@ const FileUpload = ({
                   fileName={file.file.name}
                   fileSize={formatFileSize(file.file.size)}
                   status={file.status}
-                  className="crystal-glow"
+                  className="glow-gold"
                 />
                 {file.status !== "uploading" && (
                   <button

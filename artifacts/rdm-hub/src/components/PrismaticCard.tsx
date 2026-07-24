@@ -19,13 +19,13 @@ const PrismaticCard = ({
   const baseClasses = "rounded-lg backdrop-blur-md border p-4 transition-all duration-300 celestial-card";
   
   const variantClasses = {
-    default: "bg-card/70 border-white/5 text-card-foreground shadow-quantum/20",
-    quantum: "bg-quantum-600/70 border-quantum-300/20 text-quantum-100 shadow-quantum",
-    crystal: "bg-card/50 border-crystal-300/20 text-crystal-100 shadow-crystal",
-    nebula: "bg-card/50 border-nebula-300/20 text-nebula-100 shadow-nebula",
+    default: "bg-card/70 border-white/5 text-card-foreground shadow-soft",
+    quantum: "bg-secondary/70 border-accent/20 text-foreground shadow-electric",
+    crystal: "bg-card/50 border-gold/20 text-foreground shadow-gold",
+    nebula: "bg-card/50 border-teal/20 text-foreground shadow-teal",
   };
 
-  const glowClasses = glow ? "crystal-glow" : "";
+  const glowClasses = glow ? "glow-gold" : "";
 
   return (
     <div

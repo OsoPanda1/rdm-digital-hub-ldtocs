@@ -91,7 +91,7 @@ export const ImageGallery = () => {
   return (
     <section className="py-20"
       style={{
-        background: 'linear-gradient(135deg, hsl(var(--crystal-clear)/0.2), transparent 60%)',
+        background: 'linear-gradient(135deg, hsl(var(--muted)/0.2), transparent 60%)',
       }}
     >
       <div className="container mx-auto px-4 md:px-8">

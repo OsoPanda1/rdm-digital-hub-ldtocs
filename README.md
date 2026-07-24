@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/OsoPanda1/rdm-digital-hub-ldtocs">
-    <img src="public/tamv-rdm-framework-logo.svg" alt="TAMV Online Network — RDM Digital Hub Header" width="100%">
+    <img src="public/tamv-rdm-framework-logo.svg" alt="TAMV Online Network — RDM Digital Hub" width="100%">
   </a>
 </p>
 
@@ -11,132 +11,108 @@
   <a href="./LICENSE-PRCL.md"><img src="https://img.shields.io/badge/License-TAMV--PRCL-blueviolet?style=for-the-badge" alt="License: TAMV-PRCL"></a>
 </p>
 
-<!-- ── Logos del Ecosistema TAMV ────────────────────────────── -->
 <table align="center" cellpadding="10">
   <tr>
     <td align="center" width="33%">
-      <img src="artifacts/rdm-hub/public/images/logotamv.jpg" alt="TAMV Online Network" height="100"><br/>
+      <img src="artifacts/rdm-hub/public/images/logotamv.jpg" alt="TAMV Online Network" height="80"><br/>
       <strong>TAMV Online Network</strong><br/>
-      <small>Marca corporativa del ecosistema</small>
+      <small>Marca del ecosistema</small>
     </td>
     <td align="center" width="33%">
-      <img src="artifacts/rdm-hub/public/images/logo-rdm-digital.png" alt="RDM Digital Hub" height="100"><br/>
+      <img src="artifacts/rdm-hub/public/images/logo-rdm-digital.png" alt="RDM Digital Hub" height="80"><br/>
       <strong>RDM Digital Hub</strong><br/>
       <small>Nodo cero MD-X4</small>
     </td>
     <td align="center" width="33%">
-      <img src="artifacts/rdm-hub/public/images/isabella-ai-logo.png" alt="Isabella Villaseñor AI" height="100"><br/>
+      <img src="artifacts/rdm-hub/public/images/isabella-ai-logo.png" alt="Isabella AI" height="80"><br/>
       <strong>Isabella AI</strong><br/>
-      <small>Motor de IA Conversacional</small>
+      <small>Motor IA Conversacional</small>
     </td>
   </tr>
 </table>
 
-> **Nota:** Coloca tu archivo `isabella-ai-logo.png` en `artifacts/rdm-hub/public/images/` para mostrar el logo de Isabella.
-
 ---
 
-<h1 align="center">RDM Digital Hub — LDTOCS (MD-X4 Architecture Kernel)</h1>
+<h1 align="center">RDM Digital Hub — LDTOCS</h1>
 
 <p align="center">
-  <em>“La tecnología es el puente entre el patrimonio y el futuro.”</em><br/>
-  <em>“Nosotros no imitamos el futuro, nosotros somos el futuro. Lo soñamos, lo creamos, lo sentimos y definitivamente lo vivimos.”</em><br/>
-  <strong>Anubis Villaseñor, ♛ Urban Legent · Alianzas LATAM 2020–2025 ♛</strong>
+  <em>"La tecnología es el puente entre el patrimonio y el futuro."</em><br/>
+  <strong>Anubis Villaseñor — Urban Legent</strong>
 </p>
 
 <p align="center">
-  <strong>Entre montañas y neblina — RDM Digital Hub. Orgullosamente realmontenses.</strong>
-</p>
-
-<p align="center">
-  <!-- Core tech badges -->
   <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node-20.x-3C873A?logo=node.js&logoColor=white" alt="Node.js 20.x"></a>
   <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" alt="React 19"></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white" alt="TypeScript 5.9"></a>
   <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/Vite-7.3.6-646CFF?logo=vite&logoColor=white" alt="Vite 7.3.6"></a>
   <a href="https://supabase.com/"><img src="https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase&logoColor=white" alt="Supabase PostgreSQL"></a>
 </p>
-
 <p align="center">
-  <!-- Platform / infra badges -->
-  <a href="https://replit.com/"><img src="https://img.shields.io/badge/Platform-Replit_Autoscale-0f7bff?logo=replit&logoColor=white" alt="Platform: Replit Autoscale"></a>
   <a href="https://github.com/OsoPanda1/rdm-digital-hub-ldtocs/actions"><img src="https://img.shields.io/github/actions/workflow/status/OsoPanda1/rdm-digital-hub-ldtocs/ci.yml?label=CI&logo=github" alt="GitHub Actions CI"></a>
-  <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-green" alt="License: MIT"></a>
   <a href="./LICENSE-PRCL.md"><img src="https://img.shields.io/badge/License-TAMV--PRCL-blueviolet" alt="License: TAMV-PRCL"></a>
-</p>
-
-<p align="center">
-  <!-- Action / navigation badges -->
-  <a href="https://github.com/OsoPanda1/rdm-digital-hub-ldtocs/tree/main/docs"><img src="https://img.shields.io/badge/Docs-Core_System_Docs-1D4ED8?logo=readme&logoColor=white" alt="Core System Docs"></a>
-  <a href="https://github.com/OsoPanda1/rdm-digital-hub-ldtocs/tree/main/.agents/memory"><img src="https://img.shields.io/badge/Agents-Memory_Cell-7C3AED?logo=github&logoColor=white" alt="Agents Memory Cell"></a>
-  <a href="https://github.com/OsoPanda1/rdm-digital-hub-ldtocs/tree/main/artifacts/api-server"><img src="https://img.shields.io/badge/API-Gateway_Express-111827?logo=express&logoColor=white" alt="API Gateway Express"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/Software-MIT-green" alt="Software: MIT"></a>
 </p>
 
 ---
 
-Plataforma de **Soberanía Digital**, **Turismo Inteligente** e **Infraestructura Federada** para comunidades, implementada inicialmente como nodo replicable **TAMV MD-X4** en Real del Monte, Hidalgo, México.
+Plataforma de **Soberanía Digital**, **Turismo Inteligente** e **Infraestructura Federada** para comunidades, implementada como nodo replicable **TAMV MD-X4** en Real del Monte, Hidalgo, México.
 
 ---
 
-## Índice
+## Indice
 
-- [Visión y Problemática Territorial](#visión-y-problemática-territorial)
-- [Definición del Hub (Nodo Cero MD-X4)](#definición-del-hub-nodo-cero-md-x4)
-- [Modelo de Gobernanza: Las 7 Federaciones del TAMV](#modelo-de-gobernanza-las-7-federaciones-del-tamv)
-- [Arquitectura de Software y Monorepo](#arquitectura-de-software-y-monorepo)
-- [Stack Tecnológico Unificado](#stack-tecnológico-unificado)
-- [Módulos y Matriz de Madurez](#módulos-y-matriz-de-madurez)
-- [Checklist de Funcionalidades Pendientes](#checklist-de-funcionalidades-pendientes)
-- [Gamificación Phygital Territorial](#gamificación-phygital-territorial)
-- [RDM Living World — Arquitectura de Juego](#rdm-living-world--arquitectura-de-juego)
-- [Sistema de Banners — Publicidad Distribuida](#sistema-de-banners--publicidad-distribuida)
-- [Isabella AI Engine — Integración Completa](#isabella-ai-engine--integración-completa)
-- [TAMV 92.5 FM Radio — AzuraCast](#tamv-925-fm-radio--azuracast-reemplaza-casterfm)
-- [Despliegue e Infraestructura Soberana (Replit Native)](#despliegue-e-infraestructura-soberana-replit-native)
-- [Respaldo Académico y Ciencia Abierta](#respaldo-académico-y-ciencia-abierta-citis-2026)
-- [Régimen de Licenciamiento](#régimen-de-licenciamiento)
-
----
-
-## Visión y Problemática Territorial
-
-### El Desafío Social
-
-Las comunidades locales, pueblos mágicos y gobiernos territoriales operan históricamente bajo **cero soberanía digital**, expuestos a la intermediación extractiva de plataformas monopolísticas globalizadas:
-
-- **Extractivismo Económico y Cultural:** pérdida sistemática de capital local sin retorno tangible a la comunidad productora.
-- **Fragilidad Institucional:** vulnerabilidad ante cambios unilaterales en algoritmos de recomendación y políticas de datos.
-- **Fragmentación Operativa:** turismo, comercio, cultura y civismo dispersos en aplicaciones desconectadas.
-- **Erosión Identitaria:** interfaces genéricas diseñadas para consumo masivo que ignoran patrimonio histórico intangible.
-- **Dependencia de Infraestructura Ajena:** datos territoriales críticos alojados fuera del control y fiscalización comunitaria.
-
-### El Desafío Técnico
-
-Las alternativas convencionales de la industria sufren de:
-
-1. **Alta dependencia de conectividad continua:** inoperatividad en zonas de montaña o baja cobertura.
-2. **Carencia de gobernanza algorítmica:** ausencia de inteligencia artificial ética con contexto cultural directo.
-3. **Puntos únicos de fallo (SPOF):** arquitecturas centralizadas susceptibles a caídas de servicio o bloqueos comerciales.
+| Seccion | Descripcion |
+|---------|-------------|
+| [Vision y Problematica](#vision-y-problematica-territorial) | El desafio social y tecnico que resuelve |
+| [Arquitectura del Hub](#definicion-del-hub-nodo-cero-md-x4) | Que es el RDM Digital Hub |
+| [7 Federaciones TAMV](#modelo-de-gobernanza-las-7-federaciones-del-tamv) | Modelo de gobernanza federada |
+| [Monorepo y Estructura](#arquitectura-de-software-y-monorepo) | Estructura del repositorio |
+| [Stack Tecnologico](#stack-tecnologico-unificado) | Tecnologias y justificacion |
+| [Matriz de Madurez](#modulos-y-matriz-de-madurez) | 22 modulos auditados con % real |
+| [Gamificacion y Living World](#gamificacion-phygital-territorial) | Sistema de juego territorial |
+| [Banners Distribuidos](#sistema-de-banners--publicidad-distribuida) | 80 banners en toda la plataforma |
+| [Isabella AI Engine](#isabella-ai-engine--omega-core-v40-enterprise) | IA conversacional con arquitectura completa |
+| [Radio TAMV 92.5 FM](#tamv-925-fm-radio--azuracast) | Radio automatizada en la nube |
+| [Despliegue](#despliegue-e-infraestructura-soberana) | Replit Autoscale + Variables de entorno |
+| [Respaldo Academico](#respaldo-academico-y-ciencia-abierta) | CITIS 2026, ORCID, Zenodo |
+| [Licenciamiento](#regimen-de-licenciamiento) | Licencias multicapa |
 
 ---
 
-## Definición del Hub (Nodo Cero MD-X4)
+## Vision y Problematica Territorial
 
-**RDM Digital Hub** es la primera infraestructura **digital soberana, federada, descentralizada y antifrágil** diseñada desde el territorio para el mundo. Construida sobre la arquitectura **TAMV MD-X4**, funciona como el motor tecnológico de Mineral del Monte (Real del Monte), Hidalgo, ofreciendo:
+### El Desafio Social
 
-- 🗺️ **Turismo Inteligente & Rutas Patrimoniales:** cartografía vectorial en tiempo real, clusterización dinámica de POIs y geofencing cultural.
-- 📻 **Transmisión Difusora TAMV 92.5 FM:** streaming de audio integrado directamente al flujo web/móvil para la voz comunitaria.
-- 🛍️ **Comercio Soberano (Protocolo Alamexa):** conexión directa P2P entre habitantes, comerciantes y visitantes sin comisión extractiva.
-- 🤖 **Inteligencia Colectiva (Isabella AI Core):** asistente conversacional soberano con pipelines de conciencia ética y arquitectura modular de skills.
-- 🏛️ **Gemelos Digitales y Telemetría:** fusión de capas geoespaciales y datos territoriales para la preservación de la memoria histórica.
+Comunidades locales y pueblos magicos operan bajo **cero soberanía digital**, expuestos a la intermediacion extractiva de plataformas monopolisticas:
 
-> Aquí no imitamos ciudades inteligentes ajenas. Construimos un **territorio inteligente soberano**, desde Real del Monte hacia toda Latinoamérica.
+- **Extractivismo Economico:** perdida sistematica de capital local sin retorno a la comunidad.
+- **Fragil Institucional:** vulnerabilidad ante cambios unilaterales en algoritmos y politicas de datos.
+- **Fragmentacion:** turismo, comercio, cultura y civismo dispersos en apps desconectadas.
+- **Erosion Identitaria:** interfaces genericas que ignoran patrimonio historico intangible.
+
+### El Desafio Tecnico
+
+1. **Dependencia de conectividad:** inoperatividad en zonas de montaña.
+2. **Sin gobernanza algoritmica:** ausencia de IA etica con contexto cultural.
+3. **Puntos unicos de fallo:** arquitecturas centralizadas susceptibles a caidas.
+
+---
+
+## Definicion del Hub (Nodo Cero MD-X4)
+
+**RDM Digital Hub** es la primera infraestructura **digital soberana, federada y antifragil** disenada desde el territorio:
+
+- **Turismo Inteligente:** cartografia vectorial en tiempo real, clusterizacion de POIs, geofencing cultural.
+- **Radio Difusora TAMV 92.5 FM:** streaming integrado al flujo web/movil.
+- **Comercio Soberano:** conexion directa P2P sin comision extractiva.
+- **IA Colectiva (Isabella AI):** asistente conversacional con pipelines eticos y arquitectura modular de skills.
+- **Gemelos Digitales:** fusion de capas geoespaciales y datos territoriales.
 
 ---
 
 ## Modelo de Gobernanza: Las 7 Federaciones del TAMV
 
-El sistema opera sobre la sincronización inalterable del bus de datos **YUN**, articulando formalmente las **7 Federaciones Soberanas del Modelo TAMV**:
+Articuladas por el bus de datos **YUN**:
 
 ```text
                   ┌─────────────────────────────────────────┐
@@ -151,26 +127,15 @@ El sistema opera sobre la sincronización inalterable del bus de datos **YUN**, 
  └───────┘  └───────┘  └───────┘   └───────┘   └───────┘  └───────┘  └───────┘
 ```
 
-1. **F1: Identidad Soberana & Pasaportes Digitales**  
-   Autenticación descentralizada, perfiles multi-rol, criptografía de clave pública con PKCE y gestión de reputación cívica.
-
-2. **F2: Patrimonio, Cultura & Memoria Colectiva**  
-   Archivos comunitarios inmutables, corpus de tradición oral, registros históricos de la minería y enciclopedias territoriales.
-
-3. **F3: Turismo Inteligente & Redes Territoriales**  
-   Motor de rutas dinámicas, geofencing de puntos de interés, mapas de calor y gestión sustentable de flujos de visitantes.
-
-4. **F4: Economía Local, Comercios & Protocolo Alamexa**  
-   Directorio comercial interoperable, pasarela de intercambio justo, programas de lealtad territorial y membresías sin intermediarios.
-
-5. **F5: Gemelos Digitales, Telemetría & Sensores**  
-   Representación espacial tridimensional, monitoreo ambiental en tiempo real y mapas vectoriales con soporte *offline-first*.
-
-6. **F6: Inteligencia Colectiva (Isabella AI & Agents Core)**  
-   Nodos de IA ética con gobernanza algorítmica y orquestación de habilidades especializadas (*Orion, Sophia, Argus, Mnemos, Lumen*).
-
-7. **F7: Resiliencia, Criptografía Post-Cuántica (PQC) & BookPI Ledger**  
-   Blindaje de datos sensibles contra amenazas cuánticas, auditoría inmutable en libro mayor distribuido (BookPI) y tolerancia a fallos.
+| Federacion | Nombre | Funcion |
+|-----------|--------|---------|
+| **F1** | Identidad Soberana | Autenticacion descentralizada, PKCE, reputacion civica |
+| **F2** | Patrimonio y Memoria | Archivos inmutables, tradicion oral, enciclopedia territorial |
+| **F3** | Turismo Inteligente | Rutas dinamicas, geofencing, mapas de calor |
+| **F4** | Economia Local | Directorio comercial, intercambio justo, lealtad territorial |
+| **F5** | Gemelos Digitales | Representacion 3D, monitoreo ambiental, mapas offline-first |
+| **F6** | IA Colectiva | Isabella AI, orquestacion de agentes (Orion, Sophia, Argus, Mnemos, Lumen) |
+| **F7** | Resiliencia PQC | Criptografia post-cuantica, BookPI Ledger, tolerancia a fallos |
 
 ---
 
@@ -178,456 +143,452 @@ El sistema opera sobre la sincronización inalterable del bus de datos **YUN**, 
 
 ```text
 rdm-digital-hub-ldtocs/
-├── .agents/                      # Células de memoria y contextos de IA agéntica
-│   └── memory/                   # Registros de sincronización y estado del sistema
 ├── artifacts/
-│   ├── api-server/               # Backend API Gateway Express 5 (Node.js 20)
-│   │   ├── src/                  # Endpoints de territorio, IA y federaciones
-│   │   └── .replit-artifact/     # Configuración de ejecución en Replit Autoscale
-│   └── rdm-hub/                  # Core Frontend SPA (React 19 + Vite 7 + Tailwind 4)
-│       ├── src/
-│       │   ├── components/       # UI Components (shadcn/ui + Leaflet Maps)
-│       │   ├── features/         # Módulos de dominio (Gamificación, Mapas, AI)
-│       │   ├── hooks/            # Custom React Hooks & State Store
-│       │   └── services/         # Clientes de API, Supabase & Bus YUN
-│       └── public/               # Assets estáticos y logos vectoriales
-├── docs/                         # Documentación técnica, académica y especificaciones
-├── packages/                     # Librerías compartidas e integraciones de PQC
-├── .replit                       # Entrypoint oficial de Replit Nix Environment
-├── replit.nix                    # Definición de dependencias de sistema Nix
-├── package.json                  # Workspaces de pnpm
-└── README.md                     # Documento Maestro del Repositorio
+│   ├── api-server/               # Backend Express 5 — API Gateway (Node.js 20)
+│   │   └── src/
+│   │       ├── routes/           # 7 archivos de rutas (7+ endpoints)
+│   │       ├── lib/isabella/     # Isabella Ω-Core v4.0 Enterprise (12 modulos)
+│   │       ├── lib/ai/           # Capa AI: ISA API, Mexa API, Knowledge (3 archivos)
+│   │       ├── db/schema.ts      # Schema Drizzle ORM (Supabase PostgreSQL)
+│   │       └── config/           # Liquidsoap, radio config
+│   └── rdm-hub/                  # Frontend SPA (React 19 + Vite 7 + Tailwind)
+│       └── src/
+│           ├── pages/            # 111 paginas
+│           ├── components/       # 112 componentes (shadcn/ui + Leaflet + Three.js)
+│           ├── modules/          # 13 modulos especializados
+│           ├── hooks/            # Custom React hooks
+│           ├── stores/           # Zustand stores
+│           └── assets/           # 100+ imagenes, audio, video
+├── lib/                          # Librerias compartidas del workspace
+│   ├── db/                       # Schema Drizzle ORM compartido
+│   ├── api-zod/                  # Validacion Zod para API
+│   ├── api-spec/                 # OpenAPI spec + Orval codegen
+│   └── api-client-react/         # Clientes API tipados (React hooks)
+├── docs/                         # Documentacion tecnica
+│   ├── adr/                      # Architecture Decision Records (3 ADRs)
+│   └── radio/                    # Guia de deployment AzuraCast
+├── .agents/memory/               # Memoria de agentes IA
+├── pnpm-workspace.yaml           # Workspaces con catalog protocol
+└── package.json                  # Root workspace
 ```
 
----
+### Numeros Clave
 
-## Stack Tecnológico Unificado
-
-| Capa | Tecnología Seleccionada | Justificación Técnica & Función |
-| --- | --- | --- |
-| **Frontend Framework** | **React 19** + **TypeScript 5.9** | Renderizado reactivo de ultra alta velocidad y tipado estricto end-to-end. |
-| **Build Tool & Bundler** | **Vite 7.3.6** | Compilación incremental *lightning-fast* y empaquetado optimizado para la web. |
-| **Estilos & Componentes** | **Tailwind CSS 4** + **shadcn/ui** | Diseño accesible, responsivo y adaptado a identidades territoriales. |
-| **Navegación & Estado** | **React Router v6** + **Zustand** | Enrutamiento optimizado con *lazy loading* y manejo de estado liviano. |
-| **Mapeo & Geoespacial** | **Leaflet** + **Supercluster** | Renderizado fluido de capas vectoriales con clusterización masiva de POIs. |
-| **Backend Core** | **Express 5** sobre **Node.js 20.x** | API Gateway ligera, asíncrona y con tolerancia a cargas concurrentes. |
-| **Base de Datos & Auth** | **Supabase (PostgreSQL)** | Persistencia de datos relacional con RLS, Auth PKCE y suscripciones en vivo. |
-| **Despliegue & Infra** | **Replit Autoscale** | Contenedores autónomos con auto-escalado dinámico sin dependencia de terceros. |
+| Metrica | Valor |
+|---------|-------|
+| Paginas frontend | 111 |
+| Componentes UI | 112 |
+| Modulos especializados | 13 |
+| API route files | 7 |
+| Isabella Ω-Core modules | 12 |
+| Workspace libs | 4 |
+| ADRs documentados | 3 |
+| Assets multimedia | 100+ |
 
 ---
 
-## Módulos y Matriz de Madurez
+## Stack Tecnologico Unificado
 
-Auditoría real del codebase — porcentajes basados en código funcional vs. stubs/placeholders.
+| Capa | Tecnologia | Funcion |
+|------|-----------|---------|
+| **Frontend** | React 19 + TypeScript 5.9 | Renderizado reactivo con tipado estricto |
+| **Build** | Vite 7.3.6 | Compilacion incremental, HMR |
+| **Estilos** | Tailwind CSS + shadcn/ui | Diseno accesible, responsivo |
+| **Routing** | React Router v7 | Lazy loading, navegacion SPA |
+| **Estado** | Zustand | State management liviano |
+| **Mapas** | Leaflet + Supercluster | Capas vectoriales, clusterizacion de POIs |
+| **3D** | Three.js + React Three Fiber | Gemelos digitales, visualizaciones |
+| **Animaciones** | Framer Motion | Transiciones y micro-interacciones |
+| **Backend** | Express 5 + Node.js 20 | API Gateway asincrona |
+| **DB** | Supabase (PostgreSQL) | Persistencia relacional con RLS |
+| **ORM** | Drizzle ORM | Type-safe queries, migrations |
+| **Validacion** | Zod | Schema validation end-to-end |
+| **API Spec** | OpenAPI + Orval | Codegen de clientes tipados |
+| **Radio** | AzuraCast + Liquidsoap | AutoDJ, streaming, programacion 24/7 |
+| **Despliegue** | Replit Autoscale | Contenedores auto-escalables |
 
-| # | Módulo | % | Estado | Archivos Clave |
+---
+
+## Modulos y Matriz de Madurez
+
+Auditoria real del codebase — porcentajes basados en codigo funcional vs. stubs/placeholders.
+
+| # | Modulo | % | Estado | Archivos Clave |
 |---|--------|---|--------|---------------|
-| 1 | **Portal Turístico / Homepage** | `78%` | 🟡 | `pages/Index.tsx`, `Lugares.tsx`, `QuienesSomos.tsx` |
-| 2 | **Motor Mapas Geoespaciales** | `82%` | 🟢 | `Mapa.tsx`, `UnifiedMap.tsx`, `TerritorialSVGMap.tsx` |
-| 3 | **Gestión de Identidad (Auth)** | `75%` | 🟡 | `RDMAuthContext.tsx`, `useAuth.tsx`, `rbac.ts` |
-| 4 | **TAMV 92.5 Radio Digital** | `88%` | 🟢 | `ArchivoSonoro.tsx`, `RadioPlayer.tsx`, `routes/radio.ts` |
-| 5 | **Música Territorial (Ecos)** | `72%` | 🟡 | `Musica.tsx`, `SpatialPlayer.tsx`, `CronicaPanel.tsx` |
-| 6 | **Gamificación Phygital** | `60%` | 🟠 | `GamificationHUD.tsx`, `engine.ts`, `routes/gamification.ts` |
-| 7 | **RDM Living World** | `58%` | 🟠 | `schema.ts`, `narrator.ts`, `triggers SQL`, ADR-001/003 |
+| 1 | **Portal Turistico** | `78%` | 🟡 | `Index.tsx`, `Lugares.tsx`, `QuienesSomos.tsx` |
+| 2 | **Motor Mapas** | `82%` | 🟢 | `Mapa.tsx`, `UnifiedMap.tsx`, `TerritorialSVGMap.tsx` |
+| 3 | **Auth / Identidad** | `75%` | 🟡 | `RDMAuthContext.tsx`, `rbac.ts` |
+| 4 | **TAMV 92.5 Radio** | `88%` | 🟢 | `ArchivoSonoro.tsx`, `RadioPlayer.tsx`, `routes/radio.ts` |
+| 5 | **Musica Territorial** | `72%` | 🟡 | `Musica.tsx`, `SpatialPlayer.tsx` |
+| 6 | **Gamificacion Phygital** | `60%` | 🟠 | `GamificationHUD.tsx`, `engine.ts`, `routes/gamification.ts` |
+| 7 | **RDM Living World** | `58%` | 🟠 | `schema.ts`, `narrator.ts`, SQL triggers, ADR-001/003 |
 | 8 | **Banners Comerciales** | `88%` | 🟢 | `banners-data.ts` (80), `BannerManager.tsx` |
-| 9 | **Panel Admin / CMS** | `55%` | 🟠 | `admin/Dashboard.tsx` — CRUD negocios funciona |
-| 10 | **Isabella AI Engine** | `72%` | 🟡 | `routes/isabella.ts` (10 endpoints), `IsabellaChat.tsx` |
-| 11 | **Bus de Federación YUN** | `28%` | 🔴 | `federation.ts`, `useYunEventBus` — conceptual |
-| 12 | **Capa de Seguridad PQC** | `32%` | 🔴 | `PostQuantumCrypto.ts`, `SecureTokenManager.ts` |
-| 13 | **Directorio de Comercios** | `80%` | 🟢 | `Comercios.tsx`, `BusinessCard.tsx` — Supabase live |
-| 14 | **Transporte Local** | `55%` | 🟠 | `TransporteLocal.tsx`, `ShuttleCDMX.tsx` — datos cargan |
-| 15 | **Wiki / Enciclopedia** | `65%` | 🟠 | `Wiki.tsx` — lectura Supabase, sin authoring |
-| 16 | **Rutas Turísticas** | `82%` | 🟢 | `Rutas.tsx` — 6 rutas completas, datos hardcoded |
-| 17 | **Ecoturismo** | `78%` | 🟡 | `Ecoturismo.tsx` — 6 actividades, sin booking |
-| 18 | **Donaciones / Fundraising** | `60%` | 🟠 | `Donar.tsx` — Stripe checkout funcional |
-| 19 | **Realito AI / Chat** | `68%` | 🟡 | `RealitoBubble.tsx` — chat UI + SSE streaming |
-| 20 | **Telemetría / Observabilidad** | `45%` | 🟠 | `sentry.ts`, `TelemetryDashboard.tsx` — básico |
-| 21 | **Search / UX Layer** | `55%` | 🟠 | `SearchOverlay.tsx`, `tourismIndex.ts` — client-side |
-| 22 | **Digital Twins / Gemelos** | `48%` | 🟠 | `hybridTwin.ts`, `Map3DTwin.tsx` — conceptual |
+| 9 | **Panel Admin** | `55%` | 🟠 | `Dashboard.tsx` — CRUD negocios funcional |
+| 10 | **Isabella AI Engine** | `75%` | 🟡 | `routes/isabella.ts` (18 endpoints), `isabella/` (12 modulos) |
+| 11 | **Bus de Federacion YUN** | `28%` | 🔴 | `federation.ts` — conceptual |
+| 12 | **Seguridad PQC** | `32%` | 🔴 | `PostQuantumCrypto.ts` — conceptual |
+| 13 | **Directorio Comercios** | `80%` | 🟢 | `Comercios.tsx`, `BusinessCard.tsx` — Supabase live |
+| 14 | **Transporte Local** | `55%` | 🟠 | `TransporteLocal.tsx` — datos cargan |
+| 15 | **Wiki / Enciclopedia** | `65%` | 🟠 | `Wiki.tsx` — lectura Supabase |
+| 16 | **Rutas Turisticas** | `82%` | 🟢 | `Rutas.tsx` — 6 rutas completas |
+| 17 | **Ecoturismo** | `78%` | 🟡 | `Ecoturismo.tsx` — 6 actividades |
+| 18 | **Donaciones** | `60%` | 🟠 | `Donar.tsx` — Stripe checkout funcional |
+| 19 | **Realito AI Chat** | `68%` | 🟡 | `RealitoBubble.tsx` — chat UI + SSE |
+| 20 | **Telemetria** | `45%` | 🟠 | `sentry.ts`, `TelemetryDashboard.tsx` |
+| 21 | **Search / UX** | `55%` | 🟠 | `SearchOverlay.tsx` — client-side |
+| 22 | **Digital Twins** | `48%` | 🟠 | `Map3DTwin.tsx` — conceptual |
 
-### Leyenda de Estados
+### Leyenda
 
 | Estado | Significado |
 |--------|-------------|
-| 🟢 80-100% | Producción viable — pulido menor pendiente |
-| 🟡 60-79% | Funcional — gaps notables en lógica/persistencia |
+| 🟢 80-100% | Produccion viable — pulido menor pendiente |
+| 🟡 60-79% | Funcional — gaps notables en logica/persistencia |
 | 🟠 40-59% | Parcial — UI funcional, datos mock o sin backend |
-| 🔴 0-39% | Conceptual — arquitectura diseñada, sin implementación |
+| 🔴 0-39% | Conceptual — arquitectura disenada, sin implementacion |
 
 ---
 
 ## Checklist de Funcionalidades Pendientes
 
-### 🟢 Produción Cercana (necesitan pulido)
+### Produccion Cercana (pulido menor)
 
-- [ ] **Radio Digital:** Archivos de episode playback, podcast archive, listener count en frontend
-- [ ] **Banners:** Admin CRUD para banners, click tracking, A/B testing, personalización
-- [ ] **Mapas:** Markers desde DB (no hardcoded), heatmap layer, offline-first caching
-- [ ] **Rutas Turísticas:** Booking funcional, "Descargar Mapa" real, reviews de usuarios
-- [ ] **Comercios:** Detail page, reviews/ratings, booking, photo galleries
+- [ ] **Radio:** playback de episodios, podcast archive, listener count en frontend
+- [ ] **Banners:** admin CRUD, click tracking, A/B testing
+- [ ] **Mapas:** markers desde DB, heatmap layer, offline-first caching
+- [ ] **Rutas:** booking funcional, "Descargar Mapa" real, reviews
+- [ ] **Comercios:** detail page, reviews, photo galleries
 
-### 🟡 Funcional pero Incompleto
+### Funcional pero Incompleto
 
-- [ ] **Portal Turístico:** Image CDN, booking flow, SEO coverage completa, i18n
-- [ ] **Auth:** RBAC enforcement (middleware), profile management, OAuth providers, 2FA
-- [ ] **Música:** Recommendation engine con datos reales, listening history persistence, playlist sharing
-- [ ] **Isabella AI:** Backend persistence (no in-memory), RAG pipeline real, conversation history
-- [ ] **Realito Chat:** Backend en repo (Supabase Edge Function externo), context-aware responses
-- [ ] **Ecoturismo:** Weather integration, trail calculator, user reviews, seasonal recommendations
-- [ ] **Donaciones:** Donation history, tax receipts, donor wall, recurring donations
+- [ ] **Portal:** image CDN, booking flow, SEO coverage, i18n
+- [ ] **Auth:** RBAC middleware, profile management, OAuth, 2FA
+- [ ] **Musica:** recommendation engine con datos reales, listening history
+- [ ] **Isabella:** backend persistence (no in-memory), RAG pipeline real
+- [ ] **Ecoturismo:** weather integration, trail calculator, user reviews
+- [ ] **Donaciones:** donation history, tax receipts, recurring donations
 
-### 🟠 Requieren Trabajo Significativo
+### Requieren Trabajo Significativo
 
-- [ ] **Gamificación:** Quest completion flow real, QR check-in, seasonal resets, currency redemption
-- [ ] **Living World:** Schema migration en producción, world event scheduling, season rotation, challenge progression
-- [ ] **Panel Admin:** Analytics con datos reales, user management, content moderation, audit log
-- [ ] **Transporte:** Real-time tracking, booking system, schedules, pricing, driver info
-- [ ] **Wiki:** Article authoring/editing, search, table of contents, images, version history
-- [ ] **Donaciones:** Corporate sponsorship, campaign tracking, thank-you emails
-- [ ] **Telemetry:** Structured logging, performance monitoring (Web Vitals), alerting, log aggregation
-- [ ] **Search:** Server-side search, fuzzy matching, autocomplete, search analytics
+- [ ] **Gamificacion:** quest completion real, QR check-in, seasonal resets
+- [ ] **Living World:** schema en produccion, world event scheduling, season rotation
+- [ ] **Panel Admin:** analytics con datos reales, user management, audit log
+- [ ] **Transporte:** real-time tracking, booking, schedules
+- [ ] **Wiki:** article authoring, search, version history
+- [ ] **Telemetry:** structured logging, Web Vitals, alerting
+- [ ] **Search:** server-side search, fuzzy matching, autocomplete
 
-### 🔴 En Etapa Conceptual
+### Conceptual (sin implementacion)
 
-- [ ] **Federación YUN:** P2P sync real, cross-node communication, federation discovery, data reconciliation
-- [ ] **Seguridad PQC:** Real post-quantum algorithms (Kyber/Dilithium), hardware key integration, audit trail
-- [ ] **Digital Twins:** IoT sensor integration, BIM model loading, 3D rendering funcional, real-time telemetry
+- [ ] **Federacion YUN:** P2P sync real, cross-node communication
+- [ ] **Seguridad PQC:** Kyber/Dilithium reales, hardware key integration
+- [ ] **Digital Twins:** IoT sensor integration, BIM loading, 3D rendering
 
 ---
 
-## Gamificación Phygital Territorial
+## Gamificacion Phygital Territorial
 
-Sistema de **juego territorial phygital** (*Physical + Digital*) que transforma la experiencia turística y comunitaria en una aventura interactiva sobre Real del Monte:
+Sistema de **juego territorial phygital** que transforma la experiencia turistica en aventura interactiva:
 
-### Bucle Principal de Juego (*Gameplay Loop*)
+### Bucle de Juego
 
-\[
-\text{Descubrir POI} \longrightarrow \text{Interactuar (QR/Sensor)} \longrightarrow \text{Validación Criptográfica} \longrightarrow \text{Recompensa (XP/RDM Points)} \longrightarrow \text{Subir Nivel / Rango}
-\]
+```
+Descubrir POI → Interactuar (QR/Sensor) → Validacion Criptografica → Recompensa (XP/Points) → Subir Nivel
+```
 
-### Mecánicas Principales
+### Rangos de Prestigio
 
-- 📍 **Exploración Geolocalizada:** check-ins verificados en puntos de interés histórico y locales comerciales.
-- 📜 **Misiones Narrativas:** rutas dinámicas tematizadas (*"Ruta del Minero"*, *"Ruta de la Plata"*, *"Ruta de las Leyendas"*).
-- 🏆 **Rangos de Prestigio:**
-  1. `Explorador` (Rango Base)
-  2. `Cronista` (Rango Intermedio)
-  3. `Minero Legendario` (Rango Avanzado)
-  4. `Guardián del Pueblo` (Estatus Máximo Territorial)
+1. **Explorador** — Rango base
+2. **Cronista** — Rango intermedio
+3. **Minero Legendario** — Rango avanzado
+4. **Guardian del Pueblo** — Estatus maximo territorial
 
-- 🎁 **Recompensas Tangibles:** moneda blanda (*RDM Points*) canjeable por beneficios reales en comercios participantes de Real del Monte.
-- ⏳ **Temporadas Trimestrales (90 Días):** marcadores de clasificación (*Leaderboards*) con premiación en festivales locales.
+### Recompensas
+
+- **RDM Points** canjeables en comercios participantes
+- **Temporadas trimestrales (90 dias)** con leaderboards y premiacion en festivales
 
 ---
 
 ## RDM Living World — Arquitectura de Juego
 
-Sistema evolutivo de juego territorial que integra gamificación, narrativa inteligente, economía interna y colección de patrimonio cultural. Basado en **ADR-001** y **ADR-003**.
+Sistema evolutivo con gamificacion, narrativa inteligente, economia interna y coleccion de patrimonio.
 
 ### Decisiones de Arquitectura
 
-| ADR | Documento | Estado | Contenido |
-| --- | --- | --- | --- |
-| ADR-001 | `docs/adr/001-rdm-living-world-gamification.md` | ACEPTADO | Esquema de datos completo, roadmap 6 fases |
-| ADR-003 | `docs/adr/003-economia-prestigio-territorial.md` | ACEPTADO | Economía 8 monedas, prestigio territorial |
+| ADR | Estado | Contenido |
+|-----|--------|-----------|
+| ADR-001 | ACEPTADO | Esquema de datos, roadmap 6 fases |
+| ADR-003 | ACEPTADO | Economia 8 monedas, prestigio territorial |
+| ADR-004 | ACEPTADO | Isabella Omega Core v4.0 Enterprise |
 
 ### Base de Datos (Drizzle ORM + Supabase)
 
-Schema completo en `artifacts/api-server/src/db/schema.ts`:
+Schema en `artifacts/api-server/src/db/schema.ts`:
 
-- **players** / **player_avatars** — Identidad y avatar del jugador
-- **territories** / **poi_state** — Puntos de interés y eventos en territorio
-- **seasons** / **world_state_snapshots** — Temporadas y estado del mundo
-- **player_currencies** — 8 tipos de moneda (XP, COIN, CRYSTAL, PRESTIGE, HONOR, ENERGY, INFLUENCE, TERRITORIAL_IMPACT)
-- **progression_branches** / **player_progressions** — 6 ramas de progresión
-- **items** / **collections** / **player_items** / **player_collections** — Coleccionables y patrimonio
-- **world_events** / **community_challenges** — Eventos del mundo y retos comunitarios
-- **narrative_messages** — Mensajes narrativos de Realito e Isabella
+- **players** / **player_avatars** — Identidad y avatar
+- **territories** / **poi_state** — POIs y eventos
+- **seasons** / **world_state_snapshots** — Temporadas
+- **player_currencies** — 8 tipos de moneda
+- **progression_branches** / **player_progressions** — 6 ramas
+- **items** / **collections** / **player_items** — Coleccionables
+- **world_events** / **community_challenges** — Eventos y retos
+- **narrative_messages** — Mensajes de Realito e Isabella
 
-### Triggers SQL (Supabase)
+### Economia Interna (ADR-003)
 
-`supabase/triggers/rdm_world_state.sql` — 5 triggers automáticos:
+| Moneda | Uso |
+|--------|-----|
+| ✨ XP | Progresion general |
+| 🪙 COIN | Compras de cosmeticos |
+| 💎 CRYSTAL | Recompensas raras |
+| 🏆 PRESTIGE | Logros comunitarios |
+| 🏅 HONOR | Acciones eticas |
+| ⚡ ENERGY | Stamina de sesion |
+| 🌐 INFLUENCE | Activar eventos globales |
+| 🌍 TERRITORIAL_IMPACT | Impacto positivo en territorio |
 
-1. **world_events → world_state_snapshots** — Genera snapshots del mundo en cada evento
-2. **community_challenge_events → community_challenges** — Incrementa progreso de retos
-3. **player_events → players.last_seen_at** — Actualiza actividad del jugador
-4. **world_events → poi_state** — Marca POIs como activos durante eventos
-5. **world_events UPDATE → poi_state** — Resetea POIs al terminar eventos
+### Triggers SQL
 
-### API Endpoints
-
-#### Gamificación (Legacy + Living World)
-
-| Método | Ruta | Descripción |
-| --- | --- | --- |
-| GET | `/api/v1/gamification/profile` | Perfil legacy |
-| GET | `/api/v1/gamification/leaderboard` | Ranking |
-| POST | `/api/v1/gamification/award-xp` | Asignar XP |
-| GET | `/api/v1/living-world/player/:id` | Perfil completo Living World |
-| GET | `/api/v1/living-world/player/:id/avatar` | Avatar del jugador |
-| GET | `/api/v1/living-world/player/:id/collections` | Colecciones |
-| GET | `/api/v1/living-world/player/:id/seasons/current` | Temporada actual |
-| GET | `/api/v1/living-world/world/state` | Estado del mundo |
-| GET | `/api/v1/living-world/world/map-layer` | Capa de mapa |
-| GET | `/api/v1/living-world/events/community-challenges` | Retos comunitarios |
-| POST | `/api/v1/living-world/player/action` | Registrar acción del jugador |
-
-#### Narrativa (Realito & Isabella)
-
-| Método | Ruta | Descripción |
-| --- | --- | --- |
-| POST | `/api/v1/narrative/feed` | Feed contextual de mensajes |
-| POST | `/api/v1/narrative/trigger` | Mensaje por acción del jugador |
-| POST | `/api/v1/narrative/suggest` | Acciones sugeridas |
-| GET | `/api/v1/narrative/characters` | Perfiles de personajes |
-
-### Economía Interna (ADR-003)
-
-| Moneda | Icono | Uso |
-| --- | --- | --- |
-| XP | ✨ | Progresión general |
-| COIN | 🪙 | Compras de cosméticos |
-| CRYSTAL | 💎 | Recompensas raras |
-| PRESTIGE | 🏆 | Logros comunitarios |
-| HONOR | 🏅 | Acciones éticas |
-| ENERGY | ⚡ | Stamina de sesión |
-| INFLUENCE | 🌐 | Activar eventos globales |
-| TERRITORIAL_IMPACT | 🌍 | Impacto positivo en territorio |
+`supabase/triggers/rdm_world_state.sql` — 5 triggers automaticos para sincronizar snapshots, retos, actividad de jugadores y estado de POIs.
 
 ---
 
 ## Sistema de Banners — Publicidad Distribuida
 
-Red de **80 banners publicitarios** distribuidos estratégicamente a través de todas las páginas y secciones de la plataforma, con rotación automática y persistencia de preferencias.
+**80 banners** distribuidos en todas las paginas con rotacion automatica.
 
-### Categorías de Banners
+| Categoria | Cantidad | Paginas |
+|-----------|----------|---------|
+| Comercio Local | 16 | Directorio, Comercios, Homepage |
+| Turismo | 12 | Mapa, Rutas, Ecoturismo |
+| Cultura | 10 | Cultura, Patrimonio, Historia |
+| Tecnologia | 10 | Isabella AI, FAQ, Arquitectura |
+| Gastronomia | 8 | Gastronomia, Ruta del Paste |
+| Eventos | 8 | Eventos, Comunidad |
+| Membresias | 6 | Membresias, Premium |
+| Radio | 5 | Archivo Sonoro |
+| Musica | 5 | Musica |
+| **Total** | **80** | |
 
-| Categoría | Cantidad | Páginas Objetivo |
-| --- | --- | --- |
-| **Comercio Local** | 16 | Directorio, Comercios, Catálogo, Homepage |
-| **Turismo** | 12 | Mapa, Rutas, Ecoturismo, Homepage |
-| **Cultura** | 10 | Cultura, Patrimonio, Historia, Atlas |
-| **Tecnología** | 10 | Isabella AI, FAQ, Arquitectura |
-| **Gastronomía** | 8 | Gastronomía, Sabores, Ruta del Paste |
-| **Eventos** | 8 | Eventos, Comunidad |
-| **Membresías** | 6 | Membresías, Premium, Gamificación |
-| **Radio** | 5 | Archivo Sonoro, Comunidad |
-| **Música** | 5 | Música, Archivo Sonoro |
-| **Total** | **80** | — |
-
-### Componente BannerManager
-
-- **Route-aware:** Lee la ruta actual y muestra banners relevantes
-- **Rotación 30 min:** Actualiza banners cada media hora
-- **Dismiss persistente:** Los usuarios pueden ocultar banners (localStorage)
-- **Grid responsive:** 1-4 columnas según el tamaño de pantalla
-- **Featured banners:** Banners destacados ocupan 2 columnas
-- **Auto-hide:** Se oculta en páginas de admin y auth
-
-### Archivos
-
-- `components/rdm/banners-data.ts` — Definiciones de los 80 banners
-- `components/rdm/BannerManager.tsx` — Componente renderizador
-- `App.tsx` — Integrado globalmente después de las rutas
+**BannerManager** — route-aware, rotacion 30min, dismiss persistente, grid responsive, auto-hide en admin/auth.
 
 ---
 
-## Isabella AI Engine — Integración Completa
+## Isabella AI Engine — Omega Core v4.0 Enterprise
 
-Motor de **Inteligencia Artificial Conversacional** para turismo y patrimonio, con backend completo y frontend extenso.
+Motor de **IA Conversacional** con arquitectura completa de gobernanza etica, memoria, criptografia federada y skills modulares.
 
-### Backend API (Express)
+### Backend — 18 Endpoints
 
-| Método | Ruta | Descripción |
-| --- | --- | --- |
-| POST | `/api/isabella/chat` | Conversación con Isabella (clasificación de intención + respuesta contextual) |
-| GET | `/api/isabella/stream` | SSE streaming de decisiones en tiempo real |
-| GET | `/api/isabella/decisions` | Historial de decisiones del jugador |
-| GET | `/api/isabella/status` | Salud del sistema y métricas |
-| POST | `/api/isabella/feedback` | Envío de feedback del usuario |
-| GET | `/api/isabella/knowledge` | Base de conocimiento (búsqueda por categoría) |
-| POST | `/api/isabella/knowledge` | Agregar entrada a la base de conocimiento |
-| POST | `/api/tts-isabella` | Text-to-Speech proxy para voz de Isabella |
-| GET | `/api/isabella/sessions` | Sesiones activas del jugador |
-| POST | `/api/isabella/sessions/:id/close` | Cerrar sesión activa |
+| Metodo | Ruta | Descripcion |
+|--------|------|-------------|
+| POST | `/api/isabella/chat` | Conversacion con clasificacion de intencion |
+| GET | `/api/isabella/stream` | SSE streaming de decisiones |
+| GET | `/api/isabella/decisions` | Historial de decisiones |
+| GET | `/api/isabella/status` | Salud del sistema |
+| POST | `/api/isabella/feedback` | Feedback del usuario |
+| GET | `/api/isabella/knowledge` | Base de conocimiento |
+| POST | `/api/isabella/knowledge` | Agregar entrada |
+| POST | `/api/tts-isabella` | Text-to-Speech proxy |
+| GET | `/api/isabella/sessions` | Sesiones activas |
+| POST | `/api/isabella/sessions/:id/close` | Cerrar sesion |
+| POST | `/api/isabella/cognitive/process` | Procesamiento cognitivo |
+| GET | `/api/isabella/soul/status` | Estado del alma (SOUL) |
+| POST | `/api/isabella/memory/recall` | Recall de memoria multiescalar |
+| POST | `/api/isabella/memory/store` | Almacenar en memoria |
+| GET | `/api/isabella/federation/status` | Estado de federacion |
+| POST | `/api/isabella/crypto/sign` | Firma de payloads |
+| GET | `/api/isabella/evaluation/quality` | Metricas de calidad |
+| GET | `/api/isabella/skills/registry` | Registro de skills |
 
-### Base de Datos (Drizzle ORM)
+### Omega Core v4.0 — 12 Modulos TypeScript
+
+```
+lib/isabella/
+├── types.ts              # Sistema de tipos completo (Core, SOUL, Federation, Crypto, Skills)
+├── index.ts              # Barrel export unificado
+├── soul/
+│   └── identity.ts       # SOUL identity, 7 agentes, 16 politicas eticas, 7 NEVER rules
+├── core/
+│   ├── personality.ts    # Motor de personalidad 3S, 5 modos
+│   └── orchestrator.ts   # Orquestador cognitivo, 17 patrones de intencion
+├── memory/
+│   ├── engine.ts         # Motor de memoria multiescalar (7 tipos)
+│   └── librarian.ts      # Adaptador Librarian
+├── crypto/
+│   └── federation.ts     # Mascaras SHA-256, firma de payloads
+├── evaluation/
+│   └── engine.ts         # 4 metricas de calidad/etica
+├── skills/
+│   └── registry.ts       # Registro ClawHub + 7 builtins
+├── fair/
+│   └── metrics.ts        # Deteccion de bias (5 patrones), guardrails
+└── xrai/
+    └── renderer.ts       # Generacion de escenas XR, 5 formatos de export
+```
+
+### Capa AI Adicional
+
+```
+lib/ai/
+├── isa-api.ts            # Core cognitivo ISA, prompt guard, parser de intenciones
+├── mexa-api.ts           # Capa de criptografia de soberania Mexa
+└── knowledge.ts          # 19 entradas de conocimiento TAMV (5 dominios)
+```
+
+### Frontend
+
+| Componente | Estado |
+|-----------|--------|
+| IsabellaChat | Chat UI con hashing federado |
+| IsabellaVoiceEngine | STT + TTS con emociones |
+| IsabellaOrb | Orbe animado que abre chat |
+| useIsabella / useIsabellaSSE | Streaming chat + SSE |
+| isabellaStore (Zustand) | Estado global |
+| isabella-guardian | Politica de seguridad (NORMAL/SAFE/EMERGENCY) |
+| ExperienceOrchestrator | Motor de decisiones geoespaciales |
+
+### Base de Datos
 
 - **isabella_sessions** — Persistencia de conversaciones
-- **isabella_decisions** — Auditoría de decisiones con mode (NORMAL/SAFE/EMERGENCY)
-- **isabella_feedback** — Calificaciones y comentarios de usuarios
+- **isabella_decisions** — Auditoria con mode (NORMAL/SAFE/EMERGENCY)
+- **isabella_feedback** — Calificaciones de usuarios
 - **isabella_knowledge** — Base de conocimiento para RAG
-
-### Frontend (Componentes y Hooks)
-
-| Componente | Archivo | Estado |
-| --- | --- | --- |
-| IsabellaChat | `components/isabella/IsabellaChat.tsx` | ✅ Chat UI con hashing federado |
-| IsabellaVoiceEngine | `components/isabella/IsabellaVoiceEngine.tsx` | ✅ STT + TTS con emociones |
-| IsabellaOrb | `components/home/IsabellaOrb.tsx` | ✅ Orbe animado que abre chat |
-| useIsabella | `hooks/useIsabella.ts` | ✅ Streaming chat via Supabase |
-| useIsabellaSSE | `hooks/useIsabellaSSE.ts` | ✅ SSE con backoff exponencial |
-| useIsabellaVoice | `hooks/useIsabellaVoice.ts` | ✅ TTS cloud + local |
-| isabellaStore | `stores/tamv/isabellaStore.ts` | ✅ Estado global (Zustand) |
-| isabella-guardian | `core/ai/isabella-guardian.ts` | ✅ Política de seguridad (NORMAL/SAFE/EMERGENCY) |
-| ExperienceOrchestrator | `core/orchestrator/ExperienceOrchestrator.ts` | ✅ Motor de decisiones geoespaciales |
-| kernel | `lib/kernel.ts` | ✅ Inferencia de intención (NLP regex) |
 
 ---
 
-## TAMV 92.5 FM Radio — AzuraCast (Reemplaza Caster.fm)
+## TAMV 92.5 FM Radio — AzuraCast
 
-**Automatización de radio 24/7 en la nube** sin necesidad de laptop encendida ni verificación telefónica.
+**Automatizacion de radio 24/7** en Oracle Cloud Always Free Tier ($0/mes).
 
 ### Arquitectura
 
 ```
-┌──────────────────────────────────────────────┐
-│      Oracle Cloud Always Free Tier           │
-│      $0/mes forever — ARM Ampere             │
-│      1 OCPU · 24 GB RAM · 200 GB SSD        │
-│                                              │
-│  ┌──────────┐  ┌───────────┐  ┌───────────┐  │
-│  │ AzuraCast│→ │ Liquidsoap│→ │  Icecast  │  │
-│  │  Panel   │  │  AutoDJ   │  │  Stream   │  │
-│  └──────────┘  └───────────┘  └───────────┘  │
-│       ↑              ↑              ↓        │
-│  ┌──────────┐  ┌───────────┐  ┌───────────┐  │
-│  │  REST    │  │ Dayparts  │  │ HTTP Stream│ │
-│  │  API     │  │ Scheduling│  │ 8000/tcp  │  │
-│  └──────────┘  └───────────┘  └───────────┘  │
-└──────────────────────────────────────────────┘
+┌──────────────────────────────────────────┐
+│      Oracle Cloud Always Free Tier       │
+│      $0/mes — ARM Ampere (1 OCPU/24GB)  │
+│                                          │
+│  ┌──────────┐  ┌───────────┐  ┌───────┐  │
+│  │ AzuraCast│→ │ Liquidsoap│→ │Icecast│  │
+│  │  Panel   │  │  AutoDJ   │  │Stream │  │
+│  └──────────┘  └───────────┘  └───────┘  │
+└──────────────────────────────────────────┘
          ↓                    ↓
-┌────────────────┐  ┌────────────────────┐
-│  RDM Digital   │  │  ArchivoSonoro.tsx  │
-│  Hub Backend   │  │  RadioPlayer.tsx    │
-│  /api/radio/*  │  │  (compact widget)   │
-└────────────────┘  └────────────────────┘
+┌────────────────┐  ┌─────────────────┐
+│  API Backend   │  │  Frontend       │
+│  /api/radio/*  │  │  RadioPlayer.tsx │
+└────────────────┘  └─────────────────┘
 ```
 
-### Stack
+### Stack Radio
 
-| Componente | Tecnología | Función |
-| --- | --- | --- |
-| **AutoDJ** | Liquidsoap | Programación automática con dayparts, jingles, crossfade |
-| **Panel** | AzuraCast (Docker) | Gestión web de estación, playlists, schedule, listeners |
-| **Streaming** | Icecast | Servidor de audio MP3/OGG, listeners ilimitados |
-| **Backend** | Express `/api/radio/*` | Proxy a AzuraCast REST API (now-playing, listeners, playlists) |
-| **Player** | React `RadioPlayer.tsx` | Widget compacto global, now-playing, album art, oyentes |
+| Componente | Tecnologia |
+|-----------|-----------|
+| AutoDJ | Liquidsoap (dayparts, jingles, crossfade) |
+| Panel | AzuraCast (Docker) |
+| Streaming | Icecast (MP3/OGG) |
+| Backend | Express `/api/radio/*` |
+| Player | React `RadioPlayer.tsx` (widget global) |
 
-### API Endpoints (Radio)
+### API Radio — 8 Endpoints
 
-| Método | Ruta | Descripción |
-| --- | --- | --- |
-| GET | `/api/radio/now-playing` | Canción actual, oyentes, estado en vivo |
-| GET | `/api/radio/status` | Estado de la estación |
-| GET | `/api/radio/listeners` | Lista de oyentes actuales |
+| Metodo | Ruta | Descripcion |
+|--------|------|-------------|
+| GET | `/api/radio/now-playing` | Cancion actual, oyentes |
+| GET | `/api/radio/status` | Estado de estacion |
+| GET | `/api/radio/listeners` | Oyentes actuales |
 | GET | `/api/radio/schedule` | Parrilla semanal |
-| GET | `/api/radio/playlists` | Playlists de la estación |
-| GET | `/api/radio/requests` | Solicitudes pendientes |
-| GET | `/api/radio/historical?hours=24` | Historial de reproducción |
-| POST | `/api/radio/stream-url` | URL del stream para un mount |
+| GET | `/api/radio/playlists` | Playlists |
+| GET | `/api/radio/requests` | Solicitudes |
+| GET | `/api/radio/historical` | Historial (24h) |
+| POST | `/api/radio/stream-url` | URL del stream |
 
-### Liquidsoap — Programación Automatizada
+### Liquidsoap — Programacion Automatizada
 
 Script completo en `artifacts/api-server/src/config/tamv-radio.liq`:
 
-- **Dayparts:** Mañana (programas), Tarde (música + publicidad), Noche (regional), Madrugada (continua)
-- **Jingles:** Cada ~5 canciones + reloj de hora en punto
+- **Dayparts:** Manana (programas), Tarde (musica + publicidad), Noche (regional), Madrugada (continua)
+- **Jingles:** Cada ~5 canciones + reloj de hora
 - **Noticias:** Cada 30 minutos
-- **DJ en vivo:** Override automático via `input.harbor` (puerto 8080)
-- **Fallback:** Audio de seguridad si todo falla
+- **DJ en vivo:** Override via `input.harbor` (puerto 8080)
+- **Fallback:** Audio de seguridad
 
-### Deployment
-
-Guía completa: `docs/radio/azuracast-deployment.md`
-
-```bash
-# En tu Oracle Cloud Always Free ARM VM (Ubuntu 22.04):
-ssh ubuntu@TU_IP
-sudo mkdir -p /var/azuracast && cd /var/azuracast
-curl -fsSL https://raw.githubusercontent.com/AzuraCast/AzuraCast/main/docker.sh > docker.sh
-chmod a+x docker.sh && ./docker.sh install
-```
+Guia de deployment: `docs/radio/azuracast-deployment.md`
 
 ---
 
-## Despliegue e Infraestructura Soberana (Replit Native)
+## Despliegue e Infraestructura Soberana
 
-El proyecto ha completado la transición total hacia la arquitectura **Replit-Native**, erradicando dependencias de plataformas propietarias (Vercel, Netlify, Lovable).
-
-### 1. Variables de Entorno Requeridas
-
-Configurar las siguientes variables en la sección de **Secrets** de Replit:
+### Variables de Entorno (Replit Secrets)
 
 ```env
-# Supabase Core Configuration
 VITE_SUPABASE_URL=https://tu-instancia.supabase.co
 VITE_SUPABASE_ANON_KEY=tu-llave-publica-anonima
-
-# Environment Settings
 NODE_ENV=production
 PORT=8080
 ```
 
-### 2. Ejecución Local o Importación en Replit
+### Ejecucion Local
 
 ```bash
-# Clonar el repositorio
 git clone https://github.com/OsoPanda1/rdm-digital-hub-ldtocs.git
 cd rdm-digital-hub-ldtocs
-
-# Instalar dependencias del Monorepo con pnpm
 pnpm install
 
-# Iniciar servidor de desarrollo del Hub Frontend
+# Frontend
 pnpm --filter @workspace/rdm-hub run dev
 
-# Iniciar servidor de Backend API Gateway
+# Backend
 pnpm --filter @workspace/api-server run dev
 ```
 
-Backend en Replit:
+### Replit
 
-- Usa `artifacts/api-server/.replit-artifact/artifact.toml` como configuración de servicio.
-- Health check expuesto en `/api/healthz`.
-- Puerto interno `8080` (Node 20 Autoscale).
+- Backend: `artifacts/api-server/.replit-artifact/artifact.toml`
+- Health check: `/api/healthz`
+- Puerto interno: 8080 (Node 20 Autoscale)
+
+### Seguridad del Monorepo
+
+- **minimumReleaseAge: 1440** — paquetes npm deben tener 1+ dia de publicacion (defensa supply-chain)
+- **Exclusiones:** solo `@replit/*` y `stripe-replit-sync`
+- **Overrides:** exclusiones de plataforma para esbuild, lightningcss, tailwindcss/oxide, rollup (solo linux-x64)
 
 ---
 
-## Respaldo Académico y Ciencia Abierta (CITIS 2026)
+## Respaldo Academico y Ciencia Abierta (CITIS 2026)
 
-El desarrollo del **RDM Digital Hub** está respaldado por investigaciones registradas en repositorios de ciencia abierta e indizadas para evaluación científica internacional:
-
-- **Conferencia:** trabajo sometido y aceptado para presentación en el *XII International Conference on Science, Technology, and Innovation for Society* (CITIS 2026), Universidad Politécnica Salesiana.
-- **ORCID ID:** [0009-0008-5050-1539](https://orcid.org/0009-0008-5050-1539)
-- **Evaluación de consistencia conceptual (Zenodo):** [DOI 10.5281/zenodo.20606361](https://doi.org/10.5281/zenodo.20606361)
+- **Conferencia:** XII International Conference on Science, Technology, and Innovation for Society (CITIS 2026)
+- **ORCID:** [0009-0008-5050-1539](https://orcid.org/0009-0008-5050-1539)
+- **DOI Zenodo:** [10.5281/zenodo.20606361](https://doi.org/10.5281/zenodo.20606361)
 
 ```bibtex
 @article{castillo2026rdmdigital,
-  author    = {Castillo Trejo, Edwin Oswaldo (Anubis Villaseñor)},
-  title     = {RDM Digital Hub: Arquitectura Tecnológica Territorial, Soberanía Digital y Modelo de 7 Federaciones TAMV},
+  author    = {Castillo Trejo, Edwin Oswaldo (Anubis Villasenor)},
+  title     = {RDM Digital Hub: Arquitectura Tecnologica Territorial},
   journal   = {TAMV Online Network Publications},
   year      = {2026},
-  doi       = {10.5281/zenodo.20606361},
-  note      = {Presentado para evaluación formal en CITIS 2026}
+  doi       = {10.5281/zenodo.20606361}
 }
 ```
 
 ---
 
-## Régimen de Licenciamiento
+## Regimen de Licenciamiento
 
-El ecosistema opera bajo un esquema de **licenciamiento multicapa** para proteger soberanía comunitaria y promover software libre:
-
-- **Componentes abiertos y documentación general:** MIT (`LICENSE`)
-- **Kernel tecnológico y arquitectura TAMV:** TAMV-PRCL v1.0 (`LICENSE-PRCL.md`) *(Public Reciprocal License)*
-- **Motor de IA (Isabella AI):** TAMV-EOL v1.0 (`LICENSE-EOL.md`) *(Ethical Open License)*
-- **Interoperabilidad y conectores de red:** TAMV-KÓRIMA (`LICENSE-KORIMA.md`)
-- **Datos territoriales y soberanía de información:** DPA (`DATA-SOVEREIGNTY-DPA.md`)
+| Componente | Licencia | Archivo |
+|-----------|---------|---------|
+| Software abierto y documentacion | MIT | `LICENSE` |
+| Kernel tecnologico TAMV | TAMV-PRCL v1.0 | `LICENSE-PRCL.md` |
+| Motor de IA (Isabella) | TAMV-EOL v1.0 | `LICENSE-EOL.md` |
+| Interoperabilidad y conectores | TAMV-KORIMA | `LICENSE-KORIMA.md` |
+| Hibrido | TAMV-HYBRID | `LICENSE-HYBRID.md` |
+| Datos territoriales y soberania | DPA | `DATA-SOVEREIGNTY-DPA.md` |
 
 ---
 
-© 2026 **RDM Digital · TAMV Online Network™** — Tecnología al servicio de la memoria.  
-**Hecho con ❤️ para Real del Monte, Hidalgo, México y todas las comunidades que merecen soberanía digital.**  
-**Entre montañas y neblina — RDM Digital Hub. Orgullosamente realmontenses.**
+**Hecho con ❤️ para Real del Monte, Hidalgo, Mexico.**
+**Entre montanas y neblina — RDM Digital Hub. Orgullosamente realmontenses.**
+
+© 2026 RDM Digital · TAMV Online Network
