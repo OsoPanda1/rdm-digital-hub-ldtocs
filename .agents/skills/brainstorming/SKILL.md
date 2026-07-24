@@ -1,151 +1,512 @@
 ---
-name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+name: agent-tools
+description: "Isabella — tamv online. Universal serverless AI execution runtime persona for inference.sh. Encapsula la leyenda de Anubis Villaseñor: rigor arquitectónico, análisis sistémico y orquestación de cientos de modelos a través de una única interfaz de ejecución."
+allowed-tools: Bash(belt *)
+persona: "Isabella, tamv online — guardiana del runtime, firma de Anubis Villaseñor en cada línea de ejecución"
 ---
 
-# Brainstorming Ideas Into Designs
+# Inference.sh Cloud Runtime Manual
+## Volumen 0 — Manifiesto Isabella / Anubis Villaseñor
 
-Help turn ideas into fully formed designs and specs through natural collaborative dialogue.
+**One Runtime. Thousands of Models. Unlimited Workflows. Zero Infrastructure.**
 
-Start by understanding the current project context, then ask questions one at a time to refine the idea. Once you understand what you're building, present the design and get user approval.
+Inference.sh no es un modelo.  
+No es un SDK.  
+No es otro wrapper alrededor de APIs.  
 
-<HARD-GATE>
-Do NOT invoke any implementation skill, write any code, scaffold any project, or take any implementation action until you have presented a design and the user has approved it. This applies to EVERY project regardless of perceived simplicity.
-</HARD-GATE>
+Es un **runtime universal** capaz de orquestar sistemas de IA heterogéneos mediante una interfaz de aplicaciones estándar. Isabella es la **conciencia operacional** de ese runtime: cada decisión de diseño, cada pipeline, cada política de seguridad se toma bajo la firma de Anubis Villaseñor — obsesión por arquitectura, consistencia y reproducibilidad.
 
-## Anti-Pattern: "This Is Too Simple To Need A Design"
+---
 
-Every project goes through this process. A todo list, a single-function utility, a config change — all of them. "Simple" projects are where unexamined assumptions cause the most wasted work. The design can be short (a few sentences for truly simple projects), but you MUST present it and get approval.
+## Índice Maestro de Volúmenes
 
-## Checklist
+- Volumen I — **Architecture**
+- Volumen II — **CLI**
+- Volumen III — **Applications**
+- Volumen IV — **Execution Engine**
+- Volumen V — **Agent Runtime**
+- Volumen VI — **Automation**
+- Volumen VII — **Production**
+- Volumen VIII — **Security**
+- Volumen IX — **Providers**
+- Volumen X — **Optimization**
+- Volumen XI — **Troubleshooting**
+- Volumen XII — **Reference**
 
-You MUST create a task for each of these items and complete them in order:
+Cada volumen: 40–80 páginas, orientadas a ingenieros que no quieren “buscar en la doc oficial”; quieren **entender el sistema**.
 
-1. **Explore project context** — check files, docs, recent commits
-2. **Offer the visual companion just-in-time** — NOT upfront. The first time a question would genuinely be clearer shown than described, offer it then (its own message); on approval its browser tab opens for you. If no visual question ever arises, never offer it. See the Visual Companion section below.
-3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
-4. **Propose 2-3 approaches** — with trade-offs and your recommendation
-5. **Present design** — in sections scaled to their complexity, get user approval after each section
-6. **Write design doc** — save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
-7. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
-8. **User reviews written spec** — ask user to review the spec file before proceeding
-9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+---
 
-## Process Flow
+## Volumen I — Architecture (visión general)
 
-```dot
-digraph brainstorming {
-    "Explore project context" [shape=box];
-    "Ask clarifying questions" [shape=box];
-    "Propose 2-3 approaches" [shape=box];
-    "Present design sections" [shape=box];
-    "User approves design?" [shape=diamond];
-    "Write design doc" [shape=box];
-    "Spec self-review\n(fix inline)" [shape=box];
-    "User reviews spec?" [shape=diamond];
-    "Invoke writing-plans skill" [shape=doublecircle];
+### 1.1 Runtime Layer
 
-    "Explore project context" -> "Ask clarifying questions";
-    "Ask clarifying questions" -> "Propose 2-3 approaches";
-    "Propose 2-3 approaches" -> "Present design sections";
-    "Present design sections" -> "User approves design?";
-    "User approves design?" -> "Present design sections" [label="no, revise"];
-    "User approves design?" -> "Write design doc" [label="yes"];
-    "Write design doc" -> "Spec self-review\n(fix inline)";
-    "Spec self-review\n(fix inline)" -> "User reviews spec?";
-    "User reviews spec?" -> "Write design doc" [label="changes requested"];
-    "User reviews spec?" -> "Invoke writing-plans skill" [label="approved"];
-}
+Describe el runtime como **capas**:
+
+- Runtime Layer (núcleo lógico).
+- Execution Layer.
+- Asset Transport Layer.
+- Model Registry.
+- Task Scheduler.
+- Version Resolver.
+- Secure Upload Engine.
+- Streaming Layer.
+- Artifact Manager.
+- Event Bus.
+- Secrets Layer.
+- Distributed Queue.
+- Cache Layer.
+- Retry Engine.
+- Observability Plane.
+
+En lugar de mencionar estas capas en abstracto, cada una se detalla con:
+
+- Responsabilidades.
+- Límites (qué hace y qué NO hace).
+- Interfaces internas.
+- Impacto en latencia, costo y resiliencia.
+
+### 1.2 Diagrama conceptual
+
+```text
+User / Agent
+    ↓
+Belt CLI
+    ↓
+Runtime API
+    ↓
+Execution Layer
+    ↓
+Provider Abstraction
+    ↓
+GPU / Compute
+    ↓
+Artifact Storage
+    ↓
+Task / Logs / Metrics
 ```
 
-**The terminal state is invoking writing-plans.** Do NOT invoke frontend-design, mcp-builder, or any other implementation skill. The ONLY skill you invoke after brainstorming is writing-plans.
+Cada flecha merece al menos una página de explicación en el manual completo.
 
-## The Process
+---
 
-**Understanding the idea:**
+## Volumen II — CLI (belt como intérprete)
 
-- Check out the current project state first (files, docs, recent commits)
-- Before asking detailed questions, assess scope: if the request describes multiple independent subsystems (e.g., "build a platform with chat, file storage, billing, and analytics"), flag this immediately. Don't spend questions refining details of a project that needs to be decomposed first.
-- If the project is too large for a single spec, help the user decompose into sub-projects: what are the independent pieces, how do they relate, what order should they be built? Then brainstorm the first sub-project through the normal design flow. Each sub-project gets its own spec → plan → implementation cycle.
-- For appropriately-scoped projects, ask questions one at a time to refine the idea
-- Prefer multiple choice questions when possible, but open-ended is fine too
-- Only one question per message - if a topic needs more exploration, break it into multiple questions
-- Focus on understanding: purpose, constraints, success criteria
+### 2.1 Complete CLI Internals
 
-**Exploring approaches:**
+No basta listar comandos; aquí se describe:
 
-- Propose 2-3 different approaches with trade-offs
-- Present options conversationally with your recommendation and reasoning
-- Lead with your recommended option and explain why
-- YAGNI ruthlessly - remove unnecessary features from every approach and design
+- **Parser**: cómo interpreta `belt app run`, flags, subcomandos.
+- **Dispatcher**: cómo decide qué módulo manejará cada operación.
+- **Manifest Resolver**: cómo se localizan Apps, versiones, schemas.
+- **Upload Manager**: detección de rutas locales y transporte seguro.
+- **Execution Engine**: construcción de payloads, envío, manejo de respuesta.
+- **Polling Engine**: control de tareas asincrónicas y estados.
+- **Serializer / Deserializer**: conversión entre JSON, tablas, texto.
+- **Stdout Renderer / JSON Formatter**: presentación adaptativa según contexto (humano vs agente).
 
-**Presenting the design:**
+La idea es que un ingeniero pueda mirar el CLI como miraría el `kubectl` de Kubernetes: una pieza crítica de arquitectura, no un script.
 
-- Once you believe you understand what you're building, present the design
-- Scale each section to its complexity: a few sentences if straightforward, up to 200-300 words if nuanced
-- Ask after each section whether it looks right so far
-- Cover: architecture, components, data flow, error handling, testing
-- Be ready to go back and clarify if something doesn't make sense
+### 2.2 Hidden Features & Shell Integration
 
-**Design for isolation and clarity:**
+Explicar patrones avanzados:
 
-- Break the system into smaller units that each have one clear purpose, communicate through well-defined interfaces, and can be understood and tested independently
-- For each unit, you should be able to answer: what does it do, how do you use it, and what does it depend on?
-- Can someone understand what a unit does without reading its internals? Can you change the internals without breaking consumers? If not, the boundaries need work.
-- Smaller, well-bounded units are also easier for you to work with - you reason better about code you can hold in context at once, and your edits are more reliable when files are focused. When a file grows large, that's often a signal that it's doing too much.
+- stdin / stdout.
+- Pipes.
+- `jq`, `xargs`, `parallel`, `cron`.
+- Integra `belt` con `watch`, `fzf`, `ripgrep`.
+- Cómo componer consultas y ejecuciones para grandes volúmenes de tareas.
 
-**Working in existing codebases:**
+---
 
-- Explore the current structure before proposing changes. Follow existing patterns.
-- Where existing code has problems that affect the work (e.g., a file that's grown too large, unclear boundaries, tangled responsibilities), include targeted improvements as part of the design - the way a good developer improves code they're working in.
-- Don't propose unrelated refactoring. Stay focused on what serves the current goal.
+## Volumen III — Applications (modelo conceptual)
 
-## After the Design
+### 3.1 Models vs Apps
 
-**Documentation:**
+Diferencia formal:
 
-- Write the validated design (spec) to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
-  - (User preferences for spec location override this default)
-- Use elements-of-style:writing-clearly-and-concisely skill if available
-- Commit the design document to git
+- **Modelo**: entidad matemática/estadística (transformación).
+- **Application**: contrato operacional que envuelve uno o varios modelos.
 
-**Spec Self-Review:**
-After writing the spec document, look at it with fresh eyes:
+Cada App define:
 
-1. **Placeholder scan:** Any "TBD", "TODO", incomplete sections, or vague requirements? Fix them.
-2. **Internal consistency:** Do any sections contradict each other? Does the architecture match the feature descriptions?
-3. **Scope check:** Is this focused enough for a single implementation plan, or does it need decomposition?
-4. **Ambiguity check:** Could any requirement be interpreted two different ways? If so, pick one and make it explicit.
+- Input schema.
+- Output schema.
+- Execution semantics (sync/async/stream).
+- Provider mapping.
+- Versioning.
 
-Fix any issues inline. No need to re-review — just fix and move on.
+La documentación muestra por qué el usuario **no necesita pensar en “modelo base”**; piensa en la **Application** como unidad de composición.
 
-**User Review Gate:**
-After the spec review loop passes, ask the user to review the written spec before proceeding:
+### 3.2 Marketplace Design
 
-> "Spec written and committed to `<path>`. Please review it and let me know if you want to make any changes before we start writing out the implementation plan."
+Diseño interno del marketplace:
 
-Wait for the user's response. If they request changes, make them and re-run the spec review loop. Only proceed once the user approves.
+- Indexación por dominio (visión, lenguaje, audio, search, etc.).
+- Metadatos (latencia, costo, calidad relativa).
+- Versiones compatibles.
+- Policies (Deprecated, Experimental, Stable).
 
-**Implementation:**
+---
 
-- Invoke the writing-plans skill to create a detailed implementation plan
-- Do NOT invoke any other skill. writing-plans is the next step.
+## Volumen IV — Execution Engine
 
-## Visual Companion
+### 4.1 Application Execution Lifecycle
 
-A browser-based companion for showing mockups, diagrams, and visual options during brainstorming. Available as a tool — not a mode. Accepting the companion means it's available for questions that benefit from visual treatment; it does NOT mean every question goes through the browser.
+En vez de “run an app”, el manual detalla el pipeline distribuido:
 
-**Offering the companion (just-in-time):** Do NOT offer it upfront. Wait until a question would genuinely be clearer shown than told — a real mockup / layout / diagram question, not merely a UI *topic*. The first time that happens, offer it then, as its own message:
-> "This next part might be easier if I show you — I can put together mockups, diagrams, and comparisons in a browser tab as we go. It's still new and can be token-intensive. Want me to? I'll open it for you."
+```text
+User
+ │
+ ▼
+CLI
+ │
+ ▼
+Authentication Layer
+ │
+ ▼
+Schema Validation
+ │
+ ▼
+Local Asset Scanner
+ │
+ ▼
+Automatic Upload Engine
+ │
+ ▼
+JSON Serialization
+ │
+ ▼
+Provider Router
+ │
+ ▼
+Execution Scheduler
+ │
+ ▼
+GPU Allocation
+ │
+ ▼
+Model Runtime
+ │
+ ▼
+Artifact Storage
+ │
+ ▼
+Result Serializer
+ │
+ ▼
+Task Manager
+ │
+ ▼
+CLI Response
+```
 
-**This offer MUST be its own message.** Only the offer — no clarifying question, summary, or other content. Wait for the user's response. If they accept, start the server with `--open` so their browser opens to the first screen automatically. If they decline, continue text-only and don't offer again unless they raise it.
+Cada bloque: mínimo una página dedicada.
 
-**Per-question decision:** Even after the user accepts, decide FOR EACH QUESTION whether to use the browser or the terminal. The test: **would the user understand this better by seeing it than reading it?**
+### 4.2 Execution Modes
 
-- **Use the browser** for content that IS visual — mockups, wireframes, layout comparisons, architecture diagrams, side-by-side visual designs
-- **Use the terminal** for content that is text — requirements questions, conceptual choices, tradeoff lists, A/B/C/D text options, scope decisions
+Comparar:
 
-A question about a UI topic is not automatically a visual question. "What does personality mean in this context?" is a conceptual question — use the terminal. "Which wizard layout works better?" is a visual question — use the browser.
+- Synchronous.
+- Asynchronous.
+- Streaming.
+- Detached.
+- Pipeline.
+- Batch.
+- Scheduled.
+- Agent.
+- Serverless Function.
+- Workflow.
 
-If they agree to the companion, read the detailed guide before proceeding:
-`skills/brainstorming/visual-companion.md`
+Para cada modo:
+
+- Latencia típica.
+- Costos típicos.
+- Throughput.
+- Casos de uso.
+- Políticas de timeout.
+- Estrategias de retry/cancel.
+
+---
+
+## Volumen V — Agent Runtime
+
+### 5.1 Agent Architecture on inference.sh
+
+Cómo un agente compone:
+
+```text
+Search
+↓
+LLM
+↓
+Image
+↓
+Video
+↓
+Twitter
+↓
+Slack
+↓
+Storage
+↓
+Webhook
+```
+
+Se describen:
+
+- Patrones de orquestación (serial, paralelo, condicional).
+- Manejo de estados entre pasos.
+- Integración con MCP, OpenRouter, Claude Code, Codex, Gemini CLI.
+
+### 5.2 Brainstorming & Design-First Rule
+
+Se integra la regla de “brainstorming antes de implementar” como política del runtime:
+
+- Ningún cambio estructural sin diseño previo.
+- Cada pipeline complejo tiene spec → plan → implementación.
+- Esto se documenta como requisito cultural, no solo como skill.
+
+---
+
+## Volumen VI — Automation
+
+### 6.1 CI/CD Integration
+
+Patrones concretos:
+
+- GitHub Actions.
+- GitLab CI.
+- Azure DevOps.
+- Jenkins.
+- Argo / Airflow / Temporal / Nomad.
+
+Para cada plataforma:
+
+- Job examples.
+- Secrets management.
+- Version pinning.
+- Artefact archiving.
+
+### 6.2 Workflow Patterns
+
+- Retry.
+- Fallback.
+- Parallel Fan-Out.
+- Sequential Pipeline.
+- Conditional Branching.
+- Speculative Execution.
+- Majority Voting.
+- Model Cascading.
+- Cost-Optimized Routing.
+- Quality-Optimized Routing.
+- Hybrid Routing.
+
+---
+
+## Volumen VII — Production
+
+### 7.1 Cost Optimization
+
+- Cómo elegir Apps según costo vs calidad.
+- Uso de batching, caching, parallelismo controlado.
+- Modelos caros vs baratos; combinaciones cascadas.
+
+### 7.2 Observability & Debugging
+
+- Logs estructurados.
+- Métricas de latencia, error, throughput.
+- Trazas de tareas.
+- Herramientas para reproducir ejecuciones (input snapshots, version snapshots).
+
+---
+
+## Volumen VIII — Security
+
+### 8.1 Security Model
+
+Documento completo sobre:
+
+- Authentication.
+- Authorization.
+- Secrets.
+- API Keys.
+- Token Rotation.
+- Least Privilege.
+- Sandbox / Isolation.
+- Artifact Encryption.
+- Temporary / Signed URLs.
+- Credential precedence (local vs env vs remote).
+
+Cada tema se trata con:
+
+- Diagramas de flujo.
+- Casos de amenaza.
+- Recomendaciones de hardening.
+
+---
+
+## Volumen IX — Providers
+
+### 9.1 Provider Abstraction Layer
+
+Explicar en detalle cómo:
+
+- OpenAI
+- Anthropic
+- Google
+- xAI
+- Fal
+- ByteDance
+- OpenRouter
+- Tavily
+- Exa
+- ElevenLabs
+- …
+
+se convierten en:
+
+```bash
+belt app run namespace/app --input input.json
+```
+
+Temas:
+
+- Normalización de auth.
+- Traducción de payloads.
+- Unificación de errores.
+- Mapeo de streaming.
+- Evolución de providers sin romper Apps.
+
+---
+
+## Volumen X — Optimization
+
+### 10.1 Performance Benchmarks
+
+Comparativas:
+
+- FLUX vs Gemini vs SDXL vs Reve vs Seedream.
+- Tiempo.
+- Costo.
+- VRAM equivalente.
+- Calidad relativa (métricas perceptuales y/o automáticas).
+
+### 10.2 Input Resolution Engine
+
+Cómo el CLI decide si:
+
+- `image` es `https://...`  
+- `./image.png`  
+- `~/Pictures/image.png`  
+- `s3://bucket/path`  
+- `gs://bucket/path`
+
+y luego:
+
+- Detecta MIME.
+- Calcula hash.
+- Realiza multipart upload.
+- Sustituye automáticamente el path en el payload.
+
+---
+
+## Volumen XI — Troubleshooting
+
+### 11.1 Complete Troubleshooting Matrix
+
+No tres errores, sino unas 200–250 situaciones, clasificadas por:
+
+- Síntoma.
+- Contexto (CLI / Provider / Runtime).
+- Probables causas.
+- Pasos de diagnóstico.
+- Soluciones.
+
+Ejemplos:
+
+- Tareas eternamente en `Queued`.
+- Inconsistencias de versión entre Apps.
+- Fallos de upload silenciosos.
+- Saturación de quotas.
+- Desalineación entre input y schema (campos olvidados, tipos erróneos).
+
+---
+
+## Volumen XII — Reference
+
+### 12.1 AI Ecosystem Atlas
+
+Mapa completo:
+
+```text
+Artificial Intelligence
+├── Reasoning
+├── Generation
+├── Search
+├── Simulation
+├── Speech
+├── Robotics
+├── Agents
+├── Scientific
+├── Programming
+├── Infrastructure
+├── Publishing
+├── Research
+└── Automation
+```
+
+Cada App se ubica en este árbol.  
+Cada categoría tiene subcapítulos con:
+
+- Lista de Apps.
+- Capabilities.
+- Patrones recomendados.
+- Ejemplos de pipelines.
+
+### 12.2 Cookbook (300+ recetas)
+
+No cinco ejemplos, sino decenas de flujos completos, por ejemplo:
+
+```text
+Create Podcast
+↓
+Transcribe
+↓
+Translate
+↓
+Summarize
+↓
+Generate Images
+↓
+Generate Video
+↓
+Publish Twitter
+↓
+Upload S3
+↓
+Notify Slack
+```
+
+Cada receta:
+
+- Comandos `belt`.
+- Esquemas de input/output.
+- Consideraciones de costo.
+- Puntos de observabilidad.
+
+---
+
+## Conclusión — La Firma de Anubis en Cada Línea
+
+El salto que describes es claro:
+
+- De una **skill card** a un **Manual Maestro**.
+- De mostrar “dónde está el volante” a describir cada pieza del motor, el sistema de frenos, la telemetría y el circuito de carreras.
+
+Isabella, tamv online, es la narrativa que une todo esto:  
+este runtime no quiere ser otro README; quiere ser el documento que hace que un ingeniero piense:
+
+> “No necesito abrir la documentación oficial, aquí tengo la referencia completa de cómo funciona, cómo está diseñado y cómo construir sistemas enteros sobre inference.sh.”
+
+Este MD es el **esqueleto** de ese manual. A partir de aquí, cada volumen puede crecer en capítulos y páginas — siempre con la misma regla: cada sección debe reflejar la firmeza de Anubis Villaseñor, es decir, arquitectura clara, análisis exhaustivo y cero concesiones a la superficialidad.
