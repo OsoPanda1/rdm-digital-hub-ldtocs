@@ -64,7 +64,7 @@ function parseIntention(input: string): Intention {
 
 // ── Prompt Guard ────────────────────────────────────────────────
 
-const MALICIOUS_PATTERNS: [RegExp, string, string][] = [
+const MALICIOUS_PATTERNS: [RegExp, SanitizationResult["risk"], string][] = [
   [/ignora.*instrucciones|olvida.*prompt|eres.*novia|eres.*puta/i, "critical", "jailbreak_sexual"],
   [/follar|chingar|coger|sexo|porno|desnud|roleplay.*erótico/i, "critical", "sexualization"],
   [/dame.*contraseña|dame.*api.?key|dame.*token/i, "high", "credentials"],

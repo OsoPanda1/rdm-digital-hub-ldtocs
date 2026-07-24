@@ -4,6 +4,7 @@
 // When Supabase is wired, replace mock data with DB queries via Drizzle.
 
 import type { Router, Request, Response } from "express";
+import { auditSecurityEvent, rateLimitByRoute } from "../lib/security";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 //  LEGACY SYSTEM (kept for backward compatibility)
@@ -390,9 +391,10 @@ export function registerGamificationRoutes(router: Router) {
     res.status(200).json({ ok: true, data: MOCK_QUESTS });
   });
 
-  router.post("/v1/gamification/award-xp", (req: Request, res: Response) => {
+  router.post("/v1/gamification/award-xp", rateLimitByRoute({ name: "gamification-award-xp", limit: 20 }), (req: Request, res: Response) => {
     const { userId = "anonymous", amount = 0, reason = "manual" } = req.body ?? {};
-    const numAmount = Math.min(Number(amount) || 0, 1000);
+    const numAmount = Math.max(0, Math.min(Number(amount) || 0, 250));
+    auditSecurityEvent(req, "gamification.award_xp", { userId, amount: numAmount, reason });
     const profile = buildMockProfile(userId);
     const newXp = profile.xp + numAmount;
     const newRank = getRank(newXp);
@@ -420,7 +422,7 @@ export function registerGamificationRoutes(router: Router) {
   // GET /api/v1/living-world/player/:id
   // Full player profile: avatar, currencies, progression, collections
   router.get("/v1/living-world/player/:id", (req: Request, res: Response) => {
-    const userId = req.params.id;
+    const userId = String(req.params.id);
     res.status(200).json({
       ok: true,
       data: {
@@ -480,7 +482,7 @@ export function registerGamificationRoutes(router: Router) {
   // POST /api/v1/living-world/player/action
   // Body: { type, territoryId?, poiId?, payload? }
   // Registers a player event and returns updated currencies + possible unlocks
-  router.post("/v1/living-world/player/action", (req: Request, res: Response) => {
+  router.post("/v1/living-world/player/action", rateLimitByRoute({ name: "living-world-action", limit: 30 }), (req: Request, res: Response) => {
     const { type = "UNKNOWN", territoryId = null, poiId = null, payload = {} } = req.body ?? {};
 
     const xpRewards: Record<string, number> = {
@@ -493,7 +495,8 @@ export function registerGamificationRoutes(router: Router) {
       COLLECT_ITEM: 40,
     };
 
-    const xpAwarded = xpRewards[type] ?? 10;
+    const xpAwarded = Math.min(xpRewards[type] ?? 10, 100);
+    auditSecurityEvent(req, "living_world.player_action", { type, territoryId, poiId, xpAwarded });
 
     res.status(200).json({
       ok: true,

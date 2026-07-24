@@ -4,6 +4,7 @@
 // schedule, listener stats, and playlist management.
 
 import { Router, Request, Response } from "express";
+import { rateLimitByRoute } from "../lib/security";
 
 // ── Config ──────────────────────────────────────────────────
 const AZURACAST_URL = process.env.AZURACAST_URL || "http://localhost:8000";
@@ -52,7 +53,7 @@ async function azFetch(path: string): Promise<unknown> {
 // ── Route registration ──────────────────────────────────────
 export function registerRadioRoutes(router: Router): void {
   // GET /api/radio/now-playing — Current song, listeners, live status
-  router.get("/radio/now-playing", async (_req: Request, res: Response) => {
+  router.get("/radio/now-playing", rateLimitByRoute({ name: "radio-read", limit: 120 }), async (_req: Request, res: Response) => {
     try {
       const data = await azFetch(`/api/nowplaying/${AZURACAST_STATION}`);
       res.json(data);
@@ -136,7 +137,7 @@ export function registerRadioRoutes(router: Router): void {
   });
 
   // POST /api/radio/stream-url — Get the stream URL for a given mount
-  router.post("/radio/stream-url", (req: Request, res: Response) => {
+  router.post("/radio/stream-url", rateLimitByRoute({ name: "radio-stream-url", limit: 60 }), (req: Request, res: Response) => {
     const { mount } = req.body;
     const streamMount = mount || "tamv925";
     const streamUrl = `${AZURACAST_URL}/listen/${streamMount}`;

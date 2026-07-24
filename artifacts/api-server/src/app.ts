@@ -5,6 +5,7 @@ import pinoHttp from "pino-http";
 
 import router from "./routes";
 import { logger } from "./lib/logger";
+import { attachRdmIdentity } from "./lib/security";
 
 const NODE_ENV = process.env.NODE_ENV ?? "development";
 const FEDERATION_MODE =
@@ -22,7 +23,7 @@ app.use(
   pinoHttp({
     logger,
     autoLogging: {
-      ignorePaths: ["/api/healthz"], // menos ruido para health.
+      ignore: (req) => req.url === "/api/healthz", // menos ruido para health.
     },
     serializers: {
       req(req) {
@@ -66,6 +67,7 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(attachRdmIdentity);
 
 // --------- CONTEXTO DE SEGURIDAD HEPTAFEDERADO ---------
 
