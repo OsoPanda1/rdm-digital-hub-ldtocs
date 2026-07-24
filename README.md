@@ -204,9 +204,9 @@ rdm-digital-hub-ldtocs/
 | **Música Territorial (Ecos)** | `75%` ✅ | Playlist purificada, SpatialPlayer, CrónicaPanel, XP por escucha. |
 | **Gamificación Phygital** | `65%` ✅ | API REST `/v1/gamification/*` activa, GamificationHUD en navbar, portal, leaderboard. |
 | **RDM Living World** | `70%` ✅ | ADR-001/003, Drizzle schema, 8 monedas, narrativa Realito/Isabella, triggers SQL, API endpoints. |
-| **Banners Comerciales** | `70%` ✅ | RDMCommerceBanner en homepage, rotación 30 min, 2 banners simultáneos. |
+| **Banners Comerciales** | `90%` ✅ | 80 banners distribuidos en 9 categorías, BannerManager route-aware, rotación 30 min, grid responsive. |
 | **Panel Admin Marketing** | `60%` ✅ | `/admin/marketing` — campañas, estadísticas, gestión de banners para comercios. |
-| **Isabella AI Engine (F6)** | `65%` | Pipeline de respuesta consciente, evaluación ética y API REST soberana. |
+| **Isabella AI Engine (F6)** | `75%` ✅ | Backend routes (chat, SSE, decisions, feedback, TTS, knowledge), DB schema (4 tablas), frontend hooks + guardian policy. |
 | **Bus de Federación YUN** | `30%` | Protocolo de sincronización P2P entre los 7 nodos territoriales TAMV. |
 | **Capa de Seguridad PQC (F7)** | `35%` | Esquemas de cifrado resiliente a computación cuántica y sanitización. |
 
@@ -310,6 +310,85 @@ Schema completo en `artifacts/api-server/src/db/schema.ts`:
 | ENERGY | ⚡ | Stamina de sesión |
 | INFLUENCE | 🌐 | Activar eventos globales |
 | TERRITORIAL_IMPACT | 🌍 | Impacto positivo en territorio |
+
+---
+
+## Sistema de Banners — Publicidad Distribuida
+
+Red de **80 banners publicitarios** distribuidos estratégicamente a través de todas las páginas y secciones de la plataforma, con rotación automática y persistencia de preferencias.
+
+### Categorías de Banners
+
+| Categoría | Cantidad | Páginas Objetivo |
+| --- | --- | --- |
+| **Comercio Local** | 16 | Directorio, Comercios, Catálogo, Homepage |
+| **Turismo** | 12 | Mapa, Rutas, Ecoturismo, Homepage |
+| **Cultura** | 10 | Cultura, Patrimonio, Historia, Atlas |
+| **Tecnología** | 10 | Isabella AI, FAQ, Arquitectura |
+| **Gastronomía** | 8 | Gastronomía, Sabores, Ruta del Paste |
+| **Eventos** | 8 | Eventos, Comunidad |
+| **Membresías** | 6 | Membresías, Premium, Gamificación |
+| **Radio** | 5 | Archivo Sonoro, Comunidad |
+| **Música** | 5 | Música, Archivo Sonoro |
+| **Total** | **80** | — |
+
+### Componente BannerManager
+
+- **Route-aware:** Lee la ruta actual y muestra banners relevantes
+- **Rotación 30 min:** Actualiza banners cada media hora
+- **Dismiss persistente:** Los usuarios pueden ocultar banners (localStorage)
+- **Grid responsive:** 1-4 columnas según el tamaño de pantalla
+- **Featured banners:** Banners destacados ocupan 2 columnas
+- **Auto-hide:** Se oculta en páginas de admin y auth
+
+### Archivos
+
+- `components/rdm/banners-data.ts` — Definiciones de los 80 banners
+- `components/rdm/BannerManager.tsx` — Componente renderizador
+- `App.tsx` — Integrado globalmente después de las rutas
+
+---
+
+## Isabella AI Engine — Integración Completa
+
+Motor de **Inteligencia Artificial Conversacional** para turismo y patrimonio, con backend completo y frontend extenso.
+
+### Backend API (Express)
+
+| Método | Ruta | Descripción |
+| --- | --- | --- |
+| POST | `/api/isabella/chat` | Conversación con Isabella (clasificación de intención + respuesta contextual) |
+| GET | `/api/isabella/stream` | SSE streaming de decisiones en tiempo real |
+| GET | `/api/isabella/decisions` | Historial de decisiones del jugador |
+| GET | `/api/isabella/status` | Salud del sistema y métricas |
+| POST | `/api/isabella/feedback` | Envío de feedback del usuario |
+| GET | `/api/isabella/knowledge` | Base de conocimiento (búsqueda por categoría) |
+| POST | `/api/isabella/knowledge` | Agregar entrada a la base de conocimiento |
+| POST | `/api/tts-isabella` | Text-to-Speech proxy para voz de Isabella |
+| GET | `/api/isabella/sessions` | Sesiones activas del jugador |
+| POST | `/api/isabella/sessions/:id/close` | Cerrar sesión activa |
+
+### Base de Datos (Drizzle ORM)
+
+- **isabella_sessions** — Persistencia de conversaciones
+- **isabella_decisions** — Auditoría de decisiones con mode (NORMAL/SAFE/EMERGENCY)
+- **isabella_feedback** — Calificaciones y comentarios de usuarios
+- **isabella_knowledge** — Base de conocimiento para RAG
+
+### Frontend (Componentes y Hooks)
+
+| Componente | Archivo | Estado |
+| --- | --- | --- |
+| IsabellaChat | `components/isabella/IsabellaChat.tsx` | ✅ Chat UI con hashing federado |
+| IsabellaVoiceEngine | `components/isabella/IsabellaVoiceEngine.tsx` | ✅ STT + TTS con emociones |
+| IsabellaOrb | `components/home/IsabellaOrb.tsx` | ✅ Orbe animado que abre chat |
+| useIsabella | `hooks/useIsabella.ts` | ✅ Streaming chat via Supabase |
+| useIsabellaSSE | `hooks/useIsabellaSSE.ts` | ✅ SSE con backoff exponencial |
+| useIsabellaVoice | `hooks/useIsabellaVoice.ts` | ✅ TTS cloud + local |
+| isabellaStore | `stores/tamv/isabellaStore.ts` | ✅ Estado global (Zustand) |
+| isabella-guardian | `core/ai/isabella-guardian.ts` | ✅ Política de seguridad (NORMAL/SAFE/EMERGENCY) |
+| ExperienceOrchestrator | `core/orchestrator/ExperienceOrchestrator.ts` | ✅ Motor de decisiones geoespaciales |
+| kernel | `lib/kernel.ts` | ✅ Inferencia de intención (NLP regex) |
 
 ---
 

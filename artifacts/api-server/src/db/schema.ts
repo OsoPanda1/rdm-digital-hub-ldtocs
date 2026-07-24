@@ -406,3 +406,66 @@ export const narrativeMessagesRelations = relations(
     }),
   }),
 );
+
+// ═══════════════════════════════════════════════════════════════════════════════
+//  8. ISABELLA AI
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const isabellaSessions = pgTable("isabella_sessions", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  playerId: uuid("player_id")
+    .notNull()
+    .references(() => players.id, { onDelete: "cascade" }),
+  status: text("status").notNull().default("active"), // active, closed
+  messageCount: integer("message_count").notNull().default(0),
+  startedAt: timestamp("started_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  lastMessageAt: timestamp("last_message_at", { withTimezone: true }),
+  closedAt: timestamp("closed_at", { withTimezone: true }),
+});
+
+export const isabellaDecisions = pgTable("isabella_decisions", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  playerId: uuid("player_id")
+    .notNull()
+    .references(() => players.id, { onDelete: "cascade" }),
+  sessionId: uuid("session_id").references(() => isabellaSessions.id, {
+    onDelete: "set null",
+  }),
+  type: text("type").notNull(),
+  confidence: integer("confidence").notNull().default(85),
+  territoryId: uuid("territory_id").references(() => territories.id),
+  payloadJson: jsonb("payload_json").notNull().default("{}"),
+  mode: text("mode").notNull().default("NORMAL"), // NORMAL, SAFE, EMERGENCY
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+});
+
+export const isabellaFeedback = pgTable("isabella_feedback", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  playerId: uuid("player_id")
+    .notNull()
+    .references(() => players.id, { onDelete: "cascade" }),
+  decisionId: uuid("decision_id")
+    .notNull()
+    .references(() => isabellaDecisions.id, { onDelete: "cascade" }),
+  rating: integer("rating").notNull(), // 1-5
+  comment: text("comment"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+});
+
+export const isabellaKnowledge = pgTable("isabella_knowledge", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  topic: text("topic").notNull(),
+  content: text("content").notNull(),
+  category: text("category").notNull().default("general"),
+  source: text("source").notNull().default("manual"),
+  confidence: integer("confidence").notNull().default(80),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+});

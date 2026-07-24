@@ -36,6 +36,9 @@ const SearchOverlay = lazy(() => import('@/components/SearchOverlay'))
 const SmartSidebar = lazy(() => import('@/components/SmartSidebar'))
 const GlobalPlayerBar = lazy(() => import('@/components/GlobalPlayerBar'))
 
+// ===== Banner Manager (route-aware ad placement) =====
+const BannerManager = lazy(() => import('./components/rdm/BannerManager').then((m) => ({ default: m.BannerManager })))
+
 // ===== Mother repo pages =====
 const Index = lazy(() => import('./pages/Index'))
 const Lugares = lazy(() => import('./pages/Lugares'))
@@ -521,6 +524,7 @@ const AppInner = () => {
               <AudioPlayerProvider>
                 <Suspense fallback={<LoadingFallback />}><MicroPageIntro /></Suspense>
                 <AnimatedRoutes />
+                <Suspense fallback={null}><BannerManager /></Suspense>
                 <Suspense fallback={<LoadingFallback />}><GlobalPlayerBar /></Suspense>
                 <Suspense fallback={<LoadingFallback />}><LiveTelemetryBadge /></Suspense>
                 <Suspense fallback={<LoadingFallback />}><SearchOverlay /></Suspense>

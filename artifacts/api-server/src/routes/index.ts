@@ -5,10 +5,7 @@ import { registerHealthRoutes } from "./health";
 import { registerTerritoryRoutes } from "./territory";
 import { registerGamificationRoutes } from "./gamification";
 import { registerNarrativeRoutes } from "./narrative";
-// Futuro: añadir más federaciones cuando estén listas:
-// import { registerIsabellaRoutes } from "./isabella";
-// import { registerTelemetryRoutes } from "./telemetry";
-// import { registerPaymentsRoutes } from "./payments";
+import { registerIsabellaRoutes } from "./isabella";
 
 const router = Router();
 
@@ -35,8 +32,10 @@ registerGamificationRoutes(router); // /api/v1/gamification/* + /api/v1/living-w
 // --------- NARRATIVA (Realito & Isabella) ---------
 registerNarrativeRoutes(router);    // /api/v1/narrative/*
 
+// --------- ISABELLA AI ---------
+registerIsabellaRoutes(router);     // /api/isabella/* + /api/tts-isabella
+
 // --------- FUTURAS FEDERACIONES ---------
-// registerIsabellaRoutes(router);     // /api/isabella/*
 // registerTelemetryRoutes(router);    // /api/telemetry/*
 // registerPaymentsRoutes(router);     // /api/payments/*
 
