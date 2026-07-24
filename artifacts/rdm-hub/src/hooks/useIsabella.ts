@@ -79,7 +79,6 @@ export const useIsabella = () => {
     const cacheKey = `${content}:${options?.protocol || 'default'}:${sessionIdRef.current}`;
     const cached = requestCache.get(cacheKey);
     if (cached) {
-      console.log('[Isabella] Returning cached response');
       return cached;
     }
 

@@ -157,7 +157,8 @@ export function registrarFeedback(
   decisionTraceId: string,
   rating: number,
   feedback?: string,
-  consentimiento?: boolean
+  consentimiento?: boolean,
+  playerId: string = "anonymous",
 ): void {
   logger.info('[Isabella] Feedback registrado:', {
     traceId: decisionTraceId,
@@ -168,10 +169,10 @@ export function registrarFeedback(
   });
 
   supabase.from("isabella_feedback").insert({
-    decision_trace_id: decisionTraceId,
+    player_id: playerId,
+    decision_id: decisionTraceId,
     rating,
-    feedback: feedback ?? null,
-    consentimiento: consentimiento ?? null,
+    comment: feedback ?? null,
     created_at: new Date().toISOString(),
   }).then(({ error }: { error: unknown }) => {
     if (error) logger.error("[Isabella] Error al persistir feedback", { error });

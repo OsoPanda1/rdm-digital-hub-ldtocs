@@ -8,9 +8,10 @@ import {
   uuid,
   text,
   integer,
-  bigint,
+  real,
   timestamp,
   jsonb,
+  boolean,
   primaryKey,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
@@ -58,8 +59,8 @@ export const territories = pgTable("territories", {
   name: text("name").notNull(),
   type: text("type").notNull(), // TOWN, DISTRICT, POI
   parentTerritoryId: uuid("parent_territory_id"),
-  lat: bigint("lat", { mode: "number" }),
-  lng: bigint("lng", { mode: "number" }),
+  lat: real("lat"),
+  lng: real("lng"),
   metaJson: jsonb("meta_json").notNull().default("{}"),
 });
 
@@ -186,9 +187,9 @@ export const items = pgTable("items", {
   modelUrl: text("model_url"),
   territoryId: uuid("territory_id").references(() => territories.id),
   seasonId: uuid("season_id").references(() => seasons.id),
-  isAvatarCosmetic: integer("is_avatar_cosmetic").notNull().default(0),
-  isCollectionItem: integer("is_collection_item").notNull().default(1),
-  isStoryTrigger: integer("is_story_trigger").notNull().default(0),
+  isAvatarCosmetic: boolean("is_avatar_cosmetic").notNull().default(false),
+  isCollectionItem: boolean("is_collection_item").notNull().default(true),
+  isStoryTrigger: boolean("is_story_trigger").notNull().default(false),
 });
 
 export const collections = pgTable("collections", {

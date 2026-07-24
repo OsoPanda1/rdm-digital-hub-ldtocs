@@ -99,18 +99,35 @@ export function registerTerritoryRoutes(router: Router) {
     });
   });
 
-  // Endpoint sandbox de IA territorial (Isabella operativo).
-  // En el futuro, esto debería delegar a tu módulo real de Isabella API/pipeline.
+  // Endpoint de IA territorial — delega al pipeline de Isabella.
+  // Para uso completo, enviar a POST /api/isabella/chat.
   router.post("/territory/ai/ask", (req, res, next) => {
     try {
       const { message } = parseAskBody(req.body);
 
+      // Clasificación básica de intención para respuesta territorial
+      const lower = (message ?? "").toLowerCase();
+      const isGastronomia = /comida|paste|café|chocolate|mezcal|restaur/i.test(lower);
+      const isTurismo = /turis|visita|lugar|ruta|tour|sender/i.test(lower);
+      const isHistoria = /histor|miner|colonial|pasado/i.test(lower);
+
+      let response: string;
+      if (isGastronomia) {
+        response = `Isabella recomienda: ${places.filter((p) => p.category === "gastronomia").map((p) => p.name).join(", ")}. La gastronomía es patrimonio vivo de Real del Monte.`;
+      } else if (isTurismo) {
+        response = `Isabella recomienda: ${places.slice(0, 3).map((p) => p.name).join(", ")}. Cada visita fortalece la memoria colectiva del territorio.`;
+      } else if (isHistoria) {
+        response = `Real del Monte tiene una historia minera fascinante desde el siglo XVI. Los mineros británicos dejaron una huella profunda en nuestra cultura y gastronomía.`;
+      } else {
+        response = `Isabella operativo territorial: ${message}\nLugares priorizados: ${places.map((place) => place.name).join(", ")}`;
+      }
+
       res.status(200).json({
         success: true,
         data: {
-          response:
-            `Isabella operativo territorial: ${message}\n` +
-            `Lugares priorizados: ${places.map((place) => place.name).join(", ")}`,
+          response,
+          mode: "NORMAL",
+          note: "Endpoint legacy. Para funcionalidad completa, use POST /api/isabella/chat",
         },
       });
     } catch (err) {

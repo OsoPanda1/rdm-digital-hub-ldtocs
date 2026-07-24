@@ -1,7 +1,7 @@
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { RDMHero } from "@/components/rdm/RDMHero";
 import { RDMInteractiveMap } from "@/components/rdm/RDMInteractiveMap";
-import { RDMCommerceBanner } from "@/components/rdm/RDMCommerceBanner";
+// RDMCommerceBanner removed — banners now managed globally by BannerManager
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Pickaxe, Utensils, TreePine, MapPin, Compass, Car, Calendar, Users, Star, Camera, Heart, Lightbulb, Bed, Palette, Store, Radio } from "lucide-react";
@@ -168,8 +168,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Commerce Banners — 30-min rotating ad slots for registered businesses */}
-      <RDMCommerceBanner />
+      {/* Commerce Banners — managed globally by BannerManager */}
 
       {/* Experience Grid con imágenes reales */}
       <section className="py-24 px-6 md:px-16 lg:px-24">
