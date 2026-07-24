@@ -1,9 +1,9 @@
 (function() {
   const MIN_RECONNECT_MS = 500;
   const MAX_RECONNECT_MS = 30000;
-  const TOMBSTONE_AFTER_MS = 15000; // show the "paused" overlay after this long disconnected
+  const TOMBSTONE_AFTER_MS = 15000; // mostrar overlay de "pausado" tras este tiempo desconectado
 
-  // Pure: next backoff delay (doubles, capped). Exported for unit tests.
+  // Función pura: siguiente delay de reconexión (doble, con tope).
   function nextReconnectDelay(current, max) {
     return Math.min(current * 2, max);
   }
@@ -11,7 +11,7 @@
     module.exports = { nextReconnectDelay, MIN_RECONNECT_MS, MAX_RECONNECT_MS, TOMBSTONE_AFTER_MS };
   }
 
-  // Everything below is browser-only; bail out when loaded in Node (tests).
+  // Todo lo siguiente es sólo para navegador.
   if (typeof window === 'undefined') return;
 
   let ws = null;
@@ -43,22 +43,30 @@
     }
   }
 
-  // Reflect connection state in the frame's status pill (absent on full-doc screens).
+  // Actualiza estado visual en la pill de status (C.R.O.W.N. UI).
   function setStatus(state) {
     const el = document.querySelector('.status');
     if (!el) return;
+
     const map = {
-      connecting:   ['Connecting…',   'var(--text-tertiary)'],
-      connected:    ['Connected',     'var(--success)'],
-      reconnecting: ['Reconnecting…', 'var(--warning)'],
-      disconnected: ['Disconnected',  'var(--error)']
+      connecting:   { label: 'CONNECTING',   mode: 'Kernel · Linking',   color: '#9ca3af' },
+      connected:    { label: 'KERNEL ACTIVE', mode: 'Design · Audit · Memory', color: '#22d3ee' },
+      reconnecting: { label: 'RECONNECTING', mode: 'Awaiting Sentinel', color: '#f97316' },
+      disconnected: { label: 'PAUSED',       mode: 'Ask agent to resume', color: '#ef4444' }
     };
-    const [text, color] = map[state] || map.disconnected;
-    el.textContent = text;
-    el.style.setProperty('--status-color', color);
+
+    const info = map[state] || map.disconnected;
+    const pill = el.querySelector('.status-label');
+    const mode = el.querySelector('.status-mode');
+    const dot = el.querySelector('.status-pill');
+
+    if (pill) pill.textContent = info.label;
+    if (mode) mode.textContent = info.mode;
+    if (dot) dot.style.backgroundColor = info.color;
+    if (dot) dot.style.boxShadow = `0 0 0 5px ${info.color}33`;
   }
 
-  // Self-styled so it works on framed and full-document screens alike.
+  // Overlay de “companion pausado”.
   function showTombstone() {
     if (tombstoneShown) return;
     tombstoneShown = true;
@@ -66,12 +74,15 @@
     el.id = 'bs-tombstone';
     el.style.cssText = 'position:fixed;inset:0;z-index:99999;display:flex;' +
       'align-items:center;justify-content:center;padding:2rem;text-align:center;' +
-      'background:rgba(20,20,22,0.92);color:#f5f5f7;font-family:system-ui,sans-serif';
-    el.innerHTML = '<div style="max-width:480px">' +
-      '<h2 style="margin:0 0 .5rem;font-weight:600">Companion paused</h2>' +
-      '<p style="margin:0;opacity:.85">This brainstorm companion has stopped. ' +
-      'Ask your coding agent to bring it back — this page reconnects automatically.</p></div>';
+      'background:rgba(5,8,22,0.95);color:#f9fafb;font-family:system-ui,sans-serif;';
+    el.innerHTML = '<div style="max-width:520px">' +
+      '<h2 style="margin:0 0 .75rem;font-weight:600;font-size:1.25rem">Companion paused</h2>' +
+      '<p style="margin:0;opacity:.9;font-size:.9rem">Este tablero C.R.O.W.N. se ha detenido. ' +
+      'Pide a tu agente de código que lo reactive; esta página intentará reconectar automáticamente.</p></div>';
     if (document.body) document.body.appendChild(el);
+
+    // Marcar visualmente el cuerpo como “modo crítico”.
+    document.body.classList.add('kernel-paused');
   }
 
   function connect() {
@@ -86,11 +97,12 @@
       reconnectDelay = MIN_RECONNECT_MS;
       tombstoneShown = false;
       setStatus('connected');
+      document.body.classList.remove('kernel-paused');
+
       eventQueue.forEach(e => ws.send(JSON.stringify(e)));
       eventQueue = [];
-      // Recovered from a tombstoned outage (e.g. the server restarted on the same
-      // port) — reload through the keyed bootstrap when possible so the cookie is
-      // refreshed before the visible URL returns to bare /.
+
+      // Si veníamos de un tombstone y el servidor volvió, recargar con key.
       if (recovered) reloadAfterRecovery();
     };
 
@@ -98,6 +110,8 @@
       let data;
       try { data = JSON.parse(msg.data); } catch (e) { return; }
       if (data.type === 'reload') window.location.reload();
+      // Aquí podrías extender para actualizar métricas visuales:
+      // if (data.type === 'metrics') actualizar barras/colores en el tablero.
     };
 
     ws.onclose = () => {
@@ -113,8 +127,9 @@
       reconnectDelay = nextReconnectDelay(reconnectDelay, MAX_RECONNECT_MS);
     };
 
-    // Let onclose own reconnection so we don't schedule it twice.
-    ws.onerror = () => { try { ws.close(); } catch (e) {} };
+    ws.onerror = () => {
+      try { ws.close(); } catch (e) {}
+    };
   }
 
   function sendEvent(event) {
@@ -126,7 +141,7 @@
     }
   }
 
-  // Capture clicks on choice elements
+  // Captura clicks en elementos con data-choice (opciones/cards).
   document.addEventListener('click', (e) => {
     const target = e.target.closest('[data-choice]');
     if (!target) return;
@@ -137,10 +152,9 @@
       choice: target.dataset.choice,
       id: target.id || null
     });
-
   });
 
-  // Frame UI: selection tracking
+  // Selección visual en el frame
   window.selectedChoice = null;
 
   window.toggleSelect = function(el) {
@@ -157,7 +171,7 @@
     window.selectedChoice = el.dataset.choice;
   };
 
-  // Expose API for explicit use
+  // API pública para el companion
   window.brainstorm = {
     send: sendEvent,
     choice: (value, metadata = {}) => sendEvent({ type: 'choice', value, ...metadata })
