@@ -1,129 +1,162 @@
-# Guía de Despliegue: AzuraCast en DigitalOcean
+# Guía de Despliegue: AzuraCast en Oracle Cloud (Always Free — $0)
 
-## Por qué AzuraCast reemplaza a Caster.fm
+## Resumen
 
-| Caster.fm (antes) | AzuraCast (ahora) |
-|-------------------|-------------------|
-| Laptop encendida 24/7 | DigitalOcean droplet 24/7 |
-| $0 pero quema electricidad | ~$12/mes (Basic 2GB) |
-| Sin AutoDJ | Liquidsoap AutoDJ incluido |
-| 400 listeners max | Ilimitados |
-| 96 Kbps max | 320 Kbps+ |
-| API limitada | 250+ endpoints REST |
-| Sin control total | 100% soberano |
-
----
-
-## Paso 1: Crear el Droplet
-
-1. Entra a https://cloud.digitalocean.com → **Create** → **Droplets**
-2. **Image:** Ubuntu 24.04 LTS
-3. **Plan:** Basic → **Regular Intel** → **$12/mes** (2 GB RAM, 1 vCPU, 50 GB SSD)
-   - AzuraCast necesita minimo 2 GB RAM
-   - 2GB es suficiente para ~200 listeners simultaneos
-4. **Region:**选择 la mas cercana a Mexico (NYC3 o SFO3)
-5. **Authentication:** SSH Keys (recomendado) o Password
-6. **Hostname:** `tamv-radio`
-7. Click **Create Droplet**
-
-Anota la **IP publica** que DigitalOcean te asigna.
+| Detalle | Valor |
+|---------|-------|
+| **Costo** | $0/mes — Always Free Tier |
+| **Instance** | VM.Standard.A1.Flex (ARM Ampere) |
+| **Recursos** | 1 OCPU, 24 GB RAM (overkill para radio) |
+| **Storage** | 200 GB boot volume (gratis) |
+| **Telefono** | Si — necesitas número para verificar cuenta |
+| **Alternativa** | App Oracle Authenticator para 2FA sin SMS |
 
 ---
 
-## Paso 2: Abrir Puertos (Firewall)
+## Paso 1: Crear Cuenta Oracle Cloud
 
-En DigitalOcean → **Networking** → **Firewalls** → Create Firewall:
-
-1. **Name:** `azuracast`
-2. **Inbound Rules** — agregar:
-
-| Tipo | Protocolo | Puerto | Rango | Fuente |
-|------|-----------|--------|-------|--------|
-| Custom | TCP | 80 | 0.0.0.0/0, ::/0 | Anywhere |
-| Custom | TCP | 443 | 0.0.0.0/0, ::/0 | Anywhere |
-| Custom | TCP | 8000 | 0.0.0.0/0, ::/0 | Anywhere |
-| Custom | TCP | 8005 | 0.0.0.0/0, ::/0 | Anywhere |
-| Custom | TCP | 2022 | 0.0.0.0/0, ::/0 | Anywhere |
-| SSH | TCP | 22 | 0.0.0.0/0, ::/0 | Anywhere |
-
-3. En **Droplets**, selecciona tu droplet `tamv-radio`
-4. Click **Save Firewall**
+1. Ve a https://cloud.oracle.com
+2. Click **Sign Up** or **Create a Free Account**
+3. Completa:
+   - País: **Mexico**
+   - Nombre
+   - Email
+   - Password
+4. **Verificación:** Oracle necesita un número de teléfono para enviarte un código SMS
+   - Si no tienes número propio, pide prestado el de un familiar/amigo
+   - O usa Google Voice / TextNow (números virtuales)
+5. **2FA:** Descarga la app **Oracle Authenticator** en tu celular
+   - Escanea el QR code que te muestra
+   - Ingresa el código de 6 dígitos
+6. Click **Verify Email** → abre tu email → click en el link de verificación
+7. **Select a Cloud Free Tier** → selecciona **Always Free**
+8. **Payment:** Oracle pide una tarjeta de crédito/débito para verificación, pero **NUNCA te cobran** en el tier gratuito
+   - Es solo para confirmar que no eres un bot
+   - Si no tienes tarjeta, pide prestada una
+9. Click **Start Free**
 
 ---
 
-## Paso 3: Conectar al Droplet
+## Paso 2: Crear Instancia Always Free
+
+Una vez dentro del Dashboard:
+
+1. Click **Create a VM Instance**
+2. **Name:** `tamv-radio`
+3. **Image:** Ubuntu 22.04 (o la más reciente LTS)
+4. **Shape:** Click **Change Shape**
+   - **Category:** ARM
+   - **Shape:** VM.Standard.A1.Flex
+   - **OCPU:** 1
+   - **RAM:** 6 GB (mínimo para AzuraCast)
+   - Las demás configuraciones déjalas por defecto
+5. **SSH Keys:** Sube tu SSH public key
+   - Si no tienes una, genera una:
+     ```bash
+     ssh-keygen -t ed25519 -C "tamv-radio"
+     cat ~/.ssh/id_ed25519.pub
+     ```
+   - Copia el contenido y pégalo en Oracle
+6. **Boot Volume:** 50 GB (gratis, el mínimo es 47 GB)
+7. Click **Create**
+
+Oracle te asigna una **IP pública**. Anótala.
+
+---
+
+## Paso 3: Configurar Firewall (VCN)
+
+Oracle bloquea todo el tráfico entrante por defecto. Necesitas abrir puertos:
+
+1. En el Dashboard → **Networking** → **Virtual Cloud Networks**
+2. Click en la VCN que se creó con tu instancia
+3. Click en **Security Lists** (a la derecha)
+4. Click en la security list por defecto
+5. Click **Add Ingress Rules**
+
+Agrega estas reglas **una por una**:
+
+| Puerto | Protocolo | Source CIDR | Descripción |
+|--------|-----------|-------------|-------------|
+| 80 | TCP | 0.0.0.0/0 | HTTP (panel web) |
+| 443 | TCP | 0.0.0.0/0 | HTTPS |
+| 8000 | TCP | 0.0.0.0/0 | Icecast streaming |
+| 8005 | TCP | 0.0.0.0/0 | HLS streaming |
+| 2022 | TCP | 0.0.0.0/0 | SFTP (upload música) |
+| 22 | TCP | 0.0.0.0/0 | SSH (ya debería estar abierto) |
+
+Click **Add Ingress Rule** después de cada una.
+
+---
+
+## Paso 4: Conectarte al Servidor
 
 ```bash
-# Desde tu terminal (Git Bash, PowerShell, o terminal de Mac/Linux)
-ssh root@TU_IP_PUBLICA
+# Desde Git Bash o terminal
+ssh -i ~/.ssh/id_ed25519 ubuntu@TU_IP_PUBLICA
 ```
 
-Si usaste SSH keys, asegurate de que la private key esta en `~/.ssh/`.
-
----
-
-## Paso 4: Actualizar el sistema
-
+Si usaste password:
 ```bash
-apt update && apt upgrade -y
+ssh ubuntu@TU_IP_PUBLICA
+# Ingresa tu password
 ```
 
 ---
 
-## Paso 5: Instalar AzuraCast
+## Paso 5: Instalar AzuraCast (Un Comando)
+
+Copia y pega este bloque completo:
 
 ```bash
-# Crear directorio
-mkdir -p /var/azuracast
-cd /var/azuracast
-
-# Descargar e instalar
-curl -fsSL https://raw.githubusercontent.com/AzuraCast/AzuraCast/main/docker.sh > docker.sh
-chmod a+x docker.sh
+sudo apt update && sudo apt upgrade -y && \
+sudo mkdir -p /var/azuracast && \
+cd /var/azuracast && \
+curl -fsSL https://raw.githubusercontent.com/AzuraCast/AzuraCast/main/docker.sh > docker.sh && \
+chmod a+x docker.sh && \
 ./docker.sh install
 ```
 
-El instalador te preguntara:
-- **HTTP o HTTPS:** Elige **HTTP** (para empezar, luego puedes agregar SSL con Let's Encrypt)
+El instalador te preguntará:
+- **HTTP o HTTPS:** Selecciona **HTTP** (para empezar)
 - **Puerto web:** Dejar en **80**
-- **Nombre de la estacion:** `TAMV 92.5 FM Radio Digital`
+- **Nombre de la estacion:** TAMV 92.5 FM Radio Digital
 
-El instalador descarga Docker, docker-compose, y levanta todos los contenedores. Toma ~5 minutos.
-
-Al terminar, te muestra la URL de acceso al panel:
+Tarda ~5-10 minutos. Al terminar, te muestra:
 ```
-http://TU_IP_PUBLICA
+AzuraCast is now running at: http://TU_IP_PUBLICA
 ```
 
 ---
 
-## Paso 6: Configurar AzuraCast
+## Paso 6: Configurar la Estación
 
 1. Abre `http://TU_IP_PUBLICA` en el navegador
-2. Crea tu cuenta admin:
-   - **Email:** tu email
-   - **Password:** la que quieras
-   - **NO necesitas telefono**
-3. Ve a **System Settings** → **Edit Station**
-4. Configura:
+2. **Crea tu cuenta admin:**
+   - Email: tu email
+   - Password: la que quieras
+   - **No necesitas teléfono aquí**
+3. Click **Create Account**
+4. Ve a **System Settings** → **Edit Station**
+5. Configura:
    - **Station Name:** `TAMV 92.5 FM Radio Digital`
    - **Name:** `TAMV 92.5`
    - **Shortcode:** `tamv925`
    - **Genre:** `Radio Comunitaria / Folk / Regional`
    - **Description:** `La voz de Real del Monte, Hidalgo`
-   - **URL:** `https://tusitio.com` (o la IP por ahora)
+   - **URL:** `http://TU_IP_PUBLICA`
    - **Listen URL:** `http://TU_IP_PUBLICA`
-5. Click **Save Changes**
+6. Click **Save Changes**
 
 ---
 
-## Paso 7: Subir Musica
+## Paso 7: Subir Música
 
 1. Ve a **Media** → **Music Files**
-2. Click **Upload** y sube tus archivos MP3
+2. Click **Upload** → selecciona tus archivos MP3
 3. Organiza en carpetas:
    - `/Musica Regional/` — canciones de la sierra
-   - `/Jingles/` — identificadores de estacion
+   - `/Jingles/` — identificadores de estación
    - `/Programas/` — segmentos grabados
    - `/Publicidad/` — comercios locales
 
@@ -131,29 +164,30 @@ http://TU_IP_PUBLICA
 
 ## Paso 8: Crear Playlists
 
-1. Ve a **Music** → **Playlists**
-2. Crea estas playlists:
+Ve a **Music** → **Playlists** → **Create Playlist**:
 
-| Playlist | Modo | Contenido |
+| Playlist | Mode | Contenido |
 |----------|------|-----------|
-| **Musica Regional** | Random | Canciones principales |
-| **Jingles TAMV** | Sequential | Identificadores |
-| **Programas** | Sequential | Segmentos de radio |
-| **Publicidad** | Random | Anuncios de comercios |
-| **Mix Mañana** | Weighted | 70% musica, 15% jingles, 15% programas |
-| **Mix Tarde** | Weighted | 80% musica, 20% publicidad |
-| **Mix Noche** | Weighted | 90% musica regional, 10% jingles |
+| `Musica Regional` | Random | Canciones principales |
+| `Jingles TAMV` | Sequential | Identificadores |
+| `Programas` | Sequential | Segmentos de radio |
+| `Publicidad` | Random | Anuncios de comercios |
+| `Mix Mañana` | Weighted | 70% musica, 15% jingles, 15% programas |
+| `Mix Tarde` | Weighted | 80% musica, 20% publicidad |
+| `Mix Noche` | Weighted | 90% musica regional, 10% jingles |
+
+Para weighted: en **Advanced**, pon los pesos manualmente.
 
 ---
 
 ## Paso 9: Configurar AutoDJ
 
-1. Ve a **Music** → **Audio Player** (o **AutoDJ**)
+1. Ve a **Music** → **Audio Player**
 2. **Enable AutoDJ:** ON
 3. **Source:** Playlists
-4. En **Advanced Liquidsoap Configuration**, pega el script de:
+4. En **Advanced Liquidsoap Configuration**, pega el contenido de:
    `artifacts/api-server/src/config/tamv-radio.liq`
-5. Click **Save** y **Restart AutoDJ**
+5. Click **Save** → **Restart AutoDJ**
 
 ---
 
@@ -162,23 +196,20 @@ http://TU_IP_PUBLICA
 1. Ve a **System Settings** → **API Keys**
 2. Click **Add API Key**
 3. **Name:** `RDM Digital Hub`
-4. **Permissions:** Read (now-playing, listeners, playlists)
+4. **Permissions:** Read
 5. Click **Create**
 6. **Guarda la API key** — la necesitas en Replit
 
 ---
 
-## Paso 11: Verificar que funciona
+## Paso 11: Verificar
 
+Desde tu terminal local:
 ```bash
-# Desde tu terminal local:
+# Ver now-playing
 curl http://TU_IP_PUBLICA/api/nowplaying/tamv925
-```
 
-Deberias ver JSON con la cancion actual, oyentes, etc.
-
-Tambien puedes escuchar el stream en:
-```
+# Escuchar stream (abre en navegador o VLC)
 http://TU_IP_PUBLICA/listen/tamv925
 ```
 
@@ -194,15 +225,15 @@ AZURACAST_API_KEY=tu-api-key-del-paso-10
 AZURACAST_STATION=tamv925
 ```
 
-El `RadioPlayer` en App.tsx ya esta configurado para conectarse automaticamente.
+El `RadioPlayer` en App.tsx se conecta automáticamente.
 
 ---
 
 ## Mantenimiento
 
-### Actualizar AzuraCast
+### Actualizar
 ```bash
-ssh root@TU_IP_PUBLICA
+ssh ubuntu@TU_IP_PUBLICA
 cd /var/azuracast
 ./docker.sh update
 ```
@@ -213,35 +244,52 @@ cd /var/azuracast
 docker compose restart
 ```
 
-### Ver logs
+### Logs
 ```bash
 docker logs -f azuracast-web
 docker logs -f azuracast-liquidsoap
 ```
 
 ### Backup
-En el panel: **System Settings** → **Backups** → **Create Backup**
-Se descarga un .zip con toda la config y musica.
+Panel → **System Settings** → **Backups** → **Create Backup**
 
-### Monitoreo de oyentes
+### Monitoreo
 ```bash
 curl http://TU_IP_PUBLICA/api/nowplaying/tamv925 | python3 -m json.tool
 ```
 
 ---
 
-## Licenciamiento musical en Mexico
+## Licenciamiento Musical en Mexico
 
-Para radio comunitaria, registra tu estacion con:
-
-| Organizacion | Que cobra | Sitio web |
-|-------------|-----------|-----------|
+| Organización | Qué cobra | Sitio |
+|-------------|-----------|-------|
 | **SACM** | Derechos de autores/compositores | sacm.org.mx |
 | **SOMEXFON** | Derechos de fonogramas | somexfon.com |
 
-**Alternativa sin costo:** Musica con licencia Creative Commons o royalty-free:
+**Alternativa sin costo:** Creative Commons o royalty-free:
 - Free Music Archive (freemusicarchive.org)
 - Incompetech (incompetech.com)
 - Pixabay Music (pixabay.com/music)
 
-AzuraCast genera reportes automaticos de reproduccion para cumplir con SACM/SOMEXFON.
+---
+
+## Troubleshooting
+
+### No puedo conectarme por SSH
+- Verifica que la IP sea correcta
+- Verifica que el security list tenga la regla SSH (puerto 22)
+- Prueba con `ssh -v ubuntu@IP` para ver el error
+
+### No puedo acceder al panel web
+- Verifica que el security list tenga la regla HTTP (puerto 80)
+- Oracle bloquea puertos por defecto — revisa VCN → Security Lists
+
+### El stream no suena
+- Verifica que Icecast esté corriendo: `docker ps`
+- Prueba el stream en VLC: `http://IP:8000/tamv925`
+- Verifica logs: `docker logs azuracast-liquidsoap`
+
+### El servidor se queda sin memoria
+- AzuraCast en ARM con 6GB es más que suficiente
+- Si tienes problemas, sube la RAM a 8GB (sigue siendo gratis en Always Free)
