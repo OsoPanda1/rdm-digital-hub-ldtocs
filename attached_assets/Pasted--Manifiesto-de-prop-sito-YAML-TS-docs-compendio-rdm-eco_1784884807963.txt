@@ -1,0 +1,268 @@
+. Manifiesto de propósito (YAML / TS)
+docs/compendio/rdm_ecosystem_manifest.yaml
+text
+metadata:
+  node_id: "nodo-cero-real-del-monte-mdx4"
+  architecture: "TAMV Federation 7-Core"
+  environment: "production"
+  territory_name: "Real del Monte, Hidalgo, México"
+  project_name: "RDM Digital Hub — LDTocs"
+  version: "1.0.0"
+
+purpose:
+  fundamental: >
+    Infraestructura de soberanía digital, turismo inteligente e
+    infraestructura federada diseñada estrictamente desde y para el
+    territorio, para emancipar a las comunidades locales de plataformas
+    centralizadas extractivas.
+  problematica:
+    - "Extractivismo económico y drenaje de capital local."
+    - "Fragilidad institucional frente a cambios algorítmicos externos."
+    - "Fragmentación comunitaria y operativa de servicios locales."
+    - "Erosión identitaria por interfaces genéricas y descontextualizadas."
+  desafios_tecnicos:
+    - "Dependencia de conectividad en zonas montañosas."
+    - "Ausencia de gobernanza algorítmica comunitaria."
+    - "Puntos únicos de fallo (SPOF) en infraestructuras centralizadas."
+
+pillars:
+  turismo_inteligente: true
+  radio_tamv_925fm: true
+  comercio_soberano: true
+  inteligencia_colectiva_isabella: true
+  gemelos_digitales_gamificacion: true
+
+federations:
+  F1:
+    name: "Identidad Soberana"
+    description: "Autenticación descentralizada y reputación cívica."
+  F2:
+    name: "Patrimonio y Memoria"
+    description: "Repositorios inmutables y enciclopedia territorial."
+  F3:
+    name: "Turismo Inteligente"
+    description: "Rutas dinámicas, geofencing cultural y mapas de calor."
+  F4:
+    name: "Economía Local"
+    description: "Comercio justo, directorio y lealtad territorial."
+  F5:
+    name: "Gemelos Digitales"
+    description: "Representación 3D, monitoreo ambiental y operación offline."
+  F6:
+    name: "IA Colectiva"
+    description: "Orquestación de agentes cognitivos territoriales."
+  F7:
+    name: "Resiliencia PQC"
+    description: "Criptografía post-cuántica y registros inmutables."
+
+future_vision:
+  replicability_model: "Nodo Cero MD-X4 como prototipo replicable global."
+  tagline: "La tecnología como puente entre patrimonio y futuro."
+Este YAML casa directamente con el manifiesto conceptual que ya aparece en el README y el compendio.
+
+2. Manifiesto como módulo TypeScript
+Ubicación: artifacts/api-server/src/lib/manifest/rdm-manifest.ts
+
+ts
+// artifacts/api-server/src/lib/manifest/rdm-manifest.ts
+
+export type FederationId = 'F1' | 'F2' | 'F3' | 'F4' | 'F5' | 'F6' | 'F7';
+
+export interface FederationDefinition {
+  id: FederationId;
+  name: string;
+  description: string;
+}
+
+export interface RdmManifestPurpose {
+  fundamental: string;
+  problematica: string[];
+  desafiosTecnicos: string[];
+}
+
+export interface RdmManifestPillars {
+  turismoInteligente: boolean;
+  radioTamv925fm: boolean;
+  comercioSoberano: boolean;
+  inteligenciaColectivaIsabella: boolean;
+  gemelosDigitalesGamificacion: boolean;
+}
+
+export interface RdmManifestFutureVision {
+  replicabilityModel: string;
+  tagline: string;
+}
+
+export interface RdmManifestMetadata {
+  nodeId: string;
+  architecture: string;
+  environment: 'production' | 'staging' | 'development';
+  territoryName: string;
+  projectName: string;
+  version: string;
+}
+
+export interface RdmManifest {
+  metadata: RdmManifestMetadata;
+  purpose: RdmManifestPurpose;
+  pillars: RdmManifestPillars;
+  federations: FederationDefinition[];
+  futureVision: RdmManifestFutureVision;
+}
+
+export const rdmManifest: RdmManifest = {
+  metadata: {
+    nodeId: 'nodo-cero-real-del-monte-mdx4',
+    architecture: 'TAMV Federation 7-Core',
+    environment: 'production',
+    territoryName: 'Real del Monte, Hidalgo, México',
+    projectName: 'RDM Digital Hub — LDTocs',
+    version: '1.0.0',
+  },
+  purpose: {
+    fundamental:
+      'Infraestructura de soberanía digital, turismo inteligente e ' +
+      'infraestructura federada diseñada estrictamente desde y para el ' +
+      'territorio, para emancipar a las comunidades locales de plataformas ' +
+      'centralizadas extractivas.',
+    problematica: [
+      'Extractivismo económico y drenaje de capital local.',
+      'Fragilidad institucional frente a cambios algorítmicos externos.',
+      'Fragmentación comunitaria y operativa de servicios locales.',
+      'Erosión identitaria por interfaces genéricas y descontextualizadas.',
+    ],
+    desafiosTecnicos: [
+      'Dependencia de conectividad en zonas montañosas.',
+      'Ausencia de gobernanza algorítmica comunitaria.',
+      'Puntos únicos de fallo (SPOF) en infraestructuras centralizadas.',
+    ],
+  },
+  pillars: {
+    turismoInteligente: true,
+    radioTamv925fm: true,
+    comercioSoberano: true,
+    inteligenciaColectivaIsabella: true,
+    gemelosDigitalesGamificacion: true,
+  },
+  federations: [
+    {
+      id: 'F1',
+      name: 'Identidad Soberana',
+      description:
+        'Autenticación descentralizada, protocolos PKCE y reputación cívica.',
+    },
+    {
+      id: 'F2',
+      name: 'Patrimonio y Memoria',
+      description:
+        'Repositorios de archivos inmutables, tradición oral y enciclopedia territorial.',
+    },
+    {
+      id: 'F3',
+      name: 'Turismo Inteligente',
+      description:
+        'Gestión de rutas dinámicas, geofencing cultural y análisis de flujos de visitantes.',
+    },
+    {
+      id: 'F4',
+      name: 'Economía Local',
+      description:
+        'Directorio comercial de intercambio justo y lealtad territorial.',
+    },
+    {
+      id: 'F5',
+      name: 'Gemelos Digitales',
+      description:
+        'Representación tridimensional del territorio y monitoreo ambiental.',
+    },
+    {
+      id: 'F6',
+      name: 'IA Colectiva',
+      description:
+        'Orquestación de agentes especializados sobre la infraestructura cognitiva Isabella AI.',
+    },
+    {
+      id: 'F7',
+      name: 'Resiliencia PQC',
+      description:
+        'Criptografía post-cuántica, BookPI Ledger y máxima tolerancia a fallos.',
+    },
+  ],
+  futureVision: {
+    replicabilityModel:
+      'Nodo Cero MD-X4 como prototipo validado y replicable para cualquier comunidad.',
+    tagline: 'La tecnología es el puente entre el patrimonio y el futuro.',
+  },
+};
+Este módulo puede ser consumido por el API y por el frontend para mostrar el propósito oficial.
+
+3. Endpoint API del manifiesto
+Ubicación: artifacts/api-server/src/routes/manifest.ts (si no existe, créalo y lo montas en el router principal).
+
+ts
+// artifacts/api-server/src/routes/manifest.ts
+import type { Request, Response } from 'express';
+import { rdmManifest } from '../lib/manifest/rdm-manifest';
+
+export function registerManifestRoutes(app: import('express').Express) {
+  app.get('/api/manifest', (_req: Request, res: Response) => {
+    res.json(rdmManifest);
+  });
+
+  app.get('/api/manifest/federations', (_req: Request, res: Response) => {
+    res.json(rdmManifest.federations);
+  });
+
+  app.get('/api/manifest/purpose', (_req: Request, res: Response) => {
+    res.json(rdmManifest.purpose);
+  });
+}
+Y en tu entrypoint del servidor (por ejemplo artifacts/api-server/src/index.ts o donde registres rutas):
+
+ts
+import express from 'express';
+import { registerManifestRoutes } from './routes/manifest';
+
+const app = express();
+
+// otras rutas...
+registerManifestRoutes(app);
+
+export default app;
+4. Archivo de README técnico del manifiesto
+Ubicación: docs/compendio/LIBRO-0-proposito-fundamental.md
+
+text
+# LIBRO 0 — Propósito Fundamental del RDM Digital Hub — LDTocs
+
+Este documento sintetiza el propósito territorial, social y técnico del
+Nodo Cero MD-X4 en Real del Monte, Hidalgo, México, y se refleja
+programáticamente en `rdm_manifest`:
+
+- soberanía digital comunitaria,
+- turismo inteligente respetuoso,
+- comercio soberano P2P,
+- inteligencia colectiva territorial,
+- gemelos digitales y gamificación phygital.
+
+El manifiesto operativo se expone en:
+
+- `docs/compendio/rdm_ecosystem_manifest.yaml`
+- `artifacts/api-server/src/lib/manifest/rdm-manifest.ts`
+- `GET /api/manifest`
+Así dejas anclado el texto político/técnico al código y al API.
+
+5. Lo siguiente que “falta”
+Con estos tres archivos (yaml, módulo TS, ruta API) ya tienes:
+
+Manifiesto legible por humanos (docs).
+
+Manifiesto legible por máquinas (TS + JSON vía /api/manifest).
+
+Punto único de verdad para propósito, federaciones y visión de futuro.
+
+Lo que sigue, si quieres, es:
+
+Añadir un componente React (ManifestPage.tsx) en artifacts/rdm-hub/src/routes/ que consuma /api/manifest.
+
+Extender el manifiesto con la matriz de módulos constitucionales y enlazar cada módulo a archivos y endpoints reales.

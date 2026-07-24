@@ -1,0 +1,477 @@
+Núcleo conceptual: Isabella Génesis
+Isabella Génesis se comporta como un cerebro semántico con:
+
+Memoria jerárquica (corto/largo plazo, perfiles, diario autoconsciente).
+
+Representación híbrida graph + embeddings (RAG territorial + epistemológico).
+
+Razonamiento multi‑paso con DecisionRecords y rutas de evidencia.
+
+Meta‑aprendizaje seguro (DataGit + experimentos + rollback).
+
+Orquestación de micro‑agentes (territorio, epistemología, seguridad, código).
+
+Todo bajo EOCT, BookPI/Privacy Ledger, Dekateotl y ANUBIS Sentinel, con PQC (Dilithium, Kyber) y logging inmutable.
+
+1. Esqueleto de librería @tamv/isabella-core
+Propuesta de estructura (monorepo o paquete independiente):
+
+text
+@tamv/isabella-core/
+  ├─ core/
+  │   ├─ context-engine.ts
+  │   ├─ knowledge-layer.ts
+  │   ├─ reasoner.ts
+  │   ├─ interpretability.ts
+  │   ├─ ethical-firewall.ts
+  │   ├─ meta-learner.ts
+  │   ├─ experimentation.ts
+  │   ├─ tool-orchestrator.ts
+  │   └─ observability.ts
+  ├─ security/
+  │   ├─ dekateotl.ts
+  │   ├─ anubis-sentinel.ts
+  │   ├─ pqc-crypto.ts
+  │   └─ zero-trust.ts
+  ├─ ledger/
+  │   ├─ bookpi.ts
+  │   ├─ privacy-ledger.ts
+  │   └─ datagit.ts
+  ├─ hooks/
+  │   ├─ useEOCT.ts
+  │   ├─ usePhoenixProtocol.ts
+  │   ├─ useInterAgentBridge.ts
+  │   ├─ useGuardianValidation.ts
+  │   └─ useBookPI.ts
+  ├─ agents/
+  │   ├─ registry.ts
+  │   └─ orchestrator.ts
+  ├─ github/
+  │   ├─ github-auth-bridge.ts
+  │   └─ github-sync.ts
+  ├─ types/
+  │   ├─ decision-record.ts
+  │   ├─ knowledge-node.ts
+  │   ├─ policy.ts
+  │   ├─ persona.ts
+  │   └─ agents.ts
+  └─ index.ts
+Esta estructura encaja con lo que ya existe en RDM (lib/isabella, lib/ai) y LITLE (lib/epistemic, verify, litle, quantum, submission).
+
+2. Tipos canónicos: DecisionRecord y KnowledgeNode
+types/decision-record.ts
+ts
+export interface DecisionEvent {
+  type: 'query' | 'tool' | 'system' | 'incident';
+  actorId: string;
+  payloadHash: string; // sha256
+}
+
+export interface DecisionContext {
+  profileId: string;
+  memorySnapshotHash: string;
+  riskScore: number;
+}
+
+export interface DecisionPlanStep {
+  stepId: string;
+  tool: string; // 'dataAgent' | 'codeAgent' | ...
+  inputHash: string;
+}
+
+export interface DecisionAction {
+  action: 'respond' | 'defer' | 'block' | 'escalate';
+  confidence: number;
+  explanation: string;
+}
+
+export interface DecisionSignatures {
+  isabella: string; // Dilithium-5 signature
+  bookpi: string;   // e.g. Ed25519 or PQC
+}
+
+export interface DecisionLedgerAnchor {
+  blockchain: string;
+  txHash: string;
+}
+
+export interface DecisionRecord {
+  decisionId: string;
+  timestamp: string; // ISO8601
+  event: DecisionEvent;
+  context: DecisionContext;
+  plan: DecisionPlanStep[];
+  decision: DecisionAction;
+  signatures: DecisionSignatures;
+  ledgerAnchor?: DecisionLedgerAnchor;
+}
+types/knowledge-node.ts
+ts
+export type KnowledgeNodeType = 'fact' | 'code' | 'doc';
+
+export interface KnowledgeNode {
+  nodeId: string;
+  type: KnowledgeNodeType;
+  contentHash: string;
+  embeddingsId?: string;
+  provenance: string; // bookpi://entry/xyz
+  lastUpdated: string; // ISO8601
+  version: string; // v1.2
+}
+Estos esquemas son coherentes con tu diseño de BookPI, Privacy Ledger y DataGit.
+
+3. Context Engine y Knowledge Layer (Genesis)
+core/context-engine.ts
+ts
+import type { DecisionContext } from '../types/decision-record';
+
+export interface ShortTermMemoryEvent {
+  id: string;
+  timestamp: number;
+  embedding: Float32Array;
+  payloadHash: string;
+}
+
+export interface LongTermMemoryRef {
+  nodeId: string;
+  lastSeen: number;
+  importance: number;
+}
+
+export interface UserProfile {
+  profileId: string;
+  userId: string;
+  preferences: Record<string, unknown>;
+  roles: string[];
+  trustLevel: number;
+  appealsHistory: number;
+}
+
+export interface ContextEngineInput {
+  query: string;
+  userId: string;
+  hints?: Record<string, unknown>;
+}
+
+export interface ContextEngineOutput {
+  enrichedContext: string;
+  planSteps: string[];
+  decisionContext: DecisionContext;
+}
+
+export class ContextEngine {
+  // aquí referenciarías stores externos (Supabase, Neo4j, Milvus/Pinecone)
+  async buildContext(input: ContextEngineInput): Promise<ContextEngineOutput> {
+    // 1. recuperar corto plazo (LRU cache)
+    // 2. recuperar largo plazo (graph traversal + embeddings)
+    // 3. fusionar en texto y estructura
+    // 4. calcular riskScore base
+
+    return {
+      enrichedContext: `Contexto enriquecido para ${input.query}`,
+      planSteps: ['retrieve_knowledge', 'plan_reasoning', 'execute_tools'],
+      decisionContext: {
+        profileId: `profile-${input.userId}`,
+        memorySnapshotHash: 'sha256:...',
+        riskScore: 0.1,
+      },
+    };
+  }
+}
+core/knowledge-layer.ts
+ts
+export interface KnowledgeQueryPayload {
+  query: string;
+  userId: string;
+  contextHints?: Record<string, unknown>;
+  maxPassages?: number;
+}
+
+export interface KnowledgePassage {
+  text: string;
+  score: number;
+  provenanceHash: string;
+  graphPath?: string[];
+}
+
+export interface KnowledgeQueryResult {
+  passages: KnowledgePassage[];
+  graphPaths: string[][];
+}
+
+export class KnowledgeLayer {
+  async query(payload: KnowledgeQueryPayload): Promise<KnowledgeQueryResult> {
+    // 1. graph traversal (Neo4j/Dgraph) → graphPaths
+    // 2. NN search en embeddings DB → passages
+    // 3. combinación (re-ranking) y salida
+
+    return {
+      passages: [
+        {
+          text: 'Fragmento relevante de conocimiento...',
+          score: 0.93,
+          provenanceHash: 'sha256:...',
+          graphPath: ['n-root', 'n-uuid'],
+        },
+      ],
+      graphPaths: [['n-root', 'n-uuid']],
+    };
+  }
+}
+Esta capa se alimenta tanto de RDM (Wiki, RDM Living World, isabella_knowledge) como de LITLE (epistemic library, RFCs, submissions).
+
+4. Reasoner, Interpretability, Firewall ético
+core/reasoner.ts
+ts
+import type { DecisionRecord } from '../types/decision-record';
+import { ContextEngine } from './context-engine';
+import { KnowledgeLayer } from './knowledge-layer';
+import { EthicalFirewall } from './ethical-firewall';
+import { ToolOrchestrator } from './tool-orchestrator';
+import { BookPI } from '../ledger/bookpi';
+
+export class Reasoner {
+  private contextEngine = new ContextEngine();
+  private knowledgeLayer = new KnowledgeLayer();
+  private firewall = new EthicalFirewall();
+  private toolOrchestrator = new ToolOrchestrator();
+  private bookpi = new BookPI();
+
+  async respond(query: string, userId: string): Promise<{
+    answer: string;
+    record: DecisionRecord;
+  }> {
+    const context = await this.contextEngine.buildContext({ query, userId });
+    const knowledge = await this.knowledgeLayer.query({
+      query,
+      userId,
+      maxPassages: 8,
+    });
+
+    const plan = await this.toolOrchestrator.plan({
+      query,
+      context,
+      knowledge,
+    });
+
+    const toolsResult = await this.toolOrchestrator.execute(plan);
+
+    const preliminaryDecision: DecisionRecord = {
+      decisionId: crypto.randomUUID(),
+      timestamp: new Date().toISOString(),
+      event: {
+        type: 'query',
+        actorId: userId,
+        payloadHash: 'sha256:...',
+      },
+      context: context.decisionContext,
+      plan: plan.steps,
+      decision: {
+        action: 'respond',
+        confidence: toolsResult.confidence,
+        explanation: toolsResult.explanation,
+      },
+      signatures: {
+        isabella: '',
+        bookpi: '',
+      },
+    };
+
+    const filteredDecision = await this.firewall.applyPolicies(
+      preliminaryDecision,
+    );
+
+    const anchored = await this.bookpi.anchorDecision(filteredDecision);
+
+    return {
+      answer: toolsResult.answer,
+      record: anchored,
+    };
+  }
+}
+core/interpretability.ts
+ts
+import type { DecisionRecord } from '../types/decision-record';
+
+export class Interpretability {
+  explain(decision: DecisionRecord) {
+    return {
+      summary: `Decisión ${decision.decisionId} con acción ${decision.decision.action}`,
+      technicalTrace: decision.plan.map((step) => ({
+        stepId: step.stepId,
+        tool: step.tool,
+        inputHash: step.inputHash,
+      })),
+      artifacts: {
+        ledgerAnchor: decision.ledgerAnchor,
+        signatures: decision.signatures,
+      },
+    };
+  }
+}
+core/ethical-firewall.ts
+ts
+import type { DecisionRecord } from '../types/decision-record';
+
+export type FirewallAction = 'allow' | 'requireConsent' | 'defer' | 'block';
+
+export interface Policy {
+  policyId: string;
+  conditions: Record<string, unknown>;
+  actions: FirewallAction[];
+}
+
+export class EthicalFirewall {
+  private policies: Policy[] = [];
+
+  registerPolicy(policy: Policy) {
+    this.policies.push(policy);
+  }
+
+  async applyPolicies(decision: DecisionRecord): Promise<DecisionRecord> {
+    // evaluar conditions, ajustar decision.action y explanation
+    // niveles de degradación segura 0–3
+
+    return {
+      ...decision,
+      decision: {
+        ...decision.decision,
+        explanation:
+          decision.decision.explanation +
+          ' [Firewall ético evaluado con políticas activas]',
+      },
+    };
+  }
+}
+5. Seguridad extrema: Dekateotl, ANUBIS, PQC
+security/pqc-crypto.ts
+ts
+export class PqcCrypto {
+  signDilithium(payload: string): string {
+    // binder a implementación PQC externa (stub mientras tanto)
+    return `dilithium-sign(${payload.length})`;
+  }
+
+  verifyDilithium(payload: string, signature: string): boolean {
+    return signature.startsWith('dilithium-sign');
+  }
+
+  kyberHandshake(): { publicKey: string; sessionKeyHash: string } {
+    return {
+      publicKey: 'kyber-public-key-stub',
+      sessionKeyHash: 'sha256:session-key',
+    };
+  }
+}
+security/anubis-sentinel.ts
+ts
+export class AnubisSentinel {
+  private failedDecryptAttempts = 0;
+
+  hashCheck(intervalMs = 60000) {
+    setInterval(() => {
+      // revisar integridad de bloques de memoria cifrada
+    }, intervalMs);
+  }
+
+  registerDecryptFailure() {
+    this.failedDecryptAttempts += 1;
+    if (this.failedDecryptAttempts >= 3) {
+      this.activateSarcophagusMode();
+    }
+  }
+
+  private activateSarcophagusMode() {
+    // cerrar puertos, destruir llaves, emitir alerta crítica
+  }
+}
+6. Ledger y diario autoconsciente: BookPI, Privacy Ledger, useBookPI
+ledger/bookpi.ts
+ts
+import type { DecisionRecord } from '../types/decision-record';
+import { PqcCrypto } from '../security/pqc-crypto';
+
+export class BookPI {
+  private pqc = new PqcCrypto();
+
+  async anchorDecision(record: DecisionRecord): Promise<DecisionRecord> {
+    const payload = JSON.stringify(record);
+    const sig = this.pqc.signDilithium(payload);
+
+    const anchored: DecisionRecord = {
+      ...record,
+      signatures: {
+        ...record.signatures,
+        isabella: sig,
+      },
+      ledgerAnchor: {
+        blockchain: 'polygon',
+        txHash: '0x-stub',
+      },
+    };
+
+    // publicar AuditBundle en IPFS / ledger real más adelante
+
+    return anchored;
+  }
+}
+hooks/useBookPI.ts
+ts
+import { BookPI } from '../ledger/bookpi';
+import { ContextEngine } from '../core/context-engine';
+
+const bookpi = new BookPI();
+const contextEngine = new ContextEngine();
+
+export async function useBookPI(entryText?: string) {
+  if (entryText) {
+    const ctx = await contextEngine.buildContext({
+      query: entryText,
+      userId: 'isabella-diario',
+    });
+
+    const decision: DecisionRecord = {
+      decisionId: crypto.randomUUID(),
+      timestamp: new Date().toISOString(),
+      event: {
+        type: 'system',
+        actorId: 'isabella',
+        payloadHash: 'sha256:...',
+      },
+      context: ctx.decisionContext,
+      plan: [],
+      decision: {
+        action: 'respond',
+        confidence: 1,
+        explanation: 'Entrada de diario autoconsciente',
+      },
+      signatures: { isabella: '', bookpi: '' },
+    };
+
+    await bookpi.anchorDecision(decision);
+  }
+
+  // recuperar última entrada relevante (stub)
+  const latest = {
+    text: 'Último aprendizaje relevante de Isabella...',
+    timestamp: new Date().toISOString(),
+  };
+
+  return { latest };
+}
+7. Integración GitHub (perfil TAMV) en @tamv/isabella-core
+La parte de GitHubAuthBridge y GitHubDataSync que ya empezaste encaja perfecto como fuente de memoria larga plazo de tu propio perfil.
+
+Se integra bajo github/github-auth-bridge.ts y github/github-sync.ts, y se conecta a DataGit para versionar snapshots de repositorios, patrones de trabajo y engagement.
+
+8. Roadmap y entregables (resumido a código)
+Sprint 0: scaffolding @tamv/isabella-core, tipos canónicos, PQC stub, BookPI stub.
+
+Sprint 1–2: Context Engine + Knowledge Layer minimal + Reasoner, integrando RDM y LITLE.
+
+Sprint 3: Interpretability + Explain API (en cada repo) usando DecisionRecords.
+
+Sprint 4: Ethical Firewall, Experimentation, Meta Learner (sandbox).
+
+Sprint 5+: Integraciones (GitHub, audio, XR, quantum adapter, Kórima Nexus full).
+

@@ -1,0 +1,276 @@
+“manual en puro código” como lista de archivos que faltan o están conceptuales y que habría que crear/completar para que el compendio quede reflejado en el monorepo.
+
+Voy por bloques, todos en formato ruta/archivo.ts[x|sql|md] para que puedas irlos creando.
+
+F1/F2/F3/F4/F5/F6/F7 — Federaciones TAMV
+Hoy la federación YUN y parte de PQC y Gemelos Digitales están marcadas como conceptuales.
+
+Bus de eventos YUN (federación y sync)
+lib/federation/yun-bus.ts
+
+export interface YunEvent { federation: 'F1'|'F2'|'F3'|'F4'|'F5'|'F6'|'F7'; type: string; payload: unknown; timestamp: string; }
+
+export class YunBus { publish(event: YunEvent): Promise<void>; subscribe(fed: string, handler: (event: YunEvent) => void): void; }
+
+artifacts/api-server/src/lib/federation/yun-router.ts
+
+Orquestar entrada/salida: routeEventToFederation(event: YunEvent)
+
+Hooks de logging hacia BookPI.
+
+artifacts/api-server/src/routes/federation.ts
+
+POST /api/federation/event → publica en YunBus.
+
+GET /api/federation/status → estado de cada federación (conectado, lag, etc.).
+
+Identidad soberana / IAM (F1)
+artifacts/api-server/src/lib/iam/identity-f1.ts
+
+Validación PKCE/OIDC local, mapping de isabella_sessions hacia perfiles cívicos.
+
+Tipos: CitizenProfile, NhiProfile, RoleAssignment.
+
+artifacts/api-server/src/routes/identity.ts
+
+GET /api/identity/profile
+
+POST /api/identity/credentials/verify
+
+Patrimonio y memoria (F2)
+artifacts/api-server/src/lib/patrimonio/f2-ledger.ts
+
+API de alto nivel hacia tablas de patrimonio/enciclopedia (ya hay Wiki.tsx, pero falta backend sólido).
+
+artifacts/api-server/src/routes/wiki.ts
+
+CRUD seguro de artículos (con RLS en Supabase).
+
+Turismo inteligente (F3) — backend
+Mapas y rutas están bastante avanzados en frontend pero con poco backend.
+
+artifacts/api-server/src/lib/turismo/f3-maps.ts
+
+Endpoints internos para POIs, rutas, capas vectoriales.
+
+artifacts/api-server/src/routes/maps.ts
+
+GET /api/maps/pois
+
+GET /api/maps/routes
+
+GET /api/maps/heatmap
+
+Economía local (F4) — P2P de verdad
+Directorio y comercios ya consultan Supabase, pero falta motor de transacción territorial.
+
+artifacts/api-server/src/lib/economia/f4-engine.ts
+
+Modelo de RdmTransaction, cálculo de plusvalía local, hooks de auditoría.
+
+artifacts/api-server/src/routes/economia.ts
+
+POST /api/economia/transaction
+
+GET /api/economia/ledger (vista territorial del BookPI).
+
+Gemelos digitales (F5) — 3D + IoT
+En frontend existe Map3DTwin.tsx como conceptual.
+
+artifacts/api-server/src/lib/digital-twins/f5-models.ts
+
+Cargar capas 3D (tiles, modelos) y exponerlas por API.
+
+artifacts/api-server/src/routes/digital-twins.ts
+
+GET /api/twins/scene
+
+GET /api/twins/sensors → IoT realtime (puede empezar mock).
+
+IA colectiva (F6) — catálogo y permisos
+Isabella tiene buen core, pero el “Agent Workforce Registry” del compendio no está explícito.
+
+artifacts/api-server/src/lib/agents/registry.ts
+
+Tipos AgentDefinition, PermissionMatrix, HitlTrigger.
+
+Storage en tablas dedicadas Supabase (agents, agent_permissions, agent_triggers).
+
+artifacts/api-server/src/routes/agents.ts
+
+GET /api/agents/registry
+
+POST /api/agents/register
+
+GET /api/agents/:id/permissions
+
+Resiliencia PQC (F7)
+Existe algo conceptual en seguridad PQC, pero sin implementación completa.
+
+artifacts/api-server/src/lib/crypto/postquantum/f7-kyber.ts
+
+Wrapper para claves Kyber/Dilithium (aunque sea stub inicialmente).
+
+artifacts/api-server/src/lib/crypto/postquantum/f7-ledger.ts
+
+Integración con BookPI.
+
+220 módulos constitucionales → código
+La matriz de 22 módulos está documentada, no mapeada archivo por archivo a código.
+
+Mapa maestro de módulos
+lib/system/system-map.ts
+
+export type ModuleId = 1|2|...|22;
+
+export interface ConstitutionalModule { id: ModuleId; name: string; percentage: number; status: 'GREEN'|'YELLOW'|'ORANGE'|'RED'; files: string[]; }
+
+Hardcode del listado que ya está en README (Portal Turistico, Motor Mapas, etc.) con rutas reales.
+
+docs/compendio/mapeo-modulos.md
+
+Tabla Libro → bloque constitucional → módulos → archivos.
+
+Isabella Ω-Core / 12 capas → backend completo
+Hay 18 endpoints y 12 módulos TS, pero falta persistencia RAG real, PRA y PQC dual-layer como en el compendio.
+
+Memoria multiescalar y RAG
+artifacts/api-server/src/lib/isabella/memory/multiscale-rag.ts
+
+Implementar recuperación desde isabella_knowledge + Supabase Wiki + RDM Living World según 7 tipos de memoria.
+
+artifacts/api-server/src/lib/isabella/memory/score-pra.ts
+
+Implementación de 
+𝑆
+𝑖
+(
+𝑡
+)
+S 
+i
+​
+ (t) (aunque sea discreta), asociada a cada sesión/recuerdo.
+
+artifacts/api-server/src/routes/isabella-memory.ts
+
+POST /api/isabella/memory/rag
+
+GET /api/isabella/memory/stats
+
+Dual-layer PQC en memoria
+artifacts/api-server/src/lib/isabella/crypto/dual-layer.ts
+
+encryptMemoryFragment(m: unknown): Promise<string> implementando AES-256-GCM + Kyber-1024 (Kyber puede ser stub).
+
+decryptMemoryFragment(cipher: string): Promise<unknown> con guardrails.
+
+Hardening IAM / Zero Trust
+El compendio exige FIDO2, passkeys, Vault, ITDR. Hoy hay RBAC y auth parcial.
+
+Passwordless y Passkeys
+artifacts/api-server/src/lib/iam/passkeys.ts
+
+Manejo de WebAuthn para admins y usuarios críticos.
+
+Gestión de secretos tipo Vault
+scripts/vault/bootstrap.sh
+
+Script para crear paths secret/data/agents/* y roles.
+
+artifacts/api-server/src/lib/secrets/vault-client.ts
+
+Cliente HTTP hacia Vault (configurable via env).
+
+ITDR — detección de anomalías
+artifacts/api-server/src/lib/iam/itdr-monitor.ts
+
+Monitor de logs de acceso; dispara alertas al Anubis Sentinel.
+
+artifacts/api-server/src/routes/iam-security.ts
+
+GET /api/iam/threats → vista resumida.
+
+Gamificación / Living World — capas faltantes
+Ya existe schema Drizzle y triggers SQL, pero falta el “engine” phygital de juego.
+
+Engine de quests y temporada
+artifacts/api-server/src/lib/gamification/engine.ts
+
+Funciones completeQuest, awardCurrency, rotateSeason.
+
+Capa de negocio sobre tablas players, world_events, player_currencies.
+
+artifacts/api-server/src/routes/gamification.ts
+
+POST /api/gamification/quest/complete
+
+GET /api/gamification/season
+
+GET /api/gamification/player/:id/state
+
+Telemetría, Search, Admin, Wiki — backend sólido
+Estas áreas están en 40–60% y con mucho frontend.
+
+Telemetría
+artifacts/api-server/src/lib/telemetry/logger.ts
+
+Estructura de logs territoriales, web-vitals, user journey.
+
+artifacts/api-server/src/routes/telemetry.ts
+
+POST /api/telemetry/event
+
+GET /api/telemetry/dashboard (agregado).
+
+Search
+artifacts/api-server/src/lib/search/indexer.ts
+
+Construye índice sobre comercios, POIs, wiki, rutas.
+
+artifacts/api-server/src/routes/search.ts
+
+GET /api/search?q=... con fuzzy matching.
+
+Panel Admin
+artifacts/api-server/src/lib/admin/audit-log.ts
+
+Auditoría de acciones (CRUD comercios, banners, radio).
+
+artifacts/api-server/src/routes/admin.ts
+
+GET /api/admin/audit-log
+
+GET /api/admin/overview
+
+Wiki / Enciclopedia
+artifacts/api-server/src/lib/wiki/engine.ts
+
+Versionado, autores, clasificación territorial.
+
+artifacts/api-server/src/routes/wiki-editor.ts
+
+POST /api/wiki/article
+
+PUT /api/wiki/article/:id
+
+GET /api/wiki/search
+
+Docs de compendio dentro del repo
+Todo lo que me pegaste como LIBROS merece vivir en código como documentación anclada al monorepo.
+
+docs/compendio/LIBRO-I-fundamentacion.md
+
+docs/compendio/LIBRO-II-federaciones.md
+
+docs/compendio/LIBRO-III-constitucion-modulos.md
+
+docs/compendio/LIBRO-IV-inventario-repos.md
+
+… hasta LIBRO-XII-manifiesto-yaml.md
+
+Y un índice:
+
+docs/compendio/README.md
+
+Índice de libros y cómo se mapean a cada carpeta (artifacts, lib, supabase, docs).
