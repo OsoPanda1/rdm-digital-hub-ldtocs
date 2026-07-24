@@ -25,6 +25,16 @@ export interface Profile {
 
 export type AppRole = 'admin' | 'moderator' | 'merchant' | 'tourist'
 
+// ── Admin email whitelist ──────────────────────────────────
+// Emails that automatically get admin role on registration/sign-in.
+const ADMIN_EMAILS = new Set([
+  'tamvonlinenetwork@outlook.es',
+])
+
+function isAdminEmail(email: string): boolean {
+  return ADMIN_EMAILS.has(email.toLowerCase().trim())
+}
+
 interface RDMAuthContextValue {
   user: User | null
   session: Session | null
@@ -109,7 +119,24 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
         }
 
         setProfile(profileData ?? null)
-        setRoles(((rolesData ?? []) as { role: AppRole }[]).map((x) => x.role))
+        const dbRoles = ((rolesData ?? []) as { role: AppRole }[]).map((x) => x.role)
+
+        // Auto-assign admin role for whitelisted emails
+        const userEmail = user?.email
+        if (userEmail && isAdminEmail(userEmail) && !dbRoles.includes('admin')) {
+          dbRoles.push('admin')
+          // Persist admin role to DB (best-effort)
+          try {
+            await sb.from('user_roles').upsert(
+              { user_id: uid, role: 'admin' },
+              { onConflict: 'user_id,role' },
+            )
+          } catch {
+            // Non-critical: role is still applied in-memory
+          }
+        }
+
+        setRoles(dbRoles)
       } catch (e) {
         const message = e instanceof Error ? e.message : 'Error desconocido al cargar perfil/roles'
         setError(`[auth] Excepción en loadProfileAndRoles: ${message}`)

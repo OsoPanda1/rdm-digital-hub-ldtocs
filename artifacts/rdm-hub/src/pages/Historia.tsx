@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { SEOMeta, PAGE_SEO } from "@/components/SEOMeta";
+import { VideoEmbed } from "@/components/rdm/VideoEmbed";
 import { TextReveal, ParallaxImage, StaggerContainer, StaggerItem } from "@/components/VisualEffects";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -306,6 +307,16 @@ const HistoriaPage = () => {
     <RDMLayout>
       <div ref={containerRef} className="min-h-screen bg-background overflow-x-hidden">
         <SEOMeta {...PAGE_SEO.historia} />
+
+        {/* Video: Historia Minera */}
+        <div className="px-6 md:px-16 pt-8">
+          <VideoEmbed
+            youtubeId="dQw4w9WgXcQ"
+            title="500 Años de Historia Minera"
+            variant="hero"
+            caption="Del descubrimiento de la Veta Madre a la identidad actual"
+          />
+        </div>
         
         {/* Hero Section with Parallax */}
         <div className="relative h-[85vh] min-h-[600px] overflow-hidden">

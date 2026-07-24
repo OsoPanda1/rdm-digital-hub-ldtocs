@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { TreePine, Mountain, Footprints, Tent, Camera, Binoculars, Sun, CloudFog } from "lucide-react";
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { SEOMeta, PAGE_SEO } from "@/components/SEOMeta";
+import { VideoEmbed } from "@/components/rdm/VideoEmbed";
 import penasImg from "@/assets/penas-cargadas.webp";
 import callesImg from "@/assets/calles-colonial.webp";
 import minaImg from "@/assets/mina-acosta.webp";
@@ -127,6 +128,16 @@ const EcoturismoPage = () => {
     <RDMLayout>
       <div className="min-h-screen bg-background">
         <SEOMeta {...PAGE_SEO.ecoturismo} />
+
+        {/* Video: Ecoturismo */}
+        <div className="px-6 md:px-16 pt-8">
+          <VideoEmbed
+            youtubeId="dQw4w9WgXcQ"
+            title="Aventura en la Sierra de Pachuca"
+            variant="hero"
+            caption="Senderismo, naturaleza y paisajes de ensueño"
+          />
+        </div>
         
         {/* Hero */}
         <div className="relative h-[60vh] min-h-[500px] overflow-hidden">

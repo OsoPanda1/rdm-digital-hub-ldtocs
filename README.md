@@ -11,11 +11,30 @@
   <a href="./LICENSE-PRCL.md"><img src="https://img.shields.io/badge/License-TAMV--PRCL-blueviolet?style=for-the-badge" alt="License: TAMV-PRCL"></a>
 </p>
 
-<p align="center">
-  <a href="https://github.com/OsoPanda1/rdm-digital-hub-ldtocs">
-    <img src="https://raw.githubusercontent.com/OsoPanda1/rdm-digital-hub-ldtocs/main/public/rdm-digital-nexus-logo.png" alt="RDM Digital Hub Logo" height="120">
-  </a>
-</p>
+<!-- ── Logos del Ecosistema TAMV ────────────────────────────── -->
+<table align="center" cellpadding="10">
+  <tr>
+    <td align="center" width="33%">
+      <img src="artifacts/rdm-hub/public/images/logotamv.jpg" alt="TAMV Online Network" height="100"><br/>
+      <strong>TAMV Online Network</strong><br/>
+      <small>Marca corporativa del ecosistema</small>
+    </td>
+    <td align="center" width="33%">
+      <img src="artifacts/rdm-hub/public/images/logo-rdm-digital.png" alt="RDM Digital Hub" height="100"><br/>
+      <strong>RDM Digital Hub</strong><br/>
+      <small>Nodo cero MD-X4</small>
+    </td>
+    <td align="center" width="33%">
+      <img src="artifacts/rdm-hub/public/images/isabella-ai-logo.png" alt="Isabella Villaseñor AI" height="100"><br/>
+      <strong>Isabella AI</strong><br/>
+      <small>Motor de IA Conversacional</small>
+    </td>
+  </tr>
+</table>
+
+> **Nota:** Coloca tu archivo `isabella-ai-logo.png` en `artifacts/rdm-hub/public/images/` para mostrar el logo de Isabella.
+
+---
 
 <h1 align="center">RDM Digital Hub — LDTOCS (MD-X4 Architecture Kernel)</h1>
 

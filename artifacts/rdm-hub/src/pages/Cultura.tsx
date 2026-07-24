@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { SEOMeta, PAGE_SEO } from "@/components/SEOMeta";
+import { VideoEmbed } from "@/components/rdm/VideoEmbed";
 import { TextReveal, ParallaxImage, StaggerContainer, StaggerItem, GlowCard } from "@/components/VisualEffects";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -331,6 +332,16 @@ const CulturaPage = () => {
     <RDMLayout>
       <div ref={containerRef} className="min-h-screen bg-background overflow-x-hidden">
         <SEOMeta {...PAGE_SEO.cultura} />
+
+        {/* Video: Cultura de Real del Monte */}
+        <div className="px-6 md:px-16 pt-8">
+          <VideoEmbed
+            youtubeId="dQw4w9WgXcQ"
+            title="Cultura y Tradiciones de Real del Monte"
+            variant="hero"
+            caption="Fiestas, tradiciones y el espíritu vivente de nuestra comunidad"
+          />
+        </div>
         
         {/* Hero Section */}
         <div className="relative h-[85vh] min-h-[600px] overflow-hidden">

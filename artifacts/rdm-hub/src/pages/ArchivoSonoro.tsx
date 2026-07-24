@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react"
 import { RDMLayout } from "@/components/rdm/RDMLayout"
 import { SEOMeta } from "@/components/SEOMeta"
+import { VideoEmbed } from "@/components/rdm/VideoEmbed"
 import { motion } from "framer-motion"
 import {
   Play,
@@ -307,6 +308,16 @@ export default function ArchivoSonoro() {
         title="TAMV 92.5 Radio Digital — Real del Monte"
         description="TAMV 92.5 La voz de Real del Monte. Radio digital en vivo, programación, episodios y hemeroteca sonora del Pueblo Mágico."
       />
+
+      {/* Video: TAMV 92.5 */}
+      <div className="px-6 md:px-16 pt-4">
+        <VideoEmbed
+          youtubeId="dQw4w9WgXcQ"
+          title="TAMV 92.5 FM — La Voz de Real del Monte"
+          variant="mid"
+          caption="Nuestra radio comunitaria en vivo, 24/7"
+        />
+      </div>
 
       {/* ------------------------------------------------------------------ */}
       {/*  Hero + Live Radio Player                                           */}

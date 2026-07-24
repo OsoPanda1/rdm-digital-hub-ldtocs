@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react"
 import { RDMLayout } from "@/components/rdm/RDMLayout"
 import { SEOMeta } from "@/components/SEOMeta"
+import { VideoEmbed } from "@/components/rdm/VideoEmbed"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   Play,
@@ -719,6 +720,19 @@ export default function Musica() {
       />
 
       {/* ── TAMV 92.5 Live Radio Cross-Promo ── */}
+
+      {/* Video: Música de Real del Monte */}
+      <section className="py-8 px-6 md:px-16">
+        <div className="max-w-5xl mx-auto">
+          <VideoEmbed
+            youtubeId="dQw4w9WgXcQ"
+            title="Música y Sonidos de Real del Monte"
+            variant="hero"
+            caption="Melodías que capturan el espíritu de nuestra tierra"
+          />
+        </div>
+      </section>
+
       <section className="relative pt-20 pb-4 px-6 md:px-16 bg-[hsl(220_30%_6%)]">
         <div className="max-w-5xl mx-auto">
           <Link

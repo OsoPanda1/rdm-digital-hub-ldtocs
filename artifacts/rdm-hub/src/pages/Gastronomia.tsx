@@ -122,6 +122,14 @@ export default function GastronomiaPage() {
 
         <GradientSeparator animated />
 
+        {/* Video: Gastronomía de Real del Monte */}
+        <VideoEmbed
+          youtubeId="dQw4w9WgXcQ"
+          title="Los Pastes de Real del Monte"
+          variant="mid"
+          caption="La tradición pastelera que define nuestra gastronomía"
+        />
+
         {/* Culinary Highlights */}
         <section className="relative overflow-hidden py-20">
           <div className="mx-auto max-w-6xl px-6">

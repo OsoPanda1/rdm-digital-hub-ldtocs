@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Pickaxe, Utensils, TreePine, MapPin, Compass, Car, Calendar, Users, Star, Camera, Heart, Lightbulb, Bed, Palette, Store, Radio } from "lucide-react";
 import { SEOMeta } from "@/components/SEOMeta";
+import { VideoEmbed } from "@/components/rdm/VideoEmbed";
 import { RUTAS_TEMATICAS, FICHA_TECNICA } from "@/data/rdm-territorial";
 import { EVENTOS_RDM, DATOS_CURIOSOS, SABIAS_QUE } from "@/data/rdm-events";
 import { RDM_IMAGES, GALLERY_SECTIONS } from "@/data/rdm-images";
@@ -67,6 +68,18 @@ const Index = () => {
         description="Descubre Real del Monte, Pueblo Mágico de Hidalgo. Guía turística digital con mapa interactivo, rutas, gastronomía, historia minera y eventos culturales."
       />
       <RDMHero />
+
+      {/* Video: Presentación Real del Monte */}
+      <section className="py-8 px-6 md:px-16">
+        <div className="max-w-5xl mx-auto">
+          <VideoEmbed
+            youtubeId="dQw4w9WgXcQ"
+            title="Conoce Real del Monte — Pueblo Mágico"
+            variant="hero"
+            caption="Descubre la magia de Real del Monte, Hidalgo"
+          />
+        </div>
+      </section>
 
       {/* Dato Curioso Rotativo */}
       <section className="py-6 px-6 md:px-16 bg-[hsl(var(--rdm-amber)/0.08)]">
