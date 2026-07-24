@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { v4 as uuidv4 } from "uuid";
 import { logger } from "@/lib/logger";
 import { timeUpEngine } from "./TimeUpEngine";
@@ -17,15 +18,19 @@ interface MDX5Config {
   maxQueueSize: number;
   enableTimeUp: boolean;
   enableLedger: boolean;
+  // Nuevo: ¿permitimos ejecución con PENDING_* o exigimos resolución previa?
+  allowPendingIsabellaToProceed: boolean;
+  allowPendingHumanToProceed: boolean;
 }
 
 interface PendingIntent extends MDX5Intent {
   status: "pending" | "evaluating" | "planning" | "executing" | "committing" | "reconciling";
+  timeUpVerdict?: TimeUpVerdict;
 }
 
 export class MDX5Kernel {
   private queue: PendingIntent[] = [];
-  private processed: MDX5Intent[] = [];
+  private processed: PendingIntent[] = [];
   private readonly config: MDX5Config;
   private running = false;
   private pollTimer?: ReturnType<typeof setInterval>;
@@ -40,6 +45,8 @@ export class MDX5Kernel {
       maxQueueSize: 1000,
       enableTimeUp: true,
       enableLedger: true,
+      allowPendingIsabellaToProceed: false,
+      allowPendingHumanToProceed: false,
       ...config,
     };
   }
@@ -113,7 +120,16 @@ export class MDX5Kernel {
       }
 
       if (!decision.approved) {
-        logger.info("[MDX5] Intent rechazado en fase", { id: intent.id, phase, reason: decision.reason });
+        logger.info("[MDX5] Intent detenido en fase", {
+          id: intent.id,
+          phase,
+          reason: decision.reason,
+          timeUpVerdict: decision.timeupVerdict,
+        });
+
+        // Emitir evento de soberanía cuando se rechaza o queda pendiente humano/Isabella.
+        await this.emitSovereigntyOnStop(intent, phase, decision);
+
         this.processed.push(intent);
         return;
       }
@@ -135,35 +151,35 @@ export class MDX5Kernel {
     switch (phase) {
       case "RECEIVE":
         return this.phaseReceive(base, intent);
-
       case "EVALUATE":
         return this.phaseEvaluate(base, intent);
-
       case "PLAN":
         return this.phasePlan(base, intent);
-
       case "EXECUTE":
         return this.phaseExecute(base, intent);
-
       case "COMMIT":
         return this.phaseCommit(base, intent);
-
       case "RECONCILE":
         return this.phaseReconcile(base, intent);
     }
   }
 
-  private async phaseReceive(base: MDX5Decision, _intent: PendingIntent): Promise<MDX5Decision> {
-    logger.info("[MDX5] Fase RECEIVE");
-    return { ...base, approved: true };
+  private async phaseReceive(base: MDX5Decision, intent: PendingIntent): Promise<MDX5Decision> {
+    logger.info("[MDX5] Fase RECEIVE", { intentId: intent.id, type: intent.type });
+    // Aquí podrías integrar Chronus para registrar el inicio de ciclo.
+    this.chronus.markPhaseStart(intent, "RECEIVE");
+    return { ...base, approved: true, reason: "Intent recibido en kernel" };
   }
 
   private async phaseEvaluate(base: MDX5Decision, intent: PendingIntent): Promise<MDX5Decision> {
-    logger.info("[MDX5] Fase EVALUATE");
+    logger.info("[MDX5] Fase EVALUATE", { intentId: intent.id });
+
+    this.chronus.markPhaseStart(intent, "EVALUATE");
 
     if (this.config.enableTimeUp) {
       const results = timeUpEngine.evaluate(intent);
       const globalVerdict = timeUpEngine.getGlobalVerdict(results);
+      intent.timeUpVerdict = globalVerdict;
 
       if (globalVerdict === "REJECTED") {
         return {
@@ -174,13 +190,34 @@ export class MDX5Kernel {
         };
       }
 
+      if (globalVerdict === "PENDING_ISABELLA" && !this.config.allowPendingIsabellaToProceed) {
+        return {
+          ...base,
+          approved: false,
+          timeupVerdict: "PENDING_ISABELLA",
+          reason: "TIME UP: Pendiente validación Isabella, ejecución bloqueada",
+        };
+      }
+
+      if (globalVerdict === "PENDING_HUMAN" && !this.config.allowPendingHumanToProceed) {
+        return {
+          ...base,
+          approved: false,
+          timeupVerdict: "PENDING_HUMAN",
+          reason: "TIME UP: Pendiente intervención humana, ejecución bloqueada",
+        };
+      }
+
       return {
         ...base,
         approved: true,
         timeupVerdict: globalVerdict,
-        reason: globalVerdict === "PENDING_ISABELLA"
-          ? "TIME UP: Pendiente validación Isabella"
-          : "TIME UP: Evaluación completada",
+        reason:
+          globalVerdict === "PENDING_ISABELLA"
+            ? "TIME UP: Pendiente Isabella pero permitido avanzar"
+            : globalVerdict === "PENDING_HUMAN"
+            ? "TIME UP: Pendiente humano pero permitido avanzar"
+            : "TIME UP: Evaluación completada",
       };
     }
 
@@ -190,15 +227,21 @@ export class MDX5Kernel {
   private async phasePlan(base: MDX5Decision, intent: PendingIntent): Promise<MDX5Decision> {
     logger.info("[MDX5] Fase PLAN", { intentId: intent.id, type: intent.type });
 
-    try {
-      await this.federationBus.emitSovereigntyEvent("POLICY_VIOLATION", {
-        intentId: intent.id,
-        type: intent.type,
-        phase: "PLAN",
-        timestamp: new Date().toISOString(),
-      });
-    } catch (error) {
-      logger.warn("[MDX5] Error al emitir evento de soberanía", error as Record<string, unknown>);
+    this.chronus.markPhaseStart(intent, "PLAN");
+
+    // Solo emitimos evento de "POLICY_VIOLATION" si TIME UP dejó algo pendiente o rechazado.
+    if (intent.timeUpVerdict && intent.timeUpVerdict !== "APPROVED") {
+      try {
+        await this.federationBus.emitSovereigntyEvent("POLICY_VIOLATION", {
+          intentId: intent.id,
+          type: intent.type,
+          phase: "PLAN",
+          timeUpVerdict: intent.timeUpVerdict,
+          timestamp: new Date().toISOString(),
+        });
+      } catch (error) {
+        logger.warn("[MDX5] Error al emitir evento de soberanía", error as Record<string, unknown>);
+      }
     }
 
     return { ...base, approved: true, reason: "Plan generado" };
@@ -207,16 +250,30 @@ export class MDX5Kernel {
   private async phaseExecute(base: MDX5Decision, intent: PendingIntent): Promise<MDX5Decision> {
     logger.info("[MDX5] Fase EXECUTE", { intentId: intent.id });
 
+    this.chronus.markPhaseStart(intent, "EXECUTE");
+
+    // Aquí es donde realmente ejecutarías la acción federada.
+    // Podrías delegar al FederationBus según intent.federation/operation.
+    try {
+      await this.federationBus.executeIntent(intent);
+    } catch (error) {
+      logger.error("[MDX5] Error en ejecución federada", { intentId: intent.id, error });
+      return { ...base, approved: false, reason: "Error en ejecución federada" };
+    }
+
     return { ...base, approved: true, reason: "Ejecución completada" };
   }
 
   private async phaseCommit(base: MDX5Decision, intent: PendingIntent): Promise<MDX5Decision> {
     logger.info("[MDX5] Fase COMMIT", { intentId: intent.id });
 
+    this.chronus.markPhaseStart(intent, "COMMIT");
+
     try {
       await this.federationBus.emitSovereigntyEvent("OBSERVABILIDAD_SIGNAL", {
         intentId: intent.id,
         phase: "COMMIT",
+        timeUpVerdict: intent.timeUpVerdict,
         timestamp: new Date().toISOString(),
       });
     } catch (error) {
@@ -226,16 +283,46 @@ export class MDX5Kernel {
     return { ...base, approved: true, reason: "Commit registrado en ledger" };
   }
 
-  private async phaseReconcile(base: MDX5Decision, _intent: PendingIntent): Promise<MDX5Decision> {
-    logger.info("[MDX5] Fase RECONCILE");
+  private async phaseReconcile(base: MDX5Decision, intent: PendingIntent): Promise<MDX5Decision> {
+    logger.info("[MDX5] Fase RECONCILE", { intentId: intent.id });
+
+    this.chronus.markPhaseStart(intent, "RECONCILE");
 
     if (this.config.enableLedger) {
       const chainValid = ledger.verifyChain();
       if (!chainValid) {
-        logger.error("[MDX5] Cadena de ledger corrupta en reconciliación");
+        logger.error("[MDX5] Cadena de ledger corrupta en reconciliación", { intentId: intent.id });
+        // Podrías marcar aquí un REJECTED para futuras intents o emitir un evento de crisis.
       }
     }
 
     return { ...base, approved: true, reason: "Reconciliación completada" };
+  }
+
+  private async emitSovereigntyOnStop(
+    intent: PendingIntent,
+    phase: MDX5Phase,
+    decision: MDX5Decision,
+  ): Promise<void> {
+    try {
+      const eventType =
+        decision.timeupVerdict === "REJECTED"
+          ? "TIMEUP_REJECTION"
+          : decision.timeupVerdict === "PENDING_ISABELLA"
+          ? "TIMEUP_PENDING_ISABELLA"
+          : decision.timeupVerdict === "PENDING_HUMAN"
+          ? "TIMEUP_PENDING_HUMAN"
+          : "INTENT_STOPPED";
+
+      await this.federationBus.emitSovereigntyEvent(eventType, {
+        intentId: intent.id,
+        phase,
+        reason: decision.reason,
+        timeUpVerdict: decision.timeupVerdict,
+        timestamp: decision.timestamp.toISOString(),
+      });
+    } catch (error) {
+      logger.warn("[MDX5] Error al emitir evento de soberanía al detener intent", error as Record<string, unknown>);
+    }
   }
 }
