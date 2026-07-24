@@ -48,7 +48,62 @@ export class TerritorialFederationBridge {
     logger.info('[TFB] Bridge conectado al Federation Bus');
   }
 
+  /**
+   * Validación fuerte de contribución antes de enrutar.
+   * No permite coords vacías, tipos no mapeados o territorios inválidos.
+   */
+  private validateContribution(contribution: UserContribution): boolean {
+    if (!contribution) {
+      logger.error('[TFB] Contribución nula recibida');
+      return false;
+    }
+
+    if (!contribution.id || !contribution.userId) {
+      logger.warn('[TFB] Contribución sin id o userId', { contribution });
+      return false;
+    }
+
+    if (!contribution.type) {
+      logger.warn('[TFB] Contribución sin tipo declarado', { contributionId: contribution.id });
+      return false;
+    }
+
+    if (!contribution.coords || typeof contribution.coords.lat !== 'number' || typeof contribution.coords.lng !== 'number') {
+      logger.warn('[TFB] Contribución sin coordenadas válidas', { contributionId: contribution.id });
+      return false;
+    }
+
+    if (!contribution.territorio) {
+      logger.warn('[TFB] Contribución sin territorio asignado', { contributionId: contribution.id });
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Determina severidad federada a partir de prioridad y tipo de contribución.
+   */
+  private getEventSeverity(priority: TerritorialFederationMap['priority']): 'INFO' | 'ALERTA' | 'CRITICO' {
+    switch (priority) {
+      case 'critical':
+        return 'CRITICO';
+      case 'high':
+        return 'ALERTA';
+      default:
+        return 'INFO';
+    }
+  }
+
+  /**
+   * Enruta una contribución territorial hacia federaciones TAMV con hardening:
+   * validación previa, trazas únicas y eventos secundarios controlados.
+   */
   routeContribution(contribution: UserContribution): void {
+    if (!this.validateContribution(contribution)) {
+      return;
+    }
+
     const map = this.maps.find(m => m.contributionType === contribution.type);
     if (!map) {
       logger.warn('[TFB] Sin mapeo federado para tipo', { type: contribution.type });
@@ -56,6 +111,7 @@ export class TerritorialFederationBridge {
     }
 
     const traceId = uuidv4();
+    const severity = this.getEventSeverity(map.priority);
 
     // Route to primary federation
     federationBus.emit({
@@ -71,9 +127,11 @@ export class TerritorialFederationBridge {
         traceId,
       },
       traceId,
+      severity,
+      correlationId: contribution.id,
     });
 
-    // Route to secondary federations
+    // Route to secondary federations (sin userId para minimizar exposición de identidad)
     for (const fed of map.secondaryFeds) {
       federationBus.emit({
         type: `${map.eventType}_SYNC`,
@@ -82,41 +140,77 @@ export class TerritorialFederationBridge {
           contributionId: contribution.id,
           type: contribution.type,
           coords: contribution.coords,
+          territorio: contribution.territorio,
           sourceFed: map.primaryFed,
           traceId,
         },
         traceId,
+        severity,
+        correlationId: contribution.id,
       });
     }
 
-    logger.info('[TFB] Contribucion enrutada', {
+    logger.info('[TFB] Contribución enrutada', {
       type: contribution.type,
       primary: map.primaryFed,
       secondary: map.secondaryFeds,
+      priority: map.priority,
       traceId,
     });
   }
 
+  /**
+   * Actualización de estadísticas territoriales con validación básica.
+   */
   routeTerritorialStats(stats: TerritorialStats): void {
+    if (!stats || !stats.territorio) {
+      logger.warn('[TFB] Stats territoriales inválidas', { stats });
+      return;
+    }
+
     const traceId = uuidv4();
     federationBus.emit({
       type: 'TERRITORIAL_STATS_UPDATE',
       source: 'DEKATEOTL',
       payload: { stats, traceId },
       traceId,
+      severity: 'INFO',
     });
   }
 
+  /**
+   * Actualización de heatmap con límite de puntos y validación de coordenadas.
+   */
   routeHeatMapUpdate(points: TerritorialHeatPoint[]): void {
+    if (!Array.isArray(points) || points.length === 0) {
+      logger.warn('[TFB] Heatmap vacío, no se emite evento');
+      return;
+    }
+
+    // Límite de protección: evitar floods en KAOS_HYPERRENDER.
+    const MAX_POINTS = 500;
+    const safePoints = points.slice(0, MAX_POINTS).filter(p =>
+      p && typeof p.lat === 'number' && typeof p.lng === 'number',
+    );
+
+    if (safePoints.length === 0) {
+      logger.warn('[TFB] Heatmap sin puntos válidos');
+      return;
+    }
+
     const traceId = uuidv4();
     federationBus.emit({
       type: 'HEATMAP_UPDATE',
       source: 'KAOS_HYPERRENDER',
-      payload: { points, traceId },
+      payload: { points: safePoints, traceId },
       traceId,
+      severity: 'ALERTA',
     });
   }
 
+  /**
+   * Retorna federaciones relevantes para un territorio, con whitelist simple.
+   */
   getFederationsForTerritory(territorio: string): FederationId[] {
     if (territorio === 'RDM') {
       return ['DEKATEOTL', 'ANUBIS', 'CHRONOS', 'KAOS_HYPERRENDER', 'MDD_TAMV'];
