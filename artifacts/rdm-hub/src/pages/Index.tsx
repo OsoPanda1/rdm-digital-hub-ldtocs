@@ -70,8 +70,8 @@ const Index = () => {
       <RDMHero />
 
       {/* Video: Presentación Real del Monte */}
-      <section className="py-8 px-6 md:px-16">
-        <div className="max-w-5xl mx-auto">
+      <section className="py-8 px-6 md:px-12">
+        <div className="max-w-6xl mx-auto">
           <VideoEmbed
             youtubeId="dQw4w9WgXcQ"
             title="Conoce Real del Monte — Pueblo Mágico"
@@ -82,8 +82,8 @@ const Index = () => {
       </section>
 
       {/* Dato Curioso Rotativo */}
-      <section className="py-6 px-6 md:px-16 bg-[hsl(var(--rdm-amber)/0.08)]">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-6 px-6 md:px-12 bg-[hsl(var(--rdm-amber)/0.08)]">
+        <div className="max-w-5xl mx-auto text-center">
           <motion.div key={curioso} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex items-center justify-center gap-3">
             <Lightbulb className="w-5 h-5 text-[hsl(var(--rdm-amber))] shrink-0" />
             <p className="text-sm text-[hsl(var(--foreground))]" style={{ fontFamily: "var(--font-body)" }}>
@@ -94,7 +94,7 @@ const Index = () => {
       </section>
 
       {/* Quick Access Grid */}
-      <section className="py-16 px-6 md:px-16 lg:px-24">
+      <section className="py-16 px-6 md:px-12">
         <div className="max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
             <p className="text-sm tracking-[0.3em] uppercase text-[hsl(var(--rdm-amber))] mb-3" style={{ fontFamily: "var(--font-body)" }}>¿Qué quieres hacer?</p>
@@ -117,9 +117,9 @@ const Index = () => {
       </section>
 
       {/* SECTION A: Realito te guía */}
-      <section className="py-20 px-6 md:px-16 lg:px-24 bg-[hsl(220_30%_8%)] text-white overflow-hidden relative">
+      <section className="py-20 px-6 md:px-12 bg-[hsl(220_30%_8%)] text-white overflow-hidden relative">
         <div className="absolute inset-0 bg-gradient-to-b from-[hsl(220_30%_5%)] to-transparent opacity-80" />
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="max-w-6xl mx-auto relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-center gap-4 mb-12">
             <div className="w-12 h-12 rounded-full bg-[hsl(var(--rdm-amber)/0.2)] border border-[hsl(var(--rdm-amber)/0.5)] flex items-center justify-center shrink-0">
                <img src={realitoCultura} alt="Realito Icon" className="w-8 h-8 object-contain" />
@@ -156,13 +156,13 @@ const Index = () => {
       </section>
 
       {/* SECTION B: TAMV 92.5 Radio promo strip */}
-      <section className="relative h-[240px] md:h-[300px] w-full overflow-hidden flex items-center px-6 md:px-16 lg:px-24">
+      <section className="relative h-[240px] md:h-[300px] w-full overflow-hidden flex items-center px-6 md:px-12">
         <motion.div 
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
           className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${tamvBanner})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[hsl(220_30%_5%)] via-[hsl(220_30%_6%/0.8)] to-transparent" />
-        <div className="relative z-10 max-w-4xl">
+        <div className="relative z-10 max-w-5xl">
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/50 mb-4 backdrop-blur-sm">
               <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
@@ -184,14 +184,14 @@ const Index = () => {
       {/* Commerce Banners — managed globally by BannerManager */}
 
       {/* Experience Grid con imágenes reales */}
-      <section className="py-24 px-6 md:px-16 lg:px-24">
+      <section className="py-24 px-6 md:px-12">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
           <p className="text-sm tracking-[0.3em] uppercase text-[hsl(var(--rdm-amber))] mb-4" style={{ fontFamily: "var(--font-body)" }}>Experiencias Inmersivas</p>
           <h2 className="text-4xl md:text-6xl font-bold" style={{ fontFamily: "var(--font-display)" }}>
             Cinco mundos, <span className="text-[hsl(var(--rdm-amber))]">una sierra</span>
           </h2>
         </motion.div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-7xl mx-auto auto-rows-[200px] md:auto-rows-[240px]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-6xl mx-auto auto-rows-[200px] md:auto-rows-[240px]">
           {EXPERIENCIAS.map((exp, i) => (
             <motion.div key={exp.id} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.6 }} className={exp.span}>
               <Link to={exp.to} className="block relative rounded-2xl overflow-hidden group cursor-pointer h-full">
@@ -214,8 +214,8 @@ const Index = () => {
       </section>
 
       {/* Galería fotográfica estilo muro */}
-      <section className="py-16 px-6 md:px-16 lg:px-24 bg-[hsl(var(--muted)/0.3)]">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-16 px-6 md:px-12 bg-[hsl(var(--muted)/0.3)]">
+        <div className="max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
             <Camera className="w-6 h-6 mx-auto text-[hsl(var(--rdm-amber))] mb-3" />
             <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--font-display)" }}>
@@ -259,8 +259,8 @@ const Index = () => {
       </section>
 
       {/* History Preview con imagen real */}
-      <section className="py-20 px-6 md:px-16 lg:px-24">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+      <section className="py-20 px-6 md:px-12">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <p className="text-sm tracking-[0.3em] uppercase text-[hsl(var(--rdm-amber))] mb-4" style={{ fontFamily: "var(--font-body)" }}>Memoria de Alta Fidelidad</p>
             <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "var(--font-display)" }}>
@@ -288,7 +288,7 @@ const Index = () => {
       </section>
 
       {/* Sabías que... */}
-      <section className="py-16 px-6 md:px-16 lg:px-24 bg-[hsl(var(--muted)/0.2)]">
+      <section className="py-16 px-6 md:px-12 bg-[hsl(var(--muted)/0.2)]">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-4">
             {SABIAS_QUE.slice(0, 3).map((item, i) => (
@@ -303,7 +303,7 @@ const Index = () => {
       </section>
 
       {/* Rutas Temáticas Preview */}
-      <section className="py-20 px-6 md:px-16 lg:px-24">
+      <section className="py-20 px-6 md:px-12">
         <div className="max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
             <p className="text-sm tracking-[0.3em] uppercase text-[hsl(var(--rdm-amber))] mb-3" style={{ fontFamily: "var(--font-body)" }}>Recorridos Guiados</p>
@@ -336,7 +336,7 @@ const Index = () => {
       </section>
 
       {/* Eventos Destacados */}
-      <section className="py-20 px-6 md:px-16 lg:px-24 bg-[hsl(var(--muted)/0.3)]">
+      <section className="py-20 px-6 md:px-12 bg-[hsl(var(--muted)/0.3)]">
         <div className="max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
             <Calendar className="w-6 h-6 mx-auto text-[hsl(var(--rdm-amber))] mb-3" />
@@ -371,8 +371,8 @@ const Index = () => {
       <RDMInteractiveMap />
 
       {/* Datos rápidos */}
-      <section className="py-16 px-6 md:px-16 lg:px-24">
-        <div className="max-w-4xl mx-auto">
+      <section className="py-16 px-6 md:px-12">
+        <div className="max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--font-display)" }}>
               Real del Monte en <span className="text-[hsl(var(--rdm-amber))]">números</span>
@@ -395,8 +395,8 @@ const Index = () => {
       </section>
 
       {/* Registra tu negocio CTA */}
-      <section className="py-16 px-6 md:px-16 lg:px-24 bg-[hsl(var(--rdm-amber)/0.06)]">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-16 px-6 md:px-12 bg-[hsl(var(--rdm-amber)/0.06)]">
+        <div className="max-w-5xl mx-auto text-center">
           <Store className="w-8 h-8 mx-auto text-[hsl(var(--rdm-amber))] mb-4" />
           <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
             ¿Tienes un negocio en Real del Monte?
@@ -411,7 +411,7 @@ const Index = () => {
       </section>
 
       {/* CTA Final */}
-      <section className="py-20 px-6 text-center">
+      <section className="py-20 px-6 md:px-12 text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <Star className="w-8 h-8 mx-auto text-[hsl(var(--rdm-amber))] mb-4" />
           <h2 className="text-4xl md:text-6xl font-bold mb-6" style={{ fontFamily: "var(--font-display)" }}>
