@@ -403,8 +403,8 @@ Motor de **Inteligencia Artificial Conversacional** para turismo y patrimonio, c
 
 ```
 ┌──────────────────────────────────────────────┐
-│           Oracle Cloud Free Tier             │
-│         (Always Free — $0/mes)               │
+│          DigitalOcean Droplet                │
+│         Basic 2GB — $12/mes                  │
 │                                              │
 │  ┌──────────┐  ┌───────────┐  ┌───────────┐  │
 │  │ AzuraCast│→ │ Liquidsoap│→ │  Icecast  │  │
@@ -462,8 +462,9 @@ Script completo en `artifacts/api-server/src/config/tamv-radio.liq`:
 Guía completa: `docs/radio/azuracast-deployment.md`
 
 ```bash
-# En Oracle Cloud Free Tier ARM VM:
-sudo mkdir -p /var/azuracast && cd /var/azuracast
+# En tu DigitalOcean Droplet (Ubuntu 24.04, 2GB RAM):
+ssh root@TU_IP
+mkdir -p /var/azuracast && cd /var/azuracast
 curl -fsSL https://raw.githubusercontent.com/AzuraCast/AzuraCast/main/docker.sh > docker.sh
 chmod a+x docker.sh && ./docker.sh install
 ```
