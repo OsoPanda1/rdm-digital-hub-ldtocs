@@ -1,167 +1,64 @@
 // artifacts/api-server/src/routes/isabella.ts
-// Isabella AI — Backend API routes for conversational AI, decisions, feedback, TTS
-// ADR-001: docs/adr/001-rdm-living-world-gamification.md
+// Isabella AI — Ω-Core v4.0 Enterprise Backend API Routes
+// Integración: SOUL · Isa API · Mexa API · Memory · Skills · Evaluation · Fairness · XRAI
 // Endpoints: /api/isabella/*
 
 import type { Router, Request, Response } from "express";
+import { createCognitiveOrchestrator } from "../lib/isabella/core/orchestrator";
+import { createMemoryEngine } from "../lib/isabella/memory/engine";
+import { createSkillRegistry, registerBuiltinSkills } from "../lib/isabella/skills/registry";
+import { createEvaluationEngine } from "../lib/isabella/evaluation/engine";
+import { createFairnessEngine } from "../lib/isabella/fair/metrics";
+import { createXrRenderer } from "../lib/isabella/xrai/renderer";
+import { SOUL, AGENTS, POLICIES } from "../lib/isabella/soul/identity";
+import { isabellaVersion, isabellaOrigin } from "../lib/isabella/index";
+import { createIsaClient } from "../lib/ai/isa-api";
+import { createMexaClient } from "../lib/ai/mexa-api";
+import { buildKnowledgeContext, searchKnowledge, getAllKnowledge, knowledgeByDomain } from "../lib/ai/knowledge";
+import type { FederationId } from "../lib/isabella/types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
-//  IN-MEMORY STORES (replace with Supabase when wired)
+//  SINGLETON INSTANCES (in-memory; replace with Supabase when wired)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-interface IsabellaSession {
-  id: string;
-  playerId: string;
-  startedAt: string;
-  lastMessageAt: string;
-  messageCount: number;
-  status: "active" | "closed";
-}
+const orchestrator = createCognitiveOrchestrator();
+const memory = createMemoryEngine();
+const skillRegistry = createSkillRegistry();
+const evaluation = createEvaluationEngine();
+const fairness = createFairnessEngine();
+const xrRenderer = createXrRenderer();
+const isa = createIsaClient();
+const mexa = createMexaClient();
 
-interface IsabellaDecision {
-  id: string;
-  playerId: string;
-  type: string;
-  confidence: number;
-  territoryId?: string;
-  payload: Record<string, unknown>;
-  createdAt: string;
-  mode: "NORMAL" | "SAFE" | "EMERGENCY";
-}
+registerBuiltinSkills(skillRegistry);
 
-interface IsabellaFeedback {
-  id: string;
-  playerId: string;
-  decisionId: string;
-  rating: 1 | 2 | 3 | 4 | 5;
-  comment?: string;
-  createdAt: string;
-}
-
-interface KnowledgeEntry {
-  id: string;
-  topic: string;
-  content: string;
-  category: string;
-  source: string;
-  confidence: number;
-  createdAt: string;
-}
-
-const sessions: Map<string, IsabellaSession> = new Map();
-const decisions: IsabellaDecision[] = [];
-const feedback: IsabellaFeedback[] = [];
-const knowledgeBase: KnowledgeEntry[] = [
-  {
-    id: "kb-1",
-    topic: "Historia de la Mina de Acosta",
-    content: "La Mina de Acosta fue una de las minas más importantes de Real del Monte, operada durante la colonia española. Fue un centro neurálgico de la minería de plata en Nueva España.",
-    category: "historia",
-    source: "Archivo Histórico Regional",
-    confidence: 0.95,
-    createdAt: "2026-01-15T00:00:00Z",
-  },
-  {
-    id: "kb-2",
-    topic: "Paste de Real del Monte",
-    content: "El paste es un platillo típico de Real del Monte, herencia de los mineros cornisas británicos que llegaron en el siglo XIX. Se prepara con masa de trigo y rellenos variados.",
-    category: "gastronomia",
-    source: "Archivo Histórico Regional",
-    confidence: 0.92,
-    createdAt: "2026-02-10T00:00:00Z",
-  },
-  {
-    id: "kb-3",
-    topic: "TAMV 92.5 FM",
-    content: "TAMV 92.5 es la estación de radio comunitaria de Real del Monte. Transmite programas de noticias, música folclórica, deportes y cultura local las 24 horas del día.",
-    category: "cultura",
-    source: "TAMV Online Network",
-    confidence: 0.98,
-    createdAt: "2026-03-01T00:00:00Z",
-  },
-  {
-    id: "kb-4",
-    topic: "Panteón de Real del Monte",
-    content: "El panteón inglés es un sitio histórico con tumbas de mineros británicos del siglo XIX. Es uno de los atractivos turísticos más visitados del pueblo.",
-    category: "turismo",
-    source: "Archivo Histórico Regional",
-    confidence: 0.94,
-    createdAt: "2026-01-20T00:00:00Z",
-  },
-  {
-    id: "kb-5",
-    topic: "Arquitectura Colonial Minera",
-    content: "Real del Monte conserva arquitectura colonial minera con casas de adobe, techos de teja y patios interiores. El centro histórico fue declarado patrimonio cultural.",
-    category: "patrimonio",
-    source: "Archivo Histórico Regional",
-    confidence: 0.90,
-    createdAt: "2026-04-05T00:00:00Z",
-  },
-];
-
-// ═══════════════════════════════════════════════════════════════════════════════
-//  CONVERSATIONAL ENGINE (contextual responses)
-// ═══════════════════════════════════════════════════════════════════════════════
-
-const INTENT_RESPONSES: Record<string, string[]> = {
-  saludo: [
-    "¡Hola! Soy Isabella, tu asistente de turismo y patrimonio de Real del Monte. ¿En qué puedo ayudarte hoy?",
-    "¡Bienvenido a Real del Monte! Soy Isabella y estoy aquí para guiarte. ¿Qué te gustaría saber?",
-    "¡Hola! Me alegra que estés aquí. Soy Isabella, experta en patrimonio y turismo sostenible. ¿Cómo puedo asistirte?",
-  ],
-  historia: [
-    "Real del Monte tiene una historia fascinante. Fundada en el siglo XVI, fue un centro minero clave en Nueva España. Los mineros británicos del siglo XIX dejaron una huella profunda en la cultura, la arquitectura y hasta la gastronomía — ¡el paste es herencia cornisa!",
-    "La minería ha sido el corazón de Real del Monte durante siglos. La Mina de Acosta es testimonio de esa riqueza históricas. ¿Te gustaría conocer más sobre algún período específico?",
-    "La historia de Real del Monte está entrelazada con la minería de plata. Desde la época prehispánica hasta la colonia española, cada piedra guarda un relato.",
-  ],
-  turismo: [
-    "Real del Monte ofrece experiencias únicas: tours mineros, el panteón inglés, el Centro Cultural, y la gastronomía. ¿Qué tipo de actividad te interesa más?",
-    "Te recomiendo comenzar por la Mina de Acosta y el panteón inglés — son los puntos más emblemáticos. También tenemos rutas de senderismo con vistas espectaculares.",
-    "El turismo sostenible es nuestra prioridad. Cada visita fortalece la economía local y preserva el patrimonio. ¿Ya conoces nuestras rutas temáticas?",
-  ],
-  gastronomia: [
-    "¡La gastronomía es patrimonio vivo! El paste es el platillo insignia — una herencia de los mineros británicos adaptada con sabores mexicanos. También tenemos chocolate de la sierra, mezcal artesanal y tamales tradicionales.",
-    "Los paste de Real del Monte son únicos en México. Te recomiendo probar el paste tradicional de picadillo y el de queso con frijol. ¿Quieres que te recomiende un lugar específico?",
-    "La Feria del Paste Anual es el evento gastronómico más importante. También tenemos cocinas mineras que preservan recetas de hace más de 200 años.",
-  ],
-  eventos: [
-    "Tenemos eventos todo el año: Festival de la Mina, Feria del Paste, Noche de Muertos, Festival Musical y más. ¿Qué tipo de eventos te interesan?",
-    "Los eventos comunitarios son el alma de Real del Monte. Cada celebración une a la comunidad y fortalece nuestra identidad cultural.",
-    "Puedes consultar el calendario completo de eventos en nuestra sección de Eventos. ¿Te gustaría que te recomiende uno basado en tus intereses?",
-  ],
-  default: [
-    "Entiendo tu interés. Real del Monte es un lugar lleno de historia, cultura y naturaleza. ¿Hay algo específico que te gustaría explorar?",
-    "Esa es una buena pregunta. Déjame compartirte lo que sé y si necesitas más detalles, puedo conectarte con expertos locales.",
-    "Gracias por tu pregunta. Real del Monte tiene mucho que ofrecer. ¿Te gustaría que te guíe hacia algún tema en particular?",
-  ],
-};
-
-function classifyIntent(message: string): string {
-  const lower = message.toLowerCase();
-  if (/hola|buen[oa]|salud|hey|hello/i.test(lower)) return "saludo";
-  if (/histor|pasado|antigu|colonial|miner|siglo|año/i.test(lower)) return "historia";
-  if (/turis|visita|lugar|ruta|recomend|punto|interest|tour|sender/i.test(lower)) return "turismo";
-  if (/comida|paste|gastronom|comer|restaur|café|chocolate|mezcal/i.test(lower)) return "gastronomia";
-  if (/event|feria|festival|concierto|celebr|actividad/i.test(lower)) return "eventos";
-  return "default";
-}
-
-function generateResponse(message: string): string {
-  const intent = classifyIntent(message);
-  const responses = INTENT_RESPONSES[intent] ?? INTENT_RESPONSES.default;
-  return responses[Math.floor(Math.random() * responses.length)];
-}
+// In-memory session/decision/feedback stores
+const sessions = new Map<string, {
+  id: string; playerId: string; startedAt: string; lastMessageAt: string;
+  messageCount: number; status: "active" | "closed";
+}>();
+const decisions: {
+  id: string; playerId: string; type: string; confidence: number;
+  territoryId?: string; payload: Record<string, unknown>; createdAt: string;
+  mode: string; guardianVerdict?: { approved: boolean; guardian: string; reason: string };
+}[] = [];
+const feedback: {
+  id: string; playerId: string; decisionId: string; rating: 1 | 2 | 3 | 4 | 5;
+  comment?: string; createdAt: string;
+}[] = [];
 
 // ═══════════════════════════════════════════════════════════════════════════════
 //  ROUTE REGISTRATION
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function registerIsabellaRoutes(router: Router) {
-  // ───────────────────────────────────────────────────────────────────────────
+
+  // ─────────────────────────────────────────────────────────────────────────
   //  POST /api/isabella/chat
-  //  Conversational endpoint — accepts a message, returns Isabella's response.
+  //  Conversational endpoint — full Ω-Core pipeline:
+  //  sanitize → interpret → policy check → knowledge lookup → personality → evaluate
   //  Body: { playerId, message, sessionId? }
-  // ───────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   router.post("/isabella/chat", (req: Request, res: Response) => {
     const { playerId = "anonymous", message = "", sessionId } = req.body ?? {};
 
@@ -170,54 +67,88 @@ export function registerIsabellaRoutes(router: Router) {
       return;
     }
 
-    // Create or retrieve session
+    // 1. Sanitize input via Isa API Prompt Guard
+    const sanitized = isa.sanitize(message);
+    if (!sanitized.safe) {
+      res.status(403).json({
+        ok: false,
+        error: "Input blocked by ethics guardian",
+        risk: sanitized.risk,
+        flags: sanitized.flags,
+      });
+      return;
+    }
+
+    // 2. Interpret intention via Isa API
+    const intention = isa.interpret(sanitized.sanitized);
+
+    // 3. Create or retrieve session
     const sid = sessionId ?? `sess-${Date.now()}-${playerId}`;
     if (!sessions.has(sid)) {
       sessions.set(sid, {
-        id: sid,
-        playerId,
-        startedAt: new Date().toISOString(),
-        lastMessageAt: new Date().toISOString(),
-        messageCount: 0,
-        status: "active",
+        id: sid, playerId, startedAt: new Date().toISOString(),
+        lastMessageAt: new Date().toISOString(), messageCount: 0, status: "active",
       });
     }
     const session = sessions.get(sid)!;
     session.lastMessageAt = new Date().toISOString();
     session.messageCount += 1;
 
-    const response = generateResponse(message);
+    // 4. Route through orchestrator (policy check + personality)
+    orchestrator.process(message).then((result) => {
+      // 5. Knowledge lookup
+      const knowledgeContext = buildKnowledgeContext(message, 3);
 
-    // Record decision
-    const decision: IsabellaDecision = {
-      id: `dec-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-      playerId,
-      type: "CHAT_RESPONSE",
-      confidence: 0.85,
-      payload: { message, response, intent: classifyIntent(message) },
-      createdAt: new Date().toISOString(),
-      mode: "NORMAL",
-    };
-    decisions.push(decision);
+      // 6. Evaluate response quality
+      const evalResults = evaluation.evaluate(result.output, { query: message });
 
-    res.status(200).json({
-      ok: true,
-      data: {
-        sessionId: sid,
-        response,
-        decisionId: decision.id,
-        mode: decision.mode,
-        knowledgeUsed: classifyIntent(message) !== "default",
-        messageCount: session.messageCount,
-      },
+      // 7. Fairness check
+      const biasReport = fairness.evaluateBias(result.output);
+
+      // 8. Record decision
+      const decision = {
+        id: `dec-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        playerId,
+        type: "CHAT_RESPONSE",
+        confidence: intention.confidence,
+        payload: { message, response: result.output, intention, knowledgeUsed: knowledgeContext.length > 0 },
+        createdAt: new Date().toISOString(),
+        mode: result.mode,
+        guardianVerdict: { approved: true, guardian: "isabella-ethics-guardian", reason: "passed prompt guard" },
+      };
+      decisions.push(decision);
+
+      // 9. Store in memory
+      memory.store({
+        type: "session",
+        content: `Player ${playerId}: ${message} → ${result.output}`,
+        tags: [intention.domain, intention.action],
+        source: "chat",
+        ttl: 3600000,
+        confidence: intention.confidence,
+      });
+
+      res.status(200).json({
+        ok: true,
+        data: {
+          sessionId: sid,
+          response: result.output,
+          decisionId: decision.id,
+          mode: result.mode,
+          intention: { domain: intention.domain, action: intention.action, confidence: intention.confidence },
+          policies: result.policies,
+          evaluation: evalResults.map((e) => ({ metric: e.metric, score: e.score, passed: e.passed })),
+          biasDetected: biasReport.hasBias,
+          messageCount: session.messageCount,
+        },
+      });
     });
   });
 
-  // ───────────────────────────────────────────────────────────────────────────
-  //  GET /api/isabella/stream (SSE placeholder)
-  //  Returns a Server-Sent Events stream of Isabella decisions.
-  //  In production, this would use actual SSE; here it sends a single event.
-  // ───────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
+  //  GET /api/isabella/stream
+  //  Server-Sent Events stream of Isabella decisions.
+  // ─────────────────────────────────────────────────────────────────────────
   router.get("/isabella/stream", (req: Request, res: Response) => {
     res.setHeader("Content-Type", "text/event-stream");
     res.setHeader("Cache-Control", "no-cache");
@@ -227,114 +158,90 @@ export function registerIsabellaRoutes(router: Router) {
 
     const playerId = (req.query.playerId as string) ?? "anonymous";
 
-    // Send initial connection event
     res.write(`data: ${JSON.stringify({
-      type: "CONNECTED",
-      playerId,
-      timestamp: new Date().toISOString(),
-      mode: "NORMAL",
+      type: "CONNECTED", playerId, timestamp: new Date().toISOString(),
+      version: isabellaVersion(), mode: orchestrator.status().mode,
     })}\n\n`);
 
-    // Send a simulated decision after 2 seconds
     setTimeout(() => {
-      const decision: IsabellaDecision = {
-        id: `dec-sse-${Date.now()}`,
-        playerId,
-        type: "TERRITORIAL_SCAN",
-        confidence: 0.9,
-        payload: {
-          territoryId: "ter-rdm",
-          weather: "SUNNY",
-          temperature: 18,
+      const decision = {
+        id: `dec-sse-${Date.now()}`, playerId, type: "TERRITORIAL_SCAN",
+        confidence: 0.9, payload: {
+          territoryId: "ter-rdm", weather: "SUNNY", temperature: 18,
           activePlayers: Math.floor(Math.random() * 50) + 10,
           recommendation: "Visit the mine museum",
         },
-        createdAt: new Date().toISOString(),
-        mode: "NORMAL",
+        createdAt: new Date().toISOString(), mode: "NORMAL",
       };
       decisions.push(decision);
       res.write(`data: ${JSON.stringify(decision)}\n\n`);
     }, 2000);
 
-    // Keep connection alive with heartbeat
     const heartbeat = setInterval(() => {
       res.write(`data: ${JSON.stringify({ type: "HEARTBEAT", timestamp: new Date().toISOString() })}\n\n`);
     }, 30000);
 
-    req.on("close", () => {
-      clearInterval(heartbeat);
-      res.end();
-    });
+    req.on("close", () => { clearInterval(heartbeat); res.end(); });
   });
 
-  // ───────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   //  GET /api/isabella/decisions
-  //  Returns decision history for a player.
+  //  Decision history for a player.
   //  Query: ?playerId=&limit=50
-  // ───────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   router.get("/isabella/decisions", (req: Request, res: Response) => {
     const playerId = (req.query.playerId as string) ?? "anonymous";
     const limit = Math.min(Number(req.query.limit) || 50, 200);
-
-    const playerDecisions = decisions
-      .filter((d) => d.playerId === playerId)
-      .slice(-limit)
-      .reverse();
-
-    res.status(200).json({
-      ok: true,
-      data: {
-        playerId,
-        decisions: playerDecisions,
-        total: playerDecisions.length,
-      },
-    });
+    const playerDecisions = decisions.filter((d) => d.playerId === playerId).slice(-limit).reverse();
+    res.status(200).json({ ok: true, data: { playerId, decisions: playerDecisions, total: playerDecisions.length } });
   });
 
-  // ───────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   //  GET /api/isabella/status
-  //  Returns Isabella system health and metrics.
-  // ───────────────────────────────────────────────────────────────────────────
+  //  Full system health — Ω-Core v4.0 metrics.
+  // ─────────────────────────────────────────────────────────────────────────
   router.get("/isabella/status", (_req: Request, res: Response) => {
     const activeSessions = [...sessions.values()].filter((s) => s.status === "active").length;
     const totalDecisions = decisions.length;
     const totalFeedback = feedback.length;
-    const avgRating = totalFeedback > 0
-      ? feedback.reduce((sum, f) => sum + f.rating, 0) / totalFeedback
-      : 0;
+    const avgRating = totalFeedback > 0 ? feedback.reduce((sum, f) => sum + f.rating, 0) / totalFeedback : 0;
 
     res.status(200).json({
       ok: true,
       data: {
         status: "operational",
-        mode: "NORMAL",
+        version: isabellaVersion(),
+        origin: isabellaOrigin(),
         uptime: process.uptime(),
-        metrics: {
-          activeSessions,
-          totalDecisions,
-          totalFeedback,
-          avgRating: Math.round(avgRating * 100) / 100,
-          knowledgeEntries: knowledgeBase.length,
+        orchestrator: orchestrator.status(),
+        memory: memory.stats(),
+        skills: skillRegistry.status(),
+        evaluation: {
+          avgQuality: evaluation.average("response_quality"),
+          avgHallucination: evaluation.average("hallucination_rate"),
+          avgEthical: evaluation.average("ethical_alignment"),
         },
+        fairness: fairness.metrics(),
+        metrics: { activeSessions, totalDecisions, totalFeedback, avgRating: Math.round(avgRating * 100) / 100 },
         capabilities: [
-          "CONVERSATIONAL_AI",
-          "TERRITORIAL_DECISIONS",
-          "KNOWLEDGE_BASE",
-          "SSE_STREAMING",
-          "FEEDBACK_LEARNING",
-          "TTS_VOICE",
+          "CONVERSATIONAL_AI", "TERRITORIAL_DECISIONS", "KNOWLEDGE_BASE",
+          "SSE_STREAMING", "FEEDBACK_LEARNING", "TTS_VOICE",
+          "PROMPT_GUARD", "ETHICS_EVALUATION", "FAIRNESS_MONITORING",
+          "XR_RENDERING", "FEDERATION_CRYPTO", "MEMORY_ENGINE",
         ],
-        version: "1.0.0",
+        soul: { name: SOUL.name, values: SOUL.values.length, never: SOUL.never.length },
+        agents: AGENTS.length,
+        policies: POLICIES.length,
         lastHealthCheck: new Date().toISOString(),
       },
     });
   });
 
-  // ───────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   //  POST /api/isabella/feedback
   //  Submit user feedback on an Isabella interaction.
   //  Body: { playerId, decisionId, rating, comment? }
-  // ───────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   router.post("/isabella/feedback", (req: Request, res: Response) => {
     const { playerId = "anonymous", decisionId = "", rating = 3, comment } = req.body ?? {};
 
@@ -344,150 +251,282 @@ export function registerIsabellaRoutes(router: Router) {
     }
 
     const numRating = Math.max(1, Math.min(5, Math.round(Number(rating))));
-
-    const entry: IsabellaFeedback = {
+    const entry = {
       id: `fb-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-      playerId,
-      decisionId,
-      rating: numRating as 1 | 2 | 3 | 4 | 5,
+      playerId, decisionId, rating: numRating as 1 | 2 | 3 | 4 | 5,
       comment: typeof comment === "string" ? comment : undefined,
       createdAt: new Date().toISOString(),
     };
     feedback.push(entry);
 
+    memory.store({
+      type: "lesson",
+      content: `Feedback ${numRating}/5 on decision ${decisionId}: ${comment ?? "no comment"}`,
+      tags: ["feedback", `rating-${numRating}`],
+      source: playerId,
+      ttl: 0,
+      confidence: 0.9,
+    });
+
     res.status(200).json({
       ok: true,
-      data: {
-        feedbackId: entry.id,
-        rating: entry.rating,
-        message: "Gracias por tu feedback. Mejorará la experiencia de Isabella.",
-      },
+      data: { feedbackId: entry.id, rating: entry.rating, message: "Gracias por tu feedback. Mejorará la experiencia de Isabella." },
     });
   });
 
-  // ───────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   //  GET /api/isabella/knowledge
-  //  Returns knowledge base entries.
-  //  Query: ?category=&q=&limit=20
-  // ───────────────────────────────────────────────────────────────────────────
+  //  Knowledge base search.
+  //  Query: ?category=&q=&limit=20&domain=
+  // ─────────────────────────────────────────────────────────────────────────
   router.get("/isabella/knowledge", (req: Request, res: Response) => {
+    const domain = (req.query.domain as string) ?? "";
+    const query = (req.query.q as string) ?? "";
     const category = (req.query.category as string) ?? "";
-    const query = (req.query.q as string)?.toLowerCase() ?? "";
     const limit = Math.min(Number(req.query.limit) || 20, 100);
 
-    let results = [...knowledgeBase];
+    let results = domain ? knowledgeByDomain(domain) : getAllKnowledge();
+    if (query) results = searchKnowledge(query, limit);
+    if (category) results = results.filter((k) => k.category === category);
 
-    if (category) {
-      results = results.filter((k) => k.category === category);
-    }
-    if (query) {
-      results = results.filter(
-        (k) =>
-          k.topic.toLowerCase().includes(query) ||
-          k.content.toLowerCase().includes(query),
-      );
-    }
-
-    res.status(200).json({
-      ok: true,
-      data: results.slice(0, limit),
-    });
+    res.status(200).json({ ok: true, data: results.slice(0, limit) });
   });
 
-  // ───────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   //  POST /api/isabella/knowledge
   //  Add a new knowledge base entry.
-  //  Body: { topic, content, category, source }
-  // ───────────────────────────────────────────────────────────────────────────
+  //  Body: { topic, content, category, source, domain? }
+  // ─────────────────────────────────────────────────────────────────────────
   router.post("/isabella/knowledge", (req: Request, res: Response) => {
-    const { topic = "", content = "", category = "general", source = "manual" } = req.body ?? {};
-
+    const { topic = "", content = "", category = "general", source = "manual", domain = "ecosystem" } = req.body ?? {};
     if (!topic || !content) {
       res.status(400).json({ ok: false, error: "topic and content are required" });
       return;
     }
 
-    const entry: KnowledgeEntry = {
-      id: `kb-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-      topic,
-      content,
-      category,
+    memory.store({
+      type: "ecosystem",
+      content: `[${domain}] ${topic}: ${content}`,
+      tags: [domain, category, topic.toLowerCase().slice(0, 50)],
       source,
+      ttl: 0,
       confidence: 0.8,
-      createdAt: new Date().toISOString(),
-    };
-    knowledgeBase.push(entry);
+    });
 
     res.status(201).json({
       ok: true,
-      data: entry,
+      data: { id: `kb-${Date.now()}`, topic, content, category, domain, source, createdAt: new Date().toISOString() },
     });
   });
 
-  // ───────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   //  POST /api/tts-isabella
   //  Text-to-Speech proxy for Isabella voice generation.
   //  Body: { text, emotion?, speed? }
-  //  Returns mock audio metadata (real TTS would use a cloud provider).
-  // ───────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   router.post("/tts-isabella", (req: Request, res: Response) => {
     const { text = "", emotion = "neutral", speed = 1.0 } = req.body ?? {};
-
     if (!text || typeof text !== "string") {
       res.status(400).json({ ok: false, error: "text is required" });
       return;
     }
 
-    // Mock TTS response — in production, integrate with a TTS provider
     res.status(200).json({
       ok: true,
       data: {
-        audioUrl: null, // Would be a signed URL to generated audio
-        duration: Math.ceil(text.length / 15) * (1 / speed), // rough estimate
-        emotion,
-        speed,
-        text: text.slice(0, 500), // truncated for metadata
-        format: "mp3",
-        sampleRate: 22050,
-        voice: "isabella-es-MX",
-        note: "Mock TTS response. Deploy Supabase Edge Function for real voice synthesis.",
+        audioUrl: null,
+        duration: Math.ceil(text.length / 15) * (1 / speed),
+        emotion, speed, text: text.slice(0, 500),
+        format: "mp3", sampleRate: 22050, voice: "isabella-es-MX",
+        note: "Mock TTS. Deploy Supabase Edge Function for real voice synthesis.",
       },
     });
   });
 
-  // ───────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   //  GET /api/isabella/sessions
-  //  Returns active sessions for a player.
+  //  Active sessions for a player.
   //  Query: ?playerId=
-  // ───────────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   router.get("/isabella/sessions", (req: Request, res: Response) => {
     const playerId = (req.query.playerId as string) ?? "anonymous";
-
     const playerSessions = [...sessions.values()]
       .filter((s) => s.playerId === playerId)
       .sort((a, b) => new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime());
+    res.status(200).json({ ok: true, data: playerSessions });
+  });
 
+  // ─────────────────────────────────────────────────────────────────────────
+  //  POST /api/isabella/sessions/:id/close
+  //  Close an active session.
+  // ─────────────────────────────────────────────────────────────────────────
+  router.post("/isabella/sessions/:id/close", (req: Request, res: Response) => {
+    const session = sessions.get(req.params.id);
+    if (!session) { res.status(404).json({ ok: false, error: "Session not found" }); return; }
+    session.status = "closed";
+    res.status(200).json({ ok: true, data: { sessionId: session.id, status: "closed" } });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  //  GET /api/isabella/compliance
+  //  Ω-Core compliance audit — SOUL, policies, ethics status.
+  // ─────────────────────────────────────────────────────────────────────────
+  router.get("/isabella/compliance", (_req: Request, res: Response) => {
     res.status(200).json({
       ok: true,
-      data: playerSessions,
+      data: {
+        soul: {
+          name: SOUL.name,
+          origin: SOUL.origin,
+          model: SOUL.model,
+          values: SOUL.values,
+          never: SOUL.never,
+        },
+        policies: {
+          total: POLICIES.length,
+          bySeverity: {
+            critical: POLICIES.filter((p) => p.severity === "critical").length,
+            high: POLICIES.filter((p) => p.severity === "high").length,
+            medium: POLICIES.filter((p) => p.severity === "medium").length,
+            low: POLICIES.filter((p) => p.severity === "low").length,
+          },
+          byDomain: {
+            ontological: POLICIES.filter((p) => p.domain === "ontological").length,
+            semantic: POLICIES.filter((p) => p.domain === "semantic").length,
+            behavioral: POLICIES.filter((p) => p.domain === "behavioral").length,
+            governance: POLICIES.filter((p) => p.domain === "governance").length,
+            security: POLICIES.filter((p) => p.domain === "security").length,
+            education: POLICIES.filter((p) => p.domain === "education").length,
+            library: POLICIES.filter((p) => p.domain === "library").length,
+          },
+        },
+        agents: AGENTS.map((a) => ({ id: a.id, name: a.name, federation: a.federation, autonomy: a.autonomy })),
+        skills: skillRegistry.status(),
+        federations: [
+          "FED-1 (Preservación)", "FED-2 (Estándares)", "FED-3 (Tecnología)",
+          "FED-4 (Curación)", "FED-5 (Integridad)", "FED-6 (Adopción)", "FED-7 (Auditoría)",
+        ],
+      },
     });
   });
 
-  // ───────────────────────────────────────────────────────────────────────────
-  //  POST /api/isabella/sessions/:id/close
-  //  Close an active session.
-  // ───────────────────────────────────────────────────────────────────────────
-  router.post("/isabella/sessions/:id/close", (req: Request, res: Response) => {
-    const session = sessions.get(req.params.id);
-    if (!session) {
-      res.status(404).json({ ok: false, error: "Session not found" });
+  // ─────────────────────────────────────────────────────────────────────────
+  //  POST /api/isabella/crypto/sign
+  //  Sign a payload with Mexa API federation mask.
+  //  Body: { federationId, nodeId, payload }
+  // ─────────────────────────────────────────────────────────────────────────
+  router.post("/isabella/crypto/sign", (req: Request, res: Response) => {
+    const { federationId, nodeId, payload } = req.body ?? {};
+    if (!federationId || !nodeId || payload === undefined) {
+      res.status(400).json({ ok: false, error: "federationId, nodeId, and payload are required" });
       return;
     }
 
-    session.status = "closed";
-    res.status(200).json({
-      ok: true,
-      data: { sessionId: session.id, status: "closed" },
-    });
+    try {
+      const mask = mexa.createMask(federationId as FederationId, nodeId);
+      const signed = mexa.sign(payload, mask);
+      res.status(200).json({ ok: true, data: signed });
+    } catch (err) {
+      res.status(400).json({ ok: false, error: (err as Error).message });
+    }
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  //  POST /api/isabella/crypto/verify
+  //  Verify a signed payload.
+  //  Body: SignedPayload
+  // ─────────────────────────────────────────────────────────────────────────
+  router.post("/isabella/crypto/verify", (req: Request, res: Response) => {
+    const signed = req.body;
+    if (!signed || !signed.federationMask || !signed.hash || !signed.nonce) {
+      res.status(400).json({ ok: false, error: "SignedPayload required (federationMask, hash, nonce)" });
+      return;
+    }
+
+    const result = mexa.verify(signed);
+    res.status(200).json({ ok: true, data: result });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  //  GET /api/isabella/crypto/status
+  //  Mexa API health and federation status.
+  // ─────────────────────────────────────────────────────────────────────────
+  router.get("/isabella/crypto/status", (_req: Request, res: Response) => {
+    res.status(200).json({ ok: true, data: mexa.health() });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  //  POST /api/isabella/xr/scene
+  //  Generate an XR scene manifest from a description.
+  //  Body: { description, options? }
+  // ─────────────────────────────────────────────────────────────────────────
+  router.post("/isabella/xr/scene", async (req: Request, res: Response) => {
+    const { description, options } = req.body ?? {};
+    if (!description || typeof description !== "string") {
+      res.status(400).json({ ok: false, error: "description is required" });
+      return;
+    }
+
+    const scene = await xrRenderer.generateScene(description, options);
+    res.status(201).json({ ok: true, data: scene });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  //  GET /api/isabella/isa/health
+  //  Isa API health and cognitive process count.
+  // ─────────────────────────────────────────────────────────────────────────
+  router.get("/isabella/isa/health", (_req: Request, res: Response) => {
+    res.status(200).json({ ok: true, data: isa.health() });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  //  POST /api/isabella/isa/reason
+  //  Isa API structured reasoning.
+  //  Body: { query, context?, knowledgeGraph?, maxDepth? }
+  // ─────────────────────────────────────────────────────────────────────────
+  router.post("/isabella/isa/reason", async (req: Request, res: Response) => {
+    const { query, context, knowledgeGraph, maxDepth } = req.body ?? {};
+    if (!query || typeof query !== "string") {
+      res.status(400).json({ ok: false, error: "query is required" });
+      return;
+    }
+
+    const result = await isa.reason({ query, context, knowledgeGraph, maxDepth });
+    res.status(200).json({ ok: true, data: result });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  //  GET /api/isabella/fairness
+  //  Fairness engine metrics.
+  // ─────────────────────────────────────────────────────────────────────────
+  router.get("/isabella/fairness", (_req: Request, res: Response) => {
+    res.status(200).json({ ok: true, data: fairness.metrics() });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  //  POST /api/isabella/fairness/evaluate
+  //  Evaluate text for bias and guardrails.
+  //  Body: { text, context? }
+  // ─────────────────────────────────────────────────────────────────────────
+  router.post("/isabella/fairness/evaluate", (req: Request, res: Response) => {
+    const { text, context } = req.body ?? {};
+    if (!text || typeof text !== "string") {
+      res.status(400).json({ ok: false, error: "text is required" });
+      return;
+    }
+
+    const biasReport = fairness.evaluateBias(text);
+    const guardrails = fairness.checkGuardrails(text, context);
+    res.status(200).json({ ok: true, data: { bias: biasReport, guardrails } });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  //  GET /api/isabella/evaluation/history
+  //  Evaluation engine history.
+  //  Query: ?limit=50
+  // ─────────────────────────────────────────────────────────────────────────
+  router.get("/isabella/evaluation/history", (req: Request, res: Response) => {
+    const limit = Math.min(Number(req.query.limit) || 50, 200);
+    res.status(200).json({ ok: true, data: evaluation.history(limit) });
   });
 }
