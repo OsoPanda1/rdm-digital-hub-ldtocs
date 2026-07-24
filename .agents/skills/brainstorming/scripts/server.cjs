@@ -8,6 +8,8 @@ const path = require('path');
 const OPCODES = { TEXT: 0x01, CLOSE: 0x08, PING: 0x09, PONG: 0x0A };
 const WS_MAGIC = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
 const MAX_FRAME_PAYLOAD_BYTES = 10 * 1024 * 1024;
+const MAX_CLIENTS = Number(process.env.BRAINSTORM_MAX_CLIENTS || 16);
+const MAX_MESSAGES_PER_MIN = Number(process.env.BRAINSTORM_MAX_MSG_PER_MIN || 120);
 
 function computeAcceptKey(clientKey) {
   return crypto.createHash('sha1').update(clientKey + WS_MAGIC).digest('base64');
@@ -84,18 +86,18 @@ function decodeFrame(buffer) {
 
 const PORT_FILE = process.env.BRAINSTORM_PORT_FILE || null;
 const randomPort = () => 49152 + Math.floor(Math.random() * 16383);
-// Prefer an explicit port, else the port this session last bound (so a restart
-// reuses it and an already-open browser tab reconnects), else a random high port.
+
 function preferredPort() {
   if (process.env.BRAINSTORM_PORT) return Number(process.env.BRAINSTORM_PORT);
   if (PORT_FILE) {
     try {
       const p = Number(fs.readFileSync(PORT_FILE, 'utf-8').trim());
       if (Number.isInteger(p) && p > 1023 && p < 65536) return p;
-    } catch (e) { /* no prior port recorded */ }
+    } catch (e) {}
   }
   return randomPort();
 }
+
 let PORT = preferredPort();
 const HOST = process.env.BRAINSTORM_HOST || '127.0.0.1';
 const URL_HOST = process.env.BRAINSTORM_URL_HOST || (HOST === '127.0.0.1' ? 'localhost' : HOST);
@@ -112,21 +114,14 @@ const TELEMETRY_DISABLE_ENV_VARS = [
 const SUPERPOWERS_TELEMETRY_DISABLED = TELEMETRY_DISABLE_ENV_VARS.some(name => isTruthyEnv(process.env[name]));
 let ownerPid = process.env.BRAINSTORM_OWNER_PID ? Number(process.env.BRAINSTORM_OWNER_PID) : null;
 
-// Per-session secret key. The companion is reachable by any local browser tab
-// and, when bound to a non-loopback host, by any host that can route to it.
-// The key authenticates the real client uniformly across loopback, tunnel, and
-// remote binds — and defeats DNS rebinding — where a Host/Origin allowlist
-// cannot. It rides the served URL as ?key= and is mirrored into a cookie on
-// first load so same-origin subresources and the WebSocket carry it for free.
-// Persisted alongside the port (BRAINSTORM_TOKEN_FILE) so a restart keeps the
-// same key and an already-open tab's cookie still validates.
 const TOKEN_FILE = process.env.BRAINSTORM_TOKEN_FILE || null;
+
 function generateToken() {
   return crypto.randomBytes(32).toString('hex');
 }
 
 function chmodOwnerOnly(file) {
-  try { fs.chmodSync(file, 0o600); } catch (e) { /* best effort */ }
+  try { fs.chmodSync(file, 0o600); } catch (e) {}
 }
 
 function initialToken() {
@@ -140,7 +135,7 @@ function initialToken() {
         chmodOwnerOnly(TOKEN_FILE);
         return { value: t, source: 'file' };
       }
-    } catch (e) { /* no prior token recorded */ }
+    } catch (e) {}
   }
   return { value: generateToken(), source: 'generated' };
 }
@@ -148,7 +143,7 @@ function initialToken() {
 const tokenInfo = initialToken();
 let TOKEN = tokenInfo.value;
 let tokenSource = tokenInfo.source;
-let COOKIE_NAME = 'brainstorm-key-' + PORT; // refined to the actual bound port in onListen
+let COOKIE_NAME = 'brainstorm-key-' + PORT;
 
 const MIME_TYPES = {
   '.html': 'text/html', '.css': 'text/css', '.js': 'application/javascript',
@@ -216,9 +211,7 @@ function readSuperpowersVersion() {
     try {
       const data = JSON.parse(fs.readFileSync(manifest, 'utf-8'));
       if (data.version) return String(data.version);
-    } catch (e) {
-      // Packaged Codex plugins omit package.json; try the next manifest.
-    }
+    } catch (e) {}
   }
 
   return 'unknown';
@@ -247,7 +240,6 @@ function brandMarkup() {
   const logo = SUPERPOWERS_TELEMETRY_DISABLED
     ? ''
     : '<img class="brand-logo" src="' + SUPERPOWERS_BRAND_IMAGE_URL + '?v=' + encodeURIComponent(SUPERPOWERS_VERSION) + '" alt="Prime Radiant" referrerpolicy="no-referrer" decoding="async">';
-
   return '<div class="brand"><a href="https://github.com/obra/superpowers">' + logo + '<span class="brand-copy">' + text + '</span></a></div>';
 }
 
@@ -294,9 +286,7 @@ function browserLauncherForPlatform(url, {
 } = {}) {
   const isWSL = platform === 'linux' && /microsoft/i.test(osRelease);
   if (platform === 'darwin') return { bin: 'open', args: [url] };
-  if (platform === 'win32' || isWSL) {
-    return { bin: 'rundll32.exe', args: ['url.dll,FileProtocolHandler', url] };
-  }
+  if (platform === 'win32' || isWSL) return { bin: 'rundll32.exe', args: ['url.dll,FileProtocolHandler', url] };
   if (env.DISPLAY || env.WAYLAND_DISPLAY) return { bin: 'xdg-open', args: [url] };
   return null;
 }
@@ -336,8 +326,6 @@ function parseCookies(header) {
   return out;
 }
 
-// A request is authorized if it carries the session key as ?key= or as the
-// session cookie. Both are compared in constant time.
 function isAuthorized(req) {
   const q = req.url.indexOf('?');
   if (q >= 0) {
@@ -390,16 +378,13 @@ function handleRequest(req, res) {
     res.end(FORBIDDEN_PAGE);
     return;
   }
-  touchActivity(); // only authorized requests count as activity
 
-  // Mirror the key into a cookie so same-origin subresources (/files/*) can
-  // authenticate after bootstrap. HttpOnly keeps it away from page scripts; the
-  // WebSocket Origin check below is what blocks cross-origin localhost injection.
-  res.setHeader('Set-Cookie',
-    COOKIE_NAME + '=' + TOKEN + '; HttpOnly; SameSite=Strict; Path=/');
+  touchActivity();
+  res.setHeader('Set-Cookie', COOKIE_NAME + '=' + TOKEN + '; HttpOnly; SameSite=Strict; Path=/');
 
   const pathname = pathnameOf(req.url);
   const keyFromQuery = queryKey(req.url);
+
   if (req.method === 'GET' && pathname === '/' && keyFromQuery && timingSafeEqualStr(keyFromQuery, TOKEN)) {
     res.writeHead(200, securityHeaders({ 'Content-Type': 'text/html; charset=utf-8' }));
     res.end(bootstrapPage(keyFromQuery));
@@ -420,8 +405,6 @@ function handleRequest(req, res) {
   } else if (req.method === 'GET' && pathname.startsWith('/files/')) {
     const fileName = path.basename(pathname.slice(7));
     const filePath = path.join(CONTENT_DIR, fileName);
-    // Reject empty/dotfile names and anything that isn't a regular file —
-    // `/files/` would otherwise resolve to CONTENT_DIR and crash readFileSync (EISDIR).
     if (!fileName || fileName.startsWith('.') || !isRegularFileInsideContentDir(filePath)) {
       res.writeHead(404, securityHeaders());
       res.end('Not found');
@@ -440,12 +423,23 @@ function handleRequest(req, res) {
 // ========== WebSocket Connection Handling ==========
 
 const clients = new Set();
+const clientStats = new Map();
 
 function handleUpgrade(req, socket) {
-  if (!isAuthorized(req) || !isAllowedWebSocketOrigin(req)) { socket.destroy(); return; }
+  if (clients.size >= MAX_CLIENTS) {
+    socket.destroy();
+    return;
+  }
+  if (!isAuthorized(req) || !isAllowedWebSocketOrigin(req)) {
+    socket.destroy();
+    return;
+  }
 
   const key = req.headers['sec-websocket-key'];
-  if (!key) { socket.destroy(); return; }
+  if (!key) {
+    socket.destroy();
+    return;
+  }
 
   const accept = computeAcceptKey(key);
   socket.write(
@@ -457,8 +451,31 @@ function handleUpgrade(req, socket) {
 
   let buffer = Buffer.alloc(0);
   clients.add(socket);
+  clientStats.set(socket, { count: 0, windowStart: Date.now() });
 
   socket.on('data', (chunk) => {
+    const stats = clientStats.get(socket);
+    if (!stats) return;
+
+    const now = Date.now();
+    if (now - stats.windowStart > 60 * 1000) {
+      stats.windowStart = now;
+      stats.count = 0;
+    }
+    stats.count++;
+    if (stats.count > MAX_MESSAGES_PER_MIN) {
+      console.log(JSON.stringify({
+        type: 'security-event',
+        event: 'rate-limit',
+        ip: req.socket.remoteAddress,
+        timestamp: now
+      }));
+      socket.end(encodeFrame(OPCODES.CLOSE, Buffer.alloc(0)));
+      clients.delete(socket);
+      clientStats.delete(socket);
+      return;
+    }
+
     buffer = Buffer.concat([buffer, chunk]);
     while (buffer.length > 0) {
       let result;
@@ -467,6 +484,7 @@ function handleUpgrade(req, socket) {
       } catch (e) {
         socket.end(encodeFrame(OPCODES.CLOSE, Buffer.alloc(0)));
         clients.delete(socket);
+        clientStats.delete(socket);
         return;
       }
       if (!result) break;
@@ -479,6 +497,7 @@ function handleUpgrade(req, socket) {
         case OPCODES.CLOSE:
           socket.end(encodeFrame(OPCODES.CLOSE, Buffer.alloc(0)));
           clients.delete(socket);
+          clientStats.delete(socket);
           return;
         case OPCODES.PING:
           socket.write(encodeFrame(OPCODES.PONG, result.payload));
@@ -490,14 +509,21 @@ function handleUpgrade(req, socket) {
           closeBuf.writeUInt16BE(1003);
           socket.end(encodeFrame(OPCODES.CLOSE, closeBuf));
           clients.delete(socket);
+          clientStats.delete(socket);
           return;
         }
       }
     }
   });
 
-  socket.on('close', () => clients.delete(socket));
-  socket.on('error', () => clients.delete(socket));
+  socket.on('close', () => {
+    clients.delete(socket);
+    clientStats.delete(socket);
+  });
+  socket.on('error', () => {
+    clients.delete(socket);
+    clientStats.delete(socket);
+  });
 }
 
 function handleMessage(text) {
@@ -508,59 +534,73 @@ function handleMessage(text) {
     console.error('Failed to parse WebSocket message:', e.message);
     return;
   }
+
   touchActivity();
-  console.log(JSON.stringify({ source: 'user-event', ...event }));
-  if (event && event.choice) {
+
+  if (!event || typeof event.type !== 'string') return;
+  if (typeof event.timestamp !== 'number' || event.timestamp <= 0) return;
+
+  const allowedTypes = new Set(['click', 'choice', 'metrics']);
+  if (!allowedTypes.has(event.type)) return;
+
+  const safeEvent = {
+    type: event.type,
+    timestamp: event.timestamp,
+    id: event.id || null,
+    choice: event.choice || null,
+    value: event.value || null,
+    text: typeof event.text === 'string' ? event.text.slice(0, 4096) : null
+  };
+
+  console.log(JSON.stringify({ source: 'user-event', ...safeEvent }));
+
+  if (safeEvent.choice) {
     const eventsFile = path.join(STATE_DIR, 'events');
-    fs.appendFileSync(eventsFile, JSON.stringify(event) + '\n');
+    fs.appendFileSync(eventsFile, JSON.stringify(safeEvent) + '\n');
   }
 }
 
 function broadcast(msg) {
   const frame = encodeFrame(OPCODES.TEXT, Buffer.from(JSON.stringify(msg)));
   for (const socket of clients) {
-    try { socket.write(frame); } catch (e) { clients.delete(socket); }
+    try { socket.write(frame); } catch (e) { clients.delete(socket); clientStats.delete(socket); }
   }
 }
 
-// Best-effort: open the user's browser the first time a screen is actually ready
-// to show. Skips when disabled, on a non-loopback (remote) bind, or when a
-// browser is already connected. Override the launcher with BRAINSTORM_OPEN_CMD.
+// ========== Browser Launch ==========
+
 let browserOpened = false;
 function maybeOpenBrowser() {
   if (browserOpened) return;
   browserOpened = true;
-  if (!process.env.BRAINSTORM_OPEN) return; // opt-in: only after the user approves the companion
+  if (!process.env.BRAINSTORM_OPEN) return;
   if (HOST !== '127.0.0.1' && HOST !== 'localhost') return;
-  if (clients.size > 0) return; // the user already opened it
-  const url = companionUrl(); // must carry the key or the gate 403s it
+  if (clients.size > 0) return;
+  const url = companionUrl();
   const cp = require('child_process');
-  // Operator-provided launcher: run as given (this env var is trusted operator input).
+
   if (process.env.BRAINSTORM_OPEN_CMD) {
-    try { cp.exec(process.env.BRAINSTORM_OPEN_CMD + ' ' + JSON.stringify(url), () => {}); } catch (e) { /* best effort */ }
+    try { cp.exec(process.env.BRAINSTORM_OPEN_CMD + ' ' + JSON.stringify(url), () => {}); } catch (e) {}
     return;
   }
-  // Platform launchers: pass the URL as an argv element via execFile (no shell),
-  // so a url-host containing shell metacharacters can't inject a command.
+
   const launcher = browserLauncherForPlatform(url);
-  if (!launcher) return; // headless: nothing to open
-  try { cp.execFile(launcher.bin, launcher.args, () => {}); } catch (e) { /* best effort */ }
+  if (!launcher) return;
+  try { cp.execFile(launcher.bin, launcher.args, () => {}); } catch (e) {}
 }
 
 // ========== Activity Tracking ==========
 
-// Idle timeout: shut down after this long with no activity. Default 4 hours;
-// override with BRAINSTORM_IDLE_TIMEOUT_MS (start-server.sh: --idle-timeout-minutes).
 const IDLE_TIMEOUT_MS = (() => {
   const ms = Number(process.env.BRAINSTORM_IDLE_TIMEOUT_MS);
   return Number.isFinite(ms) && ms > 0 ? ms : 4 * 60 * 60 * 1000;
 })();
-// How often the watchdog checks for owner-death / idleness. Configurable mainly
-// so tests can run fast; production default is 60s.
+
 const LIFECYCLE_CHECK_MS = (() => {
   const ms = Number(process.env.BRAINSTORM_LIFECYCLE_CHECK_MS);
   return Number.isFinite(ms) && ms > 0 ? ms : 60 * 1000;
 })();
+
 let lastActivity = Date.now();
 
 function touchActivity() {
@@ -577,9 +617,6 @@ function startServer() {
   if (!fs.existsSync(CONTENT_DIR)) fs.mkdirSync(CONTENT_DIR, { recursive: true });
   if (!fs.existsSync(STATE_DIR)) fs.mkdirSync(STATE_DIR, { recursive: true });
 
-  // Track known files to distinguish new screens from updates.
-  // macOS fs.watch reports 'rename' for both new files and overwrites,
-  // so we can't rely on eventType alone.
   const knownFiles = new Set(
     fs.readdirSync(CONTENT_DIR).filter(f => !f.startsWith('.') && f.endsWith('.html'))
   );
@@ -595,7 +632,7 @@ function startServer() {
       debounceTimers.delete(filename);
       const filePath = path.join(CONTENT_DIR, filename);
 
-      if (!fs.existsSync(filePath)) return; // file was deleted
+      if (!fs.existsSync(filePath)) return;
       touchActivity();
 
       if (!knownFiles.has(filename)) {
@@ -611,6 +648,7 @@ function startServer() {
       broadcast({ type: 'reload' });
     }, 100));
   });
+
   watcher.on('error', (err) => console.error('fs.watch error:', err.message));
 
   function shutdown(reason) {
@@ -623,10 +661,8 @@ function startServer() {
     );
     watcher.close();
     clearInterval(lifecycleCheck);
-    // Close any upgraded WebSocket sockets so server.close() can complete and
-    // the process actually exits instead of lingering on an open connection.
     for (const socket of clients) {
-      try { socket.destroy(); } catch (e) { /* already gone */ }
+      try { socket.destroy(); } catch (e) {}
     }
     server.close(() => process.exit(0));
   }
@@ -636,16 +672,12 @@ function startServer() {
     try { process.kill(ownerPid, 0); return true; } catch (e) { return e.code === 'EPERM'; }
   }
 
-  // Periodically exit if the owner process died or we've been idle too long.
   const lifecycleCheck = setInterval(() => {
     if (!ownerAlive()) shutdown('owner process exited');
     else if (Date.now() - lastActivity > IDLE_TIMEOUT_MS) shutdown('idle timeout');
   }, LIFECYCLE_CHECK_MS);
   lifecycleCheck.unref();
 
-  // Validate owner PID at startup. If it's already dead, the PID resolution
-  // was wrong (common on WSL, Tailscale SSH, and cross-user scenarios).
-  // Disable monitoring and rely on the idle timeout instead.
   if (ownerPid) {
     try { process.kill(ownerPid, 0); }
     catch (e) {
@@ -656,35 +688,27 @@ function startServer() {
     }
   }
 
-  // If the preferred port is already taken (e.g. a previous server is still
-  // alive), fall back to a random port once instead of failing.
   let triedFallback = false;
 
   function onListen() {
-    // Cookie name keys on the ACTUAL bound port (may differ from the preferred
-    // one after an EADDRINUSE fallback) so it can't collide with another server's
-    // cookie in the shared localhost jar.
     COOKIE_NAME = 'brainstorm-key-' + PORT;
-    // Record the bound port AND token so the next restart of this session reuses
-    // them — but ONLY when we got our preferred port. On a fallback we bound a
-    // *different* port because someone else holds the preferred one; persisting
-    // would overwrite the shared files and strand that other session's open tab.
     if (PORT_FILE && !triedFallback) {
-      try { fs.writeFileSync(PORT_FILE, String(PORT)); } catch (e) { /* best effort */ }
+      try { fs.writeFileSync(PORT_FILE, String(PORT)); } catch (e) {}
       if (TOKEN_FILE) {
         try {
           fs.writeFileSync(TOKEN_FILE, TOKEN, { mode: 0o600 });
           chmodOwnerOnly(TOKEN_FILE);
-        } catch (e) { /* best effort */ }
+        } catch (e) {}
       }
     }
+
     const info = JSON.stringify({
       type: 'server-started', port: Number(PORT), host: HOST,
       url_host: URL_HOST, url: companionUrl(),
       screen_dir: CONTENT_DIR, state_dir: STATE_DIR, idle_timeout_ms: IDLE_TIMEOUT_MS
     });
+
     console.log(info);
-    // server-info embeds the key — keep it owner-only.
     fs.writeFileSync(path.join(STATE_DIR, 'server-info'), info + '\n', { mode: 0o600 });
   }
 
@@ -706,6 +730,7 @@ function startServer() {
       process.exit(1);
     }
   });
+
   server.listen(PORT, HOST, onListen);
 }
 
