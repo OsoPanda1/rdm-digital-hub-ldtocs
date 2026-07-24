@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   User, Trophy, Star, Shield, Flame, TrendingUp, Award,
-  Calendar, Zap, Target
+  Calendar, Zap, Target, Crown, Lock
 } from "lucide-react";
 import { getPlayerProfile } from "../api";
 import type {
@@ -15,31 +15,31 @@ import type {
 import { calculateLevel, levelProgress, xpForNextLevel } from "../engine";
 
 const TRACK_CONFIG: Record<XpTrack, { label: string; color: string; icon: typeof Target }> = {
-  cultura: { label: 'Cultura', color: 'hsl(43, 80%, 55%)', icon: Star },
-  comunidad: { label: 'Comunidad', color: 'hsl(152, 60%, 45%)', icon: Shield },
-  juego: { label: 'Juego', color: 'hsl(210, 100%, 55%)', icon: Zap },
+  cultura: { label: "Cultura", color: "hsl(43, 80%, 55%)", icon: Star },
+  comunidad: { label: "Comunidad", color: "hsl(152, 60%, 45%)", icon: Shield },
+  juego: { label: "Juego", color: "hsl(210, 100%, 55%)", icon: Zap },
 };
 
 const RARITY_STYLES = {
-  common: 'border-white/10 bg-white/5',
-  rare: 'border-blue-500/30 bg-blue-500/5',
-  epic: 'border-purple-500/30 bg-purple-500/5',
-  legendary: 'border-amber-500/30 bg-amber-500/5',
+  common: "border-white/10 bg-white/5",
+  rare: "border-blue-500/30 bg-blue-500/5",
+  epic: "border-purple-500/30 bg-purple-500/5",
+  legendary: "border-amber-500/30 bg-amber-500/5",
 };
 
 const RARITY_LABELS = {
-  common: 'Comun',
-  rare: 'Raro',
-  epic: 'Epico',
-  legendary: 'Legendario',
+  common: "Común",
+  rare: "Raro",
+  epic: "Épico",
+  legendary: "Legendario",
 };
 
 const ROLE_LABELS: Record<string, string> = {
-  aprendiz_minero: 'Aprendiz Minero',
-  minero_local: 'Minero Local',
-  guardian_patrimonio: 'Guardian del Patrimonio',
-  maestro_hub: 'Maestro del Hub',
-  arquitecto_territorial: 'Arquitecto Territorial',
+  aprendiz_minero: "Aprendiz Minero",
+  minero_local: "Minero Local",
+  guardian_patrimonio: "Guardían del Patrimonio",
+  maestro_hub: "Maestro del Hub",
+  arquitecto_territorial: "Arquitecto Territorial",
 };
 
 export function PlayerProfile() {
@@ -51,8 +51,8 @@ export function PlayerProfile() {
   useEffect(() => {
     getPlayerProfile().then((profile) => {
       setPlayer(profile.player);
-      setBadges(profile.badges);
-      setSeason(profile.season);
+      setBadges(profile.badges || []);
+      setSeason(profile.season || null);
       setLoading(false);
     });
   }, []);
@@ -78,13 +78,18 @@ export function PlayerProfile() {
   const progress = levelProgress(player.total_xp);
   const nextLevelXp = xpForNextLevel(level);
   const earnedBadges = badges.filter(b => b.earned_at);
-  const currentRole = player.roles[player.roles.length - 1] ?? 'aprendiz_minero';
+  const currentRole = player.roles[player.roles.length - 1] ?? "aprendiz_minero";
+
+  const rareBadges = earnedBadges.filter(b => b.badge.rarity === "epic" || b.badge.rarity === "legendary");
+  const commonBadges = earnedBadges.filter(b => b.badge.rarity === "common" || b.badge.rarity === "rare");
+
+  // Premium flag (supuesto: viene del player; adáptalo a tu modelo real)
+  const isPremium = player.is_premium === true;
 
   return (
     <div className="rdm-glass rounded-2xl overflow-hidden">
       {/* Profile Header */}
       <div className="relative p-6 pb-4">
-        {/* Background decoration */}
         <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-[hsl(var(--rdm-amber)/0.08)] to-transparent" />
 
         <div className="relative flex items-start gap-4">
@@ -103,16 +108,35 @@ export function PlayerProfile() {
           </div>
 
           <div className="flex-1">
-            <h3 className="text-lg font-bold" style={{ fontFamily: "var(--font-display)" }}>
-              {player.display_name || 'Jugador'}
-            </h3>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="px-2 py-0.5 rounded-full bg-[hsl(var(--rdm-amber)/0.15)] text-[10px] font-medium text-[hsl(var(--rdm-amber))]">
-                {ROLE_LABELS[currentRole] || currentRole}
-              </span>
-              <span className="text-[10px] text-[hsl(var(--muted-foreground))]">
-                {player.quests_completed} misiones
-              </span>
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-bold" style={{ fontFamily: "var(--font-display)" }}>
+                  {player.display_name || "Jugador"}
+                </h3>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="px-2 py-0.5 rounded-full bg-[hsl(var(--rdm-amber)/0.15)] text-[10px] font-medium text-[hsl(var(--rdm-amber))]">
+                    {ROLE_LABELS[currentRole] || currentRole}
+                  </span>
+                  <span className="text-[10px] text-[hsl(var(--muted-foreground))]">
+                    {player.quests_completed} misiones
+                  </span>
+                </div>
+              </div>
+
+              {/* Premium badge */}
+              <div className="flex items-center gap-1">
+                {isPremium ? (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[hsl(var(--rdm-amber)/0.15)] text-[10px] font-medium text-[hsl(var(--rdm-amber))]">
+                    <Crown className="w-3 h-3" />
+                    Premium
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/5 text-[10px] font-medium text-[hsl(var(--muted-foreground))]">
+                    <Lock className="w-3 h-3" />
+                    Desbloquea Premium
+                  </span>
+                )}
+              </div>
             </div>
 
             {/* Level Progress */}
@@ -144,8 +168,8 @@ export function PlayerProfile() {
           {(Object.keys(TRACK_CONFIG) as XpTrack[]).map(track => {
             const config = TRACK_CONFIG[track];
             const Icon = config.icon;
-            const xp = track === 'cultura' ? player.xp_cultura
-              : track === 'comunidad' ? player.xp_comunidad
+            const xp = track === "cultura" ? player.xp_cultura
+              : track === "comunidad" ? player.xp_comunidad
               : player.xp_juego;
             const trackLevel = calculateLevel(xp);
 
@@ -178,10 +202,10 @@ export function PlayerProfile() {
       <div className="px-6 pb-4">
         <div className="grid grid-cols-4 gap-2">
           {[
-            { icon: Flame, label: 'Combos', value: player.combos_total, color: 'text-orange-400' },
-            { icon: Calendar, label: 'Racha', value: `${player.streak_days}d`, color: 'text-emerald-400' },
-            { icon: Trophy, label: 'Badges', value: earnedBadges.length, color: 'text-purple-400' },
-            { icon: TrendingUp, label: 'Total XP', value: player.total_xp.toLocaleString(), color: 'text-[hsl(var(--rdm-amber))]' },
+            { icon: Flame, label: "Combos", value: player.combos_total, color: "text-orange-400" },
+            { icon: Calendar, label: "Racha", value: `${player.streak_days}d`, color: "text-emerald-400" },
+            { icon: Trophy, label: "Insignias", value: earnedBadges.length, color: "text-purple-400" },
+            { icon: TrendingUp, label: "Total XP", value: player.total_xp.toLocaleString(), color: "text-[hsl(var(--rdm-amber))]" },
           ].map((stat, i) => (
             <div key={i} className="text-center p-2 rounded-lg bg-white/[0.02]">
               <stat.icon className={`w-4 h-4 mx-auto mb-1 ${stat.color}`} />
@@ -192,21 +216,57 @@ export function PlayerProfile() {
         </div>
       </div>
 
-      {/* Badges Showcase */}
+      {/* Badges & Rare Items */}
       {earnedBadges.length > 0 && (
-        <div className="px-6 pb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <Award className="w-4 h-4 text-[hsl(var(--rdm-amber))]" />
-            <span className="text-xs font-medium text-[hsl(var(--muted-foreground))]">Insignias</span>
+        <div className="px-6 pb-6 border-t border-white/5">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <Award className="w-4 h-4 text-[hsl(var(--rdm-amber))]" />
+              <span className="text-xs font-medium text-[hsl(var(--muted-foreground))]">Insignias y Objetos</span>
+            </div>
+            {rareBadges.length > 0 && (
+              <span className="text-[10px] text-purple-400 flex items-center gap-1">
+                <Star className="w-3 h-3" /> {rareBadges.length} raros
+              </span>
+            )}
           </div>
+
+          {/* Rare items highlight */}
+          {rareBadges.length > 0 && (
+            <div className="mb-3 flex gap-2 overflow-x-auto pb-1">
+              {rareBadges.map((pb) => (
+                <motion.div
+                  key={pb.id}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  className={`min-w-[120px] px-3 py-2 rounded-lg border ${RARITY_STYLES[pb.badge.rarity]}`}
+                >
+                  <div className="flex items-center gap-1 mb-1">
+                    <Trophy className="w-3 h-3 text-[hsl(var(--rdm-amber))]" />
+                    <span className="text-[9px] font-medium uppercase tracking-wide text-[hsl(var(--muted-foreground))]">
+                      {RARITY_LABELS[pb.badge.rarity]}
+                    </span>
+                  </div>
+                  <p className="text-xs font-semibold">{pb.badge.name}</p>
+                  {pb.badge.description && (
+                    <p className="text-[9px] text-[hsl(var(--muted-foreground))] line-clamp-2">
+                      {pb.badge.description}
+                    </p>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          )}
+
+          {/* All badges compact */}
           <div className="flex flex-wrap gap-2">
-            {earnedBadges.map((pb) => (
+            {commonBadges.map((pb) => (
               <motion.div
                 key={pb.id}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                className={`relative px-3 py-1.5 rounded-lg border ${RARITY_STYLES[pb.badge.rarity]}`}
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className={`px-3 py-1.5 rounded-lg border ${RARITY_STYLES[pb.badge.rarity]}`}
                 title={`${pb.badge.name} — ${RARITY_LABELS[pb.badge.rarity]}`}
               >
                 <span className="text-[10px] font-medium">{pb.badge.name}</span>
@@ -216,28 +276,51 @@ export function PlayerProfile() {
         </div>
       )}
 
-      {/* Season Progress */}
+      {/* Season / Battle Pass */}
       {season && (
-        <div className="px-6 pb-6">
-          <div className="p-3 rounded-xl bg-[hsl(var(--rdm-amber)/0.05)] border border-[hsl(var(--rdm-amber)/0.1)]">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-medium text-[hsl(var(--rdm-amber))]">
-                {season.name}
-              </span>
-              <span className="text-[10px] text-[hsl(var(--muted-foreground))]">
-                {new Date(season.end_date).toLocaleDateString('es-MX', { month: 'short', day: 'numeric' })}
+        <div className="px-6 pb-6 border-t border-white/5">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <Shield className="w-4 h-4 text-[hsl(var(--rdm-amber))]" />
+              <span className="text-xs font-medium text-[hsl(var(--muted-foreground))]">
+                Temporada: {season.name}
               </span>
             </div>
-            {season.global_goal && (
-              <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+            <span className="text-[10px] text-[hsl(var(--muted-foreground))] flex items-center gap-1">
+              <Calendar className="w-3 h-3" />
+              {new Date(season.end_date).toLocaleDateString("es-MX", { month: "short", day: "numeric" })}
+            </span>
+          </div>
+
+          {/* Free vs Premium track (simplificado) */}
+          {season.global_goal && (
+            <div className="space-y-2">
+              <div className="h-2 bg-white/5 rounded-full overflow-hidden">
                 <motion.div
                   className="h-full rounded-full bg-gradient-to-r from-[hsl(var(--rdm-amber))] to-[hsl(var(--rdm-terracotta))]"
                   initial={{ width: 0 }}
                   animate={{ width: `${(season.global_goal.current / season.global_goal.target) * 100}%` }}
-                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
                 />
               </div>
-            )}
+              <div className="flex items-center justify-between text-[10px] text-[hsl(var(--muted-foreground))]">
+                <span>Progreso de la comunidad</span>
+                <span>
+                  {season.global_goal.current.toLocaleString()} / {season.global_goal.target.toLocaleString()}
+                </span>
+              </div>
+            </div>
+          )}
+
+          <div className="mt-3 flex items-center justify-between text-[10px]">
+            <div className="flex items-center gap-1">
+              <Star className="w-3 h-3 text-[hsl(var(--rdm-amber))]" />
+              <span>Recompensas gratuitas en cada nivel</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Crown className="w-3 h-3 text-[hsl(var(--rdm-amber))]" />
+              <span>{isPremium ? "Recompensas premium activas" : "Premium: objetos exclusivos"}</span>
+            </div>
           </div>
         </div>
       )}
