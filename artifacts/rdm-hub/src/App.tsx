@@ -39,6 +39,9 @@ const GlobalPlayerBar = lazy(() => import('@/components/GlobalPlayerBar'))
 // ===== Banner Manager (route-aware ad placement) =====
 const BannerManager = lazy(() => import('./components/rdm/BannerManager').then((m) => ({ default: m.BannerManager })))
 
+// ===== TAMV 92.5 FM Radio Player =====
+const RadioPlayer = lazy(() => import('./components/rdm/RadioPlayer').then((m) => ({ default: m.RadioPlayer })))
+
 // ===== Mother repo pages =====
 const Index = lazy(() => import('./pages/Index'))
 const Lugares = lazy(() => import('./pages/Lugares'))
@@ -526,6 +529,7 @@ const AppInner = () => {
                 <AnimatedRoutes />
                 <Suspense fallback={null}><BannerManager /></Suspense>
                 <Suspense fallback={<LoadingFallback />}><GlobalPlayerBar /></Suspense>
+                <Suspense fallback={null}><RadioPlayer compact className="fixed bottom-20 right-4 z-50 w-72 shadow-2xl" /></Suspense>
                 <Suspense fallback={<LoadingFallback />}><LiveTelemetryBadge /></Suspense>
                 <Suspense fallback={<LoadingFallback />}><SearchOverlay /></Suspense>
                 {/* CompassNav disabled — RDMNavbar now covers all navigation */}

@@ -6,6 +6,7 @@ import { registerTerritoryRoutes } from "./territory";
 import { registerGamificationRoutes } from "./gamification";
 import { registerNarrativeRoutes } from "./narrative";
 import { registerIsabellaRoutes } from "./isabella";
+import { registerRadioRoutes } from "./radio";
 
 const router = Router();
 
@@ -34,6 +35,9 @@ registerNarrativeRoutes(router);    // /api/v1/narrative/*
 
 // --------- ISABELLA AI ---------
 registerIsabellaRoutes(router);     // /api/isabella/* + /api/tts-isabella
+
+// --------- TAMV 92.5 FM RADIO ---------
+registerRadioRoutes(router);        // /api/radio/* (AzuraCast proxy)
 
 // --------- FUTURAS FEDERACIONES ---------
 // registerTelemetryRoutes(router);    // /api/telemetry/*

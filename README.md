@@ -69,6 +69,9 @@ Plataforma de **Soberanía Digital**, **Turismo Inteligente** e **Infraestructur
 - [Módulos y Matriz de Madurez](#módulos-y-matriz-de-madurez)
 - [Gamificación Phygital Territorial](#gamificación-phygital-territorial)
 - [RDM Living World — Arquitectura de Juego](#rdm-living-world--arquitectura-de-juego)
+- [Sistema de Banners — Publicidad Distribuida](#sistema-de-banners--publicidad-distribuida)
+- [Isabella AI Engine — Integración Completa](#isabella-ai-engine--integración-completa)
+- [TAMV 92.5 FM Radio — AzuraCast](#tamv-925-fm-radio--azuracast-reemplaza-casterfm)
 - [Despliegue e Infraestructura Soberana (Replit Native)](#despliegue-e-infraestructura-soberana-replit-native)
 - [Respaldo Académico y Ciencia Abierta](#respaldo-académico-y-ciencia-abierta-citis-2026)
 - [Régimen de Licenciamiento](#régimen-de-licenciamiento)
@@ -200,7 +203,7 @@ rdm-digital-hub-ldtocs/
 | **Portal Turístico Interactivo** | `82%` ✅ | Hero redesignado (obsidian/gold), Realito showcase, secciones cerradas. |
 | **Motor Mapas Geoespaciales** | `85%` ✅ | Clusterización de POIs con Leaflet, capas de telemetría y modo sin conexión. |
 | **Gestión de Identidad (Auth)** | `90%` ✅ | Autenticación PKCE mediante Supabase, roles RBAC y pasaporte digital. |
-| **TAMV 92.5 Radio Digital** | `80%` ✅ | ArchivoSonoro.tsx separado, Caster FM stream, parrilla semanal, hemeroteca. |
+| **TAMV 92.5 Radio Digital** | `90%` ✅ | AzuraCast + Liquidsoap AutoDJ, 24/7 automatizado, REST API 8 endpoints, RadioPlayer compacto global. |
 | **Música Territorial (Ecos)** | `75%` ✅ | Playlist purificada, SpatialPlayer, CrónicaPanel, XP por escucha. |
 | **Gamificación Phygital** | `65%` ✅ | API REST `/v1/gamification/*` activa, GamificationHUD en navbar, portal, leaderboard. |
 | **RDM Living World** | `70%` ✅ | ADR-001/003, Drizzle schema, 8 monedas, narrativa Realito/Isabella, triggers SQL, API endpoints. |
@@ -389,6 +392,81 @@ Motor de **Inteligencia Artificial Conversacional** para turismo y patrimonio, c
 | isabella-guardian | `core/ai/isabella-guardian.ts` | ✅ Política de seguridad (NORMAL/SAFE/EMERGENCY) |
 | ExperienceOrchestrator | `core/orchestrator/ExperienceOrchestrator.ts` | ✅ Motor de decisiones geoespaciales |
 | kernel | `lib/kernel.ts` | ✅ Inferencia de intención (NLP regex) |
+
+---
+
+## TAMV 92.5 FM Radio — AzuraCast (Reemplaza Caster.fm)
+
+**Automatización de radio 24/7 en la nube** sin necesidad de laptop encendida ni verificación telefónica.
+
+### Arquitectura
+
+```
+┌──────────────────────────────────────────────┐
+│           Oracle Cloud Free Tier             │
+│         (Always Free — $0/mes)               │
+│                                              │
+│  ┌──────────┐  ┌───────────┐  ┌───────────┐  │
+│  │ AzuraCast│→ │ Liquidsoap│→ │  Icecast  │  │
+│  │  Panel   │  │  AutoDJ   │  │  Stream   │  │
+│  └──────────┘  └───────────┘  └───────────┘  │
+│       ↑              ↑              ↓        │
+│  ┌──────────┐  ┌───────────┐  ┌───────────┐  │
+│  │  REST    │  │ Dayparts  │  │ HTTP Stream│ │
+│  │  API     │  │ Scheduling│  │ 8000/tcp  │  │
+│  └──────────┘  └───────────┘  └───────────┘  │
+└──────────────────────────────────────────────┘
+         ↓                    ↓
+┌────────────────┐  ┌────────────────────┐
+│  RDM Digital   │  │  ArchivoSonoro.tsx  │
+│  Hub Backend   │  │  RadioPlayer.tsx    │
+│  /api/radio/*  │  │  (compact widget)   │
+└────────────────┘  └────────────────────┘
+```
+
+### Stack
+
+| Componente | Tecnología | Función |
+| --- | --- | --- |
+| **AutoDJ** | Liquidsoap | Programación automática con dayparts, jingles, crossfade |
+| **Panel** | AzuraCast (Docker) | Gestión web de estación, playlists, schedule, listeners |
+| **Streaming** | Icecast | Servidor de audio MP3/OGG, listeners ilimitados |
+| **Backend** | Express `/api/radio/*` | Proxy a AzuraCast REST API (now-playing, listeners, playlists) |
+| **Player** | React `RadioPlayer.tsx` | Widget compacto global, now-playing, album art, oyentes |
+
+### API Endpoints (Radio)
+
+| Método | Ruta | Descripción |
+| --- | --- | --- |
+| GET | `/api/radio/now-playing` | Canción actual, oyentes, estado en vivo |
+| GET | `/api/radio/status` | Estado de la estación |
+| GET | `/api/radio/listeners` | Lista de oyentes actuales |
+| GET | `/api/radio/schedule` | Parrilla semanal |
+| GET | `/api/radio/playlists` | Playlists de la estación |
+| GET | `/api/radio/requests` | Solicitudes pendientes |
+| GET | `/api/radio/historical?hours=24` | Historial de reproducción |
+| POST | `/api/radio/stream-url` | URL del stream para un mount |
+
+### Liquidsoap — Programación Automatizada
+
+Script completo en `artifacts/api-server/src/config/tamv-radio.liq`:
+
+- **Dayparts:** Mañana (programas), Tarde (música + publicidad), Noche (regional), Madrugada (continua)
+- **Jingles:** Cada ~5 canciones + reloj de hora en punto
+- **Noticias:** Cada 30 minutos
+- **DJ en vivo:** Override automático via `input.harbor` (puerto 8080)
+- **Fallback:** Audio de seguridad si todo falla
+
+### Deployment
+
+Guía completa: `docs/radio/azuracast-deployment.md`
+
+```bash
+# En Oracle Cloud Free Tier ARM VM:
+sudo mkdir -p /var/azuracast && cd /var/azuracast
+curl -fsSL https://raw.githubusercontent.com/AzuraCast/AzuraCast/main/docker.sh > docker.sh
+chmod a+x docker.sh && ./docker.sh install
+```
 
 ---
 
