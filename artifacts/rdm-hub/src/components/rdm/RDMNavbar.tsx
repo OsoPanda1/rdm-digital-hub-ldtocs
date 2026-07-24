@@ -34,6 +34,7 @@ import {
   Car,
   Crown,
   Zap,
+  Radio,
 } from "lucide-react";
 import { useRDMAuth } from "@/contexts/RDMAuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -91,6 +92,7 @@ const MEGA_CATEGORIES: MegaCategory[] = [
     links: [
       { path: "/comunidad",          label: "Foro",                icon: MessageSquare, desc: "Publicaciones y noticias" },
       { path: "/musica",             label: "Música RDM",          icon: Music2,        desc: "Escucha y descarga" },
+      { path: "/archivo-sonoro",     label: "TAMV 92.5 Radio",     icon: Radio,         desc: "Radio en vivo · Caster FM" },
       { path: "/directorio",         label: "Directorio",          icon: Store,         desc: "Negocios locales" },
       { path: "/gamificacion",        label: "Gamificación",        icon: Zap,           desc: "XP, rangos y misiones" },
       { path: "/leaderboard",        label: "Tabla de Honor",      icon: Trophy,        desc: "Ranking de exploradores" },
@@ -120,6 +122,7 @@ const MEGA_CATEGORIES: MegaCategory[] = [
       { path: "/transporte-local",  label: "Transporte Local",    icon: Bus,        desc: "Movilidad en RDM" },
       { path: "/shuttle-cdmx-rdm",  label: "Shuttle CDMX↔RDM",   icon: Bus,        desc: "Traslados directos" },
       { path: "/negocios",          label: "Portal Negocios",     icon: Store,      desc: "Panel de comercios" },
+      { path: "/admin/marketing",   label: "Panel Marketing",     icon: Star,       desc: "Campañas y banners" },
       { path: "/donar",             label: "Donar",               icon: Heart,      desc: "Apoya la plataforma" },
       { path: "/quienes-somos",     label: "Quiénes somos",       icon: Users,      desc: "El equipo RDM Digital" },
       { path: "/premium",           label: "Planes Premium",      icon: Crown,      desc: "$99/mes — canjea puntos por premios reales" },

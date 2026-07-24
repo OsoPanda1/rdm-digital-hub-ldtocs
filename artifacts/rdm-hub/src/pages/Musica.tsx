@@ -20,7 +20,9 @@ import {
   Calendar,
   MapPin,
   Users,
+  Radio,
 } from "lucide-react"
+import { Link } from "react-router-dom"
 import ReactMarkdown from "react-markdown"
 import { useAudioPlayer, type Track } from "@/contexts/AudioPlayerContext"
 import playlistMd from "@/assets/musica/playlist.md?raw"
@@ -716,8 +718,34 @@ export default function Musica() {
         description="Archivo histórico musical del Pueblo Mágico. Melodías que capturan el espíritu de Real del Monte. Apoya con una donación."
       />
 
+      {/* ── TAMV 92.5 Live Radio Cross-Promo ── */}
+      <section className="relative pt-20 pb-4 px-6 md:px-16 bg-[hsl(220_30%_6%)]">
+        <div className="max-w-5xl mx-auto">
+          <Link
+            to="/archivo-sonoro"
+            className="group flex items-center justify-between gap-4 px-5 py-4 rounded-2xl border border-[hsl(var(--rdm-amber)/0.25)] bg-[hsl(var(--rdm-amber)/0.06)] hover:border-[hsl(var(--rdm-amber)/0.5)] hover:bg-[hsl(var(--rdm-amber)/0.10)] transition-all duration-300"
+          >
+            <div className="flex items-center gap-4">
+              <div className="relative shrink-0">
+                <div className="w-10 h-10 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center">
+                  <Radio className="w-4 h-4 text-red-400" />
+                </div>
+                <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-red-500 border-2 border-[hsl(220_30%_6%)] animate-pulse" />
+              </div>
+              <div>
+                <p className="text-[10px] tracking-[0.2em] uppercase text-red-400 font-semibold" style={{ fontFamily: "var(--font-body)" }}>En Vivo Ahora</p>
+                <p className="text-sm font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>TAMV 92.5 Radio Digital — La voz del Pueblo Mágico</p>
+              </div>
+            </div>
+            <span className="shrink-0 text-[11px] font-semibold text-[hsl(var(--rdm-amber))] group-hover:translate-x-1 transition-transform" style={{ fontFamily: "var(--font-body)" }}>
+              Sintonizar →
+            </span>
+          </Link>
+        </div>
+      </section>
+
       {/* Fondo blanco + halo superior de color */}
-      <section className="relative pt-24 pb-12 px-6 md:px-16 overflow-hidden bg-white">
+      <section className="relative pt-12 pb-12 px-6 md:px-16 overflow-hidden bg-white">
         <div className="absolute inset-x-0 top-0 h-40 -z-10">
           <div
             className="h-full w-full"

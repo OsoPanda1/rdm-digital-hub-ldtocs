@@ -1,6 +1,6 @@
-- [Supabase null-safe client](supabase-null-safe.md) — export supabase as null when VITE_SUPABASE_URL/ANON_KEY are missing; guard all auth context usages with null checks. ✅ FIXED
-  - `client.ts`: exports `null` when env vars missing, checks both `VITE_SUPABASE_ANON_KEY` and `VITE_SUPABASE_PUBLISHABLE_KEY`
-  - `RDMAuthContext.tsx`: `guardSupabase()` helper throws if supabase is null, used in all methods; useEffect early-returns when `!isSupabaseConfigured`
-
-- [node:crypto in browser](node-crypto-browser.md) — server-only files imported transitively by client code must not use node:crypto; shim createHmac or remove the import. ✅ FIXED
-  - `middleware.ts`: `createHmac` browser shim in place; `process.env` replaced with `import.meta.env`; `Buffer` replaced with browser-safe `base64UrlDecode` using `atob`
+- [Supabase null-safe client](supabase-null-safe.md) — export supabase as null when VITE_SUPABASE_URL/ANON_KEY are missing; guard all auth context usages with null checks.
+- [node:crypto in browser](node-crypto-browser.md) — server-only files imported transitively by client code must not use node:crypto; shim createHmac or remove the import.
+- [Gamification API routes](gamification-api.md) — live at /api/v1/gamification/{profile,leaderboard,quests,award-xp,ranks}; mock data only until Supabase is wired.
+- [TAMV radio / Musica split](tamv-musica-split.md) — ArchivoSonoro.tsx owns TAMV 92.5 live radio; Musica.tsx is local music archive only. Musica has a cross-promo strip linking to /archivo-sonoro.
+- [Nested button HTML error](nested-button-fix.md) — TrackRow in Musica.tsx had buttons inside a button; fixed by converting outer to div+role=button with onKeyDown.
+- [Admin route deduplication](admin-dedup.md) — /admin-panel now redirects to /admin via Navigate; AdminPanel lazy import removed from App.tsx.

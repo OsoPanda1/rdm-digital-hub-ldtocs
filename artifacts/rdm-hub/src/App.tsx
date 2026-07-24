@@ -148,7 +148,7 @@ const Mitos = lazy(() => import('./pages/Mitos'))
 const MusicDetail = lazy(() => import('./pages/MusicDetail'))
 const Recorridos = lazy(() => import('./pages/Recorridos'))
 const RutaDelPaste = lazy(() => import('./pages/RutaDelPaste'))
-const AdminPanel = lazy(() => import('./pages/Admin'))
+// AdminPanel (pages/Admin.tsx) retired — /admin-panel now redirects to /admin
 const DemoChecklist = lazy(() => import('./pages/DemoChecklist'))
 const RealitoAIPage = lazy(() => import('./pages/RealitoAI'))
 
@@ -397,7 +397,7 @@ const AnimatedRoutes = () => {
           <Route path="/musica/:slug" element={<RouteErrorBoundary route="/musica/:slug"><MusicDetail /></RouteErrorBoundary>} />
           <Route path="/recorridos" element={<RouteErrorBoundary route="/recorridos"><Recorridos /></RouteErrorBoundary>} />
           <Route path="/ruta-del-paste" element={<RouteErrorBoundary route="/ruta-del-paste"><RutaDelPaste /></RouteErrorBoundary>} />
-          <Route path="/admin-panel" element={<RouteErrorBoundary route="/admin-panel"><AdminPanel /></RouteErrorBoundary>} />
+          <Route path="/admin-panel" element={<Navigate to="/admin" replace />} />
           <Route path="/demo-checklist" element={<RouteErrorBoundary route="/demo-checklist"><DemoChecklist /></RouteErrorBoundary>} />
           <Route path="/realito-ai" element={<RouteErrorBoundary route="/realito-ai"><RealitoAIPage /></RouteErrorBoundary>} />
           <Route path="/archivo-sonoro" element={<RouteErrorBoundary route="/archivo-sonoro"><ArchivoSonoro /></RouteErrorBoundary>} />

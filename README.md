@@ -196,13 +196,17 @@ rdm-digital-hub-ldtocs/
 
 | Módulo de Sistema | Estado / Madurez | Descripción y Componentes Clave |
 | --- | --- | --- |
-| **Portal Turístico Interactivo** | `78%` | Interfaz principal, catálogo de patrimonio, eventos culturales y rutas. |
-| **Motor Mapas Geoespaciales** | `85%` | Clusterización de POIs con Leaflet, capas de telemetría y modo sin conexión. |
-| **Gestión de Identidad (Auth)** | `90%` | Autenticación PKCE mediante Supabase, roles RBAC y pasaporte digital. |
+| **Portal Turístico Interactivo** | `82%` ✅ | Hero redesignado (obsidian/gold), Realito showcase, secciones cerradas. |
+| **Motor Mapas Geoespaciales** | `85%` ✅ | Clusterización de POIs con Leaflet, capas de telemetría y modo sin conexión. |
+| **Gestión de Identidad (Auth)** | `90%` ✅ | Autenticación PKCE mediante Supabase, roles RBAC y pasaporte digital. |
+| **TAMV 92.5 Radio Digital** | `80%` ✅ | ArchivoSonoro.tsx separado, Caster FM stream, parrilla semanal, hemeroteca. |
+| **Música Territorial (Ecos)** | `75%` ✅ | Playlist purificada, SpatialPlayer, CrónicaPanel, XP por escucha. |
+| **Gamificación Phygital** | `65%` ✅ | API REST `/v1/gamification/*` activa, GamificationHUD en navbar, portal, leaderboard. |
+| **Banners Comerciales** | `70%` ✅ | RDMCommerceBanner en homepage, rotación 30 min, 2 banners simultáneos. |
+| **Panel Admin Marketing** | `60%` ✅ | `/admin/marketing` — campañas, estadísticas, gestión de banners para comercios. |
 | **Isabella AI Engine (F6)** | `65%` | Pipeline de respuesta consciente, evaluación ética y API REST soberana. |
 | **Bus de Federación YUN** | `30%` | Protocolo de sincronización P2P entre los 7 nodos territoriales TAMV. |
 | **Capa de Seguridad PQC (F7)** | `35%` | Esquemas de cifrado resiliente a computación cuántica y sanitización. |
-| **Gamificación Phygital** | `40%` | Progresión territorial, misiones narrativas, XP, loot y pasaporte de sellos. |
 
 ---
 

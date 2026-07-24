@@ -1,6 +1,7 @@
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { RDMHero } from "@/components/rdm/RDMHero";
 import { RDMInteractiveMap } from "@/components/rdm/RDMInteractiveMap";
+import { RDMCommerceBanner } from "@/components/rdm/RDMCommerceBanner";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Pickaxe, Utensils, TreePine, MapPin, Compass, Car, Calendar, Users, Star, Camera, Heart, Lightbulb, Bed, Palette, Store, Radio } from "lucide-react";
@@ -160,12 +161,15 @@ const Index = () => {
             <p className="text-sm md:text-base text-white/80 mb-6 drop-shadow-md" style={{ fontFamily: "var(--font-body)" }}>
               La voz de Real del Monte · Escucha la magia de la sierra
             </p>
-            <Link to="/musica" className="inline-flex items-center gap-2 bg-[hsl(var(--rdm-amber))] text-white px-6 py-3 rounded-full font-semibold text-sm hover:scale-105 transition-transform shadow-[0_0_20px_hsla(43,80%,55%,0.3)]" style={{ fontFamily: "var(--font-body)" }}>
+            <Link to="/archivo-sonoro" className="inline-flex items-center gap-2 bg-[hsl(var(--rdm-amber))] text-white px-6 py-3 rounded-full font-semibold text-sm hover:scale-105 transition-transform shadow-[0_0_20px_hsla(43,80%,55%,0.3)]" style={{ fontFamily: "var(--font-body)" }}>
               <Radio className="w-4 h-4" /> Sintonizar ahora
             </Link>
           </motion.div>
         </div>
       </section>
+
+      {/* Commerce Banners — 30-min rotating ad slots for registered businesses */}
+      <RDMCommerceBanner />
 
       {/* Experience Grid con imágenes reales */}
       <section className="py-24 px-6 md:px-16 lg:px-24">

@@ -3,9 +3,9 @@
 import { Router } from "express";
 import { registerHealthRoutes } from "./health";
 import { registerTerritoryRoutes } from "./territory";
+import { registerGamificationRoutes } from "./gamification";
 // Futuro: añadir más federaciones cuando estén listas:
 // import { registerIsabellaRoutes } from "./isabella";
-// import { registerGamificationRoutes } from "./gamification";
 // import { registerTelemetryRoutes } from "./telemetry";
 // import { registerPaymentsRoutes } from "./payments";
 
@@ -28,9 +28,11 @@ router.get("/", (_req, res) => {
 
 registerTerritoryRoutes(router);
 
+// --------- GAMIFICACIÓN ---------
+registerGamificationRoutes(router); // /api/v1/gamification/*
+
 // --------- FUTURAS FEDERACIONES ---------
 // registerIsabellaRoutes(router);     // /api/isabella/*
-// registerGamificationRoutes(router); // /api/gamification/*
 // registerTelemetryRoutes(router);    // /api/telemetry/*
 // registerPaymentsRoutes(router);     // /api/payments/*
 
