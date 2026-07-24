@@ -1,98 +1,28 @@
-# RDM Digital Hub — LDTOCS
+# RDM Digital Hub — Real del Monte, Hidalgo
 
-Plataforma de soberanía digital, turismo inteligente e infraestructura federada para comunidades. Implementado inicialmente para Real del Monte, Pueblo Mágico de Hidalgo, México.
-
-## Run & Operate
-
-- `pnpm --filter @workspace/rdm-hub run dev` — frontend (port 22942)
-- `pnpm --filter @workspace/api-server run dev` — API server (port 5000)
-- `pnpm run typecheck` — full typecheck
-- `pnpm run build` — typecheck + build
-- Required env: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`
+Sovereign Digital Infrastructure platform for Real del Monte: smart tourism, local commerce, AI assistant (Isabella), TAMV 92.5 radio, gamification, and community services.
 
 ## Stack
+- **Frontend:** React 19 + TypeScript + Vite + Tailwind CSS + shadcn/ui (`artifacts/rdm-hub/`)
+- **Backend:** Node.js 20 + Express 5 (`artifacts/api-server/`)
+- **Database:** Supabase (PostgreSQL) + Drizzle ORM (`lib/`, `supabase/`)
+- **Shared libs:** `lib/` (DB schema, Zod validators, React Query hooks, Isabella AI engine)
 
-- pnpm workspaces, Node.js 20, TypeScript 5.9
-- Frontend: React 19 + Vite 7 + Tailwind CSS 4 + shadcn/ui
-- Routing: react-router-dom (lazy-loaded pages)
-- State: TanStack React Query + Zustand
-- Auth: Supabase Auth (PKCE)
-- DB: PostgreSQL + Drizzle ORM
-- Maps: Leaflet + React-Leaflet + Supercluster
-- IA: Isabella (pipeline de conciencia propia)
-- API: Express 5 + Zod validation
-- Build: esbuild (CJS bundle)
+## How to run
+- **Install deps:** `pnpm install` (root)
+- **Frontend dev:** `pnpm --filter @workspace/rdm-hub run dev` (PORT 22942)
+- **API dev:** `pnpm --filter @workspace/api-server run dev` (PORT 8080)
+- Both are configured as Replit workflows and start automatically.
 
-## Where things live
-
-- `artifacts/rdm-hub/` — Frontend React principal (~110 páginas)
-- `artifacts/api-server/` — API Express
-- `lib/db/` — Esquemas Drizzle ORM
-- `lib/api-client-react/` — Cliente API generado
-- `lib/api-spec/` — Especificación OpenAPI
-- `lib/api-zod/` — Esquemas Zod de la API
-- `.replit` — Configuración del workspace Replit
-
-## Architecture decisions
-
-- **Soberanía primero**: Sin dependencia de plataformas cerradas, todo open source (MIT).
-- **Modularidad**: Cada feature (turismo, mapas, IA, gamificación) es un módulo independiente.
-- **Federación**: Protocolo YUN para conectar comunidades entre sí.
-- **Seguridad por diseño**: Doble hexágono de autorización, criptografía post-cuántica.
-- **Layout unificado**: RDMLayout como único layout activo (Fase 1 completada).
-
-## Product
-
-- Guía turística digital completa para Real del Monte (mapa, rutas, eventos, gastronomía, historia)
-- Asistente IA Isabella con identidad y memoria
-- Sistema de membresías (Free → Premium → Advance → Enterprise)
-- Directorio de comercios con registro y checkout
-- Mapa interactivo con POIs, clusters y territorial data fusion
-- Gamificación: puntos, quests, leaderboard
-- Wiki/Enciclopedia TAMV
-- Portal de música y audio espacial
-- Panel de administración
+## Required Secrets
+Add these in Replit Secrets to enable auth and data features:
+- `VITE_SUPABASE_URL` — your Supabase project URL
+- `VITE_SUPABASE_ANON_KEY` — your Supabase anon/public key
+- `SUPABASE_SERVICE_ROLE_KEY` — your Supabase service role key (backend only)
+- `AZURACAST_URL` — AzuraCast radio server URL (optional, for live radio)
+- `AZURACAST_API_KEY` — AzuraCast API key (optional)
 
 ## User preferences
-
-- Usar `pnpm` siempre (nunca npm o yarn)
-- TypeScript estricto: evitar `any`, prohibido `@ts-nocheck`
-- React 19: no usar `forwardRef` (obsoleto), no importar `React`
-- Tailwind CSS 4: usar `@theme` en lugar de `@apply`
-- Commits en español (conventional commits)
-
-## Gotchas
-
-- Git Bash en Windows tiene problemas de fork(); usar PowerShell o WSL
-- No borrar `pnpm-lock.yaml` manualmente
-- `pnpm minimumReleaseAge: 1440` — esperar 1 día para paquetes nuevos
-- Los archivos `src/app/api/` son Next.js legacy (Fase 1 pending cleanup)
-- `src/data/imported/` contiene datos duplicados (Fase 1 pending cleanup)
-
-## Pointers
-
-- [README.md](./README.md) — visión completa, arquitectura, deuda técnica
-- [CONTRIBUTING.md](./CONTRIBUTING.md) — guía de contribución
-- [SECURITY.md](./SECURITY.md) — política de seguridad
-- [RFC-0001-MANIFEST.md](./RFC-0001-MANIFEST.md) — Manifiesto de licenciamiento híbrido, estatuto constitutivo y blindaje jurídico-técnico
-- [LICENSE-HYBRID.md](./LICENSE-HYBRID.md) — Marco de licenciamiento por capas
-- [LICENSE-PRCL.md](./LICENSE-PRCL.md) — TAMV‑PRCL v1.0 (Propietario, Secreto Industrial)
-- [LICENSE-EOL.md](./LICENSE-EOL.md) — TAMV‑EOL v1.0 (Licencia Ética Isabella)
-- [LICENSE-KORIMA.md](./LICENSE-KORIMA.md) — TAMV‑KÓRIMA (Bienes públicos con reciprocidad)
-- [DATA-SOVEREIGNTY-DPA.md](./DATA-SOVEREIGNTY-DPA.md) — Soberanía de datos
-- `pnpm-workspace.yaml` — catálogo de versiones y overrides de seguridad
-
-## Replit setup (2026-07-23)
-
-- Frontend runs via workflow `artifacts/rdm-hub: web` on the port assigned by Replit (`$PORT`).
-- API runs via workflow `artifacts/api-server: RDM API Gateway`; entry point is `artifacts/api-server/src/index.ts` (starts the HTTP listener). Routes live in `artifacts/api-server/src/routes/`.
-- `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` must be set as Replit secrets for auth/data features. Without them the app runs in demo mode.
-- Gamification layer (geo-discovery → XP → rank → missions → leaderboard) is next planned feature.
-
-## Actualización operacional 2026-07-23
-
-- Frontend: `pnpm --filter @workspace/rdm-hub run dev`.
-- API: `pnpm --filter @workspace/api-server run dev`.
-- Verificación total: `pnpm run typecheck && pnpm --filter @workspace/api-server run build && pnpm --filter @workspace/rdm-hub run build`.
-- Rutas API activas: `/healthz`, `/places`, `/commerce`, `/ai/ask`.
-- Hardening 5 capas: supply-chain, tipos, validación API, Supabase bearer, PQC/Web Crypto.
+- Language: Spanish (project is for Real del Monte, Hidalgo, Mexico)
+- Keep existing project structure and stack
+- Priority features: gamification, virtual store, immersive maps, audio, messaging, municipal services, user/business registration, prizes
