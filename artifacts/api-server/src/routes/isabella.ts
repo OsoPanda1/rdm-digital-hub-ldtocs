@@ -16,6 +16,7 @@ import { createIsaClient } from "../lib/ai/isa-api";
 import { createMexaClient } from "../lib/ai/mexa-api";
 import { buildKnowledgeContext, searchKnowledge, getAllKnowledge, knowledgeByDomain } from "../lib/ai/knowledge";
 import type { FederationId } from "../lib/isabella/types";
+import { auditSecurityEvent, rateLimitByRoute, requireRdmRole } from "../lib/security";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 //  SINGLETON INSTANCES (in-memory; replace with Supabase when wired)
@@ -59,7 +60,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  sanitize → interpret → policy check → knowledge lookup → personality → evaluate
   //  Body: { playerId, message, sessionId? }
   // ─────────────────────────────────────────────────────────────────────────
-  router.post("/isabella/chat", (req: Request, res: Response) => {
+  router.post("/isabella/chat", rateLimitByRoute({ name: "isabella-chat", limit: 30 }), (req: Request, res: Response) => {
     const { playerId = "anonymous", message = "", sessionId } = req.body ?? {};
 
     if (!message || typeof message !== "string") {
@@ -149,7 +150,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  GET /api/isabella/stream
   //  Server-Sent Events stream of Isabella decisions.
   // ─────────────────────────────────────────────────────────────────────────
-  router.get("/isabella/stream", (req: Request, res: Response) => {
+  router.get("/isabella/stream", rateLimitByRoute({ name: "isabella-stream", limit: 10 }), (req: Request, res: Response) => {
     res.setHeader("Content-Type", "text/event-stream");
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
@@ -297,12 +298,14 @@ export function registerIsabellaRoutes(router: Router) {
   //  Add a new knowledge base entry.
   //  Body: { topic, content, category, source, domain? }
   // ─────────────────────────────────────────────────────────────────────────
-  router.post("/isabella/knowledge", (req: Request, res: Response) => {
+  router.post("/isabella/knowledge", requireRdmRole("operator"), rateLimitByRoute({ name: "isabella-knowledge-write", limit: 12 }), (req: Request, res: Response) => {
     const { topic = "", content = "", category = "general", source = "manual", domain = "ecosystem" } = req.body ?? {};
     if (!topic || !content) {
       res.status(400).json({ ok: false, error: "topic and content are required" });
       return;
     }
+
+    auditSecurityEvent(req, "isabella.knowledge.create", { topic, domain, category });
 
     memory.store({
       type: "ecosystem",
@@ -361,7 +364,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  Close an active session.
   // ─────────────────────────────────────────────────────────────────────────
   router.post("/isabella/sessions/:id/close", (req: Request, res: Response) => {
-    const session = sessions.get(req.params.id);
+    const session = sessions.get(String(req.params.id));
     if (!session) { res.status(404).json({ ok: false, error: "Session not found" }); return; }
     session.status = "closed";
     res.status(200).json({ ok: true, data: { sessionId: session.id, status: "closed" } });
@@ -415,7 +418,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  Sign a payload with Mexa API federation mask.
   //  Body: { federationId, nodeId, payload }
   // ─────────────────────────────────────────────────────────────────────────
-  router.post("/isabella/crypto/sign", (req: Request, res: Response) => {
+  router.post("/isabella/crypto/sign", requireRdmRole("operator"), rateLimitByRoute({ name: "isabella-crypto-sign", limit: 60 }), (req: Request, res: Response) => {
     const { federationId, nodeId, payload } = req.body ?? {};
     if (!federationId || !nodeId || payload === undefined) {
       res.status(400).json({ ok: false, error: "federationId, nodeId, and payload are required" });

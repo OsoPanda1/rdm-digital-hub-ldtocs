@@ -7,6 +7,7 @@ import { registerGamificationRoutes } from "./gamification";
 import { registerNarrativeRoutes } from "./narrative";
 import { registerIsabellaRoutes } from "./isabella";
 import { registerRadioRoutes } from "./radio";
+import { registerTelemetryRoutes } from "./telemetry";
 
 const router = Router();
 
@@ -40,7 +41,7 @@ registerIsabellaRoutes(router);     // /api/isabella/* + /api/tts-isabella
 registerRadioRoutes(router);        // /api/radio/* (AzuraCast proxy)
 
 // --------- FUTURAS FEDERACIONES ---------
-// registerTelemetryRoutes(router);    // /api/telemetry/*
+registerTelemetryRoutes(router);    // /api/telemetry/*
 // registerPaymentsRoutes(router);     // /api/payments/*
 
 export default router;

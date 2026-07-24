@@ -113,7 +113,7 @@ export function registerTerritoryRoutes(router: Router) {
 
       let response: string;
       if (isGastronomia) {
-        response = `Isabella recomienda: ${places.filter((p) => p.category === "gastronomia").map((p) => p.name).join(", ")}. La gastronomía es patrimonio vivo de Real del Monte.`;
+        response = `Isabella recomienda: ${commerce.map((p) => p.name).join(", ")}. La gastronomía es patrimonio vivo de Real del Monte.`;
       } else if (isTurismo) {
         response = `Isabella recomienda: ${places.slice(0, 3).map((p) => p.name).join(", ")}. Cada visita fortalece la memoria colectiva del territorio.`;
       } else if (isHistoria) {

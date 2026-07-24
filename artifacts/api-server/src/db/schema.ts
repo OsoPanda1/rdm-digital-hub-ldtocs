@@ -12,6 +12,7 @@ import {
   timestamp,
   jsonb,
   boolean,
+  bigint,
   primaryKey,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
