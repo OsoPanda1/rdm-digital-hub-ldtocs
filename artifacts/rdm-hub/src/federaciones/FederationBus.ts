@@ -41,6 +41,8 @@ const TAMV_FEDERATION_NAMES: Record<string, string> = {
   CHRONOS: "Federación Territorial (TERRITORY)",
 };
 
+export type FederationEventSeverity = "INFO" | "ALERTA" | "CRITICO";
+
 export interface FederationEvent {
   id: string;
   type: string;
@@ -48,6 +50,8 @@ export interface FederationEvent {
   payload: unknown;
   timestamp: Date;
   traceId: string;
+  severity?: FederationEventSeverity;
+  correlationId?: string;
 }
 
 export type EventHandler = (event: FederationEvent) => void;
@@ -56,6 +60,7 @@ class FederationBus {
   private federations: Map<FederationId, FederationModule> = new Map();
   private handlers: Map<string, Set<EventHandler>> = new Map();
   private federationQueues: Map<FederationId, FederationEvent[]> = new Map();
+  private totalEventsEmitted = 0;
 
   constructor() {
     this.initFederations();
@@ -174,15 +179,25 @@ class FederationBus {
     return Array.from(this.federations.values());
   }
 
+  /**
+   * Actualiza salud de una federación y refleja estado (ACTIVE/DEGRADED/IDLE).
+   * Esto alimenta el tablero de integridad/resonancia.
+   */
   updateHealth(id: FederationId, health: number): void {
     const fed = this.federations.get(id);
     if (fed) {
       fed.health = Math.max(0, Math.min(1, health));
-      fed.status = health > 0.8 ? "ACTIVE" : health > 0.5 ? "DEGRADED" : "IDLE";
+      fed.status =
+        health > 0.8 ? ("ACTIVE" as FederationStatus) :
+        health > 0.5 ? ("DEGRADED" as FederationStatus) :
+        ("IDLE" as FederationStatus);
       fed.lastHeartbeat = new Date();
     }
   }
 
+  /**
+   * Emite un evento federado, con trazabilidad y severidad opcional.
+   */
   emit(event: Omit<FederationEvent, "id" | "timestamp">): void {
     const fullEvent: FederationEvent = {
       ...event,
@@ -195,6 +210,8 @@ class FederationBus {
       queue.push(fullEvent);
       if (queue.length > 100) queue.shift();
     }
+
+    this.totalEventsEmitted += 1;
 
     const handlers = this.handlers.get(event.type);
     if (handlers) {
@@ -211,6 +228,7 @@ class FederationBus {
       type: event.type,
       source: event.source,
       id: fullEvent.id,
+      severity: fullEvent.severity ?? "INFO",
     });
   }
 
@@ -225,6 +243,10 @@ class FederationBus {
     };
   }
 
+  /**
+   * Ruta directa de un intent MD-X5 hacia una federación objetivo.
+   * Se usa desde el kernel para ejecutar intents federados.
+   */
   async routeToFederation(intent: MDX5Intent, target: FederationId): Promise<void> {
     const federation = this.federations.get(target);
     if (!federation) {
@@ -237,24 +259,54 @@ class FederationBus {
       source: target,
       payload: intent,
       traceId: intent.traceId,
+      severity: intent.critical ? "CRITICO" : "INFO",
+      correlationId: intent.id,
     });
 
     logger.info("[FED-BUS] Intent enrutado", {
       intent: intent.id,
       target: federation.name,
       type: intent.type,
+      critical: intent.critical,
     });
   }
 
+  /**
+   * Ejecuta un intent federado: por ahora, lo publica en el bus y deja
+   * que los listeners de cada federación se encarguen de la acción real.
+   */
+  async executeIntent(intent: MDX5Intent): Promise<void> {
+    const target = intent.federation;
+    if (!target) {
+      logger.warn("[FED-BUS] Intent sin federación destino", { intentId: intent.id });
+      return;
+    }
+    await this.routeToFederation(intent, target);
+  }
+
+  /**
+   * Evento de soberanía: se eleva a PHOENIX con severidad derivada del tipo.
+   */
   async emitSovereigntyEvent(type: string, details: unknown): Promise<void> {
+    const severity: FederationEventSeverity =
+      type.includes("CRITICAL") || type.includes("REJECTION")
+        ? "CRITICO"
+        : type.includes("PENDING")
+        ? "ALERTA"
+        : "INFO";
+
     this.emit({
       type: "SOVEREIGNTY_ALERT",
       source: "PHOENIX",
       payload: { eventType: type, details },
       traceId: uuidv4(),
+      severity,
     });
   }
 
+  /**
+   * Broadcast a todas las federaciones (por ejemplo, señal de observabilidad).
+   */
   async broadcastToAll(eventType: string, payload: unknown, traceId: string): Promise<void> {
     for (const [fedId] of this.federations) {
       this.emit({
@@ -262,6 +314,7 @@ class FederationBus {
         source: fedId,
         payload,
         traceId,
+        severity: "INFO",
       });
     }
   }
@@ -270,14 +323,29 @@ class FederationBus {
     return this.federationQueues.get(federation)?.length ?? 0;
   }
 
-  getHealth(): { totalEvents: number; listenersByType: Record<string, number> } {
+  /**
+   * Estado de salud del bus: número de eventos, listeners y colas por federación.
+   * Útil para alimentar tu dashboard navy/gold con métricas de sistema.
+   */
+  getHealth(): {
+    totalEvents: number;
+    listenersByType: Record<string, number>;
+    queueByFederation: Record<string, number>;
+  } {
     const listenersByType: Record<string, number> = {};
     for (const [type, handlers] of this.handlers) {
       listenersByType[type] = handlers.size;
     }
+
+    const queueByFederation: Record<string, number> = {};
+    for (const [fedId, queue] of this.federationQueues) {
+      queueByFederation[fedId] = queue.length;
+    }
+
     return {
-      totalEvents: Array.from(this.federationQueues.values()).reduce((sum, q) => sum + q.length, 0),
+      totalEvents: this.totalEventsEmitted,
       listenersByType,
+      queueByFederation,
     };
   }
 }
