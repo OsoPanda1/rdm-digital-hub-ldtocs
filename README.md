@@ -68,6 +68,7 @@ Plataforma de **Soberanía Digital**, **Turismo Inteligente** e **Infraestructur
 - [Stack Tecnológico Unificado](#stack-tecnológico-unificado)
 - [Módulos y Matriz de Madurez](#módulos-y-matriz-de-madurez)
 - [Gamificación Phygital Territorial](#gamificación-phygital-territorial)
+- [RDM Living World — Arquitectura de Juego](#rdm-living-world--arquitectura-de-juego)
 - [Despliegue e Infraestructura Soberana (Replit Native)](#despliegue-e-infraestructura-soberana-replit-native)
 - [Respaldo Académico y Ciencia Abierta](#respaldo-académico-y-ciencia-abierta-citis-2026)
 - [Régimen de Licenciamiento](#régimen-de-licenciamiento)
@@ -202,6 +203,7 @@ rdm-digital-hub-ldtocs/
 | **TAMV 92.5 Radio Digital** | `80%` ✅ | ArchivoSonoro.tsx separado, Caster FM stream, parrilla semanal, hemeroteca. |
 | **Música Territorial (Ecos)** | `75%` ✅ | Playlist purificada, SpatialPlayer, CrónicaPanel, XP por escucha. |
 | **Gamificación Phygital** | `65%` ✅ | API REST `/v1/gamification/*` activa, GamificationHUD en navbar, portal, leaderboard. |
+| **RDM Living World** | `70%` ✅ | ADR-001/003, Drizzle schema, 8 monedas, narrativa Realito/Isabella, triggers SQL, API endpoints. |
 | **Banners Comerciales** | `70%` ✅ | RDMCommerceBanner en homepage, rotación 30 min, 2 banners simultáneos. |
 | **Panel Admin Marketing** | `60%` ✅ | `/admin/marketing` — campañas, estadísticas, gestión de banners para comercios. |
 | **Isabella AI Engine (F6)** | `65%` | Pipeline de respuesta consciente, evaluación ética y API REST soberana. |
@@ -232,6 +234,82 @@ Sistema de **juego territorial phygital** (*Physical + Digital*) que transforma 
 
 - 🎁 **Recompensas Tangibles:** moneda blanda (*RDM Points*) canjeable por beneficios reales en comercios participantes de Real del Monte.
 - ⏳ **Temporadas Trimestrales (90 Días):** marcadores de clasificación (*Leaderboards*) con premiación en festivales locales.
+
+---
+
+## RDM Living World — Arquitectura de Juego
+
+Sistema evolutivo de juego territorial que integra gamificación, narrativa inteligente, economía interna y colección de patrimonio cultural. Basado en **ADR-001** y **ADR-003**.
+
+### Decisiones de Arquitectura
+
+| ADR | Documento | Estado | Contenido |
+| --- | --- | --- | --- |
+| ADR-001 | `docs/adr/001-rdm-living-world-gamification.md` | ACEPTADO | Esquema de datos completo, roadmap 6 fases |
+| ADR-003 | `docs/adr/003-economia-prestigio-territorial.md` | ACEPTADO | Economía 8 monedas, prestigio territorial |
+
+### Base de Datos (Drizzle ORM + Supabase)
+
+Schema completo en `artifacts/api-server/src/db/schema.ts`:
+
+- **players** / **player_avatars** — Identidad y avatar del jugador
+- **territories** / **poi_state** — Puntos de interés y eventos en territorio
+- **seasons** / **world_state_snapshots** — Temporadas y estado del mundo
+- **player_currencies** — 8 tipos de moneda (XP, COIN, CRYSTAL, PRESTIGE, HONOR, ENERGY, INFLUENCE, TERRITORIAL_IMPACT)
+- **progression_branches** / **player_progressions** — 6 ramas de progresión
+- **items** / **collections** / **player_items** / **player_collections** — Coleccionables y patrimonio
+- **world_events** / **community_challenges** — Eventos del mundo y retos comunitarios
+- **narrative_messages** — Mensajes narrativos de Realito e Isabella
+
+### Triggers SQL (Supabase)
+
+`supabase/triggers/rdm_world_state.sql` — 5 triggers automáticos:
+
+1. **world_events → world_state_snapshots** — Genera snapshots del mundo en cada evento
+2. **community_challenge_events → community_challenges** — Incrementa progreso de retos
+3. **player_events → players.last_seen_at** — Actualiza actividad del jugador
+4. **world_events → poi_state** — Marca POIs como activos durante eventos
+5. **world_events UPDATE → poi_state** — Resetea POIs al terminar eventos
+
+### API Endpoints
+
+#### Gamificación (Legacy + Living World)
+
+| Método | Ruta | Descripción |
+| --- | --- | --- |
+| GET | `/api/v1/gamification/profile` | Perfil legacy |
+| GET | `/api/v1/gamification/leaderboard` | Ranking |
+| POST | `/api/v1/gamification/award-xp` | Asignar XP |
+| GET | `/api/v1/living-world/player/:id` | Perfil completo Living World |
+| GET | `/api/v1/living-world/player/:id/avatar` | Avatar del jugador |
+| GET | `/api/v1/living-world/player/:id/collections` | Colecciones |
+| GET | `/api/v1/living-world/player/:id/seasons/current` | Temporada actual |
+| GET | `/api/v1/living-world/world/state` | Estado del mundo |
+| GET | `/api/v1/living-world/world/map-layer` | Capa de mapa |
+| GET | `/api/v1/living-world/events/community-challenges` | Retos comunitarios |
+| POST | `/api/v1/living-world/player/action` | Registrar acción del jugador |
+
+#### Narrativa (Realito & Isabella)
+
+| Método | Ruta | Descripción |
+| --- | --- | --- |
+| POST | `/api/v1/narrative/feed` | Feed contextual de mensajes |
+| POST | `/api/v1/narrative/trigger` | Mensaje por acción del jugador |
+| POST | `/api/v1/narrative/suggest` | Acciones sugeridas |
+| GET | `/api/v1/narrative/characters` | Perfiles de personajes |
+
+### Economía Interna (ADR-003)
+
+| Moneda | Icono | Uso |
+| --- | --- | --- |
+| XP | ✨ | Progresión general |
+| COIN | 🪙 | Compras de cosméticos |
+| CRYSTAL | 💎 | Recompensas raras |
+| PRESTIGE | 🏆 | Logros comunitarios |
+| HONOR | 🏅 | Acciones éticas |
+| ENERGY | ⚡ | Stamina de sesión |
+| INFLUENCE | 🌐 | Activar eventos globales |
+| TERRITORIAL_IMPACT | 🌍 | Impacto positivo en territorio |
 
 ---
 
