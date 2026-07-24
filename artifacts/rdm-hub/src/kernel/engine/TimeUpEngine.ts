@@ -49,7 +49,7 @@ const TIME_UP_POLICIES: TimeUpPolicy[] = [
   {
     id: "TUP-005",
     name: "Control dual en acciones críticas",
-    description: "Acciones críticas requieren aprobación de al menos dos fedraciones o Isabella + humana.",
+    description: "Acciones críticas requieren aprobación de al menos dos federaciones o Isabella + humana.",
     federation: "PHOENIX",
     rule: "dual_control_critical_actions",
     severity: "CRITICO",
@@ -102,6 +102,7 @@ export class TimeUpEngine {
     const federation = intent.federation;
 
     for (const policy of TIME_UP_POLICIES) {
+      // Las políticas CRITICO siempre aplican; las de federación se filtran.
       if (policy.federation === federation || policy.severity === "CRITICO") {
         const result = this.evaluatePolicy(policy, intent);
         results.push(result);
@@ -117,28 +118,135 @@ export class TimeUpEngine {
     logger.info("[TIME-UP] Evaluando política", {
       policy: policy.id,
       intent: intent.id,
+      federation: intent.federation,
+      operation: intent.operation,
+      critical: intent.critical,
       verdict,
     });
 
     return { verdict, policy, reason: this.getReason(verdict, policy) };
   }
 
-  private applyRule(rule: string, _intent: MDX5Intent): TimeUpVerdict {
+  /**
+   * Reglas TIME UP basadas en el contexto del intent:
+   * - intent.operation: "READ" | "WRITE" | "DELETE" | "EXECUTE" | ...
+   * - intent.critical: boolean
+   * - intent.affectsHumans: boolean
+   * - intent.usesPersonalData: boolean
+   * - intent.involvedFederations: FederationId[]
+   * - intent.hasLedgerEntry: boolean
+   * - intent.requiresHumanApproval: boolean
+   * - intent.requiresIsabellaApproval: boolean
+   */
+  private applyRule(rule: string, intent: MDX5Intent): TimeUpVerdict {
+    const {
+      operation,
+      critical,
+      affectsHumans,
+      usesPersonalData,
+      involvedFederations,
+      hasLedgerEntry,
+      requiresHumanApproval,
+      requiresIsabellaApproval,
+    } = intent;
+
     switch (rule) {
-      case "every_critical_write_leaves_trace":
-      case "no_execute_without_timeup_approval":
-      case "intent_must_terminate":
-      case "dual_control_critical_actions":
+      case "f1_no_physical_delete": {
+        if (operation === "DELETE" && critical) {
+          // Borrado físico de datos históricos: bloquear salvo excepción explícita.
+          return "REJECTED";
+        }
         return "APPROVED";
-      case "f1_no_physical_delete":
-      case "no_personal_data_mining_without_consent":
-      case "physical_territory_supremacy":
-      case "ethical_visualization":
-      case "isabella_cognitive_guardian":
-        return "PENDING_ISABELLA";
-      case "economic_transparency":
+      }
+
+      case "every_critical_write_leaves_trace": {
+        if (critical && operation === "WRITE" && !hasLedgerEntry) {
+          // Escritura crítica sin traza en ledger: pendiente de humano.
+          return "PENDING_HUMAN";
+        }
         return "APPROVED";
+      }
+
+      case "no_execute_without_timeup_approval": {
+        if (operation === "EXECUTE" && critical) {
+          // Cualquier ejecución crítica pasa primero por TIME UP: exige al menos
+          // un camino de aprobación (Isabella y/o humano).
+          if (requiresHumanApproval || requiresIsabellaApproval) {
+            return "PENDING_ISABELLA";
+          }
+          return "REJECTED";
+        }
+        return "APPROVED";
+      }
+
+      case "intent_must_terminate": {
+        // Si el intent ya está en estado terminal, aprobamos; si está en ciclo infinito, pendiente.
+        if (intent.state === "TERMINAL_COMMIT" || intent.state === "TERMINAL_ABORT" || intent.state === "TERMINAL_REJECT") {
+          return "APPROVED";
+        }
+        return "PENDING_HUMAN";
+      }
+
+      case "dual_control_critical_actions": {
+        if (critical) {
+          const uniqueFeds = new Set<FederationId>(involvedFederations || []);
+          const hasDual = uniqueFeds.size >= 2;
+          const hasIsabellaAndHuman = requiresHumanApproval && requiresIsabellaApproval;
+
+          if (hasDual || hasIsabellaAndHuman) {
+            return "APPROVED";
+          }
+          return "PENDING_HUMAN";
+        }
+        return "APPROVED";
+      }
+
+      case "no_personal_data_mining_without_consent": {
+        if (usesPersonalData && intent.consent !== true) {
+          // Minería de datos personales sin consentimiento explícito: bloqueo.
+          return "REJECTED";
+        }
+        return "APPROVED";
+      }
+
+      case "isabella_cognitive_guardian": {
+        if (affectsHumans && critical) {
+          // Decisión que afecta bienestar humano: Isabella debe pronunciarse.
+          if (!requiresIsabellaApproval) {
+            return "PENDING_ISABELLA";
+          }
+          // Si Isabella ya aprobó, todavía podemos requerir humano según contexto.
+          return requiresHumanApproval ? "PENDING_HUMAN" : "APPROVED";
+        }
+        return "APPROVED";
+      }
+
+      case "economic_transparency": {
+        if (intent.federation === "MDD_TAMV" && operation === "WRITE" && critical) {
+          // Transacción económica crítica: debe tener ledger y trazabilidad.
+          if (!hasLedgerEntry) return "PENDING_HUMAN";
+        }
+        return "APPROVED";
+      }
+
+      case "physical_territory_supremacy": {
+        if (intent.federation === "CHRONOS" && affectsHumans && intent.affectsPhysicalTerritory) {
+          // Cualquier acción que pueda degradar territorio físico real: escalamos.
+          return "PENDING_HUMAN";
+        }
+        return "APPROVED";
+      }
+
+      case "ethical_visualization": {
+        if (intent.federation === "KAOS_HYPERRENDER" && intent.visualizationCategory === "DEGRADING") {
+          // Render que degrada dignidad humana: bloqueo directo.
+          return "REJECTED";
+        }
+        return "APPROVED";
+      }
+
       default:
+        // Por defecto, aprobado pero auditado.
         return "APPROVED";
     }
   }
