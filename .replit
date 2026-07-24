@@ -48,3 +48,6 @@ DATABASE_SUPABASE_URL = "https://lbbijzimnydvodtfbjoz.supabase.co"
 DATABASE_POSTGRES_DATABASE = "postgres"
 DATABASE_POSTGRES_HOST = "db.lbbijzimnydvodtfbjoz.supabase.co"
 DATABASE_POSTGRES_PASSWORD = "dHgjv5O3rSlMyrjP"
+
+[objectStorage]
+defaultBucketID = "replit-objstore-ada06ee1-bbce-4cd4-8773-f20ba74147c6"
