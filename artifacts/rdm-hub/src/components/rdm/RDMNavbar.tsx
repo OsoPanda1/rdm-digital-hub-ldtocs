@@ -200,7 +200,7 @@ export function RDMNavbar() {
           )}
         </AnimatePresence>
 
-        <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-16">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-[68px]">
 
           {/* ── Logo ── */}
           <Link to="/" className="flex items-center gap-2.5 group shrink-0">
@@ -294,66 +294,80 @@ export function RDMNavbar() {
               <AnimatePresence>
                 {megaOpen && (
                   <motion.div
-                    initial={{ opacity: 0, y: 12, scale: 0.97 }}
+                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 12, scale: 0.97 }}
-                    transition={{ type: "spring", stiffness: 240, damping: 22 }}
-                    className="absolute top-full right-0 mt-3 w-[680px] rounded-3xl border border-[hsl(var(--border)/0.35)] bg-[hsl(var(--background)/0.98)] backdrop-blur-2xl shadow-2xl p-5"
+                    exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 280, damping: 26 }}
+                    className="absolute top-full right-0 mt-2 w-[860px] max-w-[calc(100vw-2rem)] rounded-2xl border border-[hsl(var(--border)/0.4)] bg-[hsl(var(--background)/0.98)] backdrop-blur-2xl shadow-[0_24px_64px_-12px_hsl(0_0%_0%/0.6)] overflow-hidden"
                     role="menu"
                   >
-                    <div className="grid grid-cols-2 gap-x-5 gap-y-0">
+                    {/* Header strip */}
+                    <div className="flex items-center justify-between px-5 py-3 border-b border-[hsl(var(--border)/0.25)] bg-[hsl(var(--rdm-amber)/0.03)]">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[hsl(var(--muted-foreground))]">
+                        Explorar todo · RDM Digital Hub
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setMegaOpen(false)}
+                        className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors p-1 rounded-lg hover:bg-white/5"
+                        aria-label="Cerrar menú"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+
+                    {/* 4-column grid — compact, no vertical scroll */}
+                    <div className="grid grid-cols-4 gap-0 divide-x divide-[hsl(var(--border)/0.15)]">
                       {MEGA_CATEGORIES.map((cat) => (
-                        <div key={cat.key} className="mb-4">
+                        <div key={cat.key} className="px-4 py-4">
                           <p
-                            className="text-[10px] font-bold tracking-widest uppercase mb-2 px-2"
+                            className="text-[9px] font-bold tracking-[0.35em] uppercase mb-3 flex items-center gap-1.5"
                             style={{ color: cat.accent, fontFamily: "var(--font-body)" }}
                           >
+                            <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: cat.accent }} />
                             {cat.label}
                           </p>
-                          {cat.links.map((link) => (
-                            <Link
-                              key={link.path}
-                              to={link.path}
-                              role="menuitem"
-                              className={`flex items-start gap-2.5 px-2.5 py-1.5 rounded-xl text-xs transition-all duration-200 group ${
-                                isActive(link.path)
-                                  ? "bg-[hsl(var(--rdm-amber)/0.1)] text-[hsl(var(--rdm-amber))]"
-                                  : "text-[hsl(var(--foreground))] hover:bg-[hsl(var(--rdm-amber)/0.07)]"
-                              }`}
-                              style={{ fontFamily: "var(--font-body)" }}
-                            >
-                              {link.icon && (
-                                <link.icon className="w-3.5 h-3.5 shrink-0 mt-px text-[hsl(var(--muted-foreground))] group-hover:text-[hsl(var(--rdm-amber))] transition-colors" />
-                              )}
-                              <span>
-                                <span className="font-medium block">{link.label}</span>
-                                {link.desc && (
-                                  <span className="text-[10px] text-[hsl(var(--muted-foreground))] leading-tight">
-                                    {link.desc}
-                                  </span>
+                          <div className="space-y-0.5">
+                            {cat.links.map((link) => (
+                              <Link
+                                key={link.path}
+                                to={link.path}
+                                role="menuitem"
+                                className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-[11.5px] transition-all duration-150 group ${
+                                  isActive(link.path)
+                                    ? "bg-[hsl(var(--rdm-amber)/0.12)] text-[hsl(var(--rdm-amber))]"
+                                    : "text-[hsl(var(--foreground)/0.8)] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--rdm-amber)/0.07)]"
+                                }`}
+                                style={{ fontFamily: "var(--font-body)" }}
+                              >
+                                {link.icon && (
+                                  <link.icon className="w-3 h-3 shrink-0 text-[hsl(var(--muted-foreground))] group-hover:text-[hsl(var(--rdm-amber))] transition-colors" />
                                 )}
-                              </span>
-                            </Link>
-                          ))}
+                                <span className="font-medium truncate">{link.label}</span>
+                              </Link>
+                            ))}
+                          </div>
                         </div>
                       ))}
                     </div>
 
                     {/* Bottom strip */}
-                    <div className="mt-2 pt-3 border-t border-[hsl(var(--border)/0.3)] flex items-center justify-between gap-2 flex-wrap">
-                      {EXTRA_LINKS.map((item) => (
-                        <Link
-                          key={item.path}
-                          to={item.path}
-                          className="text-[10px] text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--rdm-amber))] transition-colors px-2"
-                          style={{ fontFamily: "var(--font-body)" }}
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
+                    <div className="flex items-center justify-between gap-2 px-5 py-3 border-t border-[hsl(var(--border)/0.2)] bg-[hsl(var(--rdm-amber)/0.02)]">
+                      <div className="flex items-center gap-1">
+                        {EXTRA_LINKS.map((item) => (
+                          <Link
+                            key={item.path}
+                            to={item.path}
+                            className="text-[10px] text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--rdm-amber))] transition-colors px-2.5 py-1 rounded-lg hover:bg-[hsl(var(--rdm-amber)/0.07)]"
+                            style={{ fontFamily: "var(--font-body)" }}
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
                       <Link
                         to="/donar"
-                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[hsl(var(--rdm-amber)/0.12)] text-[hsl(var(--rdm-amber))] text-[10px] font-semibold hover:bg-[hsl(var(--rdm-amber)/0.22)] transition-colors ml-auto"
+                        className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-[hsl(var(--rdm-amber))] to-[hsl(var(--rdm-amber)/0.85)] text-white text-[10px] font-semibold shadow-md hover:shadow-[hsl(var(--rdm-amber)/0.4)] transition-all"
                         style={{ fontFamily: "var(--font-body)" }}
                       >
                         <Heart className="w-3 h-3" /> Apoya RDM Digital

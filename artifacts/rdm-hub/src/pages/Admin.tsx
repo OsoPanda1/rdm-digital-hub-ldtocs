@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Shield, Users, Activity, ScrollText, Save, Loader2, UserPlus } from "lucide-react";
+import { Shield, Users, Activity, ScrollText, Save, Loader2, UserPlus, Store, Plus, Pencil, Trash2, X, MapPin, Phone, Globe } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useUserRole, logAudit, type AppRole } from "@/hooks/useUserRole";
 import { MusicAdminPanel } from "@/components/admin/MusicAdminPanel";
+
+// ── Admin email pre-authorized ───────────────────────────────────────────────
+const ADMIN_EMAIL = "tamvonlinenetwork@outlook.es";
 
 type Threshold = { id: string; federation_key: string; federation_name: string; max_latency_ms: number; min_integrity: number; max_offline: number; };
 type RoleRow = { id: string; user_id: string; role: AppRole; created_at: string };
@@ -65,12 +68,205 @@ export default function Admin() {
           <p className="mt-2 text-sm text-muted-foreground">Gestión de las 7 federaciones, roles, auditoría y catálogo musical.</p>
         </motion.div>
 
+        <BusinessManagerSection />
         <ThresholdsSection />
         <RolesSection />
         <MusicAdminPanel />
         <AuditSection />
       </div>
     </div>
+  );
+}
+
+// ── Business Manager ─────────────────────────────────────────────────────────
+type Business = {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  address: string;
+  phone?: string;
+  website?: string;
+  lat?: number;
+  lng?: number;
+  active: boolean;
+};
+
+const BUSINESS_CATS = ["gastronomia","hospedaje","artesanias","servicios-turisticos","comercio","entretenimiento","otro"];
+
+function BusinessManagerSection() {
+  const [items, setItems]     = useState<Business[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [editing, setEditing] = useState<Partial<Business> | null>(null);
+  const [saving, setSaving]   = useState(false);
+
+  const load = async () => {
+    setLoading(true);
+    const { data, error } = await (supabase as any).from("businesses").select("*").order("name");
+    setLoading(false);
+    if (!error) setItems((data ?? []) as Business[]);
+  };
+
+  useEffect(() => { load(); }, []);
+
+  const save = async () => {
+    if (!editing?.name?.trim()) { toast.error("El nombre es requerido"); return; }
+    setSaving(true);
+    const payload = {
+      name: editing.name, category: editing.category || "otro",
+      description: editing.description || "", address: editing.address || "",
+      phone: editing.phone || null, website: editing.website || null,
+      lat: editing.lat ? Number(editing.lat) : null, lng: editing.lng ? Number(editing.lng) : null,
+      active: editing.active ?? true,
+    };
+    const { error } = editing.id
+      ? await (supabase as any).from("businesses").update(payload).eq("id", editing.id)
+      : await (supabase as any).from("businesses").insert(payload);
+    setSaving(false);
+    if (error) { toast.error(error.message); return; }
+    toast.success(editing.id ? "Negocio actualizado" : "Negocio creado");
+    setEditing(null);
+    load();
+  };
+
+  const toggle = async (b: Business) => {
+    await (supabase as any).from("businesses").update({ active: !b.active }).eq("id", b.id);
+    load();
+  };
+
+  const remove = async (b: Business) => {
+    if (!confirm(`¿Eliminar "${b.name}"?`)) return;
+    await (supabase as any).from("businesses").delete().eq("id", b.id);
+    toast.success("Negocio eliminado");
+    load();
+  };
+
+  const field = (k: keyof Business, label: string, type = "text", opts?: string[]) => (
+    <div key={k} className="flex flex-col gap-1">
+      <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{label}</label>
+      {opts ? (
+        <select value={(editing as any)?.[k] ?? ""} onChange={e => setEditing(ed => ({ ...ed, [k]: e.target.value }))}
+          className="rounded-lg bg-background/60 border border-border/30 px-3 py-2 text-sm">
+          {opts.map(o => <option key={o} value={o}>{o}</option>)}
+        </select>
+      ) : (
+        <input type={type} value={(editing as any)?.[k] ?? ""} onChange={e => setEditing(ed => ({ ...ed, [k]: e.target.value }))}
+          className="rounded-lg bg-background/60 border border-border/30 px-3 py-2 text-sm" />
+      )}
+    </div>
+  );
+
+  return (
+    <section className="glass-card rounded-2xl border border-border/20 p-6">
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-lg font-display font-bold flex items-center gap-2">
+          <Store className="h-4 w-4 text-[hsl(var(--rdm-amber))]" /> Gestión de Negocios
+          <span className="text-xs font-mono text-muted-foreground ml-2">({items.length} registrados)</span>
+        </h2>
+        <button onClick={() => setEditing({ active: true, category: "gastronomia" })}
+          className="inline-flex items-center gap-1.5 rounded-xl gradient-gold px-4 py-2 text-xs font-semibold text-primary-foreground shadow-gold">
+          <Plus className="h-3.5 w-3.5" /> Agregar negocio
+        </button>
+      </div>
+
+      {/* Edit / create modal */}
+      {editing && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+          <motion.div initial={{ opacity:0,scale:0.95 }} animate={{ opacity:1,scale:1 }}
+            className="w-full max-w-lg rounded-2xl border border-border/40 bg-background p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="font-display font-bold">{editing.id ? "Editar" : "Nuevo"} Negocio</h3>
+              <button onClick={() => setEditing(null)}><X className="h-4 w-4 text-muted-foreground" /></button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {field("name", "Nombre del negocio")}
+              {field("category", "Categoría", "text", BUSINESS_CATS)}
+              {field("address", "Dirección")}
+              {field("phone", "Teléfono", "tel")}
+              {field("website", "Sitio web", "url")}
+              {field("lat", "Latitud", "number")}
+              {field("lng", "Longitud", "number")}
+              <div className="md:col-span-2 flex flex-col gap-1">
+                <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Descripción</label>
+                <textarea value={editing.description ?? ""} rows={3}
+                  onChange={e => setEditing(ed => ({ ...ed, description: e.target.value }))}
+                  className="rounded-lg bg-background/60 border border-border/30 px-3 py-2 text-sm resize-none" />
+              </div>
+              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <input type="checkbox" checked={editing.active ?? true}
+                  onChange={e => setEditing(ed => ({ ...ed, active: e.target.checked }))} />
+                Negocio activo (visible en el directorio)
+              </label>
+            </div>
+            <div className="flex gap-2 mt-5 justify-end">
+              <button onClick={() => setEditing(null)} className="px-4 py-2 rounded-xl border border-border/40 text-sm">Cancelar</button>
+              <button onClick={save} disabled={saving}
+                className="inline-flex items-center gap-2 px-5 py-2 rounded-xl gradient-gold text-sm font-semibold text-primary-foreground shadow-gold disabled:opacity-50">
+                {saving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
+                Guardar
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {loading ? (
+        <div className="flex justify-center py-8"><Loader2 className="h-5 w-5 animate-spin text-gold" /></div>
+      ) : items.length === 0 ? (
+        <div className="text-center py-10 text-muted-foreground">
+          <Store className="h-8 w-8 mx-auto mb-2 opacity-30" />
+          <p className="text-sm">No hay negocios registrados aún.</p>
+          <p className="text-xs mt-1">Haz clic en "Agregar negocio" para comenzar.</p>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs">
+            <thead className="text-[10px] uppercase tracking-widest text-muted-foreground border-b border-border/20">
+              <tr>
+                <th className="text-left py-2 font-mono">Negocio</th>
+                <th className="text-left py-2 font-mono">Categoría</th>
+                <th className="text-left py-2 font-mono hidden md:table-cell">Contacto</th>
+                <th className="py-2 font-mono">Estado</th>
+                <th className="py-2 font-mono">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map(b => (
+                <tr key={b.id} className="border-b border-border/10 hover:bg-white/[0.02] transition-colors">
+                  <td className="py-2.5">
+                    <p className="font-display font-semibold">{b.name}</p>
+                    {b.address && <p className="text-muted-foreground flex items-center gap-1 mt-0.5"><MapPin className="h-2.5 w-2.5" />{b.address}</p>}
+                  </td>
+                  <td className="py-2.5">
+                    <span className="px-2 py-0.5 rounded-full text-[10px] border border-gold/20 text-gold font-mono">{b.category}</span>
+                  </td>
+                  <td className="py-2.5 hidden md:table-cell text-muted-foreground">
+                    {b.phone && <p className="flex items-center gap-1"><Phone className="h-2.5 w-2.5" />{b.phone}</p>}
+                    {b.website && <p className="flex items-center gap-1"><Globe className="h-2.5 w-2.5" />{b.website}</p>}
+                  </td>
+                  <td className="py-2.5 text-center">
+                    <button onClick={() => toggle(b)}
+                      className={`px-2 py-0.5 rounded-full text-[10px] font-mono border transition-colors ${b.active ? "border-emerald-500/40 text-emerald-400 bg-emerald-500/10" : "border-red-500/40 text-red-400 bg-red-500/10"}`}>
+                      {b.active ? "Activo" : "Inactivo"}
+                    </button>
+                  </td>
+                  <td className="py-2.5 text-center">
+                    <div className="flex items-center justify-center gap-1">
+                      <button onClick={() => setEditing(b)} className="p-1.5 rounded-lg hover:bg-white/5 text-muted-foreground hover:text-foreground transition-colors" title="Editar">
+                        <Pencil className="h-3 w-3" />
+                      </button>
+                      <button onClick={() => remove(b)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-muted-foreground hover:text-red-400 transition-colors" title="Eliminar">
+                        <Trash2 className="h-3 w-3" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
   );
 }
 
