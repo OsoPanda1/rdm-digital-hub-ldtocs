@@ -1,0 +1,50 @@
+{
+  "adrs": [
+    {
+      "adrId": "ADR-YUN-0001",
+      "title": "YUN Constitutional Framework",
+      "status": "Accepted",
+      "date": "2026-07-25",
+      "authors": ["Edwin Castillo Trejo", "Isabella"],
+      "domain": "cognitive",
+      "policy_file": "infra/opa/yun-policy.rego",
+      "data_file": "infra/opa/yun-data.json",
+      "description": "Establishes the constitutional realm (YUN) as the foundational governance layer of the TAMV ecosystem. Defines 8 immutable principles, identity heptacapa, OPA policy engine, and operational rules.",
+      "principles": [
+        "CP-001: Soberanía del Dato",
+        "CP-002: Desacoplamiento Reactivo",
+        "CP-003: Seguridad Transparente (Zero Trust)",
+        "CP-004: Resiliencia Degradable",
+        "CP-005: Gobernanza Documentada",
+        "CP-006: Observabilidad Obligatoria",
+        "CP-007: Gobernanza Federada",
+        "CP-008: Neutralidad Epistémica"
+      ],
+      "implementation": {
+        "engine": "src/lib/yun/engine.ts",
+        "registry": "src/lib/yun/registry.ts",
+        "bus": "src/lib/yun/bus.ts",
+        "resilience": "src/lib/yun/resilience.ts",
+        "perception": "src/lib/yun/perception.ts",
+        "governance": "src/lib/yun/governance.ts",
+        "pqc": "src/lib/yun/pqc/core.ts",
+        "routes": "src/routes/yun.ts",
+        "opa_policy": "infra/opa/yun-policy.rego",
+        "opa_data": "infra/opa/yun-data.json"
+      },
+      "quorum_rules": {
+        "soul_modification": 5,
+        "new_skill_approval": 4,
+        "policy_change": 3,
+        "emergency_action": 2,
+        "daily_operations": 1
+      },
+      "immutable_until": "2027-07-25"
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "last_updated": "2026-07-25",
+    "generated_by": "YUN Governance Console"
+  }
+}

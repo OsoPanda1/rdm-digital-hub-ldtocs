@@ -23,6 +23,9 @@ import { registerSearchRoutes } from "./search";
 import { registerAdminRoutes } from "./admin";
 import { registerWikiEditorRoutes } from "./wiki-editor";
 
+// ── YUN Constitutional Realm ───────────────────────────────────
+import { registerYunRoutes } from "./yun";
+
 const router = Router();
 
 // --------- RUTAS PÚBLICAS BASE ---------
@@ -68,5 +71,8 @@ registerIsabellaMemoryRoutes(router);   // /api/isabella/memory/*
 registerSearchRoutes(router);           // /api/search/*
 registerAdminRoutes(router);            // /api/admin/*
 registerWikiEditorRoutes(router);       // /api/wiki-editor/*
+
+// ── YUN Constitutional Realm Routes ────────────────────────────
+registerYunRoutes(router);              // /api/yun/*
 
 export default router;

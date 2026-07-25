@@ -61,3 +61,8 @@ export function isabellaOrigin(): { name: string; author: string; origin: string
 export { createCrownSystem } from "../crown";
 export type { CrownSystem } from "../crown";
 export * from "../crown/types";
+
+// ── YUN Constitutional Realm ───────────────────────────────────
+export { createYunSystem } from "../yun";
+export type { YunSystem } from "../yun";
+export * from "../yun/types";

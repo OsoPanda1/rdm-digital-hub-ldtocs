@@ -1,0 +1,68 @@
+{
+  "yun": {
+    "restrictions": {
+      "deny_read": {},
+      "dpa_block": {
+        "impunity_survey": true,
+        "sensitive_demographic": true,
+        "personal_financial": true
+      }
+    },
+    "sensitivity": {
+      "P0": {
+        "description": "Identity/Financial — datos sensibles",
+        "replication": "never_raw",
+        "encryption": "AES-256-GCM + PQC"
+      },
+      "P1": {
+        "description": "Audit/Reputation — datos operativos",
+        "replication": "aggregated_only",
+        "encryption": "AES-256-GCM"
+      },
+      "P2": {
+        "description": "Public/Ephemeral — datos públicos",
+        "replication": "unrestricted",
+        "encryption": "optional"
+      }
+    },
+    "domains": {
+      "identity": { "database": "supabase", "federation": "FED-1" },
+      "commerce": { "database": "neon", "federation": "FED-1" },
+      "knowledge": { "database": "turso", "federation": "FED-2" },
+      "telemetry": { "database": "postgresql", "federation": "FED-3" },
+      "gameplay": { "database": "redis", "federation": "FED-6" },
+      "territorial": { "database": "postgresql", "federation": "FED-5" },
+      "media": { "database": "postgresql", "federation": "FED-4" },
+      "cognitive": { "database": "postgresql", "federation": "FED-7" }
+    },
+    "licenses": {
+      "TAMV-PRCL": {
+        "description": "Licencia Territorial — Permite operaciones territoriales y de percepción",
+        "permissions": ["territory.read", "territory.write", "events.publish"],
+        "restrictions": ["no_raw_replication"]
+      },
+      "TAMV-EOL": {
+        "description": "Licencia de Conocimiento — Acceso a base de conocimiento",
+        "permissions": ["knowledge.read", "knowledge.write"],
+        "restrictions": ["attribution_required"]
+      },
+      "TAMV-KORIMA": {
+        "description": "Licencia Narrativa — Generación de narrativa por IA",
+        "permissions": ["narrative.generate", "interpret"],
+        "restrictions": ["no_human_decision_override"]
+      },
+      "TAMV-HYBRID": {
+        "description": "Licencia Híbrida — Combina territorial + conocimiento",
+        "permissions": ["territory.read", "territory.write", "knowledge.read", "knowledge.write", "events.publish"],
+        "restrictions": ["no_raw_replication", "attribution_required"]
+      }
+    },
+    "roles": {
+      "reader": { "level": "read", "federation": "FED-2" },
+      "operator": { "level": "write", "federation": "FED-3" },
+      "admin": { "level": "admin", "federation": "FED-1" },
+      "community": { "level": "read", "federation": "FED-6" },
+      "federation_auditor": { "level": "governance", "federation": "FED-7" }
+    }
+  }
+}
