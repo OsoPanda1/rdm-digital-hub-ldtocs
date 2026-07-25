@@ -362,6 +362,9 @@ export const playersRelations = relations(players, ({ one, many }) => ({
   seasons: many(playerSeasons),
   events: many(playerEvents),
   narrativeMessages: many(narrativeMessages),
+  isabellaSessions: many(isabellaSessions),
+  isabellaDecisions: many(isabellaDecisions),
+  isabellaFeedback: many(isabellaFeedback),
 }));
 
 export const territoriesRelations = relations(territories, ({ one, many }) => ({
@@ -372,6 +375,7 @@ export const territoriesRelations = relations(territories, ({ one, many }) => ({
   }),
   children: many(territories, { relationName: "territoryHierarchy" }),
   poiStates: many(poiState),
+  isabellaDecisions: many(isabellaDecisions),
 }));
 
 export const seasonsRelations = relations(seasons, ({ many }) => ({
@@ -440,6 +444,9 @@ export const isabellaDecisions = pgTable("isabella_decisions", {
   territoryId: uuid("territory_id").references(() => territories.id),
   payloadJson: jsonb("payload_json").notNull().default("{}"),
   mode: text("mode").notNull().default("NORMAL"), // NORMAL, SAFE, EMERGENCY
+  guardianVerdictJson: jsonb("guardian_verdict_json"),
+  evaluationJson: jsonb("evaluation_json"),
+  biasDetected: boolean("bias_detected").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true })
     .defaultNow()
     .notNull(),
@@ -462,11 +469,47 @@ export const isabellaFeedback = pgTable("isabella_feedback", {
 
 export const isabellaKnowledge = pgTable("isabella_knowledge", {
   id: uuid("id").defaultRandom().primaryKey(),
+  domain: text("domain").notNull().default("ecosystem"),
   topic: text("topic").notNull(),
   content: text("content").notNull(),
+  keywords: jsonb("keywords").notNull().default("[]"),
   category: text("category").notNull().default("general"),
+  priority: integer("priority").notNull().default(5),
   source: text("source").notNull().default("manual"),
   confidence: integer("confidence").notNull().default(80),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+//  9. ISABELLA MEMORY ENGINE (Supabase-backed)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const isabellaMemory = pgTable("isabella_memory", {
+  id: text("id").primaryKey(),
+  type: text("type").notNull(), // session, persona, ecosystem, cultural, lesson, pattern, incident
+  content: text("content").notNull(),
+  tags: jsonb("tags").notNull().default("[]"),
+  source: text("source").notNull().default("system"),
+  ttl: integer("ttl").notNull().default(0), // 0 = permanent, ms until expiry
+  confidence: integer("confidence").notNull().default(80),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+//  10. ISABELLA EVALUATION RESULTS (persistent metrics)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const isabellaEvaluationResults = pgTable("isabella_evaluation_results", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  metric: text("metric").notNull(),
+  score: integer("score").notNull(), // 0-100 scaled
+  threshold: integer("threshold").notNull(),
+  passed: boolean("passed").notNull(),
+  details: text("details").notNull().default(""),
   createdAt: timestamp("created_at", { withTimezone: true })
     .defaultNow()
     .notNull(),

@@ -56,3 +56,8 @@ export function isabellaOrigin(): { name: string; author: string; origin: string
     model: "SCAO — ZT-DCOS",
   };
 }
+
+// ── THE C.R.O.W.N Integration ──────────────────────────────────
+export { createCrownSystem } from "../crown";
+export type { CrownSystem } from "../crown";
+export * from "../crown/types";
