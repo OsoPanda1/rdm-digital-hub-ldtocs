@@ -11,6 +11,8 @@ import {
   type YunDomain,
   type FederationId,
 } from "../lib/yun";
+import { requireRdmRole, rateLimitByRoute, auditSecurityEvent } from "../lib/security";
+import { validate, schemas } from "../middlewares/validate";
 
 const router = Router();
 
@@ -55,7 +57,10 @@ router.get("/status", (_req: Request, res: Response) => {
 
 // ── Policy Engine ──────────────────────────────────────────────
 
-router.post("/policy/evaluate", (req: Request, res: Response) => {
+router.post("/policy/evaluate",
+  rateLimitByRoute({ name: "yun-policy-eval", limit: 30 }),
+  validate(schemas.yunPolicyEvaluate),
+  (req: Request, res: Response) => {
   const input: PolicyInput = req.body;
   if (!input.principal || !input.action || !input.resource || !input.context) {
     res.status(400).json({ ok: false, error: "Missing required fields: principal, action, resource, context." });
@@ -100,7 +105,11 @@ router.get("/policy/stats", (_req: Request, res: Response) => {
 
 // ── Registry ───────────────────────────────────────────────────
 
-router.post("/registry/nodes", (req: Request, res: Response) => {
+router.post("/registry/nodes",
+  requireRdmRole("operator"),
+  rateLimitByRoute({ name: "yun-registry-nodes", limit: 10 }),
+  validate(schemas.yunRegistryNode),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const node = yun.registry.registerNode(req.body);
   res.json({ ok: true, node });
@@ -130,7 +139,10 @@ router.get("/registry/nodes/:nodeId", (req: Request, res: Response) => {
   res.json({ ok: true, node, binding: yun.registry.getBinding(req.params.nodeId) });
 });
 
-router.post("/registry/agents", (req: Request, res: Response) => {
+router.post("/registry/agents",
+  requireRdmRole("operator"),
+  rateLimitByRoute({ name: "yun-registry-agents", limit: 10 }),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const agent = yun.registry.registerAgent(req.body);
   res.json({ ok: true, agent });
@@ -141,7 +153,10 @@ router.get("/registry/agents", (_req: Request, res: Response) => {
   res.json({ ok: true, agents: yun.registry.findActiveAgents() });
 });
 
-router.post("/registry/services", (req: Request, res: Response) => {
+router.post("/registry/services",
+  requireRdmRole("operator"),
+  rateLimitByRoute({ name: "yun-registry-services", limit: 10 }),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const service = yun.registry.registerService(req.body);
   res.json({ ok: true, service });
@@ -152,7 +167,10 @@ router.get("/registry/licenses", (_req: Request, res: Response) => {
   res.json({ ok: true, licenses: yun.registry.getLicenses() });
 });
 
-router.post("/registry/licenses", (req: Request, res: Response) => {
+router.post("/registry/licenses",
+  requireRdmRole("admin"),
+  rateLimitByRoute({ name: "yun-licenses", limit: 5 }),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const license = yun.registry.issueLicense(req.body);
   res.json({ ok: true, license });
@@ -165,7 +183,11 @@ router.get("/registry/stats", (_req: Request, res: Response) => {
 
 // ── Message Bus ────────────────────────────────────────────────
 
-router.post("/bus/publish", (req: Request, res: Response) => {
+router.post("/bus/publish",
+  requireRdmRole("operator"),
+  rateLimitByRoute({ name: "yun-bus-publish", limit: 20 }),
+  validate(schemas.yunBusPublish),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const mode = yun.resilience.getCurrentMode();
   const result = yun.bus.publish(req.body, mode);
@@ -206,7 +228,11 @@ router.get("/resilience/mode", (_req: Request, res: Response) => {
   });
 });
 
-router.post("/resilience/transition", (req: Request, res: Response) => {
+router.post("/resilience/transition",
+  requireRdmRole("admin"),
+  rateLimitByRoute({ name: "yun-resilience", limit: 5 }),
+  validate(schemas.yunResilienceTransition),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const { to, trigger } = req.body;
   if (!to || !trigger) {
@@ -217,7 +243,11 @@ router.post("/resilience/transition", (req: Request, res: Response) => {
   res.json({ ok: true, transition });
 });
 
-router.post("/resilience/island-mode", (req: Request, res: Response) => {
+router.post("/resilience/island-mode",
+  requireRdmRole("admin"),
+  rateLimitByRoute({ name: "yun-island", limit: 3 }),
+  validate(schemas.yunResilienceIsland),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const { enter } = req.body;
   const services = enter ? yun.resilience.enterIslandMode() : yun.resilience.exitIslandMode();
@@ -236,7 +266,11 @@ router.get("/resilience/history", (_req: Request, res: Response) => {
 
 // ── Perception ─────────────────────────────────────────────────
 
-router.post("/perception/ingest", (req: Request, res: Response) => {
+router.post("/perception/ingest",
+  requireRdmRole("operator"),
+  rateLimitByRoute({ name: "yun-perception", limit: 20 }),
+  validate(schemas.yunPerceptionIngest),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const signal: PerceptionSignal = req.body;
   const event = yun.perception.ingestSignal(signal);
@@ -287,13 +321,21 @@ router.get("/governance/adrs/:adrId", (req: Request, res: Response) => {
   res.json({ ok: true, adr, voteStatus });
 });
 
-router.post("/governance/adrs", (req: Request, res: Response) => {
+router.post("/governance/adrs",
+  requireRdmRole("operator"),
+  rateLimitByRoute({ name: "yun-governance-adrs", limit: 5 }),
+  validate(schemas.yunGovernanceAdr),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const proposal = yun.governance.proposeADR(req.body);
   res.json({ ok: true, proposal });
 });
 
-router.post("/governance/vote", (req: Request, res: Response) => {
+router.post("/governance/vote",
+  requireRdmRole("operator"),
+  rateLimitByRoute({ name: "yun-governance-vote", limit: 10 }),
+  validate(schemas.yunGovernanceVote),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const result = yun.governance.castVote(req.body);
   if (!result.success) {
@@ -310,7 +352,10 @@ router.get("/governance/stats", (_req: Request, res: Response) => {
 
 // ── PQC Hybrid Crypto ─────────────────────────────────────────
 
-router.post("/pqc/keys", (req: Request, res: Response) => {
+router.post("/pqc/keys",
+  requireRdmRole("admin"),
+  rateLimitByRoute({ name: "yun-pqc-keys", limit: 5 }),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const key = yun.pqc.generateKeyPair(req.body);
   res.json({ ok: true, key });
@@ -331,7 +376,10 @@ router.get("/pqc/keys/:keyId", (req: Request, res: Response) => {
   res.json({ ok: true, key });
 });
 
-router.post("/pqc/keys/:keyId/rotate", (req: Request, res: Response) => {
+router.post("/pqc/keys/:keyId/rotate",
+  requireRdmRole("admin"),
+  rateLimitByRoute({ name: "yun-pqc-rotate", limit: 3 }),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const result = yun.pqc.rotateKey(req.params.keyId);
   if (!result) {
@@ -341,7 +389,10 @@ router.post("/pqc/keys/:keyId/rotate", (req: Request, res: Response) => {
   res.json({ ok: true, oldKey: result.oldKey, newKey: result.newKey });
 });
 
-router.post("/pqc/keys/:keyId/revoke", (req: Request, res: Response) => {
+router.post("/pqc/keys/:keyId/revoke",
+  requireRdmRole("admin"),
+  rateLimitByRoute({ name: "yun-pqc-revoke", limit: 3 }),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const success = yun.pqc.revokeKey(req.params.keyId);
   if (!success) {
@@ -356,13 +407,19 @@ router.get("/pqc/rotation-queue", (_req: Request, res: Response) => {
   res.json({ ok: true, keys: yun.pqc.getKeysNeedingRotation() });
 });
 
-router.post("/pqc/handshake", (req: Request, res: Response) => {
+router.post("/pqc/handshake",
+  requireRdmRole("admin"),
+  rateLimitByRoute({ name: "yun-pqc-handshake", limit: 10 }),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const result = yun.pqc.hybridHandshake(req.body);
   res.json({ ok: true, handshake: result });
 });
 
-router.post("/pqc/sign", (req: Request, res: Response) => {
+router.post("/pqc/sign",
+  requireRdmRole("operator"),
+  rateLimitByRoute({ name: "yun-pqc-sign", limit: 20 }),
+  (req: Request, res: Response) => {
   const yun = getYun();
   const result = yun.pqc.hybridSign(req.body);
   res.json({ ok: true, signature: result });

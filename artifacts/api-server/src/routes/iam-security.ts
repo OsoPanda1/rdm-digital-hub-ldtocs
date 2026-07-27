@@ -42,11 +42,15 @@ export function registerIamSecurityRoutes(router: Router) {
     }
   );
 
-  router.get("/iam/passkeys/:userId", (req: Request, res: Response) => {
-    passkeys.listByUser(req.params.userId).then((creds) => {
-      res.status(200).json({ ok: true, data: creds });
-    });
-  });
+  router.get("/iam/passkeys/:userId",
+    requireRdmRole("admin"),
+    rateLimitByRoute({ name: "iam-passkeys-list", limit: 20 }),
+    (req: Request, res: Response) => {
+      passkeys.listByUser(req.params.userId).then((creds) => {
+        res.status(200).json({ ok: true, data: creds });
+      });
+    }
+  );
 
   router.get("/iam/vault/secrets", requireRdmRole("admin"), (_req: Request, res: Response) => {
     vault.listSecrets().then((secrets) => res.status(200).json({ ok: true, data: secrets }));

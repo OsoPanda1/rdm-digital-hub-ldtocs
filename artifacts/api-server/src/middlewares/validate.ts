@@ -12,6 +12,7 @@ interface FieldRule {
   required?: boolean;
   min?: number;
   max?: number;
+  maxItems?: number;
   pattern?: RegExp;
   enum?: unknown[];
   custom?: (value: unknown) => boolean;
@@ -62,11 +63,19 @@ function validateField(value: unknown, rule: FieldRule, field: string): Validati
     case "object":
       if (typeof value !== "object" || Array.isArray(value))
         return { field, message: `${field} must be an object.` };
+      // Prevent prototype pollution
+      for (const key of Object.keys(value as Record<string, unknown>)) {
+        if (key === "__proto__" || key === "constructor" || key === "prototype") {
+          return { field, message: `${field} contains prohibited keys.` };
+        }
+      }
       break;
 
     case "array":
       if (!Array.isArray(value))
         return { field, message: `${field} must be an array.` };
+      if (rule.maxItems !== undefined && (value as unknown[]).length > rule.maxItems)
+        return { field, message: `${field} must have at most ${rule.maxItems} items.` };
       break;
   }
 

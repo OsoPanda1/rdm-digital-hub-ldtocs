@@ -7,6 +7,14 @@ const ROLE_ORDER: RdmRole[] = ["public", "user", "operator", "admin", "federatio
 const DEFAULT_WINDOW_MS = Number(process.env.RDM_RATE_LIMIT_WINDOW_MS ?? 60_000);
 const buckets = new Map<string, { count: number; resetAt: number }>();
 
+// ── Rate limit bucket cleanup (prevents memory leak) ──
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, bucket] of buckets) {
+    if (bucket.resetAt <= now) buckets.delete(key);
+  }
+}, 300_000); // every 5 min
+
 function normalizeRole(value: unknown): RdmRole {
   const role = String(value ?? "public").toLowerCase();
   return ROLE_ORDER.includes(role as RdmRole) ? (role as RdmRole) : "public";

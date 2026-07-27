@@ -5,9 +5,10 @@ import pinoHttp from "pino-http";
 
 import router from "./routes";
 import { logger } from "./lib/logger";
-import { attachRdmIdentity } from "./lib/security";
+import { attachRdmIdentity, rateLimitByRoute } from "./lib/security";
 import { attachJwtIdentity } from "./middlewares/auth";
 import { tracingMiddleware } from "./lib/tracing";
+import { loadEnv } from "./lib/env";
 
 const NODE_ENV = process.env.NODE_ENV ?? "development";
 const FEDERATION_MODE =
@@ -24,6 +25,17 @@ const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "")
   .filter(Boolean);
 
 const app: Express = express();
+
+// ── Validate environment at startup (fail fast if missing) ──
+try {
+  loadEnv();
+} catch (err) {
+  logger.fatal({ err }, "Environment validation failed at startup");
+  process.exit(1);
+}
+
+// ── Trust proxy (required for rate limiting and IP extraction behind LB) ──
+app.set("trust proxy", NODE_ENV === "production" ? 1 : false);
 
 // --------- LOGGING ESTRUCTURADO ---------
 
@@ -63,6 +75,19 @@ app.use(
 app.use(
   helmet({
     contentSecurityPolicy: NODE_ENV === "production" ? undefined : false,
+    hsts: NODE_ENV === "production" ? { maxAge: 31536000, includeSubDomains: true, preload: true } : false,
+    referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+    permissionsPolicy: {
+      camera: [],
+      "display-capture": [],
+      fullscreen: [],
+      geolocation: [],
+      microphone: [],
+      payment: [],
+    },
+    crossOriginEmbedderPolicy: NODE_ENV === "production",
+    crossOriginOpenerPolicy: NODE_ENV === "production",
+    crossOriginResourcePolicy: NODE_ENV === "production" ? { policy: "cross-origin" } : false,
   }),
 );
 
@@ -94,14 +119,55 @@ app.use(
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 
+// ── Global rate limiter (100 req/min/IP) — defense against brute force ──
+const globalRateLimitBuckets = new Map<string, { count: number; resetAt: number }>();
+const GLOBAL_RATE_LIMIT = 100;
+const GLOBAL_RATE_WINDOW_MS = 60_000;
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, bucket] of globalRateLimitBuckets) {
+    if (bucket.resetAt <= now) globalRateLimitBuckets.delete(key);
+  }
+}, 300_000); // cleanup every 5 min
+
+app.use((req, res, next) => {
+  const clientIp = (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() || req.ip || "unknown";
+  const now = Date.now();
+  const bucket = globalRateLimitBuckets.get(clientIp);
+  if (bucket && bucket.resetAt > now && bucket.count >= GLOBAL_RATE_LIMIT) {
+    res.status(429).json({ ok: false, error: "Rate limit exceeded", retryAfter: Math.ceil((bucket.resetAt - now) / 1000) });
+    return;
+  }
+  if (!bucket || bucket.resetAt <= now) {
+    globalRateLimitBuckets.set(clientIp, { count: 1, resetAt: now + GLOBAL_RATE_WINDOW_MS });
+  } else {
+    bucket.count++;
+  }
+  next();
+});
+
+// ── Request timeout (30s) — defense against slowloris ──
+app.use((_req, res, next) => {
+  res.setTimeout(30_000, () => {
+    if (!res.headersSent) {
+      res.status(503).json({ ok: false, error: "Request timeout" });
+    }
+  });
+  next();
+});
+
 // ── AUTH: JWT verification (PennyLane pattern: verify at boundary) ──
 // attachJwtIdentity runs FIRST — extracts identity from verified Supabase JWT.
 // attachRdmIdentity runs SECOND — fills in IP and ensures identity exists for anon.
-const JWT_SECRET = process.env.SUPABASE_JWT_SECRET ?? "";
+const JWT_SECRET = process.env.SUPABASE_JWT_SECRET || null;
 if (!JWT_SECRET && NODE_ENV === "production") {
-  logger.error("SUPABASE_JWT_SECRET not set — all requests will be anonymous!");
+  logger.fatal("SUPABASE_JWT_SECRET not set in production — refusing to start!");
+  process.exit(1);
 }
-app.use(attachJwtIdentity(JWT_SECRET || null));
+if (!JWT_SECRET) {
+  logger.warn("SUPABASE_JWT_SECRET not set — running in dev-relaxed mode (anonymous access)");
+}
+app.use(attachJwtIdentity(JWT_SECRET));
 app.use(attachRdmIdentity);
 
 // --------- CONTEXTO DE SEGURIDAD HEPTAFEDERADO ---------

@@ -191,7 +191,10 @@ export function registerIsabellaRoutes(router: Router) {
   //  Decision history for a player.
   //  Query: ?playerId=&limit=50
   // ─────────────────────────────────────────────────────────────────────────
-  router.get("/isabella/decisions", (req: Request, res: Response) => {
+  router.get("/isabella/decisions",
+    requireRdmRole("operator"),
+    rateLimitByRoute({ name: "isabella-decisions", limit: 20 }),
+    (req: Request, res: Response) => {
     const playerId = (req.query.playerId as string) ?? "anonymous";
     const limit = Math.min(Number(req.query.limit) || 50, 200);
     const playerDecisions = decisions.filter((d) => d.playerId === playerId).slice(-limit).reverse();
@@ -352,7 +355,10 @@ export function registerIsabellaRoutes(router: Router) {
   //  Active sessions for a player.
   //  Query: ?playerId=
   // ─────────────────────────────────────────────────────────────────────────
-  router.get("/isabella/sessions", (req: Request, res: Response) => {
+  router.get("/isabella/sessions",
+    requireRdmRole("user"),
+    rateLimitByRoute({ name: "isabella-sessions", limit: 20 }),
+    (req: Request, res: Response) => {
     const playerId = (req.query.playerId as string) ?? "anonymous";
     const playerSessions = [...sessions.values()]
       .filter((s) => s.playerId === playerId)
@@ -364,7 +370,9 @@ export function registerIsabellaRoutes(router: Router) {
   //  POST /api/isabella/sessions/:id/close
   //  Close an active session.
   // ─────────────────────────────────────────────────────────────────────────
-  router.post("/isabella/sessions/:id/close", (req: Request, res: Response) => {
+  router.post("/isabella/sessions/:id/close",
+    requireRdmRole("user"),
+    (req: Request, res: Response) => {
     const session = sessions.get(String(req.params.id));
     if (!session) { res.status(404).json({ ok: false, error: "Session not found" }); return; }
     session.status = "closed";
@@ -529,7 +537,10 @@ export function registerIsabellaRoutes(router: Router) {
   //  Evaluation engine history.
   //  Query: ?limit=50
   // ─────────────────────────────────────────────────────────────────────────
-  router.get("/isabella/evaluation/history", (req: Request, res: Response) => {
+  router.get("/isabella/evaluation/history",
+    requireRdmRole("operator"),
+    rateLimitByRoute({ name: "isabella-eval-history", limit: 10 }),
+    (req: Request, res: Response) => {
     const limit = Math.min(Number(req.query.limit) || 50, 200);
     res.status(200).json({ ok: true, data: evaluation.history(limit) });
   });

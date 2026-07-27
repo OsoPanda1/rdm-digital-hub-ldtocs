@@ -51,7 +51,9 @@ export function loadEnv(): EnvConfig {
       .filter(Boolean),
     MEXA_API_SECURE_KEY: requireEnv("MEXA_API_SECURE_KEY"),
     YUN_SIGNING_SECRET: requireEnv("YUN_SIGNING_SECRET"),
-    SUPABASE_JWT_SECRET: optionalEnv("SUPABASE_JWT_SECRET", ""),
+    SUPABASE_JWT_SECRET: env === "production"
+      ? requireEnv("SUPABASE_JWT_SECRET")
+      : optionalEnv("SUPABASE_JWT_SECRET", ""),
     RDM_SECURITY_PROFILE: optionalEnv("RDM_SECURITY_PROFILE", "dev-relaxed"),
     RDM_FEDERATION_MODE: optionalEnv("RDM_FEDERATION_MODE", "heptafederado-dev"),
     RDM_OBSERVABILITY_MODE: optionalEnv("RDM_OBSERVABILITY_MODE", "verbose"),
