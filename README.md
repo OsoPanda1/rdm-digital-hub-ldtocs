@@ -73,6 +73,7 @@ Plataforma de **Soberania Digital**, **Turismo Inteligente** e **Infraestructura
 | [Gamificacion y Living World](#gamificacion-phygital-territorial) | Sistema de juego territorial |
 | [Banners Distribuidos](#sistema-de-banners--publicidad-distribuida) | 80 banners en toda la plataforma |
 | [Isabella AI Engine](#isabella-ai-engine--omega-core-v40-enterprise) | IA conversacional con arquitectura completa |
+| [Isabella Cognitive Kernel](#isabella-cognitive-kernel--sistema-operativo-cognitivo) | 17 modulos, 30+ endpoints, ciclo cognitivo completo |
 | [THE C.R.O.W.N.](#the-crown--capas-de-razonamiento-optimizado) | 10 skills, BookPI, failover, capability gateway |
 | [Podcast TAMV](#podcast-tamv--spotify-integration) | Podcast episodicos via Spotify |
 | [Seguridad y Hardening](#seguridad-y-production-hardening) | Production hardening, PQC, PennyLane patterns |
@@ -279,9 +280,10 @@ rdm-digital-hub-ldtocs/
 | Paginas frontend | 112 |
 | Componentes UI | 211 |
 | Modulos especializados | 13 |
-| API route files | 21 |
-| API endpoints totales | 100+ |
+| API route files | 22 |
+| API endpoints totales | 130+ |
 | Isabella modules | 25 |
+| Cognitive Kernel modules | 17 |
 | YUN modules | 10 |
 | C.R.O.W.N. skills | 10 + BookPI + Failover |
 | Workspace libs | 4 |
@@ -580,6 +582,112 @@ lib/ai/
 - **isabella_knowledge** — Base de conocimiento para RAG
 - **isabellaMemory** — Memoria persistente de Isabella
 - **isabellaEvaluationResults** — Evaluaciones de calidad
+
+---
+
+## Isabella Cognitive Kernel — Sistema Operativo Cognitivo
+
+Evolucion de Isabella AI a un **Sistema Operativo Cognitivo** completo — 17 modulos que implementan el ciclo Perceive → Understand → Plan → Execute → Verify → Learn.
+
+### Arquitectura
+
+```
+lib/isabella/kernel/
+├── cognitive-kernel.ts      # Orquestador principal del ciclo cognitivo
+├── types.ts                 # 50+ interfaces y tipos
+├── meta-reasoner.ts         # 7 estrategias, analisis de patrones, evaluacion de riesgo
+├── capability-fabric.ts     # 18 capacidades con metricas y seleccion dinamica
+├── hierarchical-memory.ts   # 7 niveles (L0-L6), LRU/LFU, TTL, integridad
+├── planner.ts               # Descomposicion, dependencias, ciclo de vida
+├── verifier.ts              # Deteccion de alucinaciones, cumplimiento constitucional
+├── knowledge-graph.ts       # Grafo entidad-relacion con BFS
+├── confidence.ts            # Puntuacion 5 dimensiones con evidencia
+├── dynamic-context.ts       # Tiempo/temporada/ubicacion/eventos/estado del sistema
+├── learning.ts              # Ciclo Feedback→Error→Memoria→Conocimiento
+├── security-nucleus.ts      # Clasificacion 5 niveles, registros HMAC
+├── emergency.ts             # 5 niveles, escalacion, rollback, integridad
+├── simulator.ts             # Comparacion multi-escenario con recomendaciones
+├── agent-coordinator.ts     # 10 plantillas de rol, sintesis ponderada
+├── evaluator.ts             # 10 metricas con analisis de tendencias y alertas
+└── index.ts                 # Barrel export
+```
+
+### 7 Estrategias de Razonamiento
+
+| Estrategia | Fases | Latencia | Uso |
+|-----------|-------|----------|-----|
+| Quick Response | perceive→understand→execute | 200ms | Preguntas simples |
+| Standard Reasoning | 5 fases completas | 1.5s | Uso general |
+| Deep Analysis | 6 fases + multi-agente | 5s | Proyectos complejos |
+| Territorial Intelligence | 5 fases + contexto territorial | 3s | Consultas geoespaciales |
+| Emergency Response | 3 fases rapidas | 100ms | Situaciones criticas |
+| Creative Synthesis | 6 fases + iteracion | 4s | Generacion creativa |
+| Collaborative Decision | 6 fases + consenso | 8s | Decisiones multi-agente |
+
+### 7 Niveles de Memoria Jerarquica
+
+| Nivel | Nombre | Capacidad | TTL | Acceso |
+|-------|--------|-----------|-----|--------|
+| L0 | Inmediato | 50 | 30s | LRU |
+| L1 | Sesion | 500 | 1h | LRU |
+| L2 | Proyecto | 5,000 | 7d | LFU |
+| L3 | Territorio | 50,000 | Permanente | Prioridad |
+| L4 | Federacion | 100,000 | Permanente | Prioridad |
+| L5 | Permanente | 500,000 | Permanente | Permanente |
+| L6 | Historico | 1,000,000 | Permanente | Permanente |
+
+### 18 Capacidades
+
+| Capacidad | Costo | Latencia | Calidad |
+|-----------|-------|----------|---------|
+| Logical Reasoning | $0.01 | 200ms | 0.85 |
+| Memory Retrieval | $0.005 | 100ms | 0.80 |
+| Visual Analysis | $0.03 | 500ms | 0.75 |
+| Strategic Planning | $0.02 | 300ms | 0.80 |
+| Geospatial Intelligence | $0.01 | 150ms | 0.85 |
+| Tourism Intelligence | $0.01 | 200ms | 0.80 |
+| Legal Analysis | $0.04 | 400ms | 0.70 |
+| Architecture Design | $0.03 | 350ms | 0.85 |
+| Code Generation | $0.02 | 250ms | 0.80 |
+| Security Analysis | $0.05 | 500ms | 0.90 |
+| Research Synthesis | $0.02 | 300ms | 0.80 |
+| Negotiation Engine | $0.03 | 400ms | 0.75 |
+| Information Synthesis | $0.015 | 200ms | 0.85 |
+| Output Verification | $0.02 | 250ms | 0.90 |
+| Scenario Simulation | $0.04 | 600ms | 0.75 |
+| Translation | $0.01 | 150ms | 0.85 |
+| Data Analysis | $0.02 | 250ms | 0.80 |
+| Creative Generation | $0.03 | 400ms | 0.75 |
+
+### API Cognitive Kernel — 30+ Endpoints
+
+| Metodo | Ruta | Descripcion |
+|--------|------|-------------|
+| POST | `/api/kernel/process` | Ejecutar ciclo cognitivo completo |
+| GET | `/api/kernel/stats` | Estadisticas del kernel |
+| GET | `/api/kernel/memory` | Estadisticas de memoria |
+| GET | `/api/kernel/memory/query` | Consultar memoria |
+| GET | `/api/kernel/emergency` | Estado de emergencia |
+| POST | `/api/kernel/emergency/trigger` | Activar nivel de emergencia |
+| POST | `/api/kernel/emergency/shutdown` | Apagar sistema |
+| POST | `/api/kernel/emergency/rollback` | Revertir emergencia |
+| POST | `/api/kernel/emergency/clear` | Limpiar estado |
+| GET | `/api/kernel/evaluator` | Metricas de evaluacion |
+| GET | `/api/kernel/evaluator/trends` | Tendencias |
+| GET | `/api/kernel/evaluator/alerts` | Alertas activas |
+| GET | `/api/kernel/verifier` | Historial de verificacion |
+| GET | `/api/kernel/learning` | Historial de aprendizaje |
+| GET | `/api/kernel/learning/errors` | Patrones de error |
+| GET | `/api/kernel/capabilities` | Listar capacidades |
+| POST | `/api/kernel/capabilities/:id/toggle` | Habilitar/deshabilitar |
+| GET | `/api/kernel/plans` | Listar planes |
+| POST | `/api/kernel/plans` | Crear plan |
+| GET | `/api/kernel/knowledge` | Estadisticas del grafo |
+| POST | `/api/kernel/knowledge/entities` | Agregar entidad |
+| POST | `/api/kernel/knowledge/relations` | Agregar relacion |
+| POST | `/api/kernel/knowledge/search` | Buscar entidades |
+| POST | `/api/kernel/knowledge/query` | Consultar grafo |
+| POST | `/api/kernel/simulate` | Ejecutar simulacion |
 
 ---
 
