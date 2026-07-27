@@ -52,9 +52,17 @@ export interface YunSystem {
 }
 
 export function createYunSystem(signingSecret?: string): YunSystem {
+  const secret = signingSecret ?? process.env.YUN_SIGNING_SECRET;
+  if (!secret) {
+    throw new Error(
+      "YUN_SIGNING_SECRET must be set. " +
+      "Hardcoded fallback secrets are prohibited (PennyLane security pattern)."
+    );
+  }
+
   const policyEngine = new YunPolicyEngine();
   const registry = new YunRegistry();
-  const bus = new YunMessageBus(signingSecret || "yun-default-secret");
+  const bus = new YunMessageBus(secret);
   const resilience = new YunResilienceManager((transition) => {
     bus.publish({
       eventType: "yun.mode.transition",

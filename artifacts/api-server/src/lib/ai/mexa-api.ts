@@ -97,7 +97,13 @@ export interface MexaApiClient {
 }
 
 export function createMexaClient(secret?: string): MexaApiClient {
-  const key = secret ?? process.env.MEXA_API_SECURE_KEY ?? "mexa-dev-key";
+  const key = secret ?? process.env.MEXA_API_SECURE_KEY;
+  if (!key) {
+    throw new Error(
+      "MEXA_API_SECURE_KEY must be set. " +
+      "Hardcoded fallback secrets are prohibited (PennyLane security pattern)."
+    );
+  }
 
   return {
     createMask: (fed: FederationId, node: string) => createFederationMask(fed, node, key),

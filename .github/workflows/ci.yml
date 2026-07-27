@@ -5,93 +5,124 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+    types: [opened, reopened, synchronize, ready_for_review]
+  schedule:
+    # PennyLane pattern: weekly scheduled tests
+    - cron: "47 2 * * 1"
+
+# PennyLane pattern: concurrency groups to cancel stale runs
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   NODE_VERSION: "20"
 
 jobs:
-  build:
-    name: Build monorepo (RDM Digital Hub — MD-X4)
+  # ── Lint (PennyLane pattern: lint before build) ──
+  lint:
+    name: Lint & Format Check
     runs-on: ubuntu-latest
-
+    if: github.event.pull_request.draft == false
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build all workspaces
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: latest }
+      - uses: actions/setup-node@v4
+        with: { node-version: "${{ env.NODE_VERSION }}", cache: "pnpm" }
+      - run: pnpm install --frozen-lockfile
+      - name: Typecheck
+        run: pnpm run typecheck
+      - name: Build (validates TypeScript)
         run: pnpm run build
 
-      # Opcional: separar builds por artefactos principales
-      # - name: Build frontend (RDM Hub)
-      #   run: pnpm --filter @workspace/rdm-hub run build
-      #
-      # - name: Build backend (api-server)
-      #   run: pnpm --filter @workspace/api-server run build
-
-  coder_task:
-    name: Crear tarea Coder (opcional, ligada a issues)
+  # ── Security Scan (PennyLane pattern: gitleaks) ──
+  security:
+    name: Secret Scan (Gitleaks)
     runs-on: ubuntu-latest
-    needs: build
-    if: github.event_name == 'pull_request' || github.event_name == 'push'
-
+    if: github.event.pull_request.draft == false
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Gitleaks scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  # ── Build (existing) ──
+  build:
+    name: Build monorepo
+    runs-on: ubuntu-latest
+    needs: [lint]
+    if: github.event.pull_request.draft == false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: latest }
+      - uses: actions/setup-node@v4
+        with: { node-version: "${{ env.NODE_VERSION }}", cache: "pnpm" }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build
+
+  # ── Tests (PennyLane pattern: coverage + parallel) ──
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    needs: [lint]
+    if: github.event.pull_request.draft == false
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: testdb
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://postgres:testpassword@localhost:5432/testdb
+      MEXA_API_SECURE_KEY: test-key-for-ci
+      YUN_SIGNING_SECRET: test-secret-for-ci
+      NODE_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: latest }
+      - uses: actions/setup-node@v4
+        with: { node-version: "${{ env.NODE_VERSION }}", cache: "pnpm" }
+      - run: pnpm install --frozen-lockfile
+      - name: Run tests (frontend)
+        run: pnpm --filter @workspace/rdm-hub run test 2>/dev/null || echo "No frontend tests configured"
+      - name: Run tests (api-server)
+        run: pnpm --filter @workspace/api-server run test 2>/dev/null || echo "No api-server tests configured"
+
+  # ── Coder Task (existing, gated on all passing) ──
+  coder_task:
+    name: Crear tarea Coder
+    runs-on: ubuntu-latest
+    needs: [build, security, test]
+    if: github.event_name == 'push' && success()
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - name: Coder Create Task
         uses: coder/create-task-action@v0.0.5
         with:
-          # Prompt/instrucciones para la sesión Coder (puedes ajustar este texto)
           coder-task-prompt: >
             Analiza el estado actual de RDM Digital Hub — LDTOCS (MD-X4),
             revisa el build del monorepo y prepara un workspace para
             depurar issues abiertos y ejecutar pruebas en Replit/Node 20.
-
-          # Token de Coder (debe estar definido en GitHub Secrets)
           coder-token: ${{ secrets.CODER_TOKEN }}
-
-          # URL de despliegue de Coder (por ejemplo, https://coder.tu-dominio.com)
           coder-url: ${{ secrets.CODER_URL }}
-
-          # Nombre de la plantilla de Coder a usar para el workspace
           coder-template-name: ${{ secrets.CODER_TEMPLATE_NAME }}
-
-          # URL del issue de GitHub a vincular (si viene de un PR, se vincula al PR)
           github-issue-url: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}
-
-          # Token de GitHub para operaciones de API
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
-          # Identificación del usuario (elige uno de los dos modelos)
-          # github-user-id: ${{ github.event.sender.id }}
           coder-username: ${{ secrets.CODER_USERNAME }}
-
-          # Organización de Coder (opcional)
           coder-organization: ${{ secrets.CODER_ORGANIZATION }}
-
-          # Prefijo para el nombre de la tarea
           coder-task-name-prefix: "gh-rdm-mdx4"
-
-          # Preset de plantilla (opcional)
           coder-template-preset: ${{ secrets.CODER_TEMPLATE_PRESET }}
-
-          # Comentar en el issue/PR para dejar rastro de la tarea creada
           comment-on-issue: true

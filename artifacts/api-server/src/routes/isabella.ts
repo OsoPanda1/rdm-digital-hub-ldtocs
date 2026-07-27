@@ -17,6 +17,7 @@ import { createMexaClient } from "../lib/ai/mexa-api";
 import { buildKnowledgeContext, searchKnowledge, getAllKnowledge, knowledgeByDomain } from "../lib/ai/knowledge";
 import type { FederationId } from "../lib/isabella/types";
 import { auditSecurityEvent, rateLimitByRoute, requireRdmRole } from "../lib/security";
+import { validate, schemas } from "../middlewares/validate";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 //  SINGLETON INSTANCES (in-memory; replace with Supabase when wired)
@@ -60,7 +61,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  sanitize → interpret → policy check → knowledge lookup → personality → evaluate
   //  Body: { playerId, message, sessionId? }
   // ─────────────────────────────────────────────────────────────────────────
-  router.post("/isabella/chat", rateLimitByRoute({ name: "isabella-chat", limit: 30 }), (req: Request, res: Response) => {
+  router.post("/isabella/chat", rateLimitByRoute({ name: "isabella-chat", limit: 30 }), validate(schemas.isabellaChat), (req: Request, res: Response) => {
     const { playerId = "anonymous", message = "", sessionId } = req.body ?? {};
 
     if (!message || typeof message !== "string") {
