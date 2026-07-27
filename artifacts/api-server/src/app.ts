@@ -26,13 +26,8 @@ const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "")
 
 const app: Express = express();
 
-// ── Validate environment at startup (fail fast if missing) ──
-try {
-  loadEnv();
-} catch (err) {
-  logger.fatal({ err }, "Environment validation failed at startup");
-  process.exit(1);
-}
+// ── Validate environment at startup (production: fail fast; dev: warn + fallbacks) ──
+loadEnv();
 
 // ── Trust proxy (required for rate limiting and IP extraction behind LB) ──
 app.set("trust proxy", NODE_ENV === "production" ? 1 : false);
@@ -160,10 +155,6 @@ app.use((_req, res, next) => {
 // attachJwtIdentity runs FIRST — extracts identity from verified Supabase JWT.
 // attachRdmIdentity runs SECOND — fills in IP and ensures identity exists for anon.
 const JWT_SECRET = process.env.SUPABASE_JWT_SECRET || null;
-if (!JWT_SECRET && NODE_ENV === "production") {
-  logger.fatal("SUPABASE_JWT_SECRET not set in production — refusing to start!");
-  process.exit(1);
-}
 if (!JWT_SECRET) {
   logger.warn("SUPABASE_JWT_SECRET not set — running in dev-relaxed mode (anonymous access)");
 }
