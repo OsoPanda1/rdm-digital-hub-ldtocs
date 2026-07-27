@@ -6,6 +6,7 @@
 import type { Router, Request, Response } from "express";
 import { requireRdmRole, rateLimitByRoute, auditSecurityEvent } from "../lib/security";
 import { createAgentRegistry } from "../lib/federation/agents-registry";
+import { validate, schemas } from "../middlewares/validate";
 
 export function registerAgentsRoutes(router: Router) {
   const registry = createAgentRegistry();
@@ -30,6 +31,7 @@ export function registerAgentsRoutes(router: Router) {
   router.post("/agents/register",
     requireRdmRole("admin"),
     rateLimitByRoute({ name: "agents-register", limit: 10 }),
+    validate(schemas.agentRegister),
     async (req: Request, res: Response) => {
       const { name, domain, capabilities, permissions, autonomyLevel } = req.body ?? {};
       if (!name || !domain) { res.status(400).json({ ok: false, error: "name and domain required" }); return; }
@@ -45,6 +47,7 @@ export function registerAgentsRoutes(router: Router) {
   router.post("/agents/:id/trigger",
     requireRdmRole("operator"),
     rateLimitByRoute({ name: "agents-trigger", limit: 20 }),
+    validate(schemas.agentTrigger),
     async (req: Request, res: Response) => {
       const { condition, action } = req.body ?? {};
       if (!condition || !action) { res.status(400).json({ ok: false, error: "condition and action required" }); return; }

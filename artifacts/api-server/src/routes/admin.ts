@@ -6,6 +6,7 @@
 import type { Router, Request, Response } from "express";
 import { requireRdmRole, rateLimitByRoute, auditSecurityEvent } from "../lib/security";
 import { createAdminAuditLog } from "../lib/admin/audit-log";
+import { validate, schemas } from "../middlewares/validate";
 
 export function registerAdminRoutes(router: Router) {
   const auditLog = createAdminAuditLog();
@@ -49,6 +50,7 @@ export function registerAdminRoutes(router: Router) {
   router.post("/admin/audit/record",
     requireRdmRole("admin"),
     rateLimitByRoute({ name: "admin-audit-record", limit: 50 }),
+    validate(schemas.adminAuditRecord),
     async (req: Request, res: Response) => {
       const { actor, actorRole, action, target, details, sourceIp, severity } = req.body ?? {};
       if (!actor || !action) {

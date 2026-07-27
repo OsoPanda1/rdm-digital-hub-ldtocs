@@ -6,6 +6,7 @@
 import type { Router, Request, Response } from "express";
 import { requireRdmRole, rateLimitByRoute, auditSecurityEvent } from "../lib/security";
 import { createIdentityF1 } from "../lib/federation/identity-f1";
+import { validate, schemas } from "../middlewares/validate";
 
 export function registerIdentityRoutes(router: Router) {
   const identity = createIdentityF1();
@@ -24,6 +25,7 @@ export function registerIdentityRoutes(router: Router) {
   router.post("/identity/citizen",
     requireRdmRole("admin"),
     rateLimitByRoute({ name: "identity-create", limit: 10 }),
+    validate(schemas.identityCitizen),
     async (req: Request, res: Response) => {
       const { name, email, role = "citizen" } = req.body ?? {};
       if (!name || !email) { res.status(400).json({ ok: false, error: "name and email required" }); return; }
@@ -36,6 +38,7 @@ export function registerIdentityRoutes(router: Router) {
   router.post("/identity/assign-role",
     requireRdmRole("federation_auditor"),
     rateLimitByRoute({ name: "identity-role", limit: 20 }),
+    validate(schemas.identityAssignRole),
     async (req: Request, res: Response) => {
       const { citizenId, role } = req.body ?? {};
       if (!citizenId || !role) { res.status(400).json({ ok: false, error: "citizenId and role required" }); return; }

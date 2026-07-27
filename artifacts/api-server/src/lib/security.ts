@@ -22,10 +22,30 @@ function clientIp(req: Request): string {
   return req.ip || req.socket.remoteAddress || "unknown";
 }
 
+/**
+ * Legacy identity attach — kept for backward compatibility.
+ * In production, attachJwtIdentity (from middlewares/auth.ts) runs FIRST
+ * and sets rdmIdentity from the verified JWT. This function only fills in
+ * the IP and ensures rdmIdentity exists for anonymous requests.
+ *
+ * SECURITY: x-rdm-role and x-user-id headers are NO LONGER trusted.
+ * Identity is derived exclusively from the verified JWT payload.
+ */
 export function attachRdmIdentity(req: Request, _res: Response, next: NextFunction) {
-  const role = normalizeRole(req.headers["x-rdm-role"]);
-  const subject = String(req.headers["x-user-id"] ?? req.headers["x-rdm-subject"] ?? "anonymous");
-  (req as any).rdmIdentity = { subject, role, ip: clientIp(req) };
+  const existing = (req as any).rdmIdentity;
+  if (existing) {
+    // JWT middleware already set identity — just ensure ip is present
+    existing.ip = clientIp(req);
+    next();
+    return;
+  }
+  // No JWT middleware ran (dev mode) — create anonymous identity
+  (req as any).rdmIdentity = {
+    subject: "anonymous",
+    role: "public",
+    ip: clientIp(req),
+    authMethod: "anonymous",
+  };
   next();
 }
 

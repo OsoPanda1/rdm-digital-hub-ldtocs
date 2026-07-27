@@ -98,7 +98,7 @@ jobs:
       - name: Run tests (frontend)
         run: pnpm --filter @workspace/rdm-hub run test 2>/dev/null || echo "No frontend tests configured"
       - name: Run tests (api-server)
-        run: pnpm --filter @workspace/api-server run test 2>/dev/null || echo "No api-server tests configured"
+        run: pnpm --filter @workspace/api-server run test
 
   # ── Coder Task (existing, gated on all passing) ──
   coder_task:

@@ -379,7 +379,8 @@ export function registerGamificationRoutes(router: Router) {
   // ───────────────────────────────────────────────────────────────────────────
 
   router.get("/v1/gamification/profile", (req: Request, res: Response) => {
-    const userId = (req.headers["x-user-id"] as string | undefined) ?? undefined;
+    const identity = (req as any).rdmIdentity;
+    const userId = identity?.subject !== "anonymous" ? identity.subject : undefined;
     res.status(200).json({ ok: true, data: buildMockProfile(userId) });
   });
 

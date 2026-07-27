@@ -6,6 +6,7 @@ import pinoHttp from "pino-http";
 import router from "./routes";
 import { logger } from "./lib/logger";
 import { attachRdmIdentity } from "./lib/security";
+import { attachJwtIdentity } from "./middlewares/auth";
 import { tracingMiddleware } from "./lib/tracing";
 
 const NODE_ENV = process.env.NODE_ENV ?? "development";
@@ -92,6 +93,15 @@ app.use(
 
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true, limit: "1mb" }));
+
+// ── AUTH: JWT verification (PennyLane pattern: verify at boundary) ──
+// attachJwtIdentity runs FIRST — extracts identity from verified Supabase JWT.
+// attachRdmIdentity runs SECOND — fills in IP and ensures identity exists for anon.
+const JWT_SECRET = process.env.SUPABASE_JWT_SECRET ?? "";
+if (!JWT_SECRET && NODE_ENV === "production") {
+  logger.error("SUPABASE_JWT_SECRET not set — all requests will be anonymous!");
+}
+app.use(attachJwtIdentity(JWT_SECRET || null));
 app.use(attachRdmIdentity);
 
 // --------- CONTEXTO DE SEGURIDAD HEPTAFEDERADO ---------

@@ -1,4 +1,5 @@
 import type { Router } from "express";
+import { validate, schemas } from "../middlewares/validate";
 
 type Place = {
   id: string;
@@ -101,7 +102,7 @@ export function registerTerritoryRoutes(router: Router) {
 
   // Endpoint de IA territorial — delega al pipeline de Isabella.
   // Para uso completo, enviar a POST /api/isabella/chat.
-  router.post("/territory/ai/ask", (req, res, next) => {
+  router.post("/territory/ai/ask", validate(schemas.territoryAiAsk), (req, res, next) => {
     try {
       const { message } = parseAskBody(req.body);
 

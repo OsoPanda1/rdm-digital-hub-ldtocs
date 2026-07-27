@@ -4,6 +4,7 @@
 // Endpoints: /api/v1/narrative/*
 
 import type { Router, Request, Response } from "express";
+import { validate, schemas } from "../middlewares/validate";
 import {
   generateNarrative,
   generateFeed,
@@ -31,7 +32,7 @@ export function registerNarrativeRoutes(router: Router) {
   //  Body: { playerId, limit? }
   //  Returns contextual feed of narrative messages for a player.
   // ───────────────────────────────────────────────────────────────────────────
-  router.post("/v1/narrative/feed", (req: Request, res: Response) => {
+  router.post("/v1/narrative/feed", validate(schemas.narrativeFeed), (req: Request, res: Response) => {
     const { playerId = "anonymous", limit = 5 } = req.body ?? {};
 
     if (!playerId || typeof playerId !== "string") {
@@ -68,7 +69,7 @@ export function registerNarrativeRoutes(router: Router) {
   //  Body: { playerId, actionType, poiName?, eventName?, itemId? }
   //  Returns a single narrative message triggered by a player action.
   // ───────────────────────────────────────────────────────────────────────────
-  router.post("/v1/narrative/trigger", (req: Request, res: Response) => {
+  router.post("/v1/narrative/trigger", validate(schemas.narrativeTrigger), (req: Request, res: Response) => {
     const {
       playerId = "anonymous",
       actionType = "UNKNOWN",
@@ -128,7 +129,7 @@ export function registerNarrativeRoutes(router: Router) {
   //  Body: { playerId }
   //  Returns suggested next actions for a player.
   // ───────────────────────────────────────────────────────────────────────────
-  router.post("/v1/narrative/suggest", (req: Request, res: Response) => {
+  router.post("/v1/narrative/suggest", validate(schemas.narrativeSuggest), (req: Request, res: Response) => {
     const { playerId = "anonymous" } = req.body ?? {};
 
     if (!playerId || typeof playerId !== "string") {

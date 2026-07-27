@@ -6,6 +6,7 @@
 import type { Router, Request, Response } from "express";
 import { requireRdmRole, rateLimitByRoute, auditSecurityEvent } from "../lib/security";
 import { createEconomiaF4 } from "../lib/federation/economia-f4";
+import { validate, schemas } from "../middlewares/validate";
 
 export function registerEconomiaRoutes(router: Router) {
   const economia = createEconomiaF4();
@@ -29,6 +30,7 @@ export function registerEconomiaRoutes(router: Router) {
   router.post("/economia/transaction",
     requireRdmRole("operator"),
     rateLimitByRoute({ name: "economia-tx", limit: 20 }),
+    validate(schemas.economiaTransaction),
     async (req: Request, res: Response) => {
       const { fromId, toId, amount, type, description } = req.body ?? {};
       if (!fromId || !toId || !amount) {

@@ -7,6 +7,7 @@ import type { Router, Request, Response } from "express";
 import { requireRdmRole, rateLimitByRoute } from "../lib/security";
 import { createYunBus } from "../lib/federation/yun-bus";
 import { createYunRouter } from "../lib/federation/yun-router";
+import { validate, schemas } from "../middlewares/validate";
 
 export function registerFederationRoutes(router: Router) {
   const bus = createYunBus();
@@ -32,6 +33,7 @@ export function registerFederationRoutes(router: Router) {
   router.post("/federation/emit",
     requireRdmRole("operator"),
     rateLimitByRoute({ name: "federation-emit", limit: 30 }),
+    validate(schemas.federationEmit),
     async (req: Request, res: Response) => {
       const { federationId, type, payload } = req.body ?? {};
       if (!federationId || !type) {
