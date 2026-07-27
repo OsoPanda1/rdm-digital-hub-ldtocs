@@ -152,5 +152,6 @@ export const QUORUM_RULES = {
   newSkillApproval: 4,    // 4/7 federaciones
   policyChange: 3,        // 3/7 federaciones
   emergencyAction: 2,     // 2/7 federaciones
- 日常Operations: 1,        // 1 federación
+  日常Operations: 1,        // 1 federación
+  dailyOperations: 1,       // alias (ASCII)
 };

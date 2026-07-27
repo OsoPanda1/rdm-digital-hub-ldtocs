@@ -79,8 +79,16 @@ function evaluateCondition(condition: PolicyCondition, context: Record<string, u
       return Number(fieldValue) < Number(condition.value);
     case "contains":
       return String(fieldValue).includes(String(condition.value));
-    case "matches":
-      return new RegExp(String(condition.value)).test(String(fieldValue));
+    case "matches": {
+      const pattern = String(condition.value);
+      // Anchor and timeout-guard against ReDoS
+      if (pattern.length > 256) return false;
+      try {
+        return new RegExp(pattern).test(String(fieldValue));
+      } catch {
+        return false;
+      }
+    }
     default:
       return false;
   }

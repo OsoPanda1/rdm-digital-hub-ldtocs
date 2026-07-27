@@ -9,9 +9,11 @@ import type {
   FederationId, HexagonZone, SkillId, SkillDefinition, SkillInstance,
 } from "./types";
 import { createBookPiTelemetry } from "./bookpi-telemetry";
+import { createHash } from "node:crypto";
 
 export interface CapabilityGateway {
   dispatch<TReq, TRes>(req: CapabilityRequest<TReq>): Promise<CapabilityResponse<TRes>>;
+  dispatchBatch<TReq, TRes>(reqs: CapabilityRequest<TReq>[]): Promise<CapabilityResponse<TRes>[]>;
   registerSkill(def: SkillDefinition): SkillInstance;
   getSkill(skillId: SkillId): SkillInstance | undefined;
   listSkills(): SkillInstance[];
@@ -34,11 +36,8 @@ export function createCapabilityGateway(): CapabilityGateway {
     const timestamp = Date.now();
     const nodeId = generateNodeId();
     const data = `${nodeId}:${federationId}:${timestamp}`;
-    let hash = 0;
-    for (let i = 0; i < data.length; i++) {
-      hash = ((hash << 5) - hash + data.charCodeAt(i)) | 0;
-    }
-    return { nodeId, hash: `0x${Math.abs(hash).toString(16).padStart(8, "0")}`, timestamp, federationId };
+    const hash = createHash("sha256").update(data).digest("hex").slice(0, 16);
+    return { nodeId, hash: `0x${hash}`, timestamp, federationId };
   }
 
   return {
@@ -76,6 +75,10 @@ export function createCapabilityGateway(): CapabilityGateway {
         bookpi: signBookPi(req.federationId),
         durationMs: Date.now() - start,
       } as CapabilityResponse<TRes>;
+    },
+
+    async dispatchBatch<TReq, TRes>(reqs: CapabilityRequest<TReq>[]): Promise<CapabilityResponse<TRes>[]> {
+      return Promise.all(reqs.map((r) => this.dispatch<TReq, TRes>(r)));
     },
 
     registerSkill(def) {

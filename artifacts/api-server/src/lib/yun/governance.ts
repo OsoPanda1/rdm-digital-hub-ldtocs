@@ -97,11 +97,23 @@ export class YunGovernanceConsole {
       alternatives: proposal.alternatives,
     });
 
+    // Determine quorum based on content type (CP-005, CP-007)
+    const titleLower = proposal.title.toLowerCase();
+    const contextLower = proposal.context.toLowerCase();
+    let requiredQuorum: number;
+    if (titleLower.includes("soul") || contextLower.includes("soul") || titleLower.includes("constitution")) {
+      requiredQuorum = QUORUM_RULES.soulModification;
+    } else if (titleLower.includes("skill") || contextLower.includes("skill")) {
+      requiredQuorum = QUORUM_RULES.newSkillApproval;
+    } else {
+      requiredQuorum = QUORUM_RULES.policyChange;
+    }
+
     // Create vote tracking
     this.votes.set(adrId, {
       adrId,
       votes: [],
-      requiredQuorum: QUORUM_RULES.policyChange,
+      requiredQuorum,
       status: "pending",
     });
 
