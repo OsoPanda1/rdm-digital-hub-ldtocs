@@ -37,7 +37,7 @@ export interface YunAgent {
 export interface YunService {
   serviceId: string;
   name: string;
-  kind: "radio" | "api" | "panel" | "commerce" | "wiki" | "perception" | "opinion" | "resonance";
+  kind: "podcast" | "api" | "panel" | "commerce" | "wiki" | "perception" | "opinion" | "resonance";
   nodeId: string;
   domain: YunDomain;
   federationId: FederationId;

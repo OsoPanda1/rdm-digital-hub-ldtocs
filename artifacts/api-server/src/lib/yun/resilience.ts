@@ -16,7 +16,7 @@ interface DegradationProfile {
   maxEventsPerMin: number;
   replicationEnabled: boolean;
   federationOutbound: boolean;
-  radioEnabled: boolean;
+  podcastEnabled: boolean;
   commerceEnabled: boolean;
   advancedFeaturesEnabled: boolean;
 }
@@ -65,7 +65,7 @@ const DEGRADATION_PROFILES: Record<YunMode, DegradationProfile> = {
 interface IslandModeServices {
   identityLocal: boolean;
   memorySnapshot: boolean;
-  radioLocal: boolean;
+  podcastLocal: boolean;
   offlineIsabella: boolean;
   federationSync: boolean;
   telemetryGlobal: boolean;
@@ -76,7 +76,7 @@ interface IslandModeServices {
 const ISLAND_MODE_SERVICES: IslandModeServices = {
   identityLocal: true,
   memorySnapshot: true,
-  radioLocal: true,
+  podcastLocal: true,
   offlineIsabella: true,
   federationSync: false,
   telemetryGlobal: false,
@@ -208,7 +208,7 @@ export class YunResilienceManager {
   // ── Core Preservation Check ──────────────────────────────────
 
   isCorePreserved(serviceName: string): boolean {
-    const coreServices = ["identity", "telemetry", "memory", "radio-local", "isabella-offline"];
+    const coreServices = ["identity", "telemetry", "memory", "podcast-local", "isabella-offline"];
     return coreServices.includes(serviceName);
   }
 
@@ -236,7 +236,7 @@ export class YunResilienceManager {
       timeInModeMs: this.getTimeInCurrentMode(),
       transitionCount: this.transitionHistory.length,
       opaStatus: this.getOpaDegradationProfile().status,
-      coreServicesPreserved: ["identity", "telemetry", "memory", "radio-local", "isabella-offline"],
+      coreServicesPreserved: ["identity", "telemetry", "memory", "podcast-local", "isabella-offline"],
     };
   }
 }

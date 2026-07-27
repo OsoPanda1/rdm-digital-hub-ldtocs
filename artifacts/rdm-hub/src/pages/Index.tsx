@@ -4,7 +4,7 @@ import { RDMInteractiveMap } from "@/components/rdm/RDMInteractiveMap";
 // RDMCommerceBanner removed — banners now managed globally by BannerManager
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Pickaxe, Utensils, TreePine, MapPin, Compass, Car, Calendar, Users, Star, Camera, Heart, Lightbulb, Bed, Palette, Store, Radio } from "lucide-react";
+import { Pickaxe, Utensils, TreePine, MapPin, Compass, Car, Calendar, Users, Star, Camera, Heart, Lightbulb, Bed, Palette, Store, Headphones } from "lucide-react";
 import { SEOMeta } from "@/components/SEOMeta";
 import { VideoEmbed } from "@/components/rdm/VideoEmbed";
 import { RUTAS_TEMATICAS, FICHA_TECNICA } from "@/data/rdm-territorial";
@@ -155,27 +155,26 @@ const Index = () => {
         </div>
       </section>
 
-      {/* SECTION B: TAMV 92.5 Radio promo strip */}
+      {/* SECTION B: Podcast promo strip */}
       <section className="relative h-[240px] md:h-[300px] w-full overflow-hidden flex items-center px-6 md:px-12">
         <motion.div 
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-          className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${tamvBanner})` }}
+          className="absolute inset-0 bg-gradient-to-r from-green-900/40 via-green-900/20 to-transparent"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[hsl(220_30%_5%)] via-[hsl(220_30%_6%/0.8)] to-transparent" />
         <div className="relative z-10 max-w-5xl">
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/50 mb-4 backdrop-blur-sm">
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-red-100">En Vivo</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 border border-green-500/50 mb-4 backdrop-blur-sm">
+              <Headphones className="w-3 h-3 text-green-400" />
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-green-100">Spotify Podcast</span>
             </div>
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-3 drop-shadow-md" style={{ fontFamily: "var(--font-display)" }}>
-              TAMV 92.5 Radio Digital
+              Podcast del Ecosistema
             </h2>
             <p className="text-sm md:text-base text-white/80 mb-6 drop-shadow-md" style={{ fontFamily: "var(--font-body)" }}>
-              La voz de Real del Monte · Escucha la magia de la sierra
+              Voces del Pueblo Mágico · Narrativas soberanas en audio
             </p>
-            <Link to="/archivo-sonoro" className="inline-flex items-center gap-2 bg-[hsl(var(--rdm-amber))] text-white px-6 py-3 rounded-full font-semibold text-sm hover:scale-105 transition-transform shadow-[0_0_20px_hsla(43,80%,55%,0.3)]" style={{ fontFamily: "var(--font-body)" }}>
-              <Radio className="w-4 h-4" /> Sintonizar ahora
+            <Link to="/podcast" className="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-full font-semibold text-sm hover:scale-105 transition-transform shadow-[0_0_20px_rgba(22,163,74,0.3)]" style={{ fontFamily: "var(--font-body)" }}>
+              <Headphones className="w-4 h-4" /> Escuchar ahora
             </Link>
           </motion.div>
         </div>

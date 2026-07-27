@@ -5,7 +5,7 @@ import { rateLimitByRoute, requireRdmRole } from "../lib/security";
 type TelemetryEvent = {
   id: string;
   type: string;
-  source: "frontend" | "radio" | "isabella" | "gamification" | "system";
+  source: "frontend" | "podcast" | "isabella" | "gamification" | "system";
   severity: "info" | "warning" | "critical";
   timestamp: string;
   metadata: Record<string, unknown>;
@@ -37,7 +37,7 @@ export function telemetrySnapshot() {
 export function registerTelemetryRoutes(router: Router) {
   router.post("/telemetry/events", rateLimitByRoute({ name: "telemetry-events", limit: 120 }), (req: Request, res: Response) => {
     const { type = "unknown", source = "frontend", severity = "info", metadata = {} } = req.body ?? {};
-    const allowedSources = new Set(["frontend", "radio", "isabella", "gamification", "system"]);
+    const allowedSources = new Set(["frontend", "podcast", "isabella", "gamification", "system"]);
     const allowedSeverities = new Set(["info", "warning", "critical"]);
     const entry = record({
       type: String(type).slice(0, 100),

@@ -6,7 +6,6 @@ import { registerTerritoryRoutes } from "./territory";
 import { registerGamificationRoutes } from "./gamification";
 import { registerNarrativeRoutes } from "./narrative";
 import { registerIsabellaRoutes } from "./isabella";
-import { registerRadioRoutes } from "./radio";
 import { registerTelemetryRoutes } from "./telemetry";
 
 // ── Batch 7: C.R.O.W.N Federation Routes ───────────────────────
@@ -25,6 +24,7 @@ import { registerWikiEditorRoutes } from "./wiki-editor";
 
 // ── YUN Constitutional Realm ───────────────────────────────────
 import { registerYunRoutes } from "./yun";
+import { registerPodcastRoutes } from "./podcast";
 
 const router = Router();
 
@@ -52,9 +52,6 @@ registerNarrativeRoutes(router);
 // --------- ISABELLA AI ---------
 registerIsabellaRoutes(router);
 
-// --------- TAMV 92.5 FM RADIO ---------
-registerRadioRoutes(router);
-
 // --------- TELEMETRÍA ---------
 registerTelemetryRoutes(router);
 
@@ -74,5 +71,8 @@ registerWikiEditorRoutes(router);       // /api/wiki-editor/*
 
 // ── YUN Constitutional Realm Routes ────────────────────────────
 registerYunRoutes(router);              // /api/yun/*
+
+// ── Podcast Routes ─────────────────────────────────────────────
+registerPodcastRoutes(router);          // /api/podcast/*
 
 export default router;

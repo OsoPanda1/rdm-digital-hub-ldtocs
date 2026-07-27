@@ -39,8 +39,7 @@ const GlobalPlayerBar = lazy(() => import('@/components/GlobalPlayerBar'))
 // ===== Banner Manager (route-aware ad placement) =====
 const BannerManager = lazy(() => import('./components/rdm/BannerManager').then((m) => ({ default: m.BannerManager })))
 
-// ===== TAMV 92.5 FM Radio Player =====
-const RadioPlayer = lazy(() => import('./components/rdm/RadioPlayer').then((m) => ({ default: m.RadioPlayer })))
+// ===== TAMV 92.5 FM Radio Player (REMOVED — replaced by Spotify Podcast) =====
 
 // ===== Mother repo pages =====
 const Index = lazy(() => import('./pages/Index'))
@@ -158,8 +157,8 @@ const RutaDelPaste = lazy(() => import('./pages/RutaDelPaste'))
 const DemoChecklist = lazy(() => import('./pages/DemoChecklist'))
 const RealitoAIPage = lazy(() => import('./pages/RealitoAI'))
 
-// ===== TAMV 92.5 Radio Digital =====
-const ArchivoSonoro = lazy(() => import('./pages/ArchivoSonoro'))
+// ===== Podcast (Spotify) =====
+const Podcast = lazy(() => import('./pages/Podcast'))
 const ComerciosCheckout = lazy(() => import('./pages/ComerciosCheckout'))
 const ComerciosRegistroPage = lazy(() => import('./pages/ComerciosRegistro'))
 const Evolucion = lazy(() => import('./pages/Evolucion'))
@@ -406,7 +405,7 @@ const AnimatedRoutes = () => {
           <Route path="/admin-panel" element={<Navigate to="/admin" replace />} />
           <Route path="/demo-checklist" element={<RouteErrorBoundary route="/demo-checklist"><DemoChecklist /></RouteErrorBoundary>} />
           <Route path="/realito-ai" element={<RouteErrorBoundary route="/realito-ai"><RealitoAIPage /></RouteErrorBoundary>} />
-          <Route path="/archivo-sonoro" element={<RouteErrorBoundary route="/archivo-sonoro"><ArchivoSonoro /></RouteErrorBoundary>} />
+          <Route path="/podcast" element={<RouteErrorBoundary route="/podcast"><Podcast /></RouteErrorBoundary>} />
           <Route path="/comercios/checkout" element={<RouteErrorBoundary route="/comercios/checkout"><ComerciosCheckout /></RouteErrorBoundary>} />
           <Route path="/comercios/registro-v2" element={<RouteErrorBoundary route="/comercios/registro-v2"><ComerciosRegistroPage /></RouteErrorBoundary>} />
           <Route path="/evolucion" element={<RouteErrorBoundary route="/evolucion"><Evolucion /></RouteErrorBoundary>} />
@@ -529,7 +528,6 @@ const AppInner = () => {
                 <AnimatedRoutes />
                 <Suspense fallback={null}><BannerManager /></Suspense>
                 <Suspense fallback={<LoadingFallback />}><GlobalPlayerBar /></Suspense>
-                <Suspense fallback={null}><RadioPlayer compact className="fixed bottom-20 right-4 z-50 w-72 shadow-2xl" /></Suspense>
                 <Suspense fallback={<LoadingFallback />}><LiveTelemetryBadge /></Suspense>
                 <Suspense fallback={<LoadingFallback />}><SearchOverlay /></Suspense>
                 {/* CompassNav disabled — RDMNavbar now covers all navigation */}
