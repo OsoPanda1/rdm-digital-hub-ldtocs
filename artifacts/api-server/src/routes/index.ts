@@ -26,6 +26,9 @@ import { registerWikiEditorRoutes } from "./wiki-editor";
 import { registerYunRoutes } from "./yun";
 import { registerPodcastRoutes } from "./podcast";
 
+// ── Isabella Cognitive Kernel ──────────────────────────────────
+import { registerKernelRoutes } from "./isabella-kernel";
+
 const router = Router();
 
 // --------- RUTAS PÚBLICAS BASE ---------
@@ -74,5 +77,8 @@ registerYunRoutes(router);              // /api/yun/*
 
 // ── Podcast Routes ─────────────────────────────────────────────
 registerPodcastRoutes(router);          // /api/podcast/*
+
+// ── Isabella Cognitive Kernel Routes ───────────────────────────
+registerKernelRoutes(router);           // /api/kernel/*
 
 export default router;
