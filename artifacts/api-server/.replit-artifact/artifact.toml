@@ -1,13 +1,15 @@
 kind = "api"
 title = "RDM Heptafederation API Gateway"
-version = "3.0.0"
+version = "4.1.0"
 id = "3B4_FFSkEVBkAeYMFRJ2e"
 
 # El API Gateway del RDM Digital Hub expone las federaciones:
 # - Territorial (territory / twins / yun / unified)
-# - IA (Isabella core + guardian)
+# - IA (Isabella core + guardian + Cognitive Kernel 17 modulos)
 # - Gamificación y música
-# - Monetización (Stripe, Whop, B2B)
+# - YUN Constitutional Realm (PQC, governance, resilience)
+# - THE C.R.O.W.N. (10 skills + BookPI + failover)
+# - Podcast TAMV (Spotify integration)
 # - Telemetría y seguridad
 # Es el punto de entrada único para el frontend RDM Hub y para agentes externos.
 
