@@ -157,3 +157,6 @@ overrides:
   "@babel/core": ">=7.29.6"
   dompurify: ">=3.4.12"
   "@tanstack/start-server-core": ">=1.167.30"
+
+allowBuilds:
+  esbuild: set this to true or false

@@ -1,0 +1,7 @@
+version = "v2"
+
+[build]
+command = "pnpm install --frozen-lockfile"
+
+[deploy]
+command = "bash scripts/deploy-production.sh"
