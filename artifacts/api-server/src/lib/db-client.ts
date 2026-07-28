@@ -17,9 +17,13 @@ export function getDb() {
 
   const url = process.env.DATABASE_URL;
   if (!url) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error(
+        "DATABASE_URL must be set for Supabase persistence in production."
+      );
+    }
     throw new Error(
-      "DATABASE_URL must be set for Supabase persistence. " +
-      "Falling back to in-memory mode is not supported in production."
+      "DATABASE_URL not set. DB features unavailable in dev mode."
     );
   }
 

@@ -17,6 +17,31 @@ Sovereign Digital Infrastructure platform for Real del Monte: smart tourism, loc
 ## Custom Domain: visitarealdelmonte.online
 Production URL: `https://visitarealdelmonte.online`
 
+### Step-by-step Deployment (Replit Shell)
+
+```bash
+# 1. Fix merge conflict if present (from GitHub web editor)
+git fetch origin
+git reset --hard origin/main
+
+# 2. Set Replit Secrets (Settings → Secrets panel)
+#    Required: DATABASE_URL, SUPABASE_JWT_SECRET, MEXA_API_SECURE_KEY, YUN_SIGNING_SECRET
+#    Frontend: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY
+
+# 3. Install dependencies
+pnpm install
+
+# 4. Push schema to database (creates all 26 tables)
+pnpm --filter @workspace/db run push
+
+# 5. Build production
+pnpm run build
+
+# 6. Verify server starts
+pnpm --filter @workspace/api-server run start
+# Ctrl+C after verifying "listening" log
+```
+
 ### Replit Dashboard Setup
 1. Go to **Settings → Domains** in your Replit project
 2. Click **Custom Domain** → enter `visitarealdelmonte.online`
@@ -34,6 +59,9 @@ The following env vars are configured in `.replit` userenv and are used at runti
 - `VITE_API_BASE_URL` — `/api/v1` (relative, same origin)
 - `VITE_API_GATEWAY` — `/api` (relative, same origin)
 - `VITE_SITE_URL` — `https://visitarealdelmonte.online`
+
+### Automated Deployment
+Run `bash scripts/deploy-production.sh` for automated pre-flight checks, schema push, and build.
 
 ## Required Replit Secrets
 Add these in Replit Secrets panel. Server refuses to start without mandatory secrets.

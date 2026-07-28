@@ -9,7 +9,11 @@
     "start": "node --enable-source-maps ./dist/index.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "db:push": "drizzle-kit push --config ../../lib/db/drizzle.config.ts",
+    "db:push-force": "drizzle-kit push --force --config ../../lib/db/drizzle.config.ts",
+    "db:generate": "drizzle-kit generate --config ../../lib/db/drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config ../../lib/db/drizzle.config.ts"
   },
   "dependencies": {
     "@workspace/api-zod": "workspace:*",
