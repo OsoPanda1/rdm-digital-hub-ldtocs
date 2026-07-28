@@ -1,8 +1,12 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX, X } from "lucide-react";
 
-// Videos not yet available — use empty strings as placeholder
+// Videos not yet available â€” use empty strings as placeholder
 const heroVideo = "";
 const ctaVideo = "";
 const leyendaVideo = "";
@@ -26,26 +30,26 @@ interface Video {
 const videos: Video[] = [
   {
     id: "1",
-    title: "Real del Monte — Pueblo Mágico",
-    description: "Vuelo cinematográfico por las calles y paisajes del pueblo minero",
+    title: "Real del Monte â€” Pueblo MÃ¡gico",
+    description: "Vuelo cinematogrÃ¡fico por las calles y paisajes del pueblo minero",
     thumbnail: heroImg,
     videoSrc: heroVideo,
     duration: "2:30",
-    category: "Introducción"
+    category: "IntroducciÃ³n"
   },
   {
     id: "2",
-    title: "RDM Digital — Innovación Turística 2026",
-    description: "Presentación oficial de la plataforma digital de Real del Monte",
+    title: "RDM Digital â€” InnovaciÃ³n TurÃ­stica 2026",
+    description: "PresentaciÃ³n oficial de la plataforma digital de Real del Monte",
     thumbnail: callesImg,
     videoSrc: ctaVideo,
     duration: "1:15",
-    category: "Tecnología"
+    category: "TecnologÃ­a"
   },
   {
     id: "3",
     title: "Leyendas de la Mina",
-    description: "Relatos y misterios de los túneles que guardan 460 años de historia",
+    description: "Relatos y misterios de los tÃºneles que guardan 460 aÃ±os de historia",
     thumbnail: minaImg,
     videoSrc: leyendaVideo,
     duration: "4:20",
@@ -54,7 +58,7 @@ const videos: Video[] = [
   {
     id: "4",
     title: "Tour por la Mina de Acosta",
-    description: "Descenso a 460 metros bajo tierra con guía especializado",
+    description: "Descenso a 460 metros bajo tierra con guÃ­a especializado",
     thumbnail: minaImg,
     videoSrc: heroVideo,
     duration: "5:45",
@@ -62,8 +66,8 @@ const videos: Video[] = [
   },
   {
     id: "5",
-    title: "Panteón Inglés al Atardecer",
-    description: "El cementerio anglicano más alto del mundo bañado en luz dorada",
+    title: "PanteÃ³n InglÃ©s al Atardecer",
+    description: "El cementerio anglicano mÃ¡s alto del mundo baÃ±ado en luz dorada",
     thumbnail: panteonImg,
     videoSrc: heroVideo,
     duration: "3:15",
@@ -71,8 +75,8 @@ const videos: Video[] = [
   },
   {
     id: "6",
-    title: "Peñas Cargadas — Senderismo",
-    description: "Recorrido por las formaciones rocosas más impresionantes de la sierra",
+    title: "PeÃ±as Cargadas â€” Senderismo",
+    description: "Recorrido por las formaciones rocosas mÃ¡s impresionantes de la sierra",
     thumbnail: penasImg,
     videoSrc: heroVideo,
     duration: "4:00",
@@ -188,7 +192,7 @@ export const VideoPlayer = ({ video, onClose }: { video: Video; onClose: () => v
           <div className="h-full w-full flex items-center justify-center bg-black">
             <img src={video.thumbnail} alt={video.title} className="h-full w-full object-cover opacity-60" />
             <div className="absolute inset-0 flex items-center justify-center">
-              <p className="text-white/70 text-sm">Video próximamente disponible</p>
+              <p className="text-white/70 text-sm">Video prÃ³ximamente disponible</p>
             </div>
           </div>
         )}
@@ -261,13 +265,13 @@ export const VideoGallery = () => {
             className="mb-12 text-center"
           >
             <span className="mb-4 inline-block rounded-full glass px-4 py-1.5 text-xs font-medium text-amber-500">
-              🎬 Videos Reales
+              ðŸŽ¬ Videos Reales
             </span>
             <h2 className="mb-4 font-serif text-3xl font-bold text-foreground md:text-5xl">
-              Galería Audiovisual
+              GalerÃ­a Audiovisual
             </h2>
             <p className="mx-auto max-w-xl text-muted-foreground">
-              Videos reales filmados en Real del Monte — experimenta la magia del Pueblo Mágico
+              Videos reales filmados en Real del Monte â€” experimenta la magia del Pueblo MÃ¡gico
             </p>
           </motion.div>
 

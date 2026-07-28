@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { v4 as uuidv4 } from 'uuid';
 import { logger } from '@/lib/logger';
@@ -178,7 +182,7 @@ export class IsabellaConsciousnessPipeline {
       };
     }
 
-    // 5. ONTOLOGICAL LOCALIZATION (Grafo de Abstracción)
+    // 5. ONTOLOGICAL LOCALIZATION (Grafo de AbstracciÃ³n)
     if (this.config.enableOntology && inputText) {
       try {
         const targetFed = this.inferFederationFromInput(input);
@@ -195,10 +199,10 @@ export class IsabellaConsciousnessPipeline {
           path: result.path.map(n => n.nodeName),
         };
         if (result.node) {
-          logger.info('[PIPELINE] Ontología localizada', { node: result.node.nodeName, alignment: result.alignment.index, timeUp: result.timeUp.allowed });
+          logger.info('[PIPELINE] OntologÃ­a localizada', { node: result.node.nodeName, alignment: result.alignment.index, timeUp: result.timeUp.allowed });
         }
       } catch (error) {
-        logger.warn('[PIPELINE] Error en localización ontológica', { error });
+        logger.warn('[PIPELINE] Error en localizaciÃ³n ontolÃ³gica', { error });
       }
     }
 
@@ -471,7 +475,7 @@ export class IsabellaConsciousnessPipeline {
         const text = input.query.toLowerCase();
         if (text.includes('token') || text.includes('blockchain') || text.includes('crypto')) return 6;
         if (text.includes('mapa') || text.includes('lugar') || text.includes('coordenadas')) return 3;
-        if (text.includes('quien eres') || text.includes('que haces') || text.includes('propósito')) return 4;
+        if (text.includes('quien eres') || text.includes('que haces') || text.includes('propÃ³sito')) return 4;
         if (text.includes('error') || text.includes('fallo') || text.includes('no funciona')) return 7;
         if (text.includes('interfaz') || text.includes('diseno') || text.includes('ui')) return 5;
         return 1;

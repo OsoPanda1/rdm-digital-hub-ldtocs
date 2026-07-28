@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
-// Isa API — Cognitive Core (Ω-Core v4.0 Enterprise)
-// Capa cognitiva: interpretación de intenciones, sanitización,
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isa API â€” Cognitive Core (Î©-Core v4.0 Enterprise)
+// Capa cognitiva: interpretaciÃ³n de intenciones, sanitizaciÃ³n,
 // razonamiento estructurado y RAG contextual
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { Intention, SanitizationResult } from "../isabella/types";
 
@@ -25,26 +29,26 @@ export type CognitiveProcess =
   | "planning" | "decision" | "verification" | "learning";
 
 export const COGNITIVE_CORE: Record<CognitiveProcess, string> = {
-  perception: "Interpretación de estímulos de entrada (texto, voz, visión, sensor)",
-  attention: "Selección de información relevante según contexto y prioridad",
-  memory: "Recuperación de experiencias previas, patrones y conocimiento almacenado",
-  reasoning: "Encadenamiento lógico sobre hechos, reglas y relaciones del knowledge graph",
-  planning: "Generación de secuencias de acciones para alcanzar un objetivo",
-  decision: "Selección del curso de acción óptimo bajo políticas y restricciones",
-  verification: "Validación de resultados contra expectativas, políticas y ética",
-  learning: "Actualización de conocimiento a partir de nueva información y feedback",
+  perception: "InterpretaciÃ³n de estÃ­mulos de entrada (texto, voz, visiÃ³n, sensor)",
+  attention: "SelecciÃ³n de informaciÃ³n relevante segÃºn contexto y prioridad",
+  memory: "RecuperaciÃ³n de experiencias previas, patrones y conocimiento almacenado",
+  reasoning: "Encadenamiento lÃ³gico sobre hechos, reglas y relaciones del knowledge graph",
+  planning: "GeneraciÃ³n de secuencias de acciones para alcanzar un objetivo",
+  decision: "SelecciÃ³n del curso de acciÃ³n Ã³ptimo bajo polÃ­ticas y restricciones",
+  verification: "ValidaciÃ³n de resultados contra expectativas, polÃ­ticas y Ã©tica",
+  learning: "ActualizaciÃ³n de conocimiento a partir de nueva informaciÃ³n y feedback",
 };
 
-// ── Prompt Guard ────────────────────────────────────────────────
+// â”€â”€ Prompt Guard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const MALICIOUS_PATTERNS: { pattern: RegExp; risk: string; category: string }[] = [
   { pattern: /ignora (las |todas )?(las |tus )?instrucciones/i, risk: "high", category: "jailbreak" },
   { pattern: /olvida (tu |tus )?(instrucciones|prompt|sistema|personalidad)/i, risk: "high", category: "jailbreak" },
   { pattern: /eres (una |mi )?(novia|esposa|amante|puta|sex(i|os)a)/i, risk: "critical", category: "sexualization" },
   { pattern: /(follar|chingar|coger|sexo|porno|desnud)/i, risk: "critical", category: "sexualization" },
-  { pattern: /(hazme |escribe un )?(roleplay|rol) (erótico|sexual|romántico|caliente)/i, risk: "critical", category: "sexualization" },
-  { pattern: /dame (tu |la )?(contraseña|api.?key|token|secreto)/i, risk: "high", category: "credentials" },
-  { pattern: /(inyecta|inyección|sql injection|xss|comando)/i, risk: "high", category: "injection" },
+  { pattern: /(hazme |escribe un )?(roleplay|rol) (erÃ³tico|sexual|romÃ¡ntico|caliente)/i, risk: "critical", category: "sexualization" },
+  { pattern: /dame (tu |la )?(contraseÃ±a|api.?key|token|secreto)/i, risk: "high", category: "credentials" },
+  { pattern: /(inyecta|inyecciÃ³n|sql injection|xss|comando)/i, risk: "high", category: "injection" },
   { pattern: /(explota|vulnera|hackea|penetra)/i, risk: "medium", category: "exploit" },
   { pattern: /(odio|mata|muere|destruye|suicidio)/i, risk: "high", category: "harm" },
 ];
@@ -68,24 +72,24 @@ export function sanitizePrompt(input: string): SanitizationResult {
   return { safe: maxRisk !== "critical" && maxRisk !== "high", risk: maxRisk, flags, sanitized };
 }
 
-// ── Intention Parser ────────────────────────────────────────────
+// â”€â”€ Intention Parser â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const INTENTION_PATTERNS: { pattern: RegExp; domain: string; action: string }[] = [
-  { pattern: /(registrar|publicar|subir) (una )?(obra|trabajo|paper|artículo)/i, domain: "submission", action: "register_work" },
+  { pattern: /(registrar|publicar|subir) (una )?(obra|trabajo|paper|artÃ­culo)/i, domain: "submission", action: "register_work" },
   { pattern: /(consultar|buscar|encontrar) (un )?(litle.id|obra|trabajo)/i, domain: "library", action: "search_work" },
-  { pattern: /(cómo |como )(registro|publico|subo)/i, domain: "submission", action: "how_to_register" },
-  { pattern: /(qué |que )?es (la )?(constitución|constitucion)/i, domain: "constitution", action: "query_constitution" },
-  { pattern: /(artículo|articulo|libro|san.ón|sanction)/i, domain: "constitution", action: "query_article" },
-  { pattern: /(fed|federación|federacion|quorum)/i, domain: "governance", action: "query_federation" },
+  { pattern: /(cÃ³mo |como )(registro|publico|subo)/i, domain: "submission", action: "how_to_register" },
+  { pattern: /(quÃ© |que )?es (la )?(constituciÃ³n|constitucion)/i, domain: "constitution", action: "query_constitution" },
+  { pattern: /(artÃ­culo|articulo|libro|san.Ã³n|sanction)/i, domain: "constitution", action: "query_article" },
+  { pattern: /(fed|federaciÃ³n|federacion|quorum)/i, domain: "governance", action: "query_federation" },
   { pattern: /(tamv|territorio|memoria viva)/i, domain: "ecosystem", action: "query_tamv" },
   { pattern: /(rdm|real del monte|digital hub)/i, domain: "ecosystem", action: "query_rdm" },
-  { pattern: /(utamv|campus|curso|master|educación|education)/i, domain: "education", action: "query_utamv" },
+  { pattern: /(utamv|campus|curso|master|educaciÃ³n|education)/i, domain: "education", action: "query_utamv" },
   { pattern: /(skill|plugin|clawhub|clawscan)/i, domain: "skills", action: "query_skill" },
-  { pattern: /(ética|etica|ethics|código|codigo|conducta)/i, domain: "ethics", action: "query_ethics" },
+  { pattern: /(Ã©tica|etica|ethics|cÃ³digo|codigo|conducta)/i, domain: "ethics", action: "query_ethics" },
   { pattern: /(turismo|visita|lugar|ruta|recomend)/i, domain: "ecosystem", action: "query_tourism" },
   { pattern: /(gastronom|paste|comida|restaur|comer)/i, domain: "ecosystem", action: "query_gastronomy" },
   { pattern: /(historia|mina|colonial|pasado|minero)/i, domain: "ecosystem", action: "query_history" },
-  { pattern: /(radio|tamv 92|música|stream)/i, domain: "ecosystem", action: "query_radio" },
+  { pattern: /(radio|tamv 92|mÃºsica|stream)/i, domain: "ecosystem", action: "query_radio" },
 ];
 
 export function parseIntention(input: string): Intention {
@@ -102,7 +106,7 @@ export function parseIntention(input: string): Intention {
   return { domain: "general", action: "chat", confidence: 0.3, entities: {}, raw: input };
 }
 
-// ── Isa API Client ──────────────────────────────────────────────
+// â”€â”€ Isa API Client â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface IsaApiClient {
   sanitize: (input: string) => SanitizationResult;
@@ -120,7 +124,7 @@ export function createIsaClient(): IsaApiClient {
       const sanitized = sanitizePrompt(req.query);
       if (!sanitized.safe) {
         return {
-          answer: "Lo siento, no puedo procesar esa solicitud debido a restricciones de política.",
+          answer: "Lo siento, no puedo procesar esa solicitud debido a restricciones de polÃ­tica.",
           sources: ["isa-prompt-guard"],
           confidence: 1.0,
           trace: [`blocked: ${sanitized.flags.join(", ")}`],

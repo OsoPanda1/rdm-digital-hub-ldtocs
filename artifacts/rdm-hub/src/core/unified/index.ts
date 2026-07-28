@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 export { UnifiedEventBus, unifiedEventBus } from './UnifiedEventBus';
 export { UnifiedSupervisor, unifiedSupervisor } from './UnifiedSupervisor';
 export { UnifiedPersistence, unifiedPersistence } from './UnifiedPersistence';

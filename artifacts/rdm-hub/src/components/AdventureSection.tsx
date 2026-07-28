@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Compass, TreePine, Wind, Eye } from "lucide-react";
@@ -11,18 +15,18 @@ const TRAILS = [
     difficulty: "Moderado",
     distance: "4.2 km",
     time: "2.5 hrs",
-    desc: "Recorre las antiguas minas con guías locales expertos.",
+    desc: "Recorre las antiguas minas con guÃ­as locales expertos.",
   },
   {
-    name: "Peña del Cuervo",
+    name: "PeÃ±a del Cuervo",
     difficulty: "Avanzado",
     distance: "6.8 km",
     time: "4 hrs",
-    desc: "Mirador espectacular con vistas de 360° de la sierra.",
+    desc: "Mirador espectacular con vistas de 360Â° de la sierra.",
   },
   {
     name: "Bosque de Oyamel",
-    difficulty: "Fácil",
+    difficulty: "FÃ¡cil",
     distance: "2.1 km",
     time: "1 hr",
     desc: "Caminata relajante entre bosques de niebla ancestrales.",
@@ -56,7 +60,7 @@ export function AdventureSection() {
             viewport={{ once: true }}
           >
             <p className="text-sm tracking-[0.3em] uppercase text-accent font-body mb-4">
-              🏔️ Aventura
+              ðŸ”ï¸ Aventura
             </p>
             <h2 className="text-4xl md:text-7xl font-display font-bold leading-[0.9]">
               La sierra te
@@ -87,7 +91,7 @@ export function AdventureSection() {
               transition={{ delay: 0.1 }}
               className="rounded-2xl overflow-hidden h-[240px]"
             >
-              <img src={mistyMountains} alt="Montañas" loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              <img src={mistyMountains} alt="MontaÃ±as" loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
             </motion.div>
           </div>
 
@@ -99,9 +103,9 @@ export function AdventureSection() {
               mientras descubres senderos que conectan con siglos de historia.
             </p>
             <p className="text-foreground/70 font-body text-base leading-relaxed mb-10">
-              Esta vertical combina aventura ligera, interpretación ambiental y paradas narrativas:
-              miradores para fotografía romántica, rutas con memoria minera y travesías de baja
-              complejidad pensadas para visitantes que quieren emoción sin perder seguridad.
+              Esta vertical combina aventura ligera, interpretaciÃ³n ambiental y paradas narrativas:
+              miradores para fotografÃ­a romÃ¡ntica, rutas con memoria minera y travesÃ­as de baja
+              complejidad pensadas para visitantes que quieren emociÃ³n sin perder seguridad.
             </p>
 
             <div className="space-y-4">

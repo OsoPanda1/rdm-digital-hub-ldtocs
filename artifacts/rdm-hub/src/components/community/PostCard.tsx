@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Heart, MessageCircle, MapPin } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 
 import React, { ReactNode } from "react";
 import { cn } from "@/lib/utils";

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
@@ -5,12 +9,12 @@ import { Compass, Search, Mountain, Network, Scale } from "lucide-react";
 import { openSearchOverlay } from "@/features/search/tourismIndex";
 
 /**
- * CompassNav — Navegación tripartita flotante (Territorio · Ecosistema · Gobernanza).
- * NO reemplaza la RDMNavbar; complementa la experiencia con una brújula soberana
- * inferior que organiza las rutas existentes en 3 cuadrantes semánticos.
+ * CompassNav â€” NavegaciÃ³n tripartita flotante (Territorio Â· Ecosistema Â· Gobernanza).
+ * NO reemplaza la RDMNavbar; complementa la experiencia con una brÃºjula soberana
+ * inferior que organiza las rutas existentes en 3 cuadrantes semÃ¡nticos.
  *
- * Cada cuadrante despliega un panel glassmórfico con links a rutas ya registradas
- * en App.tsx — no se rompe ningún path.
+ * Cada cuadrante despliega un panel glassmÃ³rfico con links a rutas ya registradas
+ * en App.tsx â€” no se rompe ningÃºn path.
  */
 
 type QuadrantKey = "territorio" | "ecosistema" | "gobernanza";
@@ -37,7 +41,7 @@ const QUADRANTS: Quadrant[] = [
     tone: "hsl(var(--gold))",
     links: [
       { to: "/mapa", label: "Mapa vivo", hint: "POIs y rutas reales" },
-      { to: "/rutas", label: "Rutas turísticas" },
+      { to: "/rutas", label: "Rutas turÃ­sticas" },
       { to: "/historia", label: "Historia y minas" },
       { to: "/ecoturismo", label: "Naturaleza" },
       { to: "/patrimonio-cultural", label: "Patrimonio" },
@@ -51,7 +55,7 @@ const QUADRANTS: Quadrant[] = [
     tone: "hsl(var(--electric))",
     links: [
       { to: "/directorio", label: "Directorio de comercios" },
-      { to: "/gastronomia", label: "Gastronomía / Pastes" },
+      { to: "/gastronomia", label: "GastronomÃ­a / Pastes" },
       { to: "/comunidad", label: "Comunidad" },
       { to: "/eventos", label: "Eventos" },
       { to: "/relatos", label: "Leyendas" },
@@ -67,7 +71,7 @@ const QUADRANTS: Quadrant[] = [
       { to: "/leaderboard", label: "Tabla de honor" },
       { to: "/perfil", label: "Mi perfil" },
       { to: "/gobernanza", label: "Gobernanza federada" },
-      { to: "/arquitectura", label: "Arquitectura técnica" },
+      { to: "/arquitectura", label: "Arquitectura tÃ©cnica" },
       { to: "/apoya", label: "Apoya el proyecto" },
     ],
   },
@@ -128,13 +132,13 @@ export default function CompassNav() {
         )}
       </AnimatePresence>
 
-      {/* Brújula tripartita */}
+      {/* BrÃºjula tripartita */}
       <motion.nav
         initial={{ y: 60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
         className="pointer-events-auto flex items-stretch rounded-full glass-card border border-[hsl(var(--gold)/0.25)] shadow-premium overflow-hidden"
-        aria-label="Brújula de navegación"
+        aria-label="BrÃºjula de navegaciÃ³n"
       >
         {QUADRANTS.map((q, i) => {
           const Icon = q.icon;
@@ -165,23 +169,23 @@ export default function CompassNav() {
           );
         })}
 
-        {/* Centro: búsqueda */}
+        {/* Centro: bÃºsqueda */}
         <button
           onClick={() => openSearchOverlay()}
-          aria-label="Abrir búsqueda turística"
+          aria-label="Abrir bÃºsqueda turÃ­stica"
           className="relative flex items-center justify-center px-4 border-l border-[hsl(var(--border))] hover:bg-[hsl(var(--electric)/0.08)] transition-colors"
         >
           <span className="absolute inset-2 rounded-full magic-pulse" aria-hidden />
           <Search className="h-4 w-4 relative text-[hsl(var(--electric))]" />
           <span className="ml-2 hidden sm:inline text-[10px] uppercase tracking-widest text-[hsl(var(--muted-foreground))]">
-            ⌘K
+            âŒ˜K
           </span>
         </button>
       </motion.nav>
 
       <div className="pointer-events-none mt-1 flex items-center justify-center gap-1 text-[9px] uppercase tracking-[0.3em] text-[hsl(var(--muted-foreground))]">
         <Compass className="h-3 w-3" />
-        Brújula soberana RDM
+        BrÃºjula soberana RDM
       </div>
     </div>
   );

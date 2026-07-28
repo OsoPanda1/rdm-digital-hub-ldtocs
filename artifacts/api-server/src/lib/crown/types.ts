@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
-// THE C.R.O.W.N — Core Types & Contracts (TAMV-K5)
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// THE C.R.O.W.N â€” Core Types & Contracts (TAMV-K5)
 // Constitutional Realm of Omniscient Wise Nexus
 // Todos los contratos de entrada/salida del sistema
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type FederationId = "FED-1" | "FED-2" | "FED-3" | "FED-4" | "FED-5" | "FED-6" | "FED-7";
 
@@ -21,7 +25,7 @@ export type SkillStatus = "registered" | "active" | "error" | "deprecated";
 
 export type TraceSeverity = "info" | "warn" | "error" | "critical";
 
-// ── Capability Gateway Contracts ────────────────────────────────
+// â”€â”€ Capability Gateway Contracts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface CapabilityRequest<T = unknown> {
   capability: string;
@@ -51,7 +55,7 @@ export interface BookPiAnchor {
   federationId: FederationId;
 }
 
-// ── TAMV-K5 Error Contract ─────────────────────────────────────
+// â”€â”€ TAMV-K5 Error Contract â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface TAMVKernelErrorData {
   code: string;
@@ -61,7 +65,7 @@ export interface TAMVKernelErrorData {
   trace: string[];
 }
 
-// ── Telemetry Contracts ────────────────────────────────────────
+// â”€â”€ Telemetry Contracts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface TelemetryRecord {
   traceId: string;
@@ -85,7 +89,7 @@ export interface TelemetryStats {
   byZone: Record<string, number>;
 }
 
-// ── Provider Failover Contracts ────────────────────────────────
+// â”€â”€ Provider Failover Contracts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type ProviderId = "anthropic" | "openai" | "deepseek" | "local";
 
@@ -105,7 +109,7 @@ export interface ProviderResponse<T = unknown> {
   latencyMs: number;
 }
 
-// ── Skill Registry Contracts ────────────────────────────────────
+// â”€â”€ Skill Registry Contracts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface SkillDefinition {
   skillId: SkillId;
@@ -127,7 +131,7 @@ export interface SkillInstance {
   errorCount: number;
 }
 
-// ── Memory Fabric Contracts ─────────────────────────────────────
+// â”€â”€ Memory Fabric Contracts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface MemoryStoreRequest {
   type: "experience" | "embedding" | "relation" | "decision" | "lesson";
@@ -146,7 +150,7 @@ export interface MemoryRecallRequest {
   minConfidence: number;
 }
 
-// ── Execution Fabric Contracts ──────────────────────────────────
+// â”€â”€ Execution Fabric Contracts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type TaskStatus = "pending" | "running" | "completed" | "failed" | "rolled_back";
 
@@ -167,7 +171,7 @@ export interface TaskResult {
   completedAt: string | null;
 }
 
-// ── Knowledge Fabric Contracts ──────────────────────────────────
+// â”€â”€ Knowledge Fabric Contracts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface KnowledgeIngestRequest {
   source: string;
@@ -191,7 +195,7 @@ export interface TruthVerification {
   verified: boolean;
 }
 
-// ── Multi-Agent Contracts ───────────────────────────────────────
+// â”€â”€ Multi-Agent Contracts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type AgentRole =
   | "architect" | "security" | "economic" | "ethical"
@@ -212,7 +216,7 @@ export interface ConsensusResult {
   dissent: string[];
 }
 
-// ── Digital Twin Contracts ──────────────────────────────────────
+// â”€â”€ Digital Twin Contracts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface TwinModel {
   modelId: string;
@@ -231,7 +235,7 @@ export interface TwinComponent {
   metrics: Record<string, number>;
 }
 
-// ── Strategic Intelligence Contracts ────────────────────────────
+// â”€â”€ Strategic Intelligence Contracts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface StrategicObjective {
   id: string;

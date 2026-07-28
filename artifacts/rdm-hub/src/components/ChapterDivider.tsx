@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
@@ -25,7 +29,7 @@ const ChapterDivider = ({ quote, author }: ChapterDividerProps) => {
         </blockquote>
         {author && (
           <cite className="block font-body text-[10px] tracking-[0.3em] uppercase text-gold/50 mt-6 not-italic">
-            — {author}
+            â€” {author}
           </cite>
         )}
         <div className="separator-gradient mt-12 opacity-40" />

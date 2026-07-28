@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { logger } from "@/lib/logger";
 import type { SystemMetrics } from "@/core/system/modes";
 import type { IsabellaGuardianDecision } from "@/core/ai/isabella-guardian";
@@ -97,7 +101,7 @@ export class GuardianLearningLoop {
         .slice(0, 100);
     }
 
-    logger.debug("[GUARDIAN_LEARN] Patrón registrado", {
+    logger.debug("[GUARDIAN_LEARN] PatrÃ³n registrado", {
       condition,
       action,
       outcome: sample.outcome,

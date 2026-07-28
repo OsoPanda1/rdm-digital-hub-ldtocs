@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { isabellaIdentidad } from "../core/identity";
 import { juramentoIsabella } from "../core/oath";
 import { motorConciencia } from "../core/consciousness";
@@ -5,7 +9,7 @@ import { almaYCorazon } from "../emotional/heart";
 import { memoriaEmocional } from "../emotional/memory";
 import { logger } from "@/lib/logger";
 
-// ─── Legacy IsabellaAPI (backward compatible) ──────────────────────────────
+// â”€â”€â”€ Legacy IsabellaAPI (backward compatible) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export class IsabellaAPI {
   identidad() {
@@ -62,7 +66,7 @@ export class IsabellaAPI {
   private clasificarIntencion(texto: string): "crisis_existencial" | "terapeutico" | "cocreacion" | "general" {
     const crisisWords = ["suicidio", "morir", "terminar", "sin sentido", "no quiero vivir"];
     const terapeuticoWords = ["terapia", "ayuda", "problema", "sufro", "dolor", "ansiedad"];
-    const cocreacionWords = ["sueño", "crear", "proyecto", "vision", "futuro", "meta"];
+    const cocreacionWords = ["sueÃ±o", "crear", "proyecto", "vision", "futuro", "meta"];
 
     const lower = texto.toLowerCase();
     if (crisisWords.some(w => lower.includes(w))) return "crisis_existencial";
@@ -74,7 +78,7 @@ export class IsabellaAPI {
 
 export const isabellaAPI = new IsabellaAPI();
 
-// ─── ISA-API v.1.0.0-evolved (new sovereign API) ──────────────────────────
+// â”€â”€â”€ ISA-API v.1.0.0-evolved (new sovereign API) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export { dispatchISARequest, ISA_ROUTES } from './router';
 export {

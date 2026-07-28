@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * YUN Federation Coordinators — Domain Ownership & Health
+ * YUN Federation Coordinators â€” Domain Ownership & Health
  * Per YUN Constitution Principle #3 (Federate Don't Subjugate)
  * and Principle #5 (Edge-First with Cloud Fallback)
  *

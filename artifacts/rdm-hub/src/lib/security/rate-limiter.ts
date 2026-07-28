@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 interface Bucket {
   tokens: number;
   lastRefill: number;
@@ -46,7 +50,7 @@ export function createRateLimitMiddleware(config?: Partial<RateLimitConfig>) {
   return (key: string): Response | null => {
     const result = checkRateLimit(key, config);
     if (!result.allowed) {
-      return new Response(JSON.stringify({ success: false, error: 'Demasiadas solicitudes. Intenta de nuevo más tarde.' }), {
+      return new Response(JSON.stringify({ success: false, error: 'Demasiadas solicitudes. Intenta de nuevo mÃ¡s tarde.' }), {
         status: 429,
         headers: {
           'Content-Type': 'application/json',

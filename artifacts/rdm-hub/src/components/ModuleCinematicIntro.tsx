@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
@@ -35,7 +39,7 @@ export function ModuleCinematicIntro({
     >
       <img
         src={cinematicBackdrop}
-        alt="Fondo cinematográfico de Real del Monte"
+        alt="Fondo cinematogrÃ¡fico de Real del Monte"
         className="absolute inset-0 h-full w-full object-cover"
         loading="eager"
         onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
@@ -95,7 +99,7 @@ export function ModuleCinematicIntro({
             className="mt-8 inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/35 px-4 py-2 text-xs text-muted-foreground"
           >
             <Sparkles className="h-3 w-3 text-accent" />
-            MODO CINEMÁTICO ACTIVO
+            MODO CINEMÃTICO ACTIVO
           </motion.div>
         </div>
       </div>

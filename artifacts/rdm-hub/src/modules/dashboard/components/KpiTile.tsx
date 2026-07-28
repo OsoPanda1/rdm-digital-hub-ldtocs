@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { TrendingUp, TrendingDown } from "lucide-react";
 
@@ -16,7 +20,7 @@ const accentMap = {
   electric: "from-electric/20 to-electric/5 border-electric/30 text-electric",
 } as const;
 
-export function KpiTile({ label, value, delta, icon = "📊", accent = "gold" }: KpiTileProps) {
+export function KpiTile({ label, value, delta, icon = "ðŸ“Š", accent = "gold" }: KpiTileProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -7,9 +11,9 @@ import Logo from "@/components/Logo";
 import SocialLinks from "@/modules/constelacionInteractiva/SocialLinks";
 
 /**
- * Constelación Interactiva: Sistema de Navegación - Menú Interactivo
+ * ConstelaciÃ³n Interactiva: Sistema de NavegaciÃ³n - MenÃº Interactivo
  * 
- * Proporciona un sistema de navegación visualmente atractivo y fácil de usar
+ * Proporciona un sistema de navegaciÃ³n visualmente atractivo y fÃ¡cil de usar
  * para explorar la plataforma TAMV Online Network.
  */
 const Navigation = () => {
@@ -41,7 +45,7 @@ const Navigation = () => {
                 to="/documentacion" 
                 className="text-sm text-muted-foreground hover:text-blue-300 transition-colors relative group px-2"
               >
-                Documentación
+                DocumentaciÃ³n
                 <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-400/40 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
               </Link>
             </li>
@@ -50,7 +54,7 @@ const Navigation = () => {
                 to="/membresias" 
                 className="text-sm text-muted-foreground hover:text-blue-300 transition-colors relative group px-2"
               >
-                Membresía
+                MembresÃ­a
                 <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-400/40 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
               </Link>
             </li>

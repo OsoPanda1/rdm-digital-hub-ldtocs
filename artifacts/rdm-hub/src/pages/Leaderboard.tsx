@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -38,7 +42,7 @@ export default function Leaderboard() {
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-8 text-center">
             <Trophy className="h-12 w-12 mx-auto text-[hsl(var(--rdm-amber))] mb-3" />
             <h1 className="text-4xl font-bold">Tabla de Honor</h1>
-            <p className="text-muted-foreground mt-2">Los exploradores más activos de Real del Monte</p>
+            <p className="text-muted-foreground mt-2">Los exploradores mÃ¡s activos de Real del Monte</p>
           </motion.div>
 
           <Card>
@@ -47,7 +51,7 @@ export default function Leaderboard() {
               {loading ? (
                 <p className="p-6 text-center text-muted-foreground">Cargando...</p>
               ) : rows.length === 0 ? (
-                <p className="p-6 text-center text-muted-foreground">Aún nadie en el ranking. ¡Sé el primero!</p>
+                <p className="p-6 text-center text-muted-foreground">AÃºn nadie en el ranking. Â¡SÃ© el primero!</p>
               ) : (
                 <ul className="divide-y divide-border">
                   {rows.map((r, i) => (
@@ -61,7 +65,7 @@ export default function Leaderboard() {
                       </Avatar>
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold truncate">{r.display_name}</p>
-                        <p className="text-xs text-muted-foreground truncate">{r.location ?? "Pueblo Mágico"} · Nivel {r.level}</p>
+                        <p className="text-xs text-muted-foreground truncate">{r.location ?? "Pueblo MÃ¡gico"} Â· Nivel {r.level}</p>
                       </div>
                       <div className="text-right">
                         <p className="font-bold text-[hsl(var(--rdm-amber))]">{r.total_points}</p>

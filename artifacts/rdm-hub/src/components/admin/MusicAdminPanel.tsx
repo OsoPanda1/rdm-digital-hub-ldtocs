@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { Upload, Music as MusicIcon, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -73,7 +77,7 @@ export function MusicAdminPanel() {
 
   const handleUpload = useCallback(async () => {
     if (!file || !title.trim()) {
-      toast.error("Título y archivo requeridos");
+      toast.error("TÃ­tulo y archivo requeridos");
       return;
     }
 
@@ -164,7 +168,7 @@ export function MusicAdminPanel() {
   );
 
   const remove = useCallback(async (track: Track) => {
-    const confirmed = window.confirm(`¿Eliminar "${track.title}"?`);
+    const confirmed = window.confirm(`Â¿Eliminar "${track.title}"?`);
     if (!confirmed) return;
 
     try {
@@ -197,8 +201,8 @@ export function MusicAdminPanel() {
             Playlist administrable
           </h3>
           <p className="text-[11px] text-muted-foreground">
-            Sube música original. Toda pista activa será escuchada por los
-            usuarios con un botón de donación visible (mín. 25 MXN).
+            Sube mÃºsica original. Toda pista activa serÃ¡ escuchada por los
+            usuarios con un botÃ³n de donaciÃ³n visible (mÃ­n. 25 MXN).
           </p>
         </div>
       </header>
@@ -207,7 +211,7 @@ export function MusicAdminPanel() {
         <input
           value={title}
           onChange={(event) => setTitle(event.target.value)}
-          placeholder="Título de la pista"
+          placeholder="TÃ­tulo de la pista"
           className="rounded-xl border border-border/30 bg-background/60 px-3 py-2 text-sm outline-none focus:border-gold/60"
         />
         <input
@@ -227,7 +231,7 @@ export function MusicAdminPanel() {
 
       <div className="flex items-center justify-between gap-3">
         <span className="text-[11px] text-muted-foreground">
-          {file ? `Archivo seleccionado: ${file.name}` : "Ningún archivo seleccionado"}
+          {file ? `Archivo seleccionado: ${file.name}` : "NingÃºn archivo seleccionado"}
         </span>
         <button
           onClick={handleUpload}
@@ -247,11 +251,11 @@ export function MusicAdminPanel() {
         {loadingList ? (
           <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
             <Loader2 className="h-3 w-3 animate-spin" />
-            Cargando playlist…
+            Cargando playlistâ€¦
           </div>
         ) : tracks.length === 0 ? (
           <p className="text-[11px] text-muted-foreground">
-            Aún no hay pistas publicadas.
+            AÃºn no hay pistas publicadas.
           </p>
         ) : (
           <ul className="mt-2 divide-y divide-border/20">
@@ -265,10 +269,10 @@ export function MusicAdminPanel() {
                     {track.title}
                   </p>
                   <p className="truncate font-mono text-[10px] text-muted-foreground">
-                    {track.artist} ·{" "}
+                    {track.artist} Â·{" "}
                     {track.audio_url ? "audio disponible" : "sin audio"}
                     {track.duration_seconds
-                      ? ` · ${track.duration_seconds}s`
+                      ? ` Â· ${track.duration_seconds}s`
                       : null}
                   </p>
                 </div>

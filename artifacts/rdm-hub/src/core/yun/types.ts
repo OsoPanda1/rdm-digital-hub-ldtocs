@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * YUN Architecture — Core Types
+ * YUN Architecture â€” Core Types
  * Real del Monte Digital Hub
  *
  * Immutable types for the YUN governance model.
@@ -17,7 +21,7 @@ export const YUN_DOMAINS = ['identity', 'commerce', 'knowledge', 'telemetry', 'g
 export type YunDomain = (typeof YUN_DOMAINS)[number];
 
 // ============================================================================
-// YUN FEDERATIONS (7 organizational units) — Canonical Fed1-Fed7
+// YUN FEDERATIONS (7 organizational units) â€” Canonical Fed1-Fed7
 // ============================================================================
 
 export const YUN_FEDERATIONS = [
@@ -36,7 +40,7 @@ export type YunFederation = (typeof YUN_FEDERATIONS)[number];
 // ============================================================================
 
 export const FEDERATION_ALIASES: Record<string, YunFederation> = {
-  // TAMV GEN-7 names → Fed standard
+  // TAMV GEN-7 names â†’ Fed standard
   'DEKATEOTL': 'fed1_commerce_local',
   'ANUBIS': 'fed2_tourism_culture',
   'BOOKPI_DATAGIT': 'fed3_academia_science',
@@ -44,7 +48,7 @@ export const FEDERATION_ALIASES: Record<string, YunFederation> = {
   'MDD_TAMV': 'fed5_tech_infra',
   'KAOS_HYPERRENDER': 'fed6_community_orgs',
   'CHRONOS': 'fed7_metaverse_xr',
-  // Spanish names → Fed standard
+  // Spanish names â†’ Fed standard
   'comercio': 'fed1_commerce_local',
   'turismo_cultura': 'fed2_tourism_culture',
   'academia': 'fed3_academia_science',
@@ -73,7 +77,7 @@ export const STORAGE_ENGINES = ['supabase', 'neon', 'turso', 'd1', 'redis'] as c
 export type StorageEngine = (typeof STORAGE_ENGINES)[number];
 
 // ============================================================================
-// DOMAIN → STORAGE MAPPING
+// DOMAIN â†’ STORAGE MAPPING
 // ============================================================================
 
 export const DOMAIN_STORAGE: Record<YunDomain, StorageEngine> = {
@@ -85,7 +89,7 @@ export const DOMAIN_STORAGE: Record<YunDomain, StorageEngine> = {
 } as const;
 
 // ============================================================================
-// FEDERATION → DOMAIN OWNERSHIP (aligned with Fed1-Fed7)
+// FEDERATION â†’ DOMAIN OWNERSHIP (aligned with Fed1-Fed7)
 // ============================================================================
 
 export const FEDERATION_DOMAINS: Record<YunFederation, YunDomain[]> = {
@@ -140,13 +144,13 @@ export interface YunEventPayload {
 }
 
 /**
- * Canonical YUN Event — the nervous system standard.
+ * Canonical YUN Event â€” the nervous system standard.
  * All domain events, federation events, and system events MUST conform to this shape.
  */
 export interface YunEvent {
   event_type: string;          // e.g., "commerce.payment.initiated"
   domain: YunDomain;           // identity, commerce, knowledge, telemetry, gameplay
-  federation_id: YunFederation | null; // Fed1–Fed7 or null for cross-cutting
+  federation_id: YunFederation | null; // Fed1â€“Fed7 or null for cross-cutting
   entity_id: string;           // Logical ID of affected entity
   trace_id: string;            // Cross-service traceability
   timestamp: string;           // ISO 8601 with ms precision
@@ -328,7 +332,7 @@ export interface YunGovernanceConfig {
 }
 
 // ============================================================================
-// YUN BINDING (module → domain/federation/events)
+// YUN BINDING (module â†’ domain/federation/events)
 // ============================================================================
 
 export interface YunBinding {

@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { logger } from "@/lib/logger";
 /**
- * UI Telemetry — structured error & event logging for RDM Digital Hub.
+ * UI Telemetry â€” structured error & event logging for RDM Digital Hub.
  *
  * Lightweight wrapper that:
  * - Writes structured JSON to console in development.

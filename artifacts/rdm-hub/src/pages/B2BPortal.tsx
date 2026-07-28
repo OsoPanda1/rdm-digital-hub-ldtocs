@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Store, Check, ArrowRight, Crown, Building2, Sparkles } from "lucide-react";
 import { b2bPlans } from "@/data/mockData";
@@ -14,12 +18,12 @@ const item = {
 };
 
 const sectorBenefits: Record<string, string[]> = {
-  "Hoteles": ["Reservas directas sin OTA", "Analítica de visitantes", "Dashboard de estancias"],
+  "Hoteles": ["Reservas directas sin OTA", "AnalÃ­tica de visitantes", "Dashboard de estancias"],
   "Bares": ["Happy Hour Digital geolocalizado", "Alertas de eventos en tiempo real"],
-  "Pasterías/Platerías": ["Nodo de Energía para jugadores", "Métricas de conversión territorial"],
-  "Artesanías": ["Catálogo digital premium", "WhatsApp Business integrado"],
-  "Tiendas": ["Digitalización micro-negocio", "Analytics de ticket promedio"],
-  "Góndolas/Semifijos": ["Geolocalización en mapa turístico", "Ubicación dinámica en tiempo real"],
+  "PasterÃ­as/PlaterÃ­as": ["Nodo de EnergÃ­a para jugadores", "MÃ©tricas de conversiÃ³n territorial"],
+  "ArtesanÃ­as": ["CatÃ¡logo digital premium", "WhatsApp Business integrado"],
+  "Tiendas": ["DigitalizaciÃ³n micro-negocio", "Analytics de ticket promedio"],
+  "GÃ³ndolas/Semifijos": ["GeolocalizaciÃ³n en mapa turÃ­stico", "UbicaciÃ³n dinÃ¡mica en tiempo real"],
 };
 
 export default function B2BPortal() {
@@ -27,11 +31,11 @@ export default function B2BPortal() {
     <div className="space-y-8 max-w-[1400px]">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground mb-2">
-          Economía Local
+          EconomÃ­a Local
         </p>
-        <h1 className="text-4xl font-display font-bold tracking-tight">Federación Comercial B2B</h1>
+        <h1 className="text-4xl font-display font-bold tracking-tight">FederaciÃ³n Comercial B2B</h1>
         <p className="text-sm font-body text-muted-foreground mt-1">
-          Planes de suscripción sectorial para comercios de Real del Monte
+          Planes de suscripciÃ³n sectorial para comercios de Real del Monte
         </p>
       </motion.div>
 
@@ -107,8 +111,8 @@ export default function B2BPortal() {
             <h3 className="text-2xl font-display font-bold text-teal">Gobernanza DAO RDM</h3>
             <p className="mt-2 text-sm font-body text-muted-foreground leading-relaxed max-w-2xl">
               Las cuotas, beneficios y reglas comerciales son ajustadas por la DAO de Real del Monte,
-              sin modificar la arquitectura base TAMV. Los ingresos se liquidan y reportan en dashboards específicos de RDM,
-              garantizando soberanía económica total del territorio.
+              sin modificar la arquitectura base TAMV. Los ingresos se liquidan y reportan en dashboards especÃ­ficos de RDM,
+              garantizando soberanÃ­a econÃ³mica total del territorio.
             </p>
           </div>
         </div>

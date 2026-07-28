@@ -1,7 +1,11 @@
-// ────────────────────────────────────────────────────────────────
-// Isabella Genesis — Reasoner
-// Pipeline: context → knowledge → tools → firewall → BookPI → decision
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isabella Genesis â€” Reasoner
+// Pipeline: context â†’ knowledge â†’ tools â†’ firewall â†’ BookPI â†’ decision
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { DecisionRecord } from "../types/decision-record";
 import { createContextEngine } from "./context-engine";
@@ -122,7 +126,7 @@ export function createReasoner(): Reasoner {
 
     explain(record) {
       return {
-        summary: `Decisión ${record.decisionId}: acción=${record.decision.action}, confianza=${record.decision.confidence}`,
+        summary: `DecisiÃ³n ${record.decisionId}: acciÃ³n=${record.decision.action}, confianza=${record.decision.confidence}`,
         technicalTrace: record.plan.map((step) => ({
           stepId: step.stepId,
           tool: step.tool,

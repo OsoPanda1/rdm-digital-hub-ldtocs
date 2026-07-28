@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { useState, useMemo } from "react";
 import BusinessCard from "@/components/BusinessCard";
@@ -22,8 +26,8 @@ const businesses = [
   { name: "Tours Mineros RDM", category: "Tours", description: "Recorridos guiados por las minas historicas con expertos en historia local.", image: minaImg, isPremium: false, rating: 4.5 },
   { name: "Cafe La Neblina", category: "Restaurante", description: "Cafe artesanal de altura con los mejores postres y vista al bosque.", image: rdm1, isPremium: false, rating: 4.4 },
   { name: "Artesanias del Monte", category: "Souvenir", description: "Artesanias locales, textiles y recuerdos autenticos hechos a mano.", image: artesaniasImg, isPremium: true, rating: 4.6, phone: "771 345 6789" },
-  { name: "Platerías Artesanales", category: "Souvenir", description: "Joyería artesanal en plata, herencia minera de Real del Monte.", image: plateriasImg, isPremium: false, rating: 4.3 },
-  { name: "Servicios Turísticos", category: "Tours", description: "Información turística, sanitarios y puntos de asistencia al visitante.", image: sanitariosImg, isPremium: false, rating: 4.2 },
+  { name: "PlaterÃ­as Artesanales", category: "Souvenir", description: "JoyerÃ­a artesanal en plata, herencia minera de Real del Monte.", image: plateriasImg, isPremium: false, rating: 4.3 },
+  { name: "Servicios TurÃ­sticos", category: "Tours", description: "InformaciÃ³n turÃ­stica, sanitarios y puntos de asistencia al visitante.", image: sanitariosImg, isPremium: false, rating: 4.2 },
   { name: "Restaurant Los Murmullos", category: "Restaurante", description: "Comida tradicional hidalguense con ingredientes locales frescos.", image: rdm2, isPremium: true, rating: 4.5 },
 ];
 

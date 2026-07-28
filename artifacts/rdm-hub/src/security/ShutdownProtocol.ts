@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { logger } from "@/lib/logger";
 import { mdx5 } from "@/kernel/index";
 import { knowledgeEngine } from "@/isabella/knowledge/KnowledgeAbsorptionEngine";

@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // artifacts/api-server/src/routes/isabella.ts
-// Isabella AI — Ω-Core v4.0 Enterprise Backend API Routes
-// Integración: SOUL · Isa API · Mexa API · Memory · Skills · Evaluation · Fairness · XRAI
+// Isabella AI â€” Î©-Core v4.0 Enterprise Backend API Routes
+// IntegraciÃ³n: SOUL Â· Isa API Â· Mexa API Â· Memory Â· Skills Â· Evaluation Â· Fairness Â· XRAI
 // Endpoints: /api/isabella/*
 
 import type { Router, Request, Response, NextFunction } from "express";
@@ -19,9 +23,9 @@ import type { FederationId } from "../lib/isabella/types";
 import { auditSecurityEvent, rateLimitByRoute, requireRdmRole } from "../lib/security";
 import { validate, schemas } from "../middlewares/validate";
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  SINGLETON INSTANCES (in-memory; replace with Supabase when wired)
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 const MAX_SESSIONS = Number(process.env.RDM_MAX_SESSIONS ?? 2000);
 const MAX_DECISIONS = Number(process.env.RDM_MAX_DECISIONS ?? 5000);
@@ -86,18 +90,18 @@ function evictFeedback(): void {
   }
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  ROUTE REGISTRATION
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 export function registerIsabellaRoutes(router: Router) {
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  POST /api/isabella/chat
-  //  Conversational endpoint — full Ω-Core pipeline:
-  //  sanitize → interpret → policy check → knowledge lookup → personality → evaluate
+  //  Conversational endpoint â€” full Î©-Core pipeline:
+  //  sanitize â†’ interpret â†’ policy check â†’ knowledge lookup â†’ personality â†’ evaluate
   //  Body: { playerId, message, sessionId? }
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/isabella/chat", requireRdmRole("user"), rateLimitByRoute({ name: "isabella-chat", limit: 30 }), validate(schemas.isabellaChat), (req: Request, res: Response, next: NextFunction) => {
     const { playerId = "anonymous", message = "", sessionId } = req.body ?? {};
 
@@ -163,7 +167,7 @@ export function registerIsabellaRoutes(router: Router) {
       // 9. Store in memory
       memory.store({
         type: "session",
-        content: `Player ${playerId}: ${message} → ${result.output}`,
+        content: `Player ${playerId}: ${message} â†’ ${result.output}`,
         tags: [intention.domain, intention.action],
         source: "chat",
         ttl: 3600000,
@@ -187,10 +191,10 @@ export function registerIsabellaRoutes(router: Router) {
     }).catch(next);
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  GET /api/isabella/stream
   //  Server-Sent Events stream of Isabella decisions.
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.get("/isabella/stream", requireRdmRole("user"), rateLimitByRoute({ name: "isabella-stream", limit: 10 }), (req: Request, res: Response) => {
     res.setHeader("Content-Type", "text/event-stream");
     res.setHeader("Cache-Control", "no-cache");
@@ -227,11 +231,11 @@ export function registerIsabellaRoutes(router: Router) {
     req.on("close", () => { clearInterval(heartbeat); res.end(); });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  GET /api/isabella/decisions
   //  Decision history for a player.
   //  Query: ?playerId=&limit=50
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.get("/isabella/decisions",
     requireRdmRole("operator"),
     rateLimitByRoute({ name: "isabella-decisions", limit: 20 }),
@@ -242,10 +246,10 @@ export function registerIsabellaRoutes(router: Router) {
     res.status(200).json({ ok: true, data: { playerId, decisions: playerDecisions, total: playerDecisions.length } });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  GET /api/isabella/status
-  //  Full system health — Ω-Core v4.0 metrics.
-  // ─────────────────────────────────────────────────────────────────────────
+  //  Full system health â€” Î©-Core v4.0 metrics.
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.get("/isabella/status", (_req: Request, res: Response) => {
     const activeSessions = [...sessions.values()].filter((s) => s.status === "active").length;
     const totalDecisions = decisions.length;
@@ -283,11 +287,11 @@ export function registerIsabellaRoutes(router: Router) {
     });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  POST /api/isabella/feedback
   //  Submit user feedback on an Isabella interaction.
   //  Body: { playerId, decisionId, rating, comment? }
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/isabella/feedback", requireRdmRole("user"), validate(schemas.isabellaFeedback), (req: Request, res: Response) => {
     const { playerId = "anonymous", decisionId = "", rating = 3, comment } = req.body ?? {};
 
@@ -317,15 +321,15 @@ export function registerIsabellaRoutes(router: Router) {
 
     res.status(200).json({
       ok: true,
-      data: { feedbackId: entry.id, rating: entry.rating, message: "Gracias por tu feedback. Mejorará la experiencia de Isabella." },
+      data: { feedbackId: entry.id, rating: entry.rating, message: "Gracias por tu feedback. MejorarÃ¡ la experiencia de Isabella." },
     });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  GET /api/isabella/knowledge
   //  Knowledge base search.
   //  Query: ?category=&q=&limit=20&domain=
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.get("/isabella/knowledge", requireRdmRole("user"), (req: Request, res: Response) => {
     const domain = (req.query.domain as string) ?? "";
     const query = (req.query.q as string) ?? "";
@@ -339,11 +343,11 @@ export function registerIsabellaRoutes(router: Router) {
     res.status(200).json({ ok: true, data: results.slice(0, limit) });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  POST /api/isabella/knowledge
   //  Add a new knowledge base entry.
   //  Body: { topic, content, category, source, domain? }
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/isabella/knowledge", requireRdmRole("operator"), rateLimitByRoute({ name: "isabella-knowledge-write", limit: 12 }), validate(schemas.isabellaKnowledge), (req: Request, res: Response) => {
     const { topic = "", content = "", category = "general", source = "manual", domain = "ecosystem" } = req.body ?? {};
     if (!topic || !content) {
@@ -368,11 +372,11 @@ export function registerIsabellaRoutes(router: Router) {
     });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  POST /api/tts-isabella
   //  Text-to-Speech proxy for Isabella voice generation.
   //  Body: { text, emotion?, speed? }
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/tts-isabella", requireRdmRole("user"), validate(schemas.ttsIsabella), (req: Request, res: Response) => {
     const { text = "", emotion = "neutral", speed = 1.0 } = req.body ?? {};
     if (!text || typeof text !== "string") {
@@ -392,11 +396,11 @@ export function registerIsabellaRoutes(router: Router) {
     });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  GET /api/isabella/sessions
   //  Active sessions for a player.
   //  Query: ?playerId=
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.get("/isabella/sessions",
     requireRdmRole("user"),
     rateLimitByRoute({ name: "isabella-sessions", limit: 20 }),
@@ -408,10 +412,10 @@ export function registerIsabellaRoutes(router: Router) {
     res.status(200).json({ ok: true, data: playerSessions });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  POST /api/isabella/sessions/:id/close
   //  Close an active session.
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/isabella/sessions/:id/close",
     requireRdmRole("user"),
     (req: Request, res: Response) => {
@@ -421,10 +425,10 @@ export function registerIsabellaRoutes(router: Router) {
     res.status(200).json({ ok: true, data: { sessionId: session.id, status: "closed" } });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  GET /api/isabella/compliance
-  //  Ω-Core compliance audit — SOUL, policies, ethics status.
-  // ─────────────────────────────────────────────────────────────────────────
+  //  Î©-Core compliance audit â€” SOUL, policies, ethics status.
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.get("/isabella/compliance", requireRdmRole("operator"), (_req: Request, res: Response) => {
     res.status(200).json({
       ok: true,
@@ -457,18 +461,18 @@ export function registerIsabellaRoutes(router: Router) {
         agents: AGENTS.map((a) => ({ id: a.id, name: a.name, federation: a.federation, autonomy: a.autonomy })),
         skills: skillRegistry.status(),
         federations: [
-          "FED-1 (Preservación)", "FED-2 (Estándares)", "FED-3 (Tecnología)",
-          "FED-4 (Curación)", "FED-5 (Integridad)", "FED-6 (Adopción)", "FED-7 (Auditoría)",
+          "FED-1 (PreservaciÃ³n)", "FED-2 (EstÃ¡ndares)", "FED-3 (TecnologÃ­a)",
+          "FED-4 (CuraciÃ³n)", "FED-5 (Integridad)", "FED-6 (AdopciÃ³n)", "FED-7 (AuditorÃ­a)",
         ],
       },
     });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  POST /api/isabella/crypto/sign
   //  Sign a payload with Mexa API federation mask.
   //  Body: { federationId, nodeId, payload }
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/isabella/crypto/sign", requireRdmRole("operator"), rateLimitByRoute({ name: "isabella-crypto-sign", limit: 60 }), validate(schemas.isabellaCryptoSign), (req: Request, res: Response) => {
     const { federationId, nodeId, payload } = req.body ?? {};
     if (!federationId || !nodeId || payload === undefined) {
@@ -485,11 +489,11 @@ export function registerIsabellaRoutes(router: Router) {
     }
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  POST /api/isabella/crypto/verify
   //  Verify a signed payload.
   //  Body: SignedPayload
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/isabella/crypto/verify", requireRdmRole("operator"), validate(schemas.isabellaCryptoVerify), (req: Request, res: Response) => {
     const signed = req.body;
     if (!signed || !signed.federationMask || !signed.hash || !signed.nonce) {
@@ -501,19 +505,19 @@ export function registerIsabellaRoutes(router: Router) {
     res.status(200).json({ ok: true, data: result });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  GET /api/isabella/crypto/status
   //  Mexa API health and federation status.
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.get("/isabella/crypto/status", (_req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: mexa.health() });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  POST /api/isabella/xr/scene
   //  Generate an XR scene manifest from a description.
   //  Body: { description, options? }
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/isabella/xr/scene", requireRdmRole("user"), validate(schemas.isabellaXrScene), async (req: Request, res: Response, next: NextFunction) => {
     const { description, options } = req.body ?? {};
     if (!description || typeof description !== "string") {
@@ -526,19 +530,19 @@ export function registerIsabellaRoutes(router: Router) {
   } catch (err) { next(err); }
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  GET /api/isabella/isa/health
   //  Isa API health and cognitive process count.
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.get("/isabella/isa/health", requireRdmRole("user"), (_req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: isa.health() });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  POST /api/isabella/isa/reason
   //  Isa API structured reasoning.
   //  Body: { query, context?, knowledgeGraph?, maxDepth? }
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/isabella/isa/reason", requireRdmRole("user"), validate(schemas.isabellaIsaReason), async (req: Request, res: Response, next: NextFunction) => {
     const { query, context, knowledgeGraph, maxDepth } = req.body ?? {};
     if (!query || typeof query !== "string") {
@@ -551,19 +555,19 @@ export function registerIsabellaRoutes(router: Router) {
   } catch (err) { next(err); }
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  GET /api/isabella/fairness
   //  Fairness engine metrics.
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.get("/isabella/fairness", requireRdmRole("operator"), (_req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: fairness.metrics() });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  POST /api/isabella/fairness/evaluate
   //  Evaluate text for bias and guardrails.
   //  Body: { text, context? }
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/isabella/fairness/evaluate", requireRdmRole("operator"), validate(schemas.isabellaFairnessEvaluate), (req: Request, res: Response) => {
     const { text, context } = req.body ?? {};
     if (!text || typeof text !== "string") {
@@ -576,11 +580,11 @@ export function registerIsabellaRoutes(router: Router) {
     res.status(200).json({ ok: true, data: { bias: biasReport, guardrails } });
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  GET /api/isabella/evaluation/history
   //  Evaluation engine history.
   //  Query: ?limit=50
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.get("/isabella/evaluation/history",
     requireRdmRole("operator"),
     rateLimitByRoute({ name: "isabella-eval-history", limit: 10 }),

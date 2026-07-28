@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * Gamification LTOS Engine — Core Logic
+ * Gamification LTOS Engine â€” Core Logic
  * Real del Monte Digital Hub
  *
  * Processes game events, evaluates quests, awards XP and badges.
@@ -195,7 +199,7 @@ export function evaluateQuestCriteria(
       };
     }
     case 'all_season_quests': {
-      // This requires external context — mark as not met by default
+      // This requires external context â€” mark as not met by default
       return { met: false, progress: { current: 0, target: 1 } };
     }
     case 'community_action': {

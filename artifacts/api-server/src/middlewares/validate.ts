@@ -1,11 +1,15 @@
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Zod Validation Middleware (PennyLane pattern: validate at boundary)
 // All request bodies are validated before reaching route handlers.
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { Request, Response, NextFunction } from "express";
 
-// ── Minimal Zod-like validator (no external dependency needed) ──
+// â”€â”€ Minimal Zod-like validator (no external dependency needed) â”€â”€
 
 interface FieldRule {
   type: "string" | "number" | "boolean" | "object" | "array";
@@ -106,7 +110,7 @@ function validateBody(body: unknown, schema: Schema): ValidationError[] {
   return errors;
 }
 
-// ── Middleware Factory ──────────────────────────────────────────
+// â”€â”€ Middleware Factory â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function validate(schema: Schema) {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -122,7 +126,7 @@ export function validate(schema: Schema) {
   };
 }
 
-// ── Common Schemas ─────────────────────────────────────────────
+// â”€â”€ Common Schemas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const schemas = {
   // Isabella chat
@@ -172,7 +176,7 @@ export const schemas = {
     question: { type: "string" as const, required: true, min: 1, max: 2000 },
   },
 
-  // ── Isabella Extended ──────────────────────────────────────────
+  // â”€â”€ Isabella Extended â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   isabellaFeedback: {
     playerId: { type: "string" as const, required: true, min: 1 },
@@ -224,7 +228,7 @@ export const schemas = {
     context: { type: "object" as const, required: false },
   },
 
-  // ── Narrative ─────────────────────────────────────────────────
+  // â”€â”€ Narrative â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   narrativeFeed: {
     playerId: { type: "string" as const, required: true, min: 1 },
@@ -243,13 +247,13 @@ export const schemas = {
     playerId: { type: "string" as const, required: true, min: 1 },
   },
 
-  // ── Territory ─────────────────────────────────────────────────
+  // â”€â”€ Territory â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   territoryAiAsk: {
     message: { type: "string" as const, required: true, min: 1, max: 4000 },
   },
 
-  // ── Federation ────────────────────────────────────────────────
+  // â”€â”€ Federation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   federationEmit: {
     federationId: { type: "string" as const, required: true, min: 1 },
@@ -257,7 +261,7 @@ export const schemas = {
     payload: { type: "object" as const, required: false },
   },
 
-  // ── Admin ─────────────────────────────────────────────────────
+  // â”€â”€ Admin â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   adminAuditRecord: {
     actor: { type: "string" as const, required: true, min: 1, max: 200 },
@@ -269,7 +273,7 @@ export const schemas = {
     severity: { type: "string" as const, required: false, enum: ["info", "warn", "error", "critical"] },
   },
 
-  // ── Identity ──────────────────────────────────────────────────
+  // â”€â”€ Identity â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   identityCitizen: {
     name: { type: "string" as const, required: true, min: 1, max: 200 },
@@ -282,7 +286,7 @@ export const schemas = {
     role: { type: "string" as const, required: true, enum: ["user", "operator", "admin", "federation_auditor"] },
   },
 
-  // ── Agents ────────────────────────────────────────────────────
+  // â”€â”€ Agents â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   agentRegister: {
     name: { type: "string" as const, required: true, min: 1, max: 200 },
@@ -297,7 +301,7 @@ export const schemas = {
     action: { type: "string" as const, required: true, min: 1, max: 500 },
   },
 
-  // ── IAM / Passkeys ───────────────────────────────────────────
+  // â”€â”€ IAM / Passkeys â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   iamPasskeyChallenge: {
     userId: { type: "string" as const, required: true, min: 1 },
@@ -315,7 +319,7 @@ export const schemas = {
     ttl: { type: "number" as const, required: false, min: 1 },
   },
 
-  // ── Memory ────────────────────────────────────────────────────
+  // â”€â”€ Memory â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   memoryRagQuery: {
     query: { type: "string" as const, required: true, min: 1, max: 4000 },
@@ -338,7 +342,7 @@ export const schemas = {
     frequency: { type: "number" as const, required: false, min: 0 },
   },
 
-  // ── Maps ──────────────────────────────────────────────────────
+  // â”€â”€ Maps â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   mapsPoi: {
     name: { type: "string" as const, required: true, min: 1, max: 200 },
@@ -348,7 +352,7 @@ export const schemas = {
     category: { type: "string" as const, required: true, min: 1, max: 100 },
   },
 
-  // ── Search ────────────────────────────────────────────────────
+  // â”€â”€ Search â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   searchIndex: {
     type: { type: "string" as const, required: true, min: 1, max: 50 },
@@ -358,7 +362,7 @@ export const schemas = {
     metadata: { type: "object" as const, required: false },
   },
 
-  // ── Telemetry ─────────────────────────────────────────────────
+  // â”€â”€ Telemetry â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   telemetryEvent: {
     type: { type: "string" as const, required: true, min: 1, max: 100 },
@@ -367,7 +371,7 @@ export const schemas = {
     metadata: { type: "object" as const, required: false },
   },
 
-  // ── Wiki Editor ──────────────────────────────────────────────
+  // â”€â”€ Wiki Editor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   wikiArticleCreate: {
     slug: { type: "string" as const, required: true, min: 1, max: 200, pattern: /^[a-z0-9-]+$/ },
@@ -385,7 +389,7 @@ export const schemas = {
     message: { type: "string" as const, required: false, max: 500 },
   },
 
-  // ── Digital Twins ────────────────────────────────────────────
+  // â”€â”€ Digital Twins â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   twinsSceneCreate: {
     name: { type: "string" as const, required: true, min: 1, max: 200 },
@@ -399,7 +403,7 @@ export const schemas = {
     unit: { type: "string" as const, required: false, max: 50 },
   },
 
-  // ── Economia ──────────────────────────────────────────────────
+  // â”€â”€ Economia â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   economiaTransaction: {
     fromId: { type: "string" as const, required: true, min: 1 },
@@ -409,7 +413,7 @@ export const schemas = {
     description: { type: "string" as const, required: false, max: 500 },
   },
 
-  // ── YUN Extended ──────────────────────────────────────────────
+  // â”€â”€ YUN Extended â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   yunRegistryNode: {
     nodeId: { type: "string" as const, required: true, min: 1 },
@@ -493,7 +497,7 @@ export const schemas = {
   },
 };
 
-// ── Prototype-Pollution-Safe Object Sanitizer ─────────────────
+// â”€â”€ Prototype-Pollution-Safe Object Sanitizer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const FORBIDDEN_KEYS = new Set(["__proto__", "constructor", "prototype"]);
 

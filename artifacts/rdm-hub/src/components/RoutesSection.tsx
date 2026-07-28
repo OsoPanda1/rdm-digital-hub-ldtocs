@@ -1,10 +1,14 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Map, Compass, Utensils } from "lucide-react";
 
 const routes = [
   {
     name: "Ruta del Paste",
-    description: "Recorre las pastelerías más emblemáticas y prueba los mejores pastes del pueblo",
+    description: "Recorre las pastelerÃ­as mÃ¡s emblemÃ¡ticas y prueba los mejores pastes del pueblo",
     icon: Utensils,
     stops: 6,
     duration: "2-3 hrs",
@@ -12,7 +16,7 @@ const routes = [
   },
   {
     name: "Ruta Minas y Museos",
-    description: "Descubre la historia minera, los túneles subterráneos y la herencia inglesa",
+    description: "Descubre la historia minera, los tÃºneles subterrÃ¡neos y la herencia inglesa",
     icon: Compass,
     stops: 5,
     duration: "3-4 hrs",
@@ -20,7 +24,7 @@ const routes = [
   },
   {
     name: "Ruta Familiar",
-    description: "Aventura natural por Peñas Cargadas, bosques de niebla y miradores",
+    description: "Aventura natural por PeÃ±as Cargadas, bosques de niebla y miradores",
     icon: Map,
     stops: 4,
     duration: "4-5 hrs",
@@ -42,7 +46,7 @@ const RoutesSection = () => {
             Rutas Sugeridas
           </h2>
           <p className="text-muted-foreground mt-2 max-w-md mx-auto">
-            Recorridos diseñados para que no te pierdas lo mejor de Real del Monte
+            Recorridos diseÃ±ados para que no te pierdas lo mejor de Real del Monte
           </p>
         </motion.div>
 

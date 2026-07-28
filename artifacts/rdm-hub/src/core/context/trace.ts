@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 export function createTraceId() {
   if (typeof crypto !== "undefined") {
     if ("randomUUID" in crypto) return crypto.randomUUID();

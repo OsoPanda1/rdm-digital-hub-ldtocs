@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Calendar, MapPin, Clock, Sparkles, Star, ArrowRight } from "lucide-react";
@@ -18,7 +22,7 @@ export default function EventosPage() {
 
   return (
     <RDMLayout>
-      <SEOMeta title="Eventos y Festivales — Real del Monte" description="Calendario de eventos culturales, festivales gastronómicos, actividades deportivas y temporadas especiales en Real del Monte, Pueblo Mágico." />
+      <SEOMeta title="Eventos y Festivales â€” Real del Monte" description="Calendario de eventos culturales, festivales gastronÃ³micos, actividades deportivas y temporadas especiales en Real del Monte, Pueblo MÃ¡gico." />
 
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
@@ -33,7 +37,7 @@ export default function EventosPage() {
               Eventos y <span className="text-[hsl(var(--rdm-amber))]">Festivales</span>
             </h1>
             <p className="text-white/70 max-w-xl" style={{ fontFamily: "var(--font-body)" }}>
-              {EVENTOS_RDM.length} eventos que hacen de Real del Monte un destino vivo todo el año.
+              {EVENTOS_RDM.length} eventos que hacen de Real del Monte un destino vivo todo el aÃ±o.
             </p>
           </motion.div>
         </div>
@@ -70,7 +74,7 @@ export default function EventosPage() {
           {filteredEvents.length === 0 ? (
             <div className="text-center py-16 rdm-glass rounded-2xl">
               <Calendar className="h-12 w-12 text-[hsl(var(--muted-foreground))] mx-auto mb-4 opacity-40" />
-              <p className="text-[hsl(var(--muted-foreground))]">No hay eventos en esta categoría.</p>
+              <p className="text-[hsl(var(--muted-foreground))]">No hay eventos en esta categorÃ­a.</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -90,7 +94,7 @@ export default function EventosPage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                       <div className="absolute top-3 left-3 flex gap-2">
                         <span className="px-2 py-1 rounded-full bg-[hsl(var(--rdm-amber))] text-white text-[10px] font-bold">{evt.date}</span>
-                        {evt.destacado && <span className="px-2 py-1 rounded-full bg-white/20 backdrop-blur-sm text-white text-[10px]">⭐ Destacado</span>}
+                        {evt.destacado && <span className="px-2 py-1 rounded-full bg-white/20 backdrop-blur-sm text-white text-[10px]">â­ Destacado</span>}
                       </div>
                     </div>
                     <div className="p-4">

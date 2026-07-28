@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import React from "react"
 import { type LSMRenderProps, LSMRenderEngine } from "@/components/map/LSMRenderEngine"
 import TerritorialSVGMap, {
@@ -5,9 +9,9 @@ import TerritorialSVGMap, {
 } from "@/components/map/TerritorialSVGMap"
 
 export interface UnifiedMapBridgeProps {
-  /** Configuración de la capa LSM (movilidad, turismo, etc.) */
+  /** ConfiguraciÃ³n de la capa LSM (movilidad, turismo, etc.) */
   lsmConfig: LSMRenderProps
-  /** Props para el mapa territorial (POIs, selección, etc.) */
+  /** Props para el mapa territorial (POIs, selecciÃ³n, etc.) */
   territorialConfig?: Omit<TerritorialSVGMapProps, "onSelect">
   /** Callback cuando el usuario selecciona un nodo/POI desde cualquier mapa */
   onSelectNode?: (id: string) => void
@@ -19,7 +23,7 @@ export interface UnifiedMapBridgeProps {
  *  - LSMRenderEngine (mapa orbital / flujos en tiempo real)
  *  - TerritorialSVGMap (mapa SVG de nodos / POIs)
  *
- * El objetivo: unificar interacción y estado sin mezclar lógicas internas.
+ * El objetivo: unificar interacciÃ³n y estado sin mezclar lÃ³gicas internas.
  */
 const UnifiedMapBridge: React.FC<UnifiedMapBridgeProps> = ({
   lsmConfig,
@@ -65,7 +69,7 @@ const UnifiedMapBridge: React.FC<UnifiedMapBridgeProps> = ({
               </span>
             </h2>
             <p className="mt-0.5 text-[11px] text-slate-500">
-              Nodo Cero, federaciones y puntos estratégicos.
+              Nodo Cero, federaciones y puntos estratÃ©gicos.
             </p>
           </div>
         </header>

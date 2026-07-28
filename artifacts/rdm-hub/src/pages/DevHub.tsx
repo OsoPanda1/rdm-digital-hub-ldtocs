@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState } from "react";
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { SEOMeta, PAGE_SEO } from "@/components/SEOMeta";
@@ -13,32 +17,32 @@ interface ApiEndpoint {
 }
 
 const DOMAINS: { id: string; icon: typeof Terminal; name: string; description: string; endpoints: ApiEndpoint[] }[] = [
-  { id: "auth", icon: Shield, name: "Auth", description: "Autenticación y registro de usuarios", endpoints: [
-    { method: "POST", path: "/api/auth/login", description: "Iniciar sesión con email y contraseña", auth: "Public", example: "curl -X POST /api/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"...\",\"password\":\"...\"}'" },
+  { id: "auth", icon: Shield, name: "Auth", description: "AutenticaciÃ³n y registro de usuarios", endpoints: [
+    { method: "POST", path: "/api/auth/login", description: "Iniciar sesiÃ³n con email y contraseÃ±a", auth: "Public", example: "curl -X POST /api/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"...\",\"password\":\"...\"}'" },
     { method: "POST", path: "/api/auth/register", description: "Registrar nuevo usuario", auth: "Public", example: "curl -X POST /api/auth/register -d '{\"email\":\"...\",\"name\":\"...\"}'" },
   ]},
   { id: "identity", icon: Cpu, name: "Identity", description: "Identidad soberana TAMV", endpoints: [
     { method: "GET", path: "/api/identity/profile", description: "Obtener perfil del usuario", auth: "Bearer", example: "curl /api/identity/profile -H 'Authorization: Bearer <token>'" },
     { method: "PUT", path: "/api/identity/profile", description: "Actualizar perfil", auth: "Bearer", example: "curl -X PUT /api/identity/profile -d '{\"name\":\"...\"}'" },
   ]},
-  { id: "kernel", icon: Network, name: "Kernel", description: "Núcleo MD-X5 y motor de decisión", endpoints: [
-    { method: "POST", path: "/api/kernel/intent", description: "Enviar intención al kernel", auth: "Bearer", example: "curl -X POST /api/kernel/intent -d '{\"type\":\"query\",\"payload\":{}}'" },
+  { id: "kernel", icon: Network, name: "Kernel", description: "NÃºcleo MD-X5 y motor de decisiÃ³n", endpoints: [
+    { method: "POST", path: "/api/kernel/intent", description: "Enviar intenciÃ³n al kernel", auth: "Bearer", example: "curl -X POST /api/kernel/intent -d '{\"type\":\"query\",\"payload\":{}}'" },
     { method: "GET", path: "/api/kernel/status", description: "Estado del kernel", auth: "Public", example: "curl /api/kernel/status" },
   ]},
-  { id: "security", icon: Lock, name: "Security", description: "Seguridad y cifrado post-cuántico", endpoints: [
+  { id: "security", icon: Lock, name: "Security", description: "Seguridad y cifrado post-cuÃ¡ntico", endpoints: [
     { method: "POST", path: "/api/security/encrypt", description: "Cifrar datos con PQC", auth: "Bearer", example: "curl -X POST /api/security/encrypt -d '{\"data\":\"...\",\"key\":\"...\"}'" },
     { method: "POST", path: "/api/security/verify", description: "Verificar integridad", auth: "Bearer", example: "curl -X POST /api/security/verify -d '{\"data\":\"...\",\"hash\":\"...\"}'" },
   ]},
-  { id: "economy", icon: Database, name: "Economy", description: "Economía federada y ledger", endpoints: [
+  { id: "economy", icon: Database, name: "Economy", description: "EconomÃ­a federada y ledger", endpoints: [
     { method: "GET", path: "/api/economy/balance", description: "Consultar saldo", auth: "Bearer", example: "curl /api/economy/balance" },
     { method: "POST", path: "/api/economy/transfer", description: "Transferencia entre cuentas", auth: "Bearer", example: "curl -X POST /api/economy/transfer -d '{\"to\":\"...\",\"amount\":10}'" },
   ]},
   { id: "social", icon: Globe, name: "Social", description: "Red social territorial", endpoints: [
     { method: "GET", path: "/api/social/feed", description: "Obtener feed comunitario", auth: "Public", example: "curl /api/social/feed?limit=20" },
-    { method: "POST", path: "/api/social/post", description: "Crear publicación", auth: "Bearer", example: "curl -X POST /api/social/post -d '{\"content\":\"...\"}'" },
+    { method: "POST", path: "/api/social/post", description: "Crear publicaciÃ³n", auth: "Bearer", example: "curl -X POST /api/social/post -d '{\"content\":\"...\"}'" },
   ]},
   { id: "isabella", icon: QrCode, name: "Isabella AI", description: "API de inteligencia artificial", endpoints: [
-    { method: "POST", path: "/api/isabella/recommendations", description: "Recomendaciones contextuales", auth: "Bearer", example: "curl -X POST /api/isabella/recommendations -d '{\"query\":\"¿qué visitar?\"}'" },
+    { method: "POST", path: "/api/isabella/recommendations", description: "Recomendaciones contextuales", auth: "Bearer", example: "curl -X POST /api/isabella/recommendations -d '{\"query\":\"Â¿quÃ© visitar?\"}'" },
     { method: "GET", path: "/api/isabella/stream", description: "SSE en tiempo real", auth: "Bearer", example: "curl -N /api/isabella/stream" },
   ]},
 ];
@@ -55,7 +59,7 @@ export default function DevHub() {
 
   return (
     <RDMLayout>
-      <SEOMeta {...PAGE_SEO.mapa} title="DevHub DM-X7 — API Gateway" description="API unificada TAMV Gateway con 160 operaciones en 13 dominios soberanos." />
+      <SEOMeta {...PAGE_SEO.mapa} title="DevHub DM-X7 â€” API Gateway" description="API unificada TAMV Gateway con 160 operaciones en 13 dominios soberanos." />
       <div className="pt-24 pb-16 px-4 md:px-8 max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
           <div className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--rdm-amber)/0.3)] bg-[hsl(var(--rdm-amber)/0.08)] px-4 py-2 text-xs uppercase tracking-[0.2em] mb-4">
@@ -115,8 +119,8 @@ export default function DevHub() {
             </div>
 
             <div className="mt-8 p-5 rounded-2xl border border-[hsl(var(--rdm-amber)/0.25)] bg-[hsl(var(--rdm-amber)/0.06)]">
-              <h3 className="flex items-center gap-2 text-sm font-semibold mb-2"><ExternalLink className="h-4 w-4 text-[hsl(var(--rdm-amber))]" />Documentación Completa</h3>
-              <p className="text-xs text-[hsl(var(--muted-foreground))] mb-3">La especificación OpenAPI 3.1 completa está disponible en el repositorio del Gateway.</p>
+              <h3 className="flex items-center gap-2 text-sm font-semibold mb-2"><ExternalLink className="h-4 w-4 text-[hsl(var(--rdm-amber))]" />DocumentaciÃ³n Completa</h3>
+              <p className="text-xs text-[hsl(var(--muted-foreground))] mb-3">La especificaciÃ³n OpenAPI 3.1 completa estÃ¡ disponible en el repositorio del Gateway.</p>
               <div className="flex gap-2">
                 <span className="text-[10px] px-2 py-1 rounded-full bg-[hsl(var(--rdm-amber)/0.1)] text-[hsl(var(--rdm-amber))]">13 dominios</span>
                 <span className="text-[10px] px-2 py-1 rounded-full bg-[hsl(var(--rdm-amber)/0.1)] text-[hsl(var(--rdm-amber))]">160+ endpoints</span>

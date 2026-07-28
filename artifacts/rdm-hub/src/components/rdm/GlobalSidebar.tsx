@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { NavLink, useLocation } from "react-router-dom";
 import {
   Mountain,
@@ -53,7 +57,7 @@ const GROUPS: Group[] = [
     label: "Identidad & Memoria",
     icon: BookOpen,
     items: [
-      { path: "/", label: "Inicio · Nodo Cero", icon: Mountain, tag: "HUB" },
+      { path: "/", label: "Inicio Â· Nodo Cero", icon: Mountain, tag: "HUB" },
       { path: "/historia", label: "Historia Minera", icon: Pickaxe },
       { path: "/wiki", label: "Wiki Realmontense", icon: BookOpen },
       { path: "/ltos", label: "Manifiesto LTOS", icon: ShieldCheck, tag: "TAMV" },
@@ -77,8 +81,8 @@ const GROUPS: Group[] = [
     label: "Experiencias",
     icon: Sparkles,
     items: [
-      { path: "/gastronomia", label: "Gastronomía", icon: Utensils },
-      { path: "/music", label: "RDM Radio", icon: MusicIcon, tag: "♪" },
+      { path: "/gastronomia", label: "GastronomÃ­a", icon: Utensils },
+      { path: "/music", label: "RDM Radio", icon: MusicIcon, tag: "â™ª" },
       { path: "/juegos", label: "Juegos", icon: Gamepad2 },
       { path: "/game", label: "Veta Soberana", icon: Pickaxe, tag: "GA" },
     ],
@@ -103,7 +107,7 @@ const GROUPS: Group[] = [
       { path: "/dashboard", label: "Dashboard CEO", icon: LayoutDashboard, tag: "SYS" },
       { path: "/control", label: "Control Center", icon: Activity, tag: "OPS" },
       { path: "/realito", label: "Realito AI", icon: Bot, tag: "AI" },
-      { path: "/admin", label: "Administración", icon: ShieldCheck, tag: "RBAC" },
+      { path: "/admin", label: "AdministraciÃ³n", icon: ShieldCheck, tag: "RBAC" },
       { path: "/demo-checklist", label: "Demo Checklist", icon: ClipboardCheck },
     ],
   },
@@ -131,7 +135,7 @@ export function GlobalSidebar() {
               </p>
               <p className="mt-1 text-[9px] font-mono uppercase tracking-[0.22em] text-muted-foreground flex items-center gap-1">
                 <Cpu className="h-2.5 w-2.5 text-gold animate-pulse" />
-                MD-X5 · Nodo Cero
+                MD-X5 Â· Nodo Cero
               </p>
             </div>
           )}
@@ -216,7 +220,7 @@ export function GlobalSidebar() {
             <div className="flex items-center gap-2">
               <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
               <p className="text-[10px] font-mono uppercase tracking-[0.18em] text-muted-foreground">
-                Soberanía Activa
+                SoberanÃ­a Activa
               </p>
             </div>
             <p className="mt-2 text-[9px] font-display italic text-platinum-light/80 leading-snug">

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import React, { useEffect, useRef } from "react";
 
 interface TAMVTrixEffectProps {
@@ -58,7 +62,7 @@ const TAMVTrixEffect: React.FC<TAMVTrixEffectProps> = ({
         const depth = Math.random(); // 0 cercano, 1 lejano
         const scale = 0.7 + Math.random() * 1.1;
         const drift = (Math.random() - 0.5) * 1.2;
-        const opacity = 0.3 + 0.7 * (1 - depth); // columnas cercanas = más intensas
+        const opacity = 0.3 + 0.7 * (1 - depth); // columnas cercanas = mÃ¡s intensas
 
         return {
           y: Math.floor(Math.random() * canvas.height),
@@ -95,7 +99,7 @@ const TAMVTrixEffect: React.FC<TAMVTrixEffectProps> = ({
           minFontSize +
           (maxFontSize - minFontSize) * col.scale * (0.4 + 0.6 * z);
 
-        const velocity = speed * (0.3 + 0.9 * z); // más cerca = más rápido
+        const velocity = speed * (0.3 + 0.9 * z); // mÃ¡s cerca = mÃ¡s rÃ¡pido
 
         const baseX = i * columnWidth + columnWidth / 2;
         const x = baseX + col.drift * 24 * z;
@@ -106,7 +110,7 @@ const TAMVTrixEffect: React.FC<TAMVTrixEffectProps> = ({
           CORE_LETTERS[Math.floor(Math.random() * CORE_LETTERS.length)];
         const wordLetter = word[col.charIndex % word.length];
 
-        // profundo → más algoritmo (letras sueltas), cerca → más palabra legible
+        // profundo â†’ mÃ¡s algoritmo (letras sueltas), cerca â†’ mÃ¡s palabra legible
         const letter = depth > 0.5 ? coreLetter : wordLetter;
 
         // gradiente vertical con cabeza brillante y cola suave
@@ -134,7 +138,7 @@ const TAMVTrixEffect: React.FC<TAMVTrixEffectProps> = ({
         ctx.font = `${fontSize}px "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace`;
         ctx.textAlign = "center";
 
-        // “desenfoque” por profundidad
+        // â€œdesenfoqueâ€ por profundidad
         ctx.shadowColor = `rgba(59, 245, 255, ${0.25 + 0.4 * z})`;
         ctx.shadowBlur = 4 + 20 * z;
         ctx.shadowOffsetX = 0;
@@ -145,7 +149,7 @@ const TAMVTrixEffect: React.FC<TAMVTrixEffectProps> = ({
         ctx.globalAlpha = 1;
         ctx.shadowBlur = 0;
 
-        // actualizar posición de la columna (respiración del espacio)
+        // actualizar posiciÃ³n de la columna (respiraciÃ³n del espacio)
         col.y += velocity * (fontSize / 9);
 
         // reset cuando sale del canvas

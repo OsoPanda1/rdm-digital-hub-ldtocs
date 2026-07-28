@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { useState, useEffect } from "react";
@@ -13,9 +17,9 @@ import type { Business } from "@/types/supabase";
 
 const CATEGORIES = [
   { value: "all", label: "Todos" },
-  { value: "GASTRONOMIA", label: "Gastronomía" },
+  { value: "GASTRONOMIA", label: "GastronomÃ­a" },
   { value: "HOSPEDAJE", label: "Hospedaje" },
-  { value: "ARTESANIA", label: "Artesanía" },
+  { value: "ARTESANIA", label: "ArtesanÃ­a" },
   { value: "BAR", label: "Bar" },
   { value: "COMERCIO", label: "Comercio" },
   { value: "TURISMO", label: "Turismo" },
@@ -56,7 +60,7 @@ export default function Comercios() {
       <ModuleCinematicIntro
         title="Directorio Comercial"
         eyebrow="Real del Monte"
-        description="Descubre los comercios, restaurantes y artesanos que dan vida a nuestro Pueblo Mágico"
+        description="Descubre los comercios, restaurantes y artesanos que dan vida a nuestro Pueblo MÃ¡gico"
         onComplete={() => setShowIntro(false)}
       />
     );
@@ -69,10 +73,10 @@ export default function Comercios() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
             <div className="flex items-center gap-3 mb-2">
               <Store className="h-5 w-5 text-accent" />
-              <span className="text-xs tracking-[0.3em] uppercase text-muted-foreground">Economía Local</span>
+              <span className="text-xs tracking-[0.3em] uppercase text-muted-foreground">EconomÃ­a Local</span>
             </div>
             <h1 className="font-display text-4xl md:text-5xl text-foreground mb-4">Directorio de Comercios</h1>
-            <p className="text-muted-foreground max-w-2xl">Negocios activos verificados en Real del Monte. Apoya la economía local.</p>
+            <p className="text-muted-foreground max-w-2xl">Negocios activos verificados en Real del Monte. Apoya la economÃ­a local.</p>
           </motion.div>
 
           <div className="flex flex-col sm:flex-row gap-3 mb-8">
@@ -94,7 +98,7 @@ export default function Comercios() {
           {paged.length === 0 ? (
             <div className="text-center py-20 text-muted-foreground">
               <Store className="h-10 w-10 mx-auto mb-4 opacity-30" />
-              <p>No hay comercios registrados aún.</p>
+              <p>No hay comercios registrados aÃºn.</p>
             </div>
           ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

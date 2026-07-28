@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { WikiPage } from "@/components/WikiPage";
 import { Section, InfoBox } from "@/components/WikiElements";
 import { Coins, TrendingUp, Users, Building2, Briefcase, Heart } from "lucide-react";
@@ -5,18 +9,18 @@ import { Coins, TrendingUp, Users, Building2, Briefcase, Heart } from "lucide-re
 const categorias = [
   {
     icon: Coins,
-    title: "A. Creación y Contenido",
-    items: ["Venta directa de contenido digital", "Suscripciones por creador", "Acceso premium a conocimiento", "Licencias culturales y artísticas", "Royalties automáticos", "Micropagos educativos"],
+    title: "A. CreaciÃ³n y Contenido",
+    items: ["Venta directa de contenido digital", "Suscripciones por creador", "Acceso premium a conocimiento", "Licencias culturales y artÃ­sticas", "Royalties automÃ¡ticos", "Micropagos educativos"],
   },
   {
     icon: Users,
-    title: "B. Interacción y Presencia",
-    items: ["Eventos XR inmersivos", "Espacios privados habitables", "Experiencias inmersivas patrocinadas", "Servicios de mentoría"],
+    title: "B. InteracciÃ³n y Presencia",
+    items: ["Eventos XR inmersivos", "Espacios privados habitables", "Experiencias inmersivas patrocinadas", "Servicios de mentorÃ­a"],
   },
   {
     icon: Heart,
-    title: "C. Economía Social",
-    items: ["Donaciones verificables", "Fondos comunitarios", "Mecenazgo distribuido", "Economías locales digitales"],
+    title: "C. EconomÃ­a Social",
+    items: ["Donaciones verificables", "Fondos comunitarios", "Mecenazgo distribuido", "EconomÃ­as locales digitales"],
   },
   {
     icon: Building2,
@@ -25,13 +29,13 @@ const categorias = [
   },
   {
     icon: TrendingUp,
-    title: "E. Finanzas Éticas",
-    items: ["Reparto de ingresos programado", "Escrow inteligente", "Recompensas por impacto", "Economía de reputación"],
+    title: "E. Finanzas Ã‰ticas",
+    items: ["Reparto de ingresos programado", "Escrow inteligente", "Recompensas por impacto", "EconomÃ­a de reputaciÃ³n"],
   },
   {
     icon: Briefcase,
     title: "F. Trabajo y Valor Humano",
-    items: ["Freelance soberano", "Trabajo por misión", "Bounties éticos", "Cooperativas digitales"],
+    items: ["Freelance soberano", "Trabajo por misiÃ³n", "Bounties Ã©ticos", "Cooperativas digitales"],
   },
 ];
 
@@ -44,20 +48,20 @@ const metricasEcon = [
 
 const EconomiaFederada = () => (
   <WikiPage
-    title="Economía Federada TAMV"
-      subtitle="30+ Formas de Monetización Ética — Sistema FairSplit de Reparto Justo"
+    title="EconomÃ­a Federada TAMV"
+      subtitle="30+ Formas de MonetizaciÃ³n Ã‰tica â€” Sistema FairSplit de Reparto Justo"
     >
       {/* Hero Banner */}
       <div className="relative h-48 w-full overflow-hidden">
-        <img src="/images/aerial-realmont.jpg" alt="Vista aérea de Real del Monte" className="h-full w-full object-cover" />
+        <img src="/images/aerial-realmont.jpg" alt="Vista aÃ©rea de Real del Monte" className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
       </div>
-      <InfoBox type="success" title="Modelo Económico Civilizatorio">
-      La economía TAMV redistribuye el 70% de los ingresos a los creadores, con transparencia total 
+      <InfoBox type="success" title="Modelo EconÃ³mico Civilizatorio">
+      La economÃ­a TAMV redistribuye el 70% de los ingresos a los creadores, con transparencia total 
       y trazabilidad blockchain mediante el sistema FairSplit.
     </InfoBox>
 
-    <Section title="30+ Formas de Monetización" icon={Coins}>
+    <Section title="30+ Formas de MonetizaciÃ³n" icon={Coins}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {categorias.map((cat) => (
           <div key={cat.title} className="rounded-lg border border-border/50 bg-card/30 p-5">
@@ -80,9 +84,9 @@ const EconomiaFederada = () => (
 
     <Section title="G. Institucional">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {["Licencias empresariales", "Integraciones gubernamentales", "Educación institucional", "Consultoría civilizatoria"].map((item) => (
+        {["Licencias empresariales", "Integraciones gubernamentales", "EducaciÃ³n institucional", "ConsultorÃ­a civilizatoria"].map((item) => (
           <div key={item} className="flex items-center gap-3 rounded-md border border-border/50 bg-muted/20 px-3 py-2">
-            <span className="text-primary">◆</span>
+            <span className="text-primary">â—†</span>
             <span className="text-sm text-muted-foreground">{item}</span>
           </div>
         ))}
@@ -92,10 +96,10 @@ const EconomiaFederada = () => (
     <Section title="Sistema FairSplit" icon={TrendingUp}>
       <div className="rounded-lg border border-primary/20 bg-primary/5 p-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2"><span className="text-primary">✓</span> Reparto proporcional al valor aportado</div>
-          <div className="flex items-center gap-2"><span className="text-primary">✓</span> Ajuste dinámico por reputación e impacto</div>
-          <div className="flex items-center gap-2"><span className="text-primary">✓</span> Porcentaje mínimo garantizado al creador (70%)</div>
-          <div className="flex items-center gap-2"><span className="text-primary">✓</span> Transparencia total en distribución</div>
+          <div className="flex items-center gap-2"><span className="text-primary">âœ“</span> Reparto proporcional al valor aportado</div>
+          <div className="flex items-center gap-2"><span className="text-primary">âœ“</span> Ajuste dinÃ¡mico por reputaciÃ³n e impacto</div>
+          <div className="flex items-center gap-2"><span className="text-primary">âœ“</span> Porcentaje mÃ­nimo garantizado al creador (70%)</div>
+          <div className="flex items-center gap-2"><span className="text-primary">âœ“</span> Transparencia total en distribuciÃ³n</div>
         </div>
         <div className="mt-4 rounded-md bg-muted/30 p-3 font-mono text-xs">
           <span className="text-primary">platform_fee:</span> 5% | <span className="text-primary">creator_minimum:</span> 70% | <span className="text-primary">community_fund:</span> 25%
@@ -103,7 +107,7 @@ const EconomiaFederada = () => (
       </div>
     </Section>
 
-    <Section title="Métricas Económicas">
+    <Section title="MÃ©tricas EconÃ³micas">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {metricasEcon.map((m) => (
           <div key={m.label} className="rounded-lg border border-border/50 bg-card/30 p-4 text-center">
@@ -117,14 +121,14 @@ const EconomiaFederada = () => (
     <Section title="Servicios Financieros">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {[
-          "Banco Digital TAMV — Servicios globales",
-          "Trading de Criptomonedas — IA predictiva",
-          "Inversiones en NFTs — Arte digital verificado",
-          "Bienes Raíces Virtuales — Inversión inmobiliaria",
-          "Remesas Globales — Instantáneas y baratas",
+          "Banco Digital TAMV â€” Servicios globales",
+          "Trading de Criptomonedas â€” IA predictiva",
+          "Inversiones en NFTs â€” Arte digital verificado",
+          "Bienes RaÃ­ces Virtuales â€” InversiÃ³n inmobiliaria",
+          "Remesas Globales â€” InstantÃ¡neas y baratas",
         ].map((item) => (
           <div key={item} className="flex items-center gap-3 rounded-md border border-border/50 bg-muted/20 px-3 py-2">
-            <span className="text-primary">◆</span>
+            <span className="text-primary">â—†</span>
             <span className="text-sm text-muted-foreground">{item}</span>
           </div>
         ))}

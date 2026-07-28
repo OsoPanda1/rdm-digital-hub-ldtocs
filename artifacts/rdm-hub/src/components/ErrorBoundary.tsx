@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // src/components/ErrorBoundary.tsx
 
 import { Component, ErrorInfo, ReactNode } from 'react'
@@ -23,7 +27,7 @@ class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     logger.error('ErrorBoundary caught:', { error, errorInfo })
 
-    // Emite evento global para cualquier listener de telemetría/UI
+    // Emite evento global para cualquier listener de telemetrÃ­a/UI
     if (typeof window !== 'undefined') {
       try {
         window.dispatchEvent(
@@ -37,7 +41,7 @@ class ErrorBoundary extends Component<Props, State> {
           }),
         )
       } catch (e) {
-        // Si por alguna razón falla el CustomEvent, no rompemos más la app
+        // Si por alguna razÃ³n falla el CustomEvent, no rompemos mÃ¡s la app
         logger.error('ErrorBoundary event dispatch failed:', e as Record<string, unknown>)
       }
     }
@@ -60,17 +64,17 @@ class ErrorBoundary extends Component<Props, State> {
               <AlertCircle className="w-8 h-8 text-destructive" />
             </div>
             <h2 className="font-serif text-2xl font-bold text-foreground mb-2">
-              Algo salió mal
+              Algo saliÃ³ mal
             </h2>
             <p className="text-sm text-muted-foreground mb-6">
-              Ha ocurrido un error inesperado. Por favor, intenta recargar la página.
+              Ha ocurrido un error inesperado. Por favor, intenta recargar la pÃ¡gina.
             </p>
             <button
               onClick={() => window.location.reload()}
               className="btn-hero-primary inline-flex items-center gap-2"
             >
               <RefreshCw className="w-4 h-4" />
-              Recargar página
+              Recargar pÃ¡gina
             </button>
           </div>
         </div>

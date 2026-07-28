@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // src/contexts/RDMAuthContext.tsx
-// Contexto de autenticación endurecido para RDM Digital Hub (Vite + Supabase + Lovable, despliegue en Vercel).
+// Contexto de autenticaciÃ³n endurecido para RDM Digital Hub (Vite + Supabase + Lovable, despliegue en Vercel).
 
 import {
   createContext,
@@ -25,7 +29,7 @@ export interface Profile {
 
 export type AppRole = 'admin' | 'moderator' | 'merchant' | 'tourist'
 
-// ── Admin email whitelist ──────────────────────────────────
+// â”€â”€ Admin email whitelist â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Emails that automatically get admin role on registration/sign-in.
 const ADMIN_EMAILS = new Set([
   'tamvonlinenetwork@outlook.es',
@@ -60,7 +64,7 @@ const AUTH_QUERY_TIMEOUT_MS = 5_000
 
 function guardSupabase(): SupabaseClient<Database> {
   if (!isSupabaseConfigured) {
-    throw new Error('[auth] Supabase no está configurado (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY ausentes)')
+    throw new Error('[auth] Supabase no estÃ¡ configurado (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY ausentes)')
   }
   return supabase
 }
@@ -70,7 +74,7 @@ function withTimeout<T>(promise: Promise<T>, label: string): Promise<T> {
     promise,
     new Promise<T>((_, reject) => {
       window.setTimeout(
-        () => reject(new Error(`${label} excedió ${AUTH_QUERY_TIMEOUT_MS}ms`)),
+        () => reject(new Error(`${label} excediÃ³ ${AUTH_QUERY_TIMEOUT_MS}ms`)),
         AUTH_QUERY_TIMEOUT_MS,
       )
     }),
@@ -139,7 +143,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
         setRoles(dbRoles)
       } catch (e) {
         const message = e instanceof Error ? e.message : 'Error desconocido al cargar perfil/roles'
-        setError(`[auth] Excepción en loadProfileAndRoles: ${message}`)
+        setError(`[auth] ExcepciÃ³n en loadProfileAndRoles: ${message}`)
         setProfile(null)
         setRoles([])
       }
@@ -159,7 +163,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
     setIsSupabaseReady(true)
     const sb = guardSupabase()
 
-    // 1. Listener de cambios de auth (sign‑in, sign‑out, refresh).
+    // 1. Listener de cambios de auth (signâ€‘in, signâ€‘out, refresh).
     const {
       data: { subscription },
     } = sb.auth.onAuthStateChange((_evt, s) => {
@@ -179,7 +183,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
       }
     })
 
-    // 2. Sesión ya existente
+    // 2. SesiÃ³n ya existente
     const init = async () => {
       try {
         const {
@@ -191,7 +195,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
 
         if (sessionError) {
           setError(
-            `[auth] Error al recuperar sesión inicial: ${sessionError.message}`,
+            `[auth] Error al recuperar sesiÃ³n inicial: ${sessionError.message}`,
           )
           setSession(null)
           setUser(null)
@@ -206,8 +210,8 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
         }
       } catch (e) {
         if (!isMounted) return
-        const message = e instanceof Error ? e.message : 'Error desconocido al inicializar sesión'
-        setError(`[auth] Excepción en init de sesión: ${message}`)
+        const message = e instanceof Error ? e.message : 'Error desconocido al inicializar sesiÃ³n'
+        setError(`[auth] ExcepciÃ³n en init de sesiÃ³n: ${message}`)
         setSession(null)
         setUser(null)
         setProfile(null)
@@ -238,7 +242,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
       } = await sb.auth.signInWithPassword({ email, password })
 
       if (error) {
-        const msg = `[auth] Error al iniciar sesión: ${error.message}`
+        const msg = `[auth] Error al iniciar sesiÃ³n: ${error.message}`
         setError(msg)
         setUser(null)
         setSession(null)
@@ -252,8 +256,8 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
       }
       return { error: null }
     } catch (e) {
-      const message = e instanceof Error ? e.message : 'Error desconocido al iniciar sesión'
-      const msg = `[auth] Excepción en signInEmail: ${message}`
+      const message = e instanceof Error ? e.message : 'Error desconocido al iniciar sesiÃ³n'
+      const msg = `[auth] ExcepciÃ³n en signInEmail: ${message}`
       setError(msg)
       setUser(null)
       setSession(null)
@@ -274,8 +278,8 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
       const sb = guardSupabase()
       const isDev = import.meta.env.DEV
 
-      // En desarrollo: si no hay redirect URL configurada, no esperar confirmación de email
-      // para desarrollo más fluido (email confirmations disabled en Supabase dashboard)
+      // En desarrollo: si no hay redirect URL configurada, no esperar confirmaciÃ³n de email
+      // para desarrollo mÃ¡s fluido (email confirmations disabled en Supabase dashboard)
       const redirectUrl = isDev
         ? undefined
         : (import.meta.env.VITE_NEXT_PUBLIC_SUPABASE_REDIRECT_URL ??
@@ -296,20 +300,20 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
         return { error: msg }
       }
 
-      // En dev: si no hay redirect URL y el usuario se creó, intentar auto sign-in
-      // (funciona si email confirmations están deshabilitadas en Supabase dashboard)
+      // En dev: si no hay redirect URL y el usuario se creÃ³, intentar auto sign-in
+      // (funciona si email confirmations estÃ¡n deshabilitadas en Supabase dashboard)
       if (isDev && data.user && !data.session && !redirectUrl) {
         const { error: signInError } = await sb.auth.signInWithPassword({ email, password })
         if (!signInError) {
           return { error: null }
         }
-        // Si falla el auto sign-in, es porque requiere confirmación de email
+        // Si falla el auto sign-in, es porque requiere confirmaciÃ³n de email
       }
 
       return { error: null }
     } catch (e) {
       const message = e instanceof Error ? e.message : 'Error desconocido al registrarse'
-      const msg = `[auth] Excepción en signUpEmail: ${message}`
+      const msg = `[auth] ExcepciÃ³n en signUpEmail: ${message}`
       setError(msg)
       return { error: msg }
     } finally {
@@ -340,7 +344,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
       return { error: null }
     } catch (e) {
       const message = e instanceof Error ? e.message : 'Error desconocido en signInGoogle'
-      const msg = `[auth] Excepción en signInGoogle: ${message}`
+      const msg = `[auth] ExcepciÃ³n en signInGoogle: ${message}`
       setError(msg)
       return { error: msg }
     }
@@ -353,7 +357,7 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
       const sb = guardSupabase()
       const { error } = await sb.auth.signOut()
       if (error) {
-        setError(`[auth] Error al cerrar sesión: ${error.message}`)
+        setError(`[auth] Error al cerrar sesiÃ³n: ${error.message}`)
         return
       }
       setSession(null)
@@ -361,8 +365,8 @@ export function RDMAuthProvider({ children }: { children: ReactNode }) {
       setProfile(null)
       setRoles([])
     } catch (e) {
-      const message = e instanceof Error ? e.message : 'Error desconocido al cerrar sesión'
-      setError(`[auth] Excepción en signOut: ${message}`)
+      const message = e instanceof Error ? e.message : 'Error desconocido al cerrar sesiÃ³n'
+      setError(`[auth] ExcepciÃ³n en signOut: ${message}`)
     } finally {
       setLoading(false)
     }

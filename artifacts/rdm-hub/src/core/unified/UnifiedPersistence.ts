@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { v4 as uuidv4 } from 'uuid';
 import { logger } from '@/lib/logger';
 import { territorialCollector } from '@/core/territorial/TerritorialDataCollector';

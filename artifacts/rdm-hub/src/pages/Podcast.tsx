@@ -1,6 +1,10 @@
-// ────────────────────────────────────────────────────────────────
-// Podcast Page — Spotify Podcasts (replaces Archivo Sonoro / FM Radio)
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Podcast Page â€” Spotify Podcasts (replaces Archivo Sonoro / FM Radio)
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -12,8 +16,8 @@ const API_BASE = import.meta.env.VITE_API_URL || "";
 const FALLBACK_PODCASTS: PodcastEpisode[] = [
   {
     id: "podcast-isabella",
-    title: "Isabella Villaseñor — Diálogos del Pueblo Mágico",
-    description: "Conversaciones sobre cultura, identidad y tecnología desde Real del Monte. Narrativas soberanas del ecosistema TAMV.",
+    title: "Isabella VillaseÃ±or â€” DiÃ¡logos del Pueblo MÃ¡gico",
+    description: "Conversaciones sobre cultura, identidad y tecnologÃ­a desde Real del Monte. Narrativas soberanas del ecosistema TAMV.",
     spotifyUri: "spotify:show:6JQijmFkFz5ZqC4MjR3QkX",
     embedUrl: "https://open.spotify.com/embed/show/6JQijmFkFz5ZqC4MjR3QkX?utm_source=generator&theme=0",
     category: "narrativa",
@@ -22,8 +26,8 @@ const FALLBACK_PODCASTS: PodcastEpisode[] = [
   },
   {
     id: "podcast-realito",
-    title: "Realito AI — El Asistente Soberano",
-    description: "El podcast donde Realito explora el ecosistema TAMV, responde preguntas de la comunidad y comparte historias del Pueblo Mágico.",
+    title: "Realito AI â€” El Asistente Soberano",
+    description: "El podcast donde Realito explora el ecosistema TAMV, responde preguntas de la comunidad y comparte historias del Pueblo MÃ¡gico.",
     spotifyUri: "spotify:show:placeholder-realito",
     embedUrl: "https://open.spotify.com/embed/show/placeholder-realito?utm_source=generator&theme=0",
     category: "tecnologia",
@@ -33,7 +37,7 @@ const FALLBACK_PODCASTS: PodcastEpisode[] = [
   {
     id: "podcast-territorio",
     title: "Voces del Territorio",
-    description: "Historias, testimonios y análisis desde los pueblos mágicos de Hidalgo. Percepción territorial en audio.",
+    description: "Historias, testimonios y anÃ¡lisis desde los pueblos mÃ¡gicos de Hidalgo. PercepciÃ³n territorial en audio.",
     spotifyUri: "spotify:show:placeholder-territorio",
     embedUrl: "https://open.spotify.com/embed/show/placeholder-territorio?utm_source=generator&theme=0",
     category: "territorial",
@@ -43,7 +47,7 @@ const FALLBACK_PODCASTS: PodcastEpisode[] = [
   {
     id: "podcast-conocimiento",
     title: "Trovadores del Conocimiento",
-    description: "Divulgación científica, cultural y tecnológica desde la perspectiva del ecosistema TAMV. Conocimiento libre y soberano.",
+    description: "DivulgaciÃ³n cientÃ­fica, cultural y tecnolÃ³gica desde la perspectiva del ecosistema TAMV. Conocimiento libre y soberano.",
     spotifyUri: "spotify:show:placeholder-conocimiento",
     embedUrl: "https://open.spotify.com/embed/show/placeholder-conocimiento?utm_source=generator&theme=0",
     category: "conocimiento",
@@ -55,7 +59,7 @@ const FALLBACK_PODCASTS: PodcastEpisode[] = [
 const CATEGORIES = [
   { id: "all", name: "Todos", icon: Globe },
   { id: "narrativa", name: "Narrativa", icon: Mic },
-  { id: "tecnologia", name: "Tecnología", icon: Headphones },
+  { id: "tecnologia", name: "TecnologÃ­a", icon: Headphones },
   { id: "territorial", name: "Territorio", icon: Globe },
   { id: "conocimiento", name: "Conocimiento", icon: Search },
 ];
@@ -99,11 +103,11 @@ export default function Podcast() {
               </div>
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold text-foreground">Podcast</h1>
-                <p className="text-sm text-green-600 font-medium">Spotify × TAMV Ecosistema</p>
+                <p className="text-sm text-green-600 font-medium">Spotify Ã— TAMV Ecosistema</p>
               </div>
             </div>
             <p className="text-muted-foreground max-w-2xl mt-4">
-              Voces del Pueblo Mágico en Spotify. Narrativas soberanas, conocimiento libre y percepción territorial en audio.
+              Voces del Pueblo MÃ¡gico en Spotify. Narrativas soberanas, conocimiento libre y percepciÃ³n territorial en audio.
             </p>
           </motion.div>
 

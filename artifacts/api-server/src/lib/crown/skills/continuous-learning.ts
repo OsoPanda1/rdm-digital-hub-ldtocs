@@ -1,9 +1,13 @@
-// ────────────────────────────────────────────────────────────────
-// SKILL 5 — Continuous Learning Engine
-// Adaptación en tiempo real de comportamiento del agente basado
-// en feedback del usuario, métricas de rendimiento y detección
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// SKILL 5 â€” Continuous Learning Engine
+// AdaptaciÃ³n en tiempo real de comportamiento del agente basado
+// en feedback del usuario, mÃ©tricas de rendimiento y detecciÃ³n
 // de drift de comportamiento
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { SkillDefinition } from "../types";
 

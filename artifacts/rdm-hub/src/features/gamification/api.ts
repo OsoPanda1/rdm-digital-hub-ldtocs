@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * Gamification LTOS Engine — API Client
+ * Gamification LTOS Engine â€” API Client
  * Real del Monte Digital Hub
  *
  * Client-side API for interacting with the gamification backend.

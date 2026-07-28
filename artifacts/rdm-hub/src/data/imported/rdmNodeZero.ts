@@ -1,10 +1,14 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 export type NodeZeroRepoStatus = "absorbed" | "orchestrated" | "reference";
 
 export interface NodeZeroRepo {
   id: string;
   name: string;
   url: string;
-  family: "RDM" | "TAMV" | "Smart City" | "Documentación";
+  family: "RDM" | "TAMV" | "Smart City" | "DocumentaciÃ³n";
   status: NodeZeroRepoStatus;
   focus: string;
   absorbedImprovements: string[];
@@ -34,9 +38,9 @@ export const NODE_ZERO_REPOS: NodeZeroRepo[] = [
     family: "RDM",
     status: "absorbed",
     focus:
-      "Manifiesto RDM·X, páginas operativas, estado TAMV y contrato de fusión.",
+      "Manifiesto RDMÂ·X, pÃ¡ginas operativas, estado TAMV y contrato de fusiÃ³n.",
     absorbedImprovements: [
-      "Registro explícito de repos y capacidades federadas.",
+      "Registro explÃ­cito de repos y capacidades federadas.",
       "Lectura del ecosistema como sistema operativo, no como landing aislada.",
       "Panel de madurez por capacidades con rutas ejecutables.",
     ],
@@ -47,11 +51,11 @@ export const NODE_ZERO_REPOS: NodeZeroRepo[] = [
     url: "https://github.com/OsoPanda1/real-del-monte-digital",
     family: "RDM",
     status: "absorbed",
-    focus: "Shell turístico-comercial base y experiencia de Pueblo Mágico.",
+    focus: "Shell turÃ­stico-comercial base y experiencia de Pueblo MÃ¡gico.",
     absorbedImprovements: [
-      "Priorización de visitante, comercio y cultura antes del apéndice técnico.",
-      "Rutas públicas para historia, gastronomía, comercio, mapa y comunidad.",
-      "Capa visual cinematográfica con identidad Real del Monte.",
+      "PriorizaciÃ³n de visitante, comercio y cultura antes del apÃ©ndice tÃ©cnico.",
+      "Rutas pÃºblicas para historia, gastronomÃ­a, comercio, mapa y comunidad.",
+      "Capa visual cinematogrÃ¡fica con identidad Real del Monte.",
     ],
   },
   {
@@ -61,11 +65,11 @@ export const NODE_ZERO_REPOS: NodeZeroRepo[] = [
     family: "RDM",
     status: "absorbed",
     focus:
-      "Exploración cultural, sitios, relatos y navegación de experiencias.",
+      "ExploraciÃ³n cultural, sitios, relatos y navegaciÃ³n de experiencias.",
     absorbedImprovements: [
-      "Estructura de páginas culturales especializadas.",
-      "Patrón de tarjetas por experiencia territorial.",
-      "Navegación orientada a descubrir antes que administrar.",
+      "Estructura de pÃ¡ginas culturales especializadas.",
+      "PatrÃ³n de tarjetas por experiencia territorial.",
+      "NavegaciÃ³n orientada a descubrir antes que administrar.",
     ],
   },
   {
@@ -74,11 +78,11 @@ export const NODE_ZERO_REPOS: NodeZeroRepo[] = [
     url: "https://github.com/OsoPanda1/rdm-turismodigital",
     family: "RDM",
     status: "orchestrated",
-    focus: "Catálogo turístico, rutas, eventos y servicios para visitantes.",
+    focus: "CatÃ¡logo turÃ­stico, rutas, eventos y servicios para visitantes.",
     absorbedImprovements: [
-      "Agrupación turismo + comercios + rutas como una sola experiencia operacional.",
-      "CTA directas hacia rutas, catálogo, mapa y directorio.",
-      "Lenguaje de producto para activar economía local.",
+      "AgrupaciÃ³n turismo + comercios + rutas como una sola experiencia operacional.",
+      "CTA directas hacia rutas, catÃ¡logo, mapa y directorio.",
+      "Lenguaje de producto para activar economÃ­a local.",
     ],
   },
   {
@@ -88,11 +92,11 @@ export const NODE_ZERO_REPOS: NodeZeroRepo[] = [
     family: "Smart City",
     status: "absorbed",
     focus:
-      "Gemelo digital, telemetría, capas geoespaciales y lectura territorial.",
+      "Gemelo digital, telemetrÃ­a, capas geoespaciales y lectura territorial.",
     absorbedImprovements: [
       "Matriz de gemelo territorial conectada a mapa y dashboard.",
-      "Vocabulario de sensores, saturación, flujos y cuidado patrimonial.",
-      "Puente entre decisiones de IA y evidencia geográfica.",
+      "Vocabulario de sensores, saturaciÃ³n, flujos y cuidado patrimonial.",
+      "Puente entre decisiones de IA y evidencia geogrÃ¡fica.",
     ],
   },
   {
@@ -102,25 +106,25 @@ export const NODE_ZERO_REPOS: NodeZeroRepo[] = [
     family: "Smart City",
     status: "orchestrated",
     focus:
-      "Paquetes de ciudad inteligente, conectividad, seguridad y operación municipal.",
+      "Paquetes de ciudad inteligente, conectividad, seguridad y operaciÃ³n municipal.",
     absorbedImprovements: [
-      "Fases de conectividad soberana y telemetría urbana.",
-      "Indicadores de operación para pasar de visión a ejecución.",
-      "Lectura modular compatible con administración pública y comercios.",
+      "Fases de conectividad soberana y telemetrÃ­a urbana.",
+      "Indicadores de operaciÃ³n para pasar de visiÃ³n a ejecuciÃ³n.",
+      "Lectura modular compatible con administraciÃ³n pÃºblica y comercios.",
     ],
   },
   {
     id: "rdm-digital-nodo-cero",
     name: "rdm-digital-nodo-cero",
     url: "https://github.com/OsoPanda1/rdm-digital-nodo-cero",
-    family: "Documentación",
+    family: "DocumentaciÃ³n",
     status: "absorbed",
     focus:
-      "Nodo Cero soberano, tesis, identidad, protocolos y constitución funcional.",
+      "Nodo Cero soberano, tesis, identidad, protocolos y constituciÃ³n funcional.",
     absorbedImprovements: [
-      "Nodo Cero como comando verificable y no solo declaración.",
-      "Anclaje de identidad, BookPI, Phoenix 20/30/50 y auditoría BABAS.",
-      "Secuencia de activación para ejecutar el núcleo desde este repo.",
+      "Nodo Cero como comando verificable y no solo declaraciÃ³n.",
+      "Anclaje de identidad, BookPI, Phoenix 20/30/50 y auditorÃ­a BABAS.",
+      "Secuencia de activaciÃ³n para ejecutar el nÃºcleo desde este repo.",
     ],
   },
   {
@@ -129,11 +133,11 @@ export const NODE_ZERO_REPOS: NodeZeroRepo[] = [
     url: "https://github.com/OsoPanda1/tamv-core-atlas",
     family: "TAMV",
     status: "reference",
-    focus: "Atlas técnico TAMV y lenguaje de interoperabilidad federada.",
+    focus: "Atlas tÃ©cnico TAMV y lenguaje de interoperabilidad federada.",
     absorbedImprovements: [
       "Mapa de capacidades TAMV reutilizable por rutas del portal.",
       "Criterios de madurez por dominio.",
-      "Separación entre visión, contrato y ejecución.",
+      "SeparaciÃ³n entre visiÃ³n, contrato y ejecuciÃ³n.",
     ],
   },
   {
@@ -142,11 +146,11 @@ export const NODE_ZERO_REPOS: NodeZeroRepo[] = [
     url: "https://github.com/OsoPanda1/tamv-orchestrator",
     family: "TAMV",
     status: "orchestrated",
-    focus: "Orquestación API, mutaciones, auth y contratos de datos.",
+    focus: "OrquestaciÃ³n API, mutaciones, auth y contratos de datos.",
     absorbedImprovements: [
-      "Lectura de cada módulo como contrato ejecutable.",
+      "Lectura de cada mÃ³dulo como contrato ejecutable.",
       "Foco en esquemas, cliente API y control de estado.",
-      "Preparación para trazabilidad entre UI y servicios.",
+      "PreparaciÃ³n para trazabilidad entre UI y servicios.",
     ],
   },
   {
@@ -156,24 +160,24 @@ export const NODE_ZERO_REPOS: NodeZeroRepo[] = [
     family: "TAMV",
     status: "reference",
     focus:
-      "Hub soberano con economía, wallet, universidad, gobernanza y dream spaces.",
+      "Hub soberano con economÃ­a, wallet, universidad, gobernanza y dream spaces.",
     absorbedImprovements: [
-      "Visión de economía soberana y universidad digital como capas futuras.",
-      "Governance, achievements y marketplace como destinos de expansión.",
-      "Isabella AI como guardianía transversal.",
+      "VisiÃ³n de economÃ­a soberana y universidad digital como capas futuras.",
+      "Governance, achievements y marketplace como destinos de expansiÃ³n.",
+      "Isabella AI como guardianÃ­a transversal.",
     ],
   },
   {
     id: "documentacion-tamv",
     name: "DOCUMENTACION-TAMV-DM-X4-e-ISABELLA-AI",
     url: "https://github.com/OsoPanda1/DOCUMENTACION-TAMV-DM-X4-e-ISABELLA-AI",
-    family: "Documentación",
+    family: "DocumentaciÃ³n",
     status: "absorbed",
-    focus: "Corpus maestro de visión TAMV DM-X4 e Isabella AI.",
+    focus: "Corpus maestro de visiÃ³n TAMV DM-X4 e Isabella AI.",
     absorbedImprovements: [
       "Narrativa de metaverso sensorial 4D anclado en Real del Monte.",
-      "Lenguaje de autoría, soberanía tecnológica y orgullo territorial.",
-      "Marco conceptual para superar la landing turística tradicional.",
+      "Lenguaje de autorÃ­a, soberanÃ­a tecnolÃ³gica y orgullo territorial.",
+      "Marco conceptual para superar la landing turÃ­stica tradicional.",
     ],
   },
 ];
@@ -181,11 +185,11 @@ export const NODE_ZERO_REPOS: NodeZeroRepo[] = [
 export const NODE_ZERO_CAPABILITIES: NodeZeroCapability[] = [
   {
     id: "shell",
-    title: "Shell turístico-comercial soberano",
+    title: "Shell turÃ­stico-comercial soberano",
     signal:
-      "Visitante, comercio, cultura y donativo entran por una sola superficie pública.",
+      "Visitante, comercio, cultura y donativo entran por una sola superficie pÃºblica.",
     implementation:
-      "Home, rutas, catálogo, directorio, mapa, eventos y REALITO ya se exponen como producto unificado.",
+      "Home, rutas, catÃ¡logo, directorio, mapa, eventos y REALITO ya se exponen como producto unificado.",
     routes: ["/", "/rutas", "/catalogo", "/directorio", "/mapa"],
     maturity: 92,
   },
@@ -195,7 +199,7 @@ export const NODE_ZERO_CAPABILITIES: NodeZeroCapability[] = [
     signal:
       "Sitios, rutas, comercios y riesgo territorial pueden leerse como capas del mismo mapa vivo.",
     implementation:
-      "POIs georreferenciados, dashboard, contexto soberano y HUD de señales mineras quedan enlazados al Nodo Cero.",
+      "POIs georreferenciados, dashboard, contexto soberano y HUD de seÃ±ales mineras quedan enlazados al Nodo Cero.",
     routes: ["/mapa", "/admin/telemetry", "/sovereign"],
     maturity: 84,
   },
@@ -203,7 +207,7 @@ export const NODE_ZERO_CAPABILITIES: NodeZeroCapability[] = [
     id: "isabella",
     title: "Isabella / REALITO contextual",
     signal:
-      "La IA responde desde memoria cultural, retención turística y cuidado del territorio.",
+      "La IA responde desde memoria cultural, retenciÃ³n turÃ­stica y cuidado del territorio.",
     implementation:
       "Asistente flotante, motor Isabella, corpus RDM y decisiones auditables operan como una capa transversal.",
     routes: ["/tamv", "/tamv/api", "/corpus", "/admin/isabella"],
@@ -211,11 +215,11 @@ export const NODE_ZERO_CAPABILITIES: NodeZeroCapability[] = [
   },
   {
     id: "commerce",
-    title: "Economía Phoenix 20/30/50",
+    title: "EconomÃ­a Phoenix 20/30/50",
     signal:
-      "El directorio, tiers comerciales y donativos se conectan a una narrativa económica verificable.",
+      "El directorio, tiers comerciales y donativos se conectan a una narrativa econÃ³mica verificable.",
     implementation:
-      "Onboarding comercial, tiers, catálogo y donaciones quedan preparados para contratos Stripe/Supabase.",
+      "Onboarding comercial, tiers, catÃ¡logo y donaciones quedan preparados para contratos Stripe/Supabase.",
     routes: ["/negocios", "/catalogo", "/donar", "/admin/economy"],
     maturity: 79,
   },
@@ -223,19 +227,19 @@ export const NODE_ZERO_CAPABILITIES: NodeZeroCapability[] = [
     id: "memory",
     title: "Memoria federada auditable",
     signal:
-      "Cada módulo conserva fuente, contrato, ruta y madurez para evitar dispersión entre repos.",
+      "Cada mÃ³dulo conserva fuente, contrato, ruta y madurez para evitar dispersiÃ³n entre repos.",
     implementation:
-      "Este registro Nodo Cero consolida RDM, TAMV, Smart City y documentación en una bitácora navegable.",
+      "Este registro Nodo Cero consolida RDM, TAMV, Smart City y documentaciÃ³n en una bitÃ¡cora navegable.",
     routes: ["/fusion", "/federacion", "/enciclopedia", "/corpus"],
     maturity: 95,
   },
   {
     id: "execution",
-    title: "Ejecución Nodo Cero",
+    title: "EjecuciÃ³n Nodo Cero",
     signal:
-      "La visión se convierte en secuencia: absorber, normalizar, exponer, medir y escalar.",
+      "La visiÃ³n se convierte en secuencia: absorber, normalizar, exponer, medir y escalar.",
     implementation:
-      "El home ahora muestra el panel de ejecución y Fusion dejó de ser una lista pasiva de repos.",
+      "El home ahora muestra el panel de ejecuciÃ³n y Fusion dejÃ³ de ser una lista pasiva de repos.",
     routes: ["/fusion", "/admin", "/dashboard"],
     maturity: 90,
   },
@@ -254,7 +258,7 @@ export const NODE_ZERO_PROTOCOL: NodeZeroProtocolStep[] = [
     id: "absorb",
     title: "Absorber",
     description:
-      "Traer al repo actual la matriz de fusión, el lenguaje operativo y la lectura de capacidades por madurez.",
+      "Traer al repo actual la matriz de fusiÃ³n, el lenguaje operativo y la lectura de capacidades por madurez.",
     evidence:
       "NODE_ZERO_REPOS y NODE_ZERO_CAPABILITIES quedan como contrato fuente del panel.",
   },
@@ -262,15 +266,15 @@ export const NODE_ZERO_PROTOCOL: NodeZeroProtocolStep[] = [
     id: "unify",
     title: "Unificar",
     description:
-      "Conectar turismo, comercio, gemelo digital, Isabella, soberanía y documentación en rutas existentes.",
+      "Conectar turismo, comercio, gemelo digital, Isabella, soberanÃ­a y documentaciÃ³n en rutas existentes.",
     evidence:
-      "Cada capacidad lista rutas reales del portal para operar la visión desde una sola interfaz.",
+      "Cada capacidad lista rutas reales del portal para operar la visiÃ³n desde una sola interfaz.",
   },
   {
     id: "execute",
     title: "Ejecutar Nodo Cero",
     description:
-      "Publicar consola visual con estado, avances, comandos de navegación y próximos contratos técnicos.",
+      "Publicar consola visual con estado, avances, comandos de navegaciÃ³n y prÃ³ximos contratos tÃ©cnicos.",
     evidence:
       "NodoCeroCommandCenter se renderiza en home y se reutiliza en Fusion.",
   },

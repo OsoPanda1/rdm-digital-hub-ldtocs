@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // src/components/rdm/VideoEmbed.tsx
-// RDM Digital Hub — YouTube Video Embed Component
+// RDM Digital Hub â€” YouTube Video Embed Component
 // Two slots per page: hero (top) and mid-section.
 // Props: youtubeId, title, className
 
@@ -74,7 +78,7 @@ export function VideoEmbed({
               </div>
               <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2">
                 <span className="bg-black/70 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur-sm">
-                  ▶ {title}
+                  â–¶ {title}
                 </span>
               </div>
             </button>

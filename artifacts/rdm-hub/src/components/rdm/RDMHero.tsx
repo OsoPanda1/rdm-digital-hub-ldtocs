@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { ChevronDown, MapPin, Sparkles, Radio, Mountain, Calendar } from "lucide-react";
@@ -15,9 +19,9 @@ const HERO_IMAGES = [
 ];
 
 const STATS = [
-  { value: "500+", label: "Años de historia", icon: Calendar },
+  { value: "500+", label: "AÃ±os de historia", icon: Calendar },
   { value: "2,700m", label: "Altitud", icon: Mountain },
-  { value: "14°C", label: "Temperatura", icon: null },
+  { value: "14Â°C", label: "Temperatura", icon: null },
 ];
 
 const PARTICLES = Array.from({ length: 22 }, (_, i) => ({
@@ -50,7 +54,7 @@ export function RDMHero() {
       className="relative h-[100vh] w-full overflow-hidden"
       style={{ background: "hsl(222 47% 4%)" }}
     >
-      {/* ── Background image stack with Ken Burns ── */}
+      {/* â”€â”€ Background image stack with Ken Burns â”€â”€ */}
       <motion.div style={{ y, scale }} className="absolute inset-0 will-change-transform">
         {HERO_IMAGES.map((img, i) => (
           <div
@@ -77,7 +81,7 @@ export function RDMHero() {
         />
       </motion.div>
 
-      {/* ── Aurora / atmosphere glow ── */}
+      {/* â”€â”€ Aurora / atmosphere glow â”€â”€ */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <motion.div
           className="absolute -top-40 left-1/2 -translate-x-1/2 h-[460px] w-[900px] rounded-full opacity-30"
@@ -101,7 +105,7 @@ export function RDMHero() {
         />
       </div>
 
-      {/* ── Ambient particles ── */}
+      {/* â”€â”€ Ambient particles â”€â”€ */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {PARTICLES.map((p) => (
           <motion.div
@@ -121,10 +125,10 @@ export function RDMHero() {
         ))}
       </div>
 
-      {/* ── Thin top border accent ── */}
+      {/* â”€â”€ Thin top border accent â”€â”€ */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
 
-      {/* ── Content ── */}
+      {/* â”€â”€ Content â”€â”€ */}
       <motion.div
         style={{ opacity }}
         className="relative z-10 h-full flex flex-col items-center justify-center px-6 md:px-16"
@@ -148,7 +152,7 @@ export function RDMHero() {
               className="text-[11px] font-semibold uppercase tracking-widest text-white/75 group-hover:text-white/95 transition-colors"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              TAMV 92.5 · En vivo
+              TAMV 92.5 Â· En vivo
             </span>
             <Radio className="w-3 h-3 text-white/40" />
           </Link>
@@ -166,7 +170,7 @@ export function RDMHero() {
             className="mb-3 text-[10px] md:text-xs uppercase tracking-[0.45em] text-cyan-400/70 font-medium"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            Pueblo Mágico · Hidalgo · México
+            Pueblo MÃ¡gico Â· Hidalgo Â· MÃ©xico
           </p>
 
           <h1
@@ -196,7 +200,7 @@ export function RDMHero() {
           className="mb-9 max-w-lg text-center text-base md:text-lg text-white/55 leading-relaxed"
           style={{ fontFamily: "var(--font-body)" }}
         >
-          El portal soberano del Pueblo Mágico — donde la niebla abraza
+          El portal soberano del Pueblo MÃ¡gico â€” donde la niebla abraza
           la historia minera y la cultura cobra vida digital.
         </motion.p>
 
@@ -225,7 +229,7 @@ export function RDMHero() {
           </Link>
         </motion.div>
 
-        {/* Logo — small, beneath buttons */}
+        {/* Logo â€” small, beneath buttons */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -241,13 +245,13 @@ export function RDMHero() {
         </motion.div>
       </motion.div>
 
-      {/* ── Bottom bar ── */}
+      {/* â”€â”€ Bottom bar â”€â”€ */}
       <div className="absolute bottom-0 inset-x-0 z-20">
         {/* Thin accent line */}
         <div className="h-px w-full bg-gradient-to-r from-transparent via-white/8 to-transparent" />
 
         <div className="flex items-end justify-between px-6 md:px-14 py-6 bg-gradient-to-t from-black/70 to-transparent pt-16">
-          {/* TAMV banner — desktop only */}
+          {/* TAMV banner â€” desktop only */}
           <motion.div
             initial={{ opacity: 0, x: -18 }}
             animate={{ opacity: 1, x: 0 }}
@@ -267,7 +271,7 @@ export function RDMHero() {
             </Link>
           </motion.div>
 
-          {/* Scroll chevron — centered */}
+          {/* Scroll chevron â€” centered */}
           <motion.div
             animate={{ y: [0, 7, 0] }}
             transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
@@ -276,7 +280,7 @@ export function RDMHero() {
             <ChevronDown className="w-5 h-5 text-[hsl(43,70%,55%/0.65)]" />
           </motion.div>
 
-          {/* Stats — right */}
+          {/* Stats â€” right */}
           <motion.div
             initial={{ opacity: 0, x: 18 }}
             animate={{ opacity: 1, x: 0 }}

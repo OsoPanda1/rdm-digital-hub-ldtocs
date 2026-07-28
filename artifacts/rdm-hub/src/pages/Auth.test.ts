@@ -1,7 +1,11 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { describe, it, expect } from "vitest";
 import { z } from "zod";
 
-// Mirror of schemas defined in src/pages/Auth.tsx — kept in lockstep with the route.
+// Mirror of schemas defined in src/pages/Auth.tsx â€” kept in lockstep with the route.
 const signupSchema = z.object({
   displayName: z.string().trim().min(2).max(60),
   email: z.string().trim().email().max(255),
@@ -28,7 +32,7 @@ describe("auth form schemas", () => {
   });
   it("accepts a valid signup payload", () => {
     const r = signupSchema.safeParse({
-      displayName: "Ana López",
+      displayName: "Ana LÃ³pez",
       email: "ana@real.mx",
       password: "supersegura",
     });

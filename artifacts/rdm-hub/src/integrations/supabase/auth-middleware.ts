@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // Runtime-agnostic Supabase bearer verifier for Express/serverless handlers.
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from './types'

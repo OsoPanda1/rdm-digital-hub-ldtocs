@@ -1,9 +1,13 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { WikiPage } from "@/components/WikiPage";
 import { Section } from "@/components/WikiElements";
 
 const Filosofia = () => (
   <WikiPage
-    title="Filosofía y Códice Maestro"
+    title="FilosofÃ­a y CÃ³dice Maestro"
         subtitle="Los principios que rigen el ecosistema TAMV"
       >
         {/* Hero Banner */}
@@ -11,10 +15,10 @@ const Filosofia = () => (
           <img src="/images/rooftops-sunrise.jpg" alt="Azoteas al amanecer en Real del Monte" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
         </div>
-        <Section title="El Códice Kórima">
+        <Section title="El CÃ³dice KÃ³rima">
       <p className="text-muted-foreground leading-relaxed">
-        La arquitectura TAMV se rige por el <strong className="text-primary">Códice Kórima</strong>, inspirado
-        en la filosofía Rarámuri de reciprocidad. Este códice establece que toda tecnología dentro del ecosistema
+        La arquitectura TAMV se rige por el <strong className="text-primary">CÃ³dice KÃ³rima</strong>, inspirado
+        en la filosofÃ­a RarÃ¡muri de reciprocidad. Este cÃ³dice establece que toda tecnologÃ­a dentro del ecosistema
         debe servir para fortalecer la dignidad humana, no para extraer valor de las personas.
       </p>
     </Section>
@@ -22,24 +26,24 @@ const Filosofia = () => (
     <Section title="Principios fundamentales">
       <ul className="space-y-3">
         {[
-          { name: "Soberanía digital", desc: "Cada persona es dueña de su identidad y datos." },
-          { name: "Transparencia radical", desc: "Todo proceso es auditable y documentado públicamente." },
-          { name: "Ética integrada", desc: "La ética no es un módulo externo, sino parte del código base." },
-          { name: "Reciprocidad (Kórima)", desc: "El valor generado se redistribuye equitativamente." },
+          { name: "SoberanÃ­a digital", desc: "Cada persona es dueÃ±a de su identidad y datos." },
+          { name: "Transparencia radical", desc: "Todo proceso es auditable y documentado pÃºblicamente." },
+          { name: "Ã‰tica integrada", desc: "La Ã©tica no es un mÃ³dulo externo, sino parte del cÃ³digo base." },
+          { name: "Reciprocidad (KÃ³rima)", desc: "El valor generado se redistribuye equitativamente." },
           { name: "Determinismo estructural", desc: "La arquitectura garantiza predictibilidad y trazabilidad." },
         ].map((p) => (
           <li key={p.name} className="flex gap-3 items-start">
             <span className="mt-1.5 w-2 h-2 rounded-full bg-primary shrink-0" />
             <div>
               <strong className="text-foreground">{p.name}</strong>
-              <span className="text-muted-foreground"> — {p.desc}</span>
+              <span className="text-muted-foreground"> â€” {p.desc}</span>
             </div>
           </li>
         ))}
       </ul>
     </Section>
 
-    <Section title="Leyes constitucionales del código">
+    <Section title="Leyes constitucionales del cÃ³digo">
       <div className="space-y-2">
         {[
           { id: "L1", rule: "createRoot solo existe en src/main.tsx" },

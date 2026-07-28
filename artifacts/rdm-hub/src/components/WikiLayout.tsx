@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { ReactNode } from "react";
 import { WikiSidebar } from "./WikiSidebar";
 import { WikiSearch } from "./WikiSearch";
@@ -20,7 +24,7 @@ export function WikiLayout({ children }: WikiLayoutProps) {
             </SidebarTrigger>
             <div className="flex items-center gap-2">
               <span className="text-primary font-bold text-lg tracking-tight">TAMV</span>
-              <span className="text-muted-foreground text-sm">MD‑X4™ Wiki</span>
+              <span className="text-muted-foreground text-sm">MDâ€‘X4â„¢ Wiki</span>
             </div>
             <div className="ml-auto">
               <WikiSearch />

@@ -1,9 +1,13 @@
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Supabase JWT Authentication Middleware
 // Verifies Bearer tokens using HS256 (Node.js crypto, no deps).
 // In dev-relaxed mode, falls back to header-based identity.
 // In production, rejects unauthenticated requests on protected routes.
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { NextFunction, Request, Response } from "express";
 import { createHmac, timingSafeEqual } from "crypto";
@@ -29,7 +33,7 @@ export interface AuthenticatedIdentity {
   authMethod: "jwt" | "header" | "anonymous";
 }
 
-// ── Base64URL decode (Supabase JWTs use base64url encoding) ──
+// â”€â”€ Base64URL decode (Supabase JWTs use base64url encoding) â”€â”€
 
 function base64UrlDecode(str: string): Buffer {
   const base64 = str.replace(/-/g, "+").replace(/_/g, "/");
@@ -37,7 +41,7 @@ function base64UrlDecode(str: string): Buffer {
   return Buffer.from(padded, "base64");
 }
 
-// ── JWT Verification (HS256 only — Supabase default) ──
+// â”€â”€ JWT Verification (HS256 only â€” Supabase default) â”€â”€
 
 export function verifySupabaseJwt(
   token: string,
@@ -88,7 +92,7 @@ export function verifySupabaseJwt(
 
     // Check issuer (Supabase uses its project URL as issuer)
     if (payload.iss && !payload.iss.startsWith("https://")) {
-      // Soft check — log warning but don't reject (Supabase issuer format varies)
+      // Soft check â€” log warning but don't reject (Supabase issuer format varies)
       logger.warn({ iss: payload.iss }, "JWT issuer unexpected format");
     }
 
@@ -98,7 +102,7 @@ export function verifySupabaseJwt(
   }
 }
 
-// ── Extract role from Supabase JWT claims ──
+// â”€â”€ Extract role from Supabase JWT claims â”€â”€
 
 function extractRole(payload: JwtPayload): string {
   // Supabase stores roles in app_metadata.roles or app_metadata.role
@@ -115,7 +119,7 @@ function extractRole(payload: JwtPayload): string {
   return "user"; // Default authenticated role
 }
 
-// ── Middleware: Attach JWT-derived identity ──
+// â”€â”€ Middleware: Attach JWT-derived identity â”€â”€
 
 export function attachJwtIdentity(jwtSecret: string | null) {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -136,9 +140,9 @@ export function attachJwtIdentity(jwtSecret: string | null) {
         next();
         return;
       }
-      // JWT present but invalid — REJECT. Never silently degrade to anonymous
+      // JWT present but invalid â€” REJECT. Never silently degrade to anonymous
       // when a secret is configured, as that masks auth failures in production.
-      logger.warn({ error: result.error }, "JWT verification failed — rejecting request");
+      logger.warn({ error: result.error }, "JWT verification failed â€” rejecting request");
       res.status(401).json({
         ok: false,
         error: "unauthorized",
@@ -148,11 +152,11 @@ export function attachJwtIdentity(jwtSecret: string | null) {
     }
 
     if (token && !jwtSecret) {
-      // Token provided but no secret configured (dev mode) — log and allow through
-      logger.warn("Token provided but SUPABASE_JWT_SECRET not set — ignoring token (dev mode)");
+      // Token provided but no secret configured (dev mode) â€” log and allow through
+      logger.warn("Token provided but SUPABASE_JWT_SECRET not set â€” ignoring token (dev mode)");
     }
 
-    // No token, or no secret configured (dev mode) — anonymous
+    // No token, or no secret configured (dev mode) â€” anonymous
     (req as any).rdmIdentity = {
       subject: "anonymous",
       email: "",
@@ -164,7 +168,7 @@ export function attachJwtIdentity(jwtSecret: string | null) {
   };
 }
 
-// ── Middleware: Require valid JWT (401 if missing/invalid) ──
+// â”€â”€ Middleware: Require valid JWT (401 if missing/invalid) â”€â”€
 
 export function requireJwtAuth() {
   return (req: Request, res: Response, next: NextFunction) => {

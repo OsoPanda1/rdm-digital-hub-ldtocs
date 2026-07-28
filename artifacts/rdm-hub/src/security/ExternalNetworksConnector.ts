@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { logger } from "@/lib/logger";
 
 export type ExternalNetwork = "TWITTER" | "DISCORD" | "TELEGRAM" | "INSTAGRAM" | "TIKTOK";

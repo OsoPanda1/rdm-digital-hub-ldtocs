@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Heart, MessageCircle, MapPin } from "lucide-react";
 
@@ -58,7 +62,7 @@ const PostCard = ({
               <span>{timeAgo}</span>
               {placeName && (
                 <>
-                  <span>•</span>
+                  <span>â€¢</span>
                   <span className="flex items-center gap-0.5">
                     <MapPin className="w-3 h-3" />
                     {placeName}

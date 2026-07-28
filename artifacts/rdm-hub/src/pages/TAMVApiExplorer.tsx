@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,7 +24,7 @@ const endpoints: Endpoint[] = [
   { method: "POST", path: "/api/tamv/identity", desc: "Emite DID + ancla BookPI", group: "identity" },
   { method: "GET", path: "/api/tamv/governance/proposals", desc: "Propuestas DAO", group: "governance" },
   { method: "POST", path: "/api/tamv/governance/proposals", desc: "Crea propuesta", group: "governance" },
-  { method: "POST", path: "/api/tamv/economy/distribute", desc: "Distribuye Phoenix 20·30·50", group: "economy" },
+  { method: "POST", path: "/api/tamv/economy/distribute", desc: "Distribuye Phoenix 20Â·30Â·50", group: "economy" },
   { method: "POST", path: "/api/tamv/ai/decision", desc: "Registra DecisionRecord (SHA-256)", group: "ai" },
   { method: "GET", path: "/api/tamv/ai/decisions", desc: "Audita decisiones IA", group: "ai" },
   { method: "GET", path: "/api/tamv/metaverse/dreamspaces", desc: "DreamSpaces XR activos", group: "metaverse" },
@@ -52,7 +56,7 @@ const TAMVApiExplorer = () => {
           "/api/tamv/identity": { alias: "Visitante RDM", seed: "demo" },
           "/api/tamv/governance/proposals": {
             title: "Propuesta demo",
-            body: "Ratificar interoperabilidad MSR ↔ RDM.",
+            body: "Ratificar interoperabilidad MSR â†” RDM.",
           },
           "/api/tamv/economy/distribute": { profit: 1000 },
           "/api/tamv/ai/decision": {
@@ -82,8 +86,8 @@ const TAMVApiExplorer = () => {
   return (
       <RDMLayout>
         <SEOMeta
-          title="Explorador de API TAMV — RDM Digital"
-          description="Explorador interactivo de la API TAMV Blockchain MSR: identidad, gobernanza, economía, IA ética y metaverso."
+          title="Explorador de API TAMV â€” RDM Digital"
+          description="Explorador interactivo de la API TAMV Blockchain MSR: identidad, gobernanza, economÃ­a, IA Ã©tica y metaverso."
         />
         <div className="container mx-auto px-6 pt-32 pb-24">
           <motion.div
@@ -93,7 +97,7 @@ const TAMVApiExplorer = () => {
           >
             <Badge className="mb-4 bg-[hsl(var(--gold))]/10 text-[hsl(var(--gold))] border-[hsl(var(--gold))]/30">
               <Code2 className="w-3 h-3 mr-2" />
-              TAMV Blockchain MSR API · v1.0.0
+              TAMV Blockchain MSR API Â· v1.0.0
             </Badge>
             <h1 className="font-display text-4xl md:text-6xl font-light mb-3">
               Explorador de <span className="text-gradient-gold">API</span>

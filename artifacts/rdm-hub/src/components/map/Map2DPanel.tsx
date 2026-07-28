@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useMemo, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import L, { type LeafletEventHandlerFnMap, type Map as LeafletMap } from "leaflet";
@@ -6,7 +10,7 @@ import { Compass, Layers3, LocateFixed, RotateCcw, Sparkles } from "lucide-react
 import "leaflet/dist/leaflet.css";
 import { DEFAULT_MAP_VIEWPORT, type MapMarkerData, type MapViewportState } from "@/features/places/mapTypes";
 
-// Definición estricta de tipos para evitar errores de propiedades inexistentes
+// DefiniciÃ³n estricta de tipos para evitar errores de propiedades inexistentes
 type ClusterProps = { cluster: true; cluster_id: number; point_count: number };
 type PointProps = { cluster: false; markerId: string };
 
@@ -23,7 +27,7 @@ interface Map2DPanelProps {
   onViewportChange: (next: Partial<MapViewportState>) => void;
 }
 
-// Estética Platinum & Obsidian Mist para marcadores
+// EstÃ©tica Platinum & Obsidian Mist para marcadores
 const createPinIcon = (type: MapMarkerData["type"], isPremium?: boolean) => {
   const color = isPremium ? "#E5E7EB" : type === "place" ? "#60a5fa" : "#34d399";
   const glow = isPremium ? "0 0 15px rgba(229, 231, 235, 0.8)" : `0 0 12px ${color}`;
@@ -223,7 +227,7 @@ export function Map2DPanel({ markers, selected, viewport, onSelect, onViewportCh
 
       {markers.length === 0 && (
         <div className="absolute inset-0 z-[510] flex items-center justify-center bg-slate-950/70 p-4 text-center text-sm text-silver-300 backdrop-blur-sm">
-          No hay nodos para este filtro. Cambia el criterio o vuelve a “Todo” para recuperar la visualización.
+          No hay nodos para este filtro. Cambia el criterio o vuelve a â€œTodoâ€ para recuperar la visualizaciÃ³n.
         </div>
       )}
 
@@ -273,7 +277,7 @@ export function Map2DPanel({ markers, selected, viewport, onSelect, onViewportCh
         </div>
       </div>
 
-      {/* Overlay de diseño Crystal Glow en los bordes */}
+      {/* Overlay de diseÃ±o Crystal Glow en los bordes */}
       <div className="pointer-events-none absolute inset-0 rounded-2xl border border-white/5 ring-1 ring-inset ring-white/10" />
     </div>
   );

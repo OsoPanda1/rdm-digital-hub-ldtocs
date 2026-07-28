@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import React from "react";
 import { motion } from "framer-motion";
 import { Heart, MessageCircle, Share2, Bookmark, MoreHorizontal, Globe, Users, Lock } from "lucide-react";
@@ -90,7 +94,7 @@ const PostCard: React.FC<{ post: Post; onLike?: () => void; onComment?: () => vo
             </div>
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <span>@{post.author.username}</span>
-              <span>·</span>
+              <span>Â·</span>
               <span>{post.timestamp}</span>
               <VisibilityIcon className="w-3 h-3" />
             </div>
@@ -251,7 +255,7 @@ const SocialWall: React.FC<SocialWallProps> = ({
           whileTap={{ scale: 0.98 }}
           className="px-8 py-3 rounded-xl bg-card/50 border border-border/50 text-foreground/80 hover:text-foreground hover:bg-card transition-all"
         >
-          Cargar más publicaciones
+          Cargar mÃ¡s publicaciones
         </motion.button>
       </div>
     </section>

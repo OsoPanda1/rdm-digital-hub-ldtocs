@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
 // @ts-nocheck
 import { logger } from "@/lib/logger";
 import type {
@@ -16,24 +20,24 @@ interface PolicyResult {
 const TIME_UP_POLICIES: TimeUpPolicy[] = [
   {
     id: "TUP-001",
-    name: "No destrucción de memoria civilizatoria",
-    description: "F1 (DATA) no puede eliminar físicamente registros históricos. Solo archive lógico.",
+    name: "No destrucciÃ³n de memoria civilizatoria",
+    description: "F1 (DATA) no puede eliminar fÃ­sicamente registros histÃ³ricos. Solo archive lÃ³gico.",
     federation: "DEKATEOTL",
     rule: "f1_no_physical_delete",
     severity: "CRITICO",
   },
   {
     id: "TUP-002",
-    name: "Toda escritura crítica deja traza en ledger",
-    description: "Cada acción crítica debe registrar entrada inmutable en el ledger.",
+    name: "Toda escritura crÃ­tica deja traza en ledger",
+    description: "Cada acciÃ³n crÃ­tica debe registrar entrada inmutable en el ledger.",
     federation: "BOOKPI_DATAGIT",
     rule: "every_critical_write_leaves_trace",
     severity: "CRITICO",
   },
   {
     id: "TUP-003",
-    name: "No ejecución sin aprobación TIME UP",
-    description: "Ninguna federación puede ejecutar acción crítica sin evaluación TIME UP.",
+    name: "No ejecuciÃ³n sin aprobaciÃ³n TIME UP",
+    description: "Ninguna federaciÃ³n puede ejecutar acciÃ³n crÃ­tica sin evaluaciÃ³n TIME UP.",
     federation: "PHOENIX",
     rule: "no_execute_without_timeup_approval",
     severity: "CRITICO",
@@ -48,15 +52,15 @@ const TIME_UP_POLICIES: TimeUpPolicy[] = [
   },
   {
     id: "TUP-005",
-    name: "Control dual en acciones críticas",
-    description: "Acciones críticas requieren aprobación de al menos dos federaciones o Isabella + humana.",
+    name: "Control dual en acciones crÃ­ticas",
+    description: "Acciones crÃ­ticas requieren aprobaciÃ³n de al menos dos federaciones o Isabella + humana.",
     federation: "PHOENIX",
     rule: "dual_control_critical_actions",
     severity: "CRITICO",
   },
   {
     id: "TUP-006",
-    name: "No minería de datos personales sin consentimiento",
+    name: "No minerÃ­a de datos personales sin consentimiento",
     description: "F1 no puede extraer datos personales para perfilamiento no consentido.",
     federation: "DEKATEOTL",
     rule: "no_personal_data_mining_without_consent",
@@ -65,30 +69,30 @@ const TIME_UP_POLICIES: TimeUpPolicy[] = [
   {
     id: "TUP-007",
     name: "Isabella como guardiana cognitiva",
-    description: "Decisiones que afectan bienestar humano requieren validación de Isabella AI.",
+    description: "Decisiones que afectan bienestar humano requieren validaciÃ³n de Isabella AI.",
     federation: "ANUBIS",
     rule: "isabella_cognitive_guardian",
     severity: "CRITICO",
   },
   {
     id: "TUP-008",
-    name: "Transparencia económica",
-    description: "F5 (ECON) debe registrar toda transacción con trazabilidad completa.",
+    name: "Transparencia econÃ³mica",
+    description: "F5 (ECON) debe registrar toda transacciÃ³n con trazabilidad completa.",
     federation: "MDD_TAMV",
     rule: "economic_transparency",
     severity: "ALERTA",
   },
   {
     id: "TUP-009",
-    name: "Territorio físico no reemplazable por virtual",
-    description: "F7 (TERRITORY) no puede aprobar acciones que pongan en riesgo el territorio físico real.",
+    name: "Territorio fÃ­sico no reemplazable por virtual",
+    description: "F7 (TERRITORY) no puede aprobar acciones que pongan en riesgo el territorio fÃ­sico real.",
     federation: "CHRONOS",
     rule: "physical_territory_supremacy",
     severity: "CRITICO",
   },
   {
     id: "TUP-010",
-    name: "Visualización ética",
+    name: "VisualizaciÃ³n Ã©tica",
     description: "F6 (VIS) no puede renderizar representaciones que degraden dignidad humana.",
     federation: "KAOS_HYPERRENDER",
     rule: "ethical_visualization",
@@ -102,7 +106,7 @@ export class TimeUpEngine {
     const federation = intent.federation;
 
     for (const policy of TIME_UP_POLICIES) {
-      // Las políticas CRITICO siempre aplican; las de federación se filtran.
+      // Las polÃ­ticas CRITICO siempre aplican; las de federaciÃ³n se filtran.
       if (policy.federation === federation || policy.severity === "CRITICO") {
         const result = this.evaluatePolicy(policy, intent);
         results.push(result);
@@ -115,7 +119,7 @@ export class TimeUpEngine {
   private evaluatePolicy(policy: TimeUpPolicy, intent: MDX5Intent): PolicyResult {
     const verdict = this.applyRule(policy.rule, intent);
 
-    logger.info("[TIME-UP] Evaluando política", {
+    logger.info("[TIME-UP] Evaluando polÃ­tica", {
       policy: policy.id,
       intent: intent.id,
       federation: intent.federation,
@@ -153,7 +157,7 @@ export class TimeUpEngine {
     switch (rule) {
       case "f1_no_physical_delete": {
         if (operation === "DELETE" && critical) {
-          // Borrado físico de datos históricos: bloquear salvo excepción explícita.
+          // Borrado fÃ­sico de datos histÃ³ricos: bloquear salvo excepciÃ³n explÃ­cita.
           return "REJECTED";
         }
         return "APPROVED";
@@ -161,7 +165,7 @@ export class TimeUpEngine {
 
       case "every_critical_write_leaves_trace": {
         if (critical && operation === "WRITE" && !hasLedgerEntry) {
-          // Escritura crítica sin traza en ledger: pendiente de humano.
+          // Escritura crÃ­tica sin traza en ledger: pendiente de humano.
           return "PENDING_HUMAN";
         }
         return "APPROVED";
@@ -169,8 +173,8 @@ export class TimeUpEngine {
 
       case "no_execute_without_timeup_approval": {
         if (operation === "EXECUTE" && critical) {
-          // Cualquier ejecución crítica pasa primero por TIME UP: exige al menos
-          // un camino de aprobación (Isabella y/o humano).
+          // Cualquier ejecuciÃ³n crÃ­tica pasa primero por TIME UP: exige al menos
+          // un camino de aprobaciÃ³n (Isabella y/o humano).
           if (requiresHumanApproval || requiresIsabellaApproval) {
             return "PENDING_ISABELLA";
           }
@@ -180,7 +184,7 @@ export class TimeUpEngine {
       }
 
       case "intent_must_terminate": {
-        // Si el intent ya está en estado terminal, aprobamos; si está en ciclo infinito, pendiente.
+        // Si el intent ya estÃ¡ en estado terminal, aprobamos; si estÃ¡ en ciclo infinito, pendiente.
         if (intent.state === "TERMINAL_COMMIT" || intent.state === "TERMINAL_ABORT" || intent.state === "TERMINAL_REJECT") {
           return "APPROVED";
         }
@@ -203,7 +207,7 @@ export class TimeUpEngine {
 
       case "no_personal_data_mining_without_consent": {
         if (usesPersonalData && intent.consent !== true) {
-          // Minería de datos personales sin consentimiento explícito: bloqueo.
+          // MinerÃ­a de datos personales sin consentimiento explÃ­cito: bloqueo.
           return "REJECTED";
         }
         return "APPROVED";
@@ -211,11 +215,11 @@ export class TimeUpEngine {
 
       case "isabella_cognitive_guardian": {
         if (affectsHumans && critical) {
-          // Decisión que afecta bienestar humano: Isabella debe pronunciarse.
+          // DecisiÃ³n que afecta bienestar humano: Isabella debe pronunciarse.
           if (!requiresIsabellaApproval) {
             return "PENDING_ISABELLA";
           }
-          // Si Isabella ya aprobó, todavía podemos requerir humano según contexto.
+          // Si Isabella ya aprobÃ³, todavÃ­a podemos requerir humano segÃºn contexto.
           return requiresHumanApproval ? "PENDING_HUMAN" : "APPROVED";
         }
         return "APPROVED";
@@ -223,7 +227,7 @@ export class TimeUpEngine {
 
       case "economic_transparency": {
         if (intent.federation === "MDD_TAMV" && operation === "WRITE" && critical) {
-          // Transacción económica crítica: debe tener ledger y trazabilidad.
+          // TransacciÃ³n econÃ³mica crÃ­tica: debe tener ledger y trazabilidad.
           if (!hasLedgerEntry) return "PENDING_HUMAN";
         }
         return "APPROVED";
@@ -231,7 +235,7 @@ export class TimeUpEngine {
 
       case "physical_territory_supremacy": {
         if (intent.federation === "CHRONOS" && affectsHumans && intent.affectsPhysicalTerritory) {
-          // Cualquier acción que pueda degradar territorio físico real: escalamos.
+          // Cualquier acciÃ³n que pueda degradar territorio fÃ­sico real: escalamos.
           return "PENDING_HUMAN";
         }
         return "APPROVED";
@@ -260,8 +264,8 @@ export class TimeUpEngine {
 
   private getReason(verdict: TimeUpVerdict, policy: TimeUpPolicy): string {
     if (verdict === "APPROVED") return `TIME UP: ${policy.name} aprobada`;
-    if (verdict === "PENDING_ISABELLA") return `TIME UP: ${policy.name} requiere validación de Isabella`;
-    if (verdict === "PENDING_HUMAN") return `TIME UP: ${policy.name} requiere intervención humana`;
+    if (verdict === "PENDING_ISABELLA") return `TIME UP: ${policy.name} requiere validaciÃ³n de Isabella`;
+    if (verdict === "PENDING_HUMAN") return `TIME UP: ${policy.name} requiere intervenciÃ³n humana`;
     return `TIME UP: ${policy.name} rechazada`;
   }
 }

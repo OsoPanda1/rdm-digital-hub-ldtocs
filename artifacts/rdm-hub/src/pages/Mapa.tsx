@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { lazy, Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import TerritorialSVGMap from "@/components/map/TerritorialSVGMap";
@@ -22,14 +26,14 @@ import callesImg from "@/assets/calles-colonial.webp";
 const Map3DTwin = lazy(() => import("@/components/map/Map3DTwin").then((module) => ({ default: module.Map3DTwin })));
 
 const markers: MapMarkerData[] = [
-  { id: "1", name: "Mina de Acosta", category: "Mina", lat: 20.141, lng: -98.672, description: "Museo y túneles históricos de minería con experiencias guiadas inmersivas.", image: minaImg, type: "place", rating: 4.8, status: "Verificado" },
-  { id: "2", name: "Panteón Inglés", category: "Museo", lat: 20.08, lng: -98.7, description: "Patrimonio británico en el bosque con recorridos narrados por audio-guía.", image: panteonImg, type: "place", rating: 4.7, status: "Activo" },
-  { id: "3", name: "Peñas Cargadas", category: "Naturaleza", lat: 20.15, lng: -98.66, description: "Formaciones rocosas y senderismo panorámico para ecoturismo de aventura.", image: penasImg, type: "place", rating: 4.9, status: "En alta demanda" },
-  { id: "4", name: "Plaza Principal", category: "Cultura", lat: 20.138, lng: -98.6735, description: "Centro social y turístico del pueblo con eventos culturales diarios.", image: callesImg, type: "place", rating: 4.5, status: "Activo" },
-  { id: "5", name: "Museo del Paste", category: "Museo", lat: 20.1375, lng: -98.674, description: "Historia del paste y su herencia cornish con talleres gastronómicos.", image: pasteImg, type: "place", rating: 4.6, status: "Verificado" },
-  { id: "6", name: "Pastes El Portal", category: "Pastes", lat: 20.1378, lng: -98.6738, description: "Pastes tradicionales en el centro histórico y menú digital actualizado.", image: pasteImg, type: "business", isPremium: true, rating: 4.9, phone: "771 123 4567", status: "En alta demanda" },
+  { id: "1", name: "Mina de Acosta", category: "Mina", lat: 20.141, lng: -98.672, description: "Museo y tÃºneles histÃ³ricos de minerÃ­a con experiencias guiadas inmersivas.", image: minaImg, type: "place", rating: 4.8, status: "Verificado" },
+  { id: "2", name: "PanteÃ³n InglÃ©s", category: "Museo", lat: 20.08, lng: -98.7, description: "Patrimonio britÃ¡nico en el bosque con recorridos narrados por audio-guÃ­a.", image: panteonImg, type: "place", rating: 4.7, status: "Activo" },
+  { id: "3", name: "PeÃ±as Cargadas", category: "Naturaleza", lat: 20.15, lng: -98.66, description: "Formaciones rocosas y senderismo panorÃ¡mico para ecoturismo de aventura.", image: penasImg, type: "place", rating: 4.9, status: "En alta demanda" },
+  { id: "4", name: "Plaza Principal", category: "Cultura", lat: 20.138, lng: -98.6735, description: "Centro social y turÃ­stico del pueblo con eventos culturales diarios.", image: callesImg, type: "place", rating: 4.5, status: "Activo" },
+  { id: "5", name: "Museo del Paste", category: "Museo", lat: 20.1375, lng: -98.674, description: "Historia del paste y su herencia cornish con talleres gastronÃ³micos.", image: pasteImg, type: "place", rating: 4.6, status: "Verificado" },
+  { id: "6", name: "Pastes El Portal", category: "Pastes", lat: 20.1378, lng: -98.6738, description: "Pastes tradicionales en el centro histÃ³rico y menÃº digital actualizado.", image: pasteImg, type: "business", isPremium: true, rating: 4.9, phone: "771 123 4567", status: "En alta demanda" },
   { id: "7", name: "Hotel Real de Minas", category: "Hospedaje", lat: 20.1395, lng: -98.675, description: "Hospedaje boutique en casona colonial con check-in inteligente.", image: callesImg, type: "business", isPremium: true, rating: 4.7, phone: "771 234 5678", status: "Verificado" },
-  { id: "8", name: "Café La Neblina", category: "Restaurante", lat: 20.1382, lng: -98.6742, description: "Café de altura con ambiente local y reservación express.", image: panteonImg, type: "business", rating: 4.4, status: "Activo" },
+  { id: "8", name: "CafÃ© La Neblina", category: "Restaurante", lat: 20.1382, lng: -98.6742, description: "CafÃ© de altura con ambiente local y reservaciÃ³n express.", image: panteonImg, type: "business", rating: 4.4, status: "Activo" },
 ];
 
 function MapaPageContent() {
@@ -83,7 +87,7 @@ function MapaPageContent() {
         icon: Zap,
       },
       {
-        label: "Calificación promedio",
+        label: "CalificaciÃ³n promedio",
         value: `${(
           filtered.reduce((sum, current) => sum + (current.rating ?? 0), 0) /
           Math.max(filtered.length, 1)
@@ -101,7 +105,7 @@ function MapaPageContent() {
 
   const integrationReferences = [
     { label: "Eclipse Ditto", url: "https://github.com/eclipse-ditto/ditto" },
-    { label: "Underrun (simulación inmersiva)", url: "https://github.com/phoboslab/underrun" },
+    { label: "Underrun (simulaciÃ³n inmersiva)", url: "https://github.com/phoboslab/underrun" },
     { label: "OpenTwins", url: "https://github.com/ertis-research/opentwins" },
     { label: "Awesome Digital Twins", url: "https://github.com/edt-community/awesome-digital-twins" },
     { label: "SmartHotel360 IoT", url: "https://github.com/microsoft/SmartHotel360-IoT" },
@@ -133,7 +137,7 @@ function MapaPageContent() {
                   <span className="block text-[hsl(var(--rdm-amber))]">Inteligente</span>
                 </h1>
                 <p className="max-w-2xl text-base text-[hsl(var(--muted-foreground))] md:text-lg leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>
-                  Infraestructura cartográfica con clustering dinámico, sincronización 2D/3D y gemelo digital territorial.
+                  Infraestructura cartogrÃ¡fica con clustering dinÃ¡mico, sincronizaciÃ³n 2D/3D y gemelo digital territorial.
                 </p>
               </div>
               <div className="inline-flex rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.5)] p-1 text-xs">
@@ -174,11 +178,11 @@ function MapaPageContent() {
             ))}
           </section>
 
-          {/* Mapa Soberano SVG inmersivo (POIs glassmórficos + tooltips narrativos) */}
+          {/* Mapa Soberano SVG inmersivo (POIs glassmÃ³rficos + tooltips narrativos) */}
           <section className="space-y-3">
             <div className="flex items-center justify-between gap-3 flex-wrap">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.28em] text-[hsl(var(--rdm-amber))]">Capa simbólica</p>
+                <p className="text-[10px] uppercase tracking-[0.28em] text-[hsl(var(--rdm-amber))]">Capa simbÃ³lica</p>
                 <h2 className="text-2xl md:text-3xl font-bold text-[hsl(var(--foreground))]" style={{ fontFamily: "var(--font-display)" }}>Mapa Soberano del Nodo Cero</h2>
               </div>
               <p className="text-xs text-[hsl(var(--muted-foreground))] max-w-md" style={{ fontFamily: "var(--font-body)" }}>
@@ -324,7 +328,7 @@ function MapaPageContent() {
               </div>
 
               <div className="rdm-glass rounded-2xl border border-[hsl(var(--rdm-amber)/0.25)] p-4">
-                <h3 className="font-semibold text-[hsl(var(--foreground))]" style={{ fontFamily: "var(--font-display)" }}>Exploración rápida</h3>
+                <h3 className="font-semibold text-[hsl(var(--foreground))]" style={{ fontFamily: "var(--font-display)" }}>ExploraciÃ³n rÃ¡pida</h3>
                 <ul className="mt-3 space-y-2 text-sm text-[hsl(var(--muted-foreground))]">
                   {filtered.slice(0, 4).map((item) => (
                     <li key={item.id}>
@@ -346,7 +350,7 @@ function MapaPageContent() {
                 <ol className="mt-2 list-decimal space-y-1 pl-4 text-sm text-[hsl(var(--muted-foreground))]" style={{ fontFamily: "var(--font-body)" }}>
                   <li>Asistente contextual por POI con sugerencias de ruta y horario.</li>
                   <li>Streaming geoespacial de eventos por WebSocket federado.</li>
-                  <li>Sugerencias proactivas según densidad y perfil de visitante.</li>
+                  <li>Sugerencias proactivas segÃºn densidad y perfil de visitante.</li>
                 </ol>
                 <Link to="/negocios" className="mt-3 inline-block rounded-lg bg-[hsl(var(--rdm-amber))] px-3 py-2 text-sm font-semibold text-white" style={{ fontFamily: "var(--font-body)" }}>
                   Ir al portal de comercios
@@ -358,9 +362,9 @@ function MapaPageContent() {
           <section className="space-y-4 rounded-2xl border border-[hsl(var(--border)/0.4)] bg-[hsl(var(--muted)/0.2)] p-4 md:p-6">
             <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))]">Integración híbrida</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))]">IntegraciÃ³n hÃ­brida</p>
                 <h2 className="text-2xl font-semibold text-[hsl(var(--foreground))]" style={{ fontFamily: "var(--font-display)" }}>Control Room de Gemelos Digitales</h2>
-                <p className="mt-2 text-sm text-[hsl(var(--muted-foreground))]" style={{ fontFamily: "var(--font-body)" }}>Pipeline unificado para telemetría, modelos BIM/3D y simulaciones inmersivas.</p>
+                <p className="mt-2 text-sm text-[hsl(var(--muted-foreground))]" style={{ fontFamily: "var(--font-body)" }}>Pipeline unificado para telemetrÃ­a, modelos BIM/3D y simulaciones inmersivas.</p>
               </div>
               <div className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--rdm-amber)/0.3)] bg-[hsl(var(--rdm-amber)/0.08)] px-3 py-1.5 text-xs text-[hsl(var(--foreground))]">
                 <Workflow className="h-3.5 w-3.5 text-[hsl(var(--rdm-amber))]" />
@@ -390,7 +394,7 @@ function MapaPageContent() {
                   {suggestedActions.length > 0 ? (
                     suggestedActions.map((action) => <li key={action}>{action}</li>)
                   ) : (
-                    <li>Sin alertas críticas; mantener sincronización en tiempo real y simulación calibrada.</li>
+                    <li>Sin alertas crÃ­ticas; mantener sincronizaciÃ³n en tiempo real y simulaciÃ³n calibrada.</li>
                   )}
                 </ul>
               </div>

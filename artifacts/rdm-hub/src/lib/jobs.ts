@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 const queue: Array<{ job: string; payload: unknown; delay: number; runAt: number }> = [];
 
 export function enqueue(job: string, payload: unknown, delayMs: number = 0): void {

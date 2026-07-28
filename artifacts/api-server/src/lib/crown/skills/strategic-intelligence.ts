@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
-// SKILL 10 — Strategic Intelligence Engine
-// Planificación estratégica con escenarios, análisis de costo,
-// priorización por impacto y plan de acción ejecutable
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// SKILL 10 â€” Strategic Intelligence Engine
+// PlanificaciÃ³n estratÃ©gica con escenarios, anÃ¡lisis de costo,
+// priorizaciÃ³n por impacto y plan de acciÃ³n ejecutable
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { SkillDefinition, StrategicObjective, StrategicScenario, StrategicPlan } from "../types";
 

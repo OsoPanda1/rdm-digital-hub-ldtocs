@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
@@ -175,8 +179,8 @@ export function IsabellaVoiceEngine() {
                 {isListening ? "Escuchando..." : isSpeaking ? "Isabella habla..." : isProcessing ? "Procesando..." : "Isabella lista"}
               </p>
               <p className="font-mono text-[10px] tracking-sovereign text-muted-foreground">
-                {mode === "cloud" ? "☁ Cloud TTS" : "🎤 Local TTS"} · {currentPersona}
-                {error && <span className="ml-2 text-destructive">⚠ {error}</span>}
+                {mode === "cloud" ? "â˜ Cloud TTS" : "ðŸŽ¤ Local TTS"} Â· {currentPersona}
+                {error && <span className="ml-2 text-destructive">âš  {error}</span>}
               </p>
             </div>
           </div>
@@ -185,7 +189,7 @@ export function IsabellaVoiceEngine() {
             <button
               onClick={() => setShowSettings(!showSettings)}
               className="p-2 rounded-xl border-hairline hover:bg-secondary transition-colors"
-              aria-label="Configuración de voz"
+              aria-label="ConfiguraciÃ³n de voz"
             >
               <Settings className="w-4 h-4" />
             </button>
@@ -193,7 +197,7 @@ export function IsabellaVoiceEngine() {
               onClick={toggleMute}
               disabled={!isSpeaking && queue.length === 0}
               className="p-2 rounded-xl border-hairline hover:bg-secondary transition-colors disabled:opacity-50"
-              aria-label={isSpeaking ? "Silenciar" : "Cola vacía"}
+              aria-label={isSpeaking ? "Silenciar" : "Cola vacÃ­a"}
             >
               {isSpeaking || queue.length > 0 ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
             </button>
@@ -206,7 +210,7 @@ export function IsabellaVoiceEngine() {
             <input
               type="text"
               name="message"
-              placeholder={isListening ? "Escuchando..." : "Escribe o usa el micrófono..."}
+              placeholder={isListening ? "Escuchando..." : "Escribe o usa el micrÃ³fono..."}
               className="w-full rounded-full border-hairline bg-card pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40"
               disabled={isListening || isProcessing}
             />
@@ -215,7 +219,7 @@ export function IsabellaVoiceEngine() {
               onClick={startListening}
               disabled={isListening || isProcessing}
               className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-accent transition-colors disabled:opacity-50"
-              aria-label="Activar micrófono"
+              aria-label="Activar micrÃ³fono"
             >
               <Mic className="w-5 h-5" />
             </button>
@@ -287,7 +291,7 @@ export function IsabellaVoiceEngine() {
               className="relative w-full max-w-md bg-card rounded-2xl border-hairline shadow-sovereign overflow-hidden"
             >
               <div className="flex items-center justify-between p-4 border-b border-hairline">
-                <h3 className="font-display text-lg">Configuración de Voz</h3>
+                <h3 className="font-display text-lg">ConfiguraciÃ³n de Voz</h3>
                 <button onClick={() => setShowSettings(false)} className="p-1 rounded-lg hover:bg-secondary">
                   <X className="w-5 h-5" />
                 </button>
@@ -307,7 +311,7 @@ export function IsabellaVoiceEngine() {
                             : "border-hairline hover:border-accent/50"
                         }`}
                       >
-                        {m === "cloud" ? "☁ Cloud" : "🎤 Local"}
+                        {m === "cloud" ? "â˜ Cloud" : "ðŸŽ¤ Local"}
                       </button>
                     ))}
                   </div>
@@ -340,8 +344,8 @@ export function IsabellaVoiceEngine() {
                     value="es-MX"
                     className="w-full rounded-xl border-hairline bg-card px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40"
                   >
-                    <option value="es-MX">Español (México)</option>
-                    <option value="es-ES">Español (España)</option>
+                    <option value="es-MX">EspaÃ±ol (MÃ©xico)</option>
+                    <option value="es-ES">EspaÃ±ol (EspaÃ±a)</option>
                     <option value="en-US">English (US)</option>
                   </select>
                 </div>

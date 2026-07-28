@@ -1,9 +1,13 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * RDM Notification System
  * Visual toast notifications + optional Web Audio API sound effects.
  * Usage: import { useRDMNotify } from "@/components/rdm/NotificationSystem"
  *        const notify = useRDMNotify();
- *        notify.success("¡XP ganada!", "+50 puntos de exploración");
+ *        notify.success("Â¡XP ganada!", "+50 puntos de exploraciÃ³n");
  */
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -35,7 +39,7 @@ export function useRDMNotify(): RDMNotifyAPI {
   return ctx;
 }
 
-// ── Web Audio API sound synthesiser ────────────────────────────────────────
+// â”€â”€ Web Audio API sound synthesiser â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function useAudioSynth() {
   const acRef = useRef<AudioContext | null>(null);
 
@@ -69,7 +73,7 @@ function useAudioSynth() {
   };
 }
 
-// ── Config per kind ─────────────────────────────────────────────────────────
+// â”€â”€ Config per kind â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const KIND_CFG: Record<NotifKind, {
   icon: typeof CheckCircle2;
   bg: string;
@@ -84,7 +88,7 @@ const KIND_CFG: Record<NotifKind, {
   achievement: { icon: Trophy,         bg: "hsl(280 40% 8%)",  border: "hsl(280 60% 40% / 0.5)", accent: "hsl(280 70% 65%)", defaultDuration: 6000 },
 };
 
-// ── Provider ────────────────────────────────────────────────────────────────
+// â”€â”€ Provider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export function RDMNotificationProvider({ children }: { children: React.ReactNode }) {
   const [queue, setQueue] = useState<RDMNotif[]>([]);
   const synth = useAudioSynth();
@@ -105,13 +109,13 @@ export function RDMNotificationProvider({ children }: { children: React.ReactNod
     error:       (title, body) => push({ kind: "error",   title, body }),
     info:        (title, body) => push({ kind: "info",    title, body }),
     xp:          (pts, reason) => push({ kind: "xp",     title: `+${pts} XP`, body: reason }),
-    achievement: (name, desc)  => push({ kind: "achievement", title: `🏆 ${name}`, body: desc }),
+    achievement: (name, desc)  => push({ kind: "achievement", title: `ðŸ† ${name}`, body: desc }),
   };
 
   return (
     <CTX.Provider value={api}>
       {children}
-      {/* ── Notification stack ── */}
+      {/* â”€â”€ Notification stack â”€â”€ */}
       <div className="fixed bottom-24 right-4 z-[9999] flex flex-col-reverse gap-2 pointer-events-none w-80 max-w-[calc(100vw-2rem)]">
         <AnimatePresence mode="popLayout">
           {queue.map((notif) => (
@@ -123,7 +127,7 @@ export function RDMNotificationProvider({ children }: { children: React.ReactNod
   );
 }
 
-// ── Individual notification card ────────────────────────────────────────────
+// â”€â”€ Individual notification card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function NotifCard({ notif, onDismiss }: { notif: RDMNotif; onDismiss: (id: string) => void }) {
   const cfg      = KIND_CFG[notif.kind];
   const Icon     = cfg.icon;

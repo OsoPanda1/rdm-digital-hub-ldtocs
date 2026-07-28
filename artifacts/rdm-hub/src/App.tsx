@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // src/App.tsx
 
 import { useState, useCallback, useEffect, lazy, Suspense, Component, type ErrorInfo, type ReactNode } from 'react'
@@ -12,7 +16,7 @@ import { RouteErrorBoundary } from '@/components/RouteErrorBoundary'
 import { AudioPlayerProvider } from '@/contexts/AudioPlayerContext'
 import { RDMAuthProvider, useRDMAuth } from '@/contexts/RDMAuthContext'
 import { NotificationProvider } from '@/components/NotificationSystem'
-// Vercel analytics removed — not needed on Replit
+// Vercel analytics removed â€” not needed on Replit
 import { logger } from '@/lib/logger'
 import { captureException as sentryCaptureException } from '@/integrations/observability/sentry'
 
@@ -39,7 +43,7 @@ const GlobalPlayerBar = lazy(() => import('@/components/GlobalPlayerBar'))
 // ===== Banner Manager (route-aware ad placement) =====
 const BannerManager = lazy(() => import('./components/rdm/BannerManager').then((m) => ({ default: m.BannerManager })))
 
-// ===== TAMV 92.5 FM Radio Player (REMOVED — replaced by Spotify Podcast) =====
+// ===== TAMV 92.5 FM Radio Player (REMOVED â€” replaced by Spotify Podcast) =====
 
 // ===== Mother repo pages =====
 const Index = lazy(() => import('./pages/Index'))
@@ -153,7 +157,7 @@ const Mitos = lazy(() => import('./pages/Mitos'))
 const MusicDetail = lazy(() => import('./pages/MusicDetail'))
 const Recorridos = lazy(() => import('./pages/Recorridos'))
 const RutaDelPaste = lazy(() => import('./pages/RutaDelPaste'))
-// AdminPanel (pages/Admin.tsx) retired — /admin-panel now redirects to /admin
+// AdminPanel (pages/Admin.tsx) retired â€” /admin-panel now redirects to /admin
 const DemoChecklist = lazy(() => import('./pages/DemoChecklist'))
 const RealitoAIPage = lazy(() => import('./pages/RealitoAI'))
 
@@ -182,13 +186,13 @@ const queryClient = new QueryClient({
     queries: {
       // 5 minutos: suficiente para datos de turismo/directorio que no cambian cada segundo
       staleTime: 5 * 60 * 1000,
-      // Mantener en caché 30 minutos tras quedar sin suscriptores
+      // Mantener en cachÃ© 30 minutos tras quedar sin suscriptores
       gcTime: 30 * 60 * 1000,
       retry: 1,
       retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30_000),
       refetchOnWindowFocus: false,
       refetchOnReconnect: true,
-      // Evitar refetch en mount si los datos aún son frescos
+      // Evitar refetch en mount si los datos aÃºn son frescos
       refetchOnMount: true,
     },
     mutations: {
@@ -205,7 +209,7 @@ const RouteFallback = () => (
     aria-label="Cargando contenido"
   >
     <div className="animate-pulse text-muted-foreground">
-      Cargando experiencia territorial…
+      Cargando experiencia territorialâ€¦
     </div>
   </div>
 )
@@ -220,14 +224,14 @@ const AuthStatusBanner = () => {
     <div className="w-full bg-amber-900 text-amber-100 text-xs sm:text-sm px-4 py-2 z-50 shadow-md">
       {!isSupabaseReady && (
         <p>
-          Autenticación temporalmente deshabilitada: Supabase no está disponible en este
-          entorno. Puedes seguir explorando mapas, rutas, economía y narrativas sin iniciar
-          sesión.
+          AutenticaciÃ³n temporalmente deshabilitada: Supabase no estÃ¡ disponible en este
+          entorno. Puedes seguir explorando mapas, rutas, economÃ­a y narrativas sin iniciar
+          sesiÃ³n.
         </p>
       )}
       {error && (
         <p className="mt-1">
-          Detalle técnico: <span className="font-mono break-all">{error}</span>
+          Detalle tÃ©cnico: <span className="font-mono break-all">{error}</span>
         </p>
       )}
     </div>
@@ -238,20 +242,20 @@ const AppCrashFallback = () => (
   <div className="min-h-screen w-full flex items-center justify-center bg-background p-6">
     <div className="max-w-lg rounded-2xl border border-destructive/30 bg-card p-6 text-center shadow-xl">
       <p className="text-xs font-semibold uppercase tracking-[0.3em] text-destructive">
-        Error crítico
+        Error crÃ­tico
       </p>
       <h1 className="mt-3 font-serif text-2xl font-bold text-foreground">
         No pudimos iniciar la experiencia
       </h1>
       <p className="mt-3 text-sm text-muted-foreground">
-        Se detectó un fallo durante el arranque de la aplicación. Recarga la página o
+        Se detectÃ³ un fallo durante el arranque de la aplicaciÃ³n. Recarga la pÃ¡gina o
         vuelve a intentar en unos segundos.
       </p>
       <button
         onClick={() => window.location.reload()}
         className="btn-hero-primary mt-6 inline-flex items-center justify-center"
       >
-        Recargar aplicación
+        Recargar aplicaciÃ³n
       </button>
     </div>
   </div>
@@ -483,7 +487,7 @@ const AppInner = () => {
     return undefined
   }, [showIntro, introComplete])
 
-  // Analytics post-pintado: se montan vía requestIdleCallback para no bloquear el main thread
+  // Analytics post-pintado: se montan vÃ­a requestIdleCallback para no bloquear el main thread
   const [analyticsReady, setAnalyticsReady] = useState(false)
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -494,7 +498,7 @@ const AppInner = () => {
     }
   }, [])
 
-  // Arranque dinámico de Isabella AI — FusionEngine se importa bajo demanda
+  // Arranque dinÃ¡mico de Isabella AI â€” FusionEngine se importa bajo demanda
   useEffect(() => {
     const isBrowser = typeof window !== 'undefined'
     if (!isBrowser) return
@@ -530,7 +534,7 @@ const AppInner = () => {
                 <Suspense fallback={<LoadingFallback />}><GlobalPlayerBar /></Suspense>
                 <Suspense fallback={<LoadingFallback />}><LiveTelemetryBadge /></Suspense>
                 <Suspense fallback={<LoadingFallback />}><SearchOverlay /></Suspense>
-                {/* CompassNav disabled — RDMNavbar now covers all navigation */}
+                {/* CompassNav disabled â€” RDMNavbar now covers all navigation */}
                 <Suspense fallback={<LoadingFallback />}><SmartSidebar /></Suspense>
               </AudioPlayerProvider>
             </>

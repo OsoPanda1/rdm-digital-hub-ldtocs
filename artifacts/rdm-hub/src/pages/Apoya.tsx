@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -29,17 +33,17 @@ const Apoya = () => {
     setIsAuthenticated(!!token);
     
     if (success) {
-      toast({ title: '¡Gracias por tu apoyo! 🙏', description: 'Tu donación ha sido procesada correctamente.' });
+      toast({ title: 'Â¡Gracias por tu apoyo! ðŸ™', description: 'Tu donaciÃ³n ha sido procesada correctamente.' });
     }
     if (canceled) {
-      toast({ title: 'Donación cancelada', description: 'Puedes intentarlo de nuevo cuando quieras.', variant: 'destructive' });
+      toast({ title: 'DonaciÃ³n cancelada', description: 'Puedes intentarlo de nuevo cuando quieras.', variant: 'destructive' });
     }
   }, [success, canceled, toast]);
 
   const handleDonate = async () => {
     const amount = customAmount || donationAmount;
     if (!amount || parseFloat(amount) < 10) {
-      toast({ title: 'Monto mínimo', description: 'El monto mínimo de donación es de 10 MXN.', variant: 'destructive' });
+      toast({ title: 'Monto mÃ­nimo', description: 'El monto mÃ­nimo de donaciÃ³n es de 10 MXN.', variant: 'destructive' });
       return;
     }
     setLoading(true);
@@ -47,11 +51,11 @@ const Apoya = () => {
       const response = await paymentsApi.createPayment({
         amount: parseFloat(amount),
         currency: 'MXN',
-        message: 'Donación desde RDM Digital',
+        message: 'DonaciÃ³n desde RDM Digital',
       }) as { data: { url: string } };
       window.location.href = response.data.url;
     } catch (error: unknown) {
-      toast({ title: 'Error', description: error instanceof Error ? error.message : 'Error al procesar la donación.', variant: 'destructive' });
+      toast({ title: 'Error', description: error instanceof Error ? error.message : 'Error al procesar la donaciÃ³n.', variant: 'destructive' });
       setLoading(false);
     }
   };
@@ -68,7 +72,7 @@ const Apoya = () => {
                 <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4">
                   <CheckCircle className="w-10 h-10 text-green-600" />
                 </div>
-                <CardTitle className="text-2xl font-bold text-green-700">¡Felicidades!</CardTitle>
+                <CardTitle className="text-2xl font-bold text-green-700">Â¡Felicidades!</CardTitle>
                 <CardDescription>Tu negocio ahora es destacado en RDM Digital</CardDescription>
               </CardHeader>
             </Card>
@@ -84,15 +88,15 @@ const Apoya = () => {
         <div className="pt-28 pb-16">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Apoya RDM Digital 🏔️</h1>
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Apoya RDM Digital ðŸ”ï¸</h1>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Ayúdanos a seguir construyendo la mejor plataforma turística para Real del Monte.
+                AyÃºdanos a seguir construyendo la mejor plataforma turÃ­stica para Real del Monte.
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
               {[
-                { icon: Heart, title: 'Impacto Social', desc: 'Apoyas el turismo local y la economía de Real del Monte', color: 'text-primary' },
+                { icon: Heart, title: 'Impacto Social', desc: 'Apoyas el turismo local y la economÃ­a de Real del Monte', color: 'text-primary' },
                 { icon: Star, title: 'Plataforma Mejor', desc: 'Tu apoyo nos permite mejorar funcionalidades y contenido', color: 'text-primary' },
                 { icon: Zap, title: 'Reconocimiento', desc: 'Aparece en nuestro muro de agradecimientos', color: 'text-primary' },
               ].map((item) => (
@@ -110,7 +114,7 @@ const Apoya = () => {
 
             <Card className="max-w-lg mx-auto border-0 shadow-2xl">
               <CardHeader>
-                <CardTitle className="text-2xl font-bold text-center">Haz tu donación</CardTitle>
+                <CardTitle className="text-2xl font-bold text-center">Haz tu donaciÃ³n</CardTitle>
                 <CardDescription className="text-center">Elige el monto que deseas donar</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -157,8 +161,8 @@ const Apoya = () => {
 
                 {!isAuthenticated && (
                   <div className="bg-muted border border-border rounded-lg p-4 text-sm text-muted-foreground">
-                    <strong>Nota:</strong> Para hacer una donación necesitas{' '}
-                    <a href="/auth" className="underline font-semibold text-primary">iniciar sesión</a>
+                    <strong>Nota:</strong> Para hacer una donaciÃ³n necesitas{' '}
+                    <a href="/auth" className="underline font-semibold text-primary">iniciar sesiÃ³n</a>
                   </div>
                 )}
 

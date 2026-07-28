@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
 import { logger } from "@/lib/logger";
-// ChronusEngine · Núcleo de gestión de presión turística para RDM Digital.
+// ChronusEngine Â· NÃºcleo de gestiÃ³n de presiÃ³n turÃ­stica para RDM Digital.
 // Contexto: Real del Monte, turismo de alta densidad, clima complejo, eventos culturales.
 
 export interface QueryableDb {
@@ -25,26 +29,26 @@ export interface ContextoCivilizatorio {
   turistas_concurrentes: number;
 }
 
-/** Resultado completo del cálculo de presión, no solo un número. */
+/** Resultado completo del cÃ¡lculo de presiÃ³n, no solo un nÃºmero. */
 export interface ResultadoSaturacion {
-  /** Zona o polígono analizado. */
+  /** Zona o polÃ­gono analizado. */
   polygonId: string;
-  /** Presión normalizada [0,1]. */
+  /** PresiÃ³n normalizada [0,1]. */
   presion: number;
-  /** Componentes internos de la presión para telemetría. */
+  /** Componentes internos de la presiÃ³n para telemetrÃ­a. */
   componentes: {
     densidadFisica: number;
     multiplicadorClima: number;
     tensorEventos: number;
     tensorConcurrencia: number;
   };
-  /** Timestamp ISO del cálculo. */
+  /** Timestamp ISO del cÃ¡lculo. */
   timestamp: string;
 }
 
-/** Configuración inyectable para adaptar el motor sin tocar la lógica. */
+/** ConfiguraciÃ³n inyectable para adaptar el motor sin tocar la lÃ³gica. */
 export interface ChronusConfig {
-  /** Capacidad base (turistas) para normalizar densidad física. */
+  /** Capacidad base (turistas) para normalizar densidad fÃ­sica. */
   capacidadBaseZona: number; // p.ej. 1000
   /** Umbral a partir del cual se activa protocolo de escape. */
   umbralEscape: number; // p.ej. 0.85
@@ -58,12 +62,12 @@ export interface ChronusDeps {
 }
 
 /**
- * Motor principal de cálculo de presión zonal.
+ * Motor principal de cÃ¡lculo de presiÃ³n zonal.
  *
  * RESPONSABILIDADES:
- * - Obtener densidad física de turistas en un polígono (zona de presión).
- * - Combinar factores físicos y contextuales en una presión normalizada [0,1].
- * - Disparar protocolos de mitigación cuando se exceden umbrales.
+ * - Obtener densidad fÃ­sica de turistas en un polÃ­gono (zona de presiÃ³n).
+ * - Combinar factores fÃ­sicos y contextuales en una presiÃ³n normalizada [0,1].
+ * - Disparar protocolos de mitigaciÃ³n cuando se exceden umbrales.
  */
 export class ChronusEngine {
   private readonly db: QueryableDb;
@@ -81,7 +85,7 @@ export class ChronusEngine {
   }
 
   /**
-   * Calcula la presión de saturación de una zona.
+   * Calcula la presiÃ³n de saturaciÃ³n de una zona.
    * Devuelve un objeto rico en lugar de un escalar opaco.
    */
   public async calcularSaturacionZonal(
@@ -122,7 +126,7 @@ export class ChronusEngine {
     return resultado;
   }
 
-  /** Obtiene el número de turistas activos en una zona en los últimos 15 minutos. */
+  /** Obtiene el nÃºmero de turistas activos en una zona en los Ãºltimos 15 minutos. */
   private async obtenerTuristasActivos(polygonId: string): Promise<number> {
     const res = await this.db.query(
       `
@@ -143,14 +147,14 @@ export class ChronusEngine {
     return Number.isFinite(n) && n > 0 ? n : 0;
   }
 
-  /** Densidad física normalizada respecto a la capacidad base de la zona. */
+  /** Densidad fÃ­sica normalizada respecto a la capacidad base de la zona. */
   private normalizarDensidadFisica(activos: number): number {
     if (this.config.capacidadBaseZona <= 0) {
       return 0;
     }
 
     const ratio = activos / this.config.capacidadBaseZona;
-    // Permite que zonas con saturación extrema contribuyan >1 antes de clamp.
+    // Permite que zonas con saturaciÃ³n extrema contribuyan >1 antes de clamp.
     return ratio;
   }
 
@@ -167,20 +171,20 @@ export class ChronusEngine {
     }
   }
 
-  /** Aumenta presión si hay eventos activos (ej. festival, bicentenario). */
+  /** Aumenta presiÃ³n si hay eventos activos (ej. festival, bicentenario). */
   private calcularTensorEventos(eventos: string[]): number {
     if (!eventos.length) return 0;
 
-    // Cada evento agrega 0.05 hasta un máximo de 0.20.
+    // Cada evento agrega 0.05 hasta un mÃ¡ximo de 0.20.
     const base = eventos.length * 0.05;
     return Math.min(0.20, base);
   }
 
-  /** Aumenta presión según turistas concurrentes en todo el sistema. */
+  /** Aumenta presiÃ³n segÃºn turistas concurrentes en todo el sistema. */
   private calcularTensorConcurrencia(turistas_concurrentes: number): number {
     if (turistas_concurrentes <= 0) return 0;
 
-    // 10K turistas → 0.25 de presión adicional, con tope en 0.30.
+    // 10K turistas â†’ 0.25 de presiÃ³n adicional, con tope en 0.30.
     const ratio = turistas_concurrentes / 10_000;
     return Math.min(0.30, ratio * 0.25);
   }
@@ -190,13 +194,13 @@ export class ChronusEngine {
     return Math.max(min, Math.min(max, value));
   }
 
-  /** Publica un evento crítico de saturación. */
+  /** Publica un evento crÃ­tico de saturaciÃ³n. */
   private async activarProtocoloEscape(resultado: ResultadoSaturacion): Promise<void> {
     const { polygonId, presion, componentes, timestamp } = resultado;
 
     // Logging estructurado, idealmente reemplazable por tu capa de observabilidad.
     logger.warn(
-      "[CHRONUS] ALERTA: Saturación crítica",
+      "[CHRONUS] ALERTA: SaturaciÃ³n crÃ­tica",
       { polygonId, presion, componentes, timestamp },
     );
 
@@ -212,7 +216,7 @@ export class ChronusEngine {
     await this.pubsub.publish("SYSTEM_AUTOPOIESIS_ALERT", payload);
   }
 
-  /** Publica estados no críticos para dashboards / analítica continua. */
+  /** Publica estados no crÃ­ticos para dashboards / analÃ­tica continua. */
   private async publicarEstadoNoCritico(resultado: ResultadoSaturacion): Promise<void> {
     const payload = JSON.stringify({
       tipo: "ESTADO_ZONAL",

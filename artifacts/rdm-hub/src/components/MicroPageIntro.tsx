@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles } from "lucide-react";
@@ -6,7 +10,7 @@ import { useLocation } from "react-router-dom";
 const ROUTE_LABELS: Record<string, string> = {
   "/": "Inicio",
   "/mapa": "Mapa Inteligente",
-  "/rutas": "Rutas Turísticas",
+  "/rutas": "Rutas TurÃ­sticas",
   "/lugares": "Lugares Imperdibles",
   "/directorio": "Directorio Local",
   "/eventos": "Agenda Cultural",
@@ -15,24 +19,24 @@ const ROUTE_LABELS: Record<string, string> = {
   "/cultura": "Cultura Viva",
   "/relatos": "Relatos y Leyendas",
   "/ecoturismo": "Ecoturismo y Naturaleza",
-  "/gastronomia": "Gastronomía",
-  "/arte": "Arte y Artesanías",
+  "/gastronomia": "GastronomÃ­a",
+  "/arte": "Arte y ArtesanÃ­as",
   "/dichos": "Dichos Mineros",
   "/dichos-mineros": "Dichos Mineros",
-  "/catalogo": "Catálogo",
+  "/catalogo": "CatÃ¡logo",
   "/negocios": "Portal de Negocios",
   "/apoya": "Apoya RDM",
   "/patrimonio-cultural": "Patrimonio Cultural",
-  "/estacionamientos": "Dónde Estacionar",
+  "/estacionamientos": "DÃ³nde Estacionar",
   "/registro-comercio": "Registra tu Comercio",
   "/comercios": "Directorio Comercial",
-  "/quienes-somos": "Quiénes Somos",
-  "/biografia-ceo": "Biografía del Fundador",
+  "/quienes-somos": "QuiÃ©nes Somos",
+  "/biografia-ceo": "BiografÃ­a del Fundador",
   "/arquitectura": "Arquitectura del Sistema",
   "/seguridad-tenochtitlan": "Seguridad TENOCHTITLAN",
-  "/paquetes": "Paquetes Turísticos",
+  "/paquetes": "Paquetes TurÃ­sticos",
   "/transporte-local": "Transporte Local",
-  "/shuttle-cdmx-rdm": "Shuttle CDMX ↔ RDM",
+  "/shuttle-cdmx-rdm": "Shuttle CDMX â†” RDM",
   "/donar": "Dona al Proyecto",
   "/experiencias": "Experiencias",
 };

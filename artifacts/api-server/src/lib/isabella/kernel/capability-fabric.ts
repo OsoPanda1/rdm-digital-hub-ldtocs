@@ -1,7 +1,11 @@
-// ══════════════════════════════════════════════════════════════════════════════
-// Isabella Ω Cognitive Kernel — Capability Fabric
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Isabella Î© Cognitive Kernel â€” Capability Fabric
 // Dynamic capability selection with cost/latency/quality/confidence/permissions.
-// ══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 import type {
   Capability,
@@ -12,7 +16,7 @@ import type {
 } from "./types";
 import { logger } from "../../logger";
 
-// ── Built-in Capabilities ───────────────────────────────────────────────────
+// â”€â”€ Built-in Capabilities â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const BUILTIN_CAPABILITIES: Capability[] = [
   {
@@ -134,7 +138,7 @@ const BUILTIN_CAPABILITIES: Capability[] = [
   },
 ];
 
-// ── Capability Fabric Engine ────────────────────────────────────────────────
+// â”€â”€ Capability Fabric Engine â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface CapabilityFabric {
   select(requiredCapabilities: CapabilityId[]): CapabilitySelection[];

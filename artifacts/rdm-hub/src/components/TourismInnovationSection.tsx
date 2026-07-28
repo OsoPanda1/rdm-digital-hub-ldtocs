@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { CheckCircle2, Clock3 } from "lucide-react";
@@ -25,14 +29,14 @@ export function TourismInnovationSection() {
         viewport={{ once: true }}
         className="mb-10 text-center"
       >
-        <p className="mb-4 font-body text-sm uppercase tracking-[0.3em] text-accent">🧠 Turismo Digital Avanzado</p>
+        <p className="mb-4 font-body text-sm uppercase tracking-[0.3em] text-accent">ðŸ§  Turismo Digital Avanzado</p>
         <h2 className="font-display text-4xl font-bold md:text-6xl">
           30 capacidades globales
           <br />
           <span className="text-accent">mapeadas al producto</span>
         </h2>
         <p className="mx-auto mt-6 max-w-3xl font-body text-base leading-relaxed text-foreground/70">
-          Investigación comparativa de estándares en plataformas turísticas internacionales,
+          InvestigaciÃ³n comparativa de estÃ¡ndares en plataformas turÃ­sticas internacionales,
           aterrizada en un roadmap ejecutable para RDM Digital con enfoque en valor real para visitantes.
         </p>
       </motion.div>
@@ -41,14 +45,14 @@ export function TourismInnovationSection() {
         <div className="rounded-2xl border border-border bg-card/70 p-6 backdrop-blur-sm">
           <p className="text-sm text-muted-foreground">Capacidades implementadas</p>
           <p className="mt-2 font-display text-4xl font-bold text-accent">{implementedCount}/30</p>
-          <p className="mt-2 text-sm text-foreground/70">Base productiva activa con navegación, IA, telemetría y narrativa inmersiva.</p>
+          <p className="mt-2 text-sm text-foreground/70">Base productiva activa con navegaciÃ³n, IA, telemetrÃ­a y narrativa inmersiva.</p>
         </div>
         <div className="rounded-2xl border border-border bg-card/70 p-6 backdrop-blur-sm">
-          <p className="text-sm text-muted-foreground">Checklist pre-producción</p>
+          <p className="text-sm text-muted-foreground">Checklist pre-producciÃ³n</p>
           <ul className="mt-3 space-y-2 text-sm text-foreground/80">
-            <li>• Cerrar módulos UI por vertical turística.</li>
-            <li>• Integrar reservas, reseñas verificadas y analytics de conversión.</li>
-            <li>• Validar seguridad, observabilidad y flujos de despliegue continuo.</li>
+            <li>â€¢ Cerrar mÃ³dulos UI por vertical turÃ­stica.</li>
+            <li>â€¢ Integrar reservas, reseÃ±as verificadas y analytics de conversiÃ³n.</li>
+            <li>â€¢ Validar seguridad, observabilidad y flujos de despliegue continuo.</li>
           </ul>
         </div>
       </div>

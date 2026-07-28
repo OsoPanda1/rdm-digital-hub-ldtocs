@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import React, {
   useRef,
   useState,
@@ -44,13 +48,13 @@ export interface VideoCarouselProps {
   onVideoSelect?: (video: VideoItem) => void
   /** autoplay orbital opcional (ms) */
   autoRotateIntervalMs?: number
-  /** índice inicial del centro */
+  /** Ã­ndice inicial del centro */
   initialIndex?: number
 }
 
 interface VideoCardProps {
   video: VideoItem
-  offset: number // posición relativa al centro (0 = centro absoluto)
+  offset: number // posiciÃ³n relativa al centro (0 = centro absoluto)
   isCenter: boolean
   onSelect: () => void
 }
@@ -169,7 +173,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(34,211,238,0.4),transparent_55%)] mix-blend-screen opacity-70" />
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_90%_0%,rgba(232,121,249,0.35),transparent_55%)] mix-blend-screen opacity-60" />
 
-            {/* botón play flotante */}
+            {/* botÃ³n play flotante */}
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{
@@ -186,7 +190,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
               </div>
             </motion.div>
 
-            {/* duración */}
+            {/* duraciÃ³n */}
             <div className="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-slate-950/80 px-2.5 py-0.5 text-[11px] text-slate-50 backdrop-blur-md">
               <Clock className="h-3 w-3" />
               {video.duration}
@@ -207,7 +211,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
             <div className="pointer-events-none absolute inset-[1px] rounded-[1.25rem] border border-white/8" />
           </motion.div>
 
-          {/* información */}
+          {/* informaciÃ³n */}
           <div className="relative mt-3 px-1">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1">
@@ -286,7 +290,7 @@ const VideoCarousel: React.FC<VideoCarouselProps> = ({
     return () => window.clearInterval(id)
   }, [autoRotateIntervalMs, move])
 
-  // Swipe táctil básico
+  // Swipe tÃ¡ctil bÃ¡sico
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
@@ -324,7 +328,7 @@ const VideoCarousel: React.FC<VideoCarouselProps> = ({
   return (
     <section
       className="relative py-6"
-      aria-label={`${title} — carrusel de videos inmersivos`}
+      aria-label={`${title} â€” carrusel de videos inmersivos`}
     >
       {/* header TAMV */}
       <div className="mb-4 flex items-center justify-between gap-4">

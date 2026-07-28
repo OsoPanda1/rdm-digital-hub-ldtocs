@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * RDM Core Service — Sistema de modos adaptativos antifrágil
+ * RDM Core Service â€” Sistema de modos adaptativos antifrÃ¡gil
  * Modos: NORMAL | SAFE | EMERGENCY
  */
 

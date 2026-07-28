@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { federationBus, type CivicEvent } from "@/lib/tamv-kernel";
 import { logger } from "@/lib/logger";
 

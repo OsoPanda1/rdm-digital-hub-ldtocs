@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { Outlet } from "react-router-dom";
 import { RDMNavbar } from "@/components/rdm/RDMNavbar";
 import { RDMFooter } from "@/components/rdm/RDMFooter";
@@ -18,7 +22,7 @@ export function PublicLayout() {
             <Outlet />
           </main>
           <div className="border-t border-white/5 py-2 text-center text-[10px] text-muted-foreground">
-            © 2026 RDM Digital · Tecnología al servicio de la memoria
+            Â© 2026 RDM Digital Â· TecnologÃ­a al servicio de la memoria
           </div>
           <RDMFooter />
         </SidebarInset>

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Landmark, MapPin, Clock, Star, Filter } from "lucide-react";
@@ -67,7 +71,7 @@ function SiteCard({ site, index }: { site: SitioPatrimonial; index: number }) {
           className="flex items-center gap-1 text-[10px] text-[hsl(var(--rdm-amber))] hover:underline ml-auto"
           style={{ fontFamily: "var(--font-body)" }}
         >
-          <MapPin className="w-3 h-3" /> Ver ubicación
+          <MapPin className="w-3 h-3" /> Ver ubicaciÃ³n
         </a>
       </div>
     </motion.div>
@@ -83,7 +87,7 @@ export default function PatrimonioCulturalPage() {
 
   return (
     <RDMLayout>
-      <SEOMeta title="Patrimonio Cultural — Real del Monte" description="Museos, monumentos, hitos visuales y patrimonio natural de Real del Monte. Guía completa de activos históricos y culturales." />
+      <SEOMeta title="Patrimonio Cultural â€” Real del Monte" description="Museos, monumentos, hitos visuales y patrimonio natural de Real del Monte. GuÃ­a completa de activos histÃ³ricos y culturales." />
 
       {/* Hero */}
       <section className="pt-24 pb-12 px-6 md:px-16 lg:px-24">
@@ -96,7 +100,7 @@ export default function PatrimonioCulturalPage() {
               Patrimonio <span className="text-[hsl(var(--rdm-amber))]">cultural</span>
             </h1>
             <p className="text-[hsl(var(--muted-foreground))] max-w-2xl text-lg leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>
-              {ALL_TERRITORIAL_SITES.length} sitios de interés catalogados: museos de sitio, monumentos, espacios de identidad, hitos visuales y patrimonio natural.
+              {ALL_TERRITORIAL_SITES.length} sitios de interÃ©s catalogados: museos de sitio, monumentos, espacios de identidad, hitos visuales y patrimonio natural.
             </p>
           </motion.div>
 
@@ -148,7 +152,7 @@ export default function PatrimonioCulturalPage() {
         {sitiosFiltrados.length === 0 && (
           <div className="text-center py-20">
             <Landmark className="w-12 h-12 mx-auto text-[hsl(var(--muted-foreground))] mb-4" />
-            <p className="text-[hsl(var(--muted-foreground))]" style={{ fontFamily: "var(--font-body)" }}>No hay sitios en esta categoría.</p>
+            <p className="text-[hsl(var(--muted-foreground))]" style={{ fontFamily: "var(--font-body)" }}>No hay sitios en esta categorÃ­a.</p>
           </div>
         )}
       </section>

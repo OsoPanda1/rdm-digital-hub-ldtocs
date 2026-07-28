@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import express, { type Express, type NextFunction, type Request, type Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -18,7 +22,7 @@ const SECURITY_PROFILE =
 const OBSERVABILITY_MODE =
   process.env.RDM_OBSERVABILITY_MODE ?? "verbose";
 
-// ── CORS Allowlist (PennyLane pattern: explicit origins, never reflect) ──
+// â”€â”€ CORS Allowlist (PennyLane pattern: explicit origins, never reflect) â”€â”€
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "")
   .split(",")
   .map((o) => o.trim())
@@ -26,10 +30,10 @@ const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "")
 
 const app: Express = express();
 
-// ── Validate environment at startup (production: fail fast; dev: warn + fallbacks) ──
+// â”€â”€ Validate environment at startup (production: fail fast; dev: warn + fallbacks) â”€â”€
 loadEnv();
 
-// ── Trust proxy (required for rate limiting and IP extraction behind LB) ──
+// â”€â”€ Trust proxy (required for rate limiting and IP extraction behind LB) â”€â”€
 app.set("trust proxy", NODE_ENV === "production" ? 1 : false);
 
 // --------- LOGGING ESTRUCTURADO ---------
@@ -98,7 +102,7 @@ app.use(
 
       // In production, check allowlist
       if (ALLOWED_ORIGINS.length === 0) {
-        logger.warn("ALLOWED_ORIGINS is empty — CORS will reject all cross-origin requests.");
+        logger.warn("ALLOWED_ORIGINS is empty â€” CORS will reject all cross-origin requests.");
         return callback(new Error("CORS: No allowed origins configured."));
       }
       if (ALLOWED_ORIGINS.includes(origin)) {
@@ -114,7 +118,7 @@ app.use(
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 
-// ── Global rate limiter (100 req/min/IP) — defense against brute force ──
+// â”€â”€ Global rate limiter (100 req/min/IP) â€” defense against brute force â”€â”€
 const globalRateLimitBuckets = new Map<string, { count: number; resetAt: number }>();
 const GLOBAL_RATE_LIMIT = 100;
 const GLOBAL_RATE_WINDOW_MS = 60_000;
@@ -141,7 +145,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// ── Request timeout (30s) — defense against slowloris ──
+// â”€â”€ Request timeout (30s) â€” defense against slowloris â”€â”€
 app.use((_req, res, next) => {
   res.setTimeout(30_000, () => {
     if (!res.headersSent) {
@@ -151,12 +155,12 @@ app.use((_req, res, next) => {
   next();
 });
 
-// ── AUTH: JWT verification (PennyLane pattern: verify at boundary) ──
-// attachJwtIdentity runs FIRST — extracts identity from verified Supabase JWT.
-// attachRdmIdentity runs SECOND — fills in IP and ensures identity exists for anon.
+// â”€â”€ AUTH: JWT verification (PennyLane pattern: verify at boundary) â”€â”€
+// attachJwtIdentity runs FIRST â€” extracts identity from verified Supabase JWT.
+// attachRdmIdentity runs SECOND â€” fills in IP and ensures identity exists for anon.
 const JWT_SECRET = process.env.SUPABASE_JWT_SECRET || null;
 if (!JWT_SECRET) {
-  logger.warn("SUPABASE_JWT_SECRET not set — running in dev-relaxed mode (anonymous access)");
+  logger.warn("SUPABASE_JWT_SECRET not set â€” running in dev-relaxed mode (anonymous access)");
 }
 app.use(attachJwtIdentity(JWT_SECRET));
 app.use(attachRdmIdentity);

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -35,13 +39,13 @@ const TAMVStatus = () => {
       const data = await apiClient.get<MsrStatus>("/api/tamv/msr/status");
       setStatus(data);
     } catch (e) {
-      // Backend offline → mostrar estado simulado del nodo cero
+      // Backend offline â†’ mostrar estado simulado del nodo cero
       setStatus({
         node: "TAMV-RDM-NODO-CERO",
         version: "1.0.0",
-        federation: "Triple Federado (conceptual / legal / técnica)",
+        federation: "Triple Federado (conceptual / legal / tÃ©cnica)",
         layers: ["L0", "L1", "L2", "L3", "L4", "L5", "L6", "L7"],
-        protocols: ["BABAS", "Fénix Rex 4.0", "Chronus", "Autopoiesis", "BookPI", "ANUBIS-ZK"],
+        protocols: ["BABAS", "FÃ©nix Rex 4.0", "Chronus", "Autopoiesis", "BookPI", "ANUBIS-ZK"],
         quantumEncryption: true,
         msrBridge: "EVM-Sidechain (offline-fallback)",
         bookpiAnchor: "ipfs://offline-fallback",
@@ -50,7 +54,7 @@ const TAMVStatus = () => {
         decisions: 0,
         timestamp: new Date().toISOString(),
       });
-      setError("Backend offline — mostrando snapshot del Nodo Cero");
+      setError("Backend offline â€” mostrando snapshot del Nodo Cero");
     } finally {
       setLoading(false);
     }
@@ -63,8 +67,8 @@ const TAMVStatus = () => {
   return (
       <RDMLayout>
         <SEOMeta
-          title="Estado del Nodo Cero TAMV — Real del Monte"
-          description="Telemetría en tiempo real del Nodo Cero TAMV: capas federadas, protocolos de soberanía, MSR Bridge y BookPI."
+          title="Estado del Nodo Cero TAMV â€” Real del Monte"
+          description="TelemetrÃ­a en tiempo real del Nodo Cero TAMV: capas federadas, protocolos de soberanÃ­a, MSR Bridge y BookPI."
         />
         <div className="container mx-auto px-6 pt-32 pb-24">
           <motion.div
@@ -74,13 +78,13 @@ const TAMVStatus = () => {
           >
             <Badge className="mb-4 bg-[hsl(var(--electric))]/10 text-[hsl(var(--electric-light))] border-[hsl(var(--electric))]/30">
               <Radio className="w-3 h-3 mr-2" />
-              Telemetría en vivo
+              TelemetrÃ­a en vivo
             </Badge>
             <h1 className="font-display text-4xl md:text-6xl font-light mb-3">
               <span className="text-gradient-gold">Nodo Cero</span>
             </h1>
             <p className="font-body text-sm tracking-[0.2em] uppercase text-muted-foreground">
-              TAMV-RDM · Real del Monte, Hidalgo
+              TAMV-RDM Â· Real del Monte, Hidalgo
             </p>
           </motion.div>
 
@@ -113,8 +117,8 @@ const TAMVStatus = () => {
                 </CardHeader>
                 <CardContent className="space-y-2 font-body text-xs">
                   <Row k="Nodo" v={status.node} />
-                  <Row k="Versión" v={status.version} />
-                  <Row k="Federación" v={status.federation} />
+                  <Row k="VersiÃ³n" v={status.version} />
+                  <Row k="FederaciÃ³n" v={status.federation} />
                   <Row k="Sello" v={new Date(status.timestamp).toLocaleString()} />
                 </CardContent>
               </Card>
@@ -172,7 +176,7 @@ const TAMVStatus = () => {
 
               <Card className="border-[hsl(var(--gold))]/20 bg-card/60 backdrop-blur-md md:col-span-2">
                 <CardHeader>
-                  <CardTitle className="font-display text-base">Métricas vivas</CardTitle>
+                  <CardTitle className="font-display text-base">MÃ©tricas vivas</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-3 gap-4">

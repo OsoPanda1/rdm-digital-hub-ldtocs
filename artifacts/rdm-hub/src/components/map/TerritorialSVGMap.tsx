@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import {
   memo,
   useCallback,
@@ -17,9 +21,9 @@ import {
 } from "@/data/atlas/territory-pois"
 
 /**
- * TerritorialSVGMap — Mapa SVG inmersivo y soberano del Nodo Cero.
+ * TerritorialSVGMap â€” Mapa SVG inmersivo y soberano del Nodo Cero.
  *
- * - Accesible: roving tabindex (← → ↑ ↓), Enter/Space selecciona, foco visible,
+ * - Accesible: roving tabindex (â† â†’ â†‘ â†“), Enter/Space selecciona, foco visible,
  *   `role="application"` + `aria-activedescendant`, etiquetas claras.
  * - Performance: marcadores memoizados (rerender solo del POI activo),
  *   throttling rAF del hover, listeners limpiados en unmount.
@@ -53,13 +57,13 @@ const FACET_TONES: Record<
   economica: {
     ring: "hsl(145,55%,45%)",
     glow: "hsla(145,55%,45%,0.4)",
-    tag: "Económica",
+    tag: "EconÃ³mica",
     color: "hsl(145,55%,45%)",
   },
   tecnologica: {
     ring: "hsl(280,70%,60%)",
     glow: "hsla(280,70%,60%,0.45)",
-    tag: "Tecnológica",
+    tag: "TecnolÃ³gica",
     color: "hsl(280,70%,60%)",
   },
   educativa: {
@@ -85,7 +89,7 @@ const getFacetTone = (poi: TerritoryPOI) => {
 
 const PAD = 0.012
 
-// ─── Zoom/Pan State ────────────────────────────────────────────────────────
+// â”€â”€â”€ Zoom/Pan State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 interface ViewportState {
   scale: number
   translateX: number
@@ -140,7 +144,7 @@ function useProjection(pois: TerritoryPOI[]) {
   }, [pois])
 }
 
-// ─── Marker Component with Magical Effects ──────────────────────────────────
+// â”€â”€â”€ Marker Component with Magical Effects â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 interface MarkerProps {
   poi: TerritoryPOI
   x: number
@@ -177,7 +181,7 @@ const POIMarker = memo(function POIMarker({
       }}
       tabIndex={active ? 0 : -1}
       role="button"
-      aria-label={`${poi.name} — ${poi.significance}`}
+      aria-label={`${poi.name} â€” ${poi.significance}`}
       aria-pressed={active}
       className="cursor-pointer focus:outline-none [&:focus-visible>circle:last-of-type]:stroke-[hsl(var(--electric))]"
     >
@@ -223,7 +227,7 @@ const POIMarker = memo(function POIMarker({
         style={{ fontFamily: "Montserrat, system-ui, sans-serif" }}
         pointerEvents="none"
       >
-        {poi.name.length > 22 ? poi.name.slice(0, 21) + "…" : poi.name}
+        {poi.name.length > 22 ? poi.name.slice(0, 21) + "â€¦" : poi.name}
       </text>
     </g>
   )
@@ -253,7 +257,7 @@ export default function TerritorialSVGMap({
   const nextHoverRef = useRef<string | null>(null)
   const svgRef = useRef<SVGSVGElement | null>(null)
 
-  // Sync con prop externa (deep-link / selección externa)
+  // Sync con prop externa (deep-link / selecciÃ³n externa)
   useEffect(() => {
     if (selectedId) setHover(selectedId)
     else if (highlightId) setHover(highlightId)
@@ -293,7 +297,7 @@ export default function TerritorialSVGMap({
     [pois, hover],
   )
 
-  // Roving tabindex con flechas (vecino más cercano euclidiano)
+  // Roving tabindex con flechas (vecino mÃ¡s cercano euclidiano)
   const handleKey = useCallback(
     (e: KeyboardEvent<SVGSVGElement>) => {
       if (
@@ -317,7 +321,7 @@ export default function TerritorialSVGMap({
         if (p.poi.id === current.poi.id) continue
         const dx = p.x - current.x
         const dy = p.y - current.y
-        const aligned = dirX * dx + dirY * dy // proyección en la dirección
+        const aligned = dirX * dx + dirY * dy // proyecciÃ³n en la direcciÃ³n
         if (aligned <= 0) continue
 
         const lateral = Math.abs(dirX ? dy : dx)
@@ -450,14 +454,14 @@ export default function TerritorialSVGMap({
             {active.name}
           </h3>
           <p className="mt-0.5 text-xs text-[hsl(var(--muted-foreground))]">
-            {active.municipality} · {active.altitudeM} m
+            {active.municipality} Â· {active.altitudeM} m
           </p>
 
           <p className="mt-2 text-sm text-[hsl(var(--foreground)/0.85)]">
             {active.description}
           </p>
           <p className="mt-2 text-xs italic text-[hsl(var(--foreground)/0.7)]">
-            «{active.significance}»
+            Â«{active.significance}Â»
           </p>
 
           <div className="mt-3 flex flex-wrap items-center gap-2">

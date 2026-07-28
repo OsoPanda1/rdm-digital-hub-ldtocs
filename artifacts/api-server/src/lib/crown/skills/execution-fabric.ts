@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
-// SKILL 2 — Execution Fabric
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// SKILL 2 â€” Execution Fabric
 // Motor de tareas con rollback, circuit breakers, cola
-// determinista para ejecución de tareas del ecosistema
-// ────────────────────────────────────────────────────────────────
+// determinista para ejecuciÃ³n de tareas del ecosistema
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { SkillDefinition, TaskRequest, TaskResult, TaskStatus, FederationId } from "../types";
 
@@ -70,7 +74,7 @@ export function createExecutionFabric(): ExecutionFabric {
       };
       tasks.set(taskId, task);
 
-      // Simulate execution — in production, this routes to actual executors
+      // Simulate execution â€” in production, this routes to actual executors
       task.status = "completed";
       task.completedAt = new Date().toISOString();
       const result: TaskResult = { taskId, status: task.status, startedAt: task.startedAt, completedAt: task.completedAt };

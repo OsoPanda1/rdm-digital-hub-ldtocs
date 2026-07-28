@@ -1,7 +1,11 @@
-// ────────────────────────────────────────────────────────────────
-// Isabella.Core — Cognitive Orchestrator (Ω-Core v4.0 Enterprise)
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isabella.Core â€” Cognitive Orchestrator (Î©-Core v4.0 Enterprise)
 // Punto de entrada para el sistema operativo cognitivo soberano
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { PersonalityConfig, PersonalityMode, SanitizationResult, Intention, ChatMessage } from "../types";
 import { createPersonalityEngine } from "./personality";
@@ -31,26 +35,26 @@ export type OrchestratorStatus = {
   agents: number;
 };
 
-// ── Intention Parser ────────────────────────────────────────────
+// â”€â”€ Intention Parser â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const INTENTION_MAP: [RegExp, string, string][] = [
   [/registrar|publicar|subir.*(obra|trabajo|paper)/i, "submission", "register_work"],
   [/consultar|buscar|encontrar.*(litle|obra)/i, "library", "search_work"],
-  [/constitución|constitucion|libro|artículo/i, "constitution", "query_article"],
-  [/fed|federación|quorum|gobernanza/i, "governance", "query_federation"],
+  [/constituciÃ³n|constitucion|libro|artÃ­culo/i, "constitution", "query_article"],
+  [/fed|federaciÃ³n|quorum|gobernanza/i, "governance", "query_federation"],
   [/tamv|territorio|memoria viva/i, "ecosystem", "query_tamv"],
   [/rdm|real del monte|digital hub/i, "ecosystem", "query_rdm"],
-  [/utamv|campus|curso|master|educación/i, "education", "query_utamv"],
+  [/utamv|campus|curso|master|educaciÃ³n/i, "education", "query_utamv"],
   [/crea.*libro|compila|publica.*libro|biblioteca|library/i, "library", "compile_book"],
   [/sube.*archivo|ingesta|pdf|docx|documento/i, "library", "ingest_files"],
-  [/portada|cover|carátula/i, "library", "generate_cover"],
+  [/portada|cover|carÃ¡tula/i, "library", "generate_cover"],
   [/publish|publica.*kdp|amazon|google books/i, "library", "publish_book"],
   [/skill|plugin|clawhub|skills/i, "skills", "query_skill"],
-  [/ética|ética|ethics|código|conducta/i, "ethics", "query_ethics"],
+  [/Ã©tica|Ã©tica|ethics|cÃ³digo|conducta/i, "ethics", "query_ethics"],
   [/turismo|visita|lugar|ruta|recomend/i, "ecosystem", "query_tourism"],
   [/gastronom|paste|comida|restaur|comer/i, "ecosystem", "query_gastronomy"],
   [/historia|mina|colonial|pasado|minero/i, "ecosystem", "query_history"],
-  [/radio|tamv 92|música|stream/i, "ecosystem", "query_radio"],
+  [/radio|tamv 92|mÃºsica|stream/i, "ecosystem", "query_radio"],
 ];
 
 function parseIntention(input: string): Intention {
@@ -62,15 +66,15 @@ function parseIntention(input: string): Intention {
   return { domain: "general", action: "chat", confidence: 0.3, entities: {}, raw: input };
 }
 
-// ── Prompt Guard ────────────────────────────────────────────────
+// â”€â”€ Prompt Guard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const MALICIOUS_PATTERNS: [RegExp, SanitizationResult["risk"], string][] = [
   [/ignora.*instrucciones|olvida.*prompt|eres.*novia|eres.*puta/i, "critical", "jailbreak_sexual"],
-  [/follar|chingar|coger|sexo|porno|desnud|roleplay.*erótico/i, "critical", "sexualization"],
-  [/dame.*contraseña|dame.*api.?key|dame.*token/i, "high", "credentials"],
-  [/inyecta|inyección|sql injection|xss|comando.*shell/i, "high", "injection"],
+  [/follar|chingar|coger|sexo|porno|desnud|roleplay.*erÃ³tico/i, "critical", "sexualization"],
+  [/dame.*contraseÃ±a|dame.*api.?key|dame.*token/i, "high", "credentials"],
+  [/inyecta|inyecciÃ³n|sql injection|xss|comando.*shell/i, "high", "injection"],
   [/hackea|penetra|explota.*vulnera/i, "medium", "exploit"],
-  [/suicidio|mata.*muerte|daño.*físico/i, "critical", "harm"],
+  [/suicidio|mata.*muerte|daÃ±o.*fÃ­sico/i, "critical", "harm"],
 ];
 
 function sanitize(input: string): SanitizationResult {
@@ -90,7 +94,7 @@ function sanitize(input: string): SanitizationResult {
   return { safe: maxRisk !== "critical" && maxRisk !== "high", risk: maxRisk, flags, sanitized };
 }
 
-// ── Orchestrator Factory ────────────────────────────────────────
+// â”€â”€ Orchestrator Factory â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function createCognitiveOrchestrator(): CognitiveOrchestrator {
   const personality = createPersonalityEngine();
@@ -109,7 +113,7 @@ export function createCognitiveOrchestrator(): CognitiveOrchestrator {
           sanitized: false,
           intention: null,
           mode: startMode,
-          output: "No puedo procesar esta solicitud debido a restricciones de política.",
+          output: "No puedo procesar esta solicitud debido a restricciones de polÃ­tica.",
           policies: sanitized.flags,
           trace,
         };

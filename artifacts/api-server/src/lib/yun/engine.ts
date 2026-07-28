@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
-// YUN Policy Engine — OPA-style Decision Evaluator
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// YUN Policy Engine â€” OPA-style Decision Evaluator
 // The "executable" part of ADR-YUN-0001.
 // YUN never makes a significant decision without consulting OPA.
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { randomUUID } from "node:crypto";
 import { CONSTITUTION_PRINCIPLES, DEFAULT_POLICIES } from "./constitution";
@@ -15,7 +19,7 @@ import type {
   PolicyCondition,
 } from "./types";
 
-// ── Types ──────────────────────────────────────────────────────
+// â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface PolicyInput {
   principal: {
@@ -62,7 +66,7 @@ export interface PolicyViolationEvent {
   result: PolicyEvaluationResult;
 }
 
-// ── Operator Evaluators ────────────────────────────────────────
+// â”€â”€ Operator Evaluators â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function evaluateCondition(condition: PolicyCondition, context: Record<string, unknown>): boolean {
   const fieldValue = resolveField(condition.field, context);
@@ -104,7 +108,7 @@ function resolveField(field: string, context: Record<string, unknown>): unknown 
   return current;
 }
 
-// ── Core Engine ────────────────────────────────────────────────
+// â”€â”€ Core Engine â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export class YunPolicyEngine {
   private rules: PolicyRule[];
@@ -205,27 +209,27 @@ export class YunPolicyEngine {
     return { total, allowed, denied, escalated, degraded };
   }
 
-  // ── Private Helpers ──────────────────────────────────────────
+  // â”€â”€ Private Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   private checkConstitutionPrinciples(input: PolicyInput): string | null {
-    // CP-003: Zero Trust — unverified principals denied
+    // CP-003: Zero Trust â€” unverified principals denied
     if (input.action.startsWith("yun.") && !input.principal.verified) {
-      return "CP-003: Zero Trust — unverified principal denied all YUN actions.";
+      return "CP-003: Zero Trust â€” unverified principal denied all YUN actions.";
     }
 
-    // CP-002: Desacoplamiento reactivo — direct calls blocked unless EMERGENCY
+    // CP-002: Desacoplamiento reactivo â€” direct calls blocked unless EMERGENCY
     if (input.action === "service.direct.call" && input.context.mode !== "EMERGENCY") {
-      return "CP-002: Desacoplamiento reactivo — direct service calls prohibited outside EMERGENCY mode.";
+      return "CP-002: Desacoplamiento reactivo â€” direct service calls prohibited outside EMERGENCY mode.";
     }
 
     // CP-007: Soul modification requires FED-7
     if (input.action === "yun.soul.modify" && input.principal.federation !== "FED-7") {
-      return "CP-007: Gobernanza federada — soul modification only by FED-7 (Auditoría).";
+      return "CP-007: Gobernanza federada â€” soul modification only by FED-7 (AuditorÃ­a).";
     }
 
     // CP-005: No architectural changes without ADR
     if (input.action === "yun.architecture.change" && !input.context.adr.includes("ADR-YUN-0001")) {
-      return "CP-005: Gobernanza documentada — architecture changes require ADR.";
+      return "CP-005: Gobernanza documentada â€” architecture changes require ADR.";
     }
 
     return null;

@@ -1,7 +1,11 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { describe, it, expect } from "vitest";
 import { sanitizeHtml, stripHtml, escapeHtml } from "../sanitize";
 
-describe("sanitizeHtml — CodeQL #174-#178 regression", () => {
+describe("sanitizeHtml â€” CodeQL #174-#178 regression", () => {
   it("removes script tags", () => {
     expect(sanitizeHtml('<p>ok</p><script>alert(1)</script>')).toBe("<p>ok</p>");
   });
@@ -34,7 +38,7 @@ describe("stripHtml", () => {
   });
 });
 
-describe("escapeHtml — CodeQL #1, #6 regression", () => {
+describe("escapeHtml â€” CodeQL #1, #6 regression", () => {
   it("escapes all dangerous chars completely", () => {
     expect(escapeHtml(`<>&"'/\``)).toBe("&lt;&gt;&amp;&quot;&#39;&#x2F;&#x60;");
   });

@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * Hook para métricas del Dashboard CEO.
+ * Hook para mÃ©tricas del Dashboard CEO.
  * Consume el edge function `metrics-aggregates`.
  */
 import { useQuery } from "@tanstack/react-query";

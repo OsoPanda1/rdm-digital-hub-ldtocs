@@ -1,7 +1,11 @@
-// ISA-API v.1.0.0-evolved — Double Hexagon Security Middleware
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// ISA-API v.1.0.0-evolved â€” Double Hexagon Security Middleware
 // Validates API Key, JWT token, and double hexagon authorization
 
-// node:crypto shim — JWT signature verification is server-only.
+// node:crypto shim â€” JWT signature verification is server-only.
 // In browser context we skip HMAC validation (open mode); the real verification
 // happens in the Express API server which has access to node:crypto.
 const _BROWSER_CONTEXT = typeof window !== 'undefined';
@@ -15,13 +19,13 @@ const createHmac = (_algo: string, _secret: string) => {
 };
 import type { ISAContext } from './types';
 
-// ─── Configuration ──────────────────────────────────────────────────────────
+// â”€â”€â”€ Configuration â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const ISA_API_KEY = (typeof import.meta !== 'undefined' ? import.meta.env.VITE_ISABELLA_API_KEY : '') ?? '';
 const ISA_JWT_SECRET = (typeof import.meta !== 'undefined' ? import.meta.env.VITE_ISABELLA_JWT_SECRET : '') ?? '';
 const ISA_NODE_ENV = typeof process !== 'undefined' && process.env ? process.env.NODE_ENV : 'development';
 
-// ─── Types ──────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface SecurityResult {
   valid: boolean;
@@ -46,14 +50,14 @@ export interface HexagonResult {
   traceId: string;
 }
 
-// ─── API Key Validation ─────────────────────────────────────────────────────
+// â”€â”€â”€ API Key Validation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function validateApiKey(key: string | null): boolean {
   if (!ISA_API_KEY) return true; // No key configured = open mode
   return key === ISA_API_KEY;
 }
 
-// ─── JWT Token Validation ───────────────────────────────────────────────────
+// â”€â”€â”€ JWT Token Validation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function base64UrlDecode(str: string): string {
   try {
@@ -87,7 +91,7 @@ export function validateTerritorialToken(token: string | null): { valid: boolean
     const header = JSON.parse(base64UrlDecode(parts[0]));
     const payload = JSON.parse(base64UrlDecode(parts[1]));
 
-    // Verify HMAC signature (skipped in browser context — server-only validation)
+    // Verify HMAC signature (skipped in browser context â€” server-only validation)
     const signature = parts[2];
     const expectedSig = createHmac('sha256', ISA_JWT_SECRET)
       .update(`${parts[0]}.${parts[1]}`)
@@ -113,7 +117,7 @@ export function validateTerritorialToken(token: string | null): { valid: boolean
   }
 }
 
-// ─── Double Hexagon Validation ──────────────────────────────────────────────
+// â”€â”€â”€ Double Hexagon Validation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Inner hexagon: identity, kernel, memory, governance, audit
 // Outer hexagon: interoperability, signal ingestion, result publication, territorial control
 
@@ -190,22 +194,22 @@ export function validateHexagon(input: HexagonInput, traceId: string): HexagonRe
 
   if (allowed) {
     decision = 'PERMITIDO';
-    rationale = 'Ambos hexágonos validados correctamente. Acción autorizada.';
+    rationale = 'Ambos hexÃ¡gonos validados correctamente. AcciÃ³n autorizada.';
   } else if (inner.violatedRules.length > 0 && outer.violatedRules.length > 0) {
     decision = 'BLOQUEADO';
-    rationale = `Violación en ambos hexágonos: ${allViolations.join('; ')}`;
+    rationale = `ViolaciÃ³n en ambos hexÃ¡gonos: ${allViolations.join('; ')}`;
   } else if (inner.violatedRules.length > 0) {
     decision = 'RESTRINGIDO';
-    rationale = `Violación en hexágono interno: ${inner.violatedRules.join('; ')}`;
+    rationale = `ViolaciÃ³n en hexÃ¡gono interno: ${inner.violatedRules.join('; ')}`;
   } else {
     decision = 'RESTRINGIDO';
-    rationale = `Violación en hexágono externo: ${outer.violatedRules.join('; ')}`;
+    rationale = `ViolaciÃ³n en hexÃ¡gono externo: ${outer.violatedRules.join('; ')}`;
   }
 
   return { allowed, decision, rationale, auditId, traceId };
 }
 
-// ─── Full Security Check ────────────────────────────────────────────────────
+// â”€â”€â”€ Full Security Check â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function createISAContext(
   apiKey: string | null,
@@ -253,7 +257,7 @@ export function createISAContext(
   return { valid: true, ctx };
 }
 
-// ─── Trace ID Generator ─────────────────────────────────────────────────────
+// â”€â”€â”€ Trace ID Generator â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function generateTraceId(): string {
   const timestamp = Date.now().toString(36);
@@ -261,7 +265,7 @@ export function generateTraceId(): string {
   return `isa-${timestamp}-${random}`;
 }
 
-// ─── Error Response Builder ─────────────────────────────────────────────────
+// â”€â”€â”€ Error Response Builder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function buildErrorResponse(
   code: string,

@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // src/data/video-config.ts
-// RDM Digital Hub — Video Embed Configuration
+// RDM Digital Hub â€” Video Embed Configuration
 // Replace the youtubeId values with your actual YouTube video IDs.
 // Format: the part after v= in youtube.com/watch?v=XXXXX or the part after youtu.be/
 
@@ -10,97 +14,97 @@ export interface PageVideo {
 }
 
 export const PAGE_VIDEOS: Record<string, { hero?: PageVideo; mid?: PageVideo }> = {
-  // ── Homepage ──────────────────────────────────────────────
+  // â”€â”€ Homepage â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   index: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
-      title: "Conoce Real del Monte — Pueblo Mágico",
+      title: "Conoce Real del Monte â€” Pueblo MÃ¡gico",
       caption: "Descubre la magia de Real del Monte, Hidalgo",
     },
   },
 
-  // ── Cultura ────────────────────────────────────────────────
+  // â”€â”€ Cultura â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   cultura: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
       title: "Cultura y Tradiciones de Real del Monte",
-      caption: "Fiestas, tradiciones y el espíritu vivente de nuestra comunidad",
+      caption: "Fiestas, tradiciones y el espÃ­ritu vivente de nuestra comunidad",
     },
   },
 
-  // ── Historia ───────────────────────────────────────────────
+  // â”€â”€ Historia â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   historia: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
-      title: "500 Años de Historia Minera",
+      title: "500 AÃ±os de Historia Minera",
       caption: "Del descubrimiento de la Veta Madre a la identidad actual",
     },
   },
 
-  // ── Gastronomía ───────────────────────────────────────────
+  // â”€â”€ GastronomÃ­a â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   gastronomia: {
     mid: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
       title: "Los Pastes de Real del Monte",
-      caption: "La tradición pastelera que define nuestra gastronomía",
+      caption: "La tradiciÃ³n pastelera que define nuestra gastronomÃ­a",
     },
   },
 
-  // ── Música ────────────────────────────────────────────────
+  // â”€â”€ MÃºsica â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   musica: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
-      title: "Música y Sonidos de Real del Monte",
-      caption: "Melodías que capturan el espíritu de nuestra tierra",
+      title: "MÃºsica y Sonidos de Real del Monte",
+      caption: "MelodÃ­as que capturan el espÃ­ritu de nuestra tierra",
     },
   },
 
-  // ── Ecoturismo ────────────────────────────────────────────
+  // â”€â”€ Ecoturismo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   ecoturismo: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
       title: "Aventura en la Sierra de Pachuca",
-      caption: "Senderismo, naturaleza y paisajes de ensueño",
+      caption: "Senderismo, naturaleza y paisajes de ensueÃ±o",
     },
   },
 
-  // ── Radio / Archivo Sonoro ────────────────────────────────
+  // â”€â”€ Radio / Archivo Sonoro â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   "archivo-sonoro": {
     mid: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
-      title: "TAMV 92.5 FM — La Voz de Real del Monte",
+      title: "TAMV 92.5 FM â€” La Voz de Real del Monte",
       caption: "Nuestra radio comunitaria en vivo, 24/7",
     },
   },
 
-  // ── Turismo / Rutas ───────────────────────────────────────
+  // â”€â”€ Turismo / Rutas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   rutas: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
-      title: "Rutas Turísticas de Real del Monte",
+      title: "Rutas TurÃ­sticas de Real del Monte",
       caption: "Recorridos que conectan historia, naturaleza y cultura",
     },
   },
 
-  // ── Mapa ──────────────────────────────────────────────────
+  // â”€â”€ Mapa â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   mapa: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
       title: "Mapa Interactivo de Real del Monte",
-      caption: "Explora nuestros puntos de interés en tiempo real",
+      caption: "Explora nuestros puntos de interÃ©s en tiempo real",
     },
   },
 
-  // ── Arte ──────────────────────────────────────────────────
+  // â”€â”€ Arte â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   arte: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
-      title: "Artesanías y Platería de Real del Monte",
-      caption: "El arte que nace de la plata y la tradición",
+      title: "ArtesanÃ­as y PlaterÃ­a de Real del Monte",
+      caption: "El arte que nace de la plata y la tradiciÃ³n",
     },
   },
 
-  // ── Comunidad ─────────────────────────────────────────────
+  // â”€â”€ Comunidad â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   comunidad: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",

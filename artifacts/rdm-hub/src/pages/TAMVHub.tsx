@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,21 +26,21 @@ const TAMVHub = () => {
   const systemMetrics = [
     { label: "Ciudadanos Federados", value: "24,847", icon: Users, trend: "+12.4%" },
     { label: "DreamSpaces Activos", value: "3,421", icon: Globe, trend: "+8.7%" },
-    { label: "Decisiones/día (BABAS)", value: "156K", icon: Activity, trend: "+15.2%" },
+    { label: "Decisiones/dÃ­a (BABAS)", value: "156K", icon: Activity, trend: "+15.2%" },
     { label: "Nodos Federados", value: nodes.length.toString(), icon: Network, trend: "Triple Federado" },
   ];
 
   const economyDistribution = [
-    { label: "Fénix (20%) — Resiliencia", value: phoenixFund, color: "from-[hsl(var(--terracotta))] to-[hsl(var(--copper))]" },
+    { label: "FÃ©nix (20%) â€” Resiliencia", value: phoenixFund, color: "from-[hsl(var(--terracotta))] to-[hsl(var(--copper))]" },
     { label: "Infraestructura (30%)", value: infraFund, color: "from-[hsl(var(--electric))] to-[hsl(var(--navy))]" },
     { label: "Reserva (50%)", value: reserveFund, color: "from-[hsl(var(--gold))] to-[hsl(var(--gold-dark))]" },
   ];
 
   const protocols = [
-    { name: "BABAS", desc: "Auditoría blockchain", icon: Lock },
-    { name: "Fénix Rex 4.0", desc: "Recuperación autónoma", icon: Sparkles },
-    { name: "Chronus", desc: "Saturación zonal", icon: Activity },
-    { name: "Autopoiesis", desc: "Auto-regulación", icon: Cpu },
+    { name: "BABAS", desc: "AuditorÃ­a blockchain", icon: Lock },
+    { name: "FÃ©nix Rex 4.0", desc: "RecuperaciÃ³n autÃ³noma", icon: Sparkles },
+    { name: "Chronus", desc: "SaturaciÃ³n zonal", icon: Activity },
+    { name: "Autopoiesis", desc: "Auto-regulaciÃ³n", icon: Cpu },
     { name: "BookPI", desc: "Memoria IPFS", icon: Database },
     { name: "ANUBIS-ZK", desc: "Pruebas Zero Knowledge", icon: Shield },
   ];
@@ -44,8 +48,8 @@ const TAMVHub = () => {
     return (
       <RDMLayout>
         <SEOMeta
-          title="TAMV Civilization Hub — Nodo Cero Real del Monte"
-          description="Centro de mando del ecosistema TAMV Blockchain MSR. Triple Federado conceptual, legal y técnico. Despliegue del Nodo Cero en Real del Monte."
+          title="TAMV Civilization Hub â€” Nodo Cero Real del Monte"
+          description="Centro de mando del ecosistema TAMV Blockchain MSR. Triple Federado conceptual, legal y tÃ©cnico. Despliegue del Nodo Cero en Real del Monte."
         />
         <div className="container mx-auto px-6 pt-32 pb-24 relative z-10">
           {/* Hero */}
@@ -58,7 +62,7 @@ const TAMVHub = () => {
             <Badge variant="outline" className="mb-6 px-4 py-2 border-[hsl(var(--gold))]/40 bg-[hsl(var(--gold))]/5">
               <Crown className="w-4 h-4 mr-2 text-[hsl(var(--gold))]" />
               <span className="font-body text-[10px] tracking-[0.3em] uppercase text-[hsl(var(--gold))]">
-                Nodo Cero · Real del Monte
+                Nodo Cero Â· Real del Monte
               </span>
             </Badge>
             <h1 className="font-display text-5xl md:text-7xl font-light mb-6 leading-tight">
@@ -66,14 +70,14 @@ const TAMVHub = () => {
               <span className="text-foreground/90">Civilization Hub</span>
             </h1>
             <p className="font-body text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Sistema operativo civilizacional híbrido cuántico-tradicional.
-              Triple Federado: <span className="text-[hsl(var(--gold))]">conceptual</span> ·{" "}
-              <span className="text-[hsl(var(--electric))]">legal</span> ·{" "}
-              <span className="text-[hsl(var(--platinum))]">técnico</span>.
+              Sistema operativo civilizacional hÃ­brido cuÃ¡ntico-tradicional.
+              Triple Federado: <span className="text-[hsl(var(--gold))]">conceptual</span> Â·{" "}
+              <span className="text-[hsl(var(--electric))]">legal</span> Â·{" "}
+              <span className="text-[hsl(var(--platinum))]">tÃ©cnico</span>.
             </p>
           </motion.div>
 
-          {/* Métricas */}
+          {/* MÃ©tricas */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
             {systemMetrics.map((m, idx) => (
               <motion.div
@@ -114,7 +118,7 @@ const TAMVHub = () => {
               <CardHeader>
                 <CardTitle className="font-display text-xl flex items-center gap-2">
                   <Shield className={`w-5 h-5 ${guardianMode ? "text-[hsl(var(--electric))]" : "text-muted-foreground"}`} />
-                  Isabella AI NextGen™
+                  Isabella AI NextGenâ„¢
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-5">
@@ -128,14 +132,14 @@ const TAMVHub = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="font-body text-xs tracking-wider uppercase text-muted-foreground">
-                    Modo Guardián
+                    Modo GuardiÃ¡n
                   </span>
                   <Badge variant={guardianMode ? "default" : "outline"}>
                     {guardianMode ? "ACTIVO" : "STANDBY"}
                   </Badge>
                 </div>
                 {[
-                  { label: "Empatía", value: empathyIndex },
+                  { label: "EmpatÃ­a", value: empathyIndex },
                   { label: "Creatividad", value: creativityIndex },
                   { label: "Emocional", value: emotionalLevel },
                 ].map((m) => (
@@ -150,12 +154,12 @@ const TAMVHub = () => {
               </CardContent>
             </Card>
 
-            {/* Economía */}
+            {/* EconomÃ­a */}
             <Card className="border-[hsl(var(--gold))]/20 bg-card/60 backdrop-blur-md">
               <CardHeader>
                 <CardTitle className="font-display text-xl flex items-center gap-2">
                   <Wallet className="w-5 h-5 text-[hsl(var(--gold))]" />
-                  Economía Civilizatoria
+                  EconomÃ­a Civilizatoria
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -171,7 +175,7 @@ const TAMVHub = () => {
                 </div>
                 <div className="pt-3 border-t border-border/30 space-y-3">
                   <p className="font-body text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
-                    Regla Phoenix 20·30·50
+                    Regla Phoenix 20Â·30Â·50
                   </p>
                   {economyDistribution.map((f) => (
                     <div key={f.label}>
@@ -191,7 +195,7 @@ const TAMVHub = () => {
               <CardHeader>
                 <CardTitle className="font-display text-xl flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-[hsl(var(--gold))]" />
-                  Acceso Rápido
+                  Acceso RÃ¡pido
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
@@ -199,7 +203,7 @@ const TAMVHub = () => {
                   { label: "Estado del Nodo Cero", path: "/tamv/status", icon: Radio },
                   { label: "Explorador de API", path: "/tamv/api", icon: ScrollText },
                   { label: "Realito AI (Local)", path: "/", icon: Sparkles },
-                  { label: "Catálogo Comercios", path: "/catalogo", icon: Wallet },
+                  { label: "CatÃ¡logo Comercios", path: "/catalogo", icon: Wallet },
                   { label: "Rutas Territoriales", path: "/rutas", icon: Globe },
                 ].map((a) => (
                   <Link
@@ -223,7 +227,7 @@ const TAMVHub = () => {
               <CardTitle className="font-display text-xl flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <Network className="w-5 h-5 text-[hsl(var(--electric))]" />
-                  Red Federada — 8 Capas Operativas
+                  Red Federada â€” 8 Capas Operativas
                 </span>
                 <div className="flex gap-2">
                   {quantumEncryptionActive && (
@@ -238,7 +242,7 @@ const TAMVHub = () => {
                   )}
                   {bookpiAnchorActive && (
                     <Badge variant="outline" className="border-border/40">
-                      BookPI · IPFS
+                      BookPI Â· IPFS
                     </Badge>
                   )}
                 </div>
@@ -281,7 +285,7 @@ const TAMVHub = () => {
             <CardHeader>
               <CardTitle className="font-display text-xl flex items-center gap-2">
                 <Zap className="w-5 h-5 text-[hsl(var(--gold))]" />
-                Protocolos de Soberanía Activos
+                Protocolos de SoberanÃ­a Activos
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -317,7 +321,7 @@ const TAMVHub = () => {
                 <Button asChild className="bg-gradient-to-r from-[hsl(var(--gold))] to-[hsl(var(--gold-dark))] text-[hsl(var(--navy-dark))] font-semibold">
                   <Link to="/tenochtitlan">
                     <Network className="w-4 h-4 mr-2" />
-                    System Tenochtitlán
+                    System TenochtitlÃ¡n
                   </Link>
                 </Button>
               </div>

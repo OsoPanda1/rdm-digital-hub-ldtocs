@@ -1,7 +1,11 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 // ============================================================================
-// RDM Digital OS + TAMV — YUN-native Sovereign Module Manifest
-// Fundado sobre: YUN Manifesto, Constitución, Blueprint, ADR, Heptafederación
+// RDM Digital OS + TAMV â€” YUN-native Sovereign Module Manifest
+// Fundado sobre: YUN Manifesto, ConstituciÃ³n, Blueprint, ADR, HeptafederaciÃ³n
 // ============================================================================
 
 export type ModuleType =
@@ -94,7 +98,7 @@ const normalizePath = (p: string): string =>
   p.replace(/\\/g, "/").replace(/\/+/g, "/");
 
 // ============================================================================
-// Manifiesto de módulos — población exhaustiva con YUN completo
+// Manifiesto de mÃ³dulos â€” poblaciÃ³n exhaustiva con YUN completo
 // ============================================================================
 
 export const RDMX_MODULES: RepoModule[] = [
@@ -140,10 +144,10 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal", "degraded-federation"],
         degradedBehavior:
-          "Modo lectura con rutas y contenidos; sin nuevas operaciones críticas de comercio; avisos explícitos de degradación de Fed2.",
+          "Modo lectura con rutas y contenidos; sin nuevas operaciones crÃ­ticas de comercio; avisos explÃ­citos de degradaciÃ³n de Fed2.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture", "ADR-004-heptafederation"],
       },
     },
@@ -154,7 +158,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("packages/real-del-monte-twin"),
     type: "backend",
     description:
-      "Gemelo digital de Real del Monte: telemetría, grafo territorial, modelos de flujo de visitantes.",
+      "Gemelo digital de Real del Monte: telemetrÃ­a, grafo territorial, modelos de flujo de visitantes.",
     entryPoints: ["src/models/index.ts", "src/services/twinTelemetry.ts"],
     status: "integrated",
     criticality: "core",
@@ -185,10 +189,10 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal", "degraded-domain", "degraded-federation"],
         degradedBehavior:
-          "Mantiene telemetría agregada y grafo estático; suspende recomputaciones intensivas hasta recuperación.",
+          "Mantiene telemetrÃ­a agregada y grafo estÃ¡tico; suspende recomputaciones intensivas hasta recuperaciÃ³n.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture"],
       },
     },
@@ -199,7 +203,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("packages/rdm-digital-core"),
     type: "backend",
     description:
-      "Servicios base y APIs legacy de RDM Digital — autenticación, donaciones, economía local.",
+      "Servicios base y APIs legacy de RDM Digital â€” autenticaciÃ³n, donaciones, economÃ­a local.",
     entryPoints: ["src/routes/index.ts"],
     status: "integrated",
     criticality: "high",
@@ -234,7 +238,7 @@ export const RDMX_MODULES: RepoModule[] = [
           "Suspende nuevas operaciones de pago; mantiene lectura del historial y estado consolidado de donaciones.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-001-supabase", "ADR-002-event-driven"],
       },
     },
@@ -245,7 +249,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("packages/rdm-smart-city-os"),
     type: "infra",
     description:
-      "Capa Smart City: sensores urbanos, dashboards de gobierno, gestión inteligente de destino.",
+      "Capa Smart City: sensores urbanos, dashboards de gobierno, gestiÃ³n inteligente de destino.",
     entryPoints: ["src/index.ts"],
     status: "partial",
     criticality: "high",
@@ -276,10 +280,10 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal", "degraded-federation"],
         degradedBehavior:
-          "Dashboards en modo lectura, sin aplicar nuevas órdenes sobre territorio físico; toda acción requiere confirmación manual.",
+          "Dashboards en modo lectura, sin aplicar nuevas Ã³rdenes sobre territorio fÃ­sico; toda acciÃ³n requiere confirmaciÃ³n manual.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture", "ADR-004-heptafederation"],
       },
     },
@@ -290,7 +294,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("packages/real-del-monte-elevated"),
     type: "ui",
     description:
-      "Sistema de diseño cinematográfico elevated — CinematicIntro, VisualEffects, SectionHeader.",
+      "Sistema de diseÃ±o cinematogrÃ¡fico elevated â€” CinematicIntro, VisualEffects, SectionHeader.",
     entryPoints: ["src/components/CinematicIntro.tsx", "src/components/VisualEffects.tsx"],
     status: "integrated",
     criticality: "medium",
@@ -317,7 +321,7 @@ export const RDMX_MODULES: RepoModule[] = [
           "Degrada efectos visuales y animaciones; mantiene narrativa base y estructura de contenido.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture"],
       },
     },
@@ -328,7 +332,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("packages/citemesh-roots"),
     type: "content",
     description:
-      "Wiki semántica y malla de contenidos territoriales — WikiLayout, WikiSearch, IsabellaChat.",
+      "Wiki semÃ¡ntica y malla de contenidos territoriales â€” WikiLayout, WikiSearch, IsabellaChat.",
     entryPoints: ["src/components/WikiLayout.tsx", "src/services/wikiSearch.ts"],
     status: "partial",
     criticality: "medium",
@@ -358,10 +362,10 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal", "degraded-federation"],
         degradedBehavior:
-          "Wiki en modo sólo lectura cuando Fed2 está degradada; bloquea nuevas contribuciones hasta estabilización.",
+          "Wiki en modo sÃ³lo lectura cuando Fed2 estÃ¡ degradada; bloquea nuevas contribuciones hasta estabilizaciÃ³n.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture"],
       },
     },
@@ -372,7 +376,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("packages/genesis-digytamv-nexus"),
     type: "ai",
     description:
-      "Módulos avanzados TAMV — IsabellaOrb, BancoTAMV, Marketplace, Universidad Digital.",
+      "MÃ³dulos avanzados TAMV â€” IsabellaOrb, BancoTAMV, Marketplace, Universidad Digital.",
     entryPoints: ["src/modules/isabella/index.ts", "src/modules/banco/index.ts"],
     status: "partial",
     criticality: "high",
@@ -405,7 +409,7 @@ export const RDMX_MODULES: RepoModule[] = [
           "Suspende operaciones financieras automatizadas; mantiene lectura de balances y estados educativos/marketplace.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-001-supabase", "ADR-002-event-driven"],
       },
     },
@@ -416,7 +420,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("packages/civilizational-core"),
     type: "infra",
     description:
-      "Núcleo civilizacional — protocolos éticos, BookPI, módulos de gobernanza digital.",
+      "NÃºcleo civilizacional â€” protocolos Ã©ticos, BookPI, mÃ³dulos de gobernanza digital.",
     entryPoints: ["src/protocols/index.ts"],
     status: "partial",
     criticality: "core",
@@ -446,10 +450,10 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal", "degraded-domain", "degraded-federation"],
         degradedBehavior:
-          "Mantiene registro de políticas pero suspende aplicación automática de cambios hasta revisión humana.",
+          "Mantiene registro de polÃ­ticas pero suspende aplicaciÃ³n automÃ¡tica de cambios hasta revisiÃ³n humana.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture", "ADR-004-heptafederation"],
       },
     },
@@ -460,7 +464,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("packages/quantum-system-tamv"),
     type: "ai",
     description:
-      "Sistema quantum TAMV — Isabella AI, ChronusEngine, DecisionStore, agentes turismo/cultura/comercio.",
+      "Sistema quantum TAMV â€” Isabella AI, ChronusEngine, DecisionStore, agentes turismo/cultura/comercio.",
     entryPoints: ["src/main.py", "lib/isabella.ts"],
     status: "integrated",
     criticality: "core",
@@ -490,10 +494,10 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal", "degraded-domain", "degraded-federation"],
         degradedBehavior:
-          "Sólo explicación sobre datos ya existentes; desactiva decisiones automatizadas y recomendaciones de alto impacto.",
+          "SÃ³lo explicaciÃ³n sobre datos ya existentes; desactiva decisiones automatizadas y recomendaciones de alto impacto.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture"],
       },
     },
@@ -504,7 +508,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("packages/tamv-online-nextgen"),
     type: "ai",
     description:
-      "TAMV Online NextGen™ — Civilization Hub, Isabella emocional, MSR Bridge, DreamSpaces, Phoenix 20·30·50, BABAS, Fénix Rex, ANUBIS-ZK.",
+      "TAMV Online NextGenâ„¢ â€” Civilization Hub, Isabella emocional, MSR Bridge, DreamSpaces, Phoenix 20Â·30Â·50, BABAS, FÃ©nix Rex, ANUBIS-ZK.",
     entryPoints: [
       "src/pages/TAMVHub.tsx",
       "src/stores/tamv/isabellaStore.ts",
@@ -541,7 +545,7 @@ export const RDMX_MODULES: RepoModule[] = [
           "Mantiene experiencias XR en modo seguro/limitado; desactiva funciones que dependen de federaciones degradadas.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture", "ADR-004-heptafederation"],
       },
     },
@@ -552,7 +556,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("packages/rdm-digital-nodo-cero"),
     type: "infra",
     description:
-      "Nodo Cero — manifiesto soberano de RDM Digital, anclajes BookPI y constitución civilizacional.",
+      "Nodo Cero â€” manifiesto soberano de RDM Digital, anclajes BookPI y constituciÃ³n civilizacional.",
     entryPoints: ["src/pages/TAMVThesis.tsx", "server/src/routes/tamv-thesis.ts"],
     status: "integrated",
     criticality: "high",
@@ -585,7 +589,7 @@ export const RDMX_MODULES: RepoModule[] = [
           "Permite lectura de tesis y manifiesto; suspende cambios estructurales hasta recuperar plena gobernanza.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture", "ADR-004-heptafederation"],
       },
     },
@@ -596,7 +600,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("packages/real-del-monte-explorer-11b3982a"),
     type: "ui",
     description:
-      "Variante elevated del explorer (fork 11b3982a) — fusionada en páginas y componentes principales.",
+      "Variante elevated del explorer (fork 11b3982a) â€” fusionada en pÃ¡ginas y componentes principales.",
     entryPoints: ["src/pages/Index.tsx"],
     status: "integrated",
     criticality: "low",
@@ -623,7 +627,7 @@ export const RDMX_MODULES: RepoModule[] = [
           "Se desactiva en modo degradado de Fed2, delegando al explorer principal.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture"],
       },
     },
@@ -634,7 +638,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("packages/rdm-digital-2026"),
     type: "content",
     description:
-      "Roadmap visual 2026 de RDM Digital — hoja de ruta operativa ejecutable.",
+      "Roadmap visual 2026 de RDM Digital â€” hoja de ruta operativa ejecutable.",
     entryPoints: ["docs/roadmap-rdmx-executable.yaml"],
     status: "integrated",
     criticality: "medium",
@@ -661,7 +665,7 @@ export const RDMX_MODULES: RepoModule[] = [
           "Roadmap accesible en modo lectura; se bloquean cambios hasta restablecer salud de Fed5.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture"],
       },
     },
@@ -672,7 +676,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("server/src/services/tenochtitlan"),
     type: "backend",
     description:
-      "Kernel soberano Tenochtitlán: panteón centinela, radares paralelos, ID-NVIDA, EOCT, BookPI hash-chained, MD-X4 y los 48 nodos funcionales.",
+      "Kernel soberano TenochtitlÃ¡n: panteÃ³n centinela, radares paralelos, ID-NVIDA, EOCT, BookPI hash-chained, MD-X4 y los 48 nodos funcionales.",
     entryPoints: ["server/src/routes/tenochtitlan.ts", "src/pages/Tenochtitlan.tsx"],
     status: "integrated",
     criticality: "core",
@@ -713,21 +717,21 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal", "degraded-domain", "degraded-federation"],
         degradedBehavior:
-          "Mantiene vigilancia reducida; suspende cambios profundos en gobernanza hasta confirmación humana.",
+          "Mantiene vigilancia reducida; suspende cambios profundos en gobernanza hasta confirmaciÃ³n humana.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture", "ADR-004-heptafederation"],
       },
     },
   },
   {
-    id: "isabella-villaseñor-ai",
+    id: "isabella-villaseÃ±or-ai",
     repo: "https://github.com/OsoPanda1/rdm-digital-hub-ldtocs.git",
     path: normalizePath("src/isabella"),
     type: "ai",
     description:
-      "Isabella Villaseñor AI — sistema operativo cognitivo territorial con doble hexágono de seguridad, pipeline de conciencia hexagonal y 5 skills (ORION, SOPHIA, ARGUS, MNEMOS, LUMEN).",
+      "Isabella VillaseÃ±or AI â€” sistema operativo cognitivo territorial con doble hexÃ¡gono de seguridad, pipeline de conciencia hexagonal y 5 skills (ORION, SOPHIA, ARGUS, MNEMOS, LUMEN).",
     entryPoints: ["src/isabella/index.ts", "src/isabella/api/router.ts"],
     status: "integrated",
     criticality: "core",
@@ -758,10 +762,10 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal", "degraded-domain", "degraded-federation"],
         degradedBehavior:
-          "Isabella opera en modo seguro con skills críticos (LUMEN, MNEMOS) y desactiva skills no esenciales.",
+          "Isabella opera en modo seguro con skills crÃ­ticos (LUMEN, MNEMOS) y desactiva skills no esenciales.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: [
           "ADR-001-supabase",
           "ADR-002-event-driven",
@@ -777,7 +781,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("src/core/yun"),
     type: "protocol",
     description:
-      "YUN Data Fabric — orquestador central de 5 dominios de almacenamiento con adaptables por dominio (Supabase, Neon, Turso, D1, Redis).",
+      "YUN Data Fabric â€” orquestador central de 5 dominios de almacenamiento con adaptables por dominio (Supabase, Neon, Turso, D1, Redis).",
     entryPoints: ["src/core/yun/index.ts", "src/core/yun/data-fabric.ts"],
     status: "integrated",
     criticality: "core",
@@ -806,10 +810,10 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal", "degraded-domain"],
         degradedBehavior:
-          "Fallback automático a Supabase cuando el backend primario del dominio falla.",
+          "Fallback automÃ¡tico a Supabase cuando el backend primario del dominio falla.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-001-supabase", "ADR-005-commerce-neon-migration"],
       },
     },
@@ -820,7 +824,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("src/core/yun/event-bus.ts"),
     type: "protocol",
     description:
-      "YUN Constitutional Event Bus — bus central de eventos con validación de dominio, trazabilidad y resiliencia.",
+      "YUN Constitutional Event Bus â€” bus central de eventos con validaciÃ³n de dominio, trazabilidad y resiliencia.",
     entryPoints: ["src/core/yun/event-bus.ts"],
     status: "integrated",
     criticality: "core",
@@ -852,7 +856,7 @@ export const RDMX_MODULES: RepoModule[] = [
           "El event bus opera in-memory; si falla, los productores reintentan con backoff exponencial.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-002-event-driven", "ADR-003-yun-architecture"],
       },
     },
@@ -863,7 +867,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("apps/web-games"),
     type: "ui",
     description:
-      "Portal de minijuegos federados RDM Web Games — Mina Responsable, Ruta del Guardián. Integración completa con Kernel GAMER, Cattleya tiers, YUN Event Bus y pagos Stripe.",
+      "Portal de minijuegos federados RDM Web Games â€” Mina Responsable, Ruta del GuardiÃ¡n. IntegraciÃ³n completa con Kernel GAMER, Cattleya tiers, YUN Event Bus y pagos Stripe.",
     entryPoints: ["src/app/page.tsx", "src/app/games/[slug]/page.tsx"],
     status: "integrated",
     criticality: "high",
@@ -874,7 +878,7 @@ export const RDMX_MODULES: RepoModule[] = [
       hasSignedArtifacts: true,
       hasRuntimeGuards: true,
     },
-    dependencies: ["isabella-villaseñor-ai", "yun-event-bus", "yun-gateway"],
+    dependencies: ["isabella-villaseÃ±or-ai", "yun-event-bus", "yun-gateway"],
     tags: ["WebGames", "Flutter", "Gamification", "Cattleya", "GAMER"],
     yun: {
       domain: "gameplay",
@@ -899,10 +903,10 @@ export const RDMX_MODULES: RepoModule[] = [
       resilience: {
         supportedModes: ["normal", "degraded-federation"],
         degradedBehavior:
-          "Modo solo lectura con partidas gratis limitadas; pagos y boosters deshabilitados hasta recuperar federación.",
+          "Modo solo lectura con partidas gratis limitadas; pagos y boosters deshabilitados hasta recuperar federaciÃ³n.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture", "ADR-004-heptafederation", "ADR-005-commerce-neon-migration"],
       },
     },
@@ -913,7 +917,7 @@ export const RDMX_MODULES: RepoModule[] = [
     path: normalizePath("apps/web-games"),
     type: "ui",
     description:
-      "Portal de minijuegos federados RDM Web Games — Mina Responsable, Ruta del Guardián. Integración completa con Kernel GAMER, Cattleya tiers, YUN Event Bus y pagos Stripe.",
+      "Portal de minijuegos federados RDM Web Games â€” Mina Responsable, Ruta del GuardiÃ¡n. IntegraciÃ³n completa con Kernel GAMER, Cattleya tiers, YUN Event Bus y pagos Stripe.",
     entryPoints: ["src/app/page.tsx", "src/app/games/[slug]/page.tsx"],
     status: "integrated",
     criticality: "high",
@@ -924,7 +928,7 @@ export const RDMX_MODULES: RepoModule[] = [
       hasSignedArtifacts: true,
       hasRuntimeGuards: true,
     },
-    dependencies: ["isabella-villaseñor-ai", "yun-event-bus", "yun-gateway"],
+    dependencies: ["isabella-villaseÃ±or-ai", "yun-event-bus", "yun-gateway"],
     tags: ["WebGames", "Gamification", "Cattleya", "MinaResponsable", "RutaGuardian", "Flutter"],
     yun: {
       domain: "gameplay",
@@ -949,7 +953,7 @@ export const RDMX_MODULES: RepoModule[] = [
           "Modo lectura con partidas guardadas localmente; sincroniza al recuperar conectividad.",
       },
       governance: {
-        constitutionVersion: "YUN Constitution – v1.0",
+        constitutionVersion: "YUN Constitution â€“ v1.0",
         adrRefs: ["ADR-003-yun-architecture", "ADR-004-heptafederation"],
       },
     },

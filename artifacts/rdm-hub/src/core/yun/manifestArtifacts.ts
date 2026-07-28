@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // ============================================================================
-// YUN Manifest Artifacts — genera JSON derivados para observabilidad
+// YUN Manifest Artifacts â€” genera JSON derivados para observabilidad
 // ============================================================================
 
 import {
@@ -11,7 +15,7 @@ import {
   type CriticalityLevel,
 } from "./rdmxManifest";
 
-// ─── Types ──────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface YunAccessMatrixEntry {
   moduleId: string;
@@ -44,7 +48,7 @@ interface YunModuleSummary {
   byStatus: Record<string, number>;
 }
 
-// ─── Generadores ────────────────────────────────────────────────────────────
+// â”€â”€â”€ Generadores â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const buildYunAccessMatrix = (
   modules: RepoModule[],
@@ -121,7 +125,7 @@ export const buildYunModuleSummary = (
   };
 };
 
-// ─── Export all artifacts as a single object ────────────────────────────────
+// â”€â”€â”€ Export all artifacts as a single object â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const generateAllArtifacts = () => ({
   accessMatrix: buildYunAccessMatrix(RDMX_MODULES),

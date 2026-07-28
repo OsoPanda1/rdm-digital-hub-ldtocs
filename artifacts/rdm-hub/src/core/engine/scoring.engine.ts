@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { ThresholdRule, type ScoreRule } from "@/core/rules/scoring.rule";
 import type { ScoreBreakdown } from "@/core/models";
 

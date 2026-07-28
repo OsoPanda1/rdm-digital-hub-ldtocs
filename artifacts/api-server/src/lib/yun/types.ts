@@ -1,10 +1,14 @@
-// ────────────────────────────────────────────────────────────────
-// YUN — Core Types & Constitution
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// YUN â€” Core Types & Constitution
 // Constitutional Realm of the TAMV Ecosystem
 // ADR-YUN-0001: Immutable Architectural Constitution
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-// ── Domains ────────────────────────────────────────────────────
+// â”€â”€ Domains â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export type YunDomain =
   | "identity"
   | "commerce"
@@ -15,7 +19,7 @@ export type YunDomain =
   | "media"
   | "cognitive";
 
-// ── Federations (Heptafederation) ──────────────────────────────
+// â”€â”€ Federations (Heptafederation) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export type FederationId =
   | "FED-1" | "FED-2" | "FED-3" | "FED-4"
   | "FED-5" | "FED-6" | "FED-7";
@@ -28,16 +32,16 @@ export interface FederationDef {
 }
 
 export const FEDERATIONS: FederationDef[] = [
-  { id: "FED-1", name: "Preservación",   domain: "identity",    description: "Seguridad, DevSecOps, CI/CD" },
-  { id: "FED-2", name: "Estándares",     domain: "knowledge",   description: "Calidad, normas, versiones" },
-  { id: "FED-3", name: "Tecnología",     domain: "telemetry",   description: "Kernel, skills, quorum" },
-  { id: "FED-4", name: "Curación",       domain: "media",       description: "Contenido, biblioteca, narrativa" },
+  { id: "FED-1", name: "PreservaciÃ³n",   domain: "identity",    description: "Seguridad, DevSecOps, CI/CD" },
+  { id: "FED-2", name: "EstÃ¡ndares",     domain: "knowledge",   description: "Calidad, normas, versiones" },
+  { id: "FED-3", name: "TecnologÃ­a",     domain: "telemetry",   description: "Kernel, skills, quorum" },
+  { id: "FED-4", name: "CuraciÃ³n",       domain: "media",       description: "Contenido, biblioteca, narrativa" },
   { id: "FED-5", name: "Integridad",     domain: "territorial", description: "DAG, firmas, trazabilidad" },
-  { id: "FED-6", name: "Adopción",       domain: "gameplay",    description: "Educación, comunidades, tutorías" },
-  { id: "FED-7", name: "Auditoría",      domain: "cognitive",   description: "Ética, incidentes, veto" },
+  { id: "FED-6", name: "AdopciÃ³n",       domain: "gameplay",    description: "EducaciÃ³n, comunidades, tutorÃ­as" },
+  { id: "FED-7", name: "AuditorÃ­a",      domain: "cognitive",   description: "Ã‰tica, incidentes, veto" },
 ];
 
-// ── Resilience Modes ───────────────────────────────────────────
+// â”€â”€ Resilience Modes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export type YunMode = "NORMAL" | "SAFE" | "EMERGENCY";
 
 export interface ModeTransition {
@@ -47,7 +51,7 @@ export interface ModeTransition {
   timestamp: number;
 }
 
-// ── Event Standard ─────────────────────────────────────────────
+// â”€â”€ Event Standard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export type EventSeverity = "info" | "warn" | "error" | "critical";
 export type EventTopic =
   | "identity.events"
@@ -76,7 +80,7 @@ export interface YunEvent<T = unknown> {
   pqSignature?: string;
 }
 
-// ── Node / Actor Types ─────────────────────────────────────────
+// â”€â”€ Node / Actor Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export type NodeType = "territorial" | "service" | "agent-human" | "agent-ai" | "external";
 export type NodeStatus = "registered" | "active" | "suspended" | "revoked";
 
@@ -94,7 +98,7 @@ export interface YunNode {
   metadata: Record<string, unknown>;
 }
 
-// ── License Types ──────────────────────────────────────────────
+// â”€â”€ License Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export type LicenseType = "TAMV-PRCL" | "TAMV-EOL" | "TAMV-KORIMA" | "TAMV-HYBRID";
 
 export interface YunLicense {
@@ -109,7 +113,7 @@ export interface YunLicense {
   issuedBy: FederationId;
 }
 
-// ── Policy Engine Types ────────────────────────────────────────
+// â”€â”€ Policy Engine Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export type PolicyEffect = "allow" | "deny" | "escalate" | "degrade";
 
 export interface PolicyRule {
@@ -136,7 +140,7 @@ export interface PolicyDecision {
   timestamp: number;
 }
 
-// ── Data Sensitivity ───────────────────────────────────────────
+// â”€â”€ Data Sensitivity â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export type SensitivityLevel = "P0" | "P1" | "P2";
 
 export interface DataCatalogEntry {
@@ -148,7 +152,7 @@ export interface DataCatalogEntry {
   description: string;
 }
 
-// ── ADR Types ──────────────────────────────────────────────────
+// â”€â”€ ADR Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export type ADRStatus = "Proposed" | "Accepted" | "Deprecated" | "Superseded";
 
 export interface ADR {
@@ -164,7 +168,7 @@ export interface ADR {
   supersededBy?: string;
 }
 
-// ── Perception Types ───────────────────────────────────────────
+// â”€â”€ Perception Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export type PerceptionSource = "technical" | "social" | "territorial" | "cognitive";
 
 export interface PerceptionSignal {
@@ -177,7 +181,7 @@ export interface PerceptionSignal {
   metadata: Record<string, unknown>;
 }
 
-// ── YUN System State ───────────────────────────────────────────
+// â”€â”€ YUN System State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export interface YunSystemState {
   mode: YunMode;
   registeredNodes: number;

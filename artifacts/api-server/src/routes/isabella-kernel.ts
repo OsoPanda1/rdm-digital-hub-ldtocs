@@ -1,29 +1,33 @@
-// ══════════════════════════════════════════════════════════════════════════════
-// Isabella Ω Cognitive Kernel — API Routes
-// POST /api/kernel/process — Run full cognitive cycle
-// GET  /api/kernel/stats   — Kernel statistics
-// GET  /api/kernel/memory  — Memory stats
-// GET  /api/kernel/emergency — Emergency state
-// POST /api/kernel/emergency/trigger — Trigger emergency
-// POST /api/kernel/emergency/shutdown — Emergency shutdown
-// POST /api/kernel/emergency/rollback — Rollback emergency
-// POST /api/kernel/emergency/clear — Clear emergency state
-// GET  /api/kernel/evaluator — Evaluation metrics
-// GET  /api/kernel/evaluator/trends — Evaluation trends
-// GET  /api/kernel/evaluator/alerts — Active alerts
-// GET  /api/kernel/verifier — Verification history
-// GET  /api/kernel/learning — Learning history
-// GET  /api/kernel/learning/errors — Error patterns
-// GET  /api/kernel/capabilities — List capabilities
-// POST /api/kernel/capabilities/:id/toggle — Toggle capability
-// GET  /api/kernel/plans — List plans
-// POST /api/kernel/plans — Create plan
-// GET  /api/kernel/knowledge — Knowledge graph stats
-// POST /api/kernel/knowledge/entities — Add entity
-// POST /api/kernel/knowledge/relations — Add relation
-// POST /api/kernel/knowledge/search — Search entities
-// POST /api/kernel/knowledge/query — Query graph
-// ══════════════════════════════════════════════════════════════════════════════
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Isabella Î© Cognitive Kernel â€” API Routes
+// POST /api/kernel/process â€” Run full cognitive cycle
+// GET  /api/kernel/stats   â€” Kernel statistics
+// GET  /api/kernel/memory  â€” Memory stats
+// GET  /api/kernel/emergency â€” Emergency state
+// POST /api/kernel/emergency/trigger â€” Trigger emergency
+// POST /api/kernel/emergency/shutdown â€” Emergency shutdown
+// POST /api/kernel/emergency/rollback â€” Rollback emergency
+// POST /api/kernel/emergency/clear â€” Clear emergency state
+// GET  /api/kernel/evaluator â€” Evaluation metrics
+// GET  /api/kernel/evaluator/trends â€” Evaluation trends
+// GET  /api/kernel/evaluator/alerts â€” Active alerts
+// GET  /api/kernel/verifier â€” Verification history
+// GET  /api/kernel/learning â€” Learning history
+// GET  /api/kernel/learning/errors â€” Error patterns
+// GET  /api/kernel/capabilities â€” List capabilities
+// POST /api/kernel/capabilities/:id/toggle â€” Toggle capability
+// GET  /api/kernel/plans â€” List plans
+// POST /api/kernel/plans â€” Create plan
+// GET  /api/kernel/knowledge â€” Knowledge graph stats
+// POST /api/kernel/knowledge/entities â€” Add entity
+// POST /api/kernel/knowledge/relations â€” Add relation
+// POST /api/kernel/knowledge/search â€” Search entities
+// POST /api/kernel/knowledge/query â€” Query graph
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 import type { Router, Request, Response } from "express";
 import { createCognitiveKernel } from "../lib/isabella/kernel";
@@ -35,7 +39,7 @@ const kernel = createCognitiveKernel();
 
 export function registerKernelRoutes(router: Router) {
 
-  // ── Core Processing ─────────────────────────────────────────────────────
+  // â”€â”€ Core Processing â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.post("/kernel/process",
     rateLimitByRoute({ name: "kernel-process", limit: 30 }),
@@ -79,13 +83,13 @@ export function registerKernelRoutes(router: Router) {
     },
   );
 
-  // ── Kernel Stats ────────────────────────────────────────────────────────
+  // â”€â”€ Kernel Stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.get("/kernel/stats", (req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: kernel.getKernelStats() });
   });
 
-  // ── Memory ──────────────────────────────────────────────────────────────
+  // â”€â”€ Memory â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.get("/kernel/memory", (req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: kernel.memory.getStats() });
@@ -105,7 +109,7 @@ export function registerKernelRoutes(router: Router) {
     res.status(200).json({ ok: true, data: results });
   });
 
-  // ── Emergency ───────────────────────────────────────────────────────────
+  // â”€â”€ Emergency â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.get("/kernel/emergency", (req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: kernel.emergency.getState() });
@@ -158,7 +162,7 @@ export function registerKernelRoutes(router: Router) {
     },
   );
 
-  // ── Evaluator ───────────────────────────────────────────────────────────
+  // â”€â”€ Evaluator â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.get("/kernel/evaluator", (req: Request, res: Response) => {
     const limit = Math.min(Number(req.query.limit) || 20, 100);
@@ -179,14 +183,14 @@ export function registerKernelRoutes(router: Router) {
     res.status(200).json({ ok: true, data: kernel.evaluator.getAlerts() });
   });
 
-  // ── Verifier ────────────────────────────────────────────────────────────
+  // â”€â”€ Verifier â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.get("/kernel/verifier", (req: Request, res: Response) => {
     const limit = Math.min(Number(req.query.limit) || 20, 100);
     res.status(200).json({ ok: true, data: kernel.verifier.getCheckHistory(limit) });
   });
 
-  // ── Learning ────────────────────────────────────────────────────────────
+  // â”€â”€ Learning â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.get("/kernel/learning", (req: Request, res: Response) => {
     const limit = Math.min(Number(req.query.limit) || 20, 100);
@@ -203,7 +207,7 @@ export function registerKernelRoutes(router: Router) {
     res.status(200).json({ ok: true, data: kernel.learning.getErrorPatterns() });
   });
 
-  // ── Capabilities ────────────────────────────────────────────────────────
+  // â”€â”€ Capabilities â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.get("/kernel/capabilities", (req: Request, res: Response) => {
     const caps = kernel.capabilityFabric.getAllCapabilities();
@@ -224,7 +228,7 @@ export function registerKernelRoutes(router: Router) {
     },
   );
 
-  // ── Plans ───────────────────────────────────────────────────────────────
+  // â”€â”€ Plans â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.get("/kernel/plans", (req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: kernel.planner.listPlans() });
@@ -240,7 +244,7 @@ export function registerKernelRoutes(router: Router) {
     },
   );
 
-  // ── Knowledge Graph ─────────────────────────────────────────────────────
+  // â”€â”€ Knowledge Graph â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.get("/kernel/knowledge", (req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: kernel.knowledgeGraph.getStats() });
@@ -304,7 +308,7 @@ export function registerKernelRoutes(router: Router) {
     },
   );
 
-  // ── Simulation ──────────────────────────────────────────────────────────
+  // â”€â”€ Simulation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.post("/kernel/simulate",
     rateLimitByRoute({ name: "kernel-simulate", limit: 10 }),

@@ -1,26 +1,30 @@
-// ══════════════════════════════════════════════════════════════════════════════
-// Isabella Ω Cognitive Kernel — Main Orchestrator
-// The Cognitive Operating System: Perceive → Understand → Plan → Execute → Verify → Learn
-// ══════════════════════════════════════════════════════════════════════════════
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Isabella Î© Cognitive Kernel â€” Main Orchestrator
+// The Cognitive Operating System: Perceive â†’ Understand â†’ Plan â†’ Execute â†’ Verify â†’ Learn
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //
 // ARCHITECTURE:
 //
-//                    ISABELLA Ω CORE
-//                           │
-// ┌─────────────────────────┼─────────────────────────┐
-// │                         │                         │
-// Percepción             Cognición               Ejecución
-// │                         │                         │
-// │                    Meta-Razonador          Capability Fabric
-// │                         │                         │
+//                    ISABELLA Î© CORE
+//                           â”‚
+// â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+// â”‚                         â”‚                         â”‚
+// PercepciÃ³n             CogniciÃ³n               EjecuciÃ³n
+// â”‚                         â”‚                         â”‚
+// â”‚                    Meta-Razonador          Capability Fabric
+// â”‚                         â”‚                         â”‚
 // Memoria               Planificador          Agent Coordinator
-// │                         │                         │
+// â”‚                         â”‚                         â”‚
 // Aprendizaje         Gobernanza YUN          Security Nucleus
-// │                         │                         │
+// â”‚                         â”‚                         â”‚
 //                  Verifier + Simulator
 //                  Evaluator + Emergency
 //
-// ══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 import { randomBytes } from "crypto";
 import type {
@@ -46,7 +50,7 @@ import { createEvaluator } from "./evaluator";
 import { createEmergencyProtocols } from "./emergency";
 import { logger } from "../../logger";
 
-// ── Kernel Interface ────────────────────────────────────────────────────────
+// â”€â”€ Kernel Interface â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface CognitiveKernel {
   process(input: string, userId: string, sessionId: string, options?: {
@@ -85,7 +89,7 @@ export interface KernelStats {
   activeTeams: number;
 }
 
-// ── Kernel Implementation ───────────────────────────────────────────────────
+// â”€â”€ Kernel Implementation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 let totalRequests = 0;
 let totalLatencyMs = 0;
@@ -295,7 +299,7 @@ export function createCognitiveKernel(): CognitiveKernel {
       // Store session memory
       memory.store({
         level: "L0_immediate",
-        content: `Session ${sessionId}: ${input.slice(0, 100)} → ${currentOutput.slice(0, 100)}`,
+        content: `Session ${sessionId}: ${input.slice(0, 100)} â†’ ${currentOutput.slice(0, 100)}`,
         tags: ["session", sessionId],
         source: "kernel",
         confidence: 0.9,

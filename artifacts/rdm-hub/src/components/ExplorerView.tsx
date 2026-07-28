@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { motion } from "framer-motion";
 import { MapPin, Navigation } from "lucide-react";
@@ -11,7 +15,7 @@ export function ExplorerView() {
       <div>
         <h1 className="text-2xl font-display font-semibold tracking-tight">Explorer</h1>
         <p className="text-sm text-muted-foreground mt-1">
-          Mapa geoespacial de Real del Monte — Vista territorial
+          Mapa geoespacial de Real del Monte â€” Vista territorial
         </p>
       </div>
 
@@ -31,7 +35,7 @@ export function ExplorerView() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
           <Navigation className="w-8 h-8 text-accent" />
           <div className="glass px-3 py-1.5 rounded-lg">
-            <p className="text-xs text-primary-foreground font-mono">20.138°N, 98.671°W</p>
+            <p className="text-xs text-primary-foreground font-mono">20.138Â°N, 98.671Â°W</p>
             <p className="text-[10px] text-primary-foreground/60 text-center">Real del Monte, Hgo.</p>
           </div>
         </div>
@@ -86,7 +90,7 @@ export function ExplorerView() {
                 <p className="text-sm font-semibold">{place.name}</p>
                 <p className="text-xs text-muted-foreground capitalize mt-0.5">{place.category}</p>
               </div>
-              <span className="text-xs text-accent font-medium">★ {place.rating}</span>
+              <span className="text-xs text-accent font-medium">â˜… {place.rating}</span>
             </div>
             <p className="text-xs text-muted-foreground mt-2 line-clamp-2">{place.description}</p>
             <div className="flex items-center gap-1 mt-2 text-[10px] text-secondary font-mono">

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,10 +22,10 @@ interface Balance {
 interface Reward { id: string; name: string; description: string; category: string; cost_points: number; }
 
 const MINERALS = [
-  { key: "oro", label: "Oro", emoji: "🪙", color: "from-amber-400 to-yellow-600" },
-  { key: "plata", label: "Plata", emoji: "🔘", color: "from-slate-200 to-slate-400" },
-  { key: "cuarzo", label: "Cuarzo", emoji: "💎", color: "from-cyan-200 to-cyan-400" },
-  { key: "carbon", label: "Carbón", emoji: "🪨", color: "from-zinc-500 to-zinc-700" },
+  { key: "oro", label: "Oro", emoji: "ðŸª™", color: "from-amber-400 to-yellow-600" },
+  { key: "plata", label: "Plata", emoji: "ðŸ”˜", color: "from-slate-200 to-slate-400" },
+  { key: "cuarzo", label: "Cuarzo", emoji: "ðŸ’Ž", color: "from-cyan-200 to-cyan-400" },
+  { key: "carbon", label: "CarbÃ³n", emoji: "ðŸª¨", color: "from-zinc-500 to-zinc-700" },
 ] as const;
 
 const ENERGY_MAX = 100;
@@ -55,8 +59,8 @@ export default function Mina() {
     setBusy(true);
     const { data, error } = await supabase.functions.invoke("rdm-membership-activate");
     setBusy(false);
-    if (error) return toast.error("No se pudo activar la membresía");
-    if (data?.membership) { toast.success("¡Membresía minera activada por 30 días!"); loadAll(); }
+    if (error) return toast.error("No se pudo activar la membresÃ­a");
+    if (data?.membership) { toast.success("Â¡MembresÃ­a minera activada por 30 dÃ­as!"); loadAll(); }
   };
 
   const mine = async () => {
@@ -86,7 +90,7 @@ export default function Mina() {
 
   return (
     <RDMLayout>
-        <SEOMeta title="Mina RDM · Subsuelo Digital de Real del Monte" description="Mina oro, plata, cuarzo y carbón digitales y canjea tus puntos por productos reales de Real del Monte." />
+        <SEOMeta title="Mina RDM Â· Subsuelo Digital de Real del Monte" description="Mina oro, plata, cuarzo y carbÃ³n digitales y canjea tus puntos por productos reales de Real del Monte." />
         {/* Hero Banner */}
         <div className="relative h-48 w-full overflow-hidden">
           <img src="/images/historia-mina.jpg" alt="Historia de la mina de Real del Monte" className="h-full w-full object-cover" />
@@ -96,7 +100,7 @@ export default function Mina() {
         <div className="flex items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="font-display text-4xl md:text-5xl text-gradient-gold">Subsuelo Digital RDM</h1>
-            <p className="font-body text-muted-foreground mt-2">Mina minerales, acumula puntos y cánjealos por experiencias reales del Pueblo Mágico.</p>
+            <p className="font-body text-muted-foreground mt-2">Mina minerales, acumula puntos y cÃ¡njealos por experiencias reales del Pueblo MÃ¡gico.</p>
           </div>
           <Button variant="ghost" size="sm" onClick={() => supabase.auth.signOut()} className="shrink-0">
             <LogOut className="h-4 w-4 mr-1" /> Salir
@@ -106,10 +110,10 @@ export default function Mina() {
         {!active ? (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="panel-futuristic rounded-3xl p-8 text-center">
             <Gem className="h-12 w-12 mx-auto text-[hsl(var(--gold))] mb-4" />
-            <h2 className="font-display text-3xl mb-2">Membresía Minera</h2>
-            <p className="text-muted-foreground max-w-md mx-auto mb-1">Activa tu acceso al subsuelo digital y empieza a minar Oro, Plata, Cuarzo y Carbón.</p>
+            <h2 className="font-display text-3xl mb-2">MembresÃ­a Minera</h2>
+            <p className="text-muted-foreground max-w-md mx-auto mb-1">Activa tu acceso al subsuelo digital y empieza a minar Oro, Plata, Cuarzo y CarbÃ³n.</p>
             <p className="text-4xl font-display text-gradient-gold my-4">$129 <span className="text-base text-muted-foreground">MXN / mes</span></p>
-            <Button onClick={activate} disabled={busy} className="btn-premium">{busy ? "Activando…" : "Activar membresía"}</Button>
+            <Button onClick={activate} disabled={busy} className="btn-premium">{busy ? "Activandoâ€¦" : "Activar membresÃ­a"}</Button>
           </motion.div>
         ) : (
           <div className="grid lg:grid-cols-3 gap-6">
@@ -119,7 +123,7 @@ export default function Mina() {
               <div className="relative z-10 flex flex-col items-center">
                 <div className="w-full mb-6">
                   <div className="flex items-center justify-between text-xs uppercase tracking-widest text-muted-foreground mb-2">
-                    <span className="flex items-center gap-1"><Zap className="h-3.5 w-3.5 text-[hsl(var(--electric))]" /> Energía</span>
+                    <span className="flex items-center gap-1"><Zap className="h-3.5 w-3.5 text-[hsl(var(--electric))]" /> EnergÃ­a</span>
                     <span>{balance?.energy ?? 0}/{ENERGY_MAX}</span>
                   </div>
                   <Progress value={energyPct} className="h-2" />
@@ -135,7 +139,7 @@ export default function Mina() {
                         exit={{ opacity: 0 }}
                         className="absolute left-1/2 -translate-x-1/2 -top-4 font-display text-2xl text-[hsl(var(--gold))] text-glow-gold whitespace-nowrap"
                       >
-                        +{pop.amount} {pop.mineral} · +{pop.points} pts
+                        +{pop.amount} {pop.mineral} Â· +{pop.points} pts
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -148,7 +152,7 @@ export default function Mina() {
                     <Pickaxe className="h-20 w-20 text-[hsl(220,45%,8%)]" />
                   </motion.button>
                 </div>
-                <p className="text-sm text-muted-foreground mt-6">Toca el pico para extraer del subsuelo (5 energía por golpe).</p>
+                <p className="text-sm text-muted-foreground mt-6">Toca el pico para extraer del subsuelo (5 energÃ­a por golpe).</p>
 
                 <div className="grid grid-cols-4 gap-3 w-full mt-8">
                   {MINERALS.map((m) => (
@@ -167,7 +171,7 @@ export default function Mina() {
               <div className="glass-gold rounded-3xl p-6 text-center">
                 <p className="text-xs uppercase tracking-widest text-muted-foreground">Puntos RDM</p>
                 <p className="font-display text-5xl text-gradient-gold my-1">{balance?.puntos ?? 0}</p>
-                <p className="text-xs text-muted-foreground">{balance?.total_mined ?? 0} minerales extraídos</p>
+                <p className="text-xs text-muted-foreground">{balance?.total_mined ?? 0} minerales extraÃ­dos</p>
               </div>
 
               <div className="panel-futuristic rounded-3xl p-5">

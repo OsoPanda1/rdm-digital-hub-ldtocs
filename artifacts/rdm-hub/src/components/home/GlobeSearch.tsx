@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * Globe Search - Buscador global con globo 3D interactivo
- * Se transforma de globo a barra de búsqueda
+ * Se transforma de globo a barra de bÃºsqueda
  */
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -59,7 +63,7 @@ const GlobeSearch: React.FC<GlobeSearchProps> = ({ onSearch }) => {
       ctx.fillStyle = gradient;
       ctx.fill();
 
-      // Líneas de longitud
+      // LÃ­neas de longitud
       ctx.strokeStyle = 'rgba(0, 240, 255, 0.3)';
       ctx.lineWidth = 0.5;
       for (let i = 0; i < 12; i++) {
@@ -77,7 +81,7 @@ const GlobeSearch: React.FC<GlobeSearchProps> = ({ onSearch }) => {
         ctx.stroke();
       }
 
-      // Líneas de latitud
+      // LÃ­neas de latitud
       for (let i = 1; i < 6; i++) {
         const y = centerY - radius + (i * radius * 2 / 6);
         const latRadius = Math.sqrt(radius * radius - Math.pow(y - centerY, 2));
@@ -152,7 +156,7 @@ const GlobeSearch: React.FC<GlobeSearchProps> = ({ onSearch }) => {
 
   const quickFilters = [
     { icon: Users, label: 'Grupos', color: 'text-cyan-400' },
-    { icon: Music, label: 'Música', color: 'text-green-400' },
+    { icon: Music, label: 'MÃºsica', color: 'text-green-400' },
     { icon: Calendar, label: 'Eventos', color: 'text-purple-400' },
     { icon: ShoppingBag, label: 'Marketplace', color: 'text-amber-400' },
   ];
@@ -184,7 +188,7 @@ const GlobeSearch: React.FC<GlobeSearchProps> = ({ onSearch }) => {
             <div className="absolute inset-0 rounded-full bg-cyan-500/10 blur-xl animate-pulse pointer-events-none" />
           </motion.div>
         ) : (
-          // Barra de búsqueda expandida
+          // Barra de bÃºsqueda expandida
           <motion.div
             key="searchbar"
             initial={{ opacity: 0, width: 300 }}
@@ -238,7 +242,7 @@ const GlobeSearch: React.FC<GlobeSearchProps> = ({ onSearch }) => {
                 </Button>
               </div>
 
-              {/* Filtros rápidos */}
+              {/* Filtros rÃ¡pidos */}
               <div className="flex items-center gap-2 mt-4 justify-center">
                 {quickFilters.map((filter) => (
                   <Button
@@ -255,7 +259,7 @@ const GlobeSearch: React.FC<GlobeSearchProps> = ({ onSearch }) => {
 
               {/* Ubicaciones sugeridas */}
               <div className="flex items-center gap-2 mt-3 justify-center flex-wrap">
-                {['CDMX', 'New York', 'Tokyo', 'Londres', 'São Paulo'].map((city) => (
+                {['CDMX', 'New York', 'Tokyo', 'Londres', 'SÃ£o Paulo'].map((city) => (
                   <Badge
                     key={city}
                     variant="outline"
@@ -272,7 +276,7 @@ const GlobeSearch: React.FC<GlobeSearchProps> = ({ onSearch }) => {
         )}
       </AnimatePresence>
 
-      {/* Título */}
+      {/* TÃ­tulo */}
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

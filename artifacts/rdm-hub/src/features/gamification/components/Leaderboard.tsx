@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -196,7 +200,7 @@ export function Leaderboard({ compact = false, showSeason = true }: LeaderboardP
                       <span className="text-[10px] text-[hsl(var(--muted-foreground))]">
                         Nv. {entry.level}
                       </span>
-                      <span className="text-[10px] text-[hsl(var(--muted-foreground))]">·</span>
+                      <span className="text-[10px] text-[hsl(var(--muted-foreground))]">Â·</span>
                       <div className="flex gap-1.5">
                         <span className="text-[9px] text-amber-400/70">
                           C:{entry.xp_cultura}

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { logger } from "@/lib/logger";
 import { buildTerritorySecurityTopic } from "./topics";
 import type { TwinState } from "./types";

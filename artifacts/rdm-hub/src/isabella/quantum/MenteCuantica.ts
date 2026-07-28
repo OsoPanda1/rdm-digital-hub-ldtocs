@@ -1,4 +1,8 @@
-// src/isabella/quantum/MenteCuantica.ts — Quantum cognition module for Isabella
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// src/isabella/quantum/MenteCuantica.ts â€” Quantum cognition module for Isabella
 // Integrates PennyLane circuits + PQC into Isabella's consciousness pipeline
 
 import { PostQuantumCryptoV2, getPQC, initPQC } from "@/quantum/pqc"

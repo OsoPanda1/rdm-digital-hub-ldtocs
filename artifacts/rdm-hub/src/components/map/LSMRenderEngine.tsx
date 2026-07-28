@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useMemo, useState } from "react"
 import { useWebSocketSubscription } from "../../hooks/useWebSocket"
 
@@ -30,7 +34,7 @@ const MAP_BOUNDS = {
   maxLng: -98.65,
 }
 
-// Configuración cromática y semántica de la infraestructura LTOS
+// ConfiguraciÃ³n cromÃ¡tica y semÃ¡ntica de la infraestructura LTOS
 const CAPA_THEME_MAP: Record<
   LSMRenderProps["capaActiva"],
   {
@@ -45,7 +49,7 @@ const CAPA_THEME_MAP: Record<
     pulseColor: "bg-blue-400",
   },
   economia: {
-    colorNodo: "rgba(245, 158, 11, 0.85)", // Ámbar económico
+    colorNodo: "rgba(245, 158, 11, 0.85)", // Ãmbar econÃ³mico
     shadow: "0 0 4px rgba(217,119,6,0.2), 0 0 16px rgba(245,158,11,0.6)",
     pulseColor: "bg-amber-400",
   },
@@ -55,7 +59,7 @@ const CAPA_THEME_MAP: Record<
     pulseColor: "bg-slate-300",
   },
   movilidad: {
-    colorNodo: "rgba(244, 63, 94, 0.85)", // Rosa / Carmesí de flujo de tráfico
+    colorNodo: "rgba(244, 63, 94, 0.85)", // Rosa / CarmesÃ­ de flujo de trÃ¡fico
     shadow: "0 0 4px rgba(225,29,72,0.2), 0 0 16px rgba(244,63,94,0.6)",
     pulseColor: "bg-rose-400",
   },
@@ -92,19 +96,19 @@ export const LSMRenderEngine = ({
     setNodosLSM([])
   }, [capaActiva])
 
-  // Consumo e inserción limpia de flujos en tiempo real
+  // Consumo e inserciÃ³n limpia de flujos en tiempo real
   useEffect(() => {
     if (!lastEvent || lastEvent.capa !== capaActiva) return
 
     setNodosLSM((prev) => {
       const filtrados = prev.filter((n) => n.id !== lastEvent.data.id)
       const nuevos = [...filtrados, lastEvent.data]
-      // Límite de seguridad para evitar tormentas de renders en sesiones largas
+      // LÃ­mite de seguridad para evitar tormentas de renders en sesiones largas
       return nuevos.slice(-500)
     })
   }, [lastEvent, capaActiva])
 
-  // Procesamiento y proyección matemática de coordenadas analíticas
+  // Procesamiento y proyecciÃ³n matemÃ¡tica de coordenadas analÃ­ticas
   const nodosVisuales = useMemo(() => {
     return nodosLSM.map((nodo) => {
       const point = projectPoint(nodo.lat, nodo.lng)
@@ -129,7 +133,7 @@ export const LSMRenderEngine = ({
   return (
     <div
       className="relative h-full w-full overflow-hidden rounded-2xl border border-white/5 bg-[#060b16] shadow-[0_0_50px_rgba(0,0,0,0.5)]"
-      data-lng-center={initialViewState.longitude} // Preservación analítica de la referencia de centrado espacial
+      data-lng-center={initialViewState.longitude} // PreservaciÃ³n analÃ­tica de la referencia de centrado espacial
       data-lat-center={initialViewState.latitude}
     >
       {/* Fondo inmersivo optimizado */}
@@ -160,13 +164,13 @@ export const LSMRenderEngine = ({
                 transition:
                   "transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease",
               }}
-              title={`${nodo.id} · Vector: ${capaActiva}`}
+              title={`${nodo.id} Â· Vector: ${capaActiva}`}
             />
           )
         })}
       </div>
 
-      {/* Panel de Control y Estado de Telemetría Territorial */}
+      {/* Panel de Control y Estado de TelemetrÃ­a Territorial */}
       <div className="pointer-events-none absolute right-4 top-4 rounded-lg border border-white/10 bg-black/70 p-3 backdrop-blur-md transition-all duration-300">
         <span className="mb-1 block font-mono text-[10px] uppercase tracking-[2px] text-slate-400">
           Estatus LSM

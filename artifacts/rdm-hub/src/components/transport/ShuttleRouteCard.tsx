@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { Bus, Clock, Calendar, Users, DollarSign } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -24,7 +28,7 @@ export function ShuttleRouteCard({ route, onBook }: { route: ShuttleRoute; onBoo
             <Bus className="h-5 w-5 text-accent" />
           </div>
           <div className="flex-1">
-            <h3 className="font-display text-base text-foreground">{route.origin} → {route.destination}</h3>
+            <h3 className="font-display text-base text-foreground">{route.origin} â†’ {route.destination}</h3>
             {route.company_name && <p className="text-xs text-muted-foreground">{route.company_name}</p>}
           </div>
           {route.price_per_person != null && (

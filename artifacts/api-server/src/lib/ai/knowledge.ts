@@ -1,18 +1,22 @@
-// ────────────────────────────────────────────────────────────────
-// Isabella Villaseñor AI™ — Knowledge Base (Ω-Core v4.0 Enterprise)
-// Ecosistema TAMV + Constitución LITLE + Arquitectura Cognitiva
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isabella VillaseÃ±or AIâ„¢ â€” Knowledge Base (Î©-Core v4.0 Enterprise)
+// Ecosistema TAMV + ConstituciÃ³n LITLE + Arquitectura Cognitiva
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { KnowledgeEntry } from "../isabella/types";
 
 const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
-  // ── Ecosistema TAMV ───────────────────────────────────────────
+  // â”€â”€ Ecosistema TAMV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   {
     id: "kb-tamv-001",
     domain: "ecosystem",
     topic: "TAMV Online",
     keywords: ["tamv", "territorio", "memoria viva", "ecosistema"],
-    content: "TAMV Online — Territorio Autónomo de Memoria Viva — es un ecosistema digital con arquitectura propia, identidad, gobernanza y servicios integrados. Fundado por Edwin Oswaldo Castillo Trejo en Real del Monte, Hidalgo, México. Isabella Villaseñor es su sistema operativo cognitivo soberano.",
+    content: "TAMV Online â€” Territorio AutÃ³nomo de Memoria Viva â€” es un ecosistema digital con arquitectura propia, identidad, gobernanza y servicios integrados. Fundado por Edwin Oswaldo Castillo Trejo en Real del Monte, Hidalgo, MÃ©xico. Isabella VillaseÃ±or es su sistema operativo cognitivo soberano.",
     category: "ecosystem",
     priority: 10,
     source: "TAMV Documentation",
@@ -24,7 +28,7 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
     domain: "ecosystem",
     topic: "Fundador",
     keywords: ["edwin", "castillo", "trejo", "fundador", "founder"],
-    content: "Edwin Oswaldo Castillo Trejo es el fundador de TAMV Online Network. Originario de Real del Monte, Hidalgo, México. Ha desarrollado TAMV Online, TAMV OS, MD-X4/MD-X5, CITEMESH y UTAMV.",
+    content: "Edwin Oswaldo Castillo Trejo es el fundador de TAMV Online Network. Originario de Real del Monte, Hidalgo, MÃ©xico. Ha desarrollado TAMV Online, TAMV OS, MD-X4/MD-X5, CITEMESH y UTAMV.",
     category: "ecosystem",
     priority: 8,
     source: "TAMV Documentation",
@@ -36,7 +40,7 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
     domain: "ecosystem",
     topic: "RDM Digital Hub",
     keywords: ["rdm", "real del monte", "digital hub", "nodo cero"],
-    content: "RDM Digital Hub es el Nodo Cero de TAMV Online. Busca convertir Real del Monte en un referente de turismo, cultura, economía local e innovación territorial. Isabella actúa como guía contextual con soporte XR/3D.",
+    content: "RDM Digital Hub es el Nodo Cero de TAMV Online. Busca convertir Real del Monte en un referente de turismo, cultura, economÃ­a local e innovaciÃ³n territorial. Isabella actÃºa como guÃ­a contextual con soporte XR/3D.",
     category: "ecosystem",
     priority: 9,
     source: "TAMV Documentation",
@@ -47,7 +51,7 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
     id: "kb-tamv-004",
     domain: "ecosystem",
     topic: "UTAMV Campus Online",
-    keywords: ["utamv", "campus", "educación", "education", "master", "ucip"],
+    keywords: ["utamv", "campus", "educaciÃ³n", "education", "master", "ucip"],
     content: "UTAMV Campus Online es la iniciativa educativa del ecosistema TAMV. La UCIP orquesta los engines de Isabella para producir experiencias educativas adaptativas. Programas: Master Community Managers NextGen 2026 (150h).",
     category: "education",
     priority: 8,
@@ -60,7 +64,7 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
     domain: "ecosystem",
     topic: "SCAO Model",
     keywords: ["scao", "stewarded", "constitutional", "autonomous", "organization"],
-    content: "SCAO (Stewarded & Constitutional Autonomous Organization) es el modelo de gobernanza autónoma con supervisión humana del ecosistema TAMV. Isabella opera bajo este modelo.",
+    content: "SCAO (Stewarded & Constitutional Autonomous Organization) es el modelo de gobernanza autÃ³noma con supervisiÃ³n humana del ecosistema TAMV. Isabella opera bajo este modelo.",
     category: "governance",
     priority: 7,
     source: "TAMV Documentation",
@@ -70,9 +74,9 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
   {
     id: "kb-tamv-006",
     domain: "ecosystem",
-    topic: "Isabella Villaseñor",
-    keywords: ["isabella", "villasenor", "villaseñor"],
-    content: "Isabella Villaseñor es el Sistema Operativo Cognitivo Soberano (ZT-DCOS) del ecosistema TAMV. Opera en 5 capas: SOUL, Isa API, Mexa API, ClawHub y Multimodal. Tiene 6 skills internos y triple bloqueo sexual.",
+    topic: "Isabella VillaseÃ±or",
+    keywords: ["isabella", "villasenor", "villaseÃ±or"],
+    content: "Isabella VillaseÃ±or es el Sistema Operativo Cognitivo Soberano (ZT-DCOS) del ecosistema TAMV. Opera en 5 capas: SOUL, Isa API, Mexa API, ClawHub y Multimodal. Tiene 6 skills internos y triple bloqueo sexual.",
     category: "ai",
     priority: 10,
     source: "TAMV Documentation",
@@ -80,16 +84,16 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
     createdAt: "2026-01-01T00:00:00Z",
   },
 
-  // ── Real del Monte ────────────────────────────────────────────
+  // â”€â”€ Real del Monte â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   {
     id: "kb-rdm-001",
     domain: "ecosystem",
     topic: "Historia de la Mina de Acosta",
     keywords: ["mina", "acosta", "historia", "colonial", "plata"],
-    content: "La Mina de Acosta fue una de las minas más importantes de Real del Monte, operada durante la colonia española. Fue un centro neurálgico de la minería de plata en Nueva España.",
+    content: "La Mina de Acosta fue una de las minas mÃ¡s importantes de Real del Monte, operada durante la colonia espaÃ±ola. Fue un centro neurÃ¡lgico de la minerÃ­a de plata en Nueva EspaÃ±a.",
     category: "historia",
     priority: 9,
-    source: "Archivo Histórico Regional",
+    source: "Archivo HistÃ³rico Regional",
     confidence: 0.95,
     createdAt: "2026-01-15T00:00:00Z",
   },
@@ -97,11 +101,11 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
     id: "kb-rdm-002",
     domain: "ecosystem",
     topic: "Paste de Real del Monte",
-    keywords: ["paste", "gastronomia", "cornish", "británicos"],
-    content: "El paste es un platillo típico de Real del Monte, herencia de los mineros cornisas británicos del siglo XIX. Se prepara con masa de trigo y rellenos variados.",
+    keywords: ["paste", "gastronomia", "cornish", "britÃ¡nicos"],
+    content: "El paste es un platillo tÃ­pico de Real del Monte, herencia de los mineros cornisas britÃ¡nicos del siglo XIX. Se prepara con masa de trigo y rellenos variados.",
     category: "gastronomia",
     priority: 9,
-    source: "Archivo Histórico Regional",
+    source: "Archivo HistÃ³rico Regional",
     confidence: 0.92,
     createdAt: "2026-02-10T00:00:00Z",
   },
@@ -109,8 +113,8 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
     id: "kb-rdm-003",
     domain: "ecosystem",
     topic: "TAMV 92.5 FM",
-    keywords: ["radio", "tamv 92", "música", "stream", "comunitaria"],
-    content: "TAMV 92.5 es la estación de radio comunitaria de Real del Monte. Transmite programas de noticias, música folclórica, deportes y cultura local las 24 horas del día.",
+    keywords: ["radio", "tamv 92", "mÃºsica", "stream", "comunitaria"],
+    content: "TAMV 92.5 es la estaciÃ³n de radio comunitaria de Real del Monte. Transmite programas de noticias, mÃºsica folclÃ³rica, deportes y cultura local las 24 horas del dÃ­a.",
     category: "cultura",
     priority: 8,
     source: "TAMV Online Network",
@@ -120,12 +124,12 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
   {
     id: "kb-rdm-004",
     domain: "ecosystem",
-    topic: "Panteón de Real del Monte",
-    keywords: ["panteón", "ingles", "turismo", "cementerio"],
-    content: "El panteón inglés es un sitio histórico con tumbas de mineros británicos del siglo XIX. Es uno de los atractivos turísticos más visitados del pueblo.",
+    topic: "PanteÃ³n de Real del Monte",
+    keywords: ["panteÃ³n", "ingles", "turismo", "cementerio"],
+    content: "El panteÃ³n inglÃ©s es un sitio histÃ³rico con tumbas de mineros britÃ¡nicos del siglo XIX. Es uno de los atractivos turÃ­sticos mÃ¡s visitados del pueblo.",
     category: "turismo",
     priority: 8,
-    source: "Archivo Histórico Regional",
+    source: "Archivo HistÃ³rico Regional",
     confidence: 0.94,
     createdAt: "2026-01-20T00:00:00Z",
   },
@@ -134,21 +138,21 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
     domain: "ecosystem",
     topic: "Arquitectura Colonial Minera",
     keywords: ["arquitectura", "colonial", "adobe", "teja", "patrimonio"],
-    content: "Real del Monte conserva arquitectura colonial minera con casas de adobe, techos de teja y patios interiores. El centro histórico fue declarado patrimonio cultural.",
+    content: "Real del Monte conserva arquitectura colonial minera con casas de adobe, techos de teja y patios interiores. El centro histÃ³rico fue declarado patrimonio cultural.",
     category: "patrimonio",
     priority: 7,
-    source: "Archivo Histórico Regional",
+    source: "Archivo HistÃ³rico Regional",
     confidence: 0.90,
     createdAt: "2026-04-05T00:00:00Z",
   },
 
-  // ── Arquitectura Cognitiva ────────────────────────────────────
+  // â”€â”€ Arquitectura Cognitiva â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   {
     id: "kb-isa-001",
     domain: "cognitive",
     topic: "Isa API",
     keywords: ["isa", "api", "cognitivo", "cognitive", "reasoning", "razonamiento", "graphrag", "prompt guard"],
-    content: "Isa API es el núcleo cognitivo de Isabella. Incluye Cognitive Core, Reasoning Engine, GraphRAG y Prompt Guard. Implementa taxonomía de 8 procesos cognitivos.",
+    content: "Isa API es el nÃºcleo cognitivo de Isabella. Incluye Cognitive Core, Reasoning Engine, GraphRAG y Prompt Guard. Implementa taxonomÃ­a de 8 procesos cognitivos.",
     category: "ai",
     priority: 9,
     source: "Isabella Documentation",
@@ -159,8 +163,8 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
     id: "kb-isa-002",
     domain: "cognitive",
     topic: "Triple Bloqueo Sexual",
-    keywords: ["triple", "bloqueo", "sexual", "ethics", "ética", "ontológico", "semántico", "conductual"],
-    content: "El triple bloqueo sexual tiene 3 capas: Ontológico (no se define como objeto de deseo), Semántico (filtros en Prompt Guard), Conductual (tono profesional). Reglas: POL-SEX-001/002/003.",
+    keywords: ["triple", "bloqueo", "sexual", "ethics", "Ã©tica", "ontolÃ³gico", "semÃ¡ntico", "conductual"],
+    content: "El triple bloqueo sexual tiene 3 capas: OntolÃ³gico (no se define como objeto de deseo), SemÃ¡ntico (filtros en Prompt Guard), Conductual (tono profesional). Reglas: POL-SEX-001/002/003.",
     category: "ethics",
     priority: 10,
     source: "Isabella Documentation",
@@ -171,8 +175,8 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
     id: "kb-mexa-001",
     domain: "cryptographic",
     topic: "Mexa API",
-    keywords: ["mexa", "api", "cripto", "crypto", "firma", "signature", "federación", "mask"],
-    content: "Mexa API es la puerta criptográfica de Isabella. Firma digital de payloads, verificación de procedencia, máscara de federación para los 7 nodos TAMV.",
+    keywords: ["mexa", "api", "cripto", "crypto", "firma", "signature", "federaciÃ³n", "mask"],
+    content: "Mexa API es la puerta criptogrÃ¡fica de Isabella. Firma digital de payloads, verificaciÃ³n de procedencia, mÃ¡scara de federaciÃ³n para los 7 nodos TAMV.",
     category: "security",
     priority: 8,
     source: "Isabella Documentation",
@@ -180,13 +184,13 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
     createdAt: "2026-01-01T00:00:00Z",
   },
 
-  // ── Constitución LITLE ────────────────────────────────────────
+  // â”€â”€ ConstituciÃ³n LITLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   {
     id: "kb-litle-001",
     domain: "constitution",
-    topic: "Constitución de LITLE",
-    keywords: ["constitución", "constitution", "libro", "articulo", "norma", "mcf"],
-    content: "La Constitución de LITLE es un modelo constitutivo formal (MCF) definido como C = (A, Σ, R, D, E). Contiene 15 LIBROS con 42 artículos.",
+    topic: "ConstituciÃ³n de LITLE",
+    keywords: ["constituciÃ³n", "constitution", "libro", "articulo", "norma", "mcf"],
+    content: "La ConstituciÃ³n de LITLE es un modelo constitutivo formal (MCF) definido como C = (A, Î£, R, D, E). Contiene 15 LIBROS con 42 artÃ­culos.",
     category: "governance",
     priority: 10,
     source: "LITLE Documentation",
@@ -197,8 +201,8 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
     id: "kb-litle-002",
     domain: "constitution",
     topic: "Siete Federaciones",
-    keywords: ["fed", "federación", "federation", "gobernanza", "quorum"],
-    content: "Siete federaciones: FED-1 (Preservación), FED-2 (Estándares), FED-3 (Tecnología), FED-4 (Curación), FED-5 (Integridad), FED-6 (Adopción), FED-7 (Auditoría).",
+    keywords: ["fed", "federaciÃ³n", "federation", "gobernanza", "quorum"],
+    content: "Siete federaciones: FED-1 (PreservaciÃ³n), FED-2 (EstÃ¡ndares), FED-3 (TecnologÃ­a), FED-4 (CuraciÃ³n), FED-5 (Integridad), FED-6 (AdopciÃ³n), FED-7 (AuditorÃ­a).",
     category: "governance",
     priority: 9,
     source: "LITLE Documentation",
@@ -219,7 +223,7 @@ const TAMV_KNOWLEDGE: KnowledgeEntry[] = [
   },
 ];
 
-// ── Query Functions ─────────────────────────────────────────────
+// â”€â”€ Query Functions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function buildKnowledgeContext(query: string, maxEntries = 10): string {
   const normalized = query.toLowerCase();

@@ -1,7 +1,11 @@
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Type-Safe Environment Configuration (PennyLane pattern)
 // Validates all env vars at startup using Zod-like runtime checks.
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { logger } from "./logger";
 
@@ -61,7 +65,7 @@ export function loadEnv(): EnvConfig {
   if (missing.length > 0) {
     logger.warn(
       { missing, nodeEnv: env },
-      "Missing environment variables — using dev fallbacks. Do NOT use these values in production.",
+      "Missing environment variables â€” using dev fallbacks. Do NOT use these values in production.",
     );
   }
 

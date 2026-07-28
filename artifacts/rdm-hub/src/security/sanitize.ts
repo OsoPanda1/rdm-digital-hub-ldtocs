@@ -1,4 +1,8 @@
-// src/security/sanitize.ts — Hardened HTML sanitization
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// src/security/sanitize.ts â€” Hardened HTML sanitization
 //
 // Self-contained, dependency-free sanitizer designed to resist the nested /
 // malformed-tag bypasses flagged by CodeQL (#174-#178). The core idea is to

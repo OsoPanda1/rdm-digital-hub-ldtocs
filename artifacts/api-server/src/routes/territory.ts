@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { Router } from "express";
 import { validate, schemas } from "../middlewares/validate";
 import { getDb, isDbAvailable } from "../lib/db-client";
@@ -37,21 +41,21 @@ function parseAskBody(body: unknown): { message: string } {
   return { message };
 }
 
-// Fallback mock data — used only when DATABASE_URL is not set (dev mode).
+// Fallback mock data â€” used only when DATABASE_URL is not set (dev mode).
 const MOCK_PLACES: Place[] = [
   { id: "rdm-centro", name: "Real del Monte Centro", type: "historico", lat: 20.1432, lng: -98.6694 },
   { id: "mina-acosta", name: "Mina de Acosta", type: "mineria", lat: 20.1421, lng: -98.6712 },
-  { id: "panteon-ingles", name: "Panteón Inglés", type: "patrimonio", lat: 20.1455, lng: -98.6678 },
+  { id: "panteon-ingles", name: "PanteÃ³n InglÃ©s", type: "patrimonio", lat: 20.1455, lng: -98.6678 },
 ];
 
 const MOCK_COMMERCE: Commerce[] = [
-  { id: "com-pasteria-real", name: "Pastería La Plaza", category: "paste", membership: "raiz" },
-  { id: "com-cafe-neblina", name: "Café Neblina", category: "cafe", membership: "raiz" },
+  { id: "com-pasteria-real", name: "PasterÃ­a La Plaza", category: "paste", membership: "raiz" },
+  { id: "com-cafe-neblina", name: "CafÃ© Neblina", category: "cafe", membership: "raiz" },
   { id: "com-mesa-cornish", name: "La Mesa Cornish", category: "restaurante", membership: "guardian" },
 ];
 
 export function registerTerritoryRoutes(router: Router) {
-  // Listado de lugares territoriales — DB-backed when available, mock fallback in dev.
+  // Listado de lugares territoriales â€” DB-backed when available, mock fallback in dev.
   router.get("/territory/places", async (_req, res, next) => {
     try {
       if (!isDbAvailable()) {
@@ -71,28 +75,28 @@ export function registerTerritoryRoutes(router: Router) {
     } catch (err) { next(err); }
   });
 
-  // Listado de comercios afiliados — mock (no commerce table yet).
+  // Listado de comercios afiliados â€” mock (no commerce table yet).
   router.get("/territory/commerce", (_req, res) => {
     res.status(200).json({ success: true, data: MOCK_COMMERCE });
   });
 
-  // Endpoint de IA territorial — delega al pipeline de Isabella.
+  // Endpoint de IA territorial â€” delega al pipeline de Isabella.
   router.post("/territory/ai/ask", requireRdmRole("user"), validate(schemas.territoryAiAsk), (req, res, next) => {
     try {
       const { message } = parseAskBody(req.body);
 
       const lower = (message ?? "").toLowerCase();
-      const isGastronomia = /comida|paste|café|chocolate|mezcal|restaur/i.test(lower);
+      const isGastronomia = /comida|paste|cafÃ©|chocolate|mezcal|restaur/i.test(lower);
       const isTurismo = /turis|visita|lugar|ruta|tour|sender/i.test(lower);
       const isHistoria = /histor|miner|colonial|pasado/i.test(lower);
 
       let response: string;
       if (isGastronomia) {
-        response = `Isabella recomienda: ${MOCK_COMMERCE.map((p) => p.name).join(", ")}. La gastronomía es patrimonio vivo de Real del Monte.`;
+        response = `Isabella recomienda: ${MOCK_COMMERCE.map((p) => p.name).join(", ")}. La gastronomÃ­a es patrimonio vivo de Real del Monte.`;
       } else if (isTurismo) {
         response = `Isabella recomienda: ${MOCK_PLACES.slice(0, 3).map((p) => p.name).join(", ")}. Cada visita fortalece la memoria colectiva del territorio.`;
       } else if (isHistoria) {
-        response = `Real del Monte tiene una historia minera fascinante desde el siglo XVI. Los mineros británicos dejaron una huella profunda en nuestra cultura y gastronomía.`;
+        response = `Real del Monte tiene una historia minera fascinante desde el siglo XVI. Los mineros britÃ¡nicos dejaron una huella profunda en nuestra cultura y gastronomÃ­a.`;
       } else {
         response = `Isabella operativo territorial: ${message}\nLugares priorizados: ${MOCK_PLACES.map((place) => place.name).join(", ")}`;
       }

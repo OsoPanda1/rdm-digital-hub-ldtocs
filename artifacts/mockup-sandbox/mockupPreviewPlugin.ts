@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { mkdirSync, writeFileSync } from "fs";
 import path from "path";
 import glob from "fast-glob";

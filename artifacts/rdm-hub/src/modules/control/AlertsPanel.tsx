@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useState } from "react";
 import { AlertTriangle, AlertCircle, Info, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -43,8 +47,8 @@ export default function AlertsPanel() {
   return (
     <div className="glass-card rounded-2xl p-5 border border-border/20">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground">Centro de Alertas · Umbrales en vivo</h2>
-        <span className="text-[10px] font-mono text-muted-foreground/60">latencia &gt; 500ms · integrity &lt; 0.70 · offline &gt; 0</span>
+        <h2 className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground">Centro de Alertas Â· Umbrales en vivo</h2>
+        <span className="text-[10px] font-mono text-muted-foreground/60">latencia &gt; 500ms Â· integrity &lt; 0.70 Â· offline &gt; 0</span>
       </div>
       {alerts.length === 0 ? (
         <div className="flex items-center gap-2 text-emerald-400 text-xs font-mono">

@@ -1,4 +1,8 @@
-// src/quantum/index.ts — Quantum module barrel exports
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// src/quantum/index.ts â€” Quantum module barrel exports
 
 export {
   PostQuantumCryptoV2,

@@ -1,6 +1,10 @@
-// ────────────────────────────────────────────────────────────────
-// YUN Routes — Constitutional Realm API Surface
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// YUN Routes â€” Constitutional Realm API Surface
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { Router, Request, Response } from "express";
 import {
@@ -24,7 +28,7 @@ function getYun(): YunSystem {
   return yunSystem;
 }
 
-// ── System Status ──────────────────────────────────────────────
+// â”€â”€ System Status â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 router.get("/status", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
@@ -55,7 +59,7 @@ router.get("/status", requireRdmRole("user"), (_req: Request, res: Response) => 
   });
 });
 
-// ── Policy Engine ──────────────────────────────────────────────
+// â”€â”€ Policy Engine â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 router.post("/policy/evaluate",
   requireRdmRole("user"),
@@ -104,7 +108,7 @@ router.get("/policy/stats", requireRdmRole("user"), (_req: Request, res: Respons
   res.json({ ok: true, stats: yun.policyEngine.getStats() });
 });
 
-// ── Registry ───────────────────────────────────────────────────
+// â”€â”€ Registry â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 router.post("/registry/nodes",
   requireRdmRole("operator"),
@@ -185,7 +189,7 @@ router.get("/registry/stats", requireRdmRole("user"), (_req: Request, res: Respo
   res.json({ ok: true, stats: yun.registry.getStats() });
 });
 
-// ── Message Bus ────────────────────────────────────────────────
+// â”€â”€ Message Bus â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 router.post("/bus/publish",
   requireRdmRole("operator"),
@@ -220,7 +224,7 @@ router.get("/bus/stats", requireRdmRole("user"), (_req: Request, res: Response) 
   res.json({ ok: true, stats: yun.bus.getStats() });
 });
 
-// ── Resilience ─────────────────────────────────────────────────
+// â”€â”€ Resilience â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 router.get("/resilience/mode", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
@@ -268,7 +272,7 @@ router.get("/resilience/history", requireRdmRole("user"), (_req: Request, res: R
   res.json({ ok: true, transitions: yun.resilience.getTransitionHistory() });
 });
 
-// ── Perception ─────────────────────────────────────────────────
+// â”€â”€ Perception â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 router.post("/perception/ingest",
   requireRdmRole("operator"),
@@ -311,7 +315,7 @@ router.post("/perception/opa-log",
   res.json({ ok: true, event });
 });
 
-// ── Governance ─────────────────────────────────────────────────
+// â”€â”€ Governance â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 router.get("/governance/adrs", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
@@ -358,7 +362,7 @@ router.get("/governance/stats", requireRdmRole("user"), (_req: Request, res: Res
   res.json({ ok: true, stats: yun.governance.getGovernanceStats() });
 });
 
-// ── PQC Hybrid Crypto ─────────────────────────────────────────
+// â”€â”€ PQC Hybrid Crypto â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 router.post("/pqc/keys",
   requireRdmRole("admin"),
@@ -446,7 +450,7 @@ router.post("/pqc/verify",
   res.json({ ok: true, ...result });
 });
 
-// ── Constitution ───────────────────────────────────────────────
+// â”€â”€ Constitution â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 router.get("/constitution/principles", requireRdmRole("user"), (_req: Request, res: Response) => {
   // Lazy import to avoid circular dependencies

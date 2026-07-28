@@ -1,4 +1,8 @@
-// ISA-API v.1.0.0-evolved — Main Router
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// ISA-API v.1.0.0-evolved â€” Main Router
 // Bridges OpenAPI endpoints to existing Isabella skills
 
 import { orion } from '../skills/orion';
@@ -42,7 +46,7 @@ import type {
   ErrorResponse,
 } from './types';
 
-// ─── Route Handler Type ─────────────────────────────────────────────────────
+// â”€â”€â”€ Route Handler Type â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 type RouteHandler = (
   body: Record<string, unknown>,
@@ -50,7 +54,7 @@ type RouteHandler = (
   params: Record<string, string>,
 ) => Promise<{ status: number; body: unknown }>;
 
-// ─── Helpers ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function getHeader(headers: Record<string, string | null>, name: string): string | null {
   const lower = name.toLowerCase();
@@ -68,7 +72,7 @@ function secure(body: Record<string, unknown>, headers: Record<string, string | 
   return { ...result, traceId };
 }
 
-// ─── ORION Routes ───────────────────────────────────────────────────────────
+// â”€â”€â”€ ORION Routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const orionSearch: RouteHandler = async (body, headers) => {
   const sec = secure(body, headers, 'orion:search');
@@ -136,7 +140,7 @@ const orionArtifact: RouteHandler = async (body, headers, params) => {
   };
 };
 
-// ─── SOPHIA Routes ──────────────────────────────────────────────────────────
+// â”€â”€â”€ SOPHIA Routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const sophiaResearch: RouteHandler = async (body, headers) => {
   const sec = secure(body, headers, 'sophia:research');
@@ -171,7 +175,7 @@ const sophiaResearch: RouteHandler = async (body, headers) => {
   };
 };
 
-// ─── ARGUS Routes ───────────────────────────────────────────────────────────
+// â”€â”€â”€ ARGUS Routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const argusSimulate: RouteHandler = async (body, headers) => {
   const sec = secure(body, headers, 'argus:simulate');
@@ -212,7 +216,7 @@ const argusSimulate: RouteHandler = async (body, headers) => {
   };
 };
 
-// ─── MNEMOS Routes ──────────────────────────────────────────────────────────
+// â”€â”€â”€ MNEMOS Routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const mnemosRecord: RouteHandler = async (body, headers) => {
   const sec = secure(body, headers, 'mnemos:record');
@@ -275,7 +279,7 @@ const mnemosGetRecord: RouteHandler = async (body, headers, params) => {
   };
 };
 
-// ─── LUMEN Routes ───────────────────────────────────────────────────────────
+// â”€â”€â”€ LUMEN Routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const lumenEvaluate: RouteHandler = async (body, headers) => {
   const sec = secure(body, headers, 'lumen:evaluate');
@@ -314,7 +318,7 @@ const lumenEvaluate: RouteHandler = async (body, headers) => {
   };
 };
 
-// ─── KERNEL Routes ──────────────────────────────────────────────────────────
+// â”€â”€â”€ KERNEL Routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const kernelResonanceUpdate: RouteHandler = async (body, headers) => {
   const sec = secure(body, headers, 'kernel:resonance');
@@ -329,7 +333,7 @@ const kernelResonanceUpdate: RouteHandler = async (body, headers) => {
       friction_zones: result.frictionZones.map(z => ({
         node_id: z,
         severity: 'medium',
-        description: `Fricción detectada en nodo ${z}`,
+        description: `FricciÃ³n detectada en nodo ${z}`,
       })),
       redirect_plan: result.redirectPlan,
     },
@@ -356,7 +360,7 @@ const kernelTimeUpAnchor: RouteHandler = async (body, headers) => {
   };
 };
 
-// ─── TOPOLOGY Routes ────────────────────────────────────────────────────────
+// â”€â”€â”€ TOPOLOGY Routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const topologyHeptafederation: RouteHandler = async (_body, headers) => {
   const sec = secure({}, headers, 'topology:heptafederation');
@@ -388,19 +392,19 @@ const topologyNodoCero: RouteHandler = async (_body, headers) => {
 
   const workflow: NodoCeroWorkflow = {
     stages: [
-      { stage_id: 'nc-001', name: 'Despertar', description: 'Activación progresiva del Nodo Cero', dependencies: [] },
-      { stage_id: 'nc-002', name: 'Resonancia', description: 'Sincronización con la Heptafederación TAMV', dependencies: ['nc-001'] },
-      { stage_id: 'nc-003', name: 'Orquestación', description: 'Coordinación de subsistemas territoriales', dependencies: ['nc-002'] },
-      { stage_id: 'nc-004', name: 'Trascendencia', description: 'Escalamiento y visión estratégica', dependencies: ['nc-003'] },
+      { stage_id: 'nc-001', name: 'Despertar', description: 'ActivaciÃ³n progresiva del Nodo Cero', dependencies: [] },
+      { stage_id: 'nc-002', name: 'Resonancia', description: 'SincronizaciÃ³n con la HeptafederaciÃ³n TAMV', dependencies: ['nc-001'] },
+      { stage_id: 'nc-003', name: 'OrquestaciÃ³n', description: 'CoordinaciÃ³n de subsistemas territoriales', dependencies: ['nc-002'] },
+      { stage_id: 'nc-004', name: 'Trascendencia', description: 'Escalamiento y visiÃ³n estratÃ©gica', dependencies: ['nc-003'] },
     ],
-    owner: 'isabella-villaseñor',
+    owner: 'isabella-villaseÃ±or',
     status: 'active',
   };
 
   return { status: 200, body: workflow };
 };
 
-// ─── HEALTH Route ───────────────────────────────────────────────────────────
+// â”€â”€â”€ HEALTH Route â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const healthCheck: RouteHandler = async (_body, headers) => {
   const sec = secure({}, headers, 'kernel:health');
@@ -427,7 +431,7 @@ const healthCheck: RouteHandler = async (_body, headers) => {
   return { status: 200, body: health };
 };
 
-// ─── SECURITY Routes ────────────────────────────────────────────────────────
+// â”€â”€â”€ SECURITY Routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const securityHexagonValidate: RouteHandler = async (body, headers) => {
   const sec = secure(body, headers, 'security:hexagon');
@@ -445,7 +449,7 @@ const securityHexagonValidate: RouteHandler = async (body, headers) => {
   return { status: 200, body: result };
 };
 
-// ─── INTEGRATION Route ──────────────────────────────────────────────────────
+// â”€â”€â”€ INTEGRATION Route â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const integrationOrchestrate: RouteHandler = async (body, headers) => {
   const sec = secure(body, headers, 'integration:orchestrate');
@@ -472,7 +476,7 @@ const integrationOrchestrate: RouteHandler = async (body, headers) => {
   };
 };
 
-// ─── Route Registry ─────────────────────────────────────────────────────────
+// â”€â”€â”€ Route Registry â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const ISA_ROUTES: Record<string, Record<string, RouteHandler>> = {
   POST: {
@@ -495,7 +499,7 @@ export const ISA_ROUTES: Record<string, Record<string, RouteHandler>> = {
   },
 };
 
-// ─── Request Dispatcher ─────────────────────────────────────────────────────
+// â”€â”€â”€ Request Dispatcher â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export async function dispatchISARequest(
   method: string,

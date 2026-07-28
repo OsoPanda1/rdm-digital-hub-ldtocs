@@ -1,12 +1,16 @@
-// ────────────────────────────────────────────────────────────────
-// YUN Resilience Manager — Progressive Degradation
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// YUN Resilience Manager â€” Progressive Degradation
 // Implements CP-004: system degrades gracefully, never crashes.
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { randomUUID } from "node:crypto";
 import type { YunMode, YunDomain, ModeTransition } from "./types";
 
-// ── Degradation Profiles ───────────────────────────────────────
+// â”€â”€ Degradation Profiles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface DegradationProfile {
   mode: YunMode;
@@ -60,7 +64,7 @@ const DEGRADATION_PROFILES: Record<YunMode, DegradationProfile> = {
   },
 };
 
-// ── MD-X4 Island Mode Profile ─────────────────────────────────
+// â”€â”€ MD-X4 Island Mode Profile â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface IslandModeServices {
   identityLocal: boolean;
@@ -84,7 +88,7 @@ const ISLAND_MODE_SERVICES: IslandModeServices = {
   commerceExternal: false,
 };
 
-// ── Resilience Manager ─────────────────────────────────────────
+// â”€â”€ Resilience Manager â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export class YunResilienceManager {
   private currentMode: YunMode = "NORMAL";
@@ -95,7 +99,7 @@ export class YunResilienceManager {
 
   constructor(private onTransition?: (transition: ModeTransition) => void) {}
 
-  // ── Mode Management ──────────────────────────────────────────
+  // â”€â”€ Mode Management â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   getCurrentMode(): YunMode {
     return this.currentMode;
@@ -124,24 +128,24 @@ export class YunResilienceManager {
     return transition;
   }
 
-  // ── Isla MD-X4 Mode ─────────────────────────────────────────
+  // â”€â”€ Isla MD-X4 Mode â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   enterIslandMode(): IslandModeServices {
     this.isIslandMode = true;
-    this.transition("EMERGENCY", "MD-X4 disconnected — entering island mode");
+    this.transition("EMERGENCY", "MD-X4 disconnected â€” entering island mode");
     return { ...ISLAND_MODE_SERVICES };
   }
 
   exitIslandMode(): void {
     this.isIslandMode = false;
-    this.transition("NORMAL", "MD-X4 reconnection restored — exiting island mode");
+    this.transition("NORMAL", "MD-X4 reconnection restored â€” exiting island mode");
   }
 
   getIslandModeServices(): IslandModeServices {
     return this.isIslandMode ? { ...ISLAND_MODE_SERVICES } : DEGRADATION_PROFILES.NORMAL as unknown as IslandModeServices;
   }
 
-  // ── OPA Degradation Profiles ─────────────────────────────────
+  // â”€â”€ OPA Degradation Profiles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   getOpaDegradationProfile(): {
     status: "healthy" | "degraded" | "unreachable";
@@ -160,7 +164,7 @@ export class YunResilienceManager {
     };
   }
 
-  // ── Rate Limiting by Domain ──────────────────────────────────
+  // â”€â”€ Rate Limiting by Domain â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   checkDomainRateLimit(domain: YunDomain): { allowed: boolean; retryAfterMs?: number } {
     const profile = this.getProfile();
@@ -182,7 +186,7 @@ export class YunResilienceManager {
     return { allowed: true };
   }
 
-  // ── Action Enforcement ───────────────────────────────────────
+  // â”€â”€ Action Enforcement â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   isActionAllowed(action: string): { allowed: boolean; reason: string } {
     const profile = this.getProfile();
@@ -205,14 +209,14 @@ export class YunResilienceManager {
     return { allowed: true, reason: "OK" };
   }
 
-  // ── Core Preservation Check ──────────────────────────────────
+  // â”€â”€ Core Preservation Check â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   isCorePreserved(serviceName: string): boolean {
     const coreServices = ["identity", "telemetry", "memory", "podcast-local", "isabella-offline"];
     return coreServices.includes(serviceName);
   }
 
-  // ── History & Stats ──────────────────────────────────────────
+  // â”€â”€ History & Stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   getTransitionHistory(limit = 20): ModeTransition[] {
     return this.transitionHistory.slice(-limit);

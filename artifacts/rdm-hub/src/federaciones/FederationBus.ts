@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { v4 as uuidv4 } from "uuid";
 import { logger } from "@/lib/logger";
@@ -32,13 +36,13 @@ const TAMV_TO_YUN_FEDERATION: Record<string, YunFederationId> = {
 };
 
 const TAMV_FEDERATION_NAMES: Record<string, string> = {
-  DEKATEOTL: "Federación de Datos (DATA)",
-  ANUBIS: "Federación de Inteligencia (INTEL)",
-  BOOKPI_DATAGIT: "Federación de Seguridad (SEC)",
-  PHOENIX: "Federación de Gobernanza (GOV)",
-  MDD_TAMV: "Federación Económica (ECON)",
-  KAOS_HYPERRENDER: "Federación Visual (VIS)",
-  CHRONOS: "Federación Territorial (TERRITORY)",
+  DEKATEOTL: "FederaciÃ³n de Datos (DATA)",
+  ANUBIS: "FederaciÃ³n de Inteligencia (INTEL)",
+  BOOKPI_DATAGIT: "FederaciÃ³n de Seguridad (SEC)",
+  PHOENIX: "FederaciÃ³n de Gobernanza (GOV)",
+  MDD_TAMV: "FederaciÃ³n EconÃ³mica (ECON)",
+  KAOS_HYPERRENDER: "FederaciÃ³n Visual (VIS)",
+  CHRONOS: "FederaciÃ³n Territorial (TERRITORY)",
 };
 
 export type FederationEventSeverity = "INFO" | "ALERTA" | "CRITICO";
@@ -93,28 +97,28 @@ class FederationBus {
         number: "F3",
         specialty: "SEC - PQC / Zero-Trust / Q-Cells",
         stack: ["OpenFHE", "OPA/Rego", "OIDC", "Kyber/SPHINCS+"],
-        role: "Seguridad post-cuántica y gobierno de identidad",
+        role: "Seguridad post-cuÃ¡ntica y gobierno de identidad",
       },
       {
         id: "PHOENIX",
         number: "F4",
         specialty: "GOV - Executable Governance",
         stack: ["OPA", "Cel", "Rego", "DID:key"],
-        role: "Gobernanza ejecutable y políticas TIME UP",
+        role: "Gobernanza ejecutable y polÃ­ticas TIME UP",
       },
       {
         id: "MDD_TAMV",
         number: "F5",
-        specialty: "ECON - Economía local / phygital",
+        specialty: "ECON - EconomÃ­a local / phygital",
         stack: ["Stripe", "CATTLEYA", "TNX", "LedgerDB"],
-        role: "Motor económico local y moneda interna",
+        role: "Motor econÃ³mico local y moneda interna",
       },
       {
         id: "KAOS_HYPERRENDER",
         number: "F6",
         specialty: "VIS - GeoEngine 2D/3D",
         stack: ["Three.js", "Mapbox", "D5 Render", "WebGL"],
-        role: "Renderizado geoespacial y visualización inmersiva",
+        role: "Renderizado geoespacial y visualizaciÃ³n inmersiva",
       },
       {
         id: "CHRONOS",
@@ -180,7 +184,7 @@ class FederationBus {
   }
 
   /**
-   * Actualiza salud de una federación y refleja estado (ACTIVE/DEGRADED/IDLE).
+   * Actualiza salud de una federaciÃ³n y refleja estado (ACTIVE/DEGRADED/IDLE).
    * Esto alimenta el tablero de integridad/resonancia.
    */
   updateHealth(id: FederationId, health: number): void {
@@ -244,13 +248,13 @@ class FederationBus {
   }
 
   /**
-   * Ruta directa de un intent MD-X5 hacia una federación objetivo.
+   * Ruta directa de un intent MD-X5 hacia una federaciÃ³n objetivo.
    * Se usa desde el kernel para ejecutar intents federados.
    */
   async routeToFederation(intent: MDX5Intent, target: FederationId): Promise<void> {
     const federation = this.federations.get(target);
     if (!federation) {
-      logger.error("[FED-BUS] Federación no encontrada", { target });
+      logger.error("[FED-BUS] FederaciÃ³n no encontrada", { target });
       return;
     }
 
@@ -273,19 +277,19 @@ class FederationBus {
 
   /**
    * Ejecuta un intent federado: por ahora, lo publica en el bus y deja
-   * que los listeners de cada federación se encarguen de la acción real.
+   * que los listeners de cada federaciÃ³n se encarguen de la acciÃ³n real.
    */
   async executeIntent(intent: MDX5Intent): Promise<void> {
     const target = intent.federation;
     if (!target) {
-      logger.warn("[FED-BUS] Intent sin federación destino", { intentId: intent.id });
+      logger.warn("[FED-BUS] Intent sin federaciÃ³n destino", { intentId: intent.id });
       return;
     }
     await this.routeToFederation(intent, target);
   }
 
   /**
-   * Evento de soberanía: se eleva a PHOENIX con severidad derivada del tipo.
+   * Evento de soberanÃ­a: se eleva a PHOENIX con severidad derivada del tipo.
    */
   async emitSovereigntyEvent(type: string, details: unknown): Promise<void> {
     const severity: FederationEventSeverity =
@@ -305,7 +309,7 @@ class FederationBus {
   }
 
   /**
-   * Broadcast a todas las federaciones (por ejemplo, señal de observabilidad).
+   * Broadcast a todas las federaciones (por ejemplo, seÃ±al de observabilidad).
    */
   async broadcastToAll(eventType: string, payload: unknown, traceId: string): Promise<void> {
     for (const [fedId] of this.federations) {
@@ -324,8 +328,8 @@ class FederationBus {
   }
 
   /**
-   * Estado de salud del bus: número de eventos, listeners y colas por federación.
-   * Útil para alimentar tu dashboard navy/gold con métricas de sistema.
+   * Estado de salud del bus: nÃºmero de eventos, listeners y colas por federaciÃ³n.
+   * Ãštil para alimentar tu dashboard navy/gold con mÃ©tricas de sistema.
    */
   getHealth(): {
     totalEvents: number;

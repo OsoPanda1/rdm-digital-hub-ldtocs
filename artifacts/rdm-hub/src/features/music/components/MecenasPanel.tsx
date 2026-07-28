@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -57,7 +61,7 @@ const TIERS: {
     bg: "rgba(255,215,0,0.08)",
     benefits: [
       "Todo lo de Mecenas",
-      "Voto en proxima crónica",
+      "Voto en proxima crÃ³nica",
       "Solicitud de restauracion de 1 track",
       "Credito en pagina de credits",
       "Badge legendario Productor",

@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // src/components/rdm/BannerManager.tsx
-// RDM Digital Hub — Route-aware banner placement system
+// RDM Digital Hub â€” Route-aware banner placement system
 // Automatically renders contextual banners based on current route.
 // 80 banners distributed across all pages and sections.
 
@@ -54,7 +58,7 @@ function BannerCard({ banner, onDismiss }: BannerCardProps) {
         className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/30 hover:bg-black/50 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
         aria-label="Cerrar banner"
       >
-        ×
+        Ã—
       </button>
 
       <div className="relative z-10 flex items-start gap-3">
@@ -86,7 +90,7 @@ export function BannerManager() {
     setDismissed(getDismissedSet());
   }, [location.pathname]);
 
-  // Rotation timer — reshuffle banners every 30 minutes
+  // Rotation timer â€” reshuffle banners every 30 minutes
   useEffect(() => {
     const timer = setInterval(() => {
       setRotationKey((k) => k + 1);

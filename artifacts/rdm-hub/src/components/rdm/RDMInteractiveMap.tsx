@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
@@ -104,7 +108,7 @@ export function RDMInteractiveMap() {
           iconAnchor: [14, 14] 
         }) 
       }).addTo(markersLayerRef.current);
-      marker.bindPopup(`<div class="rdm-popup-card"><div class="rdm-popup-kicker"><span class="rdm-popup-dot" style="background:${color}"></span>${site.category}</div><h3 class="rdm-popup-title">${site.name}</h3><p class="rdm-popup-desc">${site.description ?? "Experiencia territorial."}</p><div class="rdm-popup-meta"><span>★ ${(site.rating ?? 4.5).toFixed(1)}</span></div></div>`, { className: "rdm-popup" });
+      marker.bindPopup(`<div class="rdm-popup-card"><div class="rdm-popup-kicker"><span class="rdm-popup-dot" style="background:${color}"></span>${site.category}</div><h3 class="rdm-popup-title">${site.name}</h3><p class="rdm-popup-desc">${site.description ?? "Experiencia territorial."}</p><div class="rdm-popup-meta"><span>â˜… ${(site.rating ?? 4.5).toFixed(1)}</span></div></div>`, { className: "rdm-popup" });
     });
     // Parking markers
     ESTACIONAMIENTOS.forEach((est) => {
@@ -137,7 +141,7 @@ export function RDMInteractiveMap() {
     <section className="px-6 py-16 md:px-16 lg:px-24">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8 text-center">
         <p className="mb-4 flex items-center justify-center gap-2 text-sm uppercase tracking-[0.3em] text-[hsl(var(--rdm-amber))]" style={{ fontFamily: "var(--font-body)" }}>
-          <Navigation className="h-4 w-4" /> Cartografía Territorial
+          <Navigation className="h-4 w-4" /> CartografÃ­a Territorial
         </p>
         <h2 className="text-4xl md:text-6xl font-bold" style={{ fontFamily: "var(--font-display)" }}>Mapa <span className="text-[hsl(var(--rdm-amber))]">Inteligente</span></h2>
       </motion.div>
@@ -166,7 +170,7 @@ export function RDMInteractiveMap() {
               <span className="text-[10px] uppercase tracking-wider text-[hsl(215_13%_42%)]" style={{ fontFamily: "var(--font-body)" }}>{place.category}</span>
             </div>
             <p className="text-sm font-semibold group-hover:text-[hsl(var(--rdm-amber))] transition-colors" style={{ fontFamily: "var(--font-display)" }}>{place.name}</p>
-            <p className="text-xs text-[hsl(215_13%_42%)] mt-1" style={{ fontFamily: "var(--font-body)" }}>★ {(place.rating ?? 4.5).toFixed(1)}</p>
+            <p className="text-xs text-[hsl(215_13%_42%)] mt-1" style={{ fontFamily: "var(--font-body)" }}>â˜… {(place.rating ?? 4.5).toFixed(1)}</p>
           </button>
         ))}
       </div>

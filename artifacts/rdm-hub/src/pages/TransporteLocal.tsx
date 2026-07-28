@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -53,7 +57,7 @@ export default function TransporteLocal() {
           {paged.length === 0 ? (
             <div className="text-center py-20 text-muted-foreground">
               <Car className="h-10 w-10 mx-auto mb-4 opacity-30" />
-              <p>No hay transportistas registrados aún.</p>
+              <p>No hay transportistas registrados aÃºn.</p>
             </div>
           ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import heroImg from "@/assets/hero-realmont.jpg";
@@ -12,11 +16,11 @@ import minaImg from "@/assets/rdm-mina.jpeg";
 
 const photos = [
   { src: plazaImg, alt: "Plaza principal de Real del Monte", caption: "Plaza Principal, atardecer dorado" },
-  { src: arqImg, alt: "Parroquia entre la niebla", caption: "Parroquia de la Asunción" },
+  { src: arqImg, alt: "Parroquia entre la niebla", caption: "Parroquia de la AsunciÃ³n" },
   { src: minaImg, alt: "Interior iluminado de una mina", caption: "Mina de Acosta, nivel 3" },
   { src: gastroImg, alt: "Paste tradicional", caption: "Paste original, receta de 1850" },
   { src: calleImg, alt: "Calle colorida colonial", caption: "Calles coloniales" },
-  { src: aerialImg, alt: "Vista aérea del pueblo", caption: "El pueblo entre la bruma" },
+  { src: aerialImg, alt: "Vista aÃ©rea del pueblo", caption: "El pueblo entre la bruma" },
   { src: heroImg, alt: "Calles empedradas al amanecer", caption: "Calle Hidalgo, amanecer" },
   { src: fogImg, alt: "Bosques envueltos en niebla", caption: "Sierra de Pachuca" },
 ];
@@ -36,7 +40,7 @@ const PhotoGallery = () => {
           transition={{ duration: 1 }}
           className="text-center mb-16"
         >
-          <span className="font-body text-[10px] tracking-[0.4em] uppercase text-gold/60">Galería</span>
+          <span className="font-body text-[10px] tracking-[0.4em] uppercase text-gold/60">GalerÃ­a</span>
           <h2 className="font-display text-4xl md:text-6xl text-foreground mt-4 tracking-tight">
             <span className="text-gradient-gold">Fragmentos de Luz</span>
           </h2>
@@ -95,11 +99,11 @@ const PhotoGallery = () => {
             <button
               onClick={(e) => { e.stopPropagation(); setSelectedIdx(Math.max(0, selectedIdx - 1)); }}
               className="font-body text-xs tracking-widest uppercase text-muted-foreground hover:text-gold transition-colors"
-            >← Anterior</button>
+            >â† Anterior</button>
             <button
               onClick={(e) => { e.stopPropagation(); setSelectedIdx(Math.min(photos.length - 1, selectedIdx + 1)); }}
               className="font-body text-xs tracking-widest uppercase text-muted-foreground hover:text-gold transition-colors"
-            >Siguiente →</button>
+            >Siguiente â†’</button>
           </div>
         </motion.div>
       )}

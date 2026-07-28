@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * Map service abstraction.
- * Implementación actual: Leaflet. Switch a Mapbox solo requiere reescribir este archivo.
+ * ImplementaciÃ³n actual: Leaflet. Switch a Mapbox solo requiere reescribir este archivo.
  */
 import L from "leaflet";
 

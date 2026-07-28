@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useMemo, useState } from "react"
 import { Link, useLocation, matchPath } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
@@ -39,14 +43,14 @@ const SECTIONS: SidebarSection[] = [
     links: [
       { to: "/mapa", label: "Mapa interactivo", icon: MapPin },
       { to: "/lugares", label: "Lugares", icon: Mountain },
-      { to: "/rutas", label: "Rutas turísticas", icon: History },
+      { to: "/rutas", label: "Rutas turÃ­sticas", icon: History },
       { to: "/ecoturismo", label: "Ecoturismo", icon: Camera },
     ],
   },
   {
-    id: "guia", label: "Guía narrativa", icon: BookOpen, color: "#3b82f6",
+    id: "guia", label: "GuÃ­a narrativa", icon: BookOpen, color: "#3b82f6",
     links: [
-      { to: "/capitulos", label: "Capítulos", icon: BookOpen },
+      { to: "/capitulos", label: "CapÃ­tulos", icon: BookOpen },
       { to: "/capitulos/minas", label: "Minas", icon: Mountain },
       { to: "/capitulos/pastes", label: "Pastes", icon: Store },
       { to: "/capitulos/leyendas", label: "Leyendas", icon: Sparkles },
@@ -55,7 +59,7 @@ const SECTIONS: SidebarSection[] = [
   {
     id: "cultura", label: "Cultura", icon: Music2, color: "#ec4899",
     links: [
-      { to: "/musica", label: "Música", icon: Music2 },
+      { to: "/musica", label: "MÃºsica", icon: Music2 },
       { to: "/cultura", label: "Cultura viva", icon: Camera },
       { to: "/historia", label: "Historia", icon: History },
     ],
@@ -184,7 +188,7 @@ export default function SmartSidebar() {
                   exit={{ opacity: 0, width: 0 }}
                   className="text-[9px] uppercase tracking-[0.25em] text-white/40 overflow-hidden whitespace-nowrap"
                 >
-                  Menú contextual
+                  MenÃº contextual
                 </motion.span>
               )}
             </AnimatePresence>

@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * RDM Ecos Música — Recommendation Engine
- * Suggests tracks, crónicas, and events based on:
+ * RDM Ecos MÃºsica â€” Recommendation Engine
+ * Suggests tracks, crÃ³nicas, and events based on:
  * - User location / territory
  * - Listening history
  * - Canonical level (historical > artistic > community)
@@ -75,7 +79,7 @@ export function recommendTracks(
 }
 
 /**
- * Recommends crónicas based on territory.
+ * Recommends crÃ³nicas based on territory.
  */
 export function recommendCronicas(
   allCronicas: MusicCronica[],

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { 
@@ -31,22 +35,22 @@ const MetaverseHome: React.FC = () => {
     { id: "channels", icon: <Users className="w-5 h-5" />, label: "Mis Canales" },
     { id: "groups", icon: <MessageCircle className="w-5 h-5" />, label: "Mis Grupos" },
     { id: "videos", icon: <Video className="w-5 h-5" />, label: "Mis Videos" },
-    { id: "music", icon: <Music className="w-5 h-5" />, label: "Mi Música" },
+    { id: "music", icon: <Music className="w-5 h-5" />, label: "Mi MÃºsica" },
   ];
 
   const rightBarItems = [
     { id: "trending", icon: <TrendingUp className="w-5 h-5" />, label: "Tendencias" },
     { id: "university", icon: <GraduationCap className="w-5 h-5" />, label: "Universidad TAMV" },
-    { id: "lottery", icon: <Ticket className="w-5 h-5" />, label: "Lotería TAMV" },
+    { id: "lottery", icon: <Ticket className="w-5 h-5" />, label: "LoterÃ­a TAMV" },
     { id: "popular", icon: <Award className="w-5 h-5" />, label: "Populares" },
     { id: "isabella", icon: <Bot className="w-5 h-5" />, label: "Isabella AI" },
   ];
 
   const bottomBarItems = [
     { id: "settings", icon: <Settings className="w-5 h-5" />, label: "Ajustes" },
-    { id: "monetization", icon: <CreditCard className="w-5 h-5" />, label: "Monetización" },
+    { id: "monetization", icon: <CreditCard className="w-5 h-5" />, label: "MonetizaciÃ³n" },
     { id: "payments", icon: <Wallet className="w-5 h-5" />, label: "Pagos" },
-    { id: "membership", icon: <Award className="w-5 h-5" />, label: "Membresías" },
+    { id: "membership", icon: <Award className="w-5 h-5" />, label: "MembresÃ­as" },
     { id: "marketplace", icon: <ShoppingBag className="w-5 h-5" />, label: "Marketplace" },
     { id: "security", icon: <Shield className="w-5 h-5" />, label: "Seguridad" },
   ];
@@ -91,7 +95,7 @@ const MetaverseHome: React.FC = () => {
       avatar: rdmAvatars[i % rdmAvatars.length],
       verified: i < 3,
     },
-    content: "Explorando las infinitas posibilidades del metaverso TAMV. ¡El futuro de las redes sociales está aquí! 🚀✨",
+    content: "Explorando las infinitas posibilidades del metaverso TAMV. Â¡El futuro de las redes sociales estÃ¡ aquÃ­! ðŸš€âœ¨",
     media: i % 2 === 0 ? [{ type: "image" as const, url: rdmThumbs[i % rdmThumbs.length] }] : undefined,
     likes: Math.floor(Math.random() * 5000),
     comments: Math.floor(Math.random() * 500),
@@ -133,7 +137,7 @@ const MetaverseHome: React.FC = () => {
           </h1>
           <p className="text-xl text-red-400 tracking-[0.2em] font-bold">EL METAVERSO DESTRUCTOR</p>
           <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-            Redefiniendo el futuro de las redes sociales. Donde los creadores son los verdaderos héroes.
+            Redefiniendo el futuro de las redes sociales. Donde los creadores son los verdaderos hÃ©roes.
           </p>
         </motion.section>
 
@@ -159,7 +163,7 @@ const MetaverseHome: React.FC = () => {
         <section className="grid md:grid-cols-3 gap-4">
           {[
             { title: "Marketplace", icon: ShoppingBag, color: "from-emerald-600 to-green-600" },
-            { title: "Galería de Arte", icon: Image, color: "from-violet-600 to-purple-600" },
+            { title: "GalerÃ­a de Arte", icon: Image, color: "from-violet-600 to-purple-600" },
             { title: "Subastas", icon: Gavel, color: "from-amber-600 to-orange-600" },
           ].map((item) => (
             <motion.div

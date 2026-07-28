@@ -1,8 +1,12 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { ModuleState, DomainSummary } from "@/lib/types/operativo";
 
 /**
- * Catálogo operativo derivado de docs/*.md y del estado real del código.
- * Esto permite que /operativo refleje qué módulos están listos para producción.
+ * CatÃ¡logo operativo derivado de docs/*.md y del estado real del cÃ³digo.
+ * Esto permite que /operativo refleje quÃ© mÃ³dulos estÃ¡n listos para producciÃ³n.
  */
 export const OPERATIVE_MODULES: ModuleState[] = [
   {
@@ -17,7 +21,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
   },
   {
     id: "fusion-ecosystem",
-    name: "Fusión funcional del ecosistema",
+    name: "FusiÃ³n funcional del ecosistema",
     domain: "frontend",
     status: "done",
     completion: 95,
@@ -27,7 +31,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
   },
   {
     id: "ecosystem-repos",
-    name: "Índice vivo de repositorios OsoPanda1",
+    name: "Ãndice vivo de repositorios OsoPanda1",
     domain: "frontend",
     status: "done",
     completion: 100,
@@ -37,12 +41,12 @@ export const OPERATIVE_MODULES: ModuleState[] = [
   },
   {
     id: "geointel-ai",
-    name: "Geolocalización + IA geoespacial",
+    name: "GeolocalizaciÃ³n + IA geoespacial",
     domain: "geointel",
     status: "in-progress",
     completion: 60,
     spec: "docs/geolocalizacion-ia-rdm-implementacion.md",
-    notes: "Endpoints /api/geolocation activos, recomendación IA pendiente",
+    notes: "Endpoints /api/geolocation activos, recomendaciÃ³n IA pendiente",
     route: "",
   },
   {
@@ -57,7 +61,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
   },
   {
     id: "merchant-payments",
-    name: "Cobro y publicación de comercios",
+    name: "Cobro y publicaciÃ³n de comercios",
     domain: "economy",
     status: "in-progress",
     completion: 75,
@@ -67,11 +71,11 @@ export const OPERATIVE_MODULES: ModuleState[] = [
   },
   {
     id: "realito-cloud",
-    name: "Realito AI vía Lovable Cloud (Gemini)",
+    name: "Realito AI vÃ­a Lovable Cloud (Gemini)",
     domain: "ai",
     status: "done",
     completion: 90,
-    notes: "Edge function realito-chat operativa con fallback heurístico",
+    notes: "Edge function realito-chat operativa con fallback heurÃ­stico",
     route: "",
     spec: "",
   },
@@ -87,7 +91,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
   },
   {
     id: "evolucion-dashboard",
-    name: "Mega-análisis de evolución",
+    name: "Mega-anÃ¡lisis de evoluciÃ³n",
     domain: "frontend",
     status: "done",
     completion: 100,
@@ -97,7 +101,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
   },
   {
     id: "roadmap-executable",
-    name: "Roadmap as code (YAML → issues)",
+    name: "Roadmap as code (YAML â†’ issues)",
     domain: "platform",
     status: "in-progress",
     completion: 50,

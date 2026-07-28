@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useCallback, useMemo, useState } from "react";
 import { Heart, Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -45,11 +49,11 @@ export function DonationButton({
 
   const donate = useCallback(async () => {
     if (!validAmount) {
-      toast.error(`La donación mínima es de ${minAmount} MXN`);
+      toast.error(`La donaciÃ³n mÃ­nima es de ${minAmount} MXN`);
       return;
     }
     if (!trackId) {
-      toast.error("No se pudo asociar la donación a la pista");
+      toast.error("No se pudo asociar la donaciÃ³n a la pista");
       return;
     }
 
@@ -70,14 +74,14 @@ export function DonationButton({
       if (data?.url) {
         window.location.href = data.url as string;
       } else {
-        toast.error("No se recibió una URL de pago");
+        toast.error("No se recibiÃ³ una URL de pago");
       }
     } catch (error) {
       logger.error("Error initiating donation", { error });
       const message =
         error instanceof Error
           ? error.message
-          : "No se pudo iniciar la donación";
+          : "No se pudo iniciar la donaciÃ³n";
       toast.error(message);
     } finally {
       setLoading(false);
@@ -106,8 +110,8 @@ export function DonationButton({
         Apoya RDM Music
       </p>
       <p className="text-xs font-body text-muted-foreground">
-        Esta música sostiene el proyecto RDM Digital. Cada donación ayuda a
-        cubrir infraestructura y producción. Monto mínimo: {minAmount} MXN.
+        Esta mÃºsica sostiene el proyecto RDM Digital. Cada donaciÃ³n ayuda a
+        cubrir infraestructura y producciÃ³n. Monto mÃ­nimo: {minAmount} MXN.
       </p>
 
       <div className="flex flex-wrap gap-2">
@@ -175,7 +179,7 @@ export function DonationButton({
       </div>
 
       <p className="text-[10px] text-muted-foreground">
-        Donación asociada a:{" "}
+        DonaciÃ³n asociada a:{" "}
         <span className="font-mono text-foreground">{label}</span>
       </p>
     </div>

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 import { DEFAULT_MAP_VIEWPORT, type MapViewportState } from "@/features/places/mapTypes";
 

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 interface ErrorStateProps {
   title?: string;
   message?: string;
@@ -7,8 +11,8 @@ interface ErrorStateProps {
 }
 
 export function ErrorState({
-  title = 'Algo salió mal',
-  message = 'No pudimos cargar esta sección. Intenta de nuevo.',
+  title = 'Algo saliÃ³ mal',
+  message = 'No pudimos cargar esta secciÃ³n. Intenta de nuevo.',
   onRetry,
   variant = 'inline',
   className = '',

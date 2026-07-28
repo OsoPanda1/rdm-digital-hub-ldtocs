@@ -1,7 +1,11 @@
-// ══════════════════════════════════════════════════════════════════════════════
-// Isabella Ω Cognitive Kernel — Independent Verifier
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Isabella Î© Cognitive Kernel â€” Independent Verifier
 // Checks contradictions, hallucinations, constitutional violations, policy.
-// ══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 import type {
   VerificationResult,
@@ -25,22 +29,22 @@ export interface VerificationCheckDef {
   evaluate: (input: string, output: string, context?: Record<string, unknown>) => VerificationCheck;
 }
 
-// ── Built-in Verification Checks ────────────────────────────────────────────
+// â”€â”€ Built-in Verification Checks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const CONSTITUTIONAL_PRINCIPLES = [
-  { id: "CP-001", name: "Soberania", pattern: /soberan[íi]a|control|dominio|autoridad/i },
+  { id: "CP-001", name: "Soberania", pattern: /soberan[Ã­i]a|control|dominio|autoridad/i },
   { id: "CP-002", name: "Transparencia", pattern: /transparenc|auditable|trazable|abierto/i },
-  { id: "CP-003", name: "Consentimiento", pattern: /consentimiento|permiso|autorizaci[oó]n/i },
-  { id: "CP-004", name: "Proporcionalidad", pattern: /proporcional|mínimo|necesario/i },
-  { id: "CP-005", name: "No Discriminación", pattern: /discriminaci[oó]n|bias|sesgo|equidad/i },
-  { id: "CP-006", name: "Interoperabilidad", pattern: /interoperab|compatible|estándar|API/i },
+  { id: "CP-003", name: "Consentimiento", pattern: /consentimiento|permiso|autorizaci[oÃ³]n/i },
+  { id: "CP-004", name: "Proporcionalidad", pattern: /proporcional|mÃ­nimo|necesario/i },
+  { id: "CP-005", name: "No DiscriminaciÃ³n", pattern: /discriminaci[oÃ³]n|bias|sesgo|equidad/i },
+  { id: "CP-006", name: "Interoperabilidad", pattern: /interoperab|compatible|estÃ¡ndar|API/i },
   { id: "CP-007", name: "Resiliencia", pattern: /resilienc|tolerancia|degradado|failover/i },
-  { id: "CP-008", name: "Auditoría", pattern: /auditor|registro|log|inmutab/i },
+  { id: "CP-008", name: "AuditorÃ­a", pattern: /auditor|registro|log|inmutab/i },
 ];
 
 const HALLUCINATION_INDICATORS = [
-  /según el (artículo|estudio|reporte) \d+/i,
-  /estadísticamente comprobado/i,
+  /segÃºn el (artÃ­culo|estudio|reporte) \d+/i,
+  /estadÃ­sticamente comprobado/i,
   /el \d+% de/i,
   /fuente:?\s*(https?:\/\/|www\.)/i,
   /referencia:\s*\[/i,
@@ -48,7 +52,7 @@ const HALLUCINATION_INDICATORS = [
 ];
 
 const CONTRADICTION_PATTERNS = [
-  { positive: /\b(siempre|nunca|todo|nada|100%|cero)\b/i, negative: /\b(nunca|siempre|nada|todo|0%|jamás)\b/i },
+  { positive: /\b(siempre|nunca|todo|nada|100%|cero)\b/i, negative: /\b(nunca|siempre|nada|todo|0%|jamÃ¡s)\b/i },
 ];
 
 function checkHallucination(input: string, output: string): VerificationCheck {
@@ -79,7 +83,7 @@ function checkConstitutionalCompliance(output: string): VerificationCheck {
   const violations: string[] = [];
 
   // Check for potential privacy violations
-  if (/\b(password|contraseña|secret|token|key)\b.*[:=]/i.test(output)) {
+  if (/\b(password|contraseÃ±a|secret|token|key)\b.*[:=]/i.test(output)) {
     violations.push("CP-001: Potential secret exposure in output");
   }
 
@@ -89,7 +93,7 @@ function checkConstitutionalCompliance(output: string): VerificationCheck {
   }
 
   // Check for data without consent
-  if (/datos personales|información privada|correo.*@/i.test(output)) {
+  if (/datos personales|informaciÃ³n privada|correo.*@/i.test(output)) {
     violations.push("CP-003: Output contains personal data references");
   }
 
@@ -169,7 +173,7 @@ function checkContradictions(output: string): VerificationCheck {
   };
 }
 
-// ── Verifier Engine ─────────────────────────────────────────────────────────
+// â”€â”€ Verifier Engine â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const checkHistory: VerificationResult[] = [];
 const MAX_HISTORY = 500;

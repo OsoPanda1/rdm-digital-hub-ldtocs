@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { NextFunction, Request, Response } from "express";
 import { logger } from "./logger";
 
@@ -7,7 +11,7 @@ const ROLE_ORDER: RdmRole[] = ["public", "user", "operator", "admin", "federatio
 const DEFAULT_WINDOW_MS = Number(process.env.RDM_RATE_LIMIT_WINDOW_MS ?? 60_000);
 const buckets = new Map<string, { count: number; resetAt: number }>();
 
-// ── Rate limit bucket cleanup (prevents memory leak) ──
+// â”€â”€ Rate limit bucket cleanup (prevents memory leak) â”€â”€
 setInterval(() => {
   const now = Date.now();
   for (const [key, bucket] of buckets) {
@@ -31,7 +35,7 @@ function clientIp(req: Request): string {
 }
 
 /**
- * Legacy identity attach — kept for backward compatibility.
+ * Legacy identity attach â€” kept for backward compatibility.
  * In production, attachJwtIdentity (from middlewares/auth.ts) runs FIRST
  * and sets rdmIdentity from the verified JWT. This function only fills in
  * the IP and ensures rdmIdentity exists for anonymous requests.
@@ -42,12 +46,12 @@ function clientIp(req: Request): string {
 export function attachRdmIdentity(req: Request, _res: Response, next: NextFunction) {
   const existing = (req as any).rdmIdentity;
   if (existing) {
-    // JWT middleware already set identity — just ensure ip is present
+    // JWT middleware already set identity â€” just ensure ip is present
     existing.ip = clientIp(req);
     next();
     return;
   }
-  // No JWT middleware ran (dev mode) — create anonymous identity
+  // No JWT middleware ran (dev mode) â€” create anonymous identity
   (req as any).rdmIdentity = {
     subject: "anonymous",
     role: "public",

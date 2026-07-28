@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -13,15 +17,15 @@ import { DichosIntro } from "./DichosIntro";
 import { useCivicEvent } from "@/hooks/useCivicEvent";
 
 const CATEGORIES = [
-  { id: "all", label: "Todos", icon: "✨" },
-  { id: "PERSONAJES", label: "Personajes", icon: "👤" },
-  { id: "BRINDIS", label: "Brindis", icon: "🥂" },
-  { id: "HUMOR", label: "Humor", icon: "🎭" },
-  { id: "FAMILIA", label: "Familia", icon: "👥" },
-  { id: "COMIDA_BEBIDA", label: "Comida y Bebida", icon: "🍷" },
-  { id: "TRABAJO", label: "Trabajo", icon: "⚙️" },
-  { id: "VIDA_COTIDIANA", label: "Vida Cotidiana", icon: "🏛️" },
-  { id: "MINERIA", label: "Minería", icon: "💎" },
+  { id: "all", label: "Todos", icon: "âœ¨" },
+  { id: "PERSONAJES", label: "Personajes", icon: "ðŸ‘¤" },
+  { id: "BRINDIS", label: "Brindis", icon: "ðŸ¥‚" },
+  { id: "HUMOR", label: "Humor", icon: "ðŸŽ­" },
+  { id: "FAMILIA", label: "Familia", icon: "ðŸ‘¥" },
+  { id: "COMIDA_BEBIDA", label: "Comida y Bebida", icon: "ðŸ·" },
+  { id: "TRABAJO", label: "Trabajo", icon: "âš™ï¸" },
+  { id: "VIDA_COTIDIANA", label: "Vida Cotidiana", icon: "ðŸ›ï¸" },
+  { id: "MINERIA", label: "MinerÃ­a", icon: "ðŸ’Ž" },
 ];
 
 interface Dicho {
@@ -123,15 +127,15 @@ export function DichosSection({ onBack }: DichosSectionProps) {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
             <p className="text-xs tracking-[0.4em] uppercase text-accent font-body mb-4 flex items-center gap-2">
               <BookOpen className="w-3 h-3" />
-              Archivo Histórico · Real del Monte
+              Archivo HistÃ³rico Â· Real del Monte
             </p>
             <h1 className="text-4xl md:text-7xl font-display font-bold mb-4 leading-[0.9]">
-              Callejón de los{" "}
+              CallejÃ³n de los{" "}
               <span className="text-accent">Dichos</span>
             </h1>
             <p className="text-foreground/60 font-body max-w-xl text-lg leading-relaxed">
-              La identidad de nuestro Pueblo Mágico codificada en 47 expresiones atemporales.
-              Un ecosistema lingüístico preservado en alta fidelidad.
+              La identidad de nuestro Pueblo MÃ¡gico codificada en 47 expresiones atemporales.
+              Un ecosistema lingÃ¼Ã­stico preservado en alta fidelidad.
             </p>
           </motion.div>
         </div>
@@ -228,9 +232,9 @@ export function DichosSection({ onBack }: DichosSectionProps) {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
           {[
             { label: "Personajes Mapeados", value: dichos.length },
-            { label: "Taxonomías", value: CATEGORIES.length - 1 },
-            { label: "Años de Preservación", value: "200+" },
-            { label: "Registros Únicos", value: "47" },
+            { label: "TaxonomÃ­as", value: CATEGORIES.length - 1 },
+            { label: "AÃ±os de PreservaciÃ³n", value: "200+" },
+            { label: "Registros Ãšnicos", value: "47" },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -266,7 +270,7 @@ export function DichosSection({ onBack }: DichosSectionProps) {
         ) : filteredDichos.length === 0 ? (
           <div className="text-center py-20">
             <Quote className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
-            <p className="text-sm text-muted-foreground font-body">No existen registros bajo esos parámetros.</p>
+            <p className="text-sm text-muted-foreground font-body">No existen registros bajo esos parÃ¡metros.</p>
           </div>
         ) : (
           <div className="space-y-2 pb-24">
@@ -320,7 +324,7 @@ export function DichosSection({ onBack }: DichosSectionProps) {
                             </div>
                             <div>
                               <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-body mb-1">
-                                Traducción
+                                TraducciÃ³n
                               </p>
                               <p className="text-xs text-foreground/80 font-body">{d.significado}</p>
                             </div>

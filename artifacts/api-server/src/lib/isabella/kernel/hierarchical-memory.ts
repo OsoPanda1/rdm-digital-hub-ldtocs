@@ -1,7 +1,11 @@
-// ══════════════════════════════════════════════════════════════════════════════
-// Isabella Ω Cognitive Kernel — Hierarchical Memory
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Isabella Î© Cognitive Kernel â€” Hierarchical Memory
 // 7-level memory with policies, persistence, access control, and TTL.
-// ══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 import type {
   MemoryLevel,
@@ -12,7 +16,7 @@ import type {
 import { logger } from "../../logger";
 import { createHmac, randomBytes } from "crypto";
 
-// ── Memory Policies per Level ───────────────────────────────────────────────
+// â”€â”€ Memory Policies per Level â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const MEMORY_POLICIES: Record<MemoryLevel, MemoryPolicy> = {
   L0_immediate: {
@@ -45,7 +49,7 @@ const MEMORY_POLICIES: Record<MemoryLevel, MemoryPolicy> = {
   },
 };
 
-// ── Memory Engine ───────────────────────────────────────────────────────────
+// â”€â”€ Memory Engine â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface HierarchicalMemory {
   store(entry: Omit<MemoryEntry, "id" | "createdAt" | "accessCount" | "lastAccessedAt">): MemoryEntry;

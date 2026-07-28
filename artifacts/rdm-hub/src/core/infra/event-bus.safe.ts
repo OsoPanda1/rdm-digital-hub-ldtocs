@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { eventsDroppedTotal } from "@/infra/metrics/prometheus";
 
 export type Listener<T = unknown> = (payload: T) => void | Promise<void>;

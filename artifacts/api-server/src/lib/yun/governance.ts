@@ -1,14 +1,18 @@
-// ────────────────────────────────────────────────────────────────
-// YUN Governance Console — ADR Management & Quorum Voting
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// YUN Governance Console â€” ADR Management & Quorum Voting
 // Materializes CP-005 (Gobernanza Documentada) and
 // CP-007 (Gobernanza Federada).
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { randomUUID } from "node:crypto";
 import { QUORUM_RULES } from "./constitution";
 import type { ADR, ADRStatus, FederationId, YunDomain } from "./types";
 
-// ── Types ──────────────────────────────────────────────────────
+// â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface VoteRecord {
   federationId: FederationId;
@@ -42,7 +46,7 @@ export interface ADRProposal {
   proposedAt: number;
 }
 
-// ── Governance Console ─────────────────────────────────────────
+// â”€â”€ Governance Console â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export class YunGovernanceConsole {
   private adrs = new Map<string, ADR>();
@@ -53,7 +57,7 @@ export class YunGovernanceConsole {
     this.initializeADRs();
   }
 
-  // ── ADR Management ───────────────────────────────────────────
+  // â”€â”€ ADR Management â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   getADRs(): ADR[] {
     return Array.from(this.adrs.values());
@@ -120,7 +124,7 @@ export class YunGovernanceConsole {
     return fullProposal;
   }
 
-  // ── Voting ───────────────────────────────────────────────────
+  // â”€â”€ Voting â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   castVote(params: {
     adrId: string;
@@ -182,7 +186,7 @@ export class YunGovernanceConsole {
     return this.votes.get(adrId);
   }
 
-  // ── License Issuance (Governance-controlled) ─────────────────
+  // â”€â”€ License Issuance (Governance-controlled) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   canIssueLicense(federationId: FederationId, domain: YunDomain): boolean {
     // CP-007: License issuance requires matching federation scope
@@ -200,7 +204,7 @@ export class YunGovernanceConsole {
     return federationMap[domain]?.includes(federationId) ?? false;
   }
 
-  // ── Stats ────────────────────────────────────────────────────
+  // â”€â”€ Stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   getGovernanceStats(): {
     totalADRs: number;
@@ -226,7 +230,7 @@ export class YunGovernanceConsole {
     };
   }
 
-  // ── Private ──────────────────────────────────────────────────
+  // â”€â”€ Private â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   private initializeADRs(): void {
     const foundationalADR: ADR = {
@@ -236,7 +240,7 @@ export class YunGovernanceConsole {
       date: "2026-07-25",
       authors: ["Edwin Castillo Trejo", "Isabella"],
       context: "Establishes the constitutional realm (YUN) as the foundational governance layer of the TAMV ecosystem, defining 8 immutable principles, identity heptacapa, and operational rules.",
-      decision: "YUN operates under 8 constitutional principles: Soberanía del Dato, Desacoplamiento Reactivo, Seguridad Transparente, Resiliencia Degradable, Gobernanza Documentada, Observabilidad Obligatoria, Gobernanza Federada, and Neutralidad Epistémica.",
+      decision: "YUN operates under 8 constitutional principles: SoberanÃ­a del Dato, Desacoplamiento Reactivo, Seguridad Transparente, Resiliencia Degradable, Gobernanza Documentada, Observabilidad Obligatoria, Gobernanza Federada, and Neutralidad EpistÃ©mica.",
       consequences: "All TAMV subsystems must comply with YUN principles. Non-compliance results in automatic policy denial. Changes to constitution require 5/7 federation quorum.",
       alternatives: ["Ad-hoc governance without constitutional framework", "External governance model borrowed from existing blockchains"],
     };

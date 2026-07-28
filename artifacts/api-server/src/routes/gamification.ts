@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // artifacts/api-server/src/routes/gamification.ts
-// Gamification API — Legacy XP system + RDM Living World endpoints.
+// Gamification API â€” Legacy XP system + RDM Living World endpoints.
 // ADR-001: docs/adr/001-rdm-living-world-gamification.md
 // When Supabase is wired, replace mock data with DB queries via Drizzle.
 
@@ -9,17 +13,17 @@ import { getDb, isDbAvailable } from "../lib/db-client";
 import { players, playerCurrencies, playerProgressions, progressionBranches, playerEvents } from "../../db/schema";
 import { eq, desc, sql } from "drizzle-orm";
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  LEGACY SYSTEM (kept for backward compatibility)
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 const RANKS = [
-  { name: "Visitante",     minXp: 0,     icon: "🧭", color: "#9CA3AF" },
-  { name: "Explorador",    minXp: 100,   icon: "🗺️", color: "#60A5FA" },
-  { name: "Minero",        minXp: 500,   icon: "⛏️", color: "#34D399" },
-  { name: "Cronista",      minXp: 1500,  icon: "📜", color: "#FBBF24" },
-  { name: "Guardián",      minXp: 4000,  icon: "🏰", color: "#F97316" },
-  { name: "Leyenda RDM",   minXp: 10000, icon: "👑", color: "#EC4899" },
+  { name: "Visitante",     minXp: 0,     icon: "ðŸ§­", color: "#9CA3AF" },
+  { name: "Explorador",    minXp: 100,   icon: "ðŸ—ºï¸", color: "#60A5FA" },
+  { name: "Minero",        minXp: 500,   icon: "â›ï¸", color: "#34D399" },
+  { name: "Cronista",      minXp: 1500,  icon: "ðŸ“œ", color: "#FBBF24" },
+  { name: "GuardiÃ¡n",      minXp: 4000,  icon: "ðŸ°", color: "#F97316" },
+  { name: "Leyenda RDM",   minXp: 10000, icon: "ðŸ‘‘", color: "#EC4899" },
 ] as const;
 
 function getRank(xp: number) {
@@ -48,12 +52,12 @@ function buildMockProfile(userId?: string) {
 }
 
 const MOCK_LEADERBOARD = [
-  { rank: 1, userId: "u1", displayName: "Minero del Alba",   xp: 8420, rankName: "Guardián",  avatar: null },
-  { rank: 2, userId: "u2", displayName: "Cronista Trejo",    xp: 5200, rankName: "Guardián",  avatar: null },
+  { rank: 1, userId: "u1", displayName: "Minero del Alba",   xp: 8420, rankName: "GuardiÃ¡n",  avatar: null },
+  { rank: 2, userId: "u2", displayName: "Cronista Trejo",    xp: 5200, rankName: "GuardiÃ¡n",  avatar: null },
   { rank: 3, userId: "u3", displayName: "Realito Fan #1",    xp: 3700, rankName: "Cronista",  avatar: null },
   { rank: 4, userId: "u4", displayName: "Sierra Walker",     xp: 2100, rankName: "Cronista",  avatar: null },
   { rank: 5, userId: "u5", displayName: "PasteHunter",       xp: 1450, rankName: "Minero",    avatar: null },
-  { rank: 6, userId: "u6", displayName: "TúristaMagico",     xp: 980,  rankName: "Minero",    avatar: null },
+  { rank: 6, userId: "u6", displayName: "TÃºristaMagico",     xp: 980,  rankName: "Minero",    avatar: null },
   { rank: 7, userId: "u7", displayName: "Nuevo Explorador",  xp: 310,  rankName: "Explorador",avatar: null },
 ];
 
@@ -61,10 +65,10 @@ const MOCK_QUESTS = [
   {
     id: "visit_mina",
     title: "Visita la Mina de Acosta",
-    description: "Descubre el corazón histórico de Real del Monte.",
+    description: "Descubre el corazÃ³n histÃ³rico de Real del Monte.",
     xpReward: 150,
-    category: "exploración",
-    icon: "⛏️",
+    category: "exploraciÃ³n",
+    icon: "â›ï¸",
     completed: false,
     progress: 0,
     total: 1,
@@ -72,10 +76,10 @@ const MOCK_QUESTS = [
   {
     id: "eat_paste",
     title: "Prueba 3 pastes distintos",
-    description: "La gastronomía es patrimonio. Saborea la historia.",
+    description: "La gastronomÃ­a es patrimonio. Saborea la historia.",
     xpReward: 80,
-    category: "gastronomía",
-    icon: "🥧",
+    category: "gastronomÃ­a",
+    icon: "ðŸ¥§",
     completed: false,
     progress: 1,
     total: 3,
@@ -83,10 +87,10 @@ const MOCK_QUESTS = [
   {
     id: "share_photo",
     title: "Comparte una foto del pueblo",
-    description: "Sé embajador digital de Real del Monte.",
+    description: "SÃ© embajador digital de Real del Monte.",
     xpReward: 50,
     category: "comunidad",
-    icon: "📸",
+    icon: "ðŸ“¸",
     completed: true,
     progress: 1,
     total: 1,
@@ -97,56 +101,56 @@ const MOCK_QUESTS = [
     description: "Sintoniza la voz del pueblo.",
     xpReward: 60,
     category: "cultura",
-    icon: "📻",
+    icon: "ðŸ“»",
     completed: false,
     progress: 0,
     total: 1,
   },
   {
     id: "visit_5_pois",
-    title: "Visita 5 puntos de interés",
-    description: "Conviértete en un explorador de verdad.",
+    title: "Visita 5 puntos de interÃ©s",
+    description: "ConviÃ©rtete en un explorador de verdad.",
     xpReward: 200,
-    category: "exploración",
-    icon: "🗺️",
+    category: "exploraciÃ³n",
+    icon: "ðŸ—ºï¸",
     completed: false,
     progress: 2,
     total: 5,
   },
 ];
 
-// ═══════════════════════════════════════════════════════════════════════════════
-//  LIVING WORLD — Mock data (ADR-001)
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+//  LIVING WORLD â€” Mock data (ADR-001)
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 const PROGRESSION_BRANCHES = [
-  { id: "br-exploration", key: "EXPLORATION", name: "Exploración", description: "Descubre territorios, POIs y rutas ocultas." },
-  { id: "br-history",     key: "HISTORY",     name: "Historia",    description: "Desbloquea capítulos narrativos del patrimonio." },
-  { id: "br-photo",       key: "PHOTO",       name: "Fotografía",  description: "Captura el territorio y comparte su imagen." },
-  { id: "br-gastronomy",  key: "GASTRONOMY",  name: "Gastronomía", description: "Saborea la identidad cultural local." },
+  { id: "br-exploration", key: "EXPLORATION", name: "ExploraciÃ³n", description: "Descubre territorios, POIs y rutas ocultas." },
+  { id: "br-history",     key: "HISTORY",     name: "Historia",    description: "Desbloquea capÃ­tulos narrativos del patrimonio." },
+  { id: "br-photo",       key: "PHOTO",       name: "FotografÃ­a",  description: "Captura el territorio y comparte su imagen." },
+  { id: "br-gastronomy",  key: "GASTRONOMY",  name: "GastronomÃ­a", description: "Saborea la identidad cultural local." },
   { id: "br-radio",       key: "RADIO",       name: "Radio",       description: "Escucha y participa en TAMV 92.5." },
   { id: "br-community",   key: "COMMUNITY",   name: "Comunidad",   description: "Contribuye al bienestar del pueblo." },
 ];
 
 const CURRENCY_TYPES = [
-  { type: "XP",                icon: "✨", description: "Experiencia general" },
-  { type: "COIN",              icon: "🪙", description: "Moneda interna" },
-  { type: "CRYSTAL",           icon: "💎", description: "Recompensas raras" },
-  { type: "PRESTIGE",          icon: "🏆", description: "Logros comunitarios" },
-  { type: "HONOR",             icon: "🏅", description: "Acciones éticas" },
-  { type: "ENERGY",            icon: "⚡", description: "Energía de sesión" },
-  { type: "INFLUENCE",         icon: "🌐", description: "Capacidad de activar eventos" },
-  { type: "TERRITORIAL_IMPACT", icon: "🌍", description: "Impacto positivo en el territorio" },
+  { type: "XP",                icon: "âœ¨", description: "Experiencia general" },
+  { type: "COIN",              icon: "ðŸª™", description: "Moneda interna" },
+  { type: "CRYSTAL",           icon: "ðŸ’Ž", description: "Recompensas raras" },
+  { type: "PRESTIGE",          icon: "ðŸ†", description: "Logros comunitarios" },
+  { type: "HONOR",             icon: "ðŸ…", description: "Acciones Ã©ticas" },
+  { type: "ENERGY",            icon: "âš¡", description: "EnergÃ­a de sesiÃ³n" },
+  { type: "INFLUENCE",         icon: "ðŸŒ", description: "Capacidad de activar eventos" },
+  { type: "TERRITORIAL_IMPACT", icon: "ðŸŒ", description: "Impacto positivo en el territorio" },
 ];
 
 const RARITY_TIERS = [
-  { key: "COMMON",    color: "#9CA3AF", label: "Común" },
-  { key: "UNCOMMON",  color: "#34D399", label: "Poco Común" },
+  { key: "COMMON",    color: "#9CA3AF", label: "ComÃºn" },
+  { key: "UNCOMMON",  color: "#34D399", label: "Poco ComÃºn" },
   { key: "RARE",      color: "#60A5FA", label: "Raro" },
-  { key: "EPIC",      color: "#A855F7", label: "Épico" },
+  { key: "EPIC",      color: "#A855F7", label: "Ã‰pico" },
   { key: "LEGENDARY", color: "#FBBF24", label: "Legendario" },
-  { key: "MYTHIC",    color: "#EC4899", label: "Mítico" },
-  { key: "UNIQUE",    color: "#FF1744", label: "Único" },
+  { key: "MYTHIC",    color: "#EC4899", label: "MÃ­tico" },
+  { key: "UNIQUE",    color: "#FF1744", label: "Ãšnico" },
 ];
 
 function buildLivingWorldPlayer(userId: string) {
@@ -174,10 +178,10 @@ function buildMockAvatar() {
     equipped: {
       head: { id: "item-helmet-minero", name: "Casco de Minero", rarity: "RARE", iconUrl: "/icons/helmet-minero.png" },
       torso: { id: "item-torso-camisa", name: "Camisa de Trabajo", rarity: "COMMON", iconUrl: "/icons/camisa.png" },
-      legs: { id: "item-legs-pantalón", name: "Pantalón de Trabajo", rarity: "COMMON", iconUrl: "/icons/pantalon.png" },
+      legs: { id: "item-legs-pantalÃ³n", name: "PantalÃ³n de Trabajo", rarity: "COMMON", iconUrl: "/icons/pantalon.png" },
       feet: { id: "item-feet-botas", name: "Botas Mineras", rarity: "UNCOMMON", iconUrl: "/icons/botas.png" },
       pet: null,
-      special: { id: "item-special-lampara", name: "Lámpara del Pionero", rarity: "EPIC", iconUrl: "/icons/lampara.png" },
+      special: { id: "item-special-lampara", name: "LÃ¡mpara del Pionero", rarity: "EPIC", iconUrl: "/icons/lampara.png" },
     },
     style: "colonial",
   };
@@ -225,7 +229,7 @@ const MOCK_COLLECTIONS = [
     id: "col-mining-heritage",
     key: "MINING_HERITAGE",
     name: "Herencia Minera",
-    description: "Los tesoros subterráneos de Real del Monte.",
+    description: "Los tesoros subterrÃ¡neos de Real del Monte.",
     category: "MINING",
     totalItems: 12,
     obtainedItems: 7,
@@ -233,7 +237,7 @@ const MOCK_COLLECTIONS = [
     completedAt: null,
     items: [
       { id: "item-pico-colonial", name: "Pico Colonial", rarity: "COMMON", obtained: true },
-      { id: "item-lampara-aceite", name: "Lámpara de Aceite", rarity: "UNCOMMON", obtained: true },
+      { id: "item-lampara-aceite", name: "LÃ¡mpara de Aceite", rarity: "UNCOMMON", obtained: true },
       { id: "item-canal-mercurio", name: "Canal de Mercurio", rarity: "RARE", obtained: true },
       { id: "item-libro-mineria", name: "Libro de Minas de 1780", rarity: "EPIC", obtained: false },
       { id: "item-espada-virrey", name: "Espada del Virrey", rarity: "LEGENDARY", obtained: false },
@@ -242,7 +246,7 @@ const MOCK_COLLECTIONS = [
   {
     id: "col-gastronomy-pastes",
     key: "GASTRONOMY_PASTES",
-    name: "Sazón del Pueblo",
+    name: "SazÃ³n del Pueblo",
     description: "Todos los pastes y sabores de Real del Monte.",
     category: "GASTRONOMY",
     totalItems: 8,
@@ -252,14 +256,14 @@ const MOCK_COLLECTIONS = [
     items: [
       { id: "item-paste-papa", name: "Paste de Papa", rarity: "COMMON", obtained: true },
       { id: "item-paste-mole", name: "Paste de Mole", rarity: "UNCOMMON", obtained: true },
-      { id: "item-paste-camaron", name: "Paste de Camarón", rarity: "RARE", obtained: false },
+      { id: "item-paste-camaron", name: "Paste de CamarÃ³n", rarity: "RARE", obtained: false },
     ],
   },
   {
     id: "col-legendary-folklore",
     key: "LEGENDARY_FOLKLORE",
     name: "Leyendas del Monte",
-    description: "Los relatos fantásticos que habitan la sierra.",
+    description: "Los relatos fantÃ¡sticos que habitan la sierra.",
     category: "LEGENDS",
     totalItems: 10,
     obtainedItems: 4,
@@ -276,13 +280,13 @@ const MOCK_COLLECTIONS = [
 const MOCK_CURRENT_SEASON = {
   id: "season-mining-colonial",
   key: "MINING_COLONIAL",
-  name: "Minería Colonial",
-  description: "Vive la época dorada de la minería en Real del Monte. Descubre los secretos subterráneos y la vida de los mineros coloniales.",
+  name: "MinerÃ­a Colonial",
+  description: "Vive la Ã©poca dorada de la minerÃ­a en Real del Monte. Descubre los secretos subterrÃ¡neos y la vida de los mineros coloniales.",
   startsAt: "2026-07-01T00:00:00Z",
   endsAt: "2026-09-30T23:59:59Z",
   themeConfig: {
     hudColor: "#D4A843",
-    mapOverlay: "mines殖民",
+    mapOverlay: "minesæ®–æ°‘",
     ambientSound: "mine-echoes",
     decorations: ["lanterns", "minecarts", "ore-glow"],
   },
@@ -307,7 +311,7 @@ function buildMockWorldState() {
         territoryId: "ter-mina-acosta",
         startsAt: "2026-07-23T10:00:00Z",
         endsAt: "2026-07-23T18:00:00Z",
-        description: "Tour especial guiado por los túneles coloniales. XP doble por visitas.",
+        description: "Tour especial guiado por los tÃºneles coloniales. XP doble por visitas.",
       },
       {
         id: "evt-challenge-paste",
@@ -316,7 +320,7 @@ function buildMockWorldState() {
         territoryId: null,
         startsAt: "2026-07-21T00:00:00Z",
         endsAt: "2026-07-27T23:59:59Z",
-        description: "El pueblo come pastes. ¿Puedes ayudar a llegar a 500?",
+        description: "El pueblo come pastes. Â¿Puedes ayudar a llegar a 500?",
         progress: 347,
         goal: 500,
       },
@@ -335,7 +339,7 @@ const MOCK_COMMUNITY_CHALLENGES = [
     id: "cc-500-pastes",
     key: "500_PASTES_WEEK",
     name: "500 Pastes esta Semana",
-    description: "La comunidad consume pastes como patrimonio vivo. ¡Contribuye!",
+    description: "La comunidad consume pastes como patrimonio vivo. Â¡Contribuye!",
     goalType: "VISITS",
     goalTarget: 500,
     currentProgress: 347,
@@ -348,14 +352,14 @@ const MOCK_COMMUNITY_CHALLENGES = [
     id: "cc-100-photos-mina",
     key: "100_PHOTOS_MINA",
     name: "100 Fotos de la Mina",
-    description: "Captura la belleza subterránea de la Mina de Acosta.",
+    description: "Captura la belleza subterrÃ¡nea de la Mina de Acosta.",
     goalType: "PHOTOS",
     goalTarget: 100,
     currentProgress: 62,
     seasonId: "season-mining-colonial",
     startsAt: "2026-07-23T00:00:00Z",
     endsAt: "2026-07-30T23:59:59Z",
-    rewardDescription: "Los 20 primeros obtienen la 'Lámpara Dorada' (LEGENDARY)",
+    rewardDescription: "Los 20 primeros obtienen la 'LÃ¡mpara Dorada' (LEGENDARY)",
   },
   {
     id: "cc-listen-30min",
@@ -372,14 +376,14 @@ const MOCK_COMMUNITY_CHALLENGES = [
   },
 ];
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  ROUTE REGISTRATION
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 export function registerGamificationRoutes(router: Router) {
-  // ───────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  LEGACY ENDPOINTS (backward compatible)
-  // ───────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.get("/v1/gamification/profile", async (req: Request, res: Response, next) => {
     try {
@@ -555,9 +559,9 @@ export function registerGamificationRoutes(router: Router) {
     res.status(200).json({ ok: true, data: RANKS });
   });
 
-  // ───────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  LIVING WORLD ENDPOINTS (ADR-001)
-  // ───────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   // GET /api/v1/living-world/player/:id
   // Full player profile: avatar, currencies, progression, collections
@@ -669,7 +673,7 @@ export function registerGamificationRoutes(router: Router) {
         pois: [
           { id: "poi-mina-acosta", name: "Mina de Acosta", status: "EVENT", currentEventId: "evt-mine-open", lat: 20.1869, lng: -98.6653 },
           { id: "poi-plaza",       name: "Plaza Principal",  status: "OPEN",  currentEventId: null, lat: 20.1834, lng: -98.6641 },
-          { id: "poi-cementerio",  name: "Panteón",         status: "OPEN",  currentEventId: null, lat: 20.1852, lng: -98.6620 },
+          { id: "poi-cementerio",  name: "PanteÃ³n",         status: "OPEN",  currentEventId: null, lat: 20.1852, lng: -98.6620 },
           { id: "poi-templo",      name: "Templo San Francisco", status: "OPEN", currentEventId: null, lat: 20.1838, lng: -98.6645 },
         ],
       },
@@ -738,7 +742,7 @@ export function registerGamificationRoutes(router: Router) {
               poiId: poiId ?? undefined,
               payloadJson: { ...payload, xpAwarded, idempotencyKey },
             });
-            // Atomic increment — eliminates read-modify-write race condition
+            // Atomic increment â€” eliminates read-modify-write race condition
             await tx.insert(playerCurrencies).values({
               playerId: player.id,
               currencyType: "XP",
@@ -772,7 +776,7 @@ export function registerGamificationRoutes(router: Router) {
           } : null,
           narrativeTrigger: type === "DISCOVER_POI" ? {
             type: "DISCOVERY",
-            message: "Has descubierto un nuevo punto de interés. Realito tiene algo que contarte...",
+            message: "Has descubierto un nuevo punto de interÃ©s. Realito tiene algo que contarte...",
           } : null,
         },
       });

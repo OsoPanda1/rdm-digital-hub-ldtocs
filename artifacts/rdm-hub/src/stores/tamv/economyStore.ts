@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // ============================================================================
-// TAMV — Economy Store: TC, MSR, TAMV balances + 20/30/50 Phoenix rule
+// TAMV â€” Economy Store: TC, MSR, TAMV balances + 20/30/50 Phoenix rule
 // ============================================================================
 import { create } from "zustand";
 

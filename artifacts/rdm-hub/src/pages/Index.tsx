@@ -1,7 +1,11 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { RDMHero } from "@/components/rdm/RDMHero";
 import { RDMInteractiveMap } from "@/components/rdm/RDMInteractiveMap";
-// RDMCommerceBanner removed — banners now managed globally by BannerManager
+// RDMCommerceBanner removed â€” banners now managed globally by BannerManager
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Pickaxe, Utensils, TreePine, MapPin, Compass, Car, Calendar, Users, Star, Camera, Heart, Lightbulb, Bed, Palette, Store, Headphones } from "lucide-react";
@@ -23,33 +27,33 @@ import realitoMinas from '@assets/realito-minas_1784832222173.png';
 import tamvBanner from '@assets/Gemini_Generated_Image_a3vb18a3vb18a3vb_1784832222162.png';
 
 const QUICK_ACCESS = [
-  { icon: MapPin, label: "Mapa", desc: "Puntos de interés", to: "/mapa", color: "hsl(var(--rdm-amber))" },
-  { icon: Pickaxe, label: "Historia", desc: "500 años de minería", to: "/historia", color: "hsl(var(--rdm-blue))" },
-  { icon: Utensils, label: "Gastronomía", desc: "Pastes y más", to: "/gastronomia", color: "hsl(var(--rdm-green))" },
+  { icon: MapPin, label: "Mapa", desc: "Puntos de interÃ©s", to: "/mapa", color: "hsl(var(--rdm-amber))" },
+  { icon: Pickaxe, label: "Historia", desc: "500 aÃ±os de minerÃ­a", to: "/historia", color: "hsl(var(--rdm-blue))" },
+  { icon: Utensils, label: "GastronomÃ­a", desc: "Pastes y mÃ¡s", to: "/gastronomia", color: "hsl(var(--rdm-green))" },
   { icon: TreePine, label: "Naturaleza", desc: "Sierra y bosque", to: "/ecoturismo", color: "hsl(var(--rdm-green))" },
   { icon: Compass, label: "Rutas", desc: "5 recorridos", to: "/rutas", color: "hsl(var(--rdm-purple))" },
-  { icon: Car, label: "Cómo llegar", desc: "Estacionamiento", to: "/estacionamientos", color: "hsl(var(--rdm-red))" },
+  { icon: Car, label: "CÃ³mo llegar", desc: "Estacionamiento", to: "/estacionamientos", color: "hsl(var(--rdm-red))" },
   { icon: Calendar, label: "Eventos", desc: "Agenda cultural", to: "/eventos", color: "hsl(var(--rdm-blue))" },
-  { icon: Store, label: "Registra tu Negocio", desc: "Únete al directorio", to: "/registro-comercio", color: "hsl(var(--rdm-amber))" },
+  { icon: Store, label: "Registra tu Negocio", desc: "Ãšnete al directorio", to: "/registro-comercio", color: "hsl(var(--rdm-amber))" },
 ];
 
 const REALITOS = [
-  { img: realitoGastro, cat: "Gastronomía", sub: "Pastes y sabores", to: "/gastronomia" },
+  { img: realitoGastro, cat: "GastronomÃ­a", sub: "Pastes y sabores", to: "/gastronomia" },
   { img: realitoArte, cat: "Arte", sub: "Creadores locales", to: "/arte" },
   { img: realitoHistoria, cat: "Historia", sub: "Legado minero", to: "/historia" },
-  { img: realitoCultura, cat: "Cultura", sub: "Tradición viva", to: "/cultura" },
+  { img: realitoCultura, cat: "Cultura", sub: "TradiciÃ³n viva", to: "/cultura" },
   { img: realitoEco, cat: "Ecoturismo", sub: "Bosque de niebla", to: "/ecoturismo" },
-  { img: realitoPlaterias, cat: "Platerías", sub: "Joyas de plata", to: "/arte" },
-  { img: realitoMinas, cat: "Minas", sub: "Túneles y leyendas", to: "/historia" },
+  { img: realitoPlaterias, cat: "PlaterÃ­as", sub: "Joyas de plata", to: "/arte" },
+  { img: realitoMinas, cat: "Minas", sub: "TÃºneles y leyendas", to: "/historia" },
   { img: realitoBares, cat: "Bares", sub: "Cantinas y mezcal", to: "/gastronomia" },
 ];
 
 const EXPERIENCIAS = [
-  { id: "historia", title: "Historia Minera", subtitle: "500 años de plata", icon: Pickaxe, to: "/historia", span: "col-span-2 row-span-2", image: RDM_IMAGES.minaEntrance },
-  { id: "gastronomia", title: "Gastronomía", subtitle: "Pastes & tradición", icon: Utensils, to: "/gastronomia", span: "col-span-1 row-span-1", image: RDM_IMAGES.pastesTraditional },
+  { id: "historia", title: "Historia Minera", subtitle: "500 aÃ±os de plata", icon: Pickaxe, to: "/historia", span: "col-span-2 row-span-2", image: RDM_IMAGES.minaEntrance },
+  { id: "gastronomia", title: "GastronomÃ­a", subtitle: "Pastes & tradiciÃ³n", icon: Utensils, to: "/gastronomia", span: "col-span-1 row-span-1", image: RDM_IMAGES.pastesTraditional },
   { id: "aventura", title: "Aventura", subtitle: "Sierra salvaje", icon: TreePine, to: "/ecoturismo", span: "col-span-1 row-span-1", image: RDM_IMAGES.penasCargadas },
-  { id: "plata", title: "Platerías", subtitle: "Artesanía en plata", icon: Palette, to: "/arte", span: "col-span-1 row-span-1", image: RDM_IMAGES.artesaniasPlata },
-  { id: "hospedaje", title: "Hospedaje", subtitle: "Cabañas de montaña", icon: Bed, to: "/directorio", span: "col-span-1 row-span-1", image: RDM_IMAGES.hospedajeCabana },
+  { id: "plata", title: "PlaterÃ­as", subtitle: "ArtesanÃ­a en plata", icon: Palette, to: "/arte", span: "col-span-1 row-span-1", image: RDM_IMAGES.artesaniasPlata },
+  { id: "hospedaje", title: "Hospedaje", subtitle: "CabaÃ±as de montaÃ±a", icon: Bed, to: "/directorio", span: "col-span-1 row-span-1", image: RDM_IMAGES.hospedajeCabana },
 ];
 
 const Index = () => {
@@ -64,17 +68,17 @@ const Index = () => {
   return (
     <RDMLayout>
       <SEOMeta
-        title="RDM Digital — Guía Turística de Real del Monte, Pueblo Mágico"
-        description="Descubre Real del Monte, Pueblo Mágico de Hidalgo. Guía turística digital con mapa interactivo, rutas, gastronomía, historia minera y eventos culturales."
+        title="RDM Digital â€” GuÃ­a TurÃ­stica de Real del Monte, Pueblo MÃ¡gico"
+        description="Descubre Real del Monte, Pueblo MÃ¡gico de Hidalgo. GuÃ­a turÃ­stica digital con mapa interactivo, rutas, gastronomÃ­a, historia minera y eventos culturales."
       />
       <RDMHero />
 
-      {/* Video: Presentación Real del Monte */}
+      {/* Video: PresentaciÃ³n Real del Monte */}
       <section className="py-8 px-6 md:px-12">
         <div className="max-w-6xl mx-auto">
           <VideoEmbed
             youtubeId="dQw4w9WgXcQ"
-            title="Conoce Real del Monte — Pueblo Mágico"
+            title="Conoce Real del Monte â€” Pueblo MÃ¡gico"
             variant="hero"
             caption="Descubre la magia de Real del Monte, Hidalgo"
           />
@@ -87,7 +91,7 @@ const Index = () => {
           <motion.div key={curioso} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex items-center justify-center gap-3">
             <Lightbulb className="w-5 h-5 text-[hsl(var(--rdm-amber))] shrink-0" />
             <p className="text-sm text-[hsl(var(--foreground))]" style={{ fontFamily: "var(--font-body)" }}>
-              <span className="font-semibold text-[hsl(var(--rdm-amber))]">¿Sabías que?</span> {DATOS_CURIOSOS[curioso]}
+              <span className="font-semibold text-[hsl(var(--rdm-amber))]">Â¿SabÃ­as que?</span> {DATOS_CURIOSOS[curioso]}
             </p>
           </motion.div>
         </div>
@@ -97,8 +101,8 @@ const Index = () => {
       <section className="py-16 px-6 md:px-12">
         <div className="max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
-            <p className="text-sm tracking-[0.3em] uppercase text-[hsl(var(--rdm-amber))] mb-3" style={{ fontFamily: "var(--font-body)" }}>¿Qué quieres hacer?</p>
-            <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--font-display)" }}>Tu visita empieza aquí</h2>
+            <p className="text-sm tracking-[0.3em] uppercase text-[hsl(var(--rdm-amber))] mb-3" style={{ fontFamily: "var(--font-body)" }}>Â¿QuÃ© quieres hacer?</p>
+            <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--font-display)" }}>Tu visita empieza aquÃ­</h2>
           </motion.div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
             {QUICK_ACCESS.map((item, i) => (
@@ -116,7 +120,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* SECTION A: Realito te guía */}
+      {/* SECTION A: Realito te guÃ­a */}
       <section className="py-20 px-6 md:px-12 bg-[hsl(220_30%_8%)] text-white overflow-hidden relative">
         <div className="absolute inset-0 bg-gradient-to-b from-[hsl(220_30%_5%)] to-transparent opacity-80" />
         <div className="max-w-6xl mx-auto relative z-10">
@@ -125,7 +129,7 @@ const Index = () => {
                <img src={realitoCultura} alt="Realito Icon" className="w-8 h-8 object-contain" />
             </div>
             <div>
-              <p className="text-xs tracking-[0.2em] uppercase text-[hsl(var(--rdm-amber))]" style={{ fontFamily: "var(--font-body)" }}>Tu guía local</p>
+              <p className="text-xs tracking-[0.2em] uppercase text-[hsl(var(--rdm-amber))]" style={{ fontFamily: "var(--font-body)" }}>Tu guÃ­a local</p>
               <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--font-display)" }}>Realito te invita a descubrir</h2>
             </div>
           </motion.div>
@@ -171,7 +175,7 @@ const Index = () => {
               Podcast del Ecosistema
             </h2>
             <p className="text-sm md:text-base text-white/80 mb-6 drop-shadow-md" style={{ fontFamily: "var(--font-body)" }}>
-              Voces del Pueblo Mágico · Narrativas soberanas en audio
+              Voces del Pueblo MÃ¡gico Â· Narrativas soberanas en audio
             </p>
             <Link to="/podcast" className="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-full font-semibold text-sm hover:scale-105 transition-transform shadow-[0_0_20px_rgba(22,163,74,0.3)]" style={{ fontFamily: "var(--font-body)" }}>
               <Headphones className="w-4 h-4" /> Escuchar ahora
@@ -180,9 +184,9 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Commerce Banners — managed globally by BannerManager */}
+      {/* Commerce Banners â€” managed globally by BannerManager */}
 
-      {/* Experience Grid con imágenes reales */}
+      {/* Experience Grid con imÃ¡genes reales */}
       <section className="py-24 px-6 md:px-12">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
           <p className="text-sm tracking-[0.3em] uppercase text-[hsl(var(--rdm-amber))] mb-4" style={{ fontFamily: "var(--font-body)" }}>Experiencias Inmersivas</p>
@@ -212,25 +216,25 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Galería fotográfica estilo muro */}
+      {/* GalerÃ­a fotogrÃ¡fica estilo muro */}
       <section className="py-16 px-6 md:px-12 bg-[hsl(var(--muted)/0.3)]">
         <div className="max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
             <Camera className="w-6 h-6 mx-auto text-[hsl(var(--rdm-amber))] mb-3" />
             <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--font-display)" }}>
-              Galería de <span className="text-[hsl(var(--rdm-amber))]">Real del Monte</span>
+              GalerÃ­a de <span className="text-[hsl(var(--rdm-amber))]">Real del Monte</span>
             </h2>
-            <p className="text-sm text-[hsl(var(--muted-foreground))] mt-2" style={{ fontFamily: "var(--font-body)" }}>Un pueblo que enamora con cada rincón</p>
+            <p className="text-sm text-[hsl(var(--muted-foreground))] mt-2" style={{ fontFamily: "var(--font-body)" }}>Un pueblo que enamora con cada rincÃ³n</p>
           </motion.div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
             {[
               { img: RDM_IMAGES.callesColoridas, label: "Calles empedradas", tall: true },
-              { img: RDM_IMAGES.panteonIngles, label: "Panteón Inglés" },
-              { img: RDM_IMAGES.cafeMontana, label: "Café de montaña" },
+              { img: RDM_IMAGES.panteonIngles, label: "PanteÃ³n InglÃ©s" },
+              { img: RDM_IMAGES.cafeMontana, label: "CafÃ© de montaÃ±a" },
               { img: RDM_IMAGES.bosqueNiebla, label: "Bosque de niebla", tall: true },
-              { img: RDM_IMAGES.diaMuertos, label: "Día de Muertos" },
-              { img: RDM_IMAGES.artesaniasPlata, label: "Artesanías de plata" },
-              { img: RDM_IMAGES.callejonRomantico, label: "Callejones románticos" },
+              { img: RDM_IMAGES.diaMuertos, label: "DÃ­a de Muertos" },
+              { img: RDM_IMAGES.artesaniasPlata, label: "ArtesanÃ­as de plata" },
+              { img: RDM_IMAGES.callejonRomantico, label: "Callejones romÃ¡nticos" },
               { img: RDM_IMAGES.casaInglesa, label: "Arquitectura Cornish" },
             ].map((photo, i) => (
               <motion.div
@@ -251,7 +255,7 @@ const Index = () => {
           </div>
           <div className="text-center mt-6">
             <Link to="/comunidad" className="inline-flex items-center gap-2 text-sm font-medium text-[hsl(var(--rdm-amber))] hover:underline" style={{ fontFamily: "var(--font-body)" }}>
-              <Camera className="w-4 h-4" /> Comparte tus fotos en el muro social →
+              <Camera className="w-4 h-4" /> Comparte tus fotos en el muro social â†’
             </Link>
           </div>
         </div>
@@ -263,13 +267,13 @@ const Index = () => {
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <p className="text-sm tracking-[0.3em] uppercase text-[hsl(var(--rdm-amber))] mb-4" style={{ fontFamily: "var(--font-body)" }}>Memoria de Alta Fidelidad</p>
             <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "var(--font-display)" }}>
-              500 años de <span className="text-[hsl(var(--rdm-amber))]">historia minera</span>
+              500 aÃ±os de <span className="text-[hsl(var(--rdm-amber))]">historia minera</span>
             </h2>
             <p className="text-[hsl(var(--muted-foreground))] leading-relaxed mb-4" style={{ fontFamily: "var(--font-body)" }}>
-              Real del Monte guarda la memoria de la migración cornish que trajo consigo técnicas mineras, el fútbol y los pastes. Un legado que vive en cada callejón empedrado y en cada bocado.
+              Real del Monte guarda la memoria de la migraciÃ³n cornish que trajo consigo tÃ©cnicas mineras, el fÃºtbol y los pastes. Un legado que vive en cada callejÃ³n empedrado y en cada bocado.
             </p>
             <div className="grid grid-cols-2 gap-3 mb-6">
-              {[{ v: "460+", l: "Años de minería" }, { v: "500+ km", l: "De túneles" }, { v: "3,000+", l: "Inmigrantes cornish" }, { v: "35+", l: "Minas históricas" }].map(s => (
+              {[{ v: "460+", l: "AÃ±os de minerÃ­a" }, { v: "500+ km", l: "De tÃºneles" }, { v: "3,000+", l: "Inmigrantes cornish" }, { v: "35+", l: "Minas histÃ³ricas" }].map(s => (
                 <div key={s.l} className="rdm-glass rounded-lg p-3 text-center">
                   <p className="text-lg font-bold text-[hsl(var(--rdm-amber))]" style={{ fontFamily: "var(--font-display)" }}>{s.v}</p>
                   <p className="text-[10px] text-[hsl(var(--muted-foreground))]" style={{ fontFamily: "var(--font-body)" }}>{s.l}</p>
@@ -286,7 +290,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Sabías que... */}
+      {/* SabÃ­as que... */}
       <section className="py-16 px-6 md:px-12 bg-[hsl(var(--muted)/0.2)]">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-4">
@@ -301,19 +305,19 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Rutas Temáticas Preview */}
+      {/* Rutas TemÃ¡ticas Preview */}
       <section className="py-20 px-6 md:px-12">
         <div className="max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
             <p className="text-sm tracking-[0.3em] uppercase text-[hsl(var(--rdm-amber))] mb-3" style={{ fontFamily: "var(--font-body)" }}>Recorridos Guiados</p>
-            <h2 className="text-3xl md:text-5xl font-bold" style={{ fontFamily: "var(--font-display)" }}>5 rutas <span className="text-[hsl(var(--rdm-amber))]">temáticas</span></h2>
+            <h2 className="text-3xl md:text-5xl font-bold" style={{ fontFamily: "var(--font-display)" }}>5 rutas <span className="text-[hsl(var(--rdm-amber))]">temÃ¡ticas</span></h2>
           </motion.div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {RUTAS_TEMATICAS.slice(0, 3).map((ruta, i) => (
               <motion.div key={ruta.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="rdm-glass rounded-xl p-5">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-3 h-3 rounded-full" style={{ background: ruta.color }} />
-                  <span className="text-xs font-medium text-[hsl(var(--muted-foreground))]" style={{ fontFamily: "var(--font-body)" }}>{ruta.dificultad} · {ruta.duracion}</span>
+                  <span className="text-xs font-medium text-[hsl(var(--muted-foreground))]" style={{ fontFamily: "var(--font-body)" }}>{ruta.dificultad} Â· {ruta.duracion}</span>
                 </div>
                 <h3 className="font-semibold text-base mb-2" style={{ fontFamily: "var(--font-display)" }}>{ruta.nombre}</h3>
                 <p className="text-xs text-[hsl(var(--muted-foreground))] leading-relaxed mb-3" style={{ fontFamily: "var(--font-body)" }}>{ruta.descripcion}</p>
@@ -369,20 +373,20 @@ const Index = () => {
 
       <RDMInteractiveMap />
 
-      {/* Datos rápidos */}
+      {/* Datos rÃ¡pidos */}
       <section className="py-16 px-6 md:px-12">
         <div className="max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--font-display)" }}>
-              Real del Monte en <span className="text-[hsl(var(--rdm-amber))]">números</span>
+              Real del Monte en <span className="text-[hsl(var(--rdm-amber))]">nÃºmeros</span>
             </h2>
           </motion.div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { value: FICHA_TECNICA.altitud, label: "Altitud" },
               { value: FICHA_TECNICA.temperatura, label: "Temperatura media" },
-              { value: FICHA_TECNICA.fundacion, label: "Fundación" },
-              { value: FICHA_TECNICA.designacion, label: "Pueblo Mágico" },
+              { value: FICHA_TECNICA.fundacion, label: "FundaciÃ³n" },
+              { value: FICHA_TECNICA.designacion, label: "Pueblo MÃ¡gico" },
             ].map((stat, i) => (
               <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="rdm-glass rounded-xl p-5 text-center">
                 <p className="text-2xl font-bold text-[hsl(var(--rdm-amber))]" style={{ fontFamily: "var(--font-display)" }}>{stat.value}</p>
@@ -398,10 +402,10 @@ const Index = () => {
         <div className="max-w-5xl mx-auto text-center">
           <Store className="w-8 h-8 mx-auto text-[hsl(var(--rdm-amber))] mb-4" />
           <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
-            ¿Tienes un negocio en Real del Monte?
+            Â¿Tienes un negocio en Real del Monte?
           </h2>
           <p className="text-[hsl(var(--muted-foreground))] max-w-md mx-auto mb-6" style={{ fontFamily: "var(--font-body)" }}>
-            Registra tu comercio, hotel, restaurante o servicio turístico y aparece en el mapa y directorio digital de RDM.
+            Registra tu comercio, hotel, restaurante o servicio turÃ­stico y aparece en el mapa y directorio digital de RDM.
           </p>
           <Link to="/registro-comercio" className="inline-flex items-center gap-3 bg-[hsl(var(--rdm-amber))] text-white px-8 py-4 rounded-full font-semibold text-sm hover:scale-105 transition-transform" style={{ fontFamily: "var(--font-body)" }}>
             <Store className="w-4 h-4" /> Registrar mi negocio
@@ -414,10 +418,10 @@ const Index = () => {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <Star className="w-8 h-8 mx-auto text-[hsl(var(--rdm-amber))] mb-4" />
           <h2 className="text-4xl md:text-6xl font-bold mb-6" style={{ fontFamily: "var(--font-display)" }}>
-            Tu aventura <span className="text-[hsl(var(--rdm-amber))]">comienza aquí</span>
+            Tu aventura <span className="text-[hsl(var(--rdm-amber))]">comienza aquÃ­</span>
           </h2>
           <p className="text-[hsl(var(--muted-foreground))] max-w-md mx-auto mb-8" style={{ fontFamily: "var(--font-body)" }}>
-            Real del Monte te espera con 500 años de historia, sabores únicos y la magia de la Sierra de Pachuca.
+            Real del Monte te espera con 500 aÃ±os de historia, sabores Ãºnicos y la magia de la Sierra de Pachuca.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/mapa" className="inline-flex items-center gap-3 bg-[hsl(var(--rdm-amber))] text-white px-10 py-4 rounded-full font-semibold text-sm hover:scale-105 transition-transform" style={{ fontFamily: "var(--font-body)" }}>

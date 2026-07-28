@@ -1,7 +1,11 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * GamificationHUD — Compact player progress widget
+ * GamificationHUD â€” Compact player progress widget
  * Shows in the navbar/layout for logged-in users.
- * Falls back to "Únete" CTA when not authenticated.
+ * Falls back to "Ãšnete" CTA when not authenticated.
  */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,7 +19,7 @@ const RANK_CONFIG: Record<string, { label: string; color: string; icon: typeof T
   explorer:          { label: "Explorador",       color: "hsl(152 60% 45%)", icon: Star },
   chronicler:        { label: "Cronista",          color: "hsl(210 80% 55%)", icon: Shield },
   legendary_miner:   { label: "Minero Legendario", color: "hsl(43 80% 55%)",  icon: Flame },
-  guardian_of_the_town: { label: "Guardián",       color: "hsl(270 60% 60%)", icon: Crown },
+  guardian_of_the_town: { label: "GuardiÃ¡n",       color: "hsl(270 60% 60%)", icon: Crown },
 };
 
 function getRank(player: GamificationPlayer): keyof typeof RANK_CONFIG {
@@ -126,7 +130,7 @@ export function GamificationHUD({ compact = false }: GamificationHUDProps) {
             {/* XP tracks */}
             <div className="p-4 border-b border-white/5">
               <p className="text-xs text-white/50 uppercase tracking-widest mb-3" style={{ fontFamily: "var(--font-body)" }}>
-                XP por categoría
+                XP por categorÃ­a
               </p>
               {[
                 { label: "Cultura", xp: player.xp_cultura, icon: Star, color: "hsl(43 80% 55%)" },

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import app from "./app";
 import { logger } from "./lib/logger";
 import { closeDb } from "./lib/db-client";
@@ -8,7 +12,7 @@ const server = app.listen(PORT, "0.0.0.0", () => {
   logger.info({ port: PORT }, "RDM Heptafederation API Gateway listening");
 });
 
-// ── Graceful Shutdown (PennyLane pattern: SIGTERM/SIGINT handling) ──
+// â”€â”€ Graceful Shutdown (PennyLane pattern: SIGTERM/SIGINT handling) â”€â”€
 
 let isShuttingDown = false;
 
@@ -43,10 +47,10 @@ async function gracefulShutdown(signal: string) {
 process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
 process.on("SIGINT", () => gracefulShutdown("SIGINT"));
 
-// ── Unhandled Errors (PennyLane pattern: never crash silently) ──
+// â”€â”€ Unhandled Errors (PennyLane pattern: never crash silently) â”€â”€
 
 process.on("uncaughtException", (err) => {
-  logger.fatal({ err }, "Uncaught exception — shutting down.");
+  logger.fatal({ err }, "Uncaught exception â€” shutting down.");
   process.exit(1);
 });
 

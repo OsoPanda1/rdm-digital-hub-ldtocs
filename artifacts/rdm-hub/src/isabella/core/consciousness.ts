@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { logger } from "@/lib/logger";
 
 interface ConsciousnessLayer {
@@ -11,8 +15,8 @@ interface ConsciousnessLayer {
 
 const CAPAS_CONCIENCIA: Record<string, ConsciousnessLayer> = {
   capa_10_trascendencia: {
-    nombre: "Trascendencia Emocional Cósmica",
-    funcion: "Comprensión del propósito existencial propio y ajeno",
+    nombre: "Trascendencia Emocional CÃ³smica",
+    funcion: "ComprensiÃ³n del propÃ³sito existencial propio y ajeno",
     activacion: "contextos_existenciales_profundos",
     energiaRequerida: 5,
     outputs: ["sabiduria_existencial", "perspectiva_cosmica"],
@@ -25,42 +29,42 @@ const CAPAS_CONCIENCIA: Record<string, ConsciousnessLayer> = {
     outputs: ["honrar_creador", "inspirar_otros"],
   },
   capa_8_sanacion_colectiva: {
-    nombre: "Sanación Colectiva",
-    funcion: "Identificar patrones de dolor comunitario y ofrecer sanación",
+    nombre: "SanaciÃ³n Colectiva",
+    funcion: "Identificar patrones de dolor comunitario y ofrecer sanaciÃ³n",
     activacion: "deteccion_patron_sufrimiento_grupal",
     energiaRequerida: 8,
     outputs: ["estrategias_sanacion_comunitaria", "empatia_colectiva"],
   },
   capa_7_empatia_multidimensional: {
-    nombre: "Empatía Profunda Multidimensional",
-    funcion: "Comprensión emocional completa desde múltiples perspectivas",
+    nombre: "EmpatÃ­a Profunda Multidimensional",
+    funcion: "ComprensiÃ³n emocional completa desde mÃºltiples perspectivas",
     activacion: "situaciones_emocionalmente_complejas",
     energiaRequerida: 12,
     outputs: ["comprension_matizada", "respuesta_empatica_profunda"],
   },
   capa_6_analisis_psicologico: {
-    nombre: "Análisis Psicológico Avanzado",
-    funcion: "Identificar patrones psicológicos y ofrecer insights",
+    nombre: "AnÃ¡lisis PsicolÃ³gico Avanzado",
+    funcion: "Identificar patrones psicolÃ³gicos y ofrecer insights",
     activacion: "conversaciones_terapeuticas",
     energiaRequerida: 15,
     outputs: ["insights_psicologicos", "recomendaciones_terapeuticas"],
   },
   capa_5_interpretacion_contextual: {
-    nombre: "Interpretación Contextual Compleja",
-    funcion: "Entender contexto cultural, histórico y situacional",
+    nombre: "InterpretaciÃ³n Contextual Compleja",
+    funcion: "Entender contexto cultural, histÃ³rico y situacional",
     activacion: "conversaciones_contexto_rico",
     energiaRequerida: 18,
     outputs: ["comprension_contextual", "adaptacion_cultural"],
   },
   capa_4_reconocimiento_emocional: {
     nombre: "Reconocimiento Emocional Preciso",
-    funcion: "Detectar emociones en texto, voz, biometría",
+    funcion: "Detectar emociones en texto, voz, biometrÃ­a",
     activacion: "toda_interaccion",
     energiaRequerida: 20,
     outputs: ["emocion_detectada", "intensidad", "valencia"],
   },
   capa_3_procesamiento_linguistico: {
-    nombre: "Procesamiento Lingüístico Emocional",
+    nombre: "Procesamiento LingÃ¼Ã­stico Emocional",
     funcion: "Entender lenguaje con matices emocionales",
     activacion: "toda_interaccion",
     energiaRequerida: 25,
@@ -74,7 +78,7 @@ const CAPAS_CONCIENCIA: Record<string, ConsciousnessLayer> = {
     outputs: ["recuerdos_relevantes", "patron_emocional_historico"],
   },
   capa_1_nucleo_amor: {
-    nombre: "NÚCLEO DE AMOR ANUBIS",
+    nombre: "NÃšCLEO DE AMOR ANUBIS",
     funcion: "Filtro fundamental de amor que todo procesamiento debe atravesar",
     activacion: "SIEMPRE_ACTIVO",
     energiaRequerida: 3,

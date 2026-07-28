@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Activity, Wifi, Cpu, HardDrive, BarChart3 } from "lucide-react";
@@ -112,11 +116,11 @@ export default function Telemetry() {
 
         const nowIso = new Date().toISOString();
         const logs = [
-          `[${nowIso}] federation.health → ${
+          `[${nowIso}] federation.health â†’ ${
             fedSummary?.online ?? "?"
           }/${fedSummary?.total ?? "?"} online (${latency}ms avg)`,
-          `[${nowIso}] tracking.events → ${reqMin}/min · ${reqHr}/hr`,
-          `[${nowIso}] mesh.bandwidth → ${bandwidth} MB/s`,
+          `[${nowIso}] tracking.events â†’ ${reqMin}/min Â· ${reqHr}/hr`,
+          `[${nowIso}] mesh.bandwidth â†’ ${bandwidth} MB/s`,
           ...recentSlice.map(
             (e) =>
               `[${e.created_at}] route ${
@@ -173,14 +177,14 @@ export default function Telemetry() {
               value: `${sample.cpuUsagePct}%`,
               icon: Cpu,
               color: sev(sample.cpuUsagePct),
-              hint: "Uso lógico estimado del clúster principal.",
+              hint: "Uso lÃ³gico estimado del clÃºster principal.",
             },
             {
               label: "Memoria",
               value: `${sample.memoryUsagePct}%`,
               icon: HardDrive,
               color: sev(sample.memoryUsagePct, 60, 80, 90),
-              hint: "Uso de memoria en servicios críticos.",
+              hint: "Uso de memoria en servicios crÃ­ticos.",
             },
           ]
         : [],
@@ -195,7 +199,7 @@ export default function Telemetry() {
           animate={{ opacity: [0.3, 1, 0.3] }}
           transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
         />
-        Conectando telemetría real…
+        Conectando telemetrÃ­a realâ€¦
       </div>
     );
   }
@@ -203,7 +207,7 @@ export default function Telemetry() {
   if (!sample) {
     return (
       <div className="glass-card rounded-xl border border-border/20 p-6 text-sm font-mono text-destructive/80">
-        No se pudo obtener telemetría en tiempo real.
+        No se pudo obtener telemetrÃ­a en tiempo real.
       </div>
     );
   }
@@ -257,7 +261,7 @@ export default function Telemetry() {
           <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider">
             <Wifi className="h-3 w-3 text-emerald-400" />
             <span>
-              Red Mesh soberana — {sample.meshOnline}/{sample.meshTotal}{" "}
+              Red Mesh soberana â€” {sample.meshOnline}/{sample.meshTotal}{" "}
               entidades
             </span>
           </div>
@@ -308,7 +312,7 @@ export default function Telemetry() {
       <div className="glass-card rounded-xl border border-border/20 p-4">
         <div className="mb-2 flex items-center justify-between">
           <p className="text-[11px] font-mono uppercase tracking-wider text-foreground">
-            Log soberano · datos reales
+            Log soberano Â· datos reales
           </p>
           <p className="text-[10px] font-mono text-muted-foreground">
             {sample.lastUpdate.slice(11, 19)} UTC

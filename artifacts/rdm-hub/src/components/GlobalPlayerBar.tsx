@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion, AnimatePresence } from "framer-motion"
 import { useAudioPlayer } from "@/contexts/AudioPlayerContext"
 import {
@@ -54,7 +58,7 @@ export default function GlobalPlayerBar() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-white truncate">{currentTrack.title}</p>
-                  <p className="text-[11px] text-white/60 truncate">{currentTrack.artist} · {formatDuration(currentTime)} / {formatDuration(currentTrack.duration)}</p>
+                  <p className="text-[11px] text-white/60 truncate">{currentTrack.artist} Â· {formatDuration(currentTime)} / {formatDuration(currentTrack.duration)}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">

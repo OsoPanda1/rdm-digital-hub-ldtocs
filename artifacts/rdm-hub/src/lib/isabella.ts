@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * RDM Digital - Fachada Isabella GEN-7+
  * API unificada para interactuar con el sistema de inteligencia territorial

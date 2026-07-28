@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * TAMVTrixField – Campo cuántico vivo de TAMV ONLINE
- * Fondo inmersivo 3D: solo alfabeto TAMVONLINE, profundidad, respiración y hero central.
+ * TAMVTrixField â€“ Campo cuÃ¡ntico vivo de TAMV ONLINE
+ * Fondo inmersivo 3D: solo alfabeto TAMVONLINE, profundidad, respiraciÃ³n y hero central.
  */
 
 import React, { useEffect, useRef, useState } from "react";
@@ -33,7 +37,7 @@ const WORDS = ["TAMV", "ONLINE", "TAMVONLINE", "GENESIS", "DIGYTAMV", "NETWORK"]
 
 const TAMVTrixField: React.FC<TAMVTrixFieldProps> = ({
   title = "TAMV ONLINE",
-  subtitle = "SOCIEDAD CUÁNTICA AUTÓNOMA",
+  subtitle = "SOCIEDAD CUÃNTICA AUTÃ“NOMA",
   showHero = true,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -106,7 +110,7 @@ const TAMVTrixField: React.FC<TAMVTrixFieldProps> = ({
         const x = baseX + col.drift * 28 * z;
         const y = col.y;
 
-        // centro más denso / rápido, bordes más ligeros
+        // centro mÃ¡s denso / rÃ¡pido, bordes mÃ¡s ligeros
         const distToCenter = Math.abs(x - centerX) / centerX;
         const densityBoost = 0.4 + (1 - Math.min(distToCenter, 1)) * 0.8;
         const velocityBase = 0.9 * (0.3 + 0.9 * z);
@@ -233,7 +237,7 @@ const TAMVTrixField: React.FC<TAMVTrixFieldProps> = ({
           }}
         />
 
-        {/* Órbitas suaves */}
+        {/* Ã“rbitas suaves */}
         <div
           className="absolute inset-0"
           style={{ transform: "translateZ(-140px) scale(1.2)" }}
@@ -248,7 +252,7 @@ const TAMVTrixField: React.FC<TAMVTrixFieldProps> = ({
           <div className="absolute inset-[30%] rounded-full border border-slate-500/12" />
         </div>
 
-        {/* Partículas TAMV */}
+        {/* PartÃ­culas TAMV */}
         <div
           className="absolute inset-0"
           style={{ transform: "translateZ(-100px)" }}
@@ -350,14 +354,14 @@ const TAMVTrixField: React.FC<TAMVTrixFieldProps> = ({
                 transition={{ delay: 2.2 }}
                 className="mt-5 text-[10px] md:text-xs lg:text-sm tracking-[0.38em] text-slate-300 uppercase"
               >
-                CAMPO MATRIZIAL VIVO · IDENTIDAD TOTAL TAMV
+                CAMPO MATRIZIAL VIVO Â· IDENTIDAD TOTAL TAMV
               </motion.p>
             </motion.div>
           )}
         </AnimatePresence>
       )}
 
-      {/* Viñeta + scanlines */}
+      {/* ViÃ±eta + scanlines */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{

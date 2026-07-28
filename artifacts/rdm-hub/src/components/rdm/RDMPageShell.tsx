@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
 import { RDMLayout } from "./RDMLayout";
@@ -30,7 +34,7 @@ export function RDMPageShell({ eyebrow, title, description, bullets = [], childr
             <motion.div key={bullet} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 + index * 0.08, duration: 0.5 }}>
               <Card className="rdm-glass h-full border-0">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm tracking-[0.14em] uppercase text-[hsl(215_13%_42%)]" style={{ fontFamily: "var(--font-body)" }}>Módulo {index + 1}</CardTitle>
+                  <CardTitle className="text-sm tracking-[0.14em] uppercase text-[hsl(215_13%_42%)]" style={{ fontFamily: "var(--font-body)" }}>MÃ³dulo {index + 1}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-[hsl(215_13%_42%)] leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>{bullet}</p>

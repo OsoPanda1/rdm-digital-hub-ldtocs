@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -45,7 +49,7 @@ export default function TelemetryDashboard() {
       if (metricsRes.data?.kpis) setKpis(metricsRes.data.kpis);
       setAlerts(alertsRes.count ?? 0);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Error de conexión");
+      setError(e instanceof Error ? e.message : "Error de conexiÃ³n");
     } finally {
       setLoading(false);
     }
@@ -63,7 +67,7 @@ export default function TelemetryDashboard() {
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-3">
               <Radio className="h-8 w-8 text-gold" />
-              Telemetría del Nodo Cero
+              TelemetrÃ­a del Nodo Cero
             </h1>
             <p className="text-muted-foreground mt-1">Monitoreo en tiempo real de las 7 federaciones TAMV</p>
           </div>
@@ -153,7 +157,7 @@ export default function TelemetryDashboard() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-base">
                   <TrendingUp className="h-4 w-4 text-electric" />
-                  KPIs — Últimas 24h
+                  KPIs â€” Ãšltimas 24h
                 </CardTitle>
               </CardHeader>
               <CardContent>

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 export type FederationKey =
   | "MDD_TAMV"
   | "BOOKPI"
@@ -19,57 +23,57 @@ export interface FederationLayer {
 export const HEPTA_LAYERS: FederationLayer[] = [
   {
     key: "ANUBIS",
-    glyph: "𓃣",
+    glyph: "ð“ƒ£",
     name: "Anubis",
-    domain: "Doctrina · Kernel ontológico",
-    mantra: "Pesa el corazón del código contra la pluma de la verdad.",
+    domain: "Doctrina Â· Kernel ontolÃ³gico",
+    mantra: "Pesa el corazÃ³n del cÃ³digo contra la pluma de la verdad.",
     color: "oklch(0.38 0.05 270)",
   },
   {
     key: "MDD_TAMV",
-    glyph: "◈",
+    glyph: "â—ˆ",
     name: "MDD-TAMV",
-    domain: "Territorio · Gemelo digital",
+    domain: "Territorio Â· Gemelo digital",
     mantra: "Cada calle es un verso del sistema.",
     color: "oklch(0.55 0.13 220)",
   },
   {
     key: "BOOKPI",
-    glyph: "✦",
+    glyph: "âœ¦",
     name: "BookPi",
-    domain: "Conocimiento · Tomos & corpus",
+    domain: "Conocimiento Â· Tomos & corpus",
     mantra: "La biblioteca escribe a quien la lee.",
     color: "oklch(0.6 0.14 80)",
   },
   {
     key: "PHOENIX",
-    glyph: "𓅓",
+    glyph: "ð“…“",
     name: "Phoenix",
-    domain: "Comercio · Ciclo de renacimiento",
-    mantra: "Toda transacción es una ceniza fértil.",
+    domain: "Comercio Â· Ciclo de renacimiento",
+    mantra: "Toda transacciÃ³n es una ceniza fÃ©rtil.",
     color: "oklch(0.62 0.18 30)",
   },
   {
     key: "KAOS",
-    glyph: "Ϟ",
+    glyph: "Ïž",
     name: "Kaos",
-    domain: "Caos creador · Investigación soberana",
-    mantra: "Del desorden, una topografía nueva.",
+    domain: "Caos creador Â· InvestigaciÃ³n soberana",
+    mantra: "Del desorden, una topografÃ­a nueva.",
     color: "oklch(0.5 0.16 330)",
   },
   {
     key: "CHRONOS",
-    glyph: "◷",
+    glyph: "â—·",
     name: "Chronos",
-    domain: "Tiempo · Timeline civilizatorio",
-    mantra: "La memoria es la única materia que no se pierde.",
+    domain: "Tiempo Â· Timeline civilizatorio",
+    mantra: "La memoria es la Ãºnica materia que no se pierde.",
     color: "oklch(0.55 0.1 180)",
   },
   {
     key: "DEKATEOTL",
-    glyph: "✺",
+    glyph: "âœº",
     name: "Dekateotl",
-    domain: "Decimación divina · IPFS & pagos",
+    domain: "DecimaciÃ³n divina Â· IPFS & pagos",
     mantra: "Diez partes del trabajo regresan a la tierra.",
     color: "oklch(0.58 0.15 130)",
   },
@@ -83,9 +87,9 @@ export const FEDERATION_COLORS: Record<string, string> = Object.fromEntries(
 );
 
 export const SECURITY_PROTOCOLS: Record<string, { name: string; description: string; color: string }> = {
-  FENIX_REX: { name: "Phoenix Rex", description: "Recuperación de datos", color: "oklch(0.62 0.18 30)" },
-  INICIACION: { name: "Iniciación", description: "Primer nivel de seguridad", color: "oklch(0.55 0.13 220)" },
-  HOYO_NEGRO: { name: "Hoyo Negro", description: "Protección avanzada", color: "oklch(0.5 0.16 330)" },
+  FENIX_REX: { name: "Phoenix Rex", description: "RecuperaciÃ³n de datos", color: "oklch(0.62 0.18 30)" },
+  INICIACION: { name: "IniciaciÃ³n", description: "Primer nivel de seguridad", color: "oklch(0.55 0.13 220)" },
+  HOYO_NEGRO: { name: "Hoyo Negro", description: "ProtecciÃ³n avanzada", color: "oklch(0.5 0.16 330)" },
 };
 
 export const ISABELLA_CORE_IDENTITY = {

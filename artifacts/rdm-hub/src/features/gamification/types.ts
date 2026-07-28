@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * Gamification LTOS Engine — Core Types
+ * Gamification LTOS Engine â€” Core Types
  * Real del Monte Digital Hub
  *
  * Federated gamification system integrated with LTOS.

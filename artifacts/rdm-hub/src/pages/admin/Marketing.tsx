@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * Panel de Marketing Digital — RDM Digital Hub
- * Herramienta interna para gestión de campañas, banners y analíticas
+ * Panel de Marketing Digital â€” RDM Digital Hub
+ * Herramienta interna para gestiÃ³n de campaÃ±as, banners y analÃ­ticas
  * de comercios registrados en la plataforma.
  */
 import { useState } from "react";
@@ -21,44 +25,44 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 
-// ─── Mock Data ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Mock Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const MOCK_BUSINESSES = [
   { id: "1", name: "Restaurante El Minero", category: "GASTRONOMIA", tier: "premium", active: true, views: 1240, clicks: 87, conversions: 12 },
-  { id: "2", name: "Platería Reyes",        category: "PLATERIA",     tier: "advance", active: true, views: 890,  clicks: 62, conversions: 8  },
-  { id: "3", name: "Hostal de la Montaña", category: "HOSPEDAJE",    tier: "premium", active: true, views: 2100, clicks: 134, conversions: 21 },
-  { id: "4", name: "Café del Pueblo",       category: "GASTRONOMIA", tier: "free",    active: true, views: 430,  clicks: 28, conversions: 3  },
+  { id: "2", name: "PlaterÃ­a Reyes",        category: "PLATERIA",     tier: "advance", active: true, views: 890,  clicks: 62, conversions: 8  },
+  { id: "3", name: "Hostal de la MontaÃ±a", category: "HOSPEDAJE",    tier: "premium", active: true, views: 2100, clicks: 134, conversions: 21 },
+  { id: "4", name: "CafÃ© del Pueblo",       category: "GASTRONOMIA", tier: "free",    active: true, views: 430,  clicks: 28, conversions: 3  },
   { id: "5", name: "Tours Real del Monte",  category: "TURISMO",     tier: "advance", active: false, views: 670, clicks: 41, conversions: 6  },
 ];
 
 const MOCK_CAMPAIGNS = [
   {
     id: "c1", business_id: "1", business: "Restaurante El Minero",
-    title: "Menú del Día — Pastes Auténticos",
+    title: "MenÃº del DÃ­a â€” Pastes AutÃ©nticos",
     status: "active", impressions: 4820, clicks: 312, ctr: 6.5,
     start: "2026-07-01", end: "2026-07-31", budget: 500,
   },
   {
-    id: "c2", business_id: "3", business: "Hostal de la Montaña",
-    title: "Fin de semana en la sierra — 20% off",
+    id: "c2", business_id: "3", business: "Hostal de la MontaÃ±a",
+    title: "Fin de semana en la sierra â€” 20% off",
     status: "active", impressions: 3100, clicks: 198, ctr: 6.4,
     start: "2026-07-15", end: "2026-08-15", budget: 800,
   },
   {
-    id: "c3", business_id: "2", business: "Platería Reyes",
-    title: "Colección verano 2026 — Plata Real del Monte",
+    id: "c3", business_id: "2", business: "PlaterÃ­a Reyes",
+    title: "ColecciÃ³n verano 2026 â€” Plata Real del Monte",
     status: "draft", impressions: 0, clicks: 0, ctr: 0,
     start: "2026-08-01", end: "2026-08-31", budget: 400,
   },
 ];
 
 const MOCK_BANNERS = [
-  { id: "b1", campaign_id: "c1", business: "Restaurante El Minero", tagline: "El sabor auténtico del pueblo mágico", cta: "Ver menú", active: true, slot: 1 },
-  { id: "b2", campaign_id: "c2", business: "Hostal de la Montaña",  tagline: "Duerme en la sierra con todo incluido",  cta: "Reservar",  active: true, slot: 2 },
-  { id: "b3", campaign_id: "c3", business: "Platería Reyes",         tagline: "Joyería artesanal — Plata de Real",      cta: "Ver colección", active: false, slot: null },
+  { id: "b1", campaign_id: "c1", business: "Restaurante El Minero", tagline: "El sabor autÃ©ntico del pueblo mÃ¡gico", cta: "Ver menÃº", active: true, slot: 1 },
+  { id: "b2", campaign_id: "c2", business: "Hostal de la MontaÃ±a",  tagline: "Duerme en la sierra con todo incluido",  cta: "Reservar",  active: true, slot: 2 },
+  { id: "b3", campaign_id: "c3", business: "PlaterÃ­a Reyes",         tagline: "JoyerÃ­a artesanal â€” Plata de Real",      cta: "Ver colecciÃ³n", active: false, slot: null },
 ];
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
+// â”€â”€â”€ Sub-components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function StatCard({ icon: Icon, label, value, trend, color }: {
   icon: typeof BarChart3; label: string; value: string | number; trend?: string; color: string;
@@ -98,7 +102,7 @@ function CampaignRow({ campaign }: { campaign: typeof MOCK_CAMPAIGNS[0] }) {
           {campaign.title}
         </p>
         <p className="text-xs text-white/40 mt-0.5" style={{ fontFamily: "var(--font-body)" }}>
-          {campaign.business} · {campaign.start} → {campaign.end}
+          {campaign.business} Â· {campaign.start} â†’ {campaign.end}
         </p>
       </div>
       <div className="flex items-center gap-6 text-center">
@@ -128,7 +132,7 @@ function CampaignRow({ campaign }: { campaign: typeof MOCK_CAMPAIGNS[0] }) {
   );
 }
 
-// ─── Main Component ───────────────────────────────────────────────────────────
+// â”€â”€â”€ Main Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export default function MarketingPanel() {
   const { toast } = useToast();
@@ -141,7 +145,7 @@ export default function MarketingPanel() {
   const avgCtr = totalClicks > 0 && totalImpressions > 0 ? ((totalClicks / totalImpressions) * 100).toFixed(1) : "0.0";
 
   const handleCreateCampaign = () => {
-    toast({ title: "Campaña creada (modo demo)", description: "Con Supabase activo, se guardaría en la base de datos." });
+    toast({ title: "CampaÃ±a creada (modo demo)", description: "Con Supabase activo, se guardarÃ­a en la base de datos." });
     setNewCampaign({ title: "", business: "", budget: "", start: "", end: "", tagline: "", cta: "" });
   };
 
@@ -160,7 +164,7 @@ export default function MarketingPanel() {
               Marketing <span className="text-[hsl(var(--rdm-amber))]">RDM Hub</span>
             </h1>
             <p className="text-white/50 text-sm" style={{ fontFamily: "var(--font-body)" }}>
-              Gestión de campañas publicitarias, banners y analíticas de comercios registrados.
+              GestiÃ³n de campaÃ±as publicitarias, banners y analÃ­ticas de comercios registrados.
             </p>
           </motion.div>
 
@@ -171,7 +175,7 @@ export default function MarketingPanel() {
                 <BarChart3 className="w-4 h-4 mr-2" /> Resumen
               </TabsTrigger>
               <TabsTrigger value="campaigns" className="data-[state=active]:bg-[hsl(var(--rdm-amber))] data-[state=active]:text-black">
-                <Target className="w-4 h-4 mr-2" /> Campañas
+                <Target className="w-4 h-4 mr-2" /> CampaÃ±as
               </TabsTrigger>
               <TabsTrigger value="banners" className="data-[state=active]:bg-[hsl(var(--rdm-amber))] data-[state=active]:text-black">
                 <Image className="w-4 h-4 mr-2" /> Banners
@@ -180,7 +184,7 @@ export default function MarketingPanel() {
                 <Store className="w-4 h-4 mr-2" /> Comercios
               </TabsTrigger>
               <TabsTrigger value="new" className="data-[state=active]:bg-[hsl(var(--rdm-amber))] data-[state=active]:text-black">
-                <Plus className="w-4 h-4 mr-2" /> Nueva Campaña
+                <Plus className="w-4 h-4 mr-2" /> Nueva CampaÃ±a
               </TabsTrigger>
             </TabsList>
 
@@ -190,12 +194,12 @@ export default function MarketingPanel() {
                 <StatCard icon={Eye} label="Impresiones totales" value={totalImpressions.toLocaleString()} trend="+18%" color="hsl(var(--rdm-amber))" />
                 <StatCard icon={MousePointer} label="Clics totales" value={totalClicks.toLocaleString()} trend="+12%" color="hsl(152 60% 45%)" />
                 <StatCard icon={TrendingUp} label="CTR promedio" value={`${avgCtr}%`} trend="+0.8pp" color="hsl(210 80% 55%)" />
-                <StatCard icon={Zap} label="Campañas activas" value={activeCampaigns} color="hsl(270 60% 60%)" />
+                <StatCard icon={Zap} label="CampaÃ±as activas" value={activeCampaigns} color="hsl(270 60% 60%)" />
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-white/2 p-6">
                 <h3 className="font-semibold text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>
-                  Campañas en curso
+                  CampaÃ±as en curso
                 </h3>
                 <div className="space-y-3">
                   {MOCK_CAMPAIGNS.filter((c) => c.status === "active").map((c) => (
@@ -219,7 +223,7 @@ export default function MarketingPanel() {
               <div className="mb-4 p-4 rounded-xl border border-amber-500/20 bg-amber-500/5 text-amber-300 text-sm flex items-center gap-2">
                 <Clock className="w-4 h-4 shrink-0" />
                 <span style={{ fontFamily: "var(--font-body)" }}>
-                  Los banners rotan automáticamente cada 30 minutos. Se muestran 2 simultáneamente en la plataforma.
+                  Los banners rotan automÃ¡ticamente cada 30 minutos. Se muestran 2 simultÃ¡neamente en la plataforma.
                 </span>
               </div>
               <div className="grid md:grid-cols-2 gap-4">
@@ -273,7 +277,7 @@ export default function MarketingPanel() {
                         {b.name}
                       </p>
                       <p className="text-xs text-white/40 mt-0.5" style={{ fontFamily: "var(--font-body)" }}>
-                        {b.category} · {b.tier}
+                        {b.category} Â· {b.tier}
                       </p>
                     </div>
                     <div className="flex items-center gap-6 text-center">
@@ -302,7 +306,7 @@ export default function MarketingPanel() {
             <TabsContent value="new">
               <div className="max-w-2xl rounded-2xl border border-white/10 bg-white/2 p-6">
                 <h3 className="font-semibold text-white mb-6 text-lg" style={{ fontFamily: "var(--font-display)" }}>
-                  Crear nueva campaña publicitaria
+                  Crear nueva campaÃ±a publicitaria
                 </h3>
                 <div className="space-y-4">
                   <div>
@@ -321,11 +325,11 @@ export default function MarketingPanel() {
                     </Select>
                   </div>
                   <div>
-                    <label className="text-xs text-white/50 uppercase tracking-wider mb-1.5 block">Título de campaña</label>
+                    <label className="text-xs text-white/50 uppercase tracking-wider mb-1.5 block">TÃ­tulo de campaÃ±a</label>
                     <Input
                       value={newCampaign.title}
                       onChange={(e) => setNewCampaign((p) => ({ ...p, title: e.target.value }))}
-                      placeholder="ej. Menú del Día — Julio 2026"
+                      placeholder="ej. MenÃº del DÃ­a â€” Julio 2026"
                       className="bg-white/5 border-white/10 text-white placeholder:text-white/20"
                     />
                   </div>
@@ -334,7 +338,7 @@ export default function MarketingPanel() {
                     <Input
                       value={newCampaign.tagline}
                       onChange={(e) => setNewCampaign((p) => ({ ...p, tagline: e.target.value }))}
-                      placeholder="ej. El sabor auténtico del pueblo mágico"
+                      placeholder="ej. El sabor autÃ©ntico del pueblo mÃ¡gico"
                       className="bg-white/5 border-white/10 text-white placeholder:text-white/20"
                     />
                   </div>
@@ -358,7 +362,7 @@ export default function MarketingPanel() {
                     disabled={!newCampaign.title || !newCampaign.business}
                   >
                     <Plus className="w-4 h-4 mr-2" />
-                    Crear Campaña
+                    Crear CampaÃ±a
                   </Button>
                 </div>
               </div>

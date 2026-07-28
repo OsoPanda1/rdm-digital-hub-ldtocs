@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -25,7 +29,7 @@ export default function HealthSparkline({ color = "#D4AF37" }: Props) {
   }, []);
 
   if (points.length < 2) {
-    return <div className="h-12 flex items-center text-[10px] font-mono text-muted-foreground/60">acumulando lecturas…</div>;
+    return <div className="h-12 flex items-center text-[10px] font-mono text-muted-foreground/60">acumulando lecturasâ€¦</div>;
   }
   const w = 200, h = 48, pad = 4;
   const max = 1, min = 0;

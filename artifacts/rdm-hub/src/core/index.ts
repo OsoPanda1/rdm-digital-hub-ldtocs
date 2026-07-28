@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * RDM Digital - Core GEN-7+ Index
  * Exportaciones centralizadas del nucleo de inteligencia territorial

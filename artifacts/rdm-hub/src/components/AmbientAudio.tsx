@@ -1,10 +1,14 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 
 /**
- * AmbientAudio — control de sonido ambiental inmersivo.
- * Arranca silenciado (las políticas de autoplay de los navegadores lo exigen)
+ * AmbientAudio â€” control de sonido ambiental inmersivo.
+ * Arranca silenciado (las polÃ­ticas de autoplay de los navegadores lo exigen)
  * y respeta prefers-reduced-motion / la preferencia guardada del visitante.
  */
 const AmbientAudio = () => {

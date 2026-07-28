@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * RDM Digital - Core Models GEN-7+
  * Sistema de Inteligencia Territorial en Tiempo Real
@@ -130,11 +134,11 @@ export interface ExitPoint {
 }
 
 // ============================================================================
-// SISTEMA HEPTAFEDERADO — YUN Canonical (Fed1–Fed7)
+// SISTEMA HEPTAFEDERADO â€” YUN Canonical (Fed1â€“Fed7)
 // ============================================================================
 
 /**
- * YUN Canonical Federation IDs (Fed1–Fed7)
+ * YUN Canonical Federation IDs (Fed1â€“Fed7)
  * This is the authoritative federation model per ADR-004.
  * TAMV GEN-7 names are maintained as legacy aliases for backwards compatibility.
  */
@@ -179,18 +183,18 @@ export const FEDERATION_DOMAIN: Record<FederationId, string> = {
  * Human-readable names for each federation
  */
 export const FEDERATION_NAMES: Record<FederationId, string> = {
-  fed1_commerce_local: 'Federación de Comercio Local (Fed1)',
-  fed2_tourism_culture: 'Federación de Turismo y Cultura (Fed2)',
-  fed3_academia_science: 'Federación de Academia y Ciencia (Fed3)',
-  fed4_local_government: 'Federación de Gobierno Local (Fed4)',
-  fed5_tech_infra: 'Federación de Tecnología e Infraestructura (Fed5)',
-  fed6_community_orgs: 'Federación de Comunidad y Organizaciones (Fed6)',
-  fed7_metaverse_xr: 'Federación de Metaverso y XR (Fed7)',
+  fed1_commerce_local: 'FederaciÃ³n de Comercio Local (Fed1)',
+  fed2_tourism_culture: 'FederaciÃ³n de Turismo y Cultura (Fed2)',
+  fed3_academia_science: 'FederaciÃ³n de Academia y Ciencia (Fed3)',
+  fed4_local_government: 'FederaciÃ³n de Gobierno Local (Fed4)',
+  fed5_tech_infra: 'FederaciÃ³n de TecnologÃ­a e Infraestructura (Fed5)',
+  fed6_community_orgs: 'FederaciÃ³n de Comunidad y Organizaciones (Fed6)',
+  fed7_metaverse_xr: 'FederaciÃ³n de Metaverso y XR (Fed7)',
 };
 
 /**
  * TAMV GEN-7 Legacy Federation IDs (backwards compatibility)
- * @deprecated Use FederationId (Fed1–Fed7) instead
+ * @deprecated Use FederationId (Fed1â€“Fed7) instead
  */
 export type TamvFederationId =
   | 'DEKATEOTL'
@@ -202,7 +206,7 @@ export type TamvFederationId =
   | 'CHRONOS';
 
 /**
- * Maps TAMV GEN-7 legacy IDs to YUN canonical Fed1–Fed7
+ * Maps TAMV GEN-7 legacy IDs to YUN canonical Fed1â€“Fed7
  */
 export const TAMV_TO_YUN_FEDERATION: Record<TamvFederationId, FederationId> = {
   DEKATEOTL: 'fed1_commerce_local',
@@ -215,7 +219,7 @@ export const TAMV_TO_YUN_FEDERATION: Record<TamvFederationId, FederationId> = {
 };
 
 /**
- * Maps YUN canonical Fed1–Fed7 to TAMV GEN-7 legacy IDs
+ * Maps YUN canonical Fed1â€“Fed7 to TAMV GEN-7 legacy IDs
  */
 export const YUN_TO_TAMV_FEDERATION: Record<FederationId, TamvFederationId> = {
   fed1_commerce_local: 'DEKATEOTL',
@@ -232,13 +236,13 @@ export const YUN_TO_TAMV_FEDERATION: Record<FederationId, TamvFederationId> = {
  * @deprecated Use FEDERATION_NAMES with FederationId instead
  */
 export const TAMV_FEDERATION_NAMES: Record<TamvFederationId, string> = {
-  DEKATEOTL: 'Federación de Datos (DATA)',
-  ANUBIS: 'Federación de Inteligencia (INTEL)',
-  BOOKPI_DATAGIT: 'Federación de Seguridad (SEC)',
-  PHOENIX: 'Federación de Gobernanza (GOV)',
-  MDD_TAMV: 'Federación Económica (ECON)',
-  KAOS_HYPERRENDER: 'Federación Visual (VIS)',
-  CHRONOS: 'Federación Territorial (TERRITORY)',
+  DEKATEOTL: 'FederaciÃ³n de Datos (DATA)',
+  ANUBIS: 'FederaciÃ³n de Inteligencia (INTEL)',
+  BOOKPI_DATAGIT: 'FederaciÃ³n de Seguridad (SEC)',
+  PHOENIX: 'FederaciÃ³n de Gobernanza (GOV)',
+  MDD_TAMV: 'FederaciÃ³n EconÃ³mica (ECON)',
+  KAOS_HYPERRENDER: 'FederaciÃ³n Visual (VIS)',
+  CHRONOS: 'FederaciÃ³n Territorial (TERRITORY)',
 };
 
 /**
@@ -293,7 +297,7 @@ export interface MDX5Decision {
 }
 
 // ============================================================================
-// TIME UP - GOBERNANZA ÉTICA
+// TIME UP - GOBERNANZA Ã‰TICA
 // ============================================================================
 
 export type TimeUpVerdict = 'APPROVED' | 'REJECTED' | 'PENDING_HUMAN' | 'PENDING_ISABELLA';

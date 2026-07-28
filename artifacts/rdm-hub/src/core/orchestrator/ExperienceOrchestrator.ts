@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * RDM Digital - Orquestador de Experiencias GEN-7+
  * Orquestacion determinista con reloj inyectable y throttling
@@ -360,7 +364,7 @@ export class ExperienceOrchestrator {
         mensaje: 'Modo descubrimiento activo: tengo opciones cercanas con equilibrio entre historia, paisaje y gastronomia.',
       },
       RETENTION: {
-        titulo: 'Quédate un Poco Mas',
+        titulo: 'QuÃ©date un Poco Mas',
         mensaje: 'Hay algo especial cerca que no querras perderte.',
       },
       ENGAGEMENT: {

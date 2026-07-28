@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Activity, GitCommitHorizontal, Layers3, Network, TrendingUp } from "lucide-react";
 import { RDMLayout } from "@/components/rdm/RDMLayout";
@@ -15,27 +19,27 @@ interface TimelineEntry {
 
 const TIMELINE: TimelineEntry[] = [
   {
-    date: "2025·Q4",
-    title: "Génesis RDM Digital",
+    date: "2025Â·Q4",
+    title: "GÃ©nesis RDM Digital",
     detail: "Arranque del explorador territorial y primeros gemelos digitales locales.",
   },
   {
-    date: "2026·Q1",
-    title: "Federación de repos",
-    detail: "Unificación de Nodo Cero, Twin, Smart City OS y CiteMesh Roots vía submódulos.",
+    date: "2026Â·Q1",
+    title: "FederaciÃ³n de repos",
+    detail: "UnificaciÃ³n de Nodo Cero, Twin, Smart City OS y CiteMesh Roots vÃ­a submÃ³dulos.",
   },
   {
-    date: "2026·Q2",
+    date: "2026Â·Q2",
     title: "TAMV + Realito Cloud",
     detail: "Hub TAMV operativo y Realito AI corriendo sobre Lovable Cloud (Gemini).",
   },
   {
-    date: "2026·05",
+    date: "2026Â·05",
     title: "Cobro real para comercios",
-    detail: "Registro, checkout y publicación automática vía webhook + RLS en Supabase.",
+    detail: "Registro, checkout y publicaciÃ³n automÃ¡tica vÃ­a webhook + RLS en Supabase.",
   },
   {
-    date: "2026·05",
+    date: "2026Â·05",
     title: "Documento maestro vivo",
     detail: "Vistas /operativo y /evolucion como tablero de control del ecosistema.",
   },
@@ -49,7 +53,7 @@ const Evolucion = () => {
       Icon: Network,
     },
     {
-      label: "Módulos catalogados",
+      label: "MÃ³dulos catalogados",
       value: OPERATIVE_MODULES.length,
       Icon: Layers3,
     },
@@ -68,8 +72,8 @@ const Evolucion = () => {
   return (
     <RDMLayout>
       <SEOMeta
-        title="Evolución RDM·X — Mega-análisis del ecosistema"
-        description="Línea de tiempo, métricas de adopción de módulos y trayectoria del ecosistema RDM Digital Nexus."
+        title="EvoluciÃ³n RDMÂ·X â€” Mega-anÃ¡lisis del ecosistema"
+        description="LÃ­nea de tiempo, mÃ©tricas de adopciÃ³n de mÃ³dulos y trayectoria del ecosistema RDM Digital Nexus."
       />
 
       <section className="container mx-auto px-6 pb-24 pt-10">
@@ -82,15 +86,15 @@ const Evolucion = () => {
           <Badge variant="outline" className="mb-5 border-[hsl(var(--gold))]/40 bg-[hsl(var(--gold))]/5 px-4 py-2">
             <Activity className="mr-2 h-4 w-4 text-[hsl(var(--gold))]" />
             <span className="font-body text-[10px] uppercase tracking-[0.28em] text-[hsl(var(--gold))]">
-              Mega-análisis de evolución
+              Mega-anÃ¡lisis de evoluciÃ³n
             </span>
           </Badge>
           <h1 className="font-display text-4xl font-light leading-tight md:text-6xl">
             Trayectoria del <span className="text-gradient-gold">ecosistema</span>
           </h1>
           <p className="mx-auto mt-5 max-w-2xl font-body text-base leading-relaxed text-muted-foreground">
-            Cómo RDM Digital pasó de un explorador local a una federación operativa
-            con gemelos digitales, IA soberana y economía local activable.
+            CÃ³mo RDM Digital pasÃ³ de un explorador local a una federaciÃ³n operativa
+            con gemelos digitales, IA soberana y economÃ­a local activable.
           </p>
         </motion.div>
 
@@ -112,7 +116,7 @@ const Evolucion = () => {
 
         <Card className="border-[hsl(var(--gold))]/15 bg-card/60 backdrop-blur-md">
           <CardContent className="p-6">
-            <h2 className="mb-6 font-display text-2xl font-light">Línea de tiempo</h2>
+            <h2 className="mb-6 font-display text-2xl font-light">LÃ­nea de tiempo</h2>
             <ol className="relative ml-3 border-l border-[hsl(var(--gold))]/25">
               {TIMELINE.map((t, i) => (
                 <motion.li

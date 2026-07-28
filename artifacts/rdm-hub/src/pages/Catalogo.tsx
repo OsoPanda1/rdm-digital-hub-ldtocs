@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { useState } from "react";
@@ -27,15 +31,15 @@ const pricingTiers: PricingTier[] = [
     category: "Hoteles y Hospedajes",
     icon: Hotel,
     price: 500,
-    description: "Máxima visibilidad para tu hospedaje con reservas directas y galería premium.",
+    description: "MÃ¡xima visibilidad para tu hospedaje con reservas directas y galerÃ­a premium.",
     color: "from-amber-500 to-yellow-600",
     features: [
-      "Ficha completa con galería de fotos",
-      "Ubicación destacada en mapa y rutas",
+      "Ficha completa con galerÃ­a de fotos",
+      "UbicaciÃ³n destacada en mapa y rutas",
       "Sistema de reservas directas",
-      "Reseñas verificadas de huéspedes",
+      "ReseÃ±as verificadas de huÃ©spedes",
       "Cupones y ofertas especiales",
-      "Estadísticas de visitas mensuales",
+      "EstadÃ­sticas de visitas mensuales",
     ],
   },
   {
@@ -43,105 +47,105 @@ const pricingTiers: PricingTier[] = [
     category: "Bares",
     icon: Wine,
     price: 450,
-    description: "Destaca tu bar con menú digital, eventos y horarios actualizados.",
+    description: "Destaca tu bar con menÃº digital, eventos y horarios actualizados.",
     color: "from-purple-500 to-violet-600",
     features: [
-      "Ficha con menú y carta de bebidas",
-      "Galería de ambiente y eventos",
+      "Ficha con menÃº y carta de bebidas",
+      "GalerÃ­a de ambiente y eventos",
       "Horarios y eventos especiales",
-      "Ubicación en mapa interactivo",
+      "UbicaciÃ³n en mapa interactivo",
       "Promociones nocturnas",
-      "Reseñas de clientes",
+      "ReseÃ±as de clientes",
     ],
   },
   {
     id: "restaurantes",
-    category: "Pasterías y Restaurantes",
+    category: "PasterÃ­as y Restaurantes",
     icon: UtensilsCrossed,
     price: 400,
-    description: "Tu menú y especialidades al alcance de miles de visitantes mensuales.",
+    description: "Tu menÃº y especialidades al alcance de miles de visitantes mensuales.",
     color: "from-orange-500 to-red-500",
     features: [
-      "Menú digital con fotos",
-      "Ubicación prioritaria en rutas gastronómicas",
-      "Reseñas y calificaciones",
+      "MenÃº digital con fotos",
+      "UbicaciÃ³n prioritaria en rutas gastronÃ³micas",
+      "ReseÃ±as y calificaciones",
       "Horarios y contacto directo",
       "Cupones descuento para turistas",
-      "Estadísticas de visitas",
+      "EstadÃ­sticas de visitas",
     ],
   },
   {
     id: "platerias",
-    category: "Platerías",
+    category: "PlaterÃ­as",
     icon: Gem,
     price: 400,
-    description: "Muestra tu catálogo de joyería y artesanía de plata al mundo.",
+    description: "Muestra tu catÃ¡logo de joyerÃ­a y artesanÃ­a de plata al mundo.",
     color: "from-slate-400 to-zinc-500",
     features: [
-      "Catálogo de productos con fotos",
-      "Ubicación en rutas de artesanías",
-      "Historia y tradición del taller",
+      "CatÃ¡logo de productos con fotos",
+      "UbicaciÃ³n en rutas de artesanÃ­as",
+      "Historia y tradiciÃ³n del taller",
       "Contacto y pedidos directos",
-      "Certificación de autenticidad",
-      "Galería de piezas destacadas",
+      "CertificaciÃ³n de autenticidad",
+      "GalerÃ­a de piezas destacadas",
     ],
   },
   {
     id: "pasterias",
-    category: "Pasterías Especializadas",
+    category: "PasterÃ­as Especializadas",
     icon: UtensilsCrossed,
     price: 350,
-    description: "Destaca tus variedades de paste y atrae a los amantes de la gastronomía local.",
+    description: "Destaca tus variedades de paste y atrae a los amantes de la gastronomÃ­a local.",
     color: "from-yellow-600 to-amber-600",
     features: [
-      "Menú de variedades de paste",
-      "Ubicación en ruta del paste",
+      "MenÃº de variedades de paste",
+      "UbicaciÃ³n en ruta del paste",
       "Historia y receta tradicional",
       "Horarios y contacto",
-      "Reseñas de visitantes",
-      "Sello de Tradición RDM",
+      "ReseÃ±as de visitantes",
+      "Sello de TradiciÃ³n RDM",
     ],
   },
   {
     id: "cafeterias",
-    category: "Cafeterías y Artesanías",
+    category: "CafeterÃ­as y ArtesanÃ­as",
     icon: Coffee,
     price: 250,
-    description: "Espacio para cafeterías de especialidad y tiendas de artesanías locales.",
+    description: "Espacio para cafeterÃ­as de especialidad y tiendas de artesanÃ­as locales.",
     color: "from-emerald-500 to-teal-600",
     features: [
-      "Ficha con fotos y descripción",
-      "Ubicación en mapa interactivo",
+      "Ficha con fotos y descripciÃ³n",
+      "UbicaciÃ³n en mapa interactivo",
       "Horarios y contacto",
-      "Reseñas de clientes",
+      "ReseÃ±as de clientes",
       "Promociones estacionales",
     ],
   },
   {
     id: "negocios",
-    category: "Tiendas, Tortillerías, Pollos y Variados",
+    category: "Tiendas, TortillerÃ­as, Pollos y Variados",
     icon: Store,
     price: 200,
-    description: "Visibilidad básica para negocios esenciales de la comunidad.",
+    description: "Visibilidad bÃ¡sica para negocios esenciales de la comunidad.",
     color: "from-blue-500 to-cyan-600",
     features: [
-      "Ficha con dirección y contacto",
-      "Ubicación en mapa",
-      "Horarios de atención",
-      "Reseñas de la comunidad",
+      "Ficha con direcciÃ³n y contacto",
+      "UbicaciÃ³n en mapa",
+      "Horarios de atenciÃ³n",
+      "ReseÃ±as de la comunidad",
       "Sello de Negocio Local",
     ],
   },
   {
     id: "gondolas",
-    category: "Góndolas y Semifijos",
+    category: "GÃ³ndolas y Semifijos",
     icon: Truck,
     price: 150,
     description: "Presencia digital accesible para vendedores ambulantes y puestos semifijos.",
     color: "from-green-500 to-lime-600",
     features: [
-      "Ficha básica con foto",
-      "Ubicación aproximada",
+      "Ficha bÃ¡sica con foto",
+      "UbicaciÃ³n aproximada",
       "Horarios habituales",
       "Contacto directo",
     ],
@@ -162,8 +166,8 @@ const CatalogoPage = () => {
     <RDMLayout>
       <div className="min-h-screen bg-background">
         <SEOMeta
-          title="Catálogo de Negocios - Únete a RDM Digital"
-          description="Registra tu negocio en el catálogo digital de Real del Monte. Precios accesibles para hoteles, restaurantes, pasterías, cafeterías y más."
+          title="CatÃ¡logo de Negocios - Ãšnete a RDM Digital"
+          description="Registra tu negocio en el catÃ¡logo digital de Real del Monte. Precios accesibles para hoteles, restaurantes, pasterÃ­as, cafeterÃ­as y mÃ¡s."
         />
 
         {/* Hero */}
@@ -181,13 +185,13 @@ const CatalogoPage = () => {
                 Oferta de Lanzamiento
               </Badge>
               <h1 className="font-serif text-4xl md:text-6xl font-bold text-foreground mb-4">
-                Únete al Catálogo{" "}
+                Ãšnete al CatÃ¡logo{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-terracotta">
                   RDM Digital
                 </span>
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-                Posiciona tu negocio en la plataforma turística líder de Real del Monte.
+                Posiciona tu negocio en la plataforma turÃ­stica lÃ­der de Real del Monte.
                 Miles de visitantes buscan negocios como el tuyo cada mes.
               </p>
 
@@ -225,11 +229,11 @@ const CatalogoPage = () => {
                     </div>
                     <div>
                       <h3 className="font-serif text-xl font-bold text-foreground">
-                        🎉 Oferta Especial: Primeros 200 negocios
+                        ðŸŽ‰ Oferta Especial: Primeros 200 negocios
                       </h3>
                       <p className="text-muted-foreground text-sm">
                         50% de descuento al cubrir 6, 9 o 12 meses por adelantado.
-                        ¡Lugares limitados!
+                        Â¡Lugares limitados!
                       </p>
                     </div>
                   </div>
@@ -264,7 +268,7 @@ const CatalogoPage = () => {
           <div className="container mx-auto px-4 md:px-8">
             <div className="text-center mb-12">
               <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3">
-                Planes por Categoría
+                Planes por CategorÃ­a
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
                 Precios mensuales. Todos los planes incluyen presencia en el mapa interactivo y directorio digital.
@@ -360,14 +364,14 @@ const CatalogoPage = () => {
         <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4 md:px-8">
             <h2 className="font-serif text-3xl font-bold text-foreground text-center mb-12">
-              ¿Por qué registrarte?
+              Â¿Por quÃ© registrarte?
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
-                { icon: TrendingUp, title: "Más Clientes", desc: "Miles de turistas buscan negocios como el tuyo cada mes en nuestra plataforma." },
+                { icon: TrendingUp, title: "MÃ¡s Clientes", desc: "Miles de turistas buscan negocios como el tuyo cada mes en nuestra plataforma." },
                 { icon: MapPin, title: "Visibilidad en Mapa", desc: "Tu negocio aparece en el mapa interactivo HUD con marcador destacado." },
-                { icon: Shield, title: "Sello Verificado", desc: "Genera confianza con el sello de verificación RDM Digital." },
-                { icon: Users, title: "Comunidad Activa", desc: "Forma parte de la red de negocios más importante de Real del Monte." },
+                { icon: Shield, title: "Sello Verificado", desc: "Genera confianza con el sello de verificaciÃ³n RDM Digital." },
+                { icon: Users, title: "Comunidad Activa", desc: "Forma parte de la red de negocios mÃ¡s importante de Real del Monte." },
               ].map((b) => (
                 <motion.div
                   key={b.title}
@@ -398,11 +402,11 @@ const CatalogoPage = () => {
             >
               <Clock className="w-10 h-10 text-gold mx-auto mb-4" />
               <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3">
-                ¡Lugares limitados!
+                Â¡Lugares limitados!
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto mb-6">
                 Solo los primeros 200 negocios obtienen el 50% de descuento.
-                No pierdas tu lugar en la plataforma turística más innovadora de Real del Monte.
+                No pierdas tu lugar en la plataforma turÃ­stica mÃ¡s innovadora de Real del Monte.
               </p>
               <Button size="lg" className="px-8">
                 <Star className="w-4 h-4 mr-2" />

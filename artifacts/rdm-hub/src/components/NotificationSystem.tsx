@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { useState, useCallback, createContext, useContext, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -168,36 +172,36 @@ function NotificationItem({
 export const predefinedNotifications = {
   welcome: () => ({
     type: "info" as NotificationType,
-    title: "¡Bienvenido a Real del Monte!",
-    message: "Descubre la magia de este Pueblo Mágico único en el mundo.",
+    title: "Â¡Bienvenido a Real del Monte!",
+    message: "Descubre la magia de este Pueblo MÃ¡gico Ãºnico en el mundo.",
     icon: Heart,
   }),
   festivalReminder: (festivalName: string, date: string) => ({
     type: "event" as NotificationType,
-    title: "Próximo Festival",
+    title: "PrÃ³ximo Festival",
     message: `${festivalName} se aproxima. Marca en tu calendario: ${date}`,
     icon: Calendar,
   }),
   routeCompleted: (routeName: string) => ({
     type: "success" as NotificationType,
-    title: "¡Ruta Completada!",
+    title: "Â¡Ruta Completada!",
     message: `Has terminado la ${routeName}. Esperamos que hayas disfrutado la experiencia.`,
   }),
   newPlaceNearby: (placeName: string) => ({
     type: "place" as NotificationType,
     title: "Lugar Cercano",
-    message: `Estás cerca de ${placeName}. ¿Te gustaría visitarlo?`,
+    message: `EstÃ¡s cerca de ${placeName}. Â¿Te gustarÃ­a visitarlo?`,
     icon: MapPin,
   }),
   foodRecommendation: (dishName: string) => ({
     type: "food" as NotificationType,
-    title: "Recomendación Gastronómica",
-    message: `No te vayas sin probar ${dishName}, un platillo único de Real del Monte.`,
+    title: "RecomendaciÃ³n GastronÃ³mica",
+    message: `No te vayas sin probar ${dishName}, un platillo Ãºnico de Real del Monte.`,
   }),
   weatherAlert: (condition: string) => ({
     type: "warning" as NotificationType,
-    title: "Alerta Climática",
-    message: `Se espera ${condition} en las próximas horas. Toma precauciones.`,
+    title: "Alerta ClimÃ¡tica",
+    message: `Se espera ${condition} en las prÃ³ximas horas. Toma precauciones.`,
   }),
   messageReceived: (from: string) => ({
     type: "message" as NotificationType,

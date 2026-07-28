@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { Component, ErrorInfo, ReactNode } from 'react'
 import { AlertCircle, RefreshCw } from 'lucide-react'
 import { logger } from "@/lib/logger"
@@ -45,7 +49,7 @@ export class RouteErrorBoundary extends Component<Props, State> {
               <AlertCircle className="w-8 h-8 text-destructive" />
             </div>
             <h2 className="font-serif text-2xl font-bold text-foreground mb-2">
-              Algo salió mal
+              Algo saliÃ³ mal
             </h2>
             <p className="text-sm text-muted-foreground mb-4">
               Error al cargar <strong>{this.props.route}</strong>.

@@ -1,8 +1,12 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useState } from "react";
 
 /**
- * LiveTelemetryBadge — chip flotante "RDM·OS · LIVE"
- * absorbido del patrón Realito Orb de rdm-digital-nodo-cero.
+ * LiveTelemetryBadge â€” chip flotante "RDMÂ·OS Â· LIVE"
+ * absorbido del patrÃ³n Realito Orb de rdm-digital-nodo-cero.
  *
  * Refuerza la narrativa de sistema operativo territorial vivo:
  * heartbeat + reloj local + estado heptafederado.
@@ -21,7 +25,7 @@ export default function LiveTelemetryBadge() {
   return (
     <div
       role="status"
-      aria-label="Sistema RDM OS en línea"
+      aria-label="Sistema RDM OS en lÃ­nea"
       className="fixed bottom-4 left-4 z-40 hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full
                  bg-background/60 backdrop-blur-xl border border-border/50 shadow-soft
                  text-[10px] font-mono tracking-[0.18em] uppercase text-muted-foreground
@@ -31,10 +35,10 @@ export default function LiveTelemetryBadge() {
         <span className="absolute inline-flex h-full w-full rounded-full bg-[hsl(var(--gold))] opacity-60 magic-pulse" />
         <span className="relative inline-flex rounded-full h-2 w-2 bg-[hsl(var(--gold))]" />
       </span>
-      <span className="text-foreground/80">RDM·OS</span>
-      <span className="opacity-50">·</span>
+      <span className="text-foreground/80">RDMÂ·OS</span>
+      <span className="opacity-50">Â·</span>
       <span>Heptafed</span>
-      <span className="opacity-50">·</span>
+      <span className="opacity-50">Â·</span>
       <span className="text-[hsl(var(--electric))]">{hh}:{mm}:{ss}</span>
     </div>
   );

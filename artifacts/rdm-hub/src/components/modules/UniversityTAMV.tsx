@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * Universidad TAMV - Centro de Aprendizaje
- * Triple Federado: Conceptual | Legal | Técnico
+ * Triple Federado: Conceptual | Legal | TÃ©cnico
  */
 
 import { useState } from 'react';
@@ -43,8 +47,8 @@ interface Course {
 const MOCK_COURSES: Course[] = [
   {
     id: '1',
-    title: 'Introducción a TAMV Online',
-    description: 'Aprende los fundamentos del ecosistema TAMV y cómo aprovechar todas sus funcionalidades.',
+    title: 'IntroducciÃ³n a TAMV Online',
+    description: 'Aprende los fundamentos del ecosistema TAMV y cÃ³mo aprovechar todas sus funcionalidades.',
     instructor: 'Isabella AI',
     category: 'Fundamentos',
     difficulty: 'beginner',
@@ -58,10 +62,10 @@ const MOCK_COURSES: Course[] = [
   },
   {
     id: '2',
-    title: 'Creación de DreamSpaces',
+    title: 'CreaciÃ³n de DreamSpaces',
     description: 'Domina el arte de crear espacios inmersivos 3D para tus seguidores.',
     instructor: 'Anubis Academy',
-    category: 'Creación',
+    category: 'CreaciÃ³n',
     difficulty: 'intermediate',
     duration: 12,
     modules: 15,
@@ -73,10 +77,10 @@ const MOCK_COURSES: Course[] = [
   },
   {
     id: '3',
-    title: 'Monetización para Creadores',
+    title: 'MonetizaciÃ³n para Creadores',
     description: 'Estrategias avanzadas para generar ingresos con tu contenido en TAMV.',
     instructor: 'Banco TAMV',
-    category: 'Economía',
+    category: 'EconomÃ­a',
     difficulty: 'advanced',
     duration: 8,
     modules: 10,
@@ -88,7 +92,7 @@ const MOCK_COURSES: Course[] = [
   {
     id: '4',
     title: 'Seguridad y Triple Federado',
-    description: 'Entiende cómo funciona el sistema de seguridad del metaverso.',
+    description: 'Entiende cÃ³mo funciona el sistema de seguridad del metaverso.',
     instructor: 'Anubis Sentinel',
     category: 'Seguridad',
     difficulty: 'intermediate',
@@ -101,7 +105,7 @@ const MOCK_COURSES: Course[] = [
   }
 ];
 
-const CATEGORIES = ['Todos', 'Fundamentos', 'Creación', 'Economía', 'Seguridad', 'IA', 'XR'];
+const CATEGORIES = ['Todos', 'Fundamentos', 'CreaciÃ³n', 'EconomÃ­a', 'Seguridad', 'IA', 'XR'];
 
 const UniversityTAMV = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
@@ -136,7 +140,7 @@ const UniversityTAMV = () => {
           </div>
           <div>
             <h1 className="text-3xl font-bold">Universidad TAMV</h1>
-            <p className="text-muted-foreground">Centro de aprendizaje del ecosistema · Triple Federado</p>
+            <p className="text-muted-foreground">Centro de aprendizaje del ecosistema Â· Triple Federado</p>
           </div>
         </div>
 
@@ -177,7 +181,7 @@ const UniversityTAMV = () => {
         </TabsList>
 
         <TabsContent value="explore" className="space-y-6">
-          {/* Categorías */}
+          {/* CategorÃ­as */}
           <div className="flex gap-2 overflow-x-auto pb-2">
             {CATEGORIES.map((category) => (
               <Button
@@ -233,7 +237,7 @@ const UniversityTAMV = () => {
                       </span>
                       <span className="flex items-center gap-1">
                         <BookOpen className="w-4 h-4" />
-                        {course.modules} módulos
+                        {course.modules} mÃ³dulos
                       </span>
                       <span className="flex items-center gap-1">
                         <Star className="w-4 h-4 text-yellow-500" />
@@ -260,8 +264,8 @@ const UniversityTAMV = () => {
           {myCourses.length === 0 ? (
             <Card className="p-12 text-center">
               <BookOpen className="w-16 h-16 mx-auto text-muted-foreground/30 mb-4" />
-              <h3 className="text-xl font-bold mb-2">Aún no tienes cursos</h3>
-              <p className="text-muted-foreground mb-4">Explora nuestro catálogo y comienza tu aprendizaje</p>
+              <h3 className="text-xl font-bold mb-2">AÃºn no tienes cursos</h3>
+              <p className="text-muted-foreground mb-4">Explora nuestro catÃ¡logo y comienza tu aprendizaje</p>
               <Button onClick={() => setActiveTab('explore')}>Explorar cursos</Button>
             </Card>
           ) : (
@@ -300,7 +304,7 @@ const UniversityTAMV = () => {
             <p className="text-muted-foreground mb-4">
               Completa cursos para obtener certificaciones verificadas con Triple Federado
             </p>
-            <Button onClick={() => setActiveTab('explore')}>Ver cursos con certificación</Button>
+            <Button onClick={() => setActiveTab('explore')}>Ver cursos con certificaciÃ³n</Button>
           </Card>
         </TabsContent>
       </Tabs>

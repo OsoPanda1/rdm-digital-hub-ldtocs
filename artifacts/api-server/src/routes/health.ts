@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { Router } from "express";
 import { telemetrySnapshot } from "./telemetry";
 import { getPool } from "../lib/db-client";

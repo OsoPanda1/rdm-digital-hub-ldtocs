@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { logger } from "@/lib/logger";
 
 export type ChainType = "POLYGON" | "MSR" | "ETHEREUM" | "BSC";
@@ -143,7 +147,7 @@ export class BlockchainConnector {
         timestamp: new Date(),
       };
     }
-    logger.info("[BLOCKCHAIN] Transacción procesada", { id: tx.id, chain: tx.chain, success, durationMs: Date.now() - start });
+    logger.info("[BLOCKCHAIN] TransacciÃ³n procesada", { id: tx.id, chain: tx.chain, success, durationMs: Date.now() - start });
   }
 }
 

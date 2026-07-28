@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -21,16 +25,16 @@ const formSchema = z.object({
     message: "El usuario debe tener al menos 3 caracteres.",
   }),
   email: z.string().email({
-    message: "Por favor ingresa un correo válido.",
+    message: "Por favor ingresa un correo vÃ¡lido.",
   }),
   password: z.string().min(8, {
-    message: "La contraseña debe tener al menos 8 caracteres.",
+    message: "La contraseÃ±a debe tener al menos 8 caracteres.",
   }),
   confirmPassword: z.string().min(8, {
-    message: "Por favor confirma tu contraseña.",
+    message: "Por favor confirma tu contraseÃ±a.",
   }),
 }).refine((data) => data.password === data.confirmPassword, {
-  message: "Las contraseñas no coinciden.",
+  message: "Las contraseÃ±as no coinciden.",
   path: ["confirmPassword"],
 });
 
@@ -136,7 +140,7 @@ const Register = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-blue-300">Contraseña</FormLabel>
+                    <FormLabel className="text-blue-300">ContraseÃ±a</FormLabel>
                     <FormControl>
                       <Input 
                         type="password"
@@ -155,7 +159,7 @@ const Register = () => {
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-blue-300">Confirmar Contraseña</FormLabel>
+                    <FormLabel className="text-blue-300">Confirmar ContraseÃ±a</FormLabel>
                     <FormControl>
                       <Input 
                         type="password"
@@ -187,7 +191,7 @@ const Register = () => {
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-background px-2 text-muted-foreground">
-                  O regístrate con
+                  O regÃ­strate con
                 </span>
               </div>
             </div>
@@ -209,16 +213,16 @@ const Register = () => {
           </div>
           
           <p className="text-center text-sm text-muted-foreground mt-6">
-            ¿Ya tienes una cuenta?{" "}
+            Â¿Ya tienes una cuenta?{" "}
             <Link to="/login" className="text-blue-400 hover:text-blue-300 hover:underline">
-              Inicia sesión
+              Inicia sesiÃ³n
             </Link>
           </p>
           <p className="text-center text-[10px] text-muted-foreground/50 mt-4 px-4">
             Al registrarte aceptas nuestro{" "}
             <Link to="/reglamento" className="text-blue-400 hover:underline">Reglamento de la Comunidad</Link>
             {" y "}
-            <a href="/PRIVACY.md" className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>.
+            <a href="/PRIVACY.md" className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">PolÃ­tica de Privacidad</a>.
           </p>
         </div>
       </motion.main>

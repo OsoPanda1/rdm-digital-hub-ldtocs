@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState } from "react";
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { SEOMeta, PAGE_SEO } from "@/components/SEOMeta";
@@ -18,7 +22,7 @@ interface NodeData {
 }
 
 const NODES: NodeData[] = [
-  { id: "n1", name: "Nodo Cero — RDM", type: "edge", status: "online", location: "Real del Monte, Hgo.", latency: 4, uptime: 99.97, throughput: 342, lastHeartbeat: "1s ago", version: "MD-X5 v2.4" },
+  { id: "n1", name: "Nodo Cero â€” RDM", type: "edge", status: "online", location: "Real del Monte, Hgo.", latency: 4, uptime: 99.97, throughput: 342, lastHeartbeat: "1s ago", version: "MD-X5 v2.4" },
   { id: "n2", name: "Fog Sierra", type: "fog", status: "online", location: "Pachuca, Hgo.", latency: 12, uptime: 99.88, throughput: 891, lastHeartbeat: "2s ago", version: "FM-X2 v1.8" },
   { id: "n3", name: "Cloud CDMX", type: "cloud", status: "online", location: "CDMX", latency: 28, uptime: 99.99, throughput: 2400, lastHeartbeat: "0.5s ago", version: "CM-X1 v3.1" },
   { id: "n4", name: "Edge Tizayuca", type: "edge", status: "degraded", location: "Tizayuca, Hgo.", latency: 45, uptime: 97.2, throughput: 156, lastHeartbeat: "15s ago", version: "MD-X5 v2.3" },
@@ -41,7 +45,7 @@ export default function Atlas() {
 
   return (
     <RDMLayout>
-      <SEOMeta {...PAGE_SEO.mapa} title="Atlas de Nodos — RDM Digital" description="Topología de nodos federados del ecosistema TAMV: edge, fog, cloud y quantum." />
+      <SEOMeta {...PAGE_SEO.mapa} title="Atlas de Nodos â€” RDM Digital" description="TopologÃ­a de nodos federados del ecosistema TAMV: edge, fog, cloud y quantum." />
       <div className="pt-24 pb-16 px-4 md:px-8 max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
           <div className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--rdm-amber)/0.3)] bg-[hsl(var(--rdm-amber)/0.08)] px-4 py-2 text-xs uppercase tracking-[0.2em] mb-4">
@@ -49,7 +53,7 @@ export default function Atlas() {
             <span>Red Federada</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold" style={{ fontFamily: "var(--font-display)" }}>Atlas de Nodos</h1>
-          <p className="mt-3 text-[hsl(var(--muted-foreground))] max-w-2xl">Topología de la red federada TAMV. Monitoreo en tiempo real de nodos edge, fog, cloud y quantum.</p>
+          <p className="mt-3 text-[hsl(var(--muted-foreground))] max-w-2xl">TopologÃ­a de la red federada TAMV. Monitoreo en tiempo real de nodos edge, fog, cloud y quantum.</p>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
@@ -99,7 +103,7 @@ export default function Atlas() {
                           <span className="text-sm font-semibold">{node.name}</span>
                           <StatusIcon className={`h-3.5 w-3.5 ${STATUS_COLORS[node.status]}`} />
                         </div>
-                        <span className="text-[10px] text-[hsl(var(--muted-foreground))]">{node.location} · {node.version}</span>
+                        <span className="text-[10px] text-[hsl(var(--muted-foreground))]">{node.location} Â· {node.version}</span>
                       </div>
                     </div>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-[hsl(var(--muted))] text-[hsl(var(--muted-foreground))] capitalize">{node.type}</span>
@@ -117,7 +121,7 @@ export default function Atlas() {
                         <div className="mt-3 pt-3 border-t border-[hsl(var(--border)/0.3)] grid grid-cols-2 gap-2 text-xs text-[hsl(var(--muted-foreground))]">
                           <div><span className="block text-[10px] opacity-60">Node ID</span>{node.id}</div>
                           <div><span className="block text-[10px] opacity-60">Tipo</span>{node.type.toUpperCase()}</div>
-                          <div><span className="block text-[10px] opacity-60">Último heartbeat</span>{node.lastHeartbeat}</div>
+                          <div><span className="block text-[10px] opacity-60">Ãšltimo heartbeat</span>{node.lastHeartbeat}</div>
                           <div><span className="block text-[10px] opacity-60">Estado</span>{node.status}</div>
                           <div className="col-span-2"><span className="block text-[10px] opacity-60">Version</span>{node.version}</div>
                         </div>

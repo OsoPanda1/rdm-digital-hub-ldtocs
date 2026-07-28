@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { RDMLayout } from '@/components/rdm/RDMLayout';
@@ -39,7 +43,7 @@ export default function TerritorialDashboard() {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <div className="inline-flex items-center gap-2 rounded-full border border-rdm-amber/30 bg-rdm-amber/10 px-4 py-2 text-xs uppercase tracking-[0.2em] mb-4">
               <Brain className="h-3.5 w-3.5 text-rdm-amber" />
-              <span className="text-foreground">Gemelo Digital · Mapa Vivo</span>
+              <span className="text-foreground">Gemelo Digital Â· Mapa Vivo</span>
             </div>
             <h1 className="text-4xl md:text-6xl font-bold">
               <span className="block text-foreground">Dashboard</span>
@@ -107,7 +111,7 @@ export default function TerritorialDashboard() {
                   <div className="rdm-glass rounded-2xl border border-border/40 p-4">
                     <h3 className="font-display text-sm text-foreground mb-2">Contribucion Seleccionada</h3>
                     <p className="text-xs text-muted-foreground">
-                      Tipo: {selectedContribution.type} · Estado: {selectedContribution.status}
+                      Tipo: {selectedContribution.type} Â· Estado: {selectedContribution.status}
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">
                       Peso de reputacion: {(selectedContribution.reputationWeight * 100).toFixed(0)}%

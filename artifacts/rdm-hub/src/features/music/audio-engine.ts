@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * RDM Ecos Música — Spatial Audio Engine
+ * RDM Ecos MÃºsica â€” Spatial Audio Engine
  * Web Audio API with 3D spatial profiles
  *
  * Three modes:
@@ -45,7 +49,7 @@ export function getAudioContext(): AudioContext {
     high.frequency.value = 3000;
     eqFilters = [low, mid, high];
 
-    // Chain: source → EQ → convolver → panner → master → analyser → destination
+    // Chain: source â†’ EQ â†’ convolver â†’ panner â†’ master â†’ analyser â†’ destination
     masterGain.connect(analyserNode);
     analyserNode.connect(audioContext.destination);
   }
@@ -66,7 +70,7 @@ export function applySpatialProfile(profile: SpatialProfile, mode: SpatialMode):
   disconnectSpatial();
 
   if (mode === 'archivo') {
-    // Pure playback — no spatial processing
+    // Pure playback â€” no spatial processing
     return;
   }
 

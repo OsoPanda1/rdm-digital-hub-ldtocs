@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +24,7 @@ const KIND_ICONS: Record<SearchHitKind, React.ComponentType<{ className?: string
 
 const KIND_LABELS: Record<SearchHitKind, string> = {
   poi: "Lugar",
-  capitulo: "Capítulo",
+  capitulo: "CapÃ­tulo",
   mina: "Mina",
   paste: "Paste",
   ruta: "Ruta",
@@ -28,9 +32,9 @@ const KIND_LABELS: Record<SearchHitKind, string> = {
 };
 
 /**
- * SearchOverlay — buscador inmersivo full-screen.
- * Se abre con ⌘/Ctrl+K o con `openSearchOverlay()`.
- * Sugerencias instantáneas tipadas, agrupadas, con preview narrativo
+ * SearchOverlay â€” buscador inmersivo full-screen.
+ * Se abre con âŒ˜/Ctrl+K o con `openSearchOverlay()`.
+ * Sugerencias instantÃ¡neas tipadas, agrupadas, con preview narrativo
  * y deep-link a `/mapa?poi=...` para anclar POIs en el mapa territorial.
  */
 export default function SearchOverlay() {
@@ -43,7 +47,7 @@ export default function SearchOverlay() {
 
   const hits = useMemo(() => searchTourism(query, 24), [query]);
 
-  // Keyboard: open with ⌘/Ctrl+K, close with Esc
+  // Keyboard: open with âŒ˜/Ctrl+K, close with Esc
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
@@ -105,12 +109,12 @@ export default function SearchOverlay() {
           className="fixed inset-0 z-[120] flex items-start justify-center px-4 pt-[8vh]"
           role="dialog"
           aria-modal="true"
-          aria-label="Búsqueda turística"
+          aria-label="BÃºsqueda turÃ­stica"
         >
           {/* Backdrop */}
           <button
             type="button"
-            aria-label="Cerrar búsqueda"
+            aria-label="Cerrar bÃºsqueda"
             onClick={() => setOpen(false)}
             className="absolute inset-0 bg-[hsl(var(--navy-dark)/0.72)] backdrop-blur-2xl"
           />
@@ -130,7 +134,7 @@ export default function SearchOverlay() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={onKeyNav}
-                placeholder="Busca minas, pastes, leyendas, plazas, rutas…"
+                placeholder="Busca minas, pastes, leyendas, plazas, rutasâ€¦"
                 className="flex-1 bg-transparent text-base outline-none placeholder:text-[hsl(var(--muted-foreground))]"
                 role="combobox"
                 aria-expanded={hits.length > 0}
@@ -154,12 +158,12 @@ export default function SearchOverlay() {
             <div
               id="search-overlay-listbox"
               role="listbox"
-              aria-label="Resultados de búsqueda"
+              aria-label="Resultados de bÃºsqueda"
               className="max-h-[60vh] overflow-y-auto py-2"
             >
               {hits.length === 0 && (
                 <div className="px-6 py-10 text-center text-sm text-[hsl(var(--muted-foreground))]">
-                  Sin resultados para «{query}». Prueba con <em>paste</em>, <em>Acosta</em> o <em>panteón</em>.
+                  Sin resultados para Â«{query}Â». Prueba con <em>paste</em>, <em>Acosta</em> o <em>panteÃ³n</em>.
                 </div>
               )}
               {hits.map((hit, i) => {
@@ -205,8 +209,8 @@ export default function SearchOverlay() {
             </div>
 
             <div className="flex items-center justify-between px-5 py-2.5 border-t border-[hsl(var(--border))] text-[10px] uppercase tracking-widest text-[hsl(var(--muted-foreground))]">
-              <span>↑↓ navegar · ↵ abrir</span>
-              <span>RDM · Búsqueda territorial viva</span>
+              <span>â†‘â†“ navegar Â· â†µ abrir</span>
+              <span>RDM Â· BÃºsqueda territorial viva</span>
             </div>
           </motion.div>
         </motion.div>

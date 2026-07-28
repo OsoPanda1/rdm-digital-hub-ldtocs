@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * INFRA METRICS — Re-export from core Prometheus (single source of truth).
+ * INFRA METRICS â€” Re-export from core Prometheus (single source of truth).
  *
  * This file exists ONLY for backward compatibility with existing imports.
  * All metric definitions live in src/core/metrics/prometheus.ts.

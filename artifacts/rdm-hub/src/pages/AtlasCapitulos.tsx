@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { Link } from "react-router-dom";
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
@@ -16,7 +20,7 @@ export default function AtlasCapitulos() {
   return (
     <RDMLayout>
       <SEOMeta
-        title="Atlas territorial — Real del Monte"
+        title="Atlas territorial â€” Real del Monte"
         description="Cuatro capas para entender Real del Monte: subsuelo, memoria comestible, memoria silenciosa y superficie."
       />
       <AtlasPageHeader
@@ -67,7 +71,7 @@ export default function AtlasCapitulos() {
             to="/capitulos/leyendas"
             className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-6 py-3 text-sm uppercase tracking-widest text-primary transition hover:bg-primary/20"
           >
-            → Leyendas y memoria oral
+            â†’ Leyendas y memoria oral
           </Link>
         </div>
       </section>

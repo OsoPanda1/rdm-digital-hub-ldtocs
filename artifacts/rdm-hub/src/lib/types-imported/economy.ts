@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // Shared economy domain contracts
 
 export type TransactionStatus = "pending" | "completed" | "cancelled" | "failed";

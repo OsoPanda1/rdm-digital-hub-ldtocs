@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * RDM Core Service — Bootstrap de eventos del sistema
+ * RDM Core Service â€” Bootstrap de eventos del sistema
  * Conecta el bus de eventos con el controlador de modos
  */
 

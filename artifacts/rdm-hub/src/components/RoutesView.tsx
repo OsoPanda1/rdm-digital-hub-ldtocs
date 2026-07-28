@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Compass, Clock, ArrowRight } from "lucide-react";
 
@@ -5,38 +9,38 @@ const ROUTES = [
   {
     id: "1",
     name: "Ruta de la Plata",
-    description: "Recorre las principales minas históricas y puntos patrimoniales del pueblo.",
+    description: "Recorre las principales minas histÃ³ricas y puntos patrimoniales del pueblo.",
     duration: "2h 30min",
     stops: 6,
     difficulty: "Moderada",
-    highlights: ["Mina de Acosta", "Panteón Inglés", "Centro Histórico"],
+    highlights: ["Mina de Acosta", "PanteÃ³n InglÃ©s", "Centro HistÃ³rico"],
   },
   {
     id: "2",
-    name: "Ruta Gastronómica",
-    description: "Explora los mejores pastes, cafés y restaurantes tradicionales.",
+    name: "Ruta GastronÃ³mica",
+    description: "Explora los mejores pastes, cafÃ©s y restaurantes tradicionales.",
     duration: "1h 45min",
     stops: 5,
-    difficulty: "Fácil",
-    highlights: ["Pastes El Portal", "Café Triana", "Mercado Municipal"],
+    difficulty: "FÃ¡cil",
+    highlights: ["Pastes El Portal", "CafÃ© Triana", "Mercado Municipal"],
   },
   {
     id: "3",
-    name: "Sendero de Montaña",
-    description: "Aventura en la Sierra de Pachuca con vistas panorámicas.",
+    name: "Sendero de MontaÃ±a",
+    description: "Aventura en la Sierra de Pachuca con vistas panorÃ¡micas.",
     duration: "4h",
     stops: 4,
     difficulty: "Alta",
-    highlights: ["Peña del Cuervo", "Mirador del Valle", "Bosque de Oyamel"],
+    highlights: ["PeÃ±a del Cuervo", "Mirador del Valle", "Bosque de Oyamel"],
   },
   {
     id: "4",
     name: "Circuito Cultural",
-    description: "Museos, galerías y espacios culturales del pueblo.",
+    description: "Museos, galerÃ­as y espacios culturales del pueblo.",
     duration: "2h",
     stops: 5,
-    difficulty: "Fácil",
-    highlights: ["Museo de Medicina", "Centro Nicolás Zavala", "Iglesia de la Asunción"],
+    difficulty: "FÃ¡cil",
+    highlights: ["Museo de Medicina", "Centro NicolÃ¡s Zavala", "Iglesia de la AsunciÃ³n"],
   },
 ];
 

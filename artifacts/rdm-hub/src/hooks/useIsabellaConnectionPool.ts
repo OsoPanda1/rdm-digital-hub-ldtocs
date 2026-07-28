@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // ============================================================================
 // Isabella Connection Pool - Shared SSE/WebSocket connection manager
 // Reduces latency by reusing connections across components

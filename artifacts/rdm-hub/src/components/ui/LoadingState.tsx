@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 interface LoadingStateProps {
   message?: string;
   size?: 'sm' | 'md' | 'lg';

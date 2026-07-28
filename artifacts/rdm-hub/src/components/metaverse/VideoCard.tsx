@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import React from "react";
 import { motion } from "framer-motion";
 import { Play, Eye, Heart, MessageCircle, Share2, MoreHorizontal } from "lucide-react";

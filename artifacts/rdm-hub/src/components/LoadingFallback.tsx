@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 export function LoadingFallback() {
   return (
     <div
@@ -7,7 +11,7 @@ export function LoadingFallback() {
     >
       <div className="rounded-2xl border border-border/60 bg-card/90 px-6 py-4 text-center shadow-lg">
         <div className="mx-auto mb-3 h-7 w-7 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-        <p className="text-sm font-medium text-muted-foreground">Cargando experiencia territorial…</p>
+        <p className="text-sm font-medium text-muted-foreground">Cargando experiencia territorialâ€¦</p>
       </div>
     </div>
   )

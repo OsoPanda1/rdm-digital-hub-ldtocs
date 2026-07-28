@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { computeTimeTheme, type TimeTheme } from "@/hooks/useTimeTheme";
 import { useWeather } from "@/hooks/useWeather";

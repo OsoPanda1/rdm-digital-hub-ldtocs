@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
 import { ChronusEngine, type PublishClient, type QueryableDb } from './engine/ChronusEngine';
 import { MDX5Kernel } from './engine/MDX5Kernel';
 import { timeUpEngine } from './engine/TimeUpEngine';
@@ -21,7 +25,7 @@ const mockPubSub: PublishClient = {
 };
 
 if (databaseUrl && !redisUrl) {
-  logger.warn('[KERNEL] DATABASE_URL y REDIS_URL no configurados. Se usará modo mock local.');
+  logger.warn('[KERNEL] DATABASE_URL y REDIS_URL no configurados. Se usarÃ¡ modo mock local.');
 }
 
 const chronus = new ChronusEngine({ db: mockDb, pubsub: mockPubSub });
@@ -50,7 +54,7 @@ export function startKernel() {
 
   logger.info('[KERNEL] MD-X5 activo en modo soberano edge-first.');
   logger.info('[KERNEL] TIME UP engine cargado con', { politicas: 10 });
-  logger.info('[KERNEL] Ledger listo para registrar acciones críticas');
+  logger.info('[KERNEL] Ledger listo para registrar acciones crÃ­ticas');
 }
 
 export function stopKernel() {

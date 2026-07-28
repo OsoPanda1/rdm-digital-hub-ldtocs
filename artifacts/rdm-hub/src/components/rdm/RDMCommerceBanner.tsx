@@ -1,15 +1,19 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Info } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const MOCK_BANNERS = [
-  { id: 1, name: "Restaurante El Minero", tagline: "Auténtico sabor a Real del Monte", category: "🍴", color: "from-[hsl(220_30%_8%)] to-[hsl(220_30%_15%)]" },
-  { id: 2, name: "Platería Reyes", tagline: "Arte en plata desde 1920", category: "💍", color: "from-[hsl(220_40%_12%)] to-[hsl(220_40%_20%)]" },
-  { id: 3, name: "Hostal de la Montaña", tagline: "Descanso entre la neblina", category: "🛏️", color: "from-[hsl(150_30%_10%)] to-[hsl(150_30%_18%)]" },
-  { id: 4, name: "Café del Pueblo", tagline: "El mejor café de altura", category: "☕", color: "from-[hsl(20_30%_12%)] to-[hsl(20_30%_20%)]" },
-  { id: 5, name: "Mezcalería El Piquete", tagline: "Tragos coquetos y tradición", category: "🥃", color: "from-[hsl(280_30%_12%)] to-[hsl(280_30%_20%)]" },
-  { id: 6, name: "Tours Real del Monte", tagline: "Aventuras mineras guiadas", category: "⛏️", color: "from-[hsl(0_0%_12%)] to-[hsl(0_0%_20%)]" },
+  { id: 1, name: "Restaurante El Minero", tagline: "AutÃ©ntico sabor a Real del Monte", category: "ðŸ´", color: "from-[hsl(220_30%_8%)] to-[hsl(220_30%_15%)]" },
+  { id: 2, name: "PlaterÃ­a Reyes", tagline: "Arte en plata desde 1920", category: "ðŸ’", color: "from-[hsl(220_40%_12%)] to-[hsl(220_40%_20%)]" },
+  { id: 3, name: "Hostal de la MontaÃ±a", tagline: "Descanso entre la neblina", category: "ðŸ›ï¸", color: "from-[hsl(150_30%_10%)] to-[hsl(150_30%_18%)]" },
+  { id: 4, name: "CafÃ© del Pueblo", tagline: "El mejor cafÃ© de altura", category: "â˜•", color: "from-[hsl(20_30%_12%)] to-[hsl(20_30%_20%)]" },
+  { id: 5, name: "MezcalerÃ­a El Piquete", tagline: "Tragos coquetos y tradiciÃ³n", category: "ðŸ¥ƒ", color: "from-[hsl(280_30%_12%)] to-[hsl(280_30%_20%)]" },
+  { id: 6, name: "Tours Real del Monte", tagline: "Aventuras mineras guiadas", category: "â›ï¸", color: "from-[hsl(0_0%_12%)] to-[hsl(0_0%_20%)]" },
 ];
 
 export function RDMCommerceBanner() {
@@ -32,7 +36,7 @@ export function RDMCommerceBanner() {
         <div className="flex items-center gap-2 mb-4">
           <Info className="w-3 h-3 text-[hsl(var(--rdm-amber))]" />
           <span className="text-[10px] uppercase tracking-widest text-[hsl(var(--muted-foreground))]">
-            Publicidad · Actualiza cada 30 min
+            Publicidad Â· Actualiza cada 30 min
           </span>
         </div>
         
@@ -60,7 +64,7 @@ export function RDMCommerceBanner() {
                 </div>
                 <div className="mt-6 flex justify-between items-end relative z-10">
                   <Link to="/directorio" className="inline-flex items-center gap-2 text-xs font-semibold text-[hsl(var(--rdm-amber))] group-hover:text-white transition-colors">
-                    Ver más <ExternalLink className="w-3 h-3" />
+                    Ver mÃ¡s <ExternalLink className="w-3 h-3" />
                   </Link>
                 </div>
               </motion.div>

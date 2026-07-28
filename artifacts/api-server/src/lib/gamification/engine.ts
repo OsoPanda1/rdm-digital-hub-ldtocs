@@ -1,7 +1,11 @@
-// ────────────────────────────────────────────────────────────────
-// Gamification Engine — XP, rutas de progresión, insignias
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Gamification Engine â€” XP, rutas de progresiÃ³n, insignias
 // Backend para el sistema Living World de RDM
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface PlayerProfile {
   userId: string;
@@ -46,7 +50,7 @@ const RANK_THRESHOLDS = [
   { rank: "Explorador", minXp: 100 },
   { rank: "Minero", minXp: 500 },
   { rank: "Cronista", minXp: 1500 },
-  { rank: "Guardián", minXp: 4000 },
+  { rank: "GuardiÃ¡n", minXp: 4000 },
   { rank: "Leyenda RDM", minXp: 10000 },
 ];
 

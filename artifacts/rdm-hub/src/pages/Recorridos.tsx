@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -42,7 +46,7 @@ export default function Recorridos() {
   });
 
   const handleBook = async () => {
-    if (!user) { toast.error("Inicia sesión para reservar"); navigate("/auth"); return; }
+    if (!user) { toast.error("Inicia sesiÃ³n para reservar"); navigate("/auth"); return; }
     if (!bookingPkg || !bookingDate || !contactName) { toast.error("Completa todos los campos"); return; }
     setSubmitting(true);
     const { error } = await supabase.from("tour_bookings").insert({
@@ -57,7 +61,7 @@ export default function Recorridos() {
     });
     setSubmitting(false);
     if (error) { toast.error("No se pudo crear la reserva"); return; }
-    toast.success("¡Reserva creada! Te contactaremos para confirmar.");
+    toast.success("Â¡Reserva creada! Te contactaremos para confirmar.");
     setBookingPkg(null);
     setContactName(""); setContactPhone(""); setBookingDate("");
   };
@@ -79,7 +83,7 @@ export default function Recorridos() {
               Recorridos <span className="text-gradient-gold">Guiados</span>
             </h1>
             <p className="mt-3 text-sm font-body text-muted-foreground max-w-xl">
-              Reserva tu día y hora con guías certificados. Disponibilidad sujeta a personal autorizado.
+              Reserva tu dÃ­a y hora con guÃ­as certificados. Disponibilidad sujeta a personal autorizado.
             </p>
           </motion.div>
         </div>
@@ -109,7 +113,7 @@ export default function Recorridos() {
                 <p className="mt-2 text-[12px] font-body text-muted-foreground leading-relaxed flex-1">{p.description}</p>
                 <div className="mt-4 flex flex-wrap gap-3 text-[11px] font-mono text-muted-foreground">
                   <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{p.duration_min} min</span>
-                  <span className="flex items-center gap-1"><Users className="h-3 w-3" />Máx {p.max_capacity}</span>
+                  <span className="flex items-center gap-1"><Users className="h-3 w-3" />MÃ¡x {p.max_capacity}</span>
                   <span className="flex items-center gap-1 text-teal">{p.difficulty}</span>
                 </div>
                 {p.includes?.length > 0 && (
@@ -136,20 +140,20 @@ export default function Recorridos() {
       {/* Guides */}
       <section className="px-6 lg:px-12 pb-24">
         <div className="mx-auto max-w-7xl">
-          <h2 className="text-3xl font-display font-bold mb-2">Nuestros guías certificados</h2>
-          <p className="text-sm font-body text-muted-foreground mb-8">Profesionales locales avalados por la federación turística de Real del Monte.</p>
+          <h2 className="text-3xl font-display font-bold mb-2">Nuestros guÃ­as certificados</h2>
+          <p className="text-sm font-body text-muted-foreground mb-8">Profesionales locales avalados por la federaciÃ³n turÃ­stica de Real del Monte.</p>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {(guides || []).map((g: any) => (
               <div key={g.id} className="rounded-2xl glass p-5 border border-border/20 flex items-start gap-4">
                 <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-gold/30 to-teal/20 flex items-center justify-center text-2xl shrink-0">
-                  👤
+                  ðŸ‘¤
                 </div>
                 <div className="min-w-0">
                   <p className="font-display font-bold">{g.name}</p>
                   <p className="text-[11px] font-body text-muted-foreground mt-1 line-clamp-2">{g.bio}</p>
                   <div className="mt-2 flex items-center gap-3 text-[10px] font-mono">
                     <span className="flex items-center gap-1 text-gold"><Star className="h-2.5 w-2.5 fill-gold" />{g.rating}</span>
-                    <span className="text-muted-foreground">{g.languages?.join(" · ")}</span>
+                    <span className="text-muted-foreground">{g.languages?.join(" Â· ")}</span>
                   </div>
                 </div>
               </div>
@@ -186,7 +190,7 @@ export default function Recorridos() {
                   className="mt-1 w-full px-4 py-2.5 rounded-xl glass text-sm outline-none focus:border-gold/40" />
               </div>
               <div>
-                <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Teléfono</label>
+                <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">TelÃ©fono</label>
                 <input type="tel" value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} maxLength={20}
                   className="mt-1 w-full px-4 py-2.5 rounded-xl glass text-sm outline-none focus:border-gold/40" />
               </div>
@@ -219,7 +223,7 @@ export default function Recorridos() {
                 {submitting ? "Procesando..." : "Confirmar reserva"}
               </button>
               <p className="text-[10px] font-mono text-muted-foreground text-center">
-                Tu reserva quedará en estado pendiente. Te contactaremos en máx. 24h para confirmar disponibilidad.
+                Tu reserva quedarÃ¡ en estado pendiente. Te contactaremos en mÃ¡x. 24h para confirmar disponibilidad.
               </p>
             </div>
           </motion.div>

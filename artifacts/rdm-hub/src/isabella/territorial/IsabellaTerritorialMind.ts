@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { isabellaAPI } from '../api';
 import { memoriaEmocional } from '../emotional/memory';
 import { motorConciencia } from '../core/consciousness';

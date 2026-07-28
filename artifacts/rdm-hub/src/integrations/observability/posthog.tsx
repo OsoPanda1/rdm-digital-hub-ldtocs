@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 /**
  * PostHog Provider (React).
@@ -31,7 +35,7 @@ export function PostHogProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const key = clientEnv.VITE_POSTHOG_KEY;
-    if (!key) return; // No key → noop client.
+    if (!key) return; // No key â†’ noop client.
 
     let cancelled = false;
     (async () => {

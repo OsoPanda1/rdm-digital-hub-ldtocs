@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * RDM Core Service — Isabella Guardian (IA policy engine antifrágil)
- * Evalúa métricas del sistema y decide acciones adaptativas
+ * RDM Core Service â€” Isabella Guardian (IA policy engine antifrÃ¡gil)
+ * EvalÃºa mÃ©tricas del sistema y decide acciones adaptativas
  */
 
 import type { SystemMetrics } from "../system/modes";
@@ -26,7 +30,7 @@ export function isabellaGuardian(metrics: SystemMetrics): IsabellaGuardianDecisi
       mode: "EMERGENCY",
       actions: ["limit_requests", "prioritize_text", "enable_cache_boost", "disable_animations"],
       confidence: 0.95,
-      reasoning: `Error rate ${(metrics.errorRate * 100).toFixed(1)}% o latencia P95 ${metrics.latencyP95.toFixed(0)}ms superan umbrales críticos`,
+      reasoning: `Error rate ${(metrics.errorRate * 100).toFixed(1)}% o latencia P95 ${metrics.latencyP95.toFixed(0)}ms superan umbrales crÃ­ticos`,
     };
   }
 
@@ -43,6 +47,6 @@ export function isabellaGuardian(metrics: SystemMetrics): IsabellaGuardianDecisi
     mode: "NORMAL",
     actions: [],
     confidence: 1.0,
-    reasoning: "Todos los indicadores dentro de parámetros nominales",
+    reasoning: "Todos los indicadores dentro de parÃ¡metros nominales",
   };
 }

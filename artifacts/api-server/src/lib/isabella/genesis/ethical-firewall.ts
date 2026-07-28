@@ -1,7 +1,11 @@
-// ────────────────────────────────────────────────────────────────
-// Isabella Genesis — Ethical Firewall
-// Políticas éticas aplicadas a cada DecisionRecord
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isabella Genesis â€” Ethical Firewall
+// PolÃ­ticas Ã©ticas aplicadas a cada DecisionRecord
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { DecisionRecord, FirewallAction } from "../types/decision-record";
 import { POLICIES } from "../soul/identity";
@@ -91,7 +95,7 @@ export function createEthicalFirewall(): EthicalFirewall {
       }
 
       const soulPolicyCount = POLICIES.length;
-      result.decision.explanation += ` [SOUL: ${soulPolicyCount} políticas activas]`;
+      result.decision.explanation += ` [SOUL: ${soulPolicyCount} polÃ­ticas activas]`;
 
       return result;
     },

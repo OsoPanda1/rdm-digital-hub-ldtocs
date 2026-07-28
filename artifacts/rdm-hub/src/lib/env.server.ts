@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * Server-only env. Importing this file from the browser bundle is forbidden
  * by ESLint (`no-restricted-imports`) and by the `.server.ts` convention.

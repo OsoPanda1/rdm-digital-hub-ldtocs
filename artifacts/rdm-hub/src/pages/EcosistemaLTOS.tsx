@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { Suspense } from "react";
 import platforms from "@/data/imported/ltos-platforms.json";
 import repos from "@/data/imported/osopanda-repos.json";
@@ -11,7 +15,7 @@ export default function EcosistemaLTOS() {
     <RDMPageShell
       eyebrow="Ecosistema LTOS"
       title="Plataformas y Repositorios"
-      description={`Arquitecto: ${platforms.architect}. Repo paraguas: ${platforms.umbrella_repo}. ORCID ${platforms.credentials?.orcid} · DOI ${platforms.credentials?.doi}.`}
+      description={`Arquitecto: ${platforms.architect}. Repo paraguas: ${platforms.umbrella_repo}. ORCID ${platforms.credentials?.orcid} Â· DOI ${platforms.credentials?.doi}.`}
     >
       <Tabs defaultValue="platforms" className="w-full">
         <TabsList>
@@ -29,7 +33,7 @@ export default function EcosistemaLTOS() {
                 <div className="flex flex-wrap gap-2">
                   {p.federation && <Badge variant="secondary">{p.federation}</Badge>}
                   {p.files != null && <Badge variant="outline">{p.files} archivos</Badge>}
-                  {p.pages != null && <Badge variant="outline">{p.pages} páginas</Badge>}
+                  {p.pages != null && <Badge variant="outline">{p.pages} pÃ¡ginas</Badge>}
                   {p.migrations != null && <Badge variant="outline">{p.migrations} migraciones</Badge>}
                 </div>
                 {p.highlights && (
@@ -49,12 +53,12 @@ export default function EcosistemaLTOS() {
               <Card className="hover:border-primary transition-colors h-full">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm">{r.name}</CardTitle>
-                  <CardDescription className="text-xs line-clamp-2">{r.description || "—"}</CardDescription>
+                  <CardDescription className="text-xs line-clamp-2">{r.description || "â€”"}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex gap-2 text-xs text-muted-foreground">
                   <Badge variant="outline">{r.language}</Badge>
-                  <span>★ {r.stars}</span>
-                  <span>· {r.updated}</span>
+                  <span>â˜… {r.stars}</span>
+                  <span>Â· {r.updated}</span>
                 </CardContent>
               </Card>
             </a>

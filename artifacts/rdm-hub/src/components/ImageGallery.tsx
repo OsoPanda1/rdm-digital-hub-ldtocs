@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ZoomIn, Camera } from "lucide-react";
@@ -34,37 +38,37 @@ interface Image {
 
 const galleryImages: Image[] = [
   // Historia
-  { id: "1", src: minaImg, title: "Mina de Acosta", category: "Historia", description: "Descenso a 460 metros bajo tierra — la mina más famosa del pueblo" },
-  { id: "2", src: panteonImg, title: "Panteón Inglés", category: "Historia", description: "El cementerio anglicano más alto del mundo a 2,700 msnm" },
+  { id: "1", src: minaImg, title: "Mina de Acosta", category: "Historia", description: "Descenso a 460 metros bajo tierra â€” la mina mÃ¡s famosa del pueblo" },
+  { id: "2", src: panteonImg, title: "PanteÃ³n InglÃ©s", category: "Historia", description: "El cementerio anglicano mÃ¡s alto del mundo a 2,700 msnm" },
   { id: "3", src: callesImg, title: "Calles Coloniales", category: "Historia", description: "Arquitectura del siglo XIX con influencia victoriana inglesa" },
-  { id: "4", src: heroImg, title: "Vista Panorámica", category: "Historia", description: "Real del Monte envuelto en su neblina característica" },
-  { id: "5", src: rdm01, title: "Centro Histórico", category: "Historia", description: "12 manzanas protegidas por el INAH" },
-  { id: "6", src: rdm02, title: "Parroquia de la Asunción", category: "Historia", description: "Templo barroco del siglo XVIII en la Plaza Principal" },
+  { id: "4", src: heroImg, title: "Vista PanorÃ¡mica", category: "Historia", description: "Real del Monte envuelto en su neblina caracterÃ­stica" },
+  { id: "5", src: rdm01, title: "Centro HistÃ³rico", category: "Historia", description: "12 manzanas protegidas por el INAH" },
+  { id: "6", src: rdm02, title: "Parroquia de la AsunciÃ³n", category: "Historia", description: "Templo barroco del siglo XVIII en la Plaza Principal" },
   
   // Cultura
   { id: "7", src: pasteImg, title: "Paste Tradicional", category: "Cultura", description: "Herencia culinaria de los mineros cornish desde 1824" },
-  { id: "8", src: rdm1, title: "Portal del Comercio", category: "Cultura", description: "Tradición comercial en el centro del pueblo" },
-  { id: "9", src: rdm2, title: "Arquitectura Cornish", category: "Cultura", description: "Techos de dos aguas y chimeneas estilo inglés" },
+  { id: "8", src: rdm1, title: "Portal del Comercio", category: "Cultura", description: "TradiciÃ³n comercial en el centro del pueblo" },
+  { id: "9", src: rdm2, title: "Arquitectura Cornish", category: "Cultura", description: "Techos de dos aguas y chimeneas estilo inglÃ©s" },
   { id: "10", src: rdm03, title: "Casa de la Cultura", category: "Cultura", description: "Eventos culturales y exposiciones permanentes" },
-  { id: "11", src: rdm04, title: "Festival del Paste", category: "Cultura", description: "Celebración anual en octubre con 50,000+ visitantes" },
+  { id: "11", src: rdm04, title: "Festival del Paste", category: "Cultura", description: "CelebraciÃ³n anual en octubre con 50,000+ visitantes" },
   
   // Naturaleza
-  { id: "12", src: penasImg, title: "Peñas Cargadas", category: "Naturaleza", description: "Formaciones rocosas gigantes en equilibrio imposible" },
+  { id: "12", src: penasImg, title: "PeÃ±as Cargadas", category: "Naturaleza", description: "Formaciones rocosas gigantes en equilibrio imposible" },
   { id: "13", src: rdm05, title: "Bosque de Oyamel", category: "Naturaleza", description: "Flora nativa de la Sierra de Pachuca" },
-  { id: "14", src: rdm06, title: "Mirador del Valle", category: "Naturaleza", description: "Vistas panorámicas desde 2,700 metros" },
-  { id: "15", src: rdm7, title: "Niebla Matutina", category: "Naturaleza", description: "180+ días de neblina al año crean una atmósfera mágica" },
+  { id: "14", src: rdm06, title: "Mirador del Valle", category: "Naturaleza", description: "Vistas panorÃ¡micas desde 2,700 metros" },
+  { id: "15", src: rdm7, title: "Niebla Matutina", category: "Naturaleza", description: "180+ dÃ­as de neblina al aÃ±o crean una atmÃ³sfera mÃ¡gica" },
   { id: "16", src: rdm07, title: "Sierra de Pachuca", category: "Naturaleza", description: "Bosques de pinos y encinos rodean el pueblo" },
   
-  // Gastronomía
-  { id: "17", src: rdm08, title: "Café de Altura", category: "Gastronomía", description: "Cafeterías artesanales con vista a las montañas" },
-  { id: "18", src: rmd5, title: "Restaurante Vista", category: "Gastronomía", description: "Comida típica con panorámica del valle" },
-  { id: "19", src: rmd6, title: "Barbacoa Estilo Hidalgo", category: "Gastronomía", description: "Tradición dominical en horno de tierra" },
+  // GastronomÃ­a
+  { id: "17", src: rdm08, title: "CafÃ© de Altura", category: "GastronomÃ­a", description: "CafeterÃ­as artesanales con vista a las montaÃ±as" },
+  { id: "18", src: rmd5, title: "Restaurante Vista", category: "GastronomÃ­a", description: "Comida tÃ­pica con panorÃ¡mica del valle" },
+  { id: "19", src: rmd6, title: "Barbacoa Estilo Hidalgo", category: "GastronomÃ­a", description: "TradiciÃ³n dominical en horno de tierra" },
   
   // Arte y Mapas
-  { id: "20", src: mapaRdm, title: "Mapa Turístico", category: "Arte", description: "Mapa ilustrado de los principales atractivos" },
+  { id: "20", src: mapaRdm, title: "Mapa TurÃ­stico", category: "Arte", description: "Mapa ilustrado de los principales atractivos" },
 ];
 
-const categories = ["Todas", "Historia", "Cultura", "Naturaleza", "Gastronomía", "Arte"];
+const categories = ["Todas", "Historia", "Cultura", "Naturaleza", "GastronomÃ­a", "Arte"];
 
 export const ImageGallery = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todas");
@@ -102,13 +106,13 @@ export const ImageGallery = () => {
           className="text-center mb-12"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-xs font-medium text-amber-500 mb-4">
-            <Camera className="w-3 h-3" /> {galleryImages.length} Fotografías Reales
+            <Camera className="w-3 h-3" /> {galleryImages.length} FotografÃ­as Reales
           </span>
           <h2 className="font-serif text-3xl md:text-5xl font-bold text-foreground mb-4">
-            Real del Monte en Imágenes
+            Real del Monte en ImÃ¡genes
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Fotografías auténticas que capturan la esencia de nuestro Pueblo Mágico
+            FotografÃ­as autÃ©nticas que capturan la esencia de nuestro Pueblo MÃ¡gico
           </p>
         </motion.div>
 

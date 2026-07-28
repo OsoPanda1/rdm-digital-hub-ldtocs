@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
-// Isabella Memory — Multiscale RAG
-// Recuperación desde isabella_knowledge + Wiki + Living World
-// según 7 tipos de memoria: session, persona, ecosystem, cultural, lesson, pattern, incident
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isabella Memory â€” Multiscale RAG
+// RecuperaciÃ³n desde isabella_knowledge + Wiki + Living World
+// segÃºn 7 tipos de memoria: session, persona, ecosystem, cultural, lesson, pattern, incident
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { db } from "../../../db-client";
 import { isabellaKnowledge, isabellaMemory } from "../../../db/schema";

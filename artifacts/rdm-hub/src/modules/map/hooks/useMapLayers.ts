@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * Capas dinámicas del Gemelo Digital.
+ * Capas dinÃ¡micas del Gemelo Digital.
  * Lee `dt_layers` y permite togglear capas en memoria.
  */
 import { useQuery } from "@tanstack/react-query";

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Crown, ArrowRight, ScrollText, Network, GitBranch } from "lucide-react";
@@ -29,7 +33,7 @@ const NodoCeroBanner = () => {
               >
                 <Crown className="w-3.5 h-3.5 mr-2 text-[hsl(var(--gold))]" />
                 <span className="font-body text-[10px] tracking-[0.3em] uppercase text-[hsl(var(--gold))]">
-                  Nodo Cero · Activo
+                  Nodo Cero Â· Activo
                 </span>
               </Badge>
               <h2 className="font-display text-3xl md:text-4xl leading-tight mb-3">
@@ -37,9 +41,9 @@ const NodoCeroBanner = () => {
                 <span className="text-gradient-gold">Sistema Operativo Territorial Soberano</span>
               </h2>
               <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed max-w-2xl">
-                Primer pueblo mágico mexicano con federación triple{" "}
-                <span className="text-foreground/80">conceptual · legal · técnica</span>, IA local,
-                economía Phoenix 20/30/50 y memoria anclada en IPFS. Tesis pública, código
+                Primer pueblo mÃ¡gico mexicano con federaciÃ³n triple{" "}
+                <span className="text-foreground/80">conceptual Â· legal Â· tÃ©cnica</span>, IA local,
+                economÃ­a Phoenix 20/30/50 y memoria anclada en IPFS. Tesis pÃºblica, cÃ³digo
                 auditable.
               </p>
             </div>
@@ -64,14 +68,14 @@ const NodoCeroBanner = () => {
                 className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-[hsl(var(--electric))]/40 bg-[hsl(var(--electric))]/5 text-[hsl(var(--electric-light))] font-body text-xs tracking-[0.25em] uppercase hover:bg-[hsl(var(--electric))]/10 transition-all"
               >
                 <GitBranch className="w-4 h-4" />
-                Fusión RDM·X
+                FusiÃ³n RDMÂ·X
               </Link>
               <Link
                 to="/tenochtitlan"
                 className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-[hsl(var(--gold))]/40 bg-[hsl(var(--gold))]/5 text-[hsl(var(--gold))] font-body text-xs tracking-[0.25em] uppercase hover:bg-[hsl(var(--gold))]/10 transition-all"
               >
                 <Network className="w-4 h-4" />
-                Tenochtitlán
+                TenochtitlÃ¡n
               </Link>
             </div>
           </div>

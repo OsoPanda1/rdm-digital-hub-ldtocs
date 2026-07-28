@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 function getCrypto(): Crypto {
   const c = (globalThis as { crypto?: Crypto }).crypto;
   if (!c?.getRandomValues) {

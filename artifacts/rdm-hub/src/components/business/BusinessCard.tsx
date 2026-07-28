@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { MapPin, Phone, Globe, Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,8 +22,8 @@ interface Business {
 }
 
 const CATEGORY_ICONS: Record<string, string> = {
-  GASTRONOMIA: "🍽️", HOSPEDAJE: "🏨", ARTESANIA: "🎨", PLATERIA: "💍",
-  BAR: "🍺", COMERCIO: "🏪", SERVICIOS: "🔧", TURISMO: "🗺️", OTROS: "📦",
+  GASTRONOMIA: "ðŸ½ï¸", HOSPEDAJE: "ðŸ¨", ARTESANIA: "ðŸŽ¨", PLATERIA: "ðŸ’",
+  BAR: "ðŸº", COMERCIO: "ðŸª", SERVICIOS: "ðŸ”§", TURISMO: "ðŸ—ºï¸", OTROS: "ðŸ“¦",
 };
 
 const PRICE_LABELS: Record<string, string> = {
@@ -44,7 +48,7 @@ export function BusinessCard({ business }: { business: Business }) {
           <div className="flex items-start justify-between gap-2">
             <div>
               <p className="text-xs text-muted-foreground tracking-widest uppercase mb-1">
-                {CATEGORY_ICONS[business.category] ?? "📦"} {business.category}
+                {CATEGORY_ICONS[business.category] ?? "ðŸ“¦"} {business.category}
               </p>
               <h3 className="font-display text-lg text-foreground leading-tight">{business.name}</h3>
             </div>

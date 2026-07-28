@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // Shared ecosystem repo contracts (used by /fusion and tooling)
 
 export type RepoRole = "core" | "satellite" | "legacy" | "experimental";

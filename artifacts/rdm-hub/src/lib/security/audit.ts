@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { createHash } from 'crypto';
 import { logger } from '@/lib/logger';
 
@@ -28,7 +32,7 @@ export function writeAudit(entry: AuditEntry): { logId: string; hash: string } {
   localAuditLog.push(entry);
 
   if (entry.severity === 'critical') {
-    logger.error(`[AUDIT:CRITICAL] ${entry.actionType} por ${entry.actorId} — ${entry.rationale ?? ''}`);
+    logger.error(`[AUDIT:CRITICAL] ${entry.actionType} por ${entry.actorId} â€” ${entry.rationale ?? ''}`);
   }
 
   return { logId: `audit-${index}`, hash };

@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * Hook: useSystemMode
- * Expone el modo antifrágil del sistema (NORMAL/SAFE/EMERGENCY) a la UI
+ * Expone el modo antifrÃ¡gil del sistema (NORMAL/SAFE/EMERGENCY) a la UI
  */
 
 import { useState, useEffect, useCallback } from "react";

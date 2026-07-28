@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { Activity, Wifi, Cpu, HardDrive, BarChart3, Database, Zap, Server, Network } from "lucide-react";
@@ -44,10 +48,10 @@ export function TelemetryView() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-display font-semibold tracking-tight">Telemetría en Vivo</h1>
+          <h1 className="text-2xl font-display font-semibold tracking-tight">TelemetrÃ­a en Vivo</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            Métricas Prometheus del kernel territorial · Actualización cada 5s
-            {error && <span className="ml-2 text-xs text-destructive">⚠ {error}</span>}
+            MÃ©tricas Prometheus del kernel territorial Â· ActualizaciÃ³n cada 5s
+            {error && <span className="ml-2 text-xs text-destructive">âš  {error}</span>}
           </p>
         </div>
         <button
@@ -65,7 +69,7 @@ export function TelemetryView() {
           { label: "Usuarios Activos", value: summary.activeUsers, icon: Network, color: "text-accent" },
           { label: "Decisiones/s", value: summary.decisionsPerSecond.toFixed(1), icon: Zap, color: "text-success" },
           { label: "Latencia P50", value: `${summary.avgLatencyMs.toFixed(0)}ms`, icon: Activity, color: summary.avgLatencyMs > 200 ? "text-destructive" : "text-accent" },
-          { label: "Salud Federación", value: `${(summary.federationHealth * 100).toFixed(0)}%`, icon: Server, color: summary.federationHealth > 0.8 ? "text-success" : summary.federationHealth > 0.5 ? "text-warning" : "text-destructive" },
+          { label: "Salud FederaciÃ³n", value: `${(summary.federationHealth * 100).toFixed(0)}%`, icon: Server, color: summary.federationHealth > 0.8 ? "text-success" : summary.federationHealth > 0.5 ? "text-warning" : "text-destructive" },
         ].map((item, i) => (
           <motion.div
             key={item.label}
@@ -109,17 +113,17 @@ export function TelemetryView() {
       <div className={card}>
         <div className="flex items-center gap-2 mb-4">
           <Server className="w-4 h-4 text-accent" />
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Salud por Federación (Heptafederación)</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Salud por FederaciÃ³n (HeptafederaciÃ³n)</p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { id: "fed1_commerce_local", name: "Comercio Local", icon: "🏪" },
-            { id: "fed2_tourism_culture", name: "Turismo y Cultura", icon: "🏛️" },
-            { id: "fed3_academia_science", name: "Academia y Ciencia", icon: "🔬" },
-            { id: "fed4_local_government", name: "Gobierno Local", icon: "🏛️" },
-            { id: "fed5_tech_infra", name: "Tech e Infraestructura", icon: "⚙️" },
-            { id: "fed6_community_orgs", name: "Comunidad y Orgs", icon: "👥" },
-            { id: "fed7_metaverse_xr", name: "Metaverso y XR", icon: "🥽" },
+            { id: "fed1_commerce_local", name: "Comercio Local", icon: "ðŸª" },
+            { id: "fed2_tourism_culture", name: "Turismo y Cultura", icon: "ðŸ›ï¸" },
+            { id: "fed3_academia_science", name: "Academia y Ciencia", icon: "ðŸ”¬" },
+            { id: "fed4_local_government", name: "Gobierno Local", icon: "ðŸ›ï¸" },
+            { id: "fed5_tech_infra", name: "Tech e Infraestructura", icon: "âš™ï¸" },
+            { id: "fed6_community_orgs", name: "Comunidad y Orgs", icon: "ðŸ‘¥" },
+            { id: "fed7_metaverse_xr", name: "Metaverso y XR", icon: "ðŸ¥½" },
           ].map((fed, i) => (
             <motion.div
               key={fed.id}
@@ -150,22 +154,22 @@ export function TelemetryView() {
       <div className={card}>
         <div className="flex items-center gap-2 mb-3">
           <Database className="w-4 h-4 text-accent" />
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Log de Métricas en Tiempo Real</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Log de MÃ©tricas en Tiempo Real</p>
           <div className="flex-1" />
           <span className={`w-2 h-2 rounded-full ${loading ? "bg-yellow-500 animate-pulse" : "bg-success"}`} />
         </div>
         <div className="bg-primary rounded-lg p-3 font-mono text-xs text-primary-foreground/80 space-y-1 max-h-48 overflow-y-auto">
           {(data ? [
-            `[${new Date().toISOString()}] kernel.latency.p50 → ${summary.avgLatencyMs.toFixed(0)}ms`,
-            `[${new Date().toISOString()}] mesh.connections → ${summary.sseConnections} active`,
-            `[${new Date().toISOString()}] cache.hit_rate → ${summary.cacheHitRate.toFixed(1)}%`,
-            `[${new Date().toISOString()}] federation.health → ${(summary.federationHealth * 100).toFixed(0)}%`,
-            `[${new Date().toISOString()}] events.processed → ${eventsProcessed} total`,
-            `[${new Date().toISOString()}] events.dropped → ${eventsDropped} (${summary.errorRate.toFixed(2)}%)`,
-            `[${new Date().toISOString()}] kernel.intents → ${decisionsTotal} processed`,
-            `[${new Date().toISOString()}] geo.lru.size → ${cacheHits + cacheMisses} entries`,
+            `[${new Date().toISOString()}] kernel.latency.p50 â†’ ${summary.avgLatencyMs.toFixed(0)}ms`,
+            `[${new Date().toISOString()}] mesh.connections â†’ ${summary.sseConnections} active`,
+            `[${new Date().toISOString()}] cache.hit_rate â†’ ${summary.cacheHitRate.toFixed(1)}%`,
+            `[${new Date().toISOString()}] federation.health â†’ ${(summary.federationHealth * 100).toFixed(0)}%`,
+            `[${new Date().toISOString()}] events.processed â†’ ${eventsProcessed} total`,
+            `[${new Date().toISOString()}] events.dropped â†’ ${eventsDropped} (${summary.errorRate.toFixed(2)}%)`,
+            `[${new Date().toISOString()}] kernel.intents â†’ ${decisionsTotal} processed`,
+            `[${new Date().toISOString()}] geo.lru.size â†’ ${cacheHits + cacheMisses} entries`,
           ] : [
-            `[${new Date().toISOString()}] Cargando métricas...`,
+            `[${new Date().toISOString()}] Cargando mÃ©tricas...`,
           ]).map((log, i) => (
             <p key={i} className="opacity-80">{log}</p>
           ))}

@@ -1,12 +1,16 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * Knowledge Cell Types - Specialized Microservice Containers
- * Cada célula es una unidad desplegable, versionada y observable.
+ * Cada cÃ©lula es una unidad desplegable, versionada y observable.
  *
  * Este modelo asume:
  * - Contrato de entrada/salida tipado.
- * - Ciclo de vida explícito (draft, active, deprecated, archived).
- * - Integración con federaciones TAMV y planos RDM.
- * - Operación como grafo (cells que se componen entre sí).
+ * - Ciclo de vida explÃ­cito (draft, active, deprecated, archived).
+ * - IntegraciÃ³n con federaciones TAMV y planos RDM.
+ * - OperaciÃ³n como grafo (cells que se componen entre sÃ­).
  */
 
 import {
@@ -16,12 +20,12 @@ import {
 } from "./federation.types";
 
 // ============================================================================
-// ENUMS BÁSICOS
+// ENUMS BÃSICOS
 // ============================================================================
 
 /**
- * Tipos canónicos de Knowledge Cell.
- * Puedes extender esta lista según crezca el ecosistema.
+ * Tipos canÃ³nicos de Knowledge Cell.
+ * Puedes extender esta lista segÃºn crezca el ecosistema.
  */
 export type CellType =
   | "Render3D"
@@ -39,7 +43,7 @@ export type CellType =
   | "IdentityBridge";
 
 /**
- * Estado de ciclo de vida de la célula.
+ * Estado de ciclo de vida de la cÃ©lula.
  */
 export type CellLifecycle = "draft" | "active" | "deprecated" | "archived";
 
@@ -53,7 +57,7 @@ export type CellCriticality =
   | "mission_critical";
 
 /**
- * Nivel de estabilidad de la API de la célula.
+ * Nivel de estabilidad de la API de la cÃ©lula.
  */
 export type CellStability = "experimental" | "beta" | "stable" | "legacy";
 
@@ -62,20 +66,20 @@ export type CellStability = "experimental" | "beta" | "stable" | "legacy";
 // ============================================================================
 
 /**
- * Representa el contrato de IO de una célula.
- * En implementación real esto podría mapear a Zod schemas o OpenAPI.
+ * Representa el contrato de IO de una cÃ©lula.
+ * En implementaciÃ³n real esto podrÃ­a mapear a Zod schemas o OpenAPI.
  */
 export interface CellIOContract {
   /**
-   * Descripción concisa del propósito de la célula.
+   * DescripciÃ³n concisa del propÃ³sito de la cÃ©lula.
    */
   summary: string;
   /**
-   * Descripción del formato de entrada (ej: JSON schema, tipo lógico).
+   * DescripciÃ³n del formato de entrada (ej: JSON schema, tipo lÃ³gico).
    */
   inputFormat: string;
   /**
-   * Descripción del formato de salida.
+   * DescripciÃ³n del formato de salida.
    */
   outputFormat: string;
   /**
@@ -93,7 +97,7 @@ export interface CellIOContract {
 // ============================================================================
 
 /**
- * Atributos de confiabilidad esperados de la célula.
+ * Atributos de confiabilidad esperados de la cÃ©lula.
  */
 export interface CellSLA {
   /**
@@ -104,17 +108,17 @@ export interface CellSLA {
     p95?: number;
   };
   /**
-   * Tasa máxima de error aceptable (0–1).
+   * Tasa mÃ¡xima de error aceptable (0â€“1).
    */
   maxErrorRate?: number;
   /**
-   * Ventana de evaluación de métricas (en segundos).
+   * Ventana de evaluaciÃ³n de mÃ©tricas (en segundos).
    */
   evaluationWindowSeconds?: number;
 }
 
 /**
- * Configuración para observabilidad de la célula.
+ * ConfiguraciÃ³n para observabilidad de la cÃ©lula.
  */
 export interface CellObservabilityConfig {
   /**
@@ -122,7 +126,7 @@ export interface CellObservabilityConfig {
    */
   emitTracingEvents: boolean;
   /**
-   * Si true, registra métricas agregadas (latencia, errores).
+   * Si true, registra mÃ©tricas agregadas (latencia, errores).
    */
   collectMetrics: boolean;
   /**
@@ -132,73 +136,73 @@ export interface CellObservabilityConfig {
 }
 
 /**
- * Configuración de seguridad / privacidad.
+ * ConfiguraciÃ³n de seguridad / privacidad.
  */
 export interface CellSecurityConfig {
   /**
-   * Si la célula puede recibir datos sensibles.
+   * Si la cÃ©lula puede recibir datos sensibles.
    */
   acceptsSensitiveData: boolean;
   /**
-   * Si la célula debe aplicar anonimización (IP, IDs, etc.) antes de salir.
+   * Si la cÃ©lula debe aplicar anonimizaciÃ³n (IP, IDs, etc.) antes de salir.
    */
   enforcesAnonymization: boolean;
   /**
-   * Scopes / roles mínimos requeridos para invocarla.
+   * Scopes / roles mÃ­nimos requeridos para invocarla.
    * Ejemplo: ["guardian", "admin", "commerce_owner"].
    */
   requiredScopes?: string[];
 }
 
 // ============================================================================
-// KNOWLEDGE CELL CANÓNICA
+// KNOWLEDGE CELL CANÃ“NICA
 // ============================================================================
 
 export interface KnowledgeCell {
   /**
-   * ID único y estable de la célula (ej: "rdm.render3d.atlas.v1").
+   * ID Ãºnico y estable de la cÃ©lula (ej: "rdm.render3d.atlas.v1").
    */
   id: string;
 
   /**
-   * Tipo canónico de la célula (Render, Engine, Bridge, etc.).
+   * Tipo canÃ³nico de la cÃ©lula (Render, Engine, Bridge, etc.).
    */
   type: CellType;
 
   /**
-   * Descripción humana de alto nivel.
+   * DescripciÃ³n humana de alto nivel.
    */
   description: string;
 
   /**
-   * Versión semántica (ej: "1.0.3").
+   * VersiÃ³n semÃ¡ntica (ej: "1.0.3").
    */
   version: string;
 
   /**
-   * Compatibilidad hacia atrás (ej: ">=1.0.0 <2.0.0").
-   * Útil para orquestadores de grafo.
+   * Compatibilidad hacia atrÃ¡s (ej: ">=1.0.0 <2.0.0").
+   * Ãštil para orquestadores de grafo.
    */
   compatibleWith?: string;
 
   /**
-   * Dominio federado al que pertenece (tecnología, cultura, economía, etc.).
+   * Dominio federado al que pertenece (tecnologÃ­a, cultura, economÃ­a, etc.).
    */
   domain: FederationDomain;
 
   /**
-   * Capa del kernel donde principalmente opera esta célula.
+   * Capa del kernel donde principalmente opera esta cÃ©lula.
    */
   layer: KernelLayer;
 
   /**
    * Plano de experiencia con el que se relaciona
-   * (turismo, institucional, técnico).
+   * (turismo, institucional, tÃ©cnico).
    */
   plane: RdmExperiencePlane;
 
   /**
-   * Estado de ciclo de vida de la célula.
+   * Estado de ciclo de vida de la cÃ©lula.
    */
   lifecycle: CellLifecycle;
 
@@ -213,23 +217,23 @@ export interface KnowledgeCell {
   stability: CellStability;
 
   /**
-   * Contrato de IO de la célula.
+   * Contrato de IO de la cÃ©lula.
    */
   io: CellIOContract;
 
   /**
-   * Lista de IDs de otras células de las que depende.
+   * Lista de IDs de otras cÃ©lulas de las que depende.
    */
   dependencies?: string[];
 
   /**
-   * Prompt base que especializa la IA que habita esta célula,
-   * en caso de que sea una célula cognitiva.
+   * Prompt base que especializa la IA que habita esta cÃ©lula,
+   * en caso de que sea una cÃ©lula cognitiva.
    */
   iaSpecializationPrompt?: string;
 
   /**
-   * Endpoint API (path lógico) y URL de microservicio de esta célula.
+   * Endpoint API (path lÃ³gico) y URL de microservicio de esta cÃ©lula.
    * - apiEndpoint: ruta interna (ej: "/cells/render3d/atlas").
    * - microserviceUrl: host/URL de despliegue (edge, lambda, etc.).
    */
@@ -242,24 +246,24 @@ export interface KnowledgeCell {
   testCases: string[];
 
   /**
-   * Muestra de visualización (ej: URL a un PNG, vídeo, XR, etc.).
+   * Muestra de visualizaciÃ³n (ej: URL a un PNG, vÃ­deo, XR, etc.).
    */
   visualizationSample?: string;
 
   /**
-   * Información de autoría / procedencia.
+   * InformaciÃ³n de autorÃ­a / procedencia.
    */
   author: string;
   created: Date;
   updated: Date;
 
   /**
-   * Etiquetas libres para clasificación, búsqueda y navegación.
+   * Etiquetas libres para clasificaciÃ³n, bÃºsqueda y navegaciÃ³n.
    */
   tags: string[];
 
   /**
-   * Si la célula es visible/usable por el público general.
+   * Si la cÃ©lula es visible/usable por el pÃºblico general.
    */
   isPublic: boolean;
 
@@ -269,7 +273,7 @@ export interface KnowledgeCell {
   metadata?: Record<string, unknown>;
 
   /**
-   * SLAs y configuración de observabilidad y seguridad.
+   * SLAs y configuraciÃ³n de observabilidad y seguridad.
    */
   sla?: CellSLA;
   observability?: CellObservabilityConfig;
@@ -277,7 +281,7 @@ export interface KnowledgeCell {
 }
 
 // ============================================================================
-// KNOWLEDGE REPOSITORY (GRAFO DE CÉLULAS)
+// KNOWLEDGE REPOSITORY (GRAFO DE CÃ‰LULAS)
 // ============================================================================
 
 export type CellRelationType =
@@ -287,27 +291,27 @@ export type CellRelationType =
   | "consumes";
 
 /**
- * Relación entre células (grafos de conocimiento / pipelines).
+ * RelaciÃ³n entre cÃ©lulas (grafos de conocimiento / pipelines).
  */
 export interface CellRelation {
   from: string; // cellId
   to: string; // cellId
   relation: CellRelationType;
   /**
-   * Peso/fortaleza de la relación (0–1).
-   * Útil para orden de composición, recomendadores, etc.
+   * Peso/fortaleza de la relaciÃ³n (0â€“1).
+   * Ãštil para orden de composiciÃ³n, recomendadores, etc.
    */
   weight?: number;
 }
 
 export interface KnowledgeRepository {
   /**
-   * Células indexadas por ID.
+   * CÃ©lulas indexadas por ID.
    */
   cells: Record<string, KnowledgeCell>;
 
   /**
-   * Relaciones entre células (grafo dirigido).
+   * Relaciones entre cÃ©lulas (grafo dirigido).
    */
   relations: CellRelation[];
 
@@ -318,7 +322,7 @@ export interface KnowledgeRepository {
   aiExpertiseProfile: string;
 
   /**
-   * Versión del repositorio (no de las células individuales).
+   * VersiÃ³n del repositorio (no de las cÃ©lulas individuales).
    */
   version: string;
 
@@ -329,28 +333,28 @@ export interface KnowledgeRepository {
 }
 
 // ============================================================================
-// CONTEXTO Y RESULTADOS DE EJECUCIÓN
+// CONTEXTO Y RESULTADOS DE EJECUCIÃ“N
 // ============================================================================
 
 /**
- * Contexto de ejecución de una célula.
+ * Contexto de ejecuciÃ³n de una cÃ©lula.
  */
 export interface CellExecutionContext<TInput = unknown> {
   cellId: string;
   input: TInput;
 
   /**
-   * Tiempo máximo de ejecución permitido (ms).
+   * Tiempo mÃ¡ximo de ejecuciÃ³n permitido (ms).
    */
   timeout?: number;
 
   /**
-   * Número máximo de reintentos ante fallos transitorios.
+   * NÃºmero mÃ¡ximo de reintentos ante fallos transitorios.
    */
   retries?: number;
 
   /**
-   * ID de trazas (para correlación con el Event Bus / Guardian).
+   * ID de trazas (para correlaciÃ³n con el Event Bus / Guardian).
    */
   traceId?: string;
 
@@ -362,13 +366,13 @@ export interface CellExecutionContext<TInput = unknown> {
   layer?: KernelLayer;
 
   /**
-   * Metadata contextual (usuario, sesión, idioma, etc.).
+   * Metadata contextual (usuario, sesiÃ³n, idioma, etc.).
    */
   contextMeta?: Record<string, unknown>;
 }
 
 /**
- * Resultado de ejecución de una célula.
+ * Resultado de ejecuciÃ³n de una cÃ©lula.
  */
 export interface CellExecutionResult<TOutput = unknown> {
   cellId: string;
@@ -380,7 +384,7 @@ export interface CellExecutionResult<TOutput = unknown> {
 
   /**
    * Registro de warnings no fatales
-   * (ej: degradación de calidad visual, fallback de modelo).
+   * (ej: degradaciÃ³n de calidad visual, fallback de modelo).
    */
   warnings?: string[];
 

@@ -1,4 +1,8 @@
-// src/quantum/pennylane-bridge.ts — Hybrid Quantum-Classical ML for Isabella
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// src/quantum/pennylane-bridge.ts â€” Hybrid Quantum-Classical ML for Isabella
 // Connects to PennyLane REST API server for quantum circuit execution
 
 type QuantumCircuit = {

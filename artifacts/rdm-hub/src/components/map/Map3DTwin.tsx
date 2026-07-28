@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
@@ -157,15 +161,15 @@ export function Map3DTwin({ viewport, markers, onViewportChange }: Map3DTwinProp
     return (
       <div className="relative flex h-[420px] w-full flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#0a1222] via-[#101a2f] to-[#0a0f1f] p-5 md:h-[640px]">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-silver-500">Modo híbrido degradado</p>
-          <h3 className="mt-2 text-xl font-semibold text-silver-100">Visualización 3D no disponible en este entorno</h3>
+          <p className="text-xs uppercase tracking-[0.2em] text-silver-500">Modo hÃ­brido degradado</p>
+          <h3 className="mt-2 text-xl font-semibold text-silver-100">VisualizaciÃ³n 3D no disponible en este entorno</h3>
           <p className="mt-2 max-w-2xl text-sm text-silver-400">Se mantiene un mapa de nodos para Lovable/WebView y equipos sin WebGL habilitado.</p>
         </div>
         <div className="grid gap-2 md:grid-cols-2">
           {markers.slice(0, 6).map((marker) => (
             <div key={marker.id} className="rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-silver-300">
               <p className="font-medium text-silver-100">{marker.name}</p>
-              <p className="text-xs text-silver-400">{marker.category} · {marker.lat.toFixed(4)}, {marker.lng.toFixed(4)}</p>
+              <p className="text-xs text-silver-400">{marker.category} Â· {marker.lat.toFixed(4)}, {marker.lng.toFixed(4)}</p>
             </div>
           ))}
         </div>
@@ -193,7 +197,7 @@ export function Map3DTwin({ viewport, markers, onViewportChange }: Map3DTwinProp
         </Suspense>
       </Canvas>
       <div className="absolute bottom-3 left-3 z-20 rounded-lg border border-white/15 bg-night-900/75 px-3 py-2 text-xs text-silver-300 backdrop-blur-sm">
-        Gemelo Digital sincronizado · {viewport.lat.toFixed(4)}, {viewport.lng.toFixed(4)}
+        Gemelo Digital sincronizado Â· {viewport.lat.toFixed(4)}, {viewport.lng.toFixed(4)}
       </div>
     </div>
   );

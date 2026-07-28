@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import type { ConnectorConfig, ConnectorType, Installation, ConnectTokenRequest, ConnectTokenResponse } from './types';
 import { federationBus } from '@/federaciones/FederationBus';

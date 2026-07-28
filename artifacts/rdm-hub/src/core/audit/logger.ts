@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * RDM Core Service — Audit Logger con hash de integridad
+ * RDM Core Service â€” Audit Logger con hash de integridad
  * Registro auditable e inmutable de eventos del sistema
  */
 

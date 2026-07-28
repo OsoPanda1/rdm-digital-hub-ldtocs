@@ -1,20 +1,24 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Store, Star, ExternalLink } from "lucide-react";
 
 const BUSINESSES = [
   { id: "1", name: "Pastes El Portal", type: "Restaurante", rating: 4.7, status: "Abierto", revenue: "+12%" },
   { id: "2", name: "Hotel Mina Real", type: "Hospedaje", rating: 4.5, status: "Abierto", revenue: "+8%" },
-  { id: "3", name: "Artesanías del Monte", type: "Tienda", rating: 4.3, status: "Abierto", revenue: "+15%" },
-  { id: "4", name: "Café La Bruma", type: "Café", rating: 4.6, status: "Abierto", revenue: "+22%" },
+  { id: "3", name: "ArtesanÃ­as del Monte", type: "Tienda", rating: 4.3, status: "Abierto", revenue: "+15%" },
+  { id: "4", name: "CafÃ© La Bruma", type: "CafÃ©", rating: 4.6, status: "Abierto", revenue: "+22%" },
   { id: "5", name: "Tours Mineros RDM", type: "Turismo", rating: 4.8, status: "Abierto", revenue: "+18%" },
-  { id: "6", name: "Pulquería El Chato", type: "Bar", rating: 4.2, status: "Cerrado", revenue: "+5%" },
+  { id: "6", name: "PulquerÃ­a El Chato", type: "Bar", rating: 4.2, status: "Cerrado", revenue: "+5%" },
 ];
 
 export function CommerceView() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-display font-semibold tracking-tight">Economía Local</h1>
+        <h1 className="text-2xl font-display font-semibold tracking-tight">EconomÃ­a Local</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Red de comercios integrados al ecosistema digital
         </p>
@@ -25,7 +29,7 @@ export function CommerceView() {
         {[
           { label: "Comercios Activos", value: "6" },
           { label: "Flujo Mensual", value: "+14%" },
-          { label: "Redistribución", value: "Equitativa" },
+          { label: "RedistribuciÃ³n", value: "Equitativa" },
         ].map((item, i) => (
           <motion.div
             key={item.label}
@@ -66,7 +70,7 @@ export function CommerceView() {
                   {biz.name}
                 </td>
                 <td className="px-4 py-3 text-muted-foreground">{biz.type}</td>
-                <td className="px-4 py-3 text-accent">★ {biz.rating}</td>
+                <td className="px-4 py-3 text-accent">â˜… {biz.rating}</td>
                 <td className="px-4 py-3">
                   <span className={`text-xs px-2 py-0.5 rounded-full ${
                     biz.status === "Abierto" ? "bg-success/10 text-success" : "bg-muted text-muted-foreground"

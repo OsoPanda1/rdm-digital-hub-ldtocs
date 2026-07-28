@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { 
@@ -32,146 +36,146 @@ const festivals = [
     name: "Festival Internacional del Paste",
     month: "Octubre",
     date: "Segundo fin de semana de octubre",
-    description: "El evento gastronómico y cultural más importante del año. Durante tres días, el pueblo celebra su icónico platillo con más de 50 expositores, concursos, música en vivo y actividades para toda la familia.",
-    fullDescription: `El Festival Internacional del Paste es mucho más que una celebración gastronómica. Es el momento en que Real del Monte rinde homenaje a su herencia cornish-mexicana y comparte esta tradición única con visitantes de todo el mundo.
+    description: "El evento gastronÃ³mico y cultural mÃ¡s importante del aÃ±o. Durante tres dÃ­as, el pueblo celebra su icÃ³nico platillo con mÃ¡s de 50 expositores, concursos, mÃºsica en vivo y actividades para toda la familia.",
+    fullDescription: `El Festival Internacional del Paste es mucho mÃ¡s que una celebraciÃ³n gastronÃ³mica. Es el momento en que Real del Monte rinde homenaje a su herencia cornish-mexicana y comparte esta tradiciÃ³n Ãºnica con visitantes de todo el mundo.
 
-Durante el festival, las calles del centro histórico se transforman en un escenario vivo donde pasteleros locales e internacionales compiten por el título de "Mejor Paste del Año". Los visitantes pueden degustar más de 50 variedades diferentes, desde el tradicional de papa con carne hasta creaciones innovadoras con ingredientes locales.
+Durante el festival, las calles del centro histÃ³rico se transforman en un escenario vivo donde pasteleros locales e internacionales compiten por el tÃ­tulo de "Mejor Paste del AÃ±o". Los visitantes pueden degustar mÃ¡s de 50 variedades diferentes, desde el tradicional de papa con carne hasta creaciones innovadoras con ingredientes locales.
 
-El evento incluye conciertos de bandas de viento, danzas folklóricas, exposiciones artesanales, y el tradicional desfile donde participan carros alegóricos inspirados en la historia minera. El clímax llega con la coronación de la "Reina del Paste" y el concurso de comelones, donde los valientes compiten por ver quién come más pastes en 10 minutos.`,
+El evento incluye conciertos de bandas de viento, danzas folklÃ³ricas, exposiciones artesanales, y el tradicional desfile donde participan carros alegÃ³ricos inspirados en la historia minera. El clÃ­max llega con la coronaciÃ³n de la "Reina del Paste" y el concurso de comelones, donde los valientes compiten por ver quiÃ©n come mÃ¡s pastes en 10 minutos.`,
     activities: [
       "Concurso del Mejor Paste Tradicional",
       "Competencia de Comelones de Paste",
-      "Coronación de la Reina del Paste",
+      "CoronaciÃ³n de la Reina del Paste",
       "Conciertos de Bandas de Viento",
-      "Exposición de Artesanías Mineras",
-      "Talleres de Elaboración de Paste",
-      "Recorridos Históricos Guiados",
-      "Espectáculo de Luz y Sonido"
+      "ExposiciÃ³n de ArtesanÃ­as Mineras",
+      "Talleres de ElaboraciÃ³n de Paste",
+      "Recorridos HistÃ³ricos Guiados",
+      "EspectÃ¡culo de Luz y Sonido"
     ],
-    culturalSignificance: "El festival representa la fusión perfecta entre la tradición cornish del Cornish Pasty y la creatividad mexicana, creando un evento único en el mundo que atrae a más de 50,000 visitantes anualmente."
+    culturalSignificance: "El festival representa la fusiÃ³n perfecta entre la tradiciÃ³n cornish del Cornish Pasty y la creatividad mexicana, creando un evento Ãºnico en el mundo que atrae a mÃ¡s de 50,000 visitantes anualmente."
   },
   {
     id: "muertos",
-    name: "Día de Muertos en el Panteón Inglés",
+    name: "DÃ­a de Muertos en el PanteÃ³n InglÃ©s",
     month: "Noviembre",
     date: "1 y 2 de noviembre",
-    description: "Una celebración única en el mundo que fusiona tradiciones mexicanas del Día de Muertos con rituales anglicanos y celtas. Velas, flores de cempasúchil, rezos en inglés y español en un ambiente mágico entre la neblina.",
-    fullDescription: `El Día de Muertos en el Panteón Inglés es posiblemente la celebración más emotiva y única de Real del Monte. En este lugar sagrado, donde descansan los restos de los mineros cornish y sus familias, las tradiciones mexicanas y anglicanas se entrelazan de manera sublime.
+    description: "Una celebraciÃ³n Ãºnica en el mundo que fusiona tradiciones mexicanas del DÃ­a de Muertos con rituales anglicanos y celtas. Velas, flores de cempasÃºchil, rezos en inglÃ©s y espaÃ±ol en un ambiente mÃ¡gico entre la neblina.",
+    fullDescription: `El DÃ­a de Muertos en el PanteÃ³n InglÃ©s es posiblemente la celebraciÃ³n mÃ¡s emotiva y Ãºnica de Real del Monte. En este lugar sagrado, donde descansan los restos de los mineros cornish y sus familias, las tradiciones mexicanas y anglicanas se entrelazan de manera sublime.
 
-La celebración comienza el 31 de octubre con la "Vigilia de las Ánimas", donde voluntarios colocan velas en cada una de las tumbas. La neblina que habitualmente envuelve el panteón crea una atmósfera etérea que parece sacada de una película.
+La celebraciÃ³n comienza el 31 de octubre con la "Vigilia de las Ãnimas", donde voluntarios colocan velas en cada una de las tumbas. La neblina que habitualmente envuelve el panteÃ³n crea una atmÃ³sfera etÃ©rea que parece sacada de una pelÃ­cula.
 
-El 1 de noviembre, Día de Todos los Santos, se celebra una misa anglicana bilingüe en la capilla del panteón. Descendientes de las familias originales viajan desde Cornualles, Inglaterra, para honrar a sus antepasados. Las ofrendas combinan elementos mexicanos (cempasúchil, pan de muerto, copal) con simbolismo celta (tréboles, cruces celtas, piedras de río).
+El 1 de noviembre, DÃ­a de Todos los Santos, se celebra una misa anglicana bilingÃ¼e en la capilla del panteÃ³n. Descendientes de las familias originales viajan desde Cornualles, Inglaterra, para honrar a sus antepasados. Las ofrendas combinan elementos mexicanos (cempasÃºchil, pan de muerto, copal) con simbolismo celta (trÃ©boles, cruces celtas, piedras de rÃ­o).
 
 El 2 de noviembre culmina con el "Festival de las Luces", donde cientos de velas iluminan el cementerio mientras el coro interpreta canciones tradicionales cornish y mexicanas.`,
     activities: [
-      "Vigilia de las Ánimas con encendido de velas",
-      "Misa Anglicana Bilingüe",
+      "Vigilia de las Ãnimas con encendido de velas",
+      "Misa Anglicana BilingÃ¼e",
       "Recorridos Nocturnos con Leyendas",
       "Ofrendas Biculturales",
       'Concierto del Coro "Voices of the Mines"',
       "Ceremonia Celta de Samhain",
       "Conteo de Historias Familiares",
-      "Liberación de Faroles Flotantes"
+      "LiberaciÃ³n de Faroles Flotantes"
     ],
-    culturalSignificance: "Es el único lugar en México donde se practica una síntesis auténtica de rituales mexicanos y anglicanos, reconocido por la UNESCO como ejemplo de diálogo intercultural."
+    culturalSignificance: "Es el Ãºnico lugar en MÃ©xico donde se practica una sÃ­ntesis autÃ©ntica de rituales mexicanos y anglicanos, reconocido por la UNESCO como ejemplo de diÃ¡logo intercultural."
   },
   {
     id: "semanasanta",
     name: "Semana Santa Minera",
     month: "Marzo/Abril",
     date: "Fecha variable (Semana Santa)",
-    description: "Procesiones que recorren las calles empedradas del centro histórico, representando la Pasión de Cristo con elementos distintivos de la tradición minera. Los penitentes visten túnicas que recuerdan a los mineros de antaño.",
-    fullDescription: `La Semana Santa en Real del Monte es una experiencia singular donde la devoción religiosa se entrelaza con la memoria de los mineros que arriesgaron sus vidas bajo tierra. Las celebraciones comienzan el Domingo de Ramos y culminan el Domingo de Resurrección.
+    description: "Procesiones que recorren las calles empedradas del centro histÃ³rico, representando la PasiÃ³n de Cristo con elementos distintivos de la tradiciÃ³n minera. Los penitentes visten tÃºnicas que recuerdan a los mineros de antaÃ±o.",
+    fullDescription: `La Semana Santa en Real del Monte es una experiencia singular donde la devociÃ³n religiosa se entrelaza con la memoria de los mineros que arriesgaron sus vidas bajo tierra. Las celebraciones comienzan el Domingo de Ramos y culminan el Domingo de ResurrecciÃ³n.
 
-El Jueves Santo tiene lugar la "Procesión del Silencio Minero", una de las más emotivas de México. Los participantes, vestidos con túnicas negras que evocan el uniforme de los mineros, portan herramientas mineras como lámparas de carburo, picos y cascos en lugar de los tradicionales cirios. El silencio solo se rompe por el sonido de las campanas y los golpes sordos que imitan el trabajo en las minas.
+El Jueves Santo tiene lugar la "ProcesiÃ³n del Silencio Minero", una de las mÃ¡s emotivas de MÃ©xico. Los participantes, vestidos con tÃºnicas negras que evocan el uniforme de los mineros, portan herramientas mineras como lÃ¡mparas de carburo, picos y cascos en lugar de los tradicionales cirios. El silencio solo se rompe por el sonido de las campanas y los golpes sordos que imitan el trabajo en las minas.
 
-El Viernes Santo, la "Procesión de la Cruz de Plata" lleva una réplica de la cruz labrada en plata pura que los mineros dedicaron a su santo patrón. Esta cruz, originalmente colocada en la Mina de Acosta en 1850, simboliza la fe de quienes arriesgaban sus vidas bajo tierra.
+El Viernes Santo, la "ProcesiÃ³n de la Cruz de Plata" lleva una rÃ©plica de la cruz labrada en plata pura que los mineros dedicaron a su santo patrÃ³n. Esta cruz, originalmente colocada en la Mina de Acosta en 1850, simboliza la fe de quienes arriesgaban sus vidas bajo tierra.
 
-Durante toda la semana, se realizan representaciones teatrales de la Pasión en escenarios naturales, conciertos de música sacra en la iglesia, y la tradicional "Feria de la Plata" donde artesanos venden joyería inspirada en la minería.`,
+Durante toda la semana, se realizan representaciones teatrales de la PasiÃ³n en escenarios naturales, conciertos de mÃºsica sacra en la iglesia, y la tradicional "Feria de la Plata" donde artesanos venden joyerÃ­a inspirada en la minerÃ­a.`,
     activities: [
-      "Procesión del Silencio Minero",
-      "Procesión de la Cruz de Plata",
-      "Representación Teatral de la Pasión",
-      "Conciertos de Música Sacra",
+      "ProcesiÃ³n del Silencio Minero",
+      "ProcesiÃ³n de la Cruz de Plata",
+      "RepresentaciÃ³n Teatral de la PasiÃ³n",
+      "Conciertos de MÃºsica Sacra",
       "Feria de la Plata Artesanal",
-      "Visitas Guiadas a Templos Históricos",
-      "Exposición de Arte Religioso Colonial",
+      "Visitas Guiadas a Templos HistÃ³ricos",
+      "ExposiciÃ³n de Arte Religioso Colonial",
       "Encuentro de Bandas de Viento"
     ],
-    culturalSignificance: "Representa la síntesis entre la fe católica y la identidad minera, mostrando cómo la religión fue fundamental para una comunidad que vivía en constante peligro bajo tierra."
+    culturalSignificance: "Representa la sÃ­ntesis entre la fe catÃ³lica y la identidad minera, mostrando cÃ³mo la religiÃ³n fue fundamental para una comunidad que vivÃ­a en constante peligro bajo tierra."
   },
   {
     id: "feriaplata",
     name: "Feria de la Plata",
     month: "Agosto",
     date: "Primera quincena de agosto",
-    description: "Celebración del metal que dio origen al pueblo. Exposición de joyería, minerales, competencias, conferencias académicas y eventos que honran la herencia minera de Real del Monte.",
-    fullDescription: `La Feria de la Plata es el homenaje anual al metal que construyó Real del Monte. Durante dos semanas, el pueblo se transforma en un centro de exposición minera, cultural y académico que atrae a geólogos, historiadores, joyeros y turistas.
+    description: "CelebraciÃ³n del metal que dio origen al pueblo. ExposiciÃ³n de joyerÃ­a, minerales, competencias, conferencias acadÃ©micas y eventos que honran la herencia minera de Real del Monte.",
+    fullDescription: `La Feria de la Plata es el homenaje anual al metal que construyÃ³ Real del Monte. Durante dos semanas, el pueblo se transforma en un centro de exposiciÃ³n minera, cultural y acadÃ©mico que atrae a geÃ³logos, historiadores, joyeros y turistas.
 
-El evento central es la "Exposición Internacional de Minerales", donde coleccionistas de todo el mundo exhiben especímenes únicos de plata nativa, acanthita, y otros minerales encontrados en las minas locales. La exposición incluye piezas históricas que datan de la época colonial.
+El evento central es la "ExposiciÃ³n Internacional de Minerales", donde coleccionistas de todo el mundo exhiben especÃ­menes Ãºnicos de plata nativa, acanthita, y otros minerales encontrados en las minas locales. La exposiciÃ³n incluye piezas histÃ³ricas que datan de la Ã©poca colonial.
 
-Uno de los momentos más esperados es el "Concurso Nacional de Joyería Minera", donde orfebres compiten creando piezas inspiradas en la tradición minera. Los diseños ganadores se exhiben en el Museo del Paste y la Plata durante todo el año.
+Uno de los momentos mÃ¡s esperados es el "Concurso Nacional de JoyerÃ­a Minera", donde orfebres compiten creando piezas inspiradas en la tradiciÃ³n minera. Los diseÃ±os ganadores se exhiben en el Museo del Paste y la Plata durante todo el aÃ±o.
 
-La feria incluye también conferencias académicas sobre historia minera, talleres de joyería para niños, recorridos especiales a las minas, y el tradicional "Encuentro de Mineros", donde veteranos comparten historias de su trabajo bajo tierra. La clausura incluye un espectacular show de fuegos artificiales desde la cima de la Mina de Acosta.`,
+La feria incluye tambiÃ©n conferencias acadÃ©micas sobre historia minera, talleres de joyerÃ­a para niÃ±os, recorridos especiales a las minas, y el tradicional "Encuentro de Mineros", donde veteranos comparten historias de su trabajo bajo tierra. La clausura incluye un espectacular show de fuegos artificiales desde la cima de la Mina de Acosta.`,
     activities: [
-      "Exposición Internacional de Minerales",
-      "Concurso Nacional de Joyería Minera",
-      "Conferencias de Historia y Geología",
+      "ExposiciÃ³n Internacional de Minerales",
+      "Concurso Nacional de JoyerÃ­a Minera",
+      "Conferencias de Historia y GeologÃ­a",
       "Recorridos Especiales a Minas",
       "Encuentro de Mineros Veteranos",
-      "Talleres de Joyería para Niños",
-      "Subasta de Piezas Históricas",
-      "Espectáculo de Fuegos Artificiales"
+      "Talleres de JoyerÃ­a para NiÃ±os",
+      "Subasta de Piezas HistÃ³ricas",
+      "EspectÃ¡culo de Fuegos Artificiales"
     ],
-    culturalSignificance: "Mantiene viva la memoria de la industria que dio origen al pueblo, educando a las nuevas generaciones sobre la importancia histórica de la minería."
+    culturalSignificance: "Mantiene viva la memoria de la industria que dio origen al pueblo, educando a las nuevas generaciones sobre la importancia histÃ³rica de la minerÃ­a."
   },
   {
     id: "cornish",
     name: "Festival Cornish-Mexicano",
     month: "Julio",
-    date: "Último fin de semana de julio",
-    description: "Celebración anual de la herencia británica del pueblo. Música celta, danzas tradicionales, comida típica de Cornualles, rugby, y la visita de delegaciones desde Inglaterra.",
-    fullDescription: `El Festival Cornish-Mexicano celebra el legado único de la inmigración inglesa que transformó Real del Monte. Es el evento que más fortalece los lazos con Cornualles, con la participación anual de delegaciones oficiales del condado británico.
+    date: "Ãšltimo fin de semana de julio",
+    description: "CelebraciÃ³n anual de la herencia britÃ¡nica del pueblo. MÃºsica celta, danzas tradicionales, comida tÃ­pica de Cornualles, rugby, y la visita de delegaciones desde Inglaterra.",
+    fullDescription: `El Festival Cornish-Mexicano celebra el legado Ãºnico de la inmigraciÃ³n inglesa que transformÃ³ Real del Monte. Es el evento que mÃ¡s fortalece los lazos con Cornualles, con la participaciÃ³n anual de delegaciones oficiales del condado britÃ¡nico.
 
-El festival comienza con el "Desfile de las Dos Naciones", donde participantes vestidos con trajes típicos mexicanos y cornish desfilan por las calles principales. La banda de música toca una mezcla de marchas mineras mexicanas y melodías celtas.
+El festival comienza con el "Desfile de las Dos Naciones", donde participantes vestidos con trajes tÃ­picos mexicanos y cornish desfilan por las calles principales. La banda de mÃºsica toca una mezcla de marchas mineras mexicanas y melodÃ­as celtas.
 
-Durante el fin de semana se realizan conciertos de música celta, talleres de bailes tradicionales cornish, exhibiciones de deportes como el rugby y la lucha greco-romana (introducidos por los ingleses), y la tradicional "Cena de los Cornish Pasties" donde se sirven pastes preparados según recetas originales traídas desde Inglaterra.
+Durante el fin de semana se realizan conciertos de mÃºsica celta, talleres de bailes tradicionales cornish, exhibiciones de deportes como el rugby y la lucha greco-romana (introducidos por los ingleses), y la tradicional "Cena de los Cornish Pasties" donde se sirven pastes preparados segÃºn recetas originales traÃ­das desde Inglaterra.
 
-Un momento especial es la "Ceremonia de las Flores", donde descendientes de familias cornish y mexicanas intercambian flores de cempasúchil y rosas inglesas como símbolo de amistad. El festival concluye con un concierto de despedida donde suenan las canciones que los mineros cantaban en los túneles.`,
+Un momento especial es la "Ceremonia de las Flores", donde descendientes de familias cornish y mexicanas intercambian flores de cempasÃºchil y rosas inglesas como sÃ­mbolo de amistad. El festival concluye con un concierto de despedida donde suenan las canciones que los mineros cantaban en los tÃºneles.`,
     activities: [
       "Desfile de las Dos Naciones",
-      "Conciertos de Música Celta",
+      "Conciertos de MÃºsica Celta",
       "Talleres de Bailes Tradicionales",
-      "Exhibición de Rugby Histórico",
+      "ExhibiciÃ³n de Rugby HistÃ³rico",
       "Cena de los Cornish Pasties",
       "Ceremonia de las Flores",
-      "Visita guiada al Panteón Inglés",
+      "Visita guiada al PanteÃ³n InglÃ©s",
       "Encuentro de Descendientes"
     ],
-    culturalSignificance: "Es el único festival de su tipo en América Latina, manteniendo vivos los lazos culturales con Cornualles y preservando tradiciones que de otra forma se habrían perdido."
+    culturalSignificance: "Es el Ãºnico festival de su tipo en AmÃ©rica Latina, manteniendo vivos los lazos culturales con Cornualles y preservando tradiciones que de otra forma se habrÃ­an perdido."
   }
 ];
 
 // Cultural expressions
 const culturalExpressions = [
   {
-    category: "Música",
+    category: "MÃºsica",
     icon: Music,
     items: [
       {
         title: "Bandas de Viento",
-        description: "Herencia de las bandas mineras que animaban las fiestas de los trabajadores. Las bandas de Real del Monte son famosas en toda la región y tocan en todas las celebraciones.",
-        significance: "Las bandas de viento surgieron como entretenimiento para los mineros después de sus duras jornadas laborales. Hoy, las bandas juveniles continúan la tradición."
+        description: "Herencia de las bandas mineras que animaban las fiestas de los trabajadores. Las bandas de Real del Monte son famosas en toda la regiÃ³n y tocan en todas las celebraciones.",
+        significance: "Las bandas de viento surgieron como entretenimiento para los mineros despuÃ©s de sus duras jornadas laborales. Hoy, las bandas juveniles continÃºan la tradiciÃ³n."
       },
       {
         title: "Coros Cornish",
-        description: 'Los coros masculinos fueron introducidos por la comunidad inglesa. El Coro "Voices of the Mines" sigue activo y canta canciones tradicionales en inglés y español.',
-        significance: "Los coros eran parte esencial de la vida comunitaria británica y se mantuvieron como tradición única en Real del Monte."
+        description: 'Los coros masculinos fueron introducidos por la comunidad inglesa. El Coro "Voices of the Mines" sigue activo y canta canciones tradicionales en inglÃ©s y espaÃ±ol.',
+        significance: "Los coros eran parte esencial de la vida comunitaria britÃ¡nica y se mantuvieron como tradiciÃ³n Ãºnica en Real del Monte."
       },
       {
-        title: "Música Celta",
-        description: "Grupos locales interpretan música tradicional de Cornualles, Gales e Irlanda, manteniendo viva la herencia musical de los inmigrantes.",
-        significance: 'La música celta se ha fusionado con ritmos mexicanos creando un estilo único conocido como "Celta-Mex".'
+        title: "MÃºsica Celta",
+        description: "Grupos locales interpretan mÃºsica tradicional de Cornualles, Gales e Irlanda, manteniendo viva la herencia musical de los inmigrantes.",
+        significance: 'La mÃºsica celta se ha fusionado con ritmos mexicanos creando un estilo Ãºnico conocido como "Celta-Mex".'
       }
     ]
   },
@@ -180,19 +184,19 @@ const culturalExpressions = [
     icon: Theater,
     items: [
       {
-        title: "Ballet Folclórico Minero",
-        description: "Danzas que cuentan la historia de la minería, la llegada de los ingleses y la vida en la sierra. Coreografías originales creadas por maestros locales.",
-        significance: "Las danzas preservan movimientos que imitan el trabajo minero: picar la roca, arrastrar carros, encender lámparas."
+        title: "Ballet FolclÃ³rico Minero",
+        description: "Danzas que cuentan la historia de la minerÃ­a, la llegada de los ingleses y la vida en la sierra. CoreografÃ­as originales creadas por maestros locales.",
+        significance: "Las danzas preservan movimientos que imitan el trabajo minero: picar la roca, arrastrar carros, encender lÃ¡mparas."
       },
       {
         title: "Danza de los Pastes",
-        description: "Coreografía especial creada para el Festival del Paste que representa el proceso de elaboración de este platillo icónico.",
-        significance: "Una danza única en el mundo que celebra un platillo específico de la gastronomía local."
+        description: "CoreografÃ­a especial creada para el Festival del Paste que representa el proceso de elaboraciÃ³n de este platillo icÃ³nico.",
+        significance: "Una danza Ãºnica en el mundo que celebra un platillo especÃ­fico de la gastronomÃ­a local."
       },
       {
         title: "Bailes Celtas",
         description: 'Talleres regulares de danzas tradicionales cornish como el "Furry Dance" y el "Flora Day", preservados por descendientes de las familias originales.',
-        significance: "Real del Monte es el único lugar fuera de Cornualles donde estas danzas se practican regularmente."
+        significance: "Real del Monte es el Ãºnico lugar fuera de Cornualles donde estas danzas se practican regularmente."
       }
     ]
   },
@@ -202,39 +206,39 @@ const culturalExpressions = [
     items: [
       {
         title: "Pintura de Paisaje",
-        description: "Artistas locales capturan la belleza del bosque de niebla, las neblinas matinales y la arquitectura colonial. La Escuela de Pintura de Real del Monte tiene más de 50 años.",
-        significance: "El paisaje único de Real del Monte ha inspirado a generaciones de pintores mexicanos e internacionales."
+        description: "Artistas locales capturan la belleza del bosque de niebla, las neblinas matinales y la arquitectura colonial. La Escuela de Pintura de Real del Monte tiene mÃ¡s de 50 aÃ±os.",
+        significance: "El paisaje Ãºnico de Real del Monte ha inspirado a generaciones de pintores mexicanos e internacionales."
       },
       {
         title: "Escultura en Metal",
-        description: "Artistas trabajan con cobre, plata y hierro creando piezas inspiradas en herramientas mineras y figuras históricas.",
+        description: "Artistas trabajan con cobre, plata y hierro creando piezas inspiradas en herramientas mineras y figuras histÃ³ricas.",
         significance: "Uso de materiales locales para crear arte que honra la herencia minera del pueblo."
       },
       {
-        title: "Fotografía Documental",
-        description: "El pueblo ha sido escenario de innumerables proyectos fotográficos que documentan su arquitectura, tradiciones y gentes.",
-        significance: "El archivo fotográfico de Real del Monte es uno de los más importantes de pueblos mágicos de México."
+        title: "FotografÃ­a Documental",
+        description: "El pueblo ha sido escenario de innumerables proyectos fotogrÃ¡ficos que documentan su arquitectura, tradiciones y gentes.",
+        significance: "El archivo fotogrÃ¡fico de Real del Monte es uno de los mÃ¡s importantes de pueblos mÃ¡gicos de MÃ©xico."
       }
     ]
   },
   {
-    category: "Artesanía",
+    category: "ArtesanÃ­a",
     icon: Gift,
     items: [
       {
-        title: "Joyería Minera",
-        description: "Orfebres locales crean piezas usando técnicas tradicionales e inspirándose en herramientas mineras, minerales y símbolos de la comunidad cornish.",
-        significance: "Cada pieza cuenta una historia de la minería y la fusión cultural del pueblo."
+        title: "JoyerÃ­a Minera",
+        description: "Orfebres locales crean piezas usando tÃ©cnicas tradicionales e inspirÃ¡ndose en herramientas mineras, minerales y sÃ­mbolos de la comunidad cornish.",
+        significance: "Cada pieza cuenta una historia de la minerÃ­a y la fusiÃ³n cultural del pueblo."
       },
       {
-        title: "Alfarería Tradicional",
-        description: "Cerámica hecha con técnicas prehispánicas y coloniales, especialmente ollas para guisos y objetos decorativos.",
-        significance: "Preservación de técnicas ancestrales que se combinan con diseños inspirados en la minería."
+        title: "AlfarerÃ­a Tradicional",
+        description: "CerÃ¡mica hecha con tÃ©cnicas prehispÃ¡nicas y coloniales, especialmente ollas para guisos y objetos decorativos.",
+        significance: "PreservaciÃ³n de tÃ©cnicas ancestrales que se combinan con diseÃ±os inspirados en la minerÃ­a."
       },
       {
         title: "Talla en Madera",
-        description: "Artesanos tallan muebles, máscaras y objetos decorativos usando maderas locales como el oyamel y el pino.",
-        significance: "Las piezas de madera tallada son características de las casas históricas del pueblo."
+        description: "Artesanos tallan muebles, mÃ¡scaras y objetos decorativos usando maderas locales como el oyamel y el pino.",
+        significance: "Las piezas de madera tallada son caracterÃ­sticas de las casas histÃ³ricas del pueblo."
       }
     ]
   }
@@ -244,22 +248,22 @@ const culturalExpressions = [
 const traditions = [
   {
     title: "La Neblina como Personaje",
-    description: "En Real del Monte, la neblina no es solo un fenómeno meteorológico, sino un elemento cultural. Existen leyendas, poemas, canciones y tradiciones relacionadas con la neblina que cubre el pueblo más de 180 días al año.",
+    description: "En Real del Monte, la neblina no es solo un fenÃ³meno meteorolÃ³gico, sino un elemento cultural. Existen leyendas, poemas, canciones y tradiciones relacionadas con la neblina que cubre el pueblo mÃ¡s de 180 dÃ­as al aÃ±o.",
     icon: Wind
   },
   {
     title: "El Culto a la Plata",
-    description: "Aunque la minería ya no es la principal actividad, la plata sigue siendo reverenciada. Se realizan ceremonias de agradecimiento a la tierra y existe un profundo respeto por las minas como patrimonio histórico.",
+    description: "Aunque la minerÃ­a ya no es la principal actividad, la plata sigue siendo reverenciada. Se realizan ceremonias de agradecimiento a la tierra y existe un profundo respeto por las minas como patrimonio histÃ³rico.",
     icon: Sparkles
   },
   {
     title: "Las Historias de Mineros",
-    description: "La tradición oral es vital. Los ancianos cuentan historias de sus experiencias en las minas a las nuevas generaciones, preservando no solo hechos históricos sino también valores como el compañerismo y el coraje.",
+    description: "La tradiciÃ³n oral es vital. Los ancianos cuentan historias de sus experiencias en las minas a las nuevas generaciones, preservando no solo hechos histÃ³ricos sino tambiÃ©n valores como el compaÃ±erismo y el coraje.",
     icon: BookOpen
   },
   {
     title: "El Respeto por los Difuntos",
-    description: "Las tradiciones funerarias combinan elementos católicos, anglicanos y prehispánicos. El Día de Muertos se celebra tanto en el panteón católico como en el anglicano, reconociendo la diversidad religiosa del pueblo.",
+    description: "Las tradiciones funerarias combinan elementos catÃ³licos, anglicanos y prehispÃ¡nicos. El DÃ­a de Muertos se celebra tanto en el panteÃ³n catÃ³lico como en el anglicano, reconociendo la diversidad religiosa del pueblo.",
     icon: Moon
   }
 ];
@@ -267,23 +271,23 @@ const traditions = [
 // Gastronomic culture
 const gastronomicCulture = {
   title: "Cultura del Paste",
-  description: "El paste no es solo comida en Real del Monte; es un símbolo de identidad cultural. Representa la fusión perfecta entre la tradición cornish y la creatividad mexicana.",
+  description: "El paste no es solo comida en Real del Monte; es un sÃ­mbolo de identidad cultural. Representa la fusiÃ³n perfecta entre la tradiciÃ³n cornish y la creatividad mexicana.",
   aspects: [
     {
       title: "El Arte de Hacer Paste",
-      description: "Las familias pastelesas guardan celosamente sus recetas, transmitiéndolas de generación en generación. El proceso de elaboración es un ritual que incluye técnicas específicas de amasado, reposo y horneado."
+      description: "Las familias pastelesas guardan celosamente sus recetas, transmitiÃ©ndolas de generaciÃ³n en generaciÃ³n. El proceso de elaboraciÃ³n es un ritual que incluye tÃ©cnicas especÃ­ficas de amasado, reposo y horneado."
     },
     {
       title: "El Repujado de la Masa",
-      description: "El característico borde de la masa del paste no es solo decorativo; tiene un origen práctico. Los mineros sostenían el paste por el borde para no contaminar la comida con sus manos sucias de carbón."
+      description: "El caracterÃ­stico borde de la masa del paste no es solo decorativo; tiene un origen prÃ¡ctico. Los mineros sostenÃ­an el paste por el borde para no contaminar la comida con sus manos sucias de carbÃ³n."
     },
     {
       title: "Variedades y Significados",
-      description: "Cada tipo de paste tiene una historia. El de mole representa la adaptación mexicana; el de papa con carne honra la receta original; el dulce de piña celebra las frutas locales."
+      description: "Cada tipo de paste tiene una historia. El de mole representa la adaptaciÃ³n mexicana; el de papa con carne honra la receta original; el dulce de piÃ±a celebra las frutas locales."
     },
     {
       title: "El Paste como Ofrenda",
-      description: "Durante el Día de Muertos, los pastes son parte esencial de las ofrendas, especialmente en el Panteón Inglés, donde se colocan pastes junto a las tumbas de los mineros cornish."
+      description: "Durante el DÃ­a de Muertos, los pastes son parte esencial de las ofrendas, especialmente en el PanteÃ³n InglÃ©s, donde se colocan pastes junto a las tumbas de los mineros cornish."
     }
   ]
 };
@@ -291,22 +295,22 @@ const gastronomicCulture = {
 // Religious syncretism
 const religiousSyncretism = {
   title: "Sincretismo Religioso",
-  description: "Real del Monte es un ejemplo único de coexistencia religiosa. Católicos y anglicanos comparten el mismo espacio físico y social, respetando mutuamente sus tradiciones.",
+  description: "Real del Monte es un ejemplo Ãºnico de coexistencia religiosa. CatÃ³licos y anglicanos comparten el mismo espacio fÃ­sico y social, respetando mutuamente sus tradiciones.",
   elements: [
     {
       faith: "Catolicismo",
-      practices: ["Procesiones de Semana Santa", "Fiestas patronales", "Día de Muertos tradicional", "Romerías a santuarios"],
-      significance: "La religión mayoritaria, practicada desde la época colonial con fuerte arraigo en la comunidad."
+      practices: ["Procesiones de Semana Santa", "Fiestas patronales", "DÃ­a de Muertos tradicional", "RomerÃ­as a santuarios"],
+      significance: "La religiÃ³n mayoritaria, practicada desde la Ã©poca colonial con fuerte arraigo en la comunidad."
     },
     {
       faith: "Anglicanismo",
-      practices: ["Servicios en inglés y español", "Navidad anglicana", "Servicios en el Panteón Inglés", "Coros eclesiásticos"],
-      significance: "Mantenido por la comunidad cornish y sus descendientes, único en México."
+      practices: ["Servicios en inglÃ©s y espaÃ±ol", "Navidad anglicana", "Servicios en el PanteÃ³n InglÃ©s", "Coros eclesiÃ¡sticos"],
+      significance: "Mantenido por la comunidad cornish y sus descendientes, Ãºnico en MÃ©xico."
     },
     {
-      faith: "Tradiciones Indígenas",
-      practices: ["Ofrendas a la tierra", "Respeto a los manantiales", "Curanderismo", "Calendario ceremonial agrícola"],
-      significance: "Preservadas por las comunidades otomíes de la región, especialmente en zonas rurales cercanas."
+      faith: "Tradiciones IndÃ­genas",
+      practices: ["Ofrendas a la tierra", "Respeto a los manantiales", "Curanderismo", "Calendario ceremonial agrÃ­cola"],
+      significance: "Preservadas por las comunidades otomÃ­es de la regiÃ³n, especialmente en zonas rurales cercanas."
     }
   ]
 };
@@ -314,8 +318,8 @@ const religiousSyncretism = {
 // Cultural images
 const culturalImages = [
   { src: callesImg, alt: "Calles durante festival", caption: "Las calles se llenan de color durante las festividades" },
-  { src: panteonImg, alt: "Panteón Inglés ceremonial", caption: "Ceremonia bicultural en el Panteón Inglés" },
-  { src: heroImg, alt: "Celebración comunitaria", caption: "Celebraciones que unen a toda la comunidad" },
+  { src: panteonImg, alt: "PanteÃ³n InglÃ©s ceremonial", caption: "Ceremonia bicultural en el PanteÃ³n InglÃ©s" },
+  { src: heroImg, alt: "CelebraciÃ³n comunitaria", caption: "Celebraciones que unen a toda la comunidad" },
   { src: penasImg, alt: "Tradiciones en la naturaleza", caption: "Tradiciones que honran el entorno natural" },
 ];
 
@@ -339,7 +343,7 @@ const CulturaPage = () => {
             youtubeId="dQw4w9WgXcQ"
             title="Cultura y Tradiciones de Real del Monte"
             variant="hero"
-            caption="Fiestas, tradiciones y el espíritu vivente de nuestra comunidad"
+            caption="Fiestas, tradiciones y el espÃ­ritu vivente de nuestra comunidad"
           />
         </div>
         
@@ -373,7 +377,7 @@ const CulturaPage = () => {
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium mb-6 backdrop-blur-sm"
                 >
                   <Palette className="w-4 h-4" />
-                  Tradición Viva
+                  TradiciÃ³n Viva
                 </motion.span>
                 
                 <TextReveal>
@@ -392,8 +396,8 @@ const CulturaPage = () => {
                   className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed"
                 >
                   Un mosaico cultural donde las tradiciones mexicanas se entrelazan con las costumbres 
-                  cornish, creando una identidad única que se expresa en festivales, música, 
-                  gastronomía y el diario vivir.
+                  cornish, creando una identidad Ãºnica que se expresa en festivales, mÃºsica, 
+                  gastronomÃ­a y el diario vivir.
                 </motion.p>
 
                 <motion.div
@@ -447,12 +451,12 @@ const CulturaPage = () => {
                 Una Cultura de Encuentro
               </h2>
               <p className="text-muted-foreground leading-relaxed text-lg">
-                La cultura de Real del Monte es el resultado de más de 200 años de diálogo entre 
-                dos mundos: el mexicano, con sus raíces indígenas y coloniales, y el británico, 
-                específicamente de Cornualles. Esta fusión no es una simple suma de elementos, 
-                sino la creación de algo completamente nuevo: una cultura híbrida que mantiene 
-                vivas sus dos herencias mientras genera expresiones únicas que no existen en 
-                ningún otro lugar del mundo.
+                La cultura de Real del Monte es el resultado de mÃ¡s de 200 aÃ±os de diÃ¡logo entre 
+                dos mundos: el mexicano, con sus raÃ­ces indÃ­genas y coloniales, y el britÃ¡nico, 
+                especÃ­ficamente de Cornualles. Esta fusiÃ³n no es una simple suma de elementos, 
+                sino la creaciÃ³n de algo completamente nuevo: una cultura hÃ­brida que mantiene 
+                vivas sus dos herencias mientras genera expresiones Ãºnicas que no existen en 
+                ningÃºn otro lugar del mundo.
               </p>
             </motion.div>
           </div>
@@ -472,8 +476,8 @@ const CulturaPage = () => {
                 Festivales y Celebraciones
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                El calendario cultural de Real del Monte está marcado por festividades que celebran 
-                su herencia única y atraen a visitantes de todo el mundo
+                El calendario cultural de Real del Monte estÃ¡ marcado por festividades que celebran 
+                su herencia Ãºnica y atraen a visitantes de todo el mundo
               </p>
             </motion.div>
 
@@ -487,7 +491,7 @@ const CulturaPage = () => {
                       </div>
                       <div>
                         <h3 className="font-serif text-xl font-bold text-foreground">{festival.name}</h3>
-                        <p className="text-sm text-muted-foreground">{festival.month} • {festival.date}</p>
+                        <p className="text-sm text-muted-foreground">{festival.month} â€¢ {festival.date}</p>
                       </div>
                     </div>
                   </AccordionTrigger>
@@ -534,11 +538,11 @@ const CulturaPage = () => {
                 Arte y Cultura Viva
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Las artes en Real del Monte reflejan su dualidad cultural y su conexión con la tierra
+                Las artes en Real del Monte reflejan su dualidad cultural y su conexiÃ³n con la tierra
               </p>
             </motion.div>
 
-            <Tabs defaultValue="Música" className="w-full">
+            <Tabs defaultValue="MÃºsica" className="w-full">
               <TabsList className="w-full max-w-2xl mx-auto grid grid-cols-4 mb-12">
                 {culturalExpressions.map((expr) => (
                   <TabsTrigger key={expr.category} value={expr.category}>
@@ -638,7 +642,7 @@ const CulturaPage = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <span className="text-gold text-sm font-medium uppercase tracking-wider">Gastronomía</span>
+                <span className="text-gold text-sm font-medium uppercase tracking-wider">GastronomÃ­a</span>
                 <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mt-2 mb-4">
                   {gastronomicCulture.title}
                 </h2>
@@ -677,7 +681,7 @@ const CulturaPage = () => {
                     <span className="font-serif font-bold text-foreground">Dato Curioso</span>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    El paste es el único platillo en México que tiene su propio museo dedicado exclusivamente a él.
+                    El paste es el Ãºnico platillo en MÃ©xico que tiene su propio museo dedicado exclusivamente a Ã©l.
                   </p>
                 </div>
               </motion.div>
@@ -745,12 +749,12 @@ const CulturaPage = () => {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <span className="text-gold text-sm font-medium uppercase tracking-wider">Galería</span>
+              <span className="text-gold text-sm font-medium uppercase tracking-wider">GalerÃ­a</span>
               <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mt-2 mb-4">
                 Momentos Culturales
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Imágenes que capturan la esencia de las tradiciones de Real del Monte
+                ImÃ¡genes que capturan la esencia de las tradiciones de Real del Monte
               </p>
             </motion.div>
 
@@ -773,7 +777,7 @@ const CulturaPage = () => {
               </h2>
               <p className="text-muted-foreground mb-8">
                 Participa en nuestros festivales, aprende nuestras tradiciones y lleva contigo 
-                un pedazo de esta cultura única en el mundo.
+                un pedazo de esta cultura Ãºnica en el mundo.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8">

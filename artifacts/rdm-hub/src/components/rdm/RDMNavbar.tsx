@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -40,7 +44,7 @@ import { useRDMAuth } from "@/contexts/RDMAuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { GamificationHUD } from "@/components/rdm/GamificationHUD";
 
-// ─── Types ──────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface NavLink {
   path: string;
@@ -56,33 +60,33 @@ interface MegaCategory {
   links: NavLink[];
 }
 
-// ─── Data ───────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /** Primary links shown flat in the desktop bar */
 const PRIMARY_LINKS: NavLink[] = [
   { path: "/", label: "Inicio", icon: Home },
   { path: "/mapa", label: "Mapa", icon: MapPin },
   { path: "/historia", label: "Historia", icon: Pickaxe },
-  { path: "/gastronomia", label: "Gastronomía", icon: Utensils },
+  { path: "/gastronomia", label: "GastronomÃ­a", icon: Utensils },
   { path: "/ecoturismo", label: "Naturaleza", icon: TreePine },
   { path: "/rutas", label: "Rutas", icon: Compass },
-  { path: "/musica", label: "Música", icon: Music2 },
+  { path: "/musica", label: "MÃºsica", icon: Music2 },
   { path: "/eventos", label: "Eventos", icon: Calendar },
 ];
 
-/** Four megamenu columns — every platform section */
+/** Four megamenu columns â€” every platform section */
 const MEGA_CATEGORIES: MegaCategory[] = [
   {
     key: "turismo",
     label: "Turismo",
     accent: "hsl(var(--rdm-amber))",
     links: [
-      { path: "/lugares",            label: "Lugares de interés",  icon: MapPin,        desc: "POIs y atracciones" },
+      { path: "/lugares",            label: "Lugares de interÃ©s",  icon: MapPin,        desc: "POIs y atracciones" },
       { path: "/patrimonio-cultural",label: "Patrimonio Cultural", icon: Landmark,      desc: "Monumentos y UNESCO" },
-      { path: "/arte",               label: "Arte y Artesanías",   icon: Palette,       desc: "Platerías y talleres" },
+      { path: "/arte",               label: "Arte y ArtesanÃ­as",   icon: Palette,       desc: "PlaterÃ­as y talleres" },
       { path: "/cultura",            label: "Cultura",             icon: Globe,         desc: "Tradiciones vivas" },
       { path: "/relatos",            label: "Leyendas",            icon: BookOpen,      desc: "Mitos mineros" },
-      { path: "/estacionamientos",   label: "Cómo llegar",         icon: Car,           desc: "Rutas y parking" },
+      { path: "/estacionamientos",   label: "CÃ³mo llegar",         icon: Car,           desc: "Rutas y parking" },
     ],
   },
   {
@@ -91,13 +95,13 @@ const MEGA_CATEGORIES: MegaCategory[] = [
     accent: "hsl(var(--rdm-blue))",
     links: [
       { path: "/comunidad",          label: "Foro",                icon: MessageSquare, desc: "Publicaciones y noticias" },
-      { path: "/musica",             label: "Música RDM",          icon: Music2,        desc: "Escucha y descarga" },
-      { path: "/archivo-sonoro",     label: "TAMV 92.5 Radio",     icon: Radio,         desc: "Radio en vivo · Caster FM" },
+      { path: "/musica",             label: "MÃºsica RDM",          icon: Music2,        desc: "Escucha y descarga" },
+      { path: "/archivo-sonoro",     label: "TAMV 92.5 Radio",     icon: Radio,         desc: "Radio en vivo Â· Caster FM" },
       { path: "/directorio",         label: "Directorio",          icon: Store,         desc: "Negocios locales" },
-      { path: "/gamificacion",        label: "Gamificación",        icon: Zap,           desc: "XP, rangos y misiones" },
+      { path: "/gamificacion",        label: "GamificaciÃ³n",        icon: Zap,           desc: "XP, rangos y misiones" },
       { path: "/leaderboard",        label: "Tabla de Honor",      icon: Trophy,        desc: "Ranking de exploradores" },
       { path: "/perfil",             label: "Mi Perfil",           icon: UserIcon,      desc: "Puntos y logros" },
-      { path: "/registro-comercio",  label: "Registra tu Negocio", icon: ShoppingBag,   desc: "Únete al directorio" },
+      { path: "/registro-comercio",  label: "Registra tu Negocio", icon: ShoppingBag,   desc: "Ãšnete al directorio" },
     ],
   },
   {
@@ -105,10 +109,10 @@ const MEGA_CATEGORIES: MegaCategory[] = [
     label: "Atlas & Historia",
     accent: "hsl(var(--rdm-green))",
     links: [
-      { path: "/capitulos",           label: "Capítulos narrativos", icon: BookOpen, desc: "Historia por capítulos" },
+      { path: "/capitulos",           label: "CapÃ­tulos narrativos", icon: BookOpen, desc: "Historia por capÃ­tulos" },
       { path: "/capitulos/minas",     label: "Las Minas",            icon: Pickaxe,  desc: "Historia minera" },
-      { path: "/capitulos/pastes",    label: "Los Pastes",           icon: Coffee,   desc: "Gastronomía típica" },
-      { path: "/capitulos/cementerio",label: "Panteón Inglés",       icon: Landmark, desc: "Legado británico" },
+      { path: "/capitulos/pastes",    label: "Los Pastes",           icon: Coffee,   desc: "GastronomÃ­a tÃ­pica" },
+      { path: "/capitulos/cementerio",label: "PanteÃ³n InglÃ©s",       icon: Landmark, desc: "Legado britÃ¡nico" },
       { path: "/capitulos/calles",    label: "Las Calles",           icon: Map,      desc: "Arquitectura colonial" },
       { path: "/capitulos/leyendas",  label: "Leyendas",             icon: Mic2,     desc: "Relatos del pueblo" },
     ],
@@ -118,14 +122,14 @@ const MEGA_CATEGORIES: MegaCategory[] = [
     label: "Servicios",
     accent: "hsl(var(--rdm-purple))",
     links: [
-      { path: "/paquetes",          label: "Paquetes turísticos", icon: Star,       desc: "Experiencias curadas" },
+      { path: "/paquetes",          label: "Paquetes turÃ­sticos", icon: Star,       desc: "Experiencias curadas" },
       { path: "/transporte-local",  label: "Transporte Local",    icon: Bus,        desc: "Movilidad en RDM" },
-      { path: "/shuttle-cdmx-rdm",  label: "Shuttle CDMX↔RDM",   icon: Bus,        desc: "Traslados directos" },
+      { path: "/shuttle-cdmx-rdm",  label: "Shuttle CDMXâ†”RDM",   icon: Bus,        desc: "Traslados directos" },
       { path: "/negocios",          label: "Portal Negocios",     icon: Store,      desc: "Panel de comercios" },
-      { path: "/admin/marketing",   label: "Panel Marketing",     icon: Star,       desc: "Campañas y banners" },
+      { path: "/admin/marketing",   label: "Panel Marketing",     icon: Star,       desc: "CampaÃ±as y banners" },
       { path: "/donar",             label: "Donar",               icon: Heart,      desc: "Apoya la plataforma" },
-      { path: "/quienes-somos",     label: "Quiénes somos",       icon: Users,      desc: "El equipo RDM Digital" },
-      { path: "/premium",           label: "Planes Premium",      icon: Crown,      desc: "$99/mes — canjea puntos por premios reales" },
+      { path: "/quienes-somos",     label: "QuiÃ©nes somos",       icon: Users,      desc: "El equipo RDM Digital" },
+      { path: "/premium",           label: "Planes Premium",      icon: Crown,      desc: "$99/mes â€” canjea puntos por premios reales" },
     ],
   },
 ];
@@ -136,7 +140,7 @@ const EXTRA_LINKS: NavLink[] = [
   { path: "/ecosistema-ltos", label: "Ecosistema LTOS" },
 ];
 
-// ─── Component ──────────────────────────────────────────────────────────────
+// â”€â”€â”€ Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function RDMNavbar() {
   const [scrolled,    setScrolled]    = useState(false);
@@ -202,7 +206,7 @@ export function RDMNavbar() {
 
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-[68px]">
 
-          {/* ── Logo ── */}
+          {/* â”€â”€ Logo â”€â”€ */}
           <Link to="/" className="flex items-center gap-2.5 group shrink-0">
             <motion.div
               className="w-9 h-9 rounded-2xl bg-gradient-to-br from-[hsl(var(--rdm-amber))] to-[hsl(var(--rdm-amber)/0.75)] flex items-center justify-center shadow-lg relative overflow-hidden"
@@ -227,12 +231,12 @@ export function RDMNavbar() {
                 className="text-[9px] tracking-[0.25em] uppercase text-[hsl(var(--rdm-amber))]"
                 style={{ fontFamily: "var(--font-body)" }}
               >
-                Pueblo Mágico
+                Pueblo MÃ¡gico
               </span>
             </div>
           </Link>
 
-          {/* ── Desktop primary links ── */}
+          {/* â”€â”€ Desktop primary links â”€â”€ */}
           <div className="hidden xl:flex items-center gap-0.5">
             {PRIMARY_LINKS.map((item, i) => (
               <motion.div
@@ -268,7 +272,7 @@ export function RDMNavbar() {
               </motion.div>
             ))}
 
-            {/* ── Megamenu trigger ── */}
+            {/* â”€â”€ Megamenu trigger â”€â”€ */}
             <div ref={megaRef} className="relative ml-1">
               <motion.button
                 type="button"
@@ -290,7 +294,7 @@ export function RDMNavbar() {
                 </motion.span>
               </motion.button>
 
-              {/* ── Megamenu panel ── */}
+              {/* â”€â”€ Megamenu panel â”€â”€ */}
               <AnimatePresence>
                 {megaOpen && (
                   <motion.div
@@ -304,19 +308,19 @@ export function RDMNavbar() {
                     {/* Header strip */}
                     <div className="flex items-center justify-between px-5 py-3 border-b border-[hsl(var(--border)/0.25)] bg-[hsl(var(--rdm-amber)/0.03)]">
                       <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[hsl(var(--muted-foreground))]">
-                        Explorar todo · RDM Digital Hub
+                        Explorar todo Â· RDM Digital Hub
                       </span>
                       <button
                         type="button"
                         onClick={() => setMegaOpen(false)}
                         className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors p-1 rounded-lg hover:bg-white/5"
-                        aria-label="Cerrar menú"
+                        aria-label="Cerrar menÃº"
                       >
                         <X className="w-3.5 h-3.5" />
                       </button>
                     </div>
 
-                    {/* 4-column grid — compact, no vertical scroll */}
+                    {/* 4-column grid â€” compact, no vertical scroll */}
                     <div className="grid grid-cols-4 gap-0 divide-x divide-[hsl(var(--border)/0.15)]">
                       {MEGA_CATEGORIES.map((cat) => (
                         <div key={cat.key} className="px-4 py-4">
@@ -379,7 +383,7 @@ export function RDMNavbar() {
             </div>
           </div>
 
-          {/* ── Right actions ── */}
+          {/* â”€â”€ Right actions â”€â”€ */}
           <div className="flex items-center gap-2 shrink-0">
             {/* Gamification HUD */}
             <div className="hidden lg:block">
@@ -433,7 +437,7 @@ export function RDMNavbar() {
               onClick={() => setMobileOpen((o) => !o)}
               className="xl:hidden w-9 h-9 flex items-center justify-center rounded-xl hover:bg-[hsl(var(--rdm-amber)/0.1)] transition-colors text-[hsl(var(--foreground))]"
               whileTap={{ scale: 0.92 }}
-              aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-label={mobileOpen ? "Cerrar menÃº" : "Abrir menÃº"}
               aria-expanded={mobileOpen}
             >
               <AnimatePresence mode="wait">
@@ -452,7 +456,7 @@ export function RDMNavbar() {
         </div>
       </motion.nav>
 
-      {/* ── Mobile drawer ── */}
+      {/* â”€â”€ Mobile drawer â”€â”€ */}
       <AnimatePresence>
         {mobileOpen && (
           <>
@@ -480,13 +484,13 @@ export function RDMNavbar() {
                     RDM Digital
                   </span>
                   <span className="block text-[9px] tracking-widest uppercase text-[hsl(var(--rdm-amber))]" style={{ fontFamily: "var(--font-body)" }}>
-                    Pueblo Mágico
+                    Pueblo MÃ¡gico
                   </span>
                 </div>
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[hsl(var(--rdm-amber)/0.1)] text-[hsl(var(--foreground))] transition-colors"
-                  aria-label="Cerrar menú"
+                  aria-label="Cerrar menÃº"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -600,7 +604,7 @@ export function RDMNavbar() {
                     style={{ fontFamily: "var(--font-body)" }}
                   >
                     <LogIn className="w-3.5 h-3.5" />
-                    Iniciar sesión
+                    Iniciar sesiÃ³n
                   </Link>
                 )}
               </div>

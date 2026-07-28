@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
@@ -40,8 +44,8 @@ const Tenochtitlan = () => {
   return (
       <RDMLayout>
         <SEOMeta
-          title="System Tenochtitlán · Kernel Soberano"
-          description="Dashboard en vivo del Sistema Tenochtitlán: 9 centinelas, 6 radares y 48 nodos funcionales del Nodo Cero RDM Digital."
+          title="System TenochtitlÃ¡n Â· Kernel Soberano"
+          description="Dashboard en vivo del Sistema TenochtitlÃ¡n: 9 centinelas, 6 radares y 48 nodos funcionales del Nodo Cero RDM Digital."
           url="/tenochtitlan"
         />
         <div className="container mx-auto px-6 pt-32 pb-24">
@@ -73,19 +77,19 @@ const Tenochtitlan = () => {
           <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-4xl">🜂</span>
+              <span className="text-4xl">ðŸœ‚</span>
               <span className="font-body text-[10px] tracking-[0.4em] uppercase text-[hsl(var(--gold))]/70">
-                Nodo Cero · Kernel Soberano
+                Nodo Cero Â· Kernel Soberano
               </span>
             </div>
             <h1 className="font-display text-4xl md:text-6xl tracking-tight mb-4 text-gradient-gold">
-              System Tenochtitlán
+              System TenochtitlÃ¡n
             </h1>
             <p className="font-body text-base md:text-lg text-foreground/75 max-w-3xl mb-8 leading-relaxed">
-              Capital lógica de RDM Digital. Orquesta los <strong>9 centinelas</strong>
-              {" "}del panteón TAMV, los <strong>6 radares</strong> en vigilancia continua y los
+              Capital lÃ³gica de RDM Digital. Orquesta los <strong>9 centinelas</strong>
+              {" "}del panteÃ³n TAMV, los <strong>6 radares</strong> en vigilancia continua y los
               {" "}<strong>48 nodos funcionales</strong> que sostienen el doble pipeline hexagonal,
-              {" "}MD-X4 render, BookPI, ID-NVIDA y la Constitución TAMV-DM-X4.
+              {" "}MD-X4 render, BookPI, ID-NVIDA y la ConstituciÃ³n TAMV-DM-X4.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
@@ -108,7 +112,7 @@ const Tenochtitlan = () => {
         <section className="mb-16">
           <div className="flex items-center gap-3 mb-6">
             <Shield className="w-4 h-4 text-[hsl(var(--gold))]" />
-            <h2 className="font-display text-2xl md:text-3xl">Panteón Centinela</h2>
+            <h2 className="font-display text-2xl md:text-3xl">PanteÃ³n Centinela</h2>
             <span className="font-body text-[10px] tracking-[0.3em] uppercase text-muted-foreground">9 sistemas activos</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -163,7 +167,7 @@ const Tenochtitlan = () => {
           <div className="flex items-center gap-3 mb-6">
             <Eye className="w-4 h-4 text-[hsl(var(--electric))]" />
             <h2 className="font-display text-2xl md:text-3xl">Radares Activos</h2>
-            <span className="font-body text-[10px] tracking-[0.3em] uppercase text-muted-foreground">Ojo de Ra · Quetzalcóatl · MOS · Dekateotl · Laberinto</span>
+            <span className="font-body text-[10px] tracking-[0.3em] uppercase text-muted-foreground">Ojo de Ra Â· QuetzalcÃ³atl Â· MOS Â· Dekateotl Â· Laberinto</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {RADARS_MIRROR.map((r, i) => (
@@ -185,7 +189,7 @@ const Tenochtitlan = () => {
                   </div>
                   <div>
                     <div className="font-display text-xl text-[hsl(var(--terracotta))]">{r.anomalies}</div>
-                    <div className="font-body text-[9px] tracking-[0.2em] uppercase text-muted-foreground">anomalías</div>
+                    <div className="font-body text-[9px] tracking-[0.2em] uppercase text-muted-foreground">anomalÃ­as</div>
                   </div>
                   <div>
                     <div className="font-display text-xl">{r.coverage}%</div>
@@ -211,7 +215,7 @@ const Tenochtitlan = () => {
           <div className="flex flex-wrap items-center gap-3 mb-6">
             <Network className="w-4 h-4 text-[hsl(var(--gold))]" />
             <h2 className="font-display text-2xl md:text-3xl">48 Nodos Funcionales</h2>
-            <span className="font-body text-[10px] tracking-[0.3em] uppercase text-muted-foreground">Filtra por clúster</span>
+            <span className="font-body text-[10px] tracking-[0.3em] uppercase text-muted-foreground">Filtra por clÃºster</span>
           </div>
           <div className="flex flex-wrap gap-2 mb-6">
             {clusters.map((c) => (
@@ -274,34 +278,34 @@ const Tenochtitlan = () => {
             {" "}y <strong>Dekateotl</strong>.
           </p>
           <pre className="font-mono text-[11px] leading-relaxed text-foreground/80 bg-background/60 rounded-xl p-5 overflow-x-auto border border-[hsl(var(--gold))]/10">{`
-                 ┌──────────────────────┐
-   request ─►   │   API Gateway        │
-                 └─────────┬────────────┘
-                           │
-                ┌──────────┴──────────┐
-                ▼                     ▼
-         ┌────────────┐        ┌────────────┐
-         │   MOS-A    │        │   MOS-B    │
-         │  (hex-A)   │        │  (hex-B)   │
-         └────┬───────┘        └────┬───────┘
-              │                     │
-              ▼                     ▼
-         ┌──────────────────────────────┐
-         │    Isabella DMX4 Kernel      │
-         │  · TAMVAI · Chronus · MD-X4  │
-         └────────────┬─────────────────┘
-                      ▼
-               ┌─────────────┐
-               │  Consensor  │ ── SHA-256 == SHA-256 ?
-               └──────┬──────┘
-                      ▼
-        ┌──────────────────────────┐
-        │   BookPI (hash-chained)  │
-        └──────────┬───────────────┘
-                   ▼
-   ┌────────────┬──────────┬──────────────┐
-   │  Anubis    │  Horus   │  Dekateotl   │
-   └────────────┴──────────┴──────────────┘
+                 â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+   request â”€â–º   â”‚   API Gateway        â”‚
+                 â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                           â”‚
+                â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+                â–¼                     â–¼
+         â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”        â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+         â”‚   MOS-A    â”‚        â”‚   MOS-B    â”‚
+         â”‚  (hex-A)   â”‚        â”‚  (hex-B)   â”‚
+         â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜        â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜
+              â”‚                     â”‚
+              â–¼                     â–¼
+         â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+         â”‚    Isabella DMX4 Kernel      â”‚
+         â”‚  Â· TAMVAI Â· Chronus Â· MD-X4  â”‚
+         â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                      â–¼
+               â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+               â”‚  Consensor  â”‚ â”€â”€ SHA-256 == SHA-256 ?
+               â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜
+                      â–¼
+        â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+        â”‚   BookPI (hash-chained)  â”‚
+        â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                   â–¼
+   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+   â”‚  Anubis    â”‚  Horus   â”‚  Dekateotl   â”‚
+   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 `}</pre>
         </section>
       </div>

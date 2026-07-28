@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useState } from "react";
 import { Shield, ShieldCheck, ShieldX, Clock, Fingerprint } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -26,12 +30,12 @@ interface FederationData {
 /**
  * FederationBadge - Sistema de Triple Federado TAMV
  * 
- * Muestra el estado de verificación triple federado de cualquier entidad:
- * - Conceptual: Validación filosófica y de visión
- * - Legal: Validación de cumplimiento y derechos
- * - Técnico: Validación de integridad y seguridad
+ * Muestra el estado de verificaciÃ³n triple federado de cualquier entidad:
+ * - Conceptual: ValidaciÃ³n filosÃ³fica y de visiÃ³n
+ * - Legal: ValidaciÃ³n de cumplimiento y derechos
+ * - TÃ©cnico: ValidaciÃ³n de integridad y seguridad
  * 
- * Triple Federado = Conceptual | Legal | Técnico
+ * Triple Federado = Conceptual | Legal | TÃ©cnico
  */
 export default function FederationBadge({
   entityType,
@@ -128,7 +132,7 @@ export default function FederationBadge({
         )}
         
         <span className="font-semibold">
-          {data.verified ? "TRIPLE FEDERADO" : "Sin Federación"}
+          {data.verified ? "TRIPLE FEDERADO" : "Sin FederaciÃ³n"}
         </span>
 
         {/* Hash Preview */}
@@ -141,7 +145,7 @@ export default function FederationBadge({
           <div className="flex gap-0.5 ml-1">
             <span className="w-1.5 h-1.5 rounded-full bg-purple-400" title="Conceptual" />
             <span className="w-1.5 h-1.5 rounded-full bg-blue-400" title="Legal" />
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" title="Técnico" />
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" title="TÃ©cnico" />
           </div>
         )}
       </motion.span>
@@ -175,7 +179,7 @@ export default function FederationBadge({
 
             {/* Technical */}
             <div className="flex flex-col items-center p-2 rounded-md bg-cyan-500/10 border border-cyan-500/20">
-              <span className="text-cyan-400 font-semibold mb-1">TÉCNICO</span>
+              <span className="text-cyan-400 font-semibold mb-1">TÃ‰CNICO</span>
               <Clock className="w-2.5 h-2.5 text-muted-foreground mb-0.5" />
               <span className="text-muted-foreground">
                 {data.technical_at ? new Date(data.technical_at).toLocaleDateString() : 'N/A'}

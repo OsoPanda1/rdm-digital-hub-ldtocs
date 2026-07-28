@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Star, X, Loader2 } from "lucide-react";
@@ -23,7 +27,7 @@ export default function RatingModal({ poiId, poiName, onClose, onSaved }: Props)
     setSaving(true);
     const { data: sess } = await supabase.auth.getUser();
     if (!sess.user) {
-      toast.error("Inicia sesión para puntuar");
+      toast.error("Inicia sesiÃ³n para puntuar");
       navigate("/auth");
       return;
     }
@@ -33,7 +37,7 @@ export default function RatingModal({ poiId, poiName, onClose, onSaved }: Props)
       .upsert({ poi_id: poiId, user_id: sess.user.id, score, review: clean || null }, { onConflict: "poi_id,user_id" });
     setSaving(false);
     if (error) { toast.error("No se pudo guardar"); return; }
-    toast.success("¡Gracias por tu reseña!");
+    toast.success("Â¡Gracias por tu reseÃ±a!");
     onSaved();
     onClose();
   };
@@ -58,12 +62,12 @@ export default function RatingModal({ poiId, poiName, onClose, onSaved }: Props)
           ))}
         </div>
         <textarea value={review} onChange={(e) => setReview(e.target.value.slice(0, 500))} maxLength={500} rows={3}
-          placeholder="¿Qué hace especial este lugar? (opcional)"
+          placeholder="Â¿QuÃ© hace especial este lugar? (opcional)"
           className="w-full rounded-xl bg-background/60 border border-border/40 px-4 py-3 text-sm text-platinum placeholder:text-muted-foreground focus:outline-none focus:border-gold/50 resize-none" />
         <div className="mt-2 text-right text-[10px] font-mono text-muted-foreground">{review.length}/500</div>
         <button onClick={submit} disabled={saving}
           className="mt-4 w-full gradient-gold text-primary-foreground font-semibold py-3 rounded-xl shadow-gold hover:shadow-elevated transition-all disabled:opacity-60 flex items-center justify-center gap-2">
-          {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : "Publicar reseña"}
+          {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : "Publicar reseÃ±a"}
         </button>
       </motion.div>
     </motion.div>

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Pause, Play, Volume2, VolumeX, Heart, ListMusic, SkipBack, SkipForward } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -26,7 +30,7 @@ export function RDMHeroPlayer({ autoplay = false }: { autoplay?: boolean }) {
           ) : "RDM"}
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/70">Ahora sonando · RDM Radio</p>
+          <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/70">Ahora sonando Â· RDM Radio</p>
           <h3 className="text-base font-display font-semibold truncate">{p.currentTrack.title}</h3>
           <p className="text-[11px] font-body text-muted-foreground truncate">{p.currentTrack.artist}</p>
         </div>

@@ -1,7 +1,11 @@
-// ISA-API v.1.0.0-evolved — TypeScript types
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// ISA-API v.1.0.0-evolved â€” TypeScript types
 // Generated from docs/yun/isa-api.yaml
 
-// ─── Security Schemes ────────────────────────────────────────────────────────
+// â”€â”€â”€ Security Schemes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface IsabellaApiKeyAuth {
   'X-Isabella-Api-Key': string;
@@ -11,7 +15,7 @@ export interface IsabellaTerritorialTokenAuth {
   Authorization: `Bearer ${string}`;
 }
 
-// ─── Common ──────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Common â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface ErrorResponse {
   code: string;
@@ -29,7 +33,7 @@ export interface SystemHealthResponse {
   memory_mb: number;
 }
 
-// ─── ORION — Cognitive Archaeology ──────────────────────────────────────────
+// â”€â”€â”€ ORION â€” Cognitive Archaeology â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface OrionSearchRequest {
   context_id?: string;
@@ -70,7 +74,7 @@ export interface GapDTO {
   suggested_action: string;
 }
 
-// ─── SOPHIA — Deep Research ─────────────────────────────────────────────────
+// â”€â”€â”€ SOPHIA â€” Deep Research â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface SophiaResearchRequest {
   research_request: string;
@@ -97,7 +101,7 @@ export interface ReferenceDTO {
   trust_level: number;
 }
 
-// ─── ARGUS — Future Impact Simulation ──────────────────────────────────────
+// â”€â”€â”€ ARGUS â€” Future Impact Simulation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface ArgusSimulationRequest {
   scenario_definition: {
@@ -144,7 +148,7 @@ export interface DimensionRiskDTO {
   mitigation: string;
 }
 
-// ─── MNEMOS — Civilizational Preservation ──────────────────────────────────
+// â”€â”€â”€ MNEMOS â€” Civilizational Preservation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface MnemosRecordRequest {
   event: Record<string, unknown>;
@@ -169,7 +173,7 @@ export interface MnemosRecordCanonical {
   evidence: Array<Record<string, unknown>>;
 }
 
-// ─── LUMEN — Constitutional Governance ─────────────────────────────────────
+// â”€â”€â”€ LUMEN â€” Constitutional Governance â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface LumenEvaluateRequest {
   action_request: {
@@ -207,7 +211,7 @@ export interface PolicyViolationDTO {
   description: string;
 }
 
-// ─── KERNEL — Resonance & Time ─────────────────────────────────────────────
+// â”€â”€â”€ KERNEL â€” Resonance & Time â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface ResonanceUpdateRequest {
   federation_nodes?: FederationNodeStateDTO[];
@@ -253,7 +257,7 @@ export interface TimeUpAnchorResponse {
   diff_analysis: Record<string, unknown>;
 }
 
-// ─── TOPOLOGY — Heptafederation ────────────────────────────────────────────
+// â”€â”€â”€ TOPOLOGY â€” Heptafederation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface HeptafederationTopology {
   federations: FederationNodeDTO[];
@@ -286,7 +290,7 @@ export interface NodoCeroStageDTO {
   dependencies: string[];
 }
 
-// ─── SECURITY — Double Hexagon ─────────────────────────────────────────────
+// â”€â”€â”€ SECURITY â€” Double Hexagon â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface HexagonValidationRequest {
   inner_hexagon: Record<string, unknown>;
@@ -304,7 +308,7 @@ export interface HexagonValidationResponse {
   trace_id: string;
 }
 
-// ─── INTEGRATION — Orchestration ───────────────────────────────────────────
+// â”€â”€â”€ INTEGRATION â€” Orchestration â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface IntegrationOrchestrationRequest {
   trace_id?: string;
@@ -319,7 +323,7 @@ export interface IntegrationOrchestrationResponse {
   trace_id: string;
 }
 
-// ─── Internal Context ──────────────────────────────────────────────────────
+// â”€â”€â”€ Internal Context â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface ISAContext {
   traceId: string;

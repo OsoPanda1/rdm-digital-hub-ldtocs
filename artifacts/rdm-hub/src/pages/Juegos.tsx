@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +12,7 @@ import TriviaGame from "@/modules/games/TriviaGame";
 type GameId = "memoria" | "trivia";
 
 const GAMES: { id: GameId; label: string; icon: typeof Brain; description: string }[] = [
-  { id: "memoria", label: "Memoria Minera", icon: Brain, description: "Empareja los símbolos del territorio." },
+  { id: "memoria", label: "Memoria Minera", icon: Brain, description: "Empareja los sÃ­mbolos del territorio." },
   { id: "trivia", label: "Trivia Territorial", icon: HelpCircle, description: "Preguntas sobre historia, minas y leyendas de RDM." },
 ];
 
@@ -31,7 +35,7 @@ export default function Juegos() {
           </h1>
           <p className="mt-3 text-sm font-body text-muted-foreground max-w-xl">
             Explora el territorio jugando. Gana puntos canjeables por pastes, micheladas,
-            joyería de plata, cenas románticas, hospedaje y tours.
+            joyerÃ­a de plata, cenas romÃ¡nticas, hospedaje y tours.
           </p>
         </motion.div>
 
@@ -47,7 +51,7 @@ export default function Juegos() {
             <button onClick={() => navigate("/premium")} className="text-gold underline-offset-2 hover:underline font-semibold">
               Bolsa de Premios
             </button>
-            . Los puntos se acreditan automáticamente al terminar cada juego.
+            . Los puntos se acreditan automÃ¡ticamente al terminar cada juego.
           </span>
           <button
             onClick={() => navigate("/premium")}

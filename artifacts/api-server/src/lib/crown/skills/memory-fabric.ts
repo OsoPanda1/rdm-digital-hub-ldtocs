@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
-// SKILL 1 — Memory Fabric
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// SKILL 1 â€” Memory Fabric
 // Multiscale RAG con confianza adaptativa, coherencia transversal,
-// prevención de alucinaciones y recuperación de memoria
-// ────────────────────────────────────────────────────────────────
+// prevenciÃ³n de alucinaciones y recuperaciÃ³n de memoria
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { SkillDefinition, CapabilityRequest, CapabilityResponse, BookPiAnchor } from "../types";
 

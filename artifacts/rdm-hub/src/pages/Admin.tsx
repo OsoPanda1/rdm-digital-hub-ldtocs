@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -7,7 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useUserRole, logAudit, type AppRole } from "@/hooks/useUserRole";
 import { MusicAdminPanel } from "@/components/admin/MusicAdminPanel";
 
-// ── Admin email pre-authorized ───────────────────────────────────────────────
+// â”€â”€ Admin email pre-authorized â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const ADMIN_EMAIL = "tamvonlinenetwork@outlook.es";
 
 type Threshold = { id: string; federation_key: string; federation_name: string; max_latency_ms: number; min_integrity: number; max_offline: number; };
@@ -31,11 +35,11 @@ export default function Admin() {
     const { error } = await supabase.from("user_roles").insert({ user_id: userId, role: "admin" });
     if (error) { toast.error(error.message); return; }
     await logAudit("role.bootstrap", "user_roles", { user_id: userId });
-    toast.success("Eres administrador. Recarga la página.");
+    toast.success("Eres administrador. Recarga la pÃ¡gina.");
     setTimeout(() => location.reload(), 800);
   };
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center text-xs font-mono">Cargando…</div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center text-xs font-mono">Cargandoâ€¦</div>;
   if (!userId) return <Navigate to="/auth" replace />;
 
   if (!isAdmin) {
@@ -43,7 +47,7 @@ export default function Admin() {
       <div className="min-h-screen pt-28 px-6 max-w-2xl mx-auto">
         <div className="glass-card rounded-2xl border border-gold/20 p-8 text-center">
           <Shield className="h-10 w-10 text-gold mx-auto mb-3" />
-          <h1 className="text-2xl font-display font-bold mb-2">Panel de Administración</h1>
+          <h1 className="text-2xl font-display font-bold mb-2">Panel de AdministraciÃ³n</h1>
           {bootstrapNeeded ? (
             <>
               <p className="text-sm text-muted-foreground mb-4">No hay administradores. Asume el rol fundador.</p>
@@ -64,8 +68,8 @@ export default function Admin() {
       <div className="mx-auto max-w-6xl space-y-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/80">Consola Soberana</p>
-          <h1 className="text-4xl md:text-5xl font-display font-bold">Panel de <span className="text-gradient-gold">Administración</span></h1>
-          <p className="mt-2 text-sm text-muted-foreground">Gestión de las 7 federaciones, roles, auditoría y catálogo musical.</p>
+          <h1 className="text-4xl md:text-5xl font-display font-bold">Panel de <span className="text-gradient-gold">AdministraciÃ³n</span></h1>
+          <p className="mt-2 text-sm text-muted-foreground">GestiÃ³n de las 7 federaciones, roles, auditorÃ­a y catÃ¡logo musical.</p>
         </motion.div>
 
         <BusinessManagerSection />
@@ -78,7 +82,7 @@ export default function Admin() {
   );
 }
 
-// ── Business Manager ─────────────────────────────────────────────────────────
+// â”€â”€ Business Manager â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 type Business = {
   id: string;
   name: string;
@@ -135,7 +139,7 @@ function BusinessManagerSection() {
   };
 
   const remove = async (b: Business) => {
-    if (!confirm(`¿Eliminar "${b.name}"?`)) return;
+    if (!confirm(`Â¿Eliminar "${b.name}"?`)) return;
     await (supabase as any).from("businesses").delete().eq("id", b.id);
     toast.success("Negocio eliminado");
     load();
@@ -160,7 +164,7 @@ function BusinessManagerSection() {
     <section className="glass-card rounded-2xl border border-border/20 p-6">
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-lg font-display font-bold flex items-center gap-2">
-          <Store className="h-4 w-4 text-[hsl(var(--rdm-amber))]" /> Gestión de Negocios
+          <Store className="h-4 w-4 text-[hsl(var(--rdm-amber))]" /> GestiÃ³n de Negocios
           <span className="text-xs font-mono text-muted-foreground ml-2">({items.length} registrados)</span>
         </h2>
         <button onClick={() => setEditing({ active: true, category: "gastronomia" })}
@@ -180,14 +184,14 @@ function BusinessManagerSection() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {field("name", "Nombre del negocio")}
-              {field("category", "Categoría", "text", BUSINESS_CATS)}
-              {field("address", "Dirección")}
-              {field("phone", "Teléfono", "tel")}
+              {field("category", "CategorÃ­a", "text", BUSINESS_CATS)}
+              {field("address", "DirecciÃ³n")}
+              {field("phone", "TelÃ©fono", "tel")}
               {field("website", "Sitio web", "url")}
               {field("lat", "Latitud", "number")}
               {field("lng", "Longitud", "number")}
               <div className="md:col-span-2 flex flex-col gap-1">
-                <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Descripción</label>
+                <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">DescripciÃ³n</label>
                 <textarea value={editing.description ?? ""} rows={3}
                   onChange={e => setEditing(ed => ({ ...ed, description: e.target.value }))}
                   className="rounded-lg bg-background/60 border border-border/30 px-3 py-2 text-sm resize-none" />
@@ -215,7 +219,7 @@ function BusinessManagerSection() {
       ) : items.length === 0 ? (
         <div className="text-center py-10 text-muted-foreground">
           <Store className="h-8 w-8 mx-auto mb-2 opacity-30" />
-          <p className="text-sm">No hay negocios registrados aún.</p>
+          <p className="text-sm">No hay negocios registrados aÃºn.</p>
           <p className="text-xs mt-1">Haz clic en "Agregar negocio" para comenzar.</p>
         </div>
       ) : (
@@ -224,7 +228,7 @@ function BusinessManagerSection() {
             <thead className="text-[10px] uppercase tracking-widest text-muted-foreground border-b border-border/20">
               <tr>
                 <th className="text-left py-2 font-mono">Negocio</th>
-                <th className="text-left py-2 font-mono">Categoría</th>
+                <th className="text-left py-2 font-mono">CategorÃ­a</th>
                 <th className="text-left py-2 font-mono hidden md:table-cell">Contacto</th>
                 <th className="py-2 font-mono">Estado</th>
                 <th className="py-2 font-mono">Acciones</th>
@@ -298,7 +302,7 @@ function ThresholdsSection() {
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead className="text-[10px] uppercase tracking-widest text-muted-foreground border-b border-border/20">
-            <tr><th className="text-left py-2">Federación</th><th>Latencia máx (ms)</th><th>Integridad mín</th><th>Offline máx</th><th></th></tr>
+            <tr><th className="text-left py-2">FederaciÃ³n</th><th>Latencia mÃ¡x (ms)</th><th>Integridad mÃ­n</th><th>Offline mÃ¡x</th><th></th></tr>
           </thead>
           <tbody>
             {rows.map((r) => (
@@ -337,7 +341,7 @@ function RolesSection() {
     // Look up profile by email pattern (display_name fallback)
     const { data: prof } = await supabase.from("profiles").select("user_id, display_name").ilike("display_name", email.trim()).limit(1);
     const uid = prof?.[0]?.user_id;
-    if (!uid) { toast.error("Usuario no encontrado por display_name. Pídeles que se registren y usa el ID."); return; }
+    if (!uid) { toast.error("Usuario no encontrado por display_name. PÃ­deles que se registren y usa el ID."); return; }
     const { error } = await supabase.from("user_roles").insert({ user_id: uid, role });
     if (error) { toast.error(error.message); return; }
     await logAudit("role.assign", "user_roles", { user_id: uid, role });
@@ -364,7 +368,7 @@ function RolesSection() {
       <ul className="divide-y divide-border/20">
         {rows.map((r) => (
           <li key={r.id} className="py-2 flex items-center justify-between text-xs font-mono">
-            <span>{r.user_id.slice(0, 8)}… · <span className="text-gold">{r.role}</span></span>
+            <span>{r.user_id.slice(0, 8)}â€¦ Â· <span className="text-gold">{r.role}</span></span>
             <button onClick={() => revoke(r)} className="text-red-400 hover:underline">revocar</button>
           </li>
         ))}
@@ -384,15 +388,15 @@ function AuditSection() {
   }, []);
   return (
     <section className="glass-card rounded-2xl border border-border/20 p-6">
-      <h2 className="text-lg font-display font-bold flex items-center gap-2 mb-4"><ScrollText className="h-4 w-4 text-amber-400" /> Auditoría reciente</h2>
+      <h2 className="text-lg font-display font-bold flex items-center gap-2 mb-4"><ScrollText className="h-4 w-4 text-amber-400" /> AuditorÃ­a reciente</h2>
       <ul className="space-y-1.5 max-h-96 overflow-y-auto">
         {rows.map((r) => (
           <li key={r.id} className="text-[11px] font-mono flex items-center justify-between border-b border-border/10 pb-1">
-            <span><span className="text-gold">{r.action}</span> <span className="text-muted-foreground">· {r.resource}</span></span>
-            <span className="text-muted-foreground">{r.actor_email ?? "—"} · {new Date(r.created_at).toLocaleString("es-MX")}</span>
+            <span><span className="text-gold">{r.action}</span> <span className="text-muted-foreground">Â· {r.resource}</span></span>
+            <span className="text-muted-foreground">{r.actor_email ?? "â€”"} Â· {new Date(r.created_at).toLocaleString("es-MX")}</span>
           </li>
         ))}
-        {!rows.length && <p className="text-xs text-muted-foreground">Sin eventos aún.</p>}
+        {!rows.length && <p className="text-xs text-muted-foreground">Sin eventos aÃºn.</p>}
       </ul>
     </section>
   );

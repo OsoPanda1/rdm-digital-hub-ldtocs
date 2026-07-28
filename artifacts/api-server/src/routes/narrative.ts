@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // artifacts/api-server/src/routes/narrative.ts
-// RDM Living World — Narrative API routes (Realito & Isabella)
+// RDM Living World â€” Narrative API routes (Realito & Isabella)
 // ADR-001: docs/adr/001-rdm-living-world-gamification.md
 // Endpoints: /api/v1/narrative/*
 
@@ -95,11 +99,11 @@ async function buildPlayerContext(playerId: string): Promise<PlayerContext> {
 }
 
 export function registerNarrativeRoutes(router: Router) {
-  // ───────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  POST /api/v1/narrative/feed
   //  Body: { playerId, limit? }
   //  Returns contextual feed of narrative messages for a player.
-  // ───────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/v1/narrative/feed", requireRdmRole("user"), rateLimitByRoute({ name: "narrative-feed", limit: 30 }), validate(schemas.narrativeFeed), async (req: Request, res: Response, next) => {
     try {
       const { playerId = "anonymous", limit = 5 } = req.body ?? {};
@@ -120,13 +124,13 @@ export function registerNarrativeRoutes(router: Router) {
         characterProfiles: {
           realito: {
             name: "Realito",
-            role: "Guía territorial y narrador del pueblo",
+            role: "GuÃ­a territorial y narrador del pueblo",
             personality: "Curioso, alegre, sabio de la sierra",
           },
           isabella: {
             name: "Isabella",
             role: "Experta en patrimonio y turismo sostenible",
-            personality: "Profesional, empática, orientada a datos",
+            personality: "Profesional, empÃ¡tica, orientada a datos",
           },
         },
       },
@@ -134,11 +138,11 @@ export function registerNarrativeRoutes(router: Router) {
     } catch (err) { next(err); }
   });
 
-  // ───────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  POST /api/v1/narrative/trigger
   //  Body: { playerId, actionType, poiName?, eventName?, itemId? }
   //  Returns a single narrative message triggered by a player action.
-  // ───────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/v1/narrative/trigger", requireRdmRole("user"), rateLimitByRoute({ name: "narrative-trigger", limit: 60 }), validate(schemas.narrativeTrigger), async (req: Request, res: Response, next) => {
     try {
       const {
@@ -196,11 +200,11 @@ export function registerNarrativeRoutes(router: Router) {
     } catch (err) { next(err); }
   });
 
-  // ───────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  POST /api/v1/narrative/suggest
   //  Body: { playerId }
   //  Returns suggested next actions for a player.
-  // ───────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/v1/narrative/suggest", requireRdmRole("user"), rateLimitByRoute({ name: "narrative-suggest", limit: 20 }), validate(schemas.narrativeSuggest), async (req: Request, res: Response, next) => {
     try {
       const { playerId = "anonymous" } = req.body ?? {};
@@ -223,10 +227,10 @@ export function registerNarrativeRoutes(router: Router) {
     } catch (err) { next(err); }
   });
 
-  // ───────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //  GET /api/v1/narrative/characters
   //  Returns available character profiles.
-  // ───────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.get("/v1/narrative/characters", requireRdmRole("user"), (_req: Request, res: Response) => {
     res.status(200).json({
       ok: true,
@@ -234,25 +238,25 @@ export function registerNarrativeRoutes(router: Router) {
         {
           key: "realito",
           name: "Realito",
-          role: "Guía territorial y narrador del pueblo",
+          role: "GuÃ­a territorial y narrador del pueblo",
           personality: "Curioso, alegre, sabio de la sierra",
           catchphrases: [
-            "¡Bienvenido a mi pueblo!",
-            "Las montañas tienen mucho que contarte.",
-            "Cada piedra aquí tiene historia.",
-            "Real del Monte es más que un lugar, es un sentimiento.",
+            "Â¡Bienvenido a mi pueblo!",
+            "Las montaÃ±as tienen mucho que contarte.",
+            "Cada piedra aquÃ­ tiene historia.",
+            "Real del Monte es mÃ¡s que un lugar, es un sentimiento.",
           ],
         },
         {
           key: "isabella",
           name: "Isabella",
           role: "Experta en patrimonio y turismo sostenible",
-          personality: "Profesional, empática, orientada a datos pero cálida",
+          personality: "Profesional, empÃ¡tica, orientada a datos pero cÃ¡lida",
           catchphrases: [
-            "Tu exploración fortalece la memoria colectiva.",
-            "Cada interacción es un dato para preservar el patrimonio.",
+            "Tu exploraciÃ³n fortalece la memoria colectiva.",
+            "Cada interacciÃ³n es un dato para preservar el patrimonio.",
             "El turismo sostenible comienza contigo.",
-            "La tecnología al servicio de la cultura.",
+            "La tecnologÃ­a al servicio de la cultura.",
           ],
         },
       ],

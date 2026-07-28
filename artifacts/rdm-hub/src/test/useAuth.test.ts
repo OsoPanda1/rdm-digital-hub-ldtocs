@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { renderHook } from '@testing-library/react';
 import { waitFor } from '@testing-library/dom';
 import { describe, it, expect, beforeEach, vi, type Mock } from 'vitest';

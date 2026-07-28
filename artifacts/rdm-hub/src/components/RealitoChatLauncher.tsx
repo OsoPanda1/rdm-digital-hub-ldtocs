@@ -1,9 +1,13 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { lazy, Suspense, useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 const RealitoChat = lazy(() => import("@/components/RealitoChat"));
 
-/* Canvas orb animado — esfera 3D pulsante que reemplaza el boton simple */
+/* Canvas orb animado â€” esfera 3D pulsante que reemplaza el boton simple */
 function OrbButton({ onClick }: { onClick: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number>(0);
@@ -57,7 +61,7 @@ function OrbButton({ onClick }: { onClick: () => void }) {
       ctx.arc(cx, cy, glowRadius, 0, Math.PI * 2);
       ctx.fill();
 
-      // Orb body — gradient sphere
+      // Orb body â€” gradient sphere
       const bodyGrad = ctx.createRadialGradient(cx - 8, cy - 8, 2, cx, cy, radius);
       bodyGrad.addColorStop(0, "rgba(100, 230, 255, 1)");
       bodyGrad.addColorStop(0.3, "rgba(59, 213, 255, 0.9)");

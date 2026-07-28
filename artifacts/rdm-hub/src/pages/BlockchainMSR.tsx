@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { WikiPage } from "@/components/WikiPage";
 import { Section, InfoBox } from "@/components/WikiElements";
 import { Link2, Shield, Code2, Database } from "lucide-react";
@@ -5,7 +9,7 @@ import { Link2, Shield, Code2, Database } from "lucide-react";
 const BlockchainMSR = () => (
   <WikiPage
     title="Blockchain MSR Antifraude"
-      subtitle="Merkle State Root — Registro Inmutable con Pruebas Criptográficas"
+      subtitle="Merkle State Root â€” Registro Inmutable con Pruebas CriptogrÃ¡ficas"
     >
       {/* Hero Banner */}
       <div className="relative h-48 w-full overflow-hidden">
@@ -13,8 +17,8 @@ const BlockchainMSR = () => (
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
       </div>
       <InfoBox type="info" title="Merkle State Root (MSR)">
-      Sistema antifraude que ancla el estado del ecosistema en blockchain público mediante pruebas de Merkle,
-      garantizando inmutabilidad, trazabilidad y verificación criptográfica de todos los registros civilizatorios.
+      Sistema antifraude que ancla el estado del ecosistema en blockchain pÃºblico mediante pruebas de Merkle,
+      garantizando inmutabilidad, trazabilidad y verificaciÃ³n criptogrÃ¡fica de todos los registros civilizatorios.
     </InfoBox>
 
     <Section title="Arquitectura MSR" icon={Link2}>
@@ -33,7 +37,7 @@ const BlockchainMSR = () => (
             <div className="mt-2"><span className="text-primary">function</span> anchorStateRoot(</div>
             <div className="pl-4">bytes32 _merkleRoot,</div>
             <div className="pl-4">bytes32[] _proof</div>
-            <div>) → verifyMerkleProof → emit StateRootAnchored</div>
+            <div>) â†’ verifyMerkleProof â†’ emit StateRootAnchored</div>
           </div>
         </div>
 
@@ -56,13 +60,13 @@ const BlockchainMSR = () => (
       </div>
     </Section>
 
-    <Section title="Características Antifraude" icon={Shield}>
+    <Section title="CaracterÃ­sticas Antifraude" icon={Shield}>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[
-          { title: "Inmutabilidad", desc: "Registros no modificables una vez anclados en blockchain. Cualquier alteración rompe la cadena de pruebas." },
-          { title: "Trazabilidad", desc: "Cadena de custodia completa para cada acción, transacción y decisión en el ecosistema." },
-          { title: "Verificación", desc: "Pruebas criptográficas Merkle que cualquier nodo puede validar de forma independiente." },
-          { title: "Distribución", desc: "Múltiples nodos validadores autorizados con consenso Proof of Stake." },
+          { title: "Inmutabilidad", desc: "Registros no modificables una vez anclados en blockchain. Cualquier alteraciÃ³n rompe la cadena de pruebas." },
+          { title: "Trazabilidad", desc: "Cadena de custodia completa para cada acciÃ³n, transacciÃ³n y decisiÃ³n en el ecosistema." },
+          { title: "VerificaciÃ³n", desc: "Pruebas criptogrÃ¡ficas Merkle que cualquier nodo puede validar de forma independiente." },
+          { title: "DistribuciÃ³n", desc: "MÃºltiples nodos validadores autorizados con consenso Proof of Stake." },
         ].map((item) => (
           <div key={item.title} className="rounded-md border border-border/50 bg-muted/20 p-4">
             <div className="font-semibold text-foreground text-sm mb-1">{item.title}</div>
@@ -75,11 +79,11 @@ const BlockchainMSR = () => (
     <Section title="Eventos MSR Registrados" icon={Database}>
       <div className="space-y-2">
         {[
-          "Creación / modificación de identidad soberana (ID-NVIDA)",
-          "Transacciones económicas y splits FairSplit",
+          "CreaciÃ³n / modificaciÃ³n de identidad soberana (ID-NVIDA)",
+          "Transacciones econÃ³micas y splits FairSplit",
           "Decisiones de gobernanza y votaciones",
           "Certificaciones federadas de nodos",
-          "Cambios en configuración de seguridad TENOCHTITLAN",
+          "Cambios en configuraciÃ³n de seguridad TENOCHTITLAN",
           "Registro de contenido con hash probatorio",
         ].map((item, idx) => (
           <div key={item} className="flex items-center gap-3">
@@ -92,10 +96,10 @@ const BlockchainMSR = () => (
 
     <Section title="API MSR" icon={Code2}>
       <div className="rounded-lg border border-border/50 bg-card/30 p-4 font-mono text-xs space-y-2">
-        <div><span className="text-primary">POST</span> /api/v1/msr/log — Registrar evento inmutable</div>
-        <div><span className="text-primary">GET</span>  /api/v1/msr/events — Listar eventos registrados</div>
-        <div><span className="text-primary">GET</span>  /api/v1/msr/verify/:hash — Verificar prueba Merkle</div>
-        <div><span className="text-primary">GET</span>  /api/v1/msr/anchor/:rootHash — Consultar anclaje en blockchain</div>
+        <div><span className="text-primary">POST</span> /api/v1/msr/log â€” Registrar evento inmutable</div>
+        <div><span className="text-primary">GET</span>  /api/v1/msr/events â€” Listar eventos registrados</div>
+        <div><span className="text-primary">GET</span>  /api/v1/msr/verify/:hash â€” Verificar prueba Merkle</div>
+        <div><span className="text-primary">GET</span>  /api/v1/msr/anchor/:rootHash â€” Consultar anclaje en blockchain</div>
       </div>
     </Section>
   </WikiPage>

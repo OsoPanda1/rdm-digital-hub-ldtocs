@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Color, Mesh, MeshStandardMaterial, MathUtils } from "three";

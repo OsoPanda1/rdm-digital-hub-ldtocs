@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { ChevronsLeft, ChevronsRight, ChevronLeft, ChevronRight } from "lucide-react";
@@ -23,14 +27,14 @@ const PaginationControls = ({ meta, onPageChange }: PaginationControlsProps) => 
 
   return (
     <motion.nav
-      aria-label="Paginación"
+      aria-label="PaginaciÃ³n"
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       className="mt-8 rounded-2xl border border-cyan-100/10 bg-slate-950/45 p-3 backdrop-blur-xl"
     >
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <p className="text-xs tracking-[0.16em] uppercase text-cyan-100/60">
-          Página {meta.page} de {meta.totalPages} · {meta.totalItems} registros
+          PÃ¡gina {meta.page} de {meta.totalPages} Â· {meta.totalItems} registros
         </p>
 
         <div className="flex flex-wrap items-center gap-1.5">
@@ -56,14 +60,14 @@ const PaginationControls = ({ meta, onPageChange }: PaginationControlsProps) => 
           {end < meta.totalPages && <GapMarker />}
 
           <PagerButton label="Siguiente" onClick={() => onPageChange(meta.page + 1)} disabled={meta.page >= meta.totalPages} icon={<ChevronRight className="h-3.5 w-3.5" />} iconRight />
-          <PagerButton label="Última" onClick={() => onPageChange(meta.totalPages)} disabled={meta.page >= meta.totalPages} icon={<ChevronsRight className="h-3.5 w-3.5" />} iconRight />
+          <PagerButton label="Ãšltima" onClick={() => onPageChange(meta.totalPages)} disabled={meta.page >= meta.totalPages} icon={<ChevronsRight className="h-3.5 w-3.5" />} iconRight />
         </div>
       </div>
     </motion.nav>
   );
 };
 
-const GapMarker = () => <span className="px-2 text-sm text-slate-500">…</span>;
+const GapMarker = () => <span className="px-2 text-sm text-slate-500">â€¦</span>;
 
 function PagerButton({
   label,

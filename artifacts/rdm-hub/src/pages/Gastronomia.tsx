@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Clock, MapPin, Star, Utensils, Flame, Coffee, ChefHat, Sparkles } from "lucide-react";
@@ -58,12 +62,12 @@ export default function GastronomiaPage() {
       try {
         const response = await fetch(`${API_BASE_URL}/businesses?category=GASTRONOMIA`);
         if (!response.ok) {
-          throw new Error("No se pudo cargar la categoría de gastronomía");
+          throw new Error("No se pudo cargar la categorÃ­a de gastronomÃ­a");
         }
         const data = await response.json();
         setBusinesses(data.data ?? []);
       } catch (error) {
-        logger.error("Error loading gastronomía:", error as Record<string, unknown>);
+        logger.error("Error loading gastronomÃ­a:", error as Record<string, unknown>);
         setBusinesses([]);
       } finally {
         setLoading(false);
@@ -122,12 +126,12 @@ export default function GastronomiaPage() {
 
         <GradientSeparator animated />
 
-        {/* Video: Gastronomía de Real del Monte */}
+        {/* Video: GastronomÃ­a de Real del Monte */}
         <VideoEmbed
           youtubeId="dQw4w9WgXcQ"
           title="Los Pastes de Real del Monte"
           variant="mid"
-          caption="La tradición pastelera que define nuestra gastronomía"
+          caption="La tradiciÃ³n pastelera que define nuestra gastronomÃ­a"
         />
 
         {/* Culinary Highlights */}
@@ -171,7 +175,7 @@ export default function GastronomiaPage() {
           </div>
         </section>
 
-        {/* Gallery Strip — Expanded */}
+        {/* Gallery Strip â€” Expanded */}
         <section className="relative overflow-hidden py-12">
           <div className="mx-auto max-w-6xl px-6">
             <div className="rdm-mosaic" style={{ gridAutoRows: "200px" }}>

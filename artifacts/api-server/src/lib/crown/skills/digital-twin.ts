@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
-// SKILL 8 — Digital Twin Engine
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// SKILL 8 â€” Digital Twin Engine
 // Gemelos digitales de repositorios, servicios, infraestructura
-// y territorios con simulación de escenarios y monitoring
-// ────────────────────────────────────────────────────────────────
+// y territorios con simulaciÃ³n de escenarios y monitoring
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { SkillDefinition, TwinModel, TwinComponent } from "../types";
 
@@ -91,7 +95,7 @@ export function createDigitalTwinEngine(): DigitalTwinEngine {
       });
 
       const overallRisk = impact.length > 0 ? impact.reduce((s, i) => s + i.risk, 0) / impact.length : 0;
-      const recommendation = overallRisk > 0.7 ? "High risk — deploy with caution" : overallRisk > 0.4 ? "Medium risk — test thoroughly" : "Low risk — safe to proceed";
+      const recommendation = overallRisk > 0.7 ? "High risk â€” deploy with caution" : overallRisk > 0.4 ? "Medium risk â€” test thoroughly" : "Low risk â€” safe to proceed";
 
       return { modelId: request.modelId, scenario: request.scenario, impact, overallRisk, recommendation };
     },

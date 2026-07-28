@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { MovementFilter } from "@/core/behavior/movement.filter";
 import { detectMovementPattern } from "@/core/behavior/pattern.detector";
 import { createTraceId } from "@/core/context/trace";

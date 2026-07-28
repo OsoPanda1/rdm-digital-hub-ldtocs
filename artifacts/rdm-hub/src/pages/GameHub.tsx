@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -55,7 +59,7 @@ export default function GameHubPage() {
   return (
     <RDMLayout>
       <SEOMeta
-        title="Game Hub — Metajuego Territorial RDM Digital"
+        title="Game Hub â€” Metajuego Territorial RDM Digital"
         description="Gamificacion federada integrada al LTOS. Misiones, insignias, leaderboard y roles territoriales."
       />
 

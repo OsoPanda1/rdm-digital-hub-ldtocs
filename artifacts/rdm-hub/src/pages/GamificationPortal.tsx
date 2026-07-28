@@ -1,7 +1,11 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * GamificationPortal — Hub central de gamificación
+ * GamificationPortal â€” Hub central de gamificaciÃ³n
  * Integra: perfil del jugador, leaderboard, misiones
- * Sistema: geo-discovery → XP → rank → missions → leaderboard
+ * Sistema: geo-discovery â†’ XP â†’ rank â†’ missions â†’ leaderboard
  */
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -39,26 +43,26 @@ const RANK_TIERS = [
     xp: 3000,
     color: "hsl(43 80% 55%)",
     bg: "hsl(43 80% 55% / 0.1)",
-    desc: "Dominas el territorio como los mineros de antaño. Desbloquea misiones exclusivas y multiplicadores.",
+    desc: "Dominas el territorio como los mineros de antaÃ±o. Desbloquea misiones exclusivas y multiplicadores.",
   },
   {
     id: "guardian_of_the_town",
-    label: "Guardián del Pueblo",
+    label: "GuardiÃ¡n del Pueblo",
     icon: Shield,
     xp: 10000,
     color: "hsl(270 60% 60%)",
     bg: "hsl(270 60% 60% / 0.1)",
-    desc: "El título máximo. Eres un pilar de la comunidad digital y territorial de Real del Monte.",
+    desc: "El tÃ­tulo mÃ¡ximo. Eres un pilar de la comunidad digital y territorial de Real del Monte.",
   },
 ];
 
 const HOW_TO_EARN = [
-  { icon: Map,     label: "Check-in geográfico",   xp: 50,  desc: "Visita físicamente un POI y valida con geofence" },
-  { icon: Trophy,  label: "Completar misión",       xp: 100, desc: "Finaliza una quest narrativa o territorial" },
-  { icon: Star,    label: "Visita cultural",         xp: 25,  desc: "Explora páginas de historia, arte o cultura" },
+  { icon: Map,     label: "Check-in geogrÃ¡fico",   xp: 50,  desc: "Visita fÃ­sicamente un POI y valida con geofence" },
+  { icon: Trophy,  label: "Completar misiÃ³n",       xp: 100, desc: "Finaliza una quest narrativa o territorial" },
+  { icon: Star,    label: "Visita cultural",         xp: 25,  desc: "Explora pÃ¡ginas de historia, arte o cultura" },
   { icon: Zap,     label: "Compra validada",         xp: 75,  desc: "Paga en un comercio registrado con QR RDM" },
-  { icon: Flame,   label: "Racha diaria",            xp: 30,  desc: "3+ días consecutivos de actividad" },
-  { icon: Shield,  label: "Acción comunitaria",      xp: 40,  desc: "Publica en el feed o apoya a un comercio" },
+  { icon: Flame,   label: "Racha diaria",            xp: 30,  desc: "3+ dÃ­as consecutivos de actividad" },
+  { icon: Shield,  label: "AcciÃ³n comunitaria",      xp: 40,  desc: "Publica en el feed o apoya a un comercio" },
 ];
 
 export default function GamificationPortal() {
@@ -67,8 +71,8 @@ export default function GamificationPortal() {
   return (
     <RDMLayout>
       <SEOMeta
-        title="Gamificación — RDM Digital Hub"
-        description="Sistema de progresión territorial para Real del Monte. Explora, acumula XP, sube de rango y conquista el leaderboard."
+        title="GamificaciÃ³n â€” RDM Digital Hub"
+        description="Sistema de progresiÃ³n territorial para Real del Monte. Explora, acumula XP, sube de rango y conquista el leaderboard."
       />
 
       {/* Hero */}
@@ -81,15 +85,15 @@ export default function GamificationPortal() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <div className="flex items-center gap-2 text-[hsl(var(--rdm-amber))] text-xs uppercase tracking-widest mb-3">
               <Trophy className="w-4 h-4" />
-              <span style={{ fontFamily: "var(--font-body)" }}>Sistema de Progresión Territorial</span>
+              <span style={{ fontFamily: "var(--font-body)" }}>Sistema de ProgresiÃ³n Territorial</span>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>
               Real del Monte<br />
               <span className="text-[hsl(var(--rdm-amber))]">RPG</span>
             </h1>
             <p className="text-white/60 text-lg max-w-xl" style={{ fontFamily: "var(--font-body)" }}>
-              Geo-discovery → XP → Rango → Misiones → Leaderboard.
-              Convierte tu exploración real en progresión digital.
+              Geo-discovery â†’ XP â†’ Rango â†’ Misiones â†’ Leaderboard.
+              Convierte tu exploraciÃ³n real en progresiÃ³n digital.
             </p>
           </motion.div>
         </div>
@@ -132,7 +136,7 @@ export default function GamificationPortal() {
       <section className="bg-[oklch(0.12_0.02_260)] py-12 px-6 md:px-12 border-y border-white/5">
         <div className="container mx-auto max-w-5xl">
           <p className="text-xs text-white/40 uppercase tracking-widest mb-6" style={{ fontFamily: "var(--font-body)" }}>
-            Cómo ganar XP
+            CÃ³mo ganar XP
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {HOW_TO_EARN.map((item, i) => (

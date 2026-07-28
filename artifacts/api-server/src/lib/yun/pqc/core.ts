@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // YUN Post-Quantum Hybrid Cryptography
 // RSA/ECDSA + Kyber (KEM) + Dilithium (signatures)
 // Provides cryptographic agility for the quantum era.
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /**
  * @module pqc/core
@@ -40,7 +44,7 @@ import {
 import { logger } from "../../logger";
 import type { YunNode } from "../types";
 
-// ── Types ──────────────────────────────────────────────────────
+// â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type PqcAlgorithm = "kyber512" | "kyber768" | "kyber1024" | "dilithium2" | "dilithium3" | "dilithium5";
 
@@ -84,7 +88,7 @@ export interface KeyInventoryEntry {
   rotationWindowMs: number;
 }
 
-// ── Migration Note ─────────────────────────────────────────────
+// â”€â”€ Migration Note â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /**
  * Migration note: This module currently uses X25519+Ed25519 as quantum-resistant
@@ -97,7 +101,7 @@ export interface KeyInventoryEntry {
 export const PQC_MIGRATION_NOTE =
   "This module uses X25519+Ed25519 as quantum-resistant classical alternatives. Migrate to lattice-based Kyber/Dilithium when native Node.js bindings are available.";
 
-// ── Default Configuration ──────────────────────────────────────
+// â”€â”€ Default Configuration â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const DEFAULT_ROTATION_WINDOW_MS = 180 * 24 * 60 * 60 * 1000; // 6 months
 const GRACE_PERIOD_MS = 30 * 24 * 60 * 60 * 1000; // 30 days after expiry
@@ -105,7 +109,7 @@ const HKDF_INFO = Buffer.from("yun-pqc-hybrid-handshake-v1");
 const HKDF_SALT = Buffer.alloc(32, 0);
 const MAX_KEYS = Number(process.env.RDM_PQC_MAX_KEYS ?? 500);
 
-// ── PQC Hybrid Crypto Engine ───────────────────────────────────
+// â”€â”€ PQC Hybrid Crypto Engine â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /**
  * YUN Post-Quantum Hybrid Cryptography Engine.
@@ -129,7 +133,7 @@ export class YunPqcCrypto {
     this.gracePeriodMs = options?.gracePeriodMs ?? GRACE_PERIOD_MS;
   }
 
-  // ── Key Management ───────────────────────────────────────────
+  // â”€â”€ Key Management â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /**
    * Generate a new key pair for the specified algorithm.
@@ -165,7 +169,7 @@ export class YunPqcCrypto {
         }
       }
       if (this.keys.size >= MAX_KEYS) {
-        logger.warn({ keyCount: this.keys.size, max: MAX_KEYS }, "PQC key store at capacity — new key may displace active keys");
+        logger.warn({ keyCount: this.keys.size, max: MAX_KEYS }, "PQC key store at capacity â€” new key may displace active keys");
       }
     }
 
@@ -183,8 +187,8 @@ export class YunPqcCrypto {
     };
 
     // Generate actual cryptographic key pair based on algorithm family
-    // Kyber algorithms → X25519 (for KEM / key agreement)
-    // Dilithium algorithms → Ed25519 (for signatures)
+    // Kyber algorithms â†’ X25519 (for KEM / key agreement)
+    // Dilithium algorithms â†’ Ed25519 (for signatures)
     const isKem = params.algorithm.startsWith("kyber");
     const keyType = isKem ? "x25519" : "ed25519";
     const { publicKey, privateKey } = generateKeyPairSync(keyType as "x25519" | "ed25519");
@@ -220,7 +224,7 @@ export class YunPqcCrypto {
     return true;
   }
 
-  // ── Key Rotation ─────────────────────────────────────────────
+  // â”€â”€ Key Rotation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   shouldRotateKey(keyId: string, now: Date = new Date()): boolean {
     const meta = this.keys.get(keyId);
@@ -253,7 +257,7 @@ export class YunPqcCrypto {
     );
   }
 
-  // ── Hybrid Handshake (RSA-OAEP + X25519 KEM) ────────────────
+  // â”€â”€ Hybrid Handshake (RSA-OAEP + X25519 KEM) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /**
    * Perform a hybrid handshake combining RSA-OAEP (classic) and X25519 (PQC).
@@ -310,7 +314,7 @@ export class YunPqcCrypto {
         );
       } catch (err) {
         // Fallback: if X25519 fails (e.g., invalid key format), use random
-        logger.warn({ error: (err as Error).message }, "Hybrid handshake X25519 fallback — falling back to random secret");
+        logger.warn({ error: (err as Error).message }, "Hybrid handshake X25519 fallback â€” falling back to random secret");
         pqcSharedSecret = randomBytes(32);
         pqcEncrypted = randomBytes(32);
       }
@@ -342,7 +346,7 @@ export class YunPqcCrypto {
     };
   }
 
-  // ── Hybrid Signing (ECDSA + Ed25519) ────────────────────────
+  // â”€â”€ Hybrid Signing (ECDSA + Ed25519) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /**
    * Create a hybrid signature combining ECDSA-SHA256 (classic) and Ed25519 (PQC).
@@ -388,7 +392,7 @@ export class YunPqcCrypto {
         pqcSignature = sig.toString("base64");
       } catch (err) {
         // If Ed25519 signing fails (e.g., wrong key type), log and leave pqcSignature empty
-        logger.warn({ error: (err as Error).message, keyId: params.keyId }, "Ed25519 signing failed — returning classic-only signature");
+        logger.warn({ error: (err as Error).message, keyId: params.keyId }, "Ed25519 signing failed â€” returning classic-only signature");
         pqcSignature = "";
       }
     }
@@ -464,7 +468,7 @@ export class YunPqcCrypto {
     }
   }
 
-  // ── Key Inventory ────────────────────────────────────────────
+  // â”€â”€ Key Inventory â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   getInventory(): KeyInventoryEntry[] {
     return Array.from(this.keys.values()).map((k) => ({

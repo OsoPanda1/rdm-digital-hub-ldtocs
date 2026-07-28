@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useRef, useEffect, useCallback } from "react";
 import { getFrequencyData, getAverageFrequency } from "./audio-engine";
 

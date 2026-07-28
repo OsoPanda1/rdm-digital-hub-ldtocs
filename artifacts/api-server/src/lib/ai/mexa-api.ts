@@ -1,15 +1,19 @@
-// ────────────────────────────────────────────────────────────────
-// Mexa API — Cryptographic Sovereignty Layer (Ω-Core v4.0 Enterprise)
-// Capa criptográfica: firma digital, verificación de procedencia,
-// máscara de federación para los 7 nodos TAMV
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Mexa API â€” Cryptographic Sovereignty Layer (Î©-Core v4.0 Enterprise)
+// Capa criptogrÃ¡fica: firma digital, verificaciÃ³n de procedencia,
+// mÃ¡scara de federaciÃ³n para los 7 nodos TAMV
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { createHash, randomBytes } from "crypto";
 import type { FederationId, FederationMask, SignedPayload, VerificationResult } from "../isabella/types";
 
 const FEDERATIONS: FederationId[] = ["FED-1", "FED-2", "FED-3", "FED-4", "FED-5", "FED-6", "FED-7"];
 
-// ── Federation Mask ─────────────────────────────────────────────
+// â”€â”€ Federation Mask â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function createFederationMask(
   federationId: FederationId,
@@ -17,7 +21,7 @@ export function createFederationMask(
   secret: string,
 ): FederationMask {
   if (!FEDERATIONS.includes(federationId)) {
-    throw new Error(`Federación inválida: ${federationId}`);
+    throw new Error(`FederaciÃ³n invÃ¡lida: ${federationId}`);
   }
   const timestamp = Date.now();
   const raw = `${federationId}:${nodeId}:${timestamp}:${secret}`;
@@ -48,7 +52,7 @@ export function verifyFederationMask(
   return { valid: true, federation: mask.federationId, node: mask.nodeId };
 }
 
-// ── Payload Signing ─────────────────────────────────────────────
+// â”€â”€ Payload Signing â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function signPayload(
   payload: unknown,
@@ -87,7 +91,7 @@ export function verifySignedPayload(
   return { valid: true, federation: signed.federationMask.federationId, node: signed.federationMask.nodeId };
 }
 
-// ── Mexa API Client ─────────────────────────────────────────────
+// â”€â”€ Mexa API Client â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface MexaApiClient {
   createMask: (fed: FederationId, node: string) => FederationMask;

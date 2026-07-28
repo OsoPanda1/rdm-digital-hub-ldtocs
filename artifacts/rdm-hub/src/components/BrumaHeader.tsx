@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
@@ -6,7 +10,7 @@ import logoImg from "@/assets/rdm-logo.png";
 
 const navItems = [
   { label: "Historia", path: "/historia" },
-  { label: "Gastronomía", path: "/gastronomia" },
+  { label: "GastronomÃ­a", path: "/gastronomia" },
   { label: "Cultura", path: "/cultura" },
   { label: "Rutas", path: "/rutas" },
   { label: "Comercios", path: "/comercios" },
@@ -16,10 +20,10 @@ const navItems = [
 
 const chapters = [
   { id: "inicio", label: "Inicio", preview: "Portal", path: "/" },
-  { id: "historia", label: "Historia Minera", preview: "Capítulo I", path: "/historia" },
-  { id: "gastronomia", label: "Gastronomía", preview: "Sabores", path: "/gastronomia" },
+  { id: "historia", label: "Historia Minera", preview: "CapÃ­tulo I", path: "/historia" },
+  { id: "gastronomia", label: "GastronomÃ­a", preview: "Sabores", path: "/gastronomia" },
   { id: "cultura", label: "Cultura y Leyendas", preview: "Identidad", path: "/cultura" },
-  { id: "rutas", label: "Rutas Turísticas", preview: "Experiencias", path: "/rutas" },
+  { id: "rutas", label: "Rutas TurÃ­sticas", preview: "Experiencias", path: "/rutas" },
   { id: "comercios", label: "Directorio", preview: "Comercios", path: "/comercios" },
   { id: "eventos", label: "Eventos", preview: "Agenda", path: "/eventos" },
   { id: "mapa", label: "Mapa Vivo", preview: "Interactivo", path: "/mapa" },
@@ -89,7 +93,7 @@ const BrumaHeader = () => {
           onClick={() => setMenuOpen(!menuOpen)}
           className="font-body text-[11px] tracking-[0.3em] uppercase text-muted-foreground hover:text-gold transition-colors duration-500 flex items-center gap-2 xl:hidden"
         >
-          <span className="hidden sm:inline">{menuOpen ? "Cerrar" : "Índice"}</span>
+          <span className="hidden sm:inline">{menuOpen ? "Cerrar" : "Ãndice"}</span>
           <div className="flex flex-col gap-1 w-5">
             <motion.div animate={{ rotate: menuOpen ? 45 : 0, y: menuOpen ? 5 : 0 }} className="w-full h-[1px] bg-gold" />
             <motion.div animate={{ opacity: menuOpen ? 0 : 1 }} className="w-full h-[1px] bg-gold/60" />

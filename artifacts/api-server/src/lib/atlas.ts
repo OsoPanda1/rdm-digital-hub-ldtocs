@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
-// ATLAS TRANSCENDENCE — Master Integration Module
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ATLAS TRANSCENDENCE â€” Master Integration Module
 // Orquestador supremo: integra Genesis, Federation, Memory, Security
-// Punto de entrada único para el ecosistema cognitivo completo
-// ────────────────────────────────────────────────────────────────
+// Punto de entrada Ãºnico para el ecosistema cognitivo completo
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { createCognitiveOrchestrator } from "./isabella/core/orchestrator";
 import { createContextEngine } from "./isabella/genesis/context-engine";

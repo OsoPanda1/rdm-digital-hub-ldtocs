@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useMemo } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
@@ -26,12 +30,12 @@ type Tab = "usuarios" | "comercios";
 const USER_PLANS = [
   {
     id: "99",
-    name: "Veta Soberana · Básico",
+    name: "Veta Soberana Â· BÃ¡sico",
     price: "$99",
     period: "MXN/mes",
-    tagline: "Acceso a minería digital y bolsa de premios",
+    tagline: "Acceso a minerÃ­a digital y bolsa de premios",
     features: [
-      "Minería digital en el Subsuelo RDM",
+      "MinerÃ­a digital en el Subsuelo RDM",
       "Bolsa de premios: pastes, micheladas, tours",
       "Canje de puntos por productos reales",
       "Misiones diarias y semanales",
@@ -43,17 +47,17 @@ const USER_PLANS = [
   },
   {
     id: "129",
-    name: "Veta Soberana · Minero",
+    name: "Veta Soberana Â· Minero",
     price: "$129",
     period: "MXN/mes",
-    tagline: "Minería remota, multiplicadores x2 y misiones avanzadas",
+    tagline: "MinerÃ­a remota, multiplicadores x2 y misiones avanzadas",
     highlight: true,
     features: [
-      "Todo lo del plan Básico",
+      "Todo lo del plan BÃ¡sico",
       "Multiplicador x2 en puntos de juegos",
-      "Minería remota desde cualquier lugar",
+      "MinerÃ­a remota desde cualquier lugar",
       "Misiones avanzadas con recompensas exclusivas",
-      "Energía y cooldown reducidos en la mina",
+      "EnergÃ­a y cooldown reducidos en la mina",
       "Acceso prioritario a premios de alto valor (plata, cenas, hospedaje)",
       "Insignia exclusiva de Minero RDM en el perfil",
     ],
@@ -65,15 +69,15 @@ const USER_PLANS = [
 const COMMERCE_PLANS = [
   {
     id: "199",
-    name: "Comercio Federado · Básico",
+    name: "Comercio Federado Â· BÃ¡sico",
     price: "$199",
     period: "MXN/mes",
     tagline: "Digitaliza tu negocio y aparece en el mapa",
     features: [
       "Perfil digital con fotos, horarios y contacto",
-      "Ubicación en el mapa interactivo turístico",
-      "Analytics básicos: vistas y clics",
-      "Botón de WhatsApp directo",
+      "UbicaciÃ³n en el mapa interactivo turÃ­stico",
+      "Analytics bÃ¡sicos: vistas y clics",
+      "BotÃ³n de WhatsApp directo",
       "Soporte por chat en horario laboral",
     ],
     accent: "from-teal/20 to-cyan-500/5",
@@ -81,17 +85,17 @@ const COMMERCE_PLANS = [
   },
   {
     id: "299",
-    name: "Comercio Federado · Premium",
+    name: "Comercio Federado Â· Premium",
     price: "$299",
     period: "MXN/mes",
-    tagline: "Destaca, atrae jugadores y vende más",
+    tagline: "Destaca, atrae jugadores y vende mÃ¡s",
     highlight: true,
     features: [
-      "Todo lo del plan Básico",
-      "Nodo de Energía: los jugadores recargan en tu local",
+      "Todo lo del plan BÃ¡sico",
+      "Nodo de EnergÃ­a: los jugadores recargan en tu local",
       "Prioridad en la bolsa de premios (tus productos aparecen primero)",
-      "Catálogo premium con fotos profesionales",
-      "Métricas avanzadas: conversión, retención, ticket promedio",
+      "CatÃ¡logo premium con fotos profesionales",
+      "MÃ©tricas avanzadas: conversiÃ³n, retenciÃ³n, ticket promedio",
       "Insignia 'Premium' destacada en el directorio",
       "Reporte semanal de rendimiento por email",
     ],
@@ -101,7 +105,7 @@ const COMMERCE_PLANS = [
 ];
 
 function getCheckoutFunctionName(planId: string, isCommerce: boolean): string {
-  // Punto único para mapear planes → función de Edge, fácil de versionar
+  // Punto Ãºnico para mapear planes â†’ funciÃ³n de Edge, fÃ¡cil de versionar
   if (isCommerce) return "create-commerce-premium-checkout";
   return "create-user-premium-checkout";
 }
@@ -124,7 +128,7 @@ export default function PremiumPlans() {
       return;
     }
     if (busy) {
-      // Evitar múltiples disparos simultáneos
+      // Evitar mÃºltiples disparos simultÃ¡neos
       return;
     }
 
@@ -140,7 +144,7 @@ export default function PremiumPlans() {
 
       const fn = getCheckoutFunctionName(planId, isCommerce);
 
-      // Punto de auditoría mínimo: log informativo (idealmente enviar a telemetría backend)
+      // Punto de auditorÃ­a mÃ­nimo: log informativo (idealmente enviar a telemetrÃ­a backend)
       // eslint-disable-next-line no-console
       console.info("Iniciando checkout premium", {
         userId: user.id,
@@ -154,20 +158,20 @@ export default function PremiumPlans() {
 
       if (error) {
         logger.error("Error en checkout premium:", { error });
-        throw new Error(error.message || "Error en la función de pago");
+        throw new Error(error.message || "Error en la funciÃ³n de pago");
       }
 
       const url = data?.url;
       if (typeof url !== "string" || !url.startsWith("http")) {
-        logger.error("URL de checkout inválida:", { url });
-        throw new Error("Respuesta de pago inválida. Intenta más tarde.");
+        logger.error("URL de checkout invÃ¡lida:", { url });
+        throw new Error("Respuesta de pago invÃ¡lida. Intenta mÃ¡s tarde.");
       }
 
       window.location.href = url;
     } catch (e: unknown) {
       const message =
         (e instanceof Error ? e.message : null) ||
-        "No se pudo iniciar el pago. Revisa tu conexión o intenta más tarde.";
+        "No se pudo iniciar el pago. Revisa tu conexiÃ³n o intenta mÃ¡s tarde.";
       toast.error(message);
       setBusy(null);
     }
@@ -176,12 +180,12 @@ export default function PremiumPlans() {
   return (
     <RDMLayout>
       <SEOMeta
-        title="Planes Premium · RDM Digital"
+        title="Planes Premium Â· RDM Digital"
         description="Planes premium para usuarios y comercios en Real del Monte. Desde $99 MXN/mes."
       />
       {/* Hero Banner */}
       <div className="relative h-56 w-full overflow-hidden">
-        <img src="/images/artesanias-plata.jpg" alt="Artesanías de plata de Real del Monte" className="h-full w-full object-cover" />
+        <img src="/images/artesanias-plata.jpg" alt="ArtesanÃ­as de plata de Real del Monte" className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
         <div className="absolute bottom-8 left-8 text-white">
           <h1 className="text-3xl font-bold">Planes Premium</h1>
@@ -201,7 +205,7 @@ export default function PremiumPlans() {
             className="mb-10 text-center"
           >
             <span className="mb-3 block font-mono text-xs uppercase tracking-widest text-primary">
-              DOCUMENTO MAESTRO · Capítulo VII
+              DOCUMENTO MAESTRO Â· CapÃ­tulo VII
             </span>
             <h1 className="mb-3 text-4xl font-bold uppercase leading-[0.9] tracking-tighter md:text-5xl">
               <span className="text-gradient-gold">Planes Premium</span>
@@ -379,16 +383,16 @@ export default function PremiumPlans() {
           >
             <Gift className="mx-auto mb-3 h-8 w-8 text-gold" />
             <h3 className="font-display text-lg font-bold text-foreground mb-2">
-              ¿Cómo funcionan los puntos?
+              Â¿CÃ³mo funcionan los puntos?
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Juega Memoria Minera y Trivia Territorial para ganar puntos
-              canjeables. Los puntos se acreditan automáticamente al completar
-              partidas. Canjea tus puntos por pastes, micheladas, joyería de
-              plata, cenas románticas, noches de hospedaje y recorridos guiados
+              canjeables. Los puntos se acreditan automÃ¡ticamente al completar
+              partidas. Canjea tus puntos por pastes, micheladas, joyerÃ­a de
+              plata, cenas romÃ¡nticas, noches de hospedaje y recorridos guiados
               en comercios federados de Real del Monte. Los premios son
-              aportados por los propios comercios — la plataforma no retiene
-              comisión.
+              aportados por los propios comercios â€” la plataforma no retiene
+              comisiÃ³n.
             </p>
             <div className="mt-4 flex flex-wrap justify-center gap-3 text-xs text-muted-foreground">
               <span className="flex items-center gap-1">
@@ -404,14 +408,14 @@ export default function PremiumPlans() {
           </motion.div>
 
           <p className="mt-8 text-center text-xs text-muted-foreground">
-            ¿Dudas? Visita las{" "}
+            Â¿Dudas? Visita las{" "}
             <Link
               to="/faq"
               className="text-gold underline-offset-2 hover:underline"
             >
               Preguntas Frecuentes
             </Link>
-            {" · "}Pago seguro con Stripe · Cancela cuando quieras
+            {" Â· "}Pago seguro con Stripe Â· Cancela cuando quieras
           </p>
         </div>
       </section>

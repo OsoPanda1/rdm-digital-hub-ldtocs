@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * Isabella AI Voice Engine — Real TTS Integration
+ * Isabella AI Voice Engine â€” Real TTS Integration
  * Uses Web Speech API for client-side TTS with emotion-aware voice selection.
  * Integrates with Isabella's consciousness pipeline for contextual voice responses.
  */
@@ -26,7 +30,7 @@ interface VoiceEngineState {
   voices: SpeechSynthesisVoice[];
 }
 
-// Emotion → voice parameter mapping (Isabella's vocal signature: 220Hz, 145 WPM, neutral Mexican)
+// Emotion â†’ voice parameter mapping (Isabella's vocal signature: 220Hz, 145 WPM, neutral Mexican)
 const EMOTION_VOICE_PARAMS: Record<string, { rate: number; pitch: number; volume: number }> = {
   neutral: { rate: 0.9, pitch: 1.0, volume: 1.0 },
   alegria: { rate: 1.0, pitch: 1.15, volume: 1.0 },

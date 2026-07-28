@@ -1,7 +1,11 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// RDM FEDERACIONES · Las 7 Federaciones Soberanas TAMV
-// Portado desde seed canónico OsoPanda1/rdm-turismodigital · 002_rdm_seed.sql
-// ─────────────────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// RDM FEDERACIONES Â· Las 7 Federaciones Soberanas TAMV
+// Portado desde seed canÃ³nico OsoPanda1/rdm-turismodigital Â· 002_rdm_seed.sql
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type FederationId =
   | "educativa"
@@ -26,18 +30,18 @@ export interface Federation {
 export const RDM_FEDERATIONS: Federation[] = [
   {
     id: "educativa",
-    name: "Federación Educativa TAMV",
-    motto: "El conocimiento como soberanía",
+    name: "FederaciÃ³n Educativa TAMV",
+    motto: "El conocimiento como soberanÃ­a",
     description:
-      "Universidad Soberana de Real del Monte. Currículo descolonizado, pedagogía minera, formación bilingüe español-otomí.",
+      "Universidad Soberana de Real del Monte. CurrÃ­culo descolonizado, pedagogÃ­a minera, formaciÃ³n bilingÃ¼e espaÃ±ol-otomÃ­.",
     colorHex: "#c47d3b",
     icon: "graduation-cap",
     domain: "edu.rdm.tamv",
-    modules: ["Universidad Soberana", "Currículo Descolonizado", "Pedagogía Minera", "Bilingüe Otomí-Español"],
+    modules: ["Universidad Soberana", "CurrÃ­culo Descolonizado", "PedagogÃ­a Minera", "BilingÃ¼e OtomÃ­-EspaÃ±ol"],
   },
   {
     id: "cultural",
-    name: "Federación Cultural TAMV",
+    name: "FederaciÃ³n Cultural TAMV",
     motto: "Memoria que no se extrae",
     description:
       "Custodia del patrimonio cornish-mexicano, festivales, archivo oral, lenguas originarias y la memoria del temporal.",
@@ -48,21 +52,21 @@ export const RDM_FEDERATIONS: Federation[] = [
   },
   {
     id: "economica",
-    name: "Federación Económica TAMV",
-    motto: "Riqueza local, circulación local",
+    name: "FederaciÃ³n EconÃ³mica TAMV",
+    motto: "Riqueza local, circulaciÃ³n local",
     description:
-      "Crédito TAMV, comercio federado, comunalidad cooperativa, redistribución soberana, anti-extractivismo.",
+      "CrÃ©dito TAMV, comercio federado, comunalidad cooperativa, redistribuciÃ³n soberana, anti-extractivismo.",
     colorHex: "#a87844",
     icon: "coins",
     domain: "eco.rdm.tamv",
-    modules: ["Crédito TAMV", "Comercios Federados", "Cooperativas", "Redistribución"],
+    modules: ["CrÃ©dito TAMV", "Comercios Federados", "Cooperativas", "RedistribuciÃ³n"],
   },
   {
     id: "tecnologica",
-    name: "Federación Tecnológica TAMV",
-    motto: "Código que no coloniza",
+    name: "FederaciÃ³n TecnolÃ³gica TAMV",
+    motto: "CÃ³digo que no coloniza",
     description:
-      "Kernel TAMV, Isabella Sentinel, soberanía algorítmica, infraestructura propia, edge computing minero.",
+      "Kernel TAMV, Isabella Sentinel, soberanÃ­a algorÃ­tmica, infraestructura propia, edge computing minero.",
     colorHex: "#6b8aa0",
     icon: "cpu",
     domain: "tec.rdm.tamv",
@@ -70,18 +74,18 @@ export const RDM_FEDERATIONS: Federation[] = [
   },
   {
     id: "salud",
-    name: "Federación de Salud TAMV",
+    name: "FederaciÃ³n de Salud TAMV",
     motto: "Cuerpo territorio, territorio cuerpo",
     description:
-      "Medicina mestiza cornish-otomí, herbolaria, salud mental comunitaria, telesalud federada.",
+      "Medicina mestiza cornish-otomÃ­, herbolaria, salud mental comunitaria, telesalud federada.",
     colorHex: "#7d9b7a",
     icon: "heart-pulse",
     domain: "sal.rdm.tamv",
-    modules: ["Herbolaria Otomí", "Medicina Mestiza", "Salud Mental", "Telesalud Federada"],
+    modules: ["Herbolaria OtomÃ­", "Medicina Mestiza", "Salud Mental", "Telesalud Federada"],
   },
   {
     id: "comunicacion",
-    name: "Federación de Comunicación TAMV",
+    name: "FederaciÃ³n de ComunicaciÃ³n TAMV",
     motto: "La narrativa propia",
     description:
       "Radio del Monte, prensa soberana, contranarrativa, blog Tamvonline Network, broadcast ritual.",
@@ -92,8 +96,8 @@ export const RDM_FEDERATIONS: Federation[] = [
   },
   {
     id: "gubernamental",
-    name: "Federación Gubernamental TAMV",
-    motto: "Asamblea, no representación",
+    name: "FederaciÃ³n Gubernamental TAMV",
+    motto: "Asamblea, no representaciÃ³n",
     description:
       "Consejo del Nodo Cero, jurisprudencia ritual, asambleas federadas, registro civil soberano.",
     colorHex: "#5e5048",

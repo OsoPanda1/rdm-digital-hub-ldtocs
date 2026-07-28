@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -56,7 +60,7 @@ export function DashboardView() {
           Control Center
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
-          Real del Monte — Sistema operativo territorial en tiempo real
+          Real del Monte â€” Sistema operativo territorial en tiempo real
         </p>
       </div>
 
@@ -95,7 +99,7 @@ export function DashboardView() {
           <p className={cardTitle}>Clima en Tiempo Real</p>
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-4xl font-display font-light">{WEATHER.temp}°</p>
+              <p className="text-4xl font-display font-light">{WEATHER.temp}Â°</p>
               <p className="text-sm text-muted-foreground">{WEATHER.condition}</p>
             </div>
             <div className="text-right text-xs text-muted-foreground space-y-1">
@@ -112,7 +116,7 @@ export function DashboardView() {
           transition={{ delay: 0.25 }}
           className={card}
         >
-          <p className={cardTitle}>Distribución por Categoría</p>
+          <p className={cardTitle}>DistribuciÃ³n por CategorÃ­a</p>
           <div className="space-y-2">
             {Object.entries(categoryCounts).map(([cat, count]) => {
               const Icon = INTENT_ICONS[cat] || MapPin;
@@ -173,7 +177,7 @@ export function DashboardView() {
             <thead>
               <tr className="border-b border-border text-left">
                 <th className="pb-2 text-xs text-muted-foreground font-medium">Nombre</th>
-                <th className="pb-2 text-xs text-muted-foreground font-medium">Categoría</th>
+                <th className="pb-2 text-xs text-muted-foreground font-medium">CategorÃ­a</th>
                 <th className="pb-2 text-xs text-muted-foreground font-medium">Rating</th>
                 <th className="pb-2 text-xs text-muted-foreground font-medium hidden md:table-cell">Coordenadas</th>
               </tr>
@@ -190,7 +194,7 @@ export function DashboardView() {
                         <span className="capitalize text-muted-foreground">{place.category}</span>
                       </div>
                     </td>
-                    <td className="py-2.5 text-accent">★ {place.rating}</td>
+                    <td className="py-2.5 text-accent">â˜… {place.rating}</td>
                     <td className="py-2.5 text-muted-foreground text-xs font-mono hidden md:table-cell">
                       {place.lat.toFixed(3)}, {place.lng.toFixed(3)}
                     </td>

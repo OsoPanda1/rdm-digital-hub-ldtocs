@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 export interface GeoPoint {
   lat: number;
   lng: number;
@@ -11,7 +15,7 @@ export type TwinSecurity = {
 
 export type TelemetryBase = Record<string, string | number | boolean>;
 
-// ─── Mesh Node ────────────────────────────────────────────────
+// â”€â”€â”€ Mesh Node â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface MeshNodeProperties {
   name: string;
@@ -43,7 +47,7 @@ export interface MeshNodeTwin {
   security: TwinSecurity;
 }
 
-// ─── Commerce ─────────────────────────────────────────────────
+// â”€â”€â”€ Commerce â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface CommerceProperties {
   name: string;
@@ -77,7 +81,7 @@ export interface CommerceTwin {
   security: TwinSecurity;
 }
 
-// ─── Environmental Sensor ─────────────────────────────────────
+// â”€â”€â”€ Environmental Sensor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface SensorProperties {
   name: string;
@@ -109,7 +113,7 @@ export interface EnvironmentalSensorTwin {
   security: TwinSecurity;
 }
 
-// ─── Union ────────────────────────────────────────────────────
+// â”€â”€â”€ Union â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type TerritorialTwin = MeshNodeTwin | CommerceTwin | EnvironmentalSensorTwin;
 
@@ -120,7 +124,7 @@ export type TwinTelemetry =
   | CommerceTelemetry
   | SensorTelemetry;
 
-// ─── Twin State (post Micro-Sentinel) ─────────────────────────
+// â”€â”€â”€ Twin State (post Micro-Sentinel) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface TwinState {
   nodeId: string;
@@ -133,7 +137,7 @@ export interface TwinState {
   telemetry: TwinTelemetry;
 }
 
-// ─── Ditto Thing ──────────────────────────────────────────────
+// â”€â”€â”€ Ditto Thing â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface DittoThing {
   thingId: string;

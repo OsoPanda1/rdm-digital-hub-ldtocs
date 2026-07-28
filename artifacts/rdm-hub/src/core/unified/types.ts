@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { FederationId, Coordenadas, IsabellaDecision, SystemMetrics } from '@/core/models';
 import type { UserContribution, TerritorialStats } from '@/core/territorial/types';
 import type { PipelineResult, PipelineInput } from '@/isabella/pipeline/pipeline.types';

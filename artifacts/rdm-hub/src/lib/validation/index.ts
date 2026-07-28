@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { z } from 'zod';
 import { ApiError, badRequest } from '@/lib/security/error-handler';
 
@@ -41,7 +45,7 @@ export function validate<T>(schema: z.ZodSchema<T>, data: unknown): T {
   const result = schema.safeParse(data);
   if (!result.success) {
     const errors = result.error.flatten();
-    throw badRequest('Datos inválidos', { fieldErrors: errors.fieldErrors, formErrors: errors.formErrors });
+    throw badRequest('Datos invÃ¡lidos', { fieldErrors: errors.fieldErrors, formErrors: errors.formErrors });
   }
   return result.data;
 }

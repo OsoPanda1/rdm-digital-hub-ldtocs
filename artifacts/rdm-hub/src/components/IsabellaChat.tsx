@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,14 +15,14 @@ type Msg = { role: "user" | "assistant"; content: string; ts?: number };
 const CHAT_URL = "/api/isabella/chat";
 
 const GREETINGS = [
-  "¡Hola! Soy **Isabella**, la IA territorial de RDM Digital Hub. Conozco cada rincón de Real del Monte — historia, minas, gastronomía, eventos. ¿Qué deseas explorar?",
+  "Â¡Hola! Soy **Isabella**, la IA territorial de RDM Digital Hub. Conozco cada rincÃ³n de Real del Monte â€” historia, minas, gastronomÃ­a, eventos. Â¿QuÃ© deseas explorar?",
 ];
 
 const SUGGESTIONS = [
-  "¿Cuál es la historia de las minas?",
-  "¿Dónde comer los mejores pastes?",
-  "¿Qué hacer este fin de semana?",
-  "Cuéntame sobre el Panteón Inglés",
+  "Â¿CuÃ¡l es la historia de las minas?",
+  "Â¿DÃ³nde comer los mejores pastes?",
+  "Â¿QuÃ© hacer este fin de semana?",
+  "CuÃ©ntame sobre el PanteÃ³n InglÃ©s",
 ];
 
 export function IsabellaChat() {
@@ -115,7 +119,7 @@ export function IsabellaChat() {
       setMessages((prev) => [...prev, {
         role: "assistant",
         content: online === false
-          ? "⚠️ Isabella no está conectada al servidor. Verifica que la API esté activa."
+          ? "âš ï¸ Isabella no estÃ¡ conectada al servidor. Verifica que la API estÃ© activa."
           : "Lo siento, hubo un problema al procesar tu mensaje. Intenta de nuevo.",
         ts: Date.now(),
       }]);
@@ -131,7 +135,7 @@ export function IsabellaChat() {
 
   return (
     <>
-      {/* ── Floating trigger ── */}
+      {/* â”€â”€ Floating trigger â”€â”€ */}
       <AnimatePresence>
         {!open && (
           <motion.button
@@ -153,7 +157,7 @@ export function IsabellaChat() {
         )}
       </AnimatePresence>
 
-      {/* ── Chat panel ── */}
+      {/* â”€â”€ Chat panel â”€â”€ */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -165,7 +169,7 @@ export function IsabellaChat() {
             className={`fixed bottom-6 right-6 z-50 ${panelW} ${panelH} max-w-[calc(100vw-1.5rem)] max-h-[calc(100vh-2rem)] flex flex-col rounded-2xl overflow-hidden border border-white/10 shadow-[0_32px_80px_-12px_hsl(0_0%_0%/0.7)]`}
             style={{ background: "hsl(222 47% 5%)" }}
           >
-            {/* ── Header ── */}
+            {/* â”€â”€ Header â”€â”€ */}
             <div
               className="flex items-center justify-between px-4 py-3 shrink-0 border-b border-white/[0.07]"
               style={{ background: "hsl(222 47% 7%)" }}
@@ -189,7 +193,7 @@ export function IsabellaChat() {
                     Isabella
                   </p>
                   <p className="text-[9px] font-mono uppercase tracking-widest text-[hsl(43_70%_60%)]">
-                    {online === null ? "Conectando…" : online ? "IA Territorial · En línea" : "Sin conexión al servidor"}
+                    {online === null ? "Conectandoâ€¦" : online ? "IA Territorial Â· En lÃ­nea" : "Sin conexiÃ³n al servidor"}
                   </p>
                 </div>
               </div>
@@ -202,14 +206,14 @@ export function IsabellaChat() {
                     if (last) voice.speak(last.content);
                   }}
                   className="p-1.5 rounded-lg text-white/40 hover:text-white/80 hover:bg-white/5 transition-colors"
-                  title="Leer última respuesta"
+                  title="Leer Ãºltima respuesta"
                 >
                   {voice.isSpeaking ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
                 </button>
                 <button
                   onClick={clearChat}
                   className="p-1.5 rounded-lg text-white/40 hover:text-white/80 hover:bg-white/5 transition-colors"
-                  title="Nueva conversación"
+                  title="Nueva conversaciÃ³n"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
                 </button>
@@ -230,7 +234,7 @@ export function IsabellaChat() {
               </div>
             </div>
 
-            {/* ── Messages ── */}
+            {/* â”€â”€ Messages â”€â”€ */}
             <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
               {messages.map((m, i) => (
                 <motion.div
@@ -283,7 +287,7 @@ export function IsabellaChat() {
               )}
             </div>
 
-            {/* ── Suggestions ── */}
+            {/* â”€â”€ Suggestions â”€â”€ */}
             {messages.length <= 1 && !loading && (
               <div className="px-4 pb-2 flex flex-wrap gap-1.5">
                 {SUGGESTIONS.map((s) => (
@@ -300,7 +304,7 @@ export function IsabellaChat() {
               </div>
             )}
 
-            {/* ── Input ── */}
+            {/* â”€â”€ Input â”€â”€ */}
             <div className="px-3 pb-3 pt-2 shrink-0 border-t border-white/[0.06]">
               <form
                 onSubmit={(e) => { e.preventDefault(); send(); }}
@@ -310,7 +314,7 @@ export function IsabellaChat() {
                   ref={inputRef}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Pregunta sobre Real del Monte…"
+                  placeholder="Pregunta sobre Real del Monteâ€¦"
                   className="flex-1 bg-transparent text-sm text-white placeholder:text-white/30 outline-none"
                   style={{ fontFamily: "var(--font-body)" }}
                   disabled={loading}

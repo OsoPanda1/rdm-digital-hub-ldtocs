@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 import PrismaticCard from "./PrismaticCard";
@@ -54,7 +58,7 @@ const FileUpload = ({
 
   const processFiles = (fileList: FileList) => {
     if (files.length >= maxFiles) {
-      toast.error(`Máximo ${maxFiles} archivos permitidos`);
+      toast.error(`MÃ¡ximo ${maxFiles} archivos permitidos`);
       return;
     }
 
@@ -64,7 +68,7 @@ const FileUpload = ({
       if (files.length + newFiles.length >= maxFiles) return;
       
       if (file.size > maxSize * 1024 * 1024) {
-        toast.error(`"${file.name}" excede el límite de ${maxSize}MB`);
+        toast.error(`"${file.name}" excede el lÃ­mite de ${maxSize}MB`);
         return;
       }
       
@@ -113,7 +117,7 @@ const FileUpload = ({
   const uploadFiles = async () => {
     if (!files.length || isUploading) return;
     if (!user) {
-      toast.error("Debes iniciar sesión para subir archivos");
+      toast.error("Debes iniciar sesiÃ³n para subir archivos");
       return;
     }
 

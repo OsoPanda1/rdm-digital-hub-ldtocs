@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // ============================================================================
-// TAMV — Isabella AI NextGen™ Store (federated state)
-// Soberanía conceptual + legal + técnica (Triple Federado)
+// TAMV â€” Isabella AI NextGenâ„¢ Store (federated state)
+// SoberanÃ­a conceptual + legal + tÃ©cnica (Triple Federado)
 // ============================================================================
 import { create } from "zustand";
 

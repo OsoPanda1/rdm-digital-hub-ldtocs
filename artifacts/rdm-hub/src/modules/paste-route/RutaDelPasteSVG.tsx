@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Star, X, ZoomIn, ZoomOut, RotateCcw, Loader2, MessageSquarePlus } from "lucide-react";
@@ -103,7 +107,7 @@ export default function RutaDelPasteSVG() {
                 <text x={p.svg_x} y={p.svg_y + 4} textAnchor="middle" fontSize="12" fontWeight="700" fill="#0d0d0d">{i + 1}</text>
                 <text x={p.svg_x} y={p.svg_y - 24} textAnchor="middle" fontSize="11" fill="#f0d78c" fontFamily="'Cormorant Garamond', serif" fontStyle="italic">{p.name}</text>
                 {p.rating_count > 0 && (
-                  <text x={p.svg_x} y={p.svg_y + 34} textAnchor="middle" fontSize="9" fill="#D4AF37" fontFamily="monospace">★ {p.avg_rating} ({p.rating_count})</text>
+                  <text x={p.svg_x} y={p.svg_y + 34} textAnchor="middle" fontSize="9" fill="#D4AF37" fontFamily="monospace">â˜… {p.avg_rating} ({p.rating_count})</text>
                 )}
               </g>
             );
@@ -138,7 +142,7 @@ export default function RutaDelPasteSVG() {
                 <h3 className="font-display text-2xl text-platinum">{selected.icon} {selected.name}</h3>
                 <p className="mt-2 text-sm font-body text-muted-foreground">{selected.description}</p>
                 <div className="mt-3 flex flex-wrap gap-3 text-xs text-platinum/75">
-                  <span className="inline-flex items-center gap-1"><Star className="h-3 w-3 text-gold fill-gold" /> {selected.avg_rating} ({selected.rating_count} reseñas)</span>
+                  <span className="inline-flex items-center gap-1"><Star className="h-3 w-3 text-gold fill-gold" /> {selected.avg_rating} ({selected.rating_count} reseÃ±as)</span>
                   <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3 text-gold" /> Real del Monte</span>
                 </div>
                 <button onClick={() => setRateOpen(true)} className="mt-4 inline-flex items-center gap-2 rounded-xl border border-gold/40 bg-gold/10 text-gold px-4 py-2 text-xs font-semibold hover:bg-gold/15 transition-all">

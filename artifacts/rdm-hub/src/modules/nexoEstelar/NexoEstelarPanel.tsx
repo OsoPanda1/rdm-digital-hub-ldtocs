@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
@@ -12,7 +16,7 @@ import { Settings, Zap, Github } from "lucide-react";
  * 
  * Punto de acceso centralizado para todas las funcionalidades de TAMV Online Network.
  * Interfaz intuitiva y personalizable que permite a los usuarios navegar a las diferentes 
- * secciones de la plataforma, gestionar su perfil, acceder a Dream Spaces, chats, la galería, y más.
+ * secciones de la plataforma, gestionar su perfil, acceder a Dream Spaces, chats, la galerÃ­a, y mÃ¡s.
  */
 const NexoEstelarPanel = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -69,7 +73,7 @@ const NexoEstelarPanel = () => {
           >
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight relative mb-2 leading-tight">
               <span className="text-gradient bg-gradient-crystal animate-text-shimmer inline-block">
-                GÉNESIS
+                GÃ‰NESIS
               </span>
             </h1>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white/90 tracking-wider">
@@ -78,7 +82,7 @@ const NexoEstelarPanel = () => {
           </motion.div>
           
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light tracking-wide">
-            Arquitectura Visionaria para la Documentación y Desarrollo del Futuro
+            Arquitectura Visionaria para la DocumentaciÃ³n y Desarrollo del Futuro
           </p>
           
           <div className="flex justify-center">
@@ -104,11 +108,11 @@ const NexoEstelarPanel = () => {
                   <div className="mr-3 p-2 rounded-full bg-blue-500/20 text-blue-400">
                     <Settings className="h-5 w-5" />
                   </div>
-                  <h2 className="text-xl font-semibold relative z-10">Integración Neural de Datos</h2>
+                  <h2 className="text-xl font-semibold relative z-10">IntegraciÃ³n Neural de Datos</h2>
                 </div>
                 <p className="text-sm text-muted-foreground mb-6 relative z-10 leading-relaxed">
-                  La plataforma Génesis Digytamv permite la asimilación de documentos en 
-                  su estructura n-dimensional mediante un proceso de cristalización dinámica.
+                  La plataforma GÃ©nesis Digytamv permite la asimilaciÃ³n de documentos en 
+                  su estructura n-dimensional mediante un proceso de cristalizaciÃ³n dinÃ¡mica.
                 </p>
                 
                 <FileUpload className="flex-1 relative z-10" />
@@ -147,11 +151,11 @@ const NexoEstelarPanel = () => {
                     <div className="mr-2 p-1.5 rounded-full bg-purple-500/20 text-purple-300">
                       <Zap className="h-4 w-4" />
                     </div>
-                    <h3 className="font-medium relative z-10">Nodos Simbióticos</h3>
+                    <h3 className="font-medium relative z-10">Nodos SimbiÃ³ticos</h3>
                   </div>
                   <p className="text-sm text-muted-foreground relative z-10 leading-relaxed">
                     Los elementos documentales existen en un estado de refinamiento constante, 
-                    mejorando automáticamente su precisión y relevancia.
+                    mejorando automÃ¡ticamente su precisiÃ³n y relevancia.
                   </p>
                 </PrismaticCard>
               </motion.div>
@@ -174,8 +178,8 @@ const NexoEstelarPanel = () => {
                     <h3 className="font-medium relative z-10">Seguridad Exoplanar</h3>
                   </div>
                   <p className="text-sm text-muted-foreground relative z-10 leading-relaxed">
-                    Sistema inmune digital que detecta y neutraliza inconsistencias lógicas
-                    mediante cifrado homomórfico completo.
+                    Sistema inmune digital que detecta y neutraliza inconsistencias lÃ³gicas
+                    mediante cifrado homomÃ³rfico completo.
                   </p>
                 </PrismaticCard>
               </motion.div>
@@ -200,7 +204,7 @@ const NexoEstelarPanel = () => {
           </div>
           
           <p className="text-xs text-muted-foreground">
-            TAMV ONLINE NETWORK © 2025 — Metaconsciencia Sistémica v1.0
+            TAMV ONLINE NETWORK Â© 2025 â€” Metaconsciencia SistÃ©mica v1.0
           </p>
         </motion.section>
       </div>

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { bus } from '@/core/infra/event-bus';
 
 type JobHandler = (payload: unknown) => Promise<void>;

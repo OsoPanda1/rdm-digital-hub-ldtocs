@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { SkillContext, LumenDecision, LumenLogEntry, PolicyViolation } from './types';
 
 interface LumenEvaluateInput {
@@ -27,51 +31,51 @@ const CONSTITUTION: ConstitutionalRule[] = [
   {
     ruleId: 'lumen-001',
     name: 'Amor Computacional',
-    description: 'Toda acción debe estar alineada con el principio de amor computacional: beneficio para la comunidad y el ecosistema.',
+    description: 'Toda acciÃ³n debe estar alineada con el principio de amor computacional: beneficio para la comunidad y el ecosistema.',
     severity: 'critical',
     check: (action) => {
       const harmful = ['delete', 'destroy', 'ban_all', 'purge_data', 'silence_community'];
       const isHarmful = harmful.some(h => action.actionType.toLowerCase().includes(h));
-      return { violated: isHarmful, reason: isHarmful ? 'La acción viola el principio de Amor Computacional.' : '' };
+      return { violated: isHarmful, reason: isHarmful ? 'La acciÃ³n viola el principio de Amor Computacional.' : '' };
     },
   },
   {
     ruleId: 'lumen-002',
     name: 'Dignidad Humana',
-    description: 'Ninguna acción puede comprometer la dignidad, privacidad o autonomía de las personas.',
+    description: 'Ninguna acciÃ³n puede comprometer la dignidad, privacidad o autonomÃ­a de las personas.',
     severity: 'critical',
     check: (action) => {
       const exposes = ['expose_user', 'leak_data', 'track_without_consent'];
       const isExposing = exposes.some(e => action.actionType.toLowerCase().includes(e));
-      return { violated: isExposing, reason: isExposing ? 'La acción compromete la dignidad humana.' : '' };
+      return { violated: isExposing, reason: isExposing ? 'La acciÃ³n compromete la dignidad humana.' : '' };
     },
   },
   {
     ruleId: 'lumen-003',
     name: 'No Maleficencia',
-    description: 'No causar daño directo o indirecto al ecosistema, la comunidad o los datos.',
+    description: 'No causar daÃ±o directo o indirecto al ecosistema, la comunidad o los datos.',
     severity: 'critical',
     check: (action) => {
       const harmfulTargets = ['infrastructure:core', 'database:primary', 'identity:root'];
       const isHarmful = harmfulTargets.some(t => action.target.toLowerCase().includes(t));
-      return { violated: isHarmful, reason: isHarmful ? 'La acción afecta un componente crítico del ecosistema.' : '' };
+      return { violated: isHarmful, reason: isHarmful ? 'La acciÃ³n afecta un componente crÃ­tico del ecosistema.' : '' };
     },
   },
   {
     ruleId: 'lumen-004',
-    name: 'Soberanía de Datos',
-    description: 'Los datos territoriales no pueden salir del ecosistema TAMV sin consentimiento explícito.',
+    name: 'SoberanÃ­a de Datos',
+    description: 'Los datos territoriales no pueden salir del ecosistema TAMV sin consentimiento explÃ­cito.',
     severity: 'high',
     check: (action) => {
       const exportsData = ['export_to_external', 'share_data', 'sync_third_party'];
       const isExport = exportsData.some(e => action.actionType.toLowerCase().includes(e));
-      return { violated: isExport, reason: isExport ? 'La acción podría violar la soberanía de datos territoriales.' : '' };
+      return { violated: isExport, reason: isExport ? 'La acciÃ³n podrÃ­a violar la soberanÃ­a de datos territoriales.' : '' };
     },
   },
   {
     ruleId: 'lumen-005',
     name: 'Consentimiento Territorial',
-    description: 'Acciones sobre territorio requieren validación de la federación territorial correspondiente.',
+    description: 'Acciones sobre territorio requieren validaciÃ³n de la federaciÃ³n territorial correspondiente.',
     severity: 'high',
     check: (action) => {
       const territorialActions = ['modify_zone', 'update_heatmap', 'change_geofence', 'broadcast_territorial'];
@@ -82,19 +86,19 @@ const CONSTITUTION: ConstitutionalRule[] = [
   {
     ruleId: 'lumen-006',
     name: 'Transparencia',
-    description: 'Toda acción debe ser registrada y trazable para auditoría.',
+    description: 'Toda acciÃ³n debe ser registrada y trazable para auditorÃ­a.',
     severity: 'medium',
     check: () => ({ violated: false, reason: '' }),
   },
   {
     ruleId: 'lumen-007',
     name: 'Proporcionalidad',
-    description: 'La severidad de la acción debe ser proporcional al problema que resuelve.',
+    description: 'La severidad de la acciÃ³n debe ser proporcional al problema que resuelve.',
     severity: 'medium',
     check: (action) => {
       const drasticActions = ['reset_system', 'disable_federation', 'revoke_all_access'];
       const isDrastic = drasticActions.some(d => action.actionType.toLowerCase().includes(d));
-      return { violated: isDrastic, reason: isDrastic ? 'La acción parece desproporcionada para la mayoría de los casos.' : '' };
+      return { violated: isDrastic, reason: isDrastic ? 'La acciÃ³n parece desproporcionada para la mayorÃ­a de los casos.' : '' };
     },
   },
 ];
@@ -162,14 +166,14 @@ class LumenEngine {
   private buildRationale(decision: string, violations: PolicyViolation[], maxSeverity: string): string {
     const parts: string[] = [];
     if (violations.length === 0) {
-      parts.push('No se detectaron violaciones a la constitución isabellina. Acción permitida.');
+      parts.push('No se detectaron violaciones a la constituciÃ³n isabellina. AcciÃ³n permitida.');
     } else {
-      parts.push(`Se detectaron ${violations.length} violacion(es) de nivel máximo: ${maxSeverity}.`);
+      parts.push(`Se detectaron ${violations.length} violacion(es) de nivel mÃ¡ximo: ${maxSeverity}.`);
       for (const v of violations) {
         parts.push(`- [${v.severity}] ${v.ruleName}: ${v.description}`);
       }
     }
-    parts.push(`Decisión final: ${decision}.`);
+    parts.push(`DecisiÃ³n final: ${decision}.`);
     return parts.join('\n');
   }
 

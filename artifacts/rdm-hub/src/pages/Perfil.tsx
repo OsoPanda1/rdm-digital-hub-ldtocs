@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -109,7 +113,7 @@ export default function Perfil() {
   const handleSave = async () => {
     const parsed = profileSchema.safeParse(form);
     if (!parsed.success) {
-      toast({ title: "Datos inválidos", description: parsed.error.errors[0].message, variant: "destructive" });
+      toast({ title: "Datos invÃ¡lidos", description: parsed.error.errors[0].message, variant: "destructive" });
       return;
     }
     setSaving(true);
@@ -162,7 +166,7 @@ export default function Perfil() {
               </div>
             </div>
             <Button variant="outline" onClick={async () => { await signOut(); navigate("/"); }}>
-              <LogOut className="h-4 w-4 mr-2" /> Cerrar sesión
+              <LogOut className="h-4 w-4 mr-2" /> Cerrar sesiÃ³n
             </Button>
           </motion.div>
 
@@ -197,7 +201,7 @@ export default function Perfil() {
                   <Input maxLength={60} value={form.display_name} onChange={(e) => setForm({ ...form, display_name: e.target.value })} />
                 </div>
                 <div className="space-y-2">
-                  <Label>Ubicación</Label>
+                  <Label>UbicaciÃ³n</Label>
                   <Input maxLength={80} placeholder="Real del Monte, Hgo." value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} />
                 </div>
               </div>
@@ -208,7 +212,7 @@ export default function Perfil() {
               </div>
               <div className="space-y-2">
                 <Label>Bio</Label>
-                <Textarea maxLength={280} rows={3} placeholder="Cuéntanos sobre ti..." value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} />
+                <Textarea maxLength={280} rows={3} placeholder="CuÃ©ntanos sobre ti..." value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} />
               </div>
               <Button onClick={handleSave} disabled={saving} className="bg-[hsl(var(--rdm-amber))] hover:opacity-90">
                 {saving ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
@@ -245,7 +249,7 @@ export default function Perfil() {
             </CardHeader>
             <CardContent>
               {history.length === 0 ? (
-                <p className="text-sm text-muted-foreground">Aún no has ganado puntos. ¡Explora el pueblo!</p>
+                <p className="text-sm text-muted-foreground">AÃºn no has ganado puntos. Â¡Explora el pueblo!</p>
               ) : (
                 <ul className="space-y-2">
                   {history.map((tx) => (

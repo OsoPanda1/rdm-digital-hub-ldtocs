@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -19,25 +23,25 @@ import { useToast } from "@/components/ui/use-toast";
 
 // Categories of dichos
 const CATEGORIES = [
-  { id: "all", label: "Todos", icon: "✨" },
-  { id: "PERSONAJES", label: "Personajes", icon: "👤" },
-  { id: "BRINDIS", label: "Brindis", icon: "🍻" },
-  { id: "HUMOR", label: "Humor", icon: "😂" },
-  { id: "FAMILIA", label: "Familia", icon: "👨‍👩‍👧‍👦" },
-  { id: "COMIDA_BEBIDA", label: "Comida y Bebida", icon: "🍽️" },
-  { id: "TRABAJO", label: "Trabajo", icon: "⛏️" },
-  { id: "VIDA_COTIDIANA", label: "Vida Cotidiana", icon: "🏠" },
-  { id: "MINERIA", label: "Minería", icon: "💎" },
+  { id: "all", label: "Todos", icon: "âœ¨" },
+  { id: "PERSONAJES", label: "Personajes", icon: "ðŸ‘¤" },
+  { id: "BRINDIS", label: "Brindis", icon: "ðŸ»" },
+  { id: "HUMOR", label: "Humor", icon: "ðŸ˜‚" },
+  { id: "FAMILIA", label: "Familia", icon: "ðŸ‘¨â€ðŸ‘©â€ðŸ‘§â€ðŸ‘¦" },
+  { id: "COMIDA_BEBIDA", label: "Comida y Bebida", icon: "ðŸ½ï¸" },
+  { id: "TRABAJO", label: "Trabajo", icon: "â›ï¸" },
+  { id: "VIDA_COTIDIANA", label: "Vida Cotidiana", icon: "ðŸ " },
+  { id: "MINERIA", label: "MinerÃ­a", icon: "ðŸ’Ž" },
 ];
 
 // Complete list of traditional dichos from Real del Monte
 const DICHOS = [
   {
     id: "1",
-    personaje: "Agustín Hernández",
-    texto: "Estás Agustín Hernández",
-    significado: "Estás débil",
-    jergaOriginal: "Estás Agustín Hernández",
+    personaje: "AgustÃ­n HernÃ¡ndez",
+    texto: "EstÃ¡s AgustÃ­n HernÃ¡ndez",
+    significado: "EstÃ¡s dÃ©bil",
+    jergaOriginal: "EstÃ¡s AgustÃ­n HernÃ¡ndez",
     categoria: "VIDA_COTIDIANA",
     likes: 156
   },
@@ -97,19 +101,19 @@ const DICHOS = [
   },
   {
     id: "8",
-    personaje: "Chucho Pérez",
-    texto: "Perdóname la Chucho Pérez",
-    significado: "Perdóname la vida",
-    jergaOriginal: "Perdóname la Chucho Pérez",
+    personaje: "Chucho PÃ©rez",
+    texto: "PerdÃ³name la Chucho PÃ©rez",
+    significado: "PerdÃ³name la vida",
+    jergaOriginal: "PerdÃ³name la Chucho PÃ©rez",
     categoria: "BRINDIS",
     likes: 156
   },
   {
     id: "9",
     personaje: "Chuco Bolio",
-    texto: "Habrá un Chuco Bolio",
-    significado: "Habrá una tocada (fiesta/evento musical)",
-    jergaOriginal: "Habrá un Chuco Bolio",
+    texto: "HabrÃ¡ un Chuco Bolio",
+    significado: "HabrÃ¡ una tocada (fiesta/evento musical)",
+    jergaOriginal: "HabrÃ¡ un Chuco Bolio",
     categoria: "PERSONAJES",
     likes: 312
   },
@@ -124,19 +128,19 @@ const DICHOS = [
   },
   {
     id: "11",
-    personaje: "Ciro Hernández",
-    texto: "Cuidado con la Ciro Hernández",
-    significado: "Cuidado con la pulmonía",
-    jergaOriginal: "Cuidado con la Ciro Hernández",
+    personaje: "Ciro HernÃ¡ndez",
+    texto: "Cuidado con la Ciro HernÃ¡ndez",
+    significado: "Cuidado con la pulmonÃ­a",
+    jergaOriginal: "Cuidado con la Ciro HernÃ¡ndez",
     categoria: "VIDA_COTIDIANA",
     likes: 134
   },
   {
     id: "12",
     personaje: "Conrado Arista",
-    texto: "Cómo eres Conrado Arista",
-    significado: "Qué bruto eres",
-    jergaOriginal: "Cómo eres Conrado Arista",
+    texto: "CÃ³mo eres Conrado Arista",
+    significado: "QuÃ© bruto eres",
+    jergaOriginal: "CÃ³mo eres Conrado Arista",
     categoria: "HUMOR",
     likes: 178
   },
@@ -152,18 +156,18 @@ const DICHOS = [
   {
     id: "14",
     personaje: "El Agrarista",
-    texto: "¡Como dijo el Agrarista! Salud chinga",
+    texto: "Â¡Como dijo el Agrarista! Salud chinga",
     significado: "Brindis rudo minero",
-    jergaOriginal: "¡Como dijo el Agrarista! Salud chinga",
+    jergaOriginal: "Â¡Como dijo el Agrarista! Salud chinga",
     categoria: "BRINDIS",
     likes: 289
   },
   {
     id: "15",
-    personaje: "Félix Castañeda",
-    texto: "De a Félix Castañeda",
-    significado: "De a momento (rápido/provisional)",
-    jergaOriginal: "De a Félix Castañeda",
+    personaje: "FÃ©lix CastaÃ±eda",
+    texto: "De a FÃ©lix CastaÃ±eda",
+    significado: "De a momento (rÃ¡pido/provisional)",
+    jergaOriginal: "De a FÃ©lix CastaÃ±eda",
     categoria: "VIDA_COTIDIANA",
     likes: 98
   },
@@ -180,44 +184,44 @@ const DICHOS = [
     id: "17",
     personaje: "Horacio Meneses",
     texto: "Ya me echo la Horacio Meneses",
-    significado: "Ya me echo la penúltima (copa)",
+    significado: "Ya me echo la penÃºltima (copa)",
     jergaOriginal: "Ya me echo la Horacio Meneses",
     categoria: "BRINDIS",
     likes: 267
   },
   {
     id: "18",
-    personaje: "José García",
-    texto: "No te José García",
+    personaje: "JosÃ© GarcÃ­a",
+    texto: "No te JosÃ© GarcÃ­a",
     significado: "No te recargues (no te apoyes/no abuses)",
-    jergaOriginal: "No te José García",
+    jergaOriginal: "No te JosÃ© GarcÃ­a",
     categoria: "TRABAJO",
     likes: 198
   },
   {
     id: "19",
-    personaje: "José Luis Fernández",
-    texto: "Estás muy José Luis Fernández",
-    significado: "Estás muy chulo",
-    jergaOriginal: "Estás muy José Luis Fernández",
+    personaje: "JosÃ© Luis FernÃ¡ndez",
+    texto: "EstÃ¡s muy JosÃ© Luis FernÃ¡ndez",
+    significado: "EstÃ¡s muy chulo",
+    jergaOriginal: "EstÃ¡s muy JosÃ© Luis FernÃ¡ndez",
     categoria: "HUMOR",
     likes: 156
   },
   {
     id: "20",
-    personaje: "José Roa",
-    texto: "¿Cómo está la José Roa?",
-    significado: "¿Cómo está la raza?",
-    jergaOriginal: "¿Cómo está la José Roa?",
+    personaje: "JosÃ© Roa",
+    texto: "Â¿CÃ³mo estÃ¡ la JosÃ© Roa?",
+    significado: "Â¿CÃ³mo estÃ¡ la raza?",
+    jergaOriginal: "Â¿CÃ³mo estÃ¡ la JosÃ© Roa?",
     categoria: "PERSONAJES",
     likes: 312
   },
   {
     id: "21",
-    personaje: "Kiko García",
-    texto: "Yo uso puro Kiko García",
+    personaje: "Kiko GarcÃ­a",
+    texto: "Yo uso puro Kiko GarcÃ­a",
     significado: "Puro billete tosco (dinero en efectivo/grande)",
-    jergaOriginal: "Yo uso puro Kiko García",
+    jergaOriginal: "Yo uso puro Kiko GarcÃ­a",
     categoria: "COMIDA_BEBIDA",
     likes: 87
   },
@@ -233,63 +237,63 @@ const DICHOS = [
   {
     id: "23",
     personaje: "Luis Campero",
-    texto: "¡Salud mulas apartando a mis compadres!",
+    texto: "Â¡Salud mulas apartando a mis compadres!",
     significado: "Brindis tradicional de cantina",
-    jergaOriginal: "¡Salud mulas apartando a mis compadres!",
+    jergaOriginal: "Â¡Salud mulas apartando a mis compadres!",
     categoria: "BRINDIS",
     likes: 178
   },
   {
     id: "24",
-    personaje: "Mamá del Bolillo",
-    texto: "Vienes como la mamá del Bolillo",
+    personaje: "MamÃ¡ del Bolillo",
+    texto: "Vienes como la mamÃ¡ del Bolillo",
     significado: "Vienes con tu carota (de mal humor)",
-    jergaOriginal: "Vienes como la mamá del Bolillo",
+    jergaOriginal: "Vienes como la mamÃ¡ del Bolillo",
     categoria: "HUMOR",
     likes: 156
   },
   {
     id: "25",
-    personaje: "Manuel Negrón",
-    texto: "Andas todo Manuel Negrón",
+    personaje: "Manuel NegrÃ³n",
+    texto: "Andas todo Manuel NegrÃ³n",
     significado: "Andas todo lambrijo (flaco/hambriento)",
-    jergaOriginal: "Andas todo Manuel Negrón",
+    jergaOriginal: "Andas todo Manuel NegrÃ³n",
     categoria: "HUMOR",
     likes: 289
   },
   {
     id: "26",
-    personaje: "Mario Hernández",
-    texto: "Andas todo Mario Hernández",
+    personaje: "Mario HernÃ¡ndez",
+    texto: "Andas todo Mario HernÃ¡ndez",
     significado: "Andas todo roido (desgastado)",
-    jergaOriginal: "Andas todo Mario Hernández",
+    jergaOriginal: "Andas todo Mario HernÃ¡ndez",
     categoria: "VIDA_COTIDIANA",
     likes: 98
   },
   {
     id: "27",
-    personaje: "Martín López",
-    texto: "Me dejaste Martín López",
-    significado: "Me dejaste picadito (con ganas de más)",
-    jergaOriginal: "Me dejaste Martín López",
+    personaje: "MartÃ­n LÃ³pez",
+    texto: "Me dejaste MartÃ­n LÃ³pez",
+    significado: "Me dejaste picadito (con ganas de mÃ¡s)",
+    jergaOriginal: "Me dejaste MartÃ­n LÃ³pez",
     categoria: "COMIDA_BEBIDA",
     likes: 145
   },
   {
     id: "28",
-    personaje: "Martín Pérez",
-    texto: "Para echarme mis Martín Pérez",
+    personaje: "MartÃ­n PÃ©rez",
+    texto: "Para echarme mis MartÃ­n PÃ©rez",
     significado: "Para echarme mis sagrados alimentos",
-    jergaOriginal: "Para echarme mis Martín Pérez",
+    jergaOriginal: "Para echarme mis MartÃ­n PÃ©rez",
     categoria: "COMIDA_BEBIDA",
     likes: 267
   },
   {
     id: "29",
-    personaje: "Moisés Escamilla",
-    texto: "No seas Moisés Escamilla",
+    personaje: "MoisÃ©s Escamilla",
+    texto: "No seas MoisÃ©s Escamilla",
     significado: "No seas ladinito (astuto/ventajoso)",
-    jergaOriginal: "No seas Moisés Escamilla",
+    jergaOriginal: "No seas MoisÃ©s Escamilla",
     categoria: "HUMOR",
     likes: 198
   },
@@ -313,28 +317,28 @@ const DICHOS = [
   },
   {
     id: "32",
-    personaje: "Nicolás Ordaz",
-    texto: "Parecen Nicolás Ordaz",
+    personaje: "NicolÃ¡s Ordaz",
+    texto: "Parecen NicolÃ¡s Ordaz",
     significado: "Parecen Judas (traidores/criticones)",
-    jergaOriginal: "Parecen Nicolás Ordaz",
+    jergaOriginal: "Parecen NicolÃ¡s Ordaz",
     categoria: "HUMOR",
     likes: 87
   },
   {
     id: "33",
-    personaje: "Nicolás Tejeda",
-    texto: "Échate un Nicolás Tejeda",
-    significado: "Échate un finfonazo (un trago de alcohol)",
-    jergaOriginal: "Échate un Nicolás Tejeda",
+    personaje: "NicolÃ¡s Tejeda",
+    texto: "Ã‰chate un NicolÃ¡s Tejeda",
+    significado: "Ã‰chate un finfonazo (un trago de alcohol)",
+    jergaOriginal: "Ã‰chate un NicolÃ¡s Tejeda",
     categoria: "BRINDIS",
     likes: 134
   },
   {
     id: "34",
     personaje: "Padre Heredia",
-    texto: "Échale copal al santo, no le hace que...",
-    significado: "Hacer algo con exageración sin importar daños",
-    jergaOriginal: "Échale copal al santo, no le hace que...",
+    texto: "Ã‰chale copal al santo, no le hace que...",
+    significado: "Hacer algo con exageraciÃ³n sin importar daÃ±os",
+    jergaOriginal: "Ã‰chale copal al santo, no le hace que...",
     categoria: "PERSONAJES",
     likes: 178
   },
@@ -349,28 +353,28 @@ const DICHOS = [
   },
   {
     id: "36",
-    personaje: "Pánfilo Soto",
-    texto: "Vete a tu Pánfilo Soto",
+    personaje: "PÃ¡nfilo Soto",
+    texto: "Vete a tu PÃ¡nfilo Soto",
     significado: "Vete a tu casita",
-    jergaOriginal: "Vete a tu Pánfilo Soto",
+    jergaOriginal: "Vete a tu PÃ¡nfilo Soto",
     categoria: "FAMILIA",
     likes: 289
   },
   {
     id: "37",
-    personaje: "Pepe Terán",
-    texto: "Te pega la Pepe Terán",
+    personaje: "Pepe TerÃ¡n",
+    texto: "Te pega la Pepe TerÃ¡n",
     significado: "Te pega la vieja (la esposa)",
-    jergaOriginal: "Te pega la Pepe Terán",
+    jergaOriginal: "Te pega la Pepe TerÃ¡n",
     categoria: "FAMILIA",
     likes: 98
   },
   {
     id: "38",
-    personaje: "Plutarco García",
-    texto: "Mis Plutarco García se pusieron malos",
+    personaje: "Plutarco GarcÃ­a",
+    texto: "Mis Plutarco GarcÃ­a se pusieron malos",
     significado: "Mis mijitos (hijos) se enfermaron",
-    jergaOriginal: "Mis Plutarco García se pusieron malos",
+    jergaOriginal: "Mis Plutarco GarcÃ­a se pusieron malos",
     categoria: "FAMILIA",
     likes: 145
   },
@@ -385,28 +389,28 @@ const DICHOS = [
   },
   {
     id: "40",
-    personaje: "Ramón Hernández",
-    texto: "Con mi Ramón Hernández",
+    personaje: "RamÃ³n HernÃ¡ndez",
+    texto: "Con mi RamÃ³n HernÃ¡ndez",
     significado: "Con mi sagrada esposa",
-    jergaOriginal: "Con mi Ramón Hernández",
+    jergaOriginal: "Con mi RamÃ³n HernÃ¡ndez",
     categoria: "FAMILIA",
     likes: 198
   },
   {
     id: "41",
-    personaje: "Ramón Razo",
-    texto: "Vengo de la Ramón Razo",
-    significado: "Vengo de la nube gris (Ciudad de México)",
-    jergaOriginal: "Vengo de la Ramón Razo",
+    personaje: "RamÃ³n Razo",
+    texto: "Vengo de la RamÃ³n Razo",
+    significado: "Vengo de la nube gris (Ciudad de MÃ©xico)",
+    jergaOriginal: "Vengo de la RamÃ³n Razo",
     categoria: "PERSONAJES",
     likes: 156
   },
   {
     id: "42",
     personaje: "Refugio Fragoso",
-    texto: "Verás como Refugio Fragoso",
-    significado: "Verás como no pasa nada",
-    jergaOriginal: "Verás como Refugio Fragoso",
+    texto: "VerÃ¡s como Refugio Fragoso",
+    significado: "VerÃ¡s como no pasa nada",
+    jergaOriginal: "VerÃ¡s como Refugio Fragoso",
     categoria: "PERSONAJES",
     likes: 312
   },
@@ -421,37 +425,37 @@ const DICHOS = [
   },
   {
     id: "44",
-    personaje: "Roberto Martínez",
-    texto: "Vienes como Roberto Martínez",
+    personaje: "Roberto MartÃ­nez",
+    texto: "Vienes como Roberto MartÃ­nez",
     significado: "Vienes como el diablo (enojado)",
-    jergaOriginal: "Vienes como Roberto Martínez",
+    jergaOriginal: "Vienes como Roberto MartÃ­nez",
     categoria: "HUMOR",
     likes: 134
   },
   {
     id: "45",
-    personaje: "Ruberta García",
-    texto: "Te traes a la Ruberta García",
+    personaje: "Ruberta GarcÃ­a",
+    texto: "Te traes a la Ruberta GarcÃ­a",
     significado: "Te traes a la descendencia (a la familia)",
-    jergaOriginal: "Te traes a la Ruberta García",
+    jergaOriginal: "Te traes a la Ruberta GarcÃ­a",
     categoria: "FAMILIA",
     likes: 178
   },
   {
     id: "46",
-    personaje: "Sergio Pérez",
-    texto: "Están muy Sergio Pérez",
-    significado: "Están muy chirris (pequeños/débiles)",
-    jergaOriginal: "Están muy Sergio Pérez",
+    personaje: "Sergio PÃ©rez",
+    texto: "EstÃ¡n muy Sergio PÃ©rez",
+    significado: "EstÃ¡n muy chirris (pequeÃ±os/dÃ©biles)",
+    jergaOriginal: "EstÃ¡n muy Sergio PÃ©rez",
     categoria: "HUMOR",
     likes: 156
   },
   {
     id: "47",
-    personaje: "Simón Guerrero",
-    texto: "Mi Simón Guerrero no me dejaba",
+    personaje: "SimÃ³n Guerrero",
+    texto: "Mi SimÃ³n Guerrero no me dejaba",
     significado: "Mi fiera (esposa/pareja) no me dejaba",
-    jergaOriginal: "Mi Simón Guerrero no me dejaba",
+    jergaOriginal: "Mi SimÃ³n Guerrero no me dejaba",
     categoria: "FAMILIA",
     likes: 289
   }
@@ -507,7 +511,7 @@ const DichosPage = () => {
               <div className="flex items-center gap-2 mb-4">
                 <Badge variant="outline" className="border-amber-500 text-amber-500">
                   <Sparkles className="w-3 h-3 mr-1" />
-                  Archivo Histórico
+                  Archivo HistÃ³rico
                 </Badge>
               </div>
               
@@ -520,8 +524,8 @@ const DichosPage = () => {
               
               <p className="text-lg text-muted-foreground leading-relaxed mb-6">
                 Descubre las expresiones tradicionales de Real del Monte. 
-                47 personajes históricos conforman el rico vocabulario característico de este 
-                Pueblo Mágico hidalguense.
+                47 personajes histÃ³ricos conforman el rico vocabulario caracterÃ­stico de este 
+                Pueblo MÃ¡gico hidalguense.
               </p>
 
               <div className="flex flex-wrap gap-3">
@@ -540,7 +544,7 @@ const DichosPage = () => {
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
-                placeholder="Buscar por personaje, expresión o significado..."
+                placeholder="Buscar por personaje, expresiÃ³n o significado..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -548,7 +552,7 @@ const DichosPage = () => {
             </div>
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
               <SelectTrigger className="w-full md:w-[200px]">
-                <SelectValue placeholder="Categoría" />
+                <SelectValue placeholder="CategorÃ­a" />
               </SelectTrigger>
               <SelectContent>
                 {CATEGORIES.map(cat => (
@@ -565,7 +569,7 @@ const DichosPage = () => {
             <section className="mb-12">
               <h2 className="font-serif text-2xl font-bold mb-6 flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-amber-500" />
-                Dichos Más Populares
+                Dichos MÃ¡s Populares
               </h2>
               <div className="grid md:grid-cols-3 gap-6">
                 {featuredDichos.map((dicho, index) => (
@@ -618,19 +622,19 @@ const DichosPage = () => {
               <Card className="bg-muted/30">
                 <CardContent className="p-4 text-center">
                   <p className="text-3xl font-bold text-amber-600">{CATEGORIES.length - 1}</p>
-                  <p className="text-sm text-muted-foreground">Categorías</p>
+                  <p className="text-sm text-muted-foreground">CategorÃ­as</p>
                 </CardContent>
               </Card>
               <Card className="bg-muted/30">
                 <CardContent className="p-4 text-center">
                   <p className="text-3xl font-bold text-amber-600">200+</p>
-                  <p className="text-sm text-muted-foreground">Años de Historia</p>
+                  <p className="text-sm text-muted-foreground">AÃ±os de Historia</p>
                 </CardContent>
               </Card>
               <Card className="bg-muted/30">
                 <CardContent className="p-4 text-center">
                   <p className="text-3xl font-bold text-amber-600">47</p>
-                  <p className="text-sm text-muted-foreground">Dichos Únicos</p>
+                  <p className="text-sm text-muted-foreground">Dichos Ãšnicos</p>
                 </CardContent>
               </Card>
             </div>
@@ -640,7 +644,7 @@ const DichosPage = () => {
           <section>
             <h2 className="font-serif text-2xl font-bold mb-6">
               {selectedCategory === "all" 
-                ? "Índice Alfabético de Dichos Realmontenses" 
+                ? "Ãndice AlfabÃ©tico de Dichos Realmontenses" 
                 : CATEGORIES.find(c => c.id === selectedCategory)?.icon + " " + CATEGORIES.find(c => c.id === selectedCategory)?.label
               }
             </h2>
@@ -648,7 +652,7 @@ const DichosPage = () => {
             {filteredDichos.length === 0 ? (
               <div className="text-center py-12 text-muted-foreground">
                 <Quote className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>No se encontraron dichos con esa búsqueda</p>
+                <p>No se encontraron dichos con esa bÃºsqueda</p>
               </div>
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -740,10 +744,10 @@ const DichosPage = () => {
               <CardContent className="p-8 text-center">
                 <Lightbulb className="w-12 h-12 mx-auto mb-4 opacity-80" />
                 <h3 className="font-serif text-2xl font-bold mb-2">
-                  ¿Conoces algún dicho tradicional?
+                  Â¿Conoces algÃºn dicho tradicional?
                 </h3>
                 <p className="opacity-80 mb-6 max-w-xl mx-auto">
-                  Ayúdanos a preservar la cultura de Real del Monte contribuyendo con 
+                  AyÃºdanos a preservar la cultura de Real del Monte contribuyendo con 
                   dichos o expresiones tradicionales que conozcas.
                 </p>
                 <Button 

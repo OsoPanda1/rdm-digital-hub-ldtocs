@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Loader2, Volume2, VolumeX, MapPin, Sparkles } from "lucide-react";
@@ -14,10 +18,10 @@ interface Message {
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/realito-chat`;
 
 const suggestions = [
-  "¿Qué ruta me recomiendas hoy?",
-  "¿Dónde están los mejores pastes?",
-  "Cuéntame una leyenda minera",
-  "¿Qué eventos hay esta semana?",
+  "Â¿QuÃ© ruta me recomiendas hoy?",
+  "Â¿DÃ³nde estÃ¡n los mejores pastes?",
+  "CuÃ©ntame una leyenda minera",
+  "Â¿QuÃ© eventos hay esta semana?",
 ];
 
 const RealitoBubble = () => {
@@ -83,7 +87,7 @@ const RealitoBubble = () => {
 
       if (!resp.ok || !resp.body) {
         const errorData = await resp.json().catch(() => ({}));
-        throw new Error(errorData.error || "Error de conexión");
+        throw new Error(errorData.error || "Error de conexiÃ³n");
       }
 
       // Add empty assistant message
@@ -156,7 +160,7 @@ const RealitoBubble = () => {
         transition={{ boxShadow: { duration: 3, repeat: Infinity, ease: "easeInOut" } }}
       >
         {open ? (
-          <span className="text-lg font-bold text-night-900">✕</span>
+          <span className="text-lg font-bold text-night-900">âœ•</span>
         ) : (
           <img src={logoImg} alt="Realito" loading="lazy" className="w-8 h-8 object-contain" />
         )}
@@ -206,7 +210,7 @@ const RealitoBubble = () => {
                 <>
                   <div className="glass-card rounded-xl p-4">
                     <p className="font-body text-sm text-foreground/90 leading-relaxed">
-                      ¡Hola! Soy <span className="text-gradient-gold font-semibold">Realito</span>, tu guía inteligente de Real del Monte. Pregúntame lo que sea sobre el Pueblo Mágico. 🏔️
+                      Â¡Hola! Soy <span className="text-gradient-gold font-semibold">Realito</span>, tu guÃ­a inteligente de Real del Monte. PregÃºntame lo que sea sobre el Pueblo MÃ¡gico. ðŸ”ï¸
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -247,7 +251,7 @@ const RealitoBubble = () => {
               {isTyping && messages[messages.length - 1]?.role !== "assistant" && (
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Loader2 className="w-3.5 h-3.5 animate-spin text-gold" />
-                  <span className="font-body text-xs">Realito está pensando...</span>
+                  <span className="font-body text-xs">Realito estÃ¡ pensando...</span>
                 </div>
               )}
             </div>
@@ -260,7 +264,7 @@ const RealitoBubble = () => {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Pregúntale a Realito..."
+                  placeholder="PregÃºntale a Realito..."
                   disabled={isTyping}
                   className="flex-1 px-4 py-2.5 rounded-full glass font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold/40 disabled:opacity-50"
                 />

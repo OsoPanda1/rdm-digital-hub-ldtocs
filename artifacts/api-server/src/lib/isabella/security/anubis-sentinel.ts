@@ -1,7 +1,11 @@
-// ────────────────────────────────────────────────────────────────
-// Isabella Genesis — Anubis Sentinel
-// Vigilancia de integridad y modo sarcófago ante intrusos
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isabella Genesis â€” Anubis Sentinel
+// Vigilancia de integridad y modo sarcÃ³fago ante intrusos
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type SentinelStatus = "nominal" | "watch" | "elevated" | "sarcophagus";
 
@@ -55,7 +59,7 @@ export function createAnubisSentinel(): AnubisSentinel {
 
     registerIntegrityCheck(passed) {
       if (!passed) {
-        addEvent("hash_mismatch", "critical", "Integrity check failed — memory hash mismatch");
+        addEvent("hash_mismatch", "critical", "Integrity check failed â€” memory hash mismatch");
         status = status === "nominal" ? "watch" : status;
       } else {
         addEvent("integrity_check", "info", "Integrity check passed");
@@ -70,7 +74,7 @@ export function createAnubisSentinel(): AnubisSentinel {
 
     activateSarcophagusMode() {
       status = "sarcophagus";
-      addEvent("key_destruction", "critical", "SARCOPHAGUS MODE ACTIVATED — keys destroyed, ports closed");
+      addEvent("key_destruction", "critical", "SARCOPHAGUS MODE ACTIVATED â€” keys destroyed, ports closed");
       return { keysDestroyed: true, portsClosed: true, alertEmitted: true };
     },
 

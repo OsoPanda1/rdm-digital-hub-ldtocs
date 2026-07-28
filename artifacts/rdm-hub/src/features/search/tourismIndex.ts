@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import {
   RDM_TERRITORY_POIS,
   chapters,
@@ -65,7 +69,7 @@ export const TOURISM_INDEX: SearchHit[] = [
       id: m.id,
       kind: "mina",
       title: m.name,
-      subtitle: `Fundada ${m.founded} · ${m.status}`,
+      subtitle: `Fundada ${m.founded} Â· ${m.status}`,
       narrative: m.description,
       href: "/capitulos/minas",
       facet: "subsuelo",

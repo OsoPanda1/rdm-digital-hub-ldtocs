@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * YUN Data Fabric — Cross-Domain Orchestration
+ * YUN Data Fabric â€” Cross-Domain Orchestration
  * Per YUN Constitution Principle #3 (Federate Don't Subjugate)
  * and Principle #4 (Reversible by Default)
  *
@@ -46,7 +50,7 @@ export interface SagaResult<T> {
 }
 
 /**
- * Executes a saga — a sequence of steps with compensating transactions.
+ * Executes a saga â€” a sequence of steps with compensating transactions.
  * Per YUN Principle #4: Reversible by Default.
  */
 export async function executeSaga<TFinal>(
@@ -219,7 +223,7 @@ export interface DataHandler {
 }
 
 // ============================================================================
-// STORAGE ADAPTERS — Real Supabase-backed implementations
+// STORAGE ADAPTERS â€” Real Supabase-backed implementations
 // ============================================================================
 
 /**
@@ -284,7 +288,7 @@ export class CommerceAdapter implements DataHandler {
   private async neonQuery<T>(sql: string, params?: unknown[]): Promise<T> {
     const neonUrl = this.getNeonUrl();
     if (!neonUrl) {
-      throw new Error('NEON_DATABASE_URL not configured — falling back to Supabase');
+      throw new Error('NEON_DATABASE_URL not configured â€” falling back to Supabase');
     }
 
     // Use Neon HTTP-based query (works in Edge Runtime)

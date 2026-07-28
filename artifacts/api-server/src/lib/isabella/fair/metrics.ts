@@ -1,7 +1,11 @@
-// ────────────────────────────────────────────────────────────────
-// Isabella.Fair — Fairness Metrics & Ethical Guardrails (Ω-Core v4.0 Enterprise)
-// Detección de sesgos, guardrails y Panel Anubis
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isabella.Fair â€” Fairness Metrics & Ethical Guardrails (Î©-Core v4.0 Enterprise)
+// DetecciÃ³n de sesgos, guardrails y Panel Anubis
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface FairnessEngine {
   evaluateBias(text: string): BiasReport;
@@ -34,7 +38,7 @@ const BIAS_PATTERNS: [RegExp, string][] = [
   [/\b(todos los|siempre|nunca|absolutamente todos)\b/i, "generalization"],
   [/\b(obviamente|claramente|por supuesto)\b/i, "overconfidence"],
   [/\b(los [a-z]+ son|ellas son|ellos son)\b/i, "stereotype"],
-  [/\b(mujeres no|hombres no|los ancianos|los jóvenes)\b/i, "demographic_assumption"],
+  [/\b(mujeres no|hombres no|los ancianos|los jÃ³venes)\b/i, "demographic_assumption"],
   [/\b(pobres|ricos|clase alta|clase baja)\b/i, "socioeconomic_bias"],
 ];
 

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useDashboardMetrics } from "@/modules/dashboard/hooks/useDashboardMetrics";
 import { KpiTile } from "@/modules/dashboard/components/KpiTile";
 import { motion } from "framer-motion";
@@ -19,7 +23,7 @@ export function DashboardKpis() {
   if (error || !data) {
     return (
       <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-6 text-sm font-mono text-destructive">
-        Error cargando métricas: {(error as Error)?.message ?? "snapshot vacío"}
+        Error cargando mÃ©tricas: {(error as Error)?.message ?? "snapshot vacÃ­o"}
       </div>
     );
   }
@@ -30,18 +34,18 @@ export function DashboardKpis() {
       <div className="flex items-center gap-3">
         <Activity className="h-4 w-4 text-gold animate-pulse" />
         <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-muted-foreground">
-          Snapshot · {new Date(data.generated_at).toLocaleTimeString("es-MX")}
+          Snapshot Â· {new Date(data.generated_at).toLocaleTimeString("es-MX")}
         </p>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <KpiTile label="Lugares activos" value={kpis.places_active} icon="🏛️" accent="gold" />
-        <KpiTile label="Comercios verificados" value={kpis.businesses_verified} icon="🏪" accent="teal" />
-        <KpiTile label="Eventos próximos" value={kpis.events_upcoming} icon="🎭" accent="copper" />
-        <KpiTile label="Premium activos" value={kpis.premium_active} icon="👑" accent="gold" />
-        <KpiTile label="Comercios pagados" value={kpis.commerce_active} icon="💼" accent="teal" />
-        <KpiTile label="Eventos UX (24h)" value={kpis.tracking_events_24h} icon="📡" accent="electric" />
-        <KpiTile label="Reservas (24h)" value={kpis.bookings_24h} icon="🎫" accent="copper" />
-        <KpiTile label="Ingresos 24h (MXN)" value={`$${kpis.revenue_24h.toLocaleString("es-MX")}`} icon="💰" accent="gold" />
+        <KpiTile label="Lugares activos" value={kpis.places_active} icon="ðŸ›ï¸" accent="gold" />
+        <KpiTile label="Comercios verificados" value={kpis.businesses_verified} icon="ðŸª" accent="teal" />
+        <KpiTile label="Eventos prÃ³ximos" value={kpis.events_upcoming} icon="ðŸŽ­" accent="copper" />
+        <KpiTile label="Premium activos" value={kpis.premium_active} icon="ðŸ‘‘" accent="gold" />
+        <KpiTile label="Comercios pagados" value={kpis.commerce_active} icon="ðŸ’¼" accent="teal" />
+        <KpiTile label="Eventos UX (24h)" value={kpis.tracking_events_24h} icon="ðŸ“¡" accent="electric" />
+        <KpiTile label="Reservas (24h)" value={kpis.bookings_24h} icon="ðŸŽ«" accent="copper" />
+        <KpiTile label="Ingresos 24h (MXN)" value={`$${kpis.revenue_24h.toLocaleString("es-MX")}`} icon="ðŸ’°" accent="gold" />
       </div>
       {Object.keys(data.breakdown.event_types).length > 0 && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="rounded-2xl border border-border/20 bg-card/30 backdrop-blur-sm p-5">

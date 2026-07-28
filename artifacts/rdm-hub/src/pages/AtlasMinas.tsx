@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { AtlasPageHeader } from "@/components/atlas/AtlasPageHeader";
@@ -8,13 +12,13 @@ export default function AtlasMinas() {
   return (
     <RDMLayout>
       <SEOMeta
-        title="Las minas — Real del Monte"
-        description="Las minas que sostienen el suelo de Real del Monte: Acosta, Dolores, Santa Inés, San Juan Pachuca. Memoria viva del ciclo de la plata."
+        title="Las minas â€” Real del Monte"
+        description="Las minas que sostienen el suelo de Real del Monte: Acosta, Dolores, Santa InÃ©s, San Juan Pachuca. Memoria viva del ciclo de la plata."
       />
       <AtlasPageHeader
-        kicker="Capa I · Subsuelo"
-        title="Bajo el pueblo respira una segunda geografía."
-        intro="Galerías que sostuvieron la plata del mundo y dieron forma a todo lo que está arriba: el idioma, la cocina, los apellidos, el silencio que cae al atardecer."
+        kicker="Capa I Â· Subsuelo"
+        title="Bajo el pueblo respira una segunda geografÃ­a."
+        intro="GalerÃ­as que sostuvieron la plata del mundo y dieron forma a todo lo que estÃ¡ arriba: el idioma, la cocina, los apellidos, el silencio que cae al atardecer."
         image={img}
       />
 
@@ -25,9 +29,9 @@ export default function AtlasMinas() {
           </div>
           <div className="md:col-span-8">
             <p className="text-lg leading-relaxed text-foreground/85">
-              Real del Monte fue, durante más de dos siglos, uno de los distritos mineros más
-              importantes del mundo. La huelga de 1766 — la primera de América — comenzó aquí, entre
-              estos túneles. Hoy las minas siguen siendo el corazón silencioso del pueblo: algunas
+              Real del Monte fue, durante mÃ¡s de dos siglos, uno de los distritos mineros mÃ¡s
+              importantes del mundo. La huelga de 1766 â€” la primera de AmÃ©rica â€” comenzÃ³ aquÃ­, entre
+              estos tÃºneles. Hoy las minas siguen siendo el corazÃ³n silencioso del pueblo: algunas
               son patrimonio, otras se recorren, otras se recuerdan.
             </p>
           </div>
@@ -38,7 +42,7 @@ export default function AtlasMinas() {
             <article key={m.id} className="grid gap-6 border-t border-border pt-12 md:grid-cols-12">
               <div className="md:col-span-4">
                 <div className="font-mono text-xs text-muted-foreground">
-                  0{i + 1} · {m.founded}
+                  0{i + 1} Â· {m.founded}
                 </div>
                 <h2 className="font-serif mt-2 text-3xl font-bold">{m.name}</h2>
                 <span className="mt-3 inline-flex rounded-full border border-border bg-muted/50 px-3 py-1 text-xs text-muted-foreground capitalize">

@@ -1,10 +1,14 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { RotateCcw, Trophy, Timer, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-const SYMBOLS = ["⛰️", "⛏️", "🥟", "☕", "🕯️", "✝️", "🌫️", "🪙"];
+const SYMBOLS = ["â›°ï¸", "â›ï¸", "ðŸ¥Ÿ", "â˜•", "ðŸ•¯ï¸", "âœï¸", "ðŸŒ«ï¸", "ðŸª™"];
 
 type Card = { sym: string; flipped: boolean; matched: boolean };
 
@@ -56,7 +60,7 @@ export default function MemoryGame() {
         toast.success(`+${score} puntos por completar Memoria Minera`);
       }
     } catch {
-      // Silently fail — points are a bonus
+      // Silently fail â€” points are a bonus
     }
   };
 

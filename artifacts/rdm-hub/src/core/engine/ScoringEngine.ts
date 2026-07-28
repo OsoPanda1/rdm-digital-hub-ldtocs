@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { logger } from "@/lib/logger";
 /**
  * RDM Digital - Motor de Scoring GEN-7+
@@ -209,7 +213,7 @@ export class ScoringEngine {
   ): RetentionIntent {
     const { factors } = score;
 
-    // Si esta muy cerca de la salida y moviéndose rapido
+    // Si esta muy cerca de la salida y moviÃ©ndose rapido
     if (factors.proximity_to_exit > 0.8 && factors.movement_speed > 0.6) {
       return 'SAFE_EXIT';
     }

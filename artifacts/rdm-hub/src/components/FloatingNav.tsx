@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mountain, Menu, X, BookOpen } from "lucide-react";
@@ -6,11 +10,11 @@ const NAV_ITEMS = [
   { id: "inicio", label: "Inicio" },
   { id: "experiencias", label: "Experiencias" },
   { id: "historia", label: "Historia" },
-  { id: "gastronomia", label: "Gastronomía" },
+  { id: "gastronomia", label: "GastronomÃ­a" },
   { id: "aventura", label: "Aventura" },
   { id: "hospedaje", label: "Hospedaje" },
   { id: "cultura", label: "Cultura" },
-  { id: "innovacion", label: "Innovación" },
+  { id: "innovacion", label: "InnovaciÃ³n" },
 ];
 
 interface FloatingNavProps {
@@ -104,7 +108,7 @@ export function FloatingNav({ onDichosClick }: FloatingNavProps) {
               }}
               className="block w-full text-left px-3 py-2.5 text-sm font-body text-accent hover:text-accent/80 transition-colors rounded-lg font-medium"
             >
-              📜 Callejón de los Dichos
+              ðŸ“œ CallejÃ³n de los Dichos
             </button>
           )}
         </motion.div>

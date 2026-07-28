@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
-// THE C.R.O.W.N — Provider Failover
-// Multi-provider: Anthropic → OpenAI → DeepSeek → Others
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// THE C.R.O.W.N â€” Provider Failover
+// Multi-provider: Anthropic â†’ OpenAI â†’ DeepSeek â†’ Others
 // Solo acepta salidas que cumplen el esquema del agente
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { ProviderId, ProviderConfig, ProviderResponse } from "./types";
 
@@ -38,7 +42,7 @@ export function createProviderFailover(): ProviderFailover {
         statsByProvider[provider.id]!.calls++;
         const start = Date.now();
         try {
-          // Simulated provider call — in production, this calls the actual API
+          // Simulated provider call â€” in production, this calls the actual API
           const mockResponse = { capability, providerId: provider.id, model: provider.model, data: payload };
           const latencyMs = Date.now() - start;
 

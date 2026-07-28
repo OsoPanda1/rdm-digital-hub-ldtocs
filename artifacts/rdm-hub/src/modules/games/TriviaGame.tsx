@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useMemo, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -52,7 +56,7 @@ export default function TriviaGame() {
     awardPoints();
   }, [done]); // eslint-disable-line react-hooks/exhaustive-deps -- awardPoints captures current score/total
 
-  if (isLoading) return <div className="glass-card rounded-2xl p-6 border border-border/20 text-center text-muted-foreground text-sm">Cargando trivia…</div>;
+  if (isLoading) return <div className="glass-card rounded-2xl p-6 border border-border/20 text-center text-muted-foreground text-sm">Cargando triviaâ€¦</div>;
   if (shuffled.length === 0) return <div className="glass-card rounded-2xl p-6 border border-border/20 text-center text-muted-foreground text-sm">No hay preguntas disponibles.</div>;
 
   const q = shuffled[idx];
@@ -88,11 +92,11 @@ export default function TriviaGame() {
           <Trophy className="h-12 w-12 text-gold mx-auto mb-3" />
           <p className="text-3xl font-display font-bold">Score: {score}/{shuffled.length}</p>
           <p className="text-sm text-muted-foreground mt-2">
-            {score === shuffled.length ? "¡Maestro del territorio!" : score >= shuffled.length / 2 ? "Buen conocimiento territorial." : "Sigue explorando RDM."}
+            {score === shuffled.length ? "Â¡Maestro del territorio!" : score >= shuffled.length / 2 ? "Buen conocimiento territorial." : "Sigue explorando RDM."}
           </p>
           {pointsAwarded && (
             <p className="text-xs text-emerald mt-2 flex items-center justify-center gap-1">
-              <Sparkles className="h-3 w-3" /> Puntos canjeables añadidos a tu cuenta
+              <Sparkles className="h-3 w-3" /> Puntos canjeables aÃ±adidos a tu cuenta
             </p>
           )}
         </motion.div>

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { SkillContext, CanonicalEntry, Evidence, KnowledgeGraph, Artifact, Relation } from './types';
 
 function simpleHash(input: string): string {
@@ -75,7 +79,7 @@ class MnemosEngine {
       nodes.push({
         artifactId: id,
         title: entry.title,
-        summary: `Registro categoría: ${entry.category}, evidencias: ${entry.evidence.length}`,
+        summary: `Registro categorÃ­a: ${entry.category}, evidencias: ${entry.evidence.length}`,
         source: 'mnemos',
         confidenceScore: 0.95,
         timestamp: entry.timestamp,

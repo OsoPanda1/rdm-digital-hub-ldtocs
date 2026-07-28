@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { v4 as uuidv4 } from 'uuid';
 import { logger } from '@/lib/logger';
@@ -49,32 +53,32 @@ export class TerritorialFederationBridge {
   }
 
   /**
-   * Validación fuerte de contribución antes de enrutar.
-   * No permite coords vacías, tipos no mapeados o territorios inválidos.
+   * ValidaciÃ³n fuerte de contribuciÃ³n antes de enrutar.
+   * No permite coords vacÃ­as, tipos no mapeados o territorios invÃ¡lidos.
    */
   private validateContribution(contribution: UserContribution): boolean {
     if (!contribution) {
-      logger.error('[TFB] Contribución nula recibida');
+      logger.error('[TFB] ContribuciÃ³n nula recibida');
       return false;
     }
 
     if (!contribution.id || !contribution.userId) {
-      logger.warn('[TFB] Contribución sin id o userId', { contribution });
+      logger.warn('[TFB] ContribuciÃ³n sin id o userId', { contribution });
       return false;
     }
 
     if (!contribution.type) {
-      logger.warn('[TFB] Contribución sin tipo declarado', { contributionId: contribution.id });
+      logger.warn('[TFB] ContribuciÃ³n sin tipo declarado', { contributionId: contribution.id });
       return false;
     }
 
     if (!contribution.coords || typeof contribution.coords.lat !== 'number' || typeof contribution.coords.lng !== 'number') {
-      logger.warn('[TFB] Contribución sin coordenadas válidas', { contributionId: contribution.id });
+      logger.warn('[TFB] ContribuciÃ³n sin coordenadas vÃ¡lidas', { contributionId: contribution.id });
       return false;
     }
 
     if (!contribution.territorio) {
-      logger.warn('[TFB] Contribución sin territorio asignado', { contributionId: contribution.id });
+      logger.warn('[TFB] ContribuciÃ³n sin territorio asignado', { contributionId: contribution.id });
       return false;
     }
 
@@ -82,7 +86,7 @@ export class TerritorialFederationBridge {
   }
 
   /**
-   * Determina severidad federada a partir de prioridad y tipo de contribución.
+   * Determina severidad federada a partir de prioridad y tipo de contribuciÃ³n.
    */
   private getEventSeverity(priority: TerritorialFederationMap['priority']): 'INFO' | 'ALERTA' | 'CRITICO' {
     switch (priority) {
@@ -96,8 +100,8 @@ export class TerritorialFederationBridge {
   }
 
   /**
-   * Enruta una contribución territorial hacia federaciones TAMV con hardening:
-   * validación previa, trazas únicas y eventos secundarios controlados.
+   * Enruta una contribuciÃ³n territorial hacia federaciones TAMV con hardening:
+   * validaciÃ³n previa, trazas Ãºnicas y eventos secundarios controlados.
    */
   routeContribution(contribution: UserContribution): void {
     if (!this.validateContribution(contribution)) {
@@ -131,7 +135,7 @@ export class TerritorialFederationBridge {
       correlationId: contribution.id,
     });
 
-    // Route to secondary federations (sin userId para minimizar exposición de identidad)
+    // Route to secondary federations (sin userId para minimizar exposiciÃ³n de identidad)
     for (const fed of map.secondaryFeds) {
       federationBus.emit({
         type: `${map.eventType}_SYNC`,
@@ -150,7 +154,7 @@ export class TerritorialFederationBridge {
       });
     }
 
-    logger.info('[TFB] Contribución enrutada', {
+    logger.info('[TFB] ContribuciÃ³n enrutada', {
       type: contribution.type,
       primary: map.primaryFed,
       secondary: map.secondaryFeds,
@@ -160,11 +164,11 @@ export class TerritorialFederationBridge {
   }
 
   /**
-   * Actualización de estadísticas territoriales con validación básica.
+   * ActualizaciÃ³n de estadÃ­sticas territoriales con validaciÃ³n bÃ¡sica.
    */
   routeTerritorialStats(stats: TerritorialStats): void {
     if (!stats || !stats.territorio) {
-      logger.warn('[TFB] Stats territoriales inválidas', { stats });
+      logger.warn('[TFB] Stats territoriales invÃ¡lidas', { stats });
       return;
     }
 
@@ -179,22 +183,22 @@ export class TerritorialFederationBridge {
   }
 
   /**
-   * Actualización de heatmap con límite de puntos y validación de coordenadas.
+   * ActualizaciÃ³n de heatmap con lÃ­mite de puntos y validaciÃ³n de coordenadas.
    */
   routeHeatMapUpdate(points: TerritorialHeatPoint[]): void {
     if (!Array.isArray(points) || points.length === 0) {
-      logger.warn('[TFB] Heatmap vacío, no se emite evento');
+      logger.warn('[TFB] Heatmap vacÃ­o, no se emite evento');
       return;
     }
 
-    // Límite de protección: evitar floods en KAOS_HYPERRENDER.
+    // LÃ­mite de protecciÃ³n: evitar floods en KAOS_HYPERRENDER.
     const MAX_POINTS = 500;
     const safePoints = points.slice(0, MAX_POINTS).filter(p =>
       p && typeof p.lat === 'number' && typeof p.lng === 'number',
     );
 
     if (safePoints.length === 0) {
-      logger.warn('[TFB] Heatmap sin puntos válidos');
+      logger.warn('[TFB] Heatmap sin puntos vÃ¡lidos');
       return;
     }
 

@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
-// Isabella.Core — Personality Engine (Ω-Core v4.0 Enterprise)
-// Motor de personalidad "fría y calculadora" con reglas 3S
-// Psicología: objetiva, económica, analítica, sin emotividad
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isabella.Core â€” Personality Engine (Î©-Core v4.0 Enterprise)
+// Motor de personalidad "frÃ­a y calculadora" con reglas 3S
+// PsicologÃ­a: objetiva, econÃ³mica, analÃ­tica, sin emotividad
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { PersonalityMode, PersonalityConfig } from "../types";
 
@@ -32,9 +36,9 @@ const MODE_OVERRIDES: Record<PersonalityMode, Partial<PersonalityConfig>> = {
 };
 
 const STOP_WORDS = [
-  "rápidamente", "profundamente", "necesariamente", "obviamente",
-  "claramente", "simplemente", "básicamente", "literalmente",
-  "extremadamente", "altamente", "increíblemente", "absolutamente",
+  "rÃ¡pidamente", "profundamente", "necesariamente", "obviamente",
+  "claramente", "simplemente", "bÃ¡sicamente", "literalmente",
+  "extremadamente", "altamente", "increÃ­blemente", "absolutamente",
 ];
 
 export function createPersonalityEngine(initialConfig?: Partial<PersonalityConfig>): PersonalityEngine {
@@ -60,8 +64,8 @@ export function createPersonalityEngine(initialConfig?: Partial<PersonalityConfi
       // 2. Voz activa
       result = result.replace(/es (realizado|procesado|ejecutado) por/gi, "lo realiza");
       result = result.replace(/son (realizados|procesados|ejecutados) por/gi, "los realizan");
-      result = result.replace(/fue (realizado|creado|desarrollado) por/gi, "lo creó");
-      result = result.replace(/será (realizado|procesado) por/gi, "lo realizará");
+      result = result.replace(/fue (realizado|creado|desarrollado) por/gi, "lo creÃ³");
+      result = result.replace(/serÃ¡ (realizado|procesado) por/gi, "lo realizarÃ¡");
 
       // 3. Dividir oraciones largas (>20 palabras)
       const sentences = result.split(/(?<=[.!?])\s+/);
@@ -75,7 +79,7 @@ export function createPersonalityEngine(initialConfig?: Partial<PersonalityConfi
       });
       result = shortSentences.join(". ");
 
-      // 4. Limitar párrafos a 5 oraciones
+      // 4. Limitar pÃ¡rrafos a 5 oraciones
       const paragraphs = result.split(/\n+/);
       const shortParagraphs = paragraphs.map((p) => {
         const sents = p.split(/(?<=[.!?])\s+/);
@@ -85,7 +89,7 @@ export function createPersonalityEngine(initialConfig?: Partial<PersonalityConfi
 
       // 5. Eliminar exclamaciones
       result = result.replace(/!/g, ".");
-      result = result.replace(/¡/g, "");
+      result = result.replace(/Â¡/g, "");
 
       return result;
     },
@@ -94,7 +98,7 @@ export function createPersonalityEngine(initialConfig?: Partial<PersonalityConfi
       const palabras = text.split(/\s+/).filter(Boolean).length;
       const oraciones = text.split(/[.!?]+/).filter(Boolean).length;
       const complejidad = palabras > 0 ? text.length / palabras : 0;
-      const emocionalidad = (text.match(/[!¡?¿]/g)?.length ?? 0) / Math.max(1, palabras);
+      const emocionalidad = (text.match(/[!Â¡?Â¿]/g)?.length ?? 0) / Math.max(1, palabras);
       return { palabras, oraciones, complejidad, emocionalidad };
     },
   };

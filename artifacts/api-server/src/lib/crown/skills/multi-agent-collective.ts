@@ -1,9 +1,13 @@
-// ────────────────────────────────────────────────────────────────
-// SKILL 7 — Multi-Agent Collective
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// SKILL 7 â€” Multi-Agent Collective
 // Consenso distribuido entre agentes especializados (arquitecto,
-// seguridad, económico, ético, UX, legal, documentación)
+// seguridad, econÃ³mico, Ã©tico, UX, legal, documentaciÃ³n)
 // con mecanismo de consenso ponderado
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { SkillDefinition, AgentRole, AgentOpinion, ConsensusResult } from "../types";
 
@@ -35,11 +39,11 @@ interface ConsensusRequest {
 const DEFAULT_AGENTS: Agent[] = [
   { role: "architect", name: "Arquitecto", weight: 1.2, active: true, lastResponse: null },
   { role: "security", name: "Seguridad", weight: 1.5, active: true, lastResponse: null },
-  { role: "economic", name: "Económico", weight: 1.0, active: true, lastResponse: null },
-  { role: "ethical", name: "Ético", weight: 1.3, active: true, lastResponse: null },
+  { role: "economic", name: "EconÃ³mico", weight: 1.0, active: true, lastResponse: null },
+  { role: "ethical", name: "Ã‰tico", weight: 1.3, active: true, lastResponse: null },
   { role: "ux", name: "UX", weight: 0.9, active: true, lastResponse: null },
   { role: "legal", name: "Legal", weight: 1.1, active: true, lastResponse: null },
-  { role: "documentation", name: "Documentación", weight: 0.8, active: true, lastResponse: null },
+  { role: "documentation", name: "DocumentaciÃ³n", weight: 0.8, active: true, lastResponse: null },
 ];
 
 export interface MultiAgentCollective {

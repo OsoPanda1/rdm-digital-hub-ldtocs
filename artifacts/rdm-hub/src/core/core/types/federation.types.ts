@@ -1,18 +1,22 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * TAMV Federation Core Types - L0-L7
  * Architectural Foundation for Territorial & Multidimensional Awareness
  *
- * Estos tipos describen la ontología canónica del kernel MD‑X4 / LTOS.
- * No solo tipan datos: codifican cómo piensan las federaciones del sistema.
+ * Estos tipos describen la ontologÃ­a canÃ³nica del kernel MDâ€‘X4 / LTOS.
+ * No solo tipan datos: codifican cÃ³mo piensan las federaciones del sistema.
  */
 
 // ============================================================================
-// ENUMS BÁSICOS DE FEDERACIÓN Y CONTEXTO
+// ENUMS BÃSICOS DE FEDERACIÃ“N Y CONTEXTO
 // ============================================================================
 
 /**
  * Federaciones soberanas del ecosistema TAMV / RDM.
- * Cada servicio, evento o decisión debe poder ubicarse en una de estas.
+ * Cada servicio, evento o decisiÃ³n debe poder ubicarse en una de estas.
  */
 export enum FederationDomain {
   TECHNOLOGY = "technology",
@@ -27,9 +31,9 @@ export enum FederationDomain {
 /**
  * Planos funcionales de la plataforma RDM Digital.
  * Se corresponden, por ejemplo, con las capas:
- *  - Plano 1: experiencia turística.
+ *  - Plano 1: experiencia turÃ­stica.
  *  - Plano 2: institucional.
- *  - Plano 3: documental / tecnológico.
+ *  - Plano 3: documental / tecnolÃ³gico.
  */
 export enum RdmExperiencePlane {
   TOURISM = "tourism",
@@ -38,7 +42,7 @@ export enum RdmExperiencePlane {
 }
 
 /**
- * Capas L0–L7 del kernel MD‑X4 / Heptafederado.
+ * Capas L0â€“L7 del kernel MDâ€‘X4 / Heptafederado.
  */
 export enum KernelLayer {
   L0_DOCTRINE_ETHICS = "L0_DOCTRINE_ETHICS",
@@ -63,7 +67,7 @@ export enum EthicRiskLevel {
 }
 
 /**
- * Qué tipo de regla es (p.ej., protección de menores, datos sensibles, etc.).
+ * QuÃ© tipo de regla es (p.ej., protecciÃ³n de menores, datos sensibles, etc.).
  */
 export enum EthicRuleCategory {
   PRIVACY = "privacy",
@@ -76,7 +80,7 @@ export enum EthicRuleCategory {
 
 /**
  * Comando de protocolo canonizado.
- * (Declarado aquí porque lo usan los validadores de ética.)
+ * (Declarado aquÃ­ porque lo usan los validadores de Ã©tica.)
  */
 export type ProtocolLifecycleState =
   | "received"
@@ -87,7 +91,7 @@ export type ProtocolLifecycleState =
   | "rejected";
 
 /**
- * Fuente principal que gatilló la decisión.
+ * Fuente principal que gatillÃ³ la decisiÃ³n.
  */
 export type DecisionSource =
   | "human_guardian"
@@ -105,11 +109,11 @@ export interface ProtocolCommand {
   actorId: string;
   domain: FederationDomain;
   /**
-   * Plano donde se originó el comando (turismo, institucional, técnico).
+   * Plano donde se originÃ³ el comando (turismo, institucional, tÃ©cnico).
    */
   plane: RdmExperiencePlane;
   /**
-   * Capa del kernel donde será principalmente procesado.
+   * Capa del kernel donde serÃ¡ principalmente procesado.
    */
   layer: KernelLayer;
   payload: Record<string, unknown>;
@@ -128,12 +132,12 @@ export interface EthicRule {
   category: EthicRuleCategory;
   severity: EthicRiskLevel;
   /**
-   * Dominio/federación para la cual aplica principalmente esta regla.
+   * Dominio/federaciÃ³n para la cual aplica principalmente esta regla.
    */
   domain: FederationDomain;
   /**
-   * Validador pura lógica: no debe tener side-effects.
-   * Retorna true si el comando está permitido bajo esta regla.
+   * Validador pura lÃ³gica: no debe tener side-effects.
+   * Retorna true si el comando estÃ¡ permitido bajo esta regla.
    */
   validator: (command: ProtocolCommand) => boolean;
 }
@@ -175,7 +179,7 @@ export interface RegistryEvent {
   domain: FederationDomain;
   layer: KernelLayer;
   /**
-   * Tags para facilitar búsquedas y agregaciones.
+   * Tags para facilitar bÃºsquedas y agregaciones.
    * Ejemplo: ["donation", "commerce", "tourism-plane"].
    */
   tags: string[];
@@ -196,7 +200,7 @@ export interface NarrativeEntry {
    */
   references: string[];
   /**
-   * ID opcional de sesión o hilo narrativo (para agrupar historias relacionadas).
+   * ID opcional de sesiÃ³n o hilo narrativo (para agrupar historias relacionadas).
    */
   threadId?: string;
 }
@@ -210,7 +214,7 @@ export interface ProtocolDecision {
   risk: EthicRiskLevel;
   reasons: string[];
   /**
-   * Nivel de intervención humana vs automática.
+   * Nivel de intervenciÃ³n humana vs automÃ¡tica.
    */
   source: DecisionSource;
   /**
@@ -227,7 +231,7 @@ export interface ProtocolExecutionResult {
   bookpiEntryId: string;
   executedAt: Date;
   /**
-   * Duración total de la ejecución, útil para observabilidad.
+   * DuraciÃ³n total de la ejecuciÃ³n, Ãºtil para observabilidad.
    */
   durationMs?: number;
 }
@@ -281,7 +285,7 @@ export interface GuardianAlert {
   domain: FederationDomain;
   layer: KernelLayer;
   /**
-   * ID de evento/trace para correlación.
+   * ID de evento/trace para correlaciÃ³n.
    */
   traceId?: string;
 }
@@ -306,7 +310,7 @@ export interface SpatialCell {
 }
 
 /**
- * Decisión contextual (p.ej. sugerir ruta, ocultar comercio, mostrar aviso).
+ * DecisiÃ³n contextual (p.ej. sugerir ruta, ocultar comercio, mostrar aviso).
  */
 export interface ContextualDecision {
   priority: number;
@@ -314,7 +318,7 @@ export interface ContextualDecision {
   payload: unknown;
   reason: string;
   /**
-   * Plano donde impacta esta decisión (turismo/UX, institucional, técnico).
+   * Plano donde impacta esta decisiÃ³n (turismo/UX, institucional, tÃ©cnico).
    */
   plane: RdmExperiencePlane;
 }
@@ -339,7 +343,7 @@ export interface DomainService {
 }
 
 /**
- * Identidad base (ej: ID‑NVIDA).
+ * Identidad base (ej: IDâ€‘NVIDA).
  */
 export interface IdentityRecord {
   id: string;
@@ -348,7 +352,7 @@ export interface IdentityRecord {
   createdAt: Date;
   verifiedAt?: Date;
   /**
-   * Dominio principal al que está afiliada esta identidad (p.ej. ECONOMY, CULTURE).
+   * Dominio principal al que estÃ¡ afiliada esta identidad (p.ej. ECONOMY, CULTURE).
    */
   primaryDomain?: FederationDomain;
 }
@@ -363,17 +367,17 @@ export interface CommerceEntity {
   location: GeoPoint;
   verified: boolean;
   /**
-   * Puntuación operativa (puede provenir de gemelos, telemetría, reseñas).
+   * PuntuaciÃ³n operativa (puede provenir de gemelos, telemetrÃ­a, reseÃ±as).
    */
   operationalScore?: number;
   /**
-   * ID de ruta o cluster turístico predominante.
+   * ID de ruta o cluster turÃ­stico predominante.
    */
   clusterId?: string;
 }
 
 /**
- * Telemetría territorial básica (L5).
+ * TelemetrÃ­a territorial bÃ¡sica (L5).
  */
 export interface TelemetryData {
   timestamp: Date;
@@ -382,7 +386,7 @@ export interface TelemetryData {
   signal?: Record<string, number>;
   metadata?: Record<string, unknown>;
   /**
-   * Plano de experiencia asociado (ej: TOURISM cuando navega el mapa público).
+   * Plano de experiencia asociado (ej: TOURISM cuando navega el mapa pÃºblico).
    */
   plane?: RdmExperiencePlane;
 }
@@ -396,7 +400,7 @@ export interface UIState<T = unknown> {
   error?: string;
   data?: T;
   /**
-   * Última actualización para este estado, útil para cache y revalidación.
+   * Ãšltima actualizaciÃ³n para este estado, Ãºtil para cache y revalidaciÃ³n.
    */
   updatedAt?: Date;
 }
@@ -418,7 +422,7 @@ export interface QuantumDecisionState {
   collapsed?: ContextualDecision;
   probability: number;
   /**
-   * Información opcional para explicar por qué colapsó en cierta opción.
+   * InformaciÃ³n opcional para explicar por quÃ© colapsÃ³ en cierta opciÃ³n.
    */
   explanation?: string;
 }
@@ -428,7 +432,7 @@ export interface QuantumDecisionState {
 // ============================================================================
 
 /**
- * Contexto de ejecución federado: une actor, territorio, plano y capa.
+ * Contexto de ejecuciÃ³n federado: une actor, territorio, plano y capa.
  */
 export interface TamvExecutionContext {
   commandId: string;
@@ -465,7 +469,7 @@ export interface TamvExecutionResult {
 export type EventHandler<T = unknown> = (data: T) => void | Promise<void>;
 
 /**
- * Configuración del Event Bus soberano.
+ * ConfiguraciÃ³n del Event Bus soberano.
  */
 export interface EventBusConfig {
   maxListeners: number;
@@ -488,7 +492,7 @@ export interface PublishedEvent<T = unknown> {
   timestamp: Date;
   traceId: string;
   /**
-   * Dominio/federación y plano desde donde se emite.
+   * Dominio/federaciÃ³n y plano desde donde se emite.
    */
   domain: FederationDomain;
   layer: KernelLayer;

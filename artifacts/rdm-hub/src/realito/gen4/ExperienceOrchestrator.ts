@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { logger } from "@/lib/logger";
 interface Coordenadas {
   lat: number;
@@ -47,15 +51,15 @@ export class ExperienceOrchestrator {
     const inactividadMinutos = (Date.now() - turista.ultimaInteraccion.getTime()) / 60000;
 
     if (cercaDeSalida && turista.tiempoEstadiaHoras < 3.0) {
-      logger.info(`[REALITO GEN-4] Turista ${turista.id} en riesgo de fuga económica.`);
+      logger.info(`[REALITO GEN-4] Turista ${turista.id} en riesgo de fuga econÃ³mica.`);
 
       return {
         accion: 'PUSH_NOTIFICATION',
         nivel: inactividadMinutos > 30 ? 'CRITICO' : 'ALERTA',
         payload: {
-          titulo: '¡Espera! El Real tiene un secreto para ti...',
+          titulo: 'Â¡Espera! El Real tiene un secreto para ti...',
           mensaje:
-            'Anubis detecta que aún no pruebas la plata de autor. Gira a la derecha en el próximo callejón y obtén precio de taller en la Federación de Platería.',
+            'Anubis detecta que aÃºn no pruebas la plata de autor. Gira a la derecha en el prÃ³ximo callejÃ³n y obtÃ©n precio de taller en la FederaciÃ³n de PlaterÃ­a.',
           ruta_ar_activada: true,
         },
       };

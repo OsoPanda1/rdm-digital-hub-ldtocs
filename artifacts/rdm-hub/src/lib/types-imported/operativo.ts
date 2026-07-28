@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // Shared "operativo" (operational dashboard) contracts
 
 export type ModuleStatus = "design" | "in-progress" | "done";

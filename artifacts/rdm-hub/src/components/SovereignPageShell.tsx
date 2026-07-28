@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion, AnimatePresence } from "framer-motion";
 import { ReactNode, useState } from "react";
 import { RDMLayout } from "@/components/rdm/RDMLayout";
@@ -65,7 +69,7 @@ export function SovereignPageShell({ eyebrow, title, description, bullets, child
               >
                 <Card className="glass border-border/60 h-full">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm tracking-[0.14em] uppercase text-foreground/75">Módulo {index + 1}</CardTitle>
+                    <CardTitle className="text-sm tracking-[0.14em] uppercase text-foreground/75">MÃ³dulo {index + 1}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-foreground/75 leading-relaxed">{bullet}</p>

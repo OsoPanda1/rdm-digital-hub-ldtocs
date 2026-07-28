@@ -1,4 +1,8 @@
-// src/quantum/pqc.ts — Post-Quantum Cryptography
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// src/quantum/pqc.ts â€” Post-Quantum Cryptography
 // Kyber KEM + Dilithium signatures via liboqs WASM (with Web Crypto fallback)
 
 type PQCCiphertext = {

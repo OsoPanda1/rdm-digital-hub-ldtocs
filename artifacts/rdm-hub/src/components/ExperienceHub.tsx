@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { Compass, MapPin, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import pasteriasImg from "@/assets/pasterias.png";
@@ -7,31 +11,31 @@ import sanitariosImg from "@/assets/sanitarios.png";
 
 const experiences = [
   {
-    title: "Pasterías del Monte",
-    category: "Gastronomía",
+    title: "PasterÃ­as del Monte",
+    category: "GastronomÃ­a",
     image: pasteriasImg,
-    description: "Los pastes más auténticos con receta inglesa de 1824. Sabores clásicos y nuevas creaciones.",
+    description: "Los pastes mÃ¡s autÃ©nticos con receta inglesa de 1824. Sabores clÃ¡sicos y nuevas creaciones.",
     rating: 5.0,
   },
   {
-    title: "Platerías Artesanales",
-    category: "Artesanía & Joyería",
+    title: "PlaterÃ­as Artesanales",
+    category: "ArtesanÃ­a & JoyerÃ­a",
     image: plateriasImg,
-    description: "Joyería artesanal en plata que refleja la herencia minera de Real del Monte.",
+    description: "JoyerÃ­a artesanal en plata que refleja la herencia minera de Real del Monte.",
     rating: 4.8,
   },
   {
-    title: "Mercado de Artesanías",
+    title: "Mercado de ArtesanÃ­as",
     category: "Cultura & Compras",
     image: artesaniasImg,
-    description: "Textiles, cerámica y arte popular de la sierra de Hidalgo.",
+    description: "Textiles, cerÃ¡mica y arte popular de la sierra de Hidalgo.",
     rating: 4.9,
   },
   {
     title: "Servicios al Visitante",
-    category: "Información",
+    category: "InformaciÃ³n",
     image: sanitariosImg,
-    description: "Sanitarios públicos, puntos de información turística y primeros auxilios.",
+    description: "Sanitarios pÃºblicos, puntos de informaciÃ³n turÃ­stica y primeros auxilios.",
     rating: 4.7,
   },
 ];
@@ -42,8 +46,8 @@ export default function ExperienceHub() {
         <div className="max-w-2xl">
           <h2 className="mb-4 font-serif text-5xl font-light italic">Experience Hub</h2>
           <p className="leading-relaxed text-gray-400">
-            Explora Real del Monte a través de experiencias curadas por la red RDM Digital. Desde las profundidades
-            de las minas hasta los sabores más auténticos.
+            Explora Real del Monte a travÃ©s de experiencias curadas por la red RDM Digital. Desde las profundidades
+            de las minas hasta los sabores mÃ¡s autÃ©nticos.
           </p>
         </div>
         <div className="flex gap-2">
@@ -117,12 +121,12 @@ export default function ExperienceHub() {
           </div>
           <h3 className="mb-6 text-4xl font-bold">Senda de los Mineros</h3>
           <p className="mb-8 leading-relaxed text-gray-400">
-            Una travesía digitalmente guiada que conecta los puntos más emblemáticos de la herencia minera. Sincroniza
+            Una travesÃ­a digitalmente guiada que conecta los puntos mÃ¡s emblemÃ¡ticos de la herencia minera. Sincroniza
             tu dispositivo con el Gemelo Digital para una experiencia inmersiva.
           </p>
           <div className="flex gap-4">
             <button className="flex items-center gap-2 rounded-xl bg-brand-amber px-8 py-4 font-bold text-black transition-all hover:bg-amber-400">
-              Iniciar Navegación
+              Iniciar NavegaciÃ³n
               <Compass className="h-4 w-4" />
             </button>
             <button className="rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-xs font-bold transition-all hover:bg-white/10">

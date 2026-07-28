@@ -1,19 +1,23 @@
-// ────────────────────────────────────────────────────────────────
-// Podcast Routes — Spotify Integration
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Podcast Routes â€” Spotify Integration
 // Replaces TAMV 92.5 FM Radio with Spotify podcast embeds.
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { Router, Request, Response } from "express";
 
 const router = Router();
 
-// ── Featured Podcasts (curated by Isabella) ────────────────────
+// â”€â”€ Featured Podcasts (curated by Isabella) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const FEATURED_PODCASTS = [
   {
     id: "podcast-isabella",
-    title: "Isabella Villaseñor — Diálogos del Pueblo Mágico",
-    description: "Conversaciones sobre cultura, identidad y tecnología desde Real del Monte. Narrativas soberanas del ecosistema TAMV.",
+    title: "Isabella VillaseÃ±or â€” DiÃ¡logos del Pueblo MÃ¡gico",
+    description: "Conversaciones sobre cultura, identidad y tecnologÃ­a desde Real del Monte. Narrativas soberanas del ecosistema TAMV.",
     spotifyUri: "spotify:show:6JQijmFkFz5ZqC4MjR3QkX",
     embedUrl: "https://open.spotify.com/embed/show/6JQijmFkFz5ZqC4MjR3QkX?utm_source=generator&theme=0",
     category: "narrativa",
@@ -23,8 +27,8 @@ const FEATURED_PODCASTS = [
   },
   {
     id: "podcast-realito",
-    title: "Realito AI — El Asistente Soberano",
-    description: "El podcast donde Realito explora el ecosistema TAMV, responde preguntas de la comunidad y comparte historias del Pueblo Mágico.",
+    title: "Realito AI â€” El Asistente Soberano",
+    description: "El podcast donde Realito explora el ecosistema TAMV, responde preguntas de la comunidad y comparte historias del Pueblo MÃ¡gico.",
     spotifyUri: "spotify:show:placeholder-realito",
     embedUrl: "https://open.spotify.com/embed/show/placeholder-realito?utm_source=generator&theme=0",
     category: "tecnologia",
@@ -35,7 +39,7 @@ const FEATURED_PODCASTS = [
   {
     id: "podcast-territorio",
     title: "Voces del Territorio",
-    description: "Historias, testimonios y análisis desde los pueblos mágicos de Hidalgo. Percepción territorial en audio.",
+    description: "Historias, testimonios y anÃ¡lisis desde los pueblos mÃ¡gicos de Hidalgo. PercepciÃ³n territorial en audio.",
     spotifyUri: "spotify:show:placeholder-territorio",
     embedUrl: "https://open.spotify.com/embed/show/placeholder-territorio?utm_source=generator&theme=0",
     category: "territorial",
@@ -46,7 +50,7 @@ const FEATURED_PODCASTS = [
   {
     id: "podcast-conocimiento",
     title: "Trovadores del Conocimiento",
-    description: "Divulgación científica, cultural y tecnológica desde la perspectiva del ecosistema TAMV. Conocimiento libre y soberano.",
+    description: "DivulgaciÃ³n cientÃ­fica, cultural y tecnolÃ³gica desde la perspectiva del ecosistema TAMV. Conocimiento libre y soberano.",
     spotifyUri: "spotify:show:placeholder-conocimiento",
     embedUrl: "https://open.spotify.com/embed/show/placeholder-conocimiento?utm_source=generator&theme=0",
     category: "conocimiento",
@@ -56,17 +60,17 @@ const FEATURED_PODCASTS = [
   },
 ];
 
-// ── Podcast Categories ─────────────────────────────────────────
+// â”€â”€ Podcast Categories â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const CATEGORIES = [
   { id: "narrativa", name: "Narrativa", description: "Historias y conversaciones del ecosistema" },
-  { id: "tecnologia", name: "Tecnología", description: "IA, soberanía digital y herramientas" },
-  { id: "territorial", name: "Territorio", description: "Voces desde los pueblos mágicos" },
-  { id: "conocimiento", name: "Conocimiento", description: "Ciencia, cultura y educación" },
-  { id: "musica", name: "Música", description: "Sonidos del Pueblo Mágico" },
+  { id: "tecnologia", name: "TecnologÃ­a", description: "IA, soberanÃ­a digital y herramientas" },
+  { id: "territorial", name: "Territorio", description: "Voces desde los pueblos mÃ¡gicos" },
+  { id: "conocimiento", name: "Conocimiento", description: "Ciencia, cultura y educaciÃ³n" },
+  { id: "musica", name: "MÃºsica", description: "Sonidos del Pueblo MÃ¡gico" },
 ];
 
-// ── Routes ─────────────────────────────────────────────────────
+// â”€â”€ Routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 router.get("/featured", (_req: Request, res: Response) => {
   res.json({

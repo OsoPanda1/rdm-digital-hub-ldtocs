@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { MapPin, Clock, Zap } from "lucide-react";
@@ -19,15 +23,15 @@ interface Place {
 }
 
 const places: Place[] = [
-  { name: "Mina de Acosta", category: "Historia", time: "2h", energy: "Alta", image: minaImg, description: "Desciende 400m al corazón de la montaña donde los ecos cornish aún resuenan." },
-  { name: "Plaza Principal", category: "Cultura", time: "1h", energy: "Baja", image: plazaImg, description: "Centro vibrante del pueblo con su icónica iglesia amarilla y jardines coloniales." },
+  { name: "Mina de Acosta", category: "Historia", time: "2h", energy: "Alta", image: minaImg, description: "Desciende 400m al corazÃ³n de la montaÃ±a donde los ecos cornish aÃºn resuenan." },
+  { name: "Plaza Principal", category: "Cultura", time: "1h", energy: "Baja", image: plazaImg, description: "Centro vibrante del pueblo con su icÃ³nica iglesia amarilla y jardines coloniales." },
   { name: "Calles Coloniales", category: "Arquitectura", time: "1.5h", energy: "Media", image: calleImg, description: "Fachadas coloridas que narran cuatro siglos de historia mestiza." },
-  { name: "Parroquia de la Asunción", category: "Arquitectura", time: "45min", energy: "Baja", image: iglesiaImg, description: "Cantera labrada que desafía la niebla desde el siglo XVIII." },
-  { name: "Pasterías", category: "Gastronomía", time: "30min", energy: "Baja", image: gastroImg, description: "El paste original, herencia de los mineros ingleses, horneado con receta de 1850." },
-  { name: "Mirador Peña del Cuervo", category: "Naturaleza", time: "2.5h", energy: "Alta", image: heroImg, description: "Donde el bosque se abre y la vista abraza todo el valle." },
+  { name: "Parroquia de la AsunciÃ³n", category: "Arquitectura", time: "45min", energy: "Baja", image: iglesiaImg, description: "Cantera labrada que desafÃ­a la niebla desde el siglo XVIII." },
+  { name: "PasterÃ­as", category: "GastronomÃ­a", time: "30min", energy: "Baja", image: gastroImg, description: "El paste original, herencia de los mineros ingleses, horneado con receta de 1850." },
+  { name: "Mirador PeÃ±a del Cuervo", category: "Naturaleza", time: "2.5h", energy: "Alta", image: heroImg, description: "Donde el bosque se abre y la vista abraza todo el valle." },
 ];
 
-const categories = ["Todos", "Historia", "Cultura", "Arquitectura", "Gastronomía", "Naturaleza"];
+const categories = ["Todos", "Historia", "Cultura", "Arquitectura", "GastronomÃ­a", "Naturaleza"];
 
 const energyColor = { Alta: "text-destructive", Media: "text-gold", Baja: "text-electric" };
 
@@ -54,7 +58,7 @@ const TourismSection = () => {
             <span className="text-gradient-gold">Lugares Imperdibles</span>
           </h2>
           <p className="font-display text-lg text-platinum/50 italic mt-4 max-w-md mx-auto">
-            Los atractivos más emblemáticos de Real del Monte
+            Los atractivos mÃ¡s emblemÃ¡ticos de Real del Monte
           </p>
         </motion.div>
 

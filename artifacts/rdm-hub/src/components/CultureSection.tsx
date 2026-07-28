@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import diaMuertos from "@/assets/dia-muertos.jpg";
@@ -13,12 +17,12 @@ export function CultureSection() {
   const imgY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   const GALLERY = [
-    { src: churchAsuncion, alt: "Iglesia de la Asunción", span: "col-span-2 row-span-2" },
+    { src: churchAsuncion, alt: "Iglesia de la AsunciÃ³n", span: "col-span-2 row-span-2" },
     { src: artisanWorkshop, alt: "Taller artesanal", span: "col-span-1 row-span-1" },
     { src: streetsColonial, alt: "Calles coloniales", span: "col-span-1 row-span-1" },
     { src: plazaNight, alt: "Plaza de noche", span: "col-span-1 row-span-1" },
     { src: rooftopsSunrise, alt: "Techos al amanecer", span: "col-span-1 row-span-1" },
-    { src: diaMuertos, alt: "Día de Muertos", span: "col-span-2 row-span-1" },
+    { src: diaMuertos, alt: "DÃ­a de Muertos", span: "col-span-2 row-span-1" },
   ];
 
   return (
@@ -28,7 +32,7 @@ export function CultureSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background" />
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-16 lg:p-24">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <p className="text-sm tracking-[0.3em] uppercase text-accent font-body mb-4">🎭 Cultura Viva</p>
+            <p className="text-sm tracking-[0.3em] uppercase text-accent font-body mb-4">ðŸŽ­ Cultura Viva</p>
             <h2 className="text-4xl md:text-7xl font-display font-bold leading-[0.9]">
               Cada calle, una <span className="text-accent">obra de arte</span>
             </h2>
@@ -68,12 +72,12 @@ export function CultureSection() {
           className="mt-16 text-center max-w-2xl mx-auto"
         >
           <p className="text-lg text-foreground/70 font-body leading-relaxed italic font-display mb-4">
-            "Real del Monte es Pueblo Mágico por derecho propio. Su mezcla de herencia
-            británica y raíces mexicanas crea algo irrepetible — cada calle empedrada,
-            cada fachada colorida, cada tradición preservada es un acto de resistencia cultural."
+            "Real del Monte es Pueblo MÃ¡gico por derecho propio. Su mezcla de herencia
+            britÃ¡nica y raÃ­ces mexicanas crea algo irrepetible â€” cada calle empedrada,
+            cada fachada colorida, cada tradiciÃ³n preservada es un acto de resistencia cultural."
           </p>
           <p className="text-sm text-foreground/70 font-body leading-relaxed">
-            Desde el Panteón Inglés hasta los talleres locales, la experiencia cultural se vive
+            Desde el PanteÃ³n InglÃ©s hasta los talleres locales, la experiencia cultural se vive
             en capas: arquitectura, memoria obrera, cocina migrante, relatos comunitarios y
             festividades que transforman al visitante en testigo de una identidad profundamente viva.
           </p>

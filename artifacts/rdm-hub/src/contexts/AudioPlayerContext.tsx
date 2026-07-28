@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { createContext, useContext, useRef, useState, useCallback, useEffect, type ReactNode } from "react"
 import { logger } from "@/lib/logger"
 
@@ -65,7 +69,7 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
     const onPlay = () => { setIsPlaying(true); setError(null) }
     const onPause = () => setIsPlaying(false)
     const onError = () => {
-      const msg = audio.src ? `Error al cargar audio: ${audio.src.split('/').pop()}` : 'Error de reproducción'
+      const msg = audio.src ? `Error al cargar audio: ${audio.src.split('/').pop()}` : 'Error de reproducciÃ³n'
       setError(msg)
       logger.warn(msg)
     }

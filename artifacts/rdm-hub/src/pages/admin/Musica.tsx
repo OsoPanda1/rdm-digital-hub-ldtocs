@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useState, useRef } from "react";
 import { Navigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -71,7 +75,7 @@ export default function MusicaAdmin() {
 
   const handleUpload = async () => {
     if (!file || !title.trim()) {
-      toast({ title: "Faltan datos", description: "Título y archivo son obligatorios.", variant: "destructive" });
+      toast({ title: "Faltan datos", description: "TÃ­tulo y archivo son obligatorios.", variant: "destructive" });
       return;
     }
     if (!ACCEPTED.includes(file.type) && !/\.(mp3|m4a)$/i.test(file.name)) {
@@ -99,7 +103,7 @@ export default function MusicaAdmin() {
       });
       if (insErr) throw insErr;
 
-      toast({ title: "Canción subida", description: title });
+      toast({ title: "CanciÃ³n subida", description: title });
       setTitle(""); setArtist(""); setDescription(""); setFile(null);
       const input = document.getElementById("song-file") as HTMLInputElement | null;
       if (input) input.value = "";
@@ -128,7 +132,7 @@ export default function MusicaAdmin() {
   };
 
   const handleDelete = async (song: Song) => {
-    if (!confirm(`¿Eliminar "${song.title}"?`)) return;
+    if (!confirm(`Â¿Eliminar "${song.title}"?`)) return;
     await supabase.storage.from("songs").remove([song.storage_path]);
     const { error } = await supabase.from("songs").delete().eq("id", song.id);
     if (error) toast({ title: "Error", description: error.message, variant: "destructive" });
@@ -139,15 +143,15 @@ export default function MusicaAdmin() {
     <div className="container mx-auto max-w-5xl p-6 space-y-6">
       <div className="flex items-center gap-3">
         <Music className="h-7 w-7 text-accent" />
-        <h1 className="text-3xl font-display">Panel de Música</h1>
+        <h1 className="text-3xl font-display">Panel de MÃºsica</h1>
       </div>
 
       <Card>
-        <CardHeader><CardTitle>Subir nueva canción</CardTitle></CardHeader>
+        <CardHeader><CardTitle>Subir nueva canciÃ³n</CardTitle></CardHeader>
         <CardContent className="space-y-3">
-          <Input placeholder="Título *" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <Input placeholder="TÃ­tulo *" value={title} onChange={(e) => setTitle(e.target.value)} />
           <Input placeholder="Artista" value={artist} onChange={(e) => setArtist(e.target.value)} />
-          <Textarea placeholder="Descripción" value={description} onChange={(e) => setDescription(e.target.value)} />
+          <Textarea placeholder="DescripciÃ³n" value={description} onChange={(e) => setDescription(e.target.value)} />
           <Input
             id="song-file"
             type="file"
@@ -167,7 +171,7 @@ export default function MusicaAdmin() {
           {loading ? (
             <div className="flex justify-center p-6"><Loader2 className="h-6 w-6 animate-spin" /></div>
           ) : songs.length === 0 ? (
-            <p className="text-muted-foreground text-sm">Aún no hay canciones.</p>
+            <p className="text-muted-foreground text-sm">AÃºn no hay canciones.</p>
           ) : (
             <ul className="space-y-2">
               {songs.map((s) => (
@@ -178,7 +182,7 @@ export default function MusicaAdmin() {
                   <div className="flex-1 min-w-0">
                     <div className="font-medium truncate">{s.title}</div>
                     <div className="text-xs text-muted-foreground truncate">
-                      {s.artist ?? "—"} · {s.mime_type} · {(s.size_bytes ? (s.size_bytes / 1024 / 1024).toFixed(2) : "?")} MB
+                      {s.artist ?? "â€”"} Â· {s.mime_type} Â· {(s.size_bytes ? (s.size_bytes / 1024 / 1024).toFixed(2) : "?")} MB
                     </div>
                   </div>
                   <Button size="icon" variant="ghost" onClick={() => handleDelete(s)}>

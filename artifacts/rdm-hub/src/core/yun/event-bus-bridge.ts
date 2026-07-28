@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 /**
- * YUN Event Bus Bridge — Unifies the three event systems:
+ * YUN Event Bus Bridge â€” Unifies the three event systems:
  * 1. YUN Constitutional Event Bus (src/core/yun/event-bus.ts)
  * 2. FederationBus (src/federaciones/FederationBus.ts)
  * 3. RDM Core Events (src/core/events/bus.ts)
@@ -15,7 +19,7 @@ import type { YunEventEnvelope, YunFederation, YunDomain, YunEventType } from '@
 import type { FederationId } from '@/core/models';
 
 // ============================================================================
-// TAMV FEDERATION → YUN FEDERATION MAPPING
+// TAMV FEDERATION â†’ YUN FEDERATION MAPPING
 // ============================================================================
 
 const TAMV_TO_YUN_FEDERATION: Record<FederationId, YunFederation> = {
@@ -39,7 +43,7 @@ const YUN_TO_TAMV_FEDERATION: Record<YunFederation, FederationId> = {
 };
 
 // ============================================================================
-// FEDERATION EVENT → YUN EVENT BRIDGE
+// FEDERATION EVENT â†’ YUN EVENT BRIDGE
 // ============================================================================
 
 /**
@@ -76,7 +80,7 @@ function bridgeFederationToYun(): void {
 }
 
 // ============================================================================
-// YUN EVENT → FEDERATION EVENT BRIDGE
+// YUN EVENT â†’ FEDERATION EVENT BRIDGE
 // ============================================================================
 
 /**
@@ -222,5 +226,5 @@ export function initEventBusBridge(): void {
   bridgeFederationToYun();
   bridgeYunToFederation();
   initialized = true;
-  console.log('[YUN EventBusBridge] Unified event bus initialized — TAMV ↔ YUN ↔ Core bridged');
+  console.log('[YUN EventBusBridge] Unified event bus initialized â€” TAMV â†” YUN â†” Core bridged');
 }

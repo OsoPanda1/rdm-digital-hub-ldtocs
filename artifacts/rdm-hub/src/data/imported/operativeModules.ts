@@ -1,16 +1,20 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { DomainSummary, ModuleState } from "@/lib/types/operativo";
 
 export const OPERATIVE_MODULES: ModuleState[] = [
   {
     id: "fusion-ecosystem",
-    name: "Fusión funcional RDM·X",
+    name: "FusiÃ³n funcional RDMÂ·X",
     domain: "frontend",
     status: "done",
     completion: 96,
     route: "/fusion",
     spec: "RDM-Digital-X/src/data/fusion-repos.ts",
     notes:
-      "La página /fusion lista repos fuente, mejoras absorbidas, capacidades y rutas ejecutables.",
+      "La pÃ¡gina /fusion lista repos fuente, mejoras absorbidas, capacidades y rutas ejecutables.",
   },
   {
     id: "node-zero-command",
@@ -21,7 +25,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     route: "/",
     spec: "src/components/NodoCeroCommandCenter.tsx",
     notes:
-      "Se renderiza en home y en Fusion con KPIs, protocolo y bitácora de absorción.",
+      "Se renderiza en home y en Fusion con KPIs, protocolo y bitÃ¡cora de absorciÃ³n.",
   },
   {
     id: "tamv-status",
@@ -32,7 +36,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     route: "/tamv/status",
     spec: "RDM-Digital-X/src/pages/TAMVStatus.tsx",
     notes:
-      "Consulta /api/tamv/msr/status y cae a snapshot soberano si el backend está offline.",
+      "Consulta /api/tamv/msr/status y cae a snapshot soberano si el backend estÃ¡ offline.",
   },
   {
     id: "tamv-api-explorer",
@@ -43,7 +47,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     route: "/tamv/api",
     spec: "RDM-Digital-X/src/pages/TAMVApiExplorer.tsx",
     notes:
-      "Prueba endpoints de identidad, gobernanza, economía, IA y MSR con fallback auditable.",
+      "Prueba endpoints de identidad, gobernanza, economÃ­a, IA y MSR con fallback auditable.",
   },
   {
     id: "tamv-thesis",
@@ -65,18 +69,18 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     route: "/mapa",
     spec: "real-del-monte-twin",
     notes:
-      "POIs, riesgos, rutas y telemetría se exponen en mapa, dashboard y capa soberana.",
+      "POIs, riesgos, rutas y telemetrÃ­a se exponen en mapa, dashboard y capa soberana.",
   },
   {
     id: "commerce-phoenix",
-    name: "Economía Phoenix 20/30/50",
+    name: "EconomÃ­a Phoenix 20/30/50",
     domain: "economy",
     status: "in-progress",
     completion: 78,
     route: "/negocios",
     spec: "tamv-sovereign-hub + rdm-turismodigital",
     notes:
-      "Onboarding, catálogo, tiers y donativos listos para proveedores transaccionales reales.",
+      "Onboarding, catÃ¡logo, tiers y donativos listos para proveedores transaccionales reales.",
   },
   {
     id: "isabella-realito",
@@ -91,14 +95,14 @@ export const OPERATIVE_MODULES: ModuleState[] = [
   },
   {
     id: "smart-city-os",
-    name: "Smart City OS / telemetría",
+    name: "Smart City OS / telemetrÃ­a",
     domain: "platform",
     status: "in-progress",
     completion: 72,
     route: "/admin/telemetry",
     spec: "rdm-smart-city-os",
     notes:
-      "Fases de conectividad, sensores, saturación y cuidado patrimonial preparadas para operación municipal.",
+      "Fases de conectividad, sensores, saturaciÃ³n y cuidado patrimonial preparadas para operaciÃ³n municipal.",
   },
   {
     id: "federated-memory",
@@ -109,7 +113,7 @@ export const OPERATIVE_MODULES: ModuleState[] = [
     route: "/corpus",
     spec: "citemesh-roots + BookPI",
     notes:
-      "El corpus, la enciclopedia y la bitácora de repos reducen dispersión entre repositorios.",
+      "El corpus, la enciclopedia y la bitÃ¡cora de repos reducen dispersiÃ³n entre repositorios.",
   },
 ];
 

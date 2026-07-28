@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // React Router/Vite replacement for the removed TanStack React Start auth attacher.
 import { supabase } from './client'
 

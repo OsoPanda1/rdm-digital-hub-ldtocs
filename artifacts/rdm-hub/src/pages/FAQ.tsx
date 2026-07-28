@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, HelpCircle, Search, MessageCircle } from "lucide-react";
@@ -12,45 +16,45 @@ const FAQ_GROUPS: FaqGroup[] = [
     group: "Turismo y experiencia",
     key: "turismo",
     items: [
-      { q: "¿Qué es Real del Monte?", a: "Real del Monte (Mineral del Monte) es un Pueblo Mágico de Hidalgo, México, célebre por su herencia minera, la influencia inglesa de Cornualles, los pastes, el Panteón Inglés y su clima de montaña a 2,700 m de altitud." },
-      { q: "¿Cómo uso el mapa interactivo?", a: "En la página de inicio, sección Mapa, puedes ver sitios, museos, ecoturismo y comercios. Usa el botón “Centrar en mí” para activar tu geolocalización y filtra por categoría y tipo de lugar." },
-      { q: "¿Qué son las rutas turísticas?", a: "Son recorridos temáticos (patrimonio, gastronomía, miradores, nocturna, romántica, platera y más) que conectan historias, lugares y comercios locales en una sola experiencia guiada." },
+      { q: "Â¿QuÃ© es Real del Monte?", a: "Real del Monte (Mineral del Monte) es un Pueblo MÃ¡gico de Hidalgo, MÃ©xico, cÃ©lebre por su herencia minera, la influencia inglesa de Cornualles, los pastes, el PanteÃ³n InglÃ©s y su clima de montaÃ±a a 2,700 m de altitud." },
+      { q: "Â¿CÃ³mo uso el mapa interactivo?", a: "En la pÃ¡gina de inicio, secciÃ³n Mapa, puedes ver sitios, museos, ecoturismo y comercios. Usa el botÃ³n â€œCentrar en mÃ­â€ para activar tu geolocalizaciÃ³n y filtra por categorÃ­a y tipo de lugar." },
+      { q: "Â¿QuÃ© son las rutas turÃ­sticas?", a: "Son recorridos temÃ¡ticos (patrimonio, gastronomÃ­a, miradores, nocturna, romÃ¡ntica, platera y mÃ¡s) que conectan historias, lugares y comercios locales en una sola experiencia guiada." },
     ],
   },
   {
     group: "Historia, mitos y cultura",
     key: "historia",
     items: [
-      { q: "¿Por qué hay influencia inglesa en Real del Monte?", a: "En el siglo XIX, mineros de Cornualles (Inglaterra) llegaron para trabajar las minas. Dejaron el fútbol, el paste y el Panteón Inglés, únicos en México por orientar las tumbas hacia su tierra natal." },
-      { q: "¿Cuáles son las leyendas más conocidas?", a: "Destacan las Peñas Cargadas, los relatos de túneles encantados de las minas y apariciones del Panteón Inglés. Encuéntralas en la sección Mitos y Leyendas del Plano I." },
-      { q: "¿Qué es el paste?", a: "Es una empanada horneada heredada del Cornish pasty inglés, hoy símbolo gastronómico del pueblo, con rellenos tradicionales (papa con carne) y dulces." },
+      { q: "Â¿Por quÃ© hay influencia inglesa en Real del Monte?", a: "En el siglo XIX, mineros de Cornualles (Inglaterra) llegaron para trabajar las minas. Dejaron el fÃºtbol, el paste y el PanteÃ³n InglÃ©s, Ãºnicos en MÃ©xico por orientar las tumbas hacia su tierra natal." },
+      { q: "Â¿CuÃ¡les son las leyendas mÃ¡s conocidas?", a: "Destacan las PeÃ±as Cargadas, los relatos de tÃºneles encantados de las minas y apariciones del PanteÃ³n InglÃ©s. EncuÃ©ntralas en la secciÃ³n Mitos y Leyendas del Plano I." },
+      { q: "Â¿QuÃ© es el paste?", a: "Es una empanada horneada heredada del Cornish pasty inglÃ©s, hoy sÃ­mbolo gastronÃ³mico del pueblo, con rellenos tradicionales (papa con carne) y dulces." },
     ],
   },
   {
     group: "Cuenta, perfil y comunidad",
     key: "comunidad",
     items: [
-      { q: "¿Necesito registrarme?", a: "Puedes explorar gran parte del contenido sin cuenta. Para participar en la comunidad, gestionar tu perfil, activar membresías o usar la Mina necesitas iniciar sesión." },
-      { q: "¿Cómo edito mi perfil?", a: "Entra a Mi Perfil desde el menú o el botón Cuenta. Ahí puedes actualizar tu nombre para mostrar y tu avatar, y revisar tu membresía y progreso minero." },
-      { q: "¿Mis datos están protegidos?", a: "Sí. La plataforma usa autenticación segura y políticas de acceso por fila (RLS): cada usuario solo puede ver y editar su propia información." },
+      { q: "Â¿Necesito registrarme?", a: "Puedes explorar gran parte del contenido sin cuenta. Para participar en la comunidad, gestionar tu perfil, activar membresÃ­as o usar la Mina necesitas iniciar sesiÃ³n." },
+      { q: "Â¿CÃ³mo edito mi perfil?", a: "Entra a Mi Perfil desde el menÃº o el botÃ³n Cuenta. AhÃ­ puedes actualizar tu nombre para mostrar y tu avatar, y revisar tu membresÃ­a y progreso minero." },
+      { q: "Â¿Mis datos estÃ¡n protegidos?", a: "SÃ­. La plataforma usa autenticaciÃ³n segura y polÃ­ticas de acceso por fila (RLS): cada usuario solo puede ver y editar su propia informaciÃ³n." },
     ],
   },
   {
-    group: "Membresías y gamificación",
+    group: "MembresÃ­as y gamificaciÃ³n",
     key: "membresias",
     items: [
-      { q: "¿Qué incluye la membresía Minero RDM?", a: "Por $129 MXN al mes obtienes acceso completo a la Mina, donde acumulas minerales y puntos que puedes canjear por productos reales: pastes, refrescos, joyería de plata, hospedaje, cenas y paseos." },
-      { q: "¿Cómo funciona la Mina?", a: "Cada extracción consume energía (que se regenera con el tiempo) y otorga minerales con distinta probabilidad. Los minerales se convierten en puntos canjeables en el catálogo de recompensas." },
-      { q: "¿Cómo canjeo mis puntos?", a: "Desde la sección de recompensas de la Mina selecciona el producto disponible; si tienes puntos suficientes y hay stock, se genera tu canje." },
+      { q: "Â¿QuÃ© incluye la membresÃ­a Minero RDM?", a: "Por $129 MXN al mes obtienes acceso completo a la Mina, donde acumulas minerales y puntos que puedes canjear por productos reales: pastes, refrescos, joyerÃ­a de plata, hospedaje, cenas y paseos." },
+      { q: "Â¿CÃ³mo funciona la Mina?", a: "Cada extracciÃ³n consume energÃ­a (que se regenera con el tiempo) y otorga minerales con distinta probabilidad. Los minerales se convierten en puntos canjeables en el catÃ¡logo de recompensas." },
+      { q: "Â¿CÃ³mo canjeo mis puntos?", a: "Desde la secciÃ³n de recompensas de la Mina selecciona el producto disponible; si tienes puntos suficientes y hay stock, se genera tu canje." },
     ],
   },
   {
     group: "Comercios y pagos",
     key: "pagos",
     items: [
-      { q: "Tengo un negocio, ¿cómo aparezco en el catálogo?", a: "Usa Registrar Comercio para dar de alta tu negocio, elegir categoría y completar el pago de activación. Tras la confirmación, un administrador aprueba y se publica tu ficha en el catálogo." },
-      { q: "¿Cómo se manejan los pagos?", a: "Los pagos se procesan de forma segura mediante nuestra pasarela en línea. Al confirmarse el pago, la publicación de tu comercio queda lista para aprobación y activación." },
-      { q: "¿Qué son las donaciones?", a: "Las donaciones apoyan la digitalización del pueblo y la visibilidad de los negocios locales. Puedes contribuir desde la sección Apoya RDM." },
+      { q: "Tengo un negocio, Â¿cÃ³mo aparezco en el catÃ¡logo?", a: "Usa Registrar Comercio para dar de alta tu negocio, elegir categorÃ­a y completar el pago de activaciÃ³n. Tras la confirmaciÃ³n, un administrador aprueba y se publica tu ficha en el catÃ¡logo." },
+      { q: "Â¿CÃ³mo se manejan los pagos?", a: "Los pagos se procesan de forma segura mediante nuestra pasarela en lÃ­nea. Al confirmarse el pago, la publicaciÃ³n de tu comercio queda lista para aprobaciÃ³n y activaciÃ³n." },
+      { q: "Â¿QuÃ© son las donaciones?", a: "Las donaciones apoyan la digitalizaciÃ³n del pueblo y la visibilidad de los negocios locales. Puedes contribuir desde la secciÃ³n Apoya RDM." },
     ],
   },
 ];
@@ -101,7 +105,7 @@ export default function FAQ() {
 
   return (
     <RDMLayout>
-      <SEOMeta title="Preguntas Frecuentes · RDM Digital" description="Centro de ayuda con artículos por categoría sobre turismo, historia, comunidad, membresías y pagos en Real del Monte, con buscador inteligente." />
+      <SEOMeta title="Preguntas Frecuentes Â· RDM Digital" description="Centro de ayuda con artÃ­culos por categorÃ­a sobre turismo, historia, comunidad, membresÃ­as y pagos en Real del Monte, con buscador inteligente." />
       {/* Hero Banner */}
       <div className="relative h-48 w-full overflow-hidden">
         <img src="/images/landscape-fog.jpg" alt="Paisaje de Real del Monte" className="h-full w-full object-cover" />
@@ -111,13 +115,13 @@ export default function FAQ() {
         <div className="container mx-auto max-w-3xl px-6">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
             <span className="mb-3 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-primary">
-              <HelpCircle className="h-3.5 w-3.5" /> Plano II · Centro de Ayuda
+              <HelpCircle className="h-3.5 w-3.5" /> Plano II Â· Centro de Ayuda
             </span>
             <h1 className="mb-3 text-4xl font-bold uppercase leading-[0.9] tracking-tighter md:text-5xl">
               Preguntas <span className="text-gradient-cyan">Frecuentes</span>
             </h1>
             <p className="max-w-xl text-muted-foreground">
-              Artículos por categoría sobre turismo, historia, comunidad, membresías y pagos. Busca por tema o pregúntale directamente a Realito.
+              ArtÃ­culos por categorÃ­a sobre turismo, historia, comunidad, membresÃ­as y pagos. Busca por tema o pregÃºntale directamente a Realito.
             </p>
           </motion.div>
 
@@ -127,7 +131,7 @@ export default function FAQ() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Busca por tema: pastes, membresía, mapa, leyendas…"
+              placeholder="Busca por tema: pastes, membresÃ­a, mapa, leyendasâ€¦"
               className="w-full rounded-xl border border-border bg-muted/40 py-3 pl-11 pr-4 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary/50"
             />
           </div>
@@ -149,9 +153,9 @@ export default function FAQ() {
 
           {totalResults === 0 ? (
             <div className="glass-surface-strong p-8 text-center">
-              <p className="mb-4 text-sm text-muted-foreground">No encontramos artículos para “{query}”.</p>
+              <p className="mb-4 text-sm text-muted-foreground">No encontramos artÃ­culos para â€œ{query}â€.</p>
               <button onClick={askRealito} className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-sm text-primary transition-colors hover:bg-primary/20">
-                <MessageCircle className="h-4 w-4" /> Pregúntale a Realito AI
+                <MessageCircle className="h-4 w-4" /> PregÃºntale a Realito AI
               </button>
             </div>
           ) : (
@@ -172,8 +176,8 @@ export default function FAQ() {
           {/* Realito CTA */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-12 glass-surface-strong flex flex-col items-center gap-3 p-6 text-center sm:flex-row sm:justify-between sm:text-left">
             <div>
-              <h3 className="font-body text-base text-white/95">¿No encuentras tu respuesta?</h3>
-              <p className="text-sm text-muted-foreground">Realito AI conoce el catálogo, rutas y la historia del pueblo.</p>
+              <h3 className="font-body text-base text-white/95">Â¿No encuentras tu respuesta?</h3>
+              <p className="text-sm text-muted-foreground">Realito AI conoce el catÃ¡logo, rutas y la historia del pueblo.</p>
             </div>
             <button onClick={askRealito} className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-sm text-primary transition-colors hover:bg-primary/20">
               <MessageCircle className="h-4 w-4" /> Hablar con Realito

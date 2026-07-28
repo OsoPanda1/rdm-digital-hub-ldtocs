@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * Hero Section - Video/Canvas 3D principal
  * TAMV ONLINE - El Metaverso Destructor
@@ -21,7 +25,7 @@ const HeroSection: React.FC = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight * 0.7;
 
-    // Partículas fluidas
+    // PartÃ­culas fluidas
     const particles: Array<{
       x: number;
       y: number;
@@ -65,7 +69,7 @@ const HeroSection: React.FC = () => {
         ctx.globalAlpha = 1;
       });
 
-      // Conexiones entre partículas cercanas
+      // Conexiones entre partÃ­culas cercanas
       particles.forEach((p1, i) => {
         particles.slice(i + 1).forEach(p2 => {
           const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
@@ -142,14 +146,14 @@ const HeroSection: React.FC = () => {
             EL METAVERSO DESTRUCTOR
           </motion.p>
 
-          {/* Subtítulo */}
+          {/* SubtÃ­tulo */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.6 }}
             className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8"
           >
-            Civilización Digital Quantum XR-IA — Social, Ética, Autosuficiente y Auditable
+            CivilizaciÃ³n Digital Quantum XR-IA â€” Social, Ã‰tica, Autosuficiente y Auditable
           </motion.p>
 
           {/* CTAs */}
@@ -164,7 +168,7 @@ const HeroSection: React.FC = () => {
               className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold px-8 py-6 text-lg rounded-full shadow-lg shadow-cyan-500/30"
             >
               <Sparkles className="w-5 h-5 mr-2" />
-              Entrar al Núcleo
+              Entrar al NÃºcleo
             </Button>
             <Button
               size="lg"

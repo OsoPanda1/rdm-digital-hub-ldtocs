@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { logger } from "@/lib/logger";
 import { getPQC } from "@/security/PostQuantumCrypto";
 
@@ -40,7 +44,7 @@ export class KnowledgeAbsorptionEngine {
 
   startAbsorptionCycle(intervalMs = 300000): void {
     if (this.fetchTimer) return;
-    logger.info("[KNOWLEDGE] Ciclo de absorción iniciado", { intervalMs });
+    logger.info("[KNOWLEDGE] Ciclo de absorciÃ³n iniciado", { intervalMs });
     this.fetchTimer = setInterval(() => this.cycle(), intervalMs);
     this.cycle();
   }

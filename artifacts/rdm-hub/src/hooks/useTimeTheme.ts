@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 export type TimeTheme = "day" | "evening" | "night";
 
 export function computeTimeTheme(date = new Date()): TimeTheme {

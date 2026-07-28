@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useRef } from "react"
 
 function CanvasStarfield() {
@@ -95,10 +99,10 @@ export default function AmbientLayer() {
       {/* Canvas starfield */}
       <CanvasStarfield />
 
-      {/* Aurora layer 1 — deep shift */}
+      {/* Aurora layer 1 â€” deep shift */}
       <div className="absolute inset-0 aurora-bg opacity-70" />
 
-      {/* Aurora layer 2 — conic shimmer */}
+      {/* Aurora layer 2 â€” conic shimmer */}
       <div className="absolute inset-0 aurora-conic opacity-50" />
 
       {/* Grid paper fine */}

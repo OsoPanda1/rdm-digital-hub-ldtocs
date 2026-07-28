@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -27,8 +31,8 @@ export default function AuthCallback() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <p className="text-destructive">Error de autenticación: {error}</p>
-          <button onClick={() => navigate("/auth")} className="text-primary underline">Volver al inicio de sesión</button>
+          <p className="text-destructive">Error de autenticaciÃ³n: {error}</p>
+          <button onClick={() => navigate("/auth")} className="text-primary underline">Volver al inicio de sesiÃ³n</button>
         </div>
       </div>
     );
@@ -38,7 +42,7 @@ export default function AuthCallback() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center space-y-4">
         <Loader2 className="h-8 w-8 animate-spin mx-auto text-primary" />
-        <p>Completando autenticación...</p>
+        <p>Completando autenticaciÃ³n...</p>
       </div>
     </div>
   );

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 // ============================================================================
 // Unified Map System - RDM Digital LTOS
@@ -72,9 +76,9 @@ export interface UseMapOptions {
 
 const DEFAULT_LAYERS: MapLayerConfig[] = [
   { id: 'osm', name: 'OpenStreetMap', type: 'base', visible: true, zIndex: 100 },
-  { id: 'satellite', name: 'Satélite', type: 'base', visible: false, zIndex: 101 },
+  { id: 'satellite', name: 'SatÃ©lite', type: 'base', visible: false, zIndex: 101 },
   { id: 'federation-heat', name: 'Calor Federado', type: 'federation', visible: true, opacity: 0.4, zIndex: 200 },
-  { id: 'poi-markers', name: 'Puntos de Interés', type: 'overlay', visible: true, zIndex: 300 },
+  { id: 'poi-markers', name: 'Puntos de InterÃ©s', type: 'overlay', visible: true, zIndex: 300 },
   { id: 'realtime-events', name: 'Eventos en Vivo', type: 'realtime', visible: true, zIndex: 400 },
   { id: 'user-path', name: 'Tu Recorrido', type: 'overlay', visible: false, zIndex: 350 },
 ];
@@ -107,17 +111,17 @@ export function useUnifiedMap(options: UseMapOptions) {
 
   const baseLayers = useMemo(() => ({
     osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
+      attribution: 'Â© OpenStreetMap contributors',
       maxZoom: 19,
       crossOrigin: true,
     }),
     satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles © Esri',
+      attribution: 'Tiles Â© Esri',
       maxZoom: 19,
       crossOrigin: true,
     }),
     topo: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenTopoMap contributors',
+      attribution: 'Â© OpenTopoMap contributors',
       maxZoom: 17,
       crossOrigin: true,
     }),
@@ -182,9 +186,9 @@ export function useUnifiedMap(options: UseMapOptions) {
           </div>
           <p class="popup-desc">${site.description}</p>
           <div class="popup-meta">
-            <span>⭐ ${site.rating}</span>
-            ${site.precioEstimado ? `<span>💰 ${site.precioEstimado.min}-${site.precioEstimado.max} ${site.precioEstimado.moneda}</span>` : ''}
-            ${poi.distanceFromUser ? `<span>📍 ${(poi.distanceFromUser / 1000).toFixed(1)} km</span>` : ''}
+            <span>â­ ${site.rating}</span>
+            ${site.precioEstimado ? `<span>ðŸ’° ${site.precioEstimado.min}-${site.precioEstimado.max} ${site.precioEstimado.moneda}</span>` : ''}
+            ${poi.distanceFromUser ? `<span>ðŸ“ ${(poi.distanceFromUser / 1000).toFixed(1)} km</span>` : ''}
           </div>
         </div>
       `;
@@ -283,10 +287,10 @@ export function useUnifiedMap(options: UseMapOptions) {
 
     eventMarker.bindPopup(`
       <div class="realtime-popup">
-        <h5>⚡ Decisión GEN-7 Activa</h5>
+        <h5>âš¡ DecisiÃ³n GEN-7 Activa</h5>
         <p><strong>Nivel:</strong> ${decision.level}</p>
-        <p><strong>Intención:</strong> ${decision.retentionIntent}</p>
-        <p><strong>Patrón:</strong> ${decision.pattern}</p>
+        <p><strong>IntenciÃ³n:</strong> ${decision.retentionIntent}</p>
+        <p><strong>PatrÃ³n:</strong> ${decision.pattern}</p>
         <p><strong>Distancia a salida:</strong> ${decision.distanceToExit.toFixed(0)}m</p>
         <p class="text-xs text-muted-foreground">Actualizado: ${new Date(decision.timestamp).toLocaleTimeString()}</p>
       </div>
@@ -321,7 +325,7 @@ export function useUnifiedMap(options: UseMapOptions) {
       className: 'user-location-pulse',
     });
 
-    userMarker.bindPopup('<div class="user-popup">📍 Tu ubicación actual</div>');
+    userMarker.bindPopup('<div class="user-popup">ðŸ“ Tu ubicaciÃ³n actual</div>');
     userMarker.addTo(map);
     layersRef.current.set('user-location', userMarker);
   }, [state.userLocation]);

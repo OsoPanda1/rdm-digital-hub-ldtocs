@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { MapMarkerData } from "@/features/places/mapTypes";
 
 export type TwinSource =
@@ -123,17 +127,17 @@ export function buildRecommendedActions(summaries: TwinOverlaySummary[]) {
         return `Sincronizar twins de Eclipse Ditto con cola de eventos prioritaria (${summary.avgLatencyMs}ms).`;
       }
       if (summary.source === "forge-digital-twin") {
-        return `Reducir tamaño de geometrías en Autodesk Forge para bajar latencia de render.`;
+        return `Reducir tamaÃ±o de geometrÃ­as en Autodesk Forge para bajar latencia de render.`;
       }
       if (summary.source === "smart-hotel-iot") {
-        return `Ajustar frecuencia de telemetría de SmartHotel360 IoT para estabilizar throughput.`;
+        return `Ajustar frecuencia de telemetrÃ­a de SmartHotel360 IoT para estabilizar throughput.`;
       }
       if (summary.source === "open-twins") {
-        return `Validar conectores semánticos de OpenTwins y reintentos para incidentes detectados.`;
+        return `Validar conectores semÃ¡nticos de OpenTwins y reintentos para incidentes detectados.`;
       }
       if (summary.source === "underrun-sim") {
-        return `Recalibrar capa de simulación Underrun para mantener coherencia con datos reales.`;
+        return `Recalibrar capa de simulaciÃ³n Underrun para mantener coherencia con datos reales.`;
       }
-      return `Actualizar catálogo de patrones desde Awesome Digital Twins para reforzar modelos híbridos.`;
+      return `Actualizar catÃ¡logo de patrones desde Awesome Digital Twins para reforzar modelos hÃ­bridos.`;
     });
 }

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { useState, useEffect } from "react";
@@ -39,15 +43,15 @@ export default function ShuttleCDMX() {
   const paged = routes.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
   const handleBook = () => {
-    toast({ title: "Reserva", description: "Sistema de reservas próximamente. Contacta a la empresa directamente." });
+    toast({ title: "Reserva", description: "Sistema de reservas prÃ³ximamente. Contacta a la empresa directamente." });
   };
 
   if (showIntro) {
     return (
       <ModuleCinematicIntro
-        title="Shuttle CDMX ↔ RDM"
-        eyebrow="Conexión Directa"
-        description="Viaja cómodo entre la Ciudad de México y Real del Monte con servicios de shuttle verificados"
+        title="Shuttle CDMX â†” RDM"
+        eyebrow="ConexiÃ³n Directa"
+        description="Viaja cÃ³modo entre la Ciudad de MÃ©xico y Real del Monte con servicios de shuttle verificados"
         onComplete={() => setShowIntro(false)}
       />
     );
@@ -62,14 +66,14 @@ export default function ShuttleCDMX() {
               <Bus className="h-5 w-5 text-accent" />
               <span className="text-xs tracking-[0.3em] uppercase text-muted-foreground">Conectividad</span>
             </div>
-            <h1 className="font-display text-4xl md:text-5xl text-foreground mb-4">Shuttle CDMX ↔ Real del Monte</h1>
-            <p className="text-muted-foreground max-w-2xl">Rutas de transporte directo entre la capital y nuestro Pueblo Mágico.</p>
+            <h1 className="font-display text-4xl md:text-5xl text-foreground mb-4">Shuttle CDMX â†” Real del Monte</h1>
+            <p className="text-muted-foreground max-w-2xl">Rutas de transporte directo entre la capital y nuestro Pueblo MÃ¡gico.</p>
           </motion.div>
 
           {paged.length === 0 ? (
             <div className="text-center py-20 text-muted-foreground">
               <Bus className="h-10 w-10 mx-auto mb-4 opacity-30" />
-              <p>No hay rutas de shuttle disponibles aún.</p>
+              <p>No hay rutas de shuttle disponibles aÃºn.</p>
             </div>
           ) : (
             <div className="grid sm:grid-cols-2 gap-6">

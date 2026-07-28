@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { MeshNodeTwin, CommerceTwin, EnvironmentalSensorTwin, DittoThing } from "./types";
 
-// ─── Ditto Policy ─────────────────────────────────────────────
+// â”€â”€â”€ Ditto Policy â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const RDM_TERRITORY_POLICY = {
   policyId: "policy:rdm-territory",
@@ -26,7 +30,7 @@ export const RDM_TERRITORY_POLICY = {
   },
 };
 
-// ─── Thing builders ───────────────────────────────────────────
+// â”€â”€â”€ Thing builders â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function buildMeshThing(twin: MeshNodeTwin): DittoThing {
   return {
@@ -103,7 +107,7 @@ export function buildSensorThing(twin: EnvironmentalSensorTwin): DittoThing {
   };
 }
 
-// ─── Connection config ────────────────────────────────────────
+// â”€â”€â”€ Connection config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface DittoSource {
   addresses: string[];
@@ -139,7 +143,7 @@ export const MESH_CONNECTION: DittoConnection = {
   targets: [],
 };
 
-// ─── Ditto Protocol mapping ──────────────────────────────────
+// â”€â”€â”€ Ditto Protocol mapping â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface DittoProtocolMessage {
   topic: string;

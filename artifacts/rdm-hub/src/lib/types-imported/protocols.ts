@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // Shared protocol domain contracts
 
 export type ProtocolMode = "hoyo-negro" | "fenix" | "futuros";

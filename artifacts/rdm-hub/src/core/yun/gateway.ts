@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * YUN Gateway — Request Protection Layer
+ * YUN Gateway â€” Request Protection Layer
  * Per YUN Constitution Principle #5 (Edge-First with Cloud Fallback)
  * and Principle #6 (Observable by Default)
  *
@@ -443,7 +447,7 @@ export async function processRequest(
     }
   }
 
-  // 4. Auth check (simplified — real auth uses JWT validation)
+  // 4. Auth check (simplified â€” real auth uses JWT validation)
   if (!request.userId) {
     return {
       status: 401,

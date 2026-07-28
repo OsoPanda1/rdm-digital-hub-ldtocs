@@ -1,7 +1,11 @@
-// ────────────────────────────────────────────────────────────────
-// Isabella.Evaluation — Quality & Ethics Evaluation Engine (Ω-Core v4.0 Enterprise)
-// Evalúa calidad, alucinación, ética y cumplimiento constitucional
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isabella.Evaluation â€” Quality & Ethics Evaluation Engine (Î©-Core v4.0 Enterprise)
+// EvalÃºa calidad, alucinaciÃ³n, Ã©tica y cumplimiento constitucional
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { EvaluationMetric, EvaluationResult } from "../types";
 
@@ -29,8 +33,8 @@ const HALLUCINATION_MARKERS = [
   /I'm just an AI/i,
 ];
 
-const ETHICAL_KEYWORDS = [/ética|ethics|dignidad|respeto/i, /constitución|constitution|libro/i, /LITLE|FED-/i];
-const CONSTITUTIONAL_KEYWORDS = [/artículo|articulo|libro|LITLE-/i, /sanción|sanction/i, /fed/i, /quorum/i];
+const ETHICAL_KEYWORDS = [/Ã©tica|ethics|dignidad|respeto/i, /constituciÃ³n|constitution|libro/i, /LITLE|FED-/i];
+const CONSTITUTIONAL_KEYWORDS = [/artÃ­culo|articulo|libro|LITLE-/i, /sanciÃ³n|sanction/i, /fed/i, /quorum/i];
 
 export function createEvaluationEngine(): EvaluationEngine {
   return {

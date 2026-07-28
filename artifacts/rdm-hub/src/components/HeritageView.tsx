@@ -1,29 +1,33 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { BookOpen, Pickaxe, Church, Crown } from "lucide-react";
 
 const HERITAGE_ITEMS = [
   {
     era: "Siglo XVI",
-    title: "Fundación Minera",
-    description: "Los primeros yacimientos de plata son descubiertos en la Sierra de Pachuca. Real del Monte nace como real de minas bajo la Corona Española.",
+    title: "FundaciÃ³n Minera",
+    description: "Los primeros yacimientos de plata son descubiertos en la Sierra de Pachuca. Real del Monte nace como real de minas bajo la Corona EspaÃ±ola.",
     icon: Pickaxe,
   },
   {
     era: "Siglo XVIII",
     title: "Apogeo de la Plata",
-    description: "La Mina de Acosta y la Veta Vizcaína producen toneladas de plata. El pueblo se convierte en uno de los centros mineros más ricos de la Nueva España.",
+    description: "La Mina de Acosta y la Veta VizcaÃ­na producen toneladas de plata. El pueblo se convierte en uno de los centros mineros mÃ¡s ricos de la Nueva EspaÃ±a.",
     icon: Crown,
   },
   {
     era: "1824",
     title: "Llegada de los Cornish",
-    description: "Mineros británicos de Cornwall llegan con tecnología de vapor y traen consigo el paste, el fútbol y el cementerio inglés. Una fusión cultural irrepetible.",
+    description: "Mineros britÃ¡nicos de Cornwall llegan con tecnologÃ­a de vapor y traen consigo el paste, el fÃºtbol y el cementerio inglÃ©s. Una fusiÃ³n cultural irrepetible.",
     icon: BookOpen,
   },
   {
     era: "Siglo XX",
     title: "Patrimonio Cultural",
-    description: "Real del Monte es declarado Pueblo Mágico. Sus minas, arquitectura y tradiciones son reconocidas como patrimonio cultural de México.",
+    description: "Real del Monte es declarado Pueblo MÃ¡gico. Sus minas, arquitectura y tradiciones son reconocidas como patrimonio cultural de MÃ©xico.",
     icon: Church,
   },
 ];
@@ -34,7 +38,7 @@ export function HeritageView() {
       <div>
         <h1 className="text-2xl font-display font-semibold tracking-tight">Patrimonio Digital</h1>
         <p className="text-sm text-muted-foreground mt-1">
-          Línea temporal del valor cultural de Real del Monte
+          LÃ­nea temporal del valor cultural de Real del Monte
         </p>
       </div>
 
@@ -71,9 +75,9 @@ export function HeritageView() {
         className="bg-primary text-primary-foreground rounded-xl p-6 text-center"
       >
         <p className="font-display text-lg italic leading-relaxed">
-          "Real del Monte no compite contra apps. Compite contra el abandono tecnológico de territorios completos."
+          "Real del Monte no compite contra apps. Compite contra el abandono tecnolÃ³gico de territorios completos."
         </p>
-        <p className="text-xs mt-3 opacity-60">— Filosofía RDM Digital OS</p>
+        <p className="text-xs mt-3 opacity-60">â€” FilosofÃ­a RDM Digital OS</p>
       </motion.div>
     </div>
   );

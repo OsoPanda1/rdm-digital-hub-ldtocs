@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { AtlasPageHeader } from "@/components/atlas/AtlasPageHeader";
@@ -7,13 +11,13 @@ export default function AtlasLeyendas() {
   return (
     <RDMLayout>
       <SEOMeta
-        title="Leyendas — Real del Monte"
+        title="Leyendas â€” Real del Monte"
         description="Las leyendas de Real del Monte: la novia de la mina, la campana de Cornualles, el conde y la veta perdida."
       />
       <AtlasPageHeader
         kicker="Memoria oral"
         title="Hay cosas que el mapa no registra."
-        intro="Las leyendas de Real del Monte no se enseñan en la escuela. Se cuentan al atardecer, cuando la niebla baja y los nombres antiguos vuelven a pesar."
+        intro="Las leyendas de Real del Monte no se enseÃ±an en la escuela. Se cuentan al atardecer, cuando la niebla baja y los nombres antiguos vuelven a pesar."
       />
 
       <section className="mx-auto max-w-4xl px-6 pb-24">

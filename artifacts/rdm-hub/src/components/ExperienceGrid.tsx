@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Pickaxe, Utensils, Mountain, Bed, Palette } from "lucide-react";
@@ -11,7 +15,7 @@ const EXPERIENCES = [
   {
     id: "historia",
     title: "Historia Minera",
-    subtitle: "500 años de plata",
+    subtitle: "500 aÃ±os de plata",
     image: mineEntrance,
     icon: Pickaxe,
     href: "#historia",
@@ -19,8 +23,8 @@ const EXPERIENCES = [
   },
   {
     id: "gastronomia",
-    title: "Gastronomía",
-    subtitle: "Pastes & tradición",
+    title: "GastronomÃ­a",
+    subtitle: "Pastes & tradiciÃ³n",
     image: pastesFood,
     icon: Utensils,
     href: "#gastronomia",

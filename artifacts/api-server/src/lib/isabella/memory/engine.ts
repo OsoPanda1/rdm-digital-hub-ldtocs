@@ -1,7 +1,11 @@
-// ────────────────────────────────────────────────────────────────
-// Isabella.Memory — Cognitive Memory Subsystem (Ω-Core v4.0 Enterprise)
-// Memoria multiescala con RAG, retención/olvido y trazabilidad
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isabella.Memory â€” Cognitive Memory Subsystem (Î©-Core v4.0 Enterprise)
+// Memoria multiescala con RAG, retenciÃ³n/olvido y trazabilidad
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type MemoryType = "session" | "persona" | "ecosystem" | "cultural" | "lesson" | "pattern" | "incident";
 

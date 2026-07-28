@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { Slot } from '@radix-ui/react-slot';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';

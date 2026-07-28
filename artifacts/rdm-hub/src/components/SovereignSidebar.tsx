@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -23,7 +27,7 @@ const NAV_ITEMS = [
   { id: "routes", label: "Rutas", icon: Compass },
   { id: "commerce", label: "Comercio", icon: Store },
   { id: "heritage", label: "Patrimonio", icon: History },
-  { id: "telemetry", label: "Telemetría", icon: Activity },
+  { id: "telemetry", label: "TelemetrÃ­a", icon: Activity },
 ];
 
 export function SovereignSidebar({ activeView, onViewChange }: SovereignSidebarProps) {

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, FileText, ScrollText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,7 +11,7 @@ import { RFC_SECTIONS, RFC_COLORS, type RFCStatus } from "@/data/rfc-system";
 
 const statusLabels: Record<RFCStatus, string> = {
   draft: "Borrador",
-  review: "Revisión",
+  review: "RevisiÃ³n",
   ratified: "Ratificado",
   superseded: "Sustituido",
 };
@@ -25,10 +29,10 @@ export default function RFCList() {
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-3">
               <ScrollText className="h-8 w-8 text-gold" />
-              RFC — Request for Comments
+              RFC â€” Request for Comments
             </h1>
             <p className="text-muted-foreground mt-1">
-              Documentos de especificación y consenso del ecosistema soberano TAMV
+              Documentos de especificaciÃ³n y consenso del ecosistema soberano TAMV
             </p>
           </div>
         </div>

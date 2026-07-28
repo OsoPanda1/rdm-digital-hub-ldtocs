@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * YUN Event Bus — Constitutional Event System
+ * YUN Event Bus â€” Constitutional Event System
  * Per YUN Constitution Principle #1 (Truth as Service) and Principle #2 (No Orphans)
  *
  * Every state change MUST flow through this bus.
@@ -95,7 +99,7 @@ export async function publish<T>(event: YunEventEnvelope<T>): Promise<void> {
   const handlers = getMatchingHandlers(event.type);
 
   if (handlers.length === 0) {
-    // No handlers — check if this is a critical event
+    // No handlers â€” check if this is a critical event
     if (isCriticalEvent(event.type)) {
       deadLetterQueue.push(event as YunEventEnvelope);
       if (deadLetterQueue.length > MAX_DEAD_LETTER) {
@@ -192,7 +196,7 @@ export function getEventLog(limit = 100): YunEventEnvelope[] {
 
 /**
  * Returns the dead letter queue.
- * Per YUN Principle #4: Reversible by Default — failed events are preserved.
+ * Per YUN Principle #4: Reversible by Default â€” failed events are preserved.
  */
 export function getDeadLetterQueue(): YunEventEnvelope[] {
   return [...deadLetterQueue];

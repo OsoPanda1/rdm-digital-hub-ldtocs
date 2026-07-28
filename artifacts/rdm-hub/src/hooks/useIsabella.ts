@@ -1,7 +1,11 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 /**
- * Hook para interactuar con Isabella AI - Optimizado con caching y deduplicación
- * Triple Federado: Conceptual | Legal | Técnico
+ * Hook para interactuar con Isabella AI - Optimizado con caching y deduplicaciÃ³n
+ * Triple Federado: Conceptual | Legal | TÃ©cnico
  */
 
 import { useState, useCallback, useRef, useEffect } from 'react';
@@ -65,7 +69,7 @@ export const useIsabella = () => {
     };
   }, []);
 
-  // Enviar mensaje a Isabella con streaming y deduplicación
+  // Enviar mensaje a Isabella con streaming y deduplicaciÃ³n
   const sendMessage = useCallback(async (
     content: string,
     options?: {
@@ -100,7 +104,7 @@ export const useIsabella = () => {
       activeProtocol: options?.protocol || null
     }));
 
-    // Cancelar petición anterior si existe
+    // Cancelar peticiÃ³n anterior si existe
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
@@ -108,7 +112,7 @@ export const useIsabella = () => {
 
     const executeRequest = async () => {
       try {
-        // Obtener sesión actual
+        // Obtener sesiÃ³n actual
         const { data: { session } } = await supabase.auth.getSession();
 
         // Preparar mensajes para la API (usar ref para evitar stale closure)
@@ -148,7 +152,7 @@ export const useIsabella = () => {
         let assistantContent = '';
         let textBuffer = '';
 
-        // Crear mensaje vacío de Isabella
+        // Crear mensaje vacÃ­o de Isabella
         const assistantMessageId = generateFederationHash();
 
         setState(prev => ({
@@ -168,7 +172,7 @@ export const useIsabella = () => {
 
           textBuffer += decoder.decode(value, { stream: true });
 
-          // Procesar líneas del stream SSE
+          // Procesar lÃ­neas del stream SSE
           let newlineIndex: number;
           while ((newlineIndex = textBuffer.indexOf('\n')) !== -1) {
             let line = textBuffer.slice(0, newlineIndex);
@@ -188,7 +192,7 @@ export const useIsabella = () => {
               if (deltaContent) {
                 assistantContent += deltaContent;
 
-                // Actualizar el último mensaje
+                // Actualizar el Ãºltimo mensaje
                 setState(prev => ({
                   ...prev,
                   messages: prev.messages.map((m, i) =>
@@ -199,7 +203,7 @@ export const useIsabella = () => {
                 }));
               }
             } catch {
-              // JSON incompleto, esperar más datos
+              // JSON incompleto, esperar mÃ¡s datos
             }
           }
         }
@@ -208,7 +212,7 @@ export const useIsabella = () => {
 
       } catch (error) {
         if (error instanceof Error && error.name === 'AbortError') {
-          return; // Ignorar errores de cancelación
+          return; // Ignorar errores de cancelaciÃ³n
         }
 
         setState(prev => ({
@@ -232,11 +236,11 @@ export const useIsabella = () => {
   const activateProtocol = useCallback((protocol: 'fenix_rex' | 'iniciacion' | 'hoyo_negro') => {
     setState(prev => ({ ...prev, activeProtocol: protocol }));
     
-    // Enviar mensaje de activación
-    sendMessage(`[ACTIVACIÓN DE PROTOCOLO: ${protocol.toUpperCase()}]`, { protocol });
+    // Enviar mensaje de activaciÃ³n
+    sendMessage(`[ACTIVACIÃ“N DE PROTOCOLO: ${protocol.toUpperCase()}]`, { protocol });
   }, [sendMessage]);
 
-  // Limpiar conversación
+  // Limpiar conversaciÃ³n
   const clearConversation = useCallback(() => {
     setState({
       messages: [],
@@ -249,7 +253,7 @@ export const useIsabella = () => {
     requestCache.clear();
   }, []);
 
-  // Cancelar petición actual
+  // Cancelar peticiÃ³n actual
   const cancelRequest = useCallback(() => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();

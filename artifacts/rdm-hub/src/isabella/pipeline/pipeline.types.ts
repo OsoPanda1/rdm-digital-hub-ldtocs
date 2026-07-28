@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { Coordenadas, FederationId, FederationModule, IsabellaDecision } from '@/core/models';
 import type { UserContribution } from '@/core/territorial/types';
 import type { FederationEvent } from '@/federaciones/FederationBus';

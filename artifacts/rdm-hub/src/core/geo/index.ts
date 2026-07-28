@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * RDM Digital - Geo Utilities GEN-7+
  * Optimizaciones geoespaciales con cache LRU y TTL
@@ -54,7 +58,7 @@ export function fastDistance(a: Coordenadas, b: Coordenadas): number {
  */
 export function createBBox(center: Coordenadas, radiusMeters: number): BoundingBox {
   const radiusKm = radiusMeters / 1000;
-  const latDelta = radiusKm / 111.32; // 1 grado lat ≈ 111.32 km
+  const latDelta = radiusKm / 111.32; // 1 grado lat â‰ˆ 111.32 km
   const lngDelta = radiusKm / (111.32 * Math.cos(center.lat * DEG_TO_RAD));
   
   return {

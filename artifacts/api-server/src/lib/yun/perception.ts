@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
-// YUN Perception Layer — Sensory System
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// YUN Perception Layer â€” Sensory System
 // Normalizes signals from technical, social, territorial,
 // and cognitive sources into standardized YUN events.
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { randomUUID } from "node:crypto";
 import type {
@@ -13,7 +17,7 @@ import type {
   EventTopic,
 } from "./types";
 
-// ── Types ──────────────────────────────────────────────────────
+// â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface PerceptionSignal {
   signalId?: string;
@@ -61,7 +65,7 @@ export interface TerritorialSignal {
   population?: number;
 }
 
-// ── Normalization Pipelines ────────────────────────────────────
+// â”€â”€ Normalization Pipelines â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function normalizeTechnicalSignal(signal: PerceptionSignal): YunPerceptionEvent {
   const payload = signal.metadata as TechnicalSignal;
@@ -147,7 +151,7 @@ function normalizeCognitiveSignal(signal: PerceptionSignal): YunPerceptionEvent 
   };
 }
 
-// ── Enrichment ─────────────────────────────────────────────────
+// â”€â”€ Enrichment â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function enrichWithContext(event: YunPerceptionEvent): YunPerceptionEvent {
   return {
@@ -163,7 +167,7 @@ function enrichWithContext(event: YunPerceptionEvent): YunPerceptionEvent {
   };
 }
 
-// ── Perception Layer ───────────────────────────────────────────
+// â”€â”€ Perception Layer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export class YunPerceptionLayer {
   private signals: YunPerceptionEvent[] = [];
@@ -174,7 +178,7 @@ export class YunPerceptionLayer {
     this.publishFn = publishFn;
   }
 
-  // ── Ingest ───────────────────────────────────────────────────
+  // â”€â”€ Ingest â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   ingestSignal(signal: PerceptionSignal): YunPerceptionEvent {
     const normalized = this.normalize(signal);
@@ -205,7 +209,7 @@ export class YunPerceptionLayer {
     return enriched;
   }
 
-  // ── OPA Decision Log Adapter ─────────────────────────────────
+  // â”€â”€ OPA Decision Log Adapter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   ingestOpaDecisionLog(log: {
     decision_id: string;
@@ -236,7 +240,7 @@ export class YunPerceptionLayer {
     return this.ingestSignal(signal);
   }
 
-  // ── Query ────────────────────────────────────────────────────
+  // â”€â”€ Query â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   getRecentSignals(limit = 50, source?: PerceptionSource): YunPerceptionEvent[] {
     let filtered = [...this.signals];
@@ -255,7 +259,7 @@ export class YunPerceptionLayer {
     return this.signals.length;
   }
 
-  // ── Contracts: YunInferenceEngine Interface ──────────────────
+  // â”€â”€ Contracts: YunInferenceEngine Interface â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   async ingestPerception(event: YunPerceptionEvent): Promise<void> {
     this.signals.push(event);
@@ -293,7 +297,7 @@ export class YunPerceptionLayer {
     return { level, factors };
   }
 
-  // ── Private ──────────────────────────────────────────────────
+  // â”€â”€ Private â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   private normalize(signal: PerceptionSignal): YunPerceptionEvent {
     switch (signal.source) {

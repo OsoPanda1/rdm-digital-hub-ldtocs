@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * Central image registry for RDM Digital
  * All generated images are imported here for reuse across the platform
@@ -17,7 +21,7 @@ import artesaniasPlata from "@/assets/rdm-artesanias-plata.jpg";
 import festivalPaste from "@/assets/rdm-festival-paste.jpg";
 import callejonRomantico from "@/assets/rdm-callejon-romantico.jpg";
 import hospedajeCabana from "@/assets/rdm-hospedaje-cabana.jpg";
-import cafeMontana from "@/assets/rdm-cafe-montaña.jpg";
+import cafeMontana from "@/assets/rdm-cafe-montaÃ±a.jpg";
 import casaInglesa from "@/assets/rdm-casa-inglesa.jpg";
 
 export const RDM_IMAGES = {
@@ -55,7 +59,7 @@ export const IMAGE_MAP: Record<string, string> = {
   "rdm-festival-paste": festivalPaste,
   "rdm-callejon-romantico": callejonRomantico,
   "rdm-hospedaje-cabana": hospedajeCabana,
-  "rdm-cafe-montaña": cafeMontana,
+  "rdm-cafe-montaÃ±a": cafeMontana,
   "rdm-casa-inglesa": casaInglesa,
 };
 

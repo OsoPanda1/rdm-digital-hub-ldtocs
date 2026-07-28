@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -28,16 +32,16 @@ const RARITY_STYLES = {
 };
 
 const RARITY_LABELS = {
-  common: "Común",
+  common: "ComÃºn",
   rare: "Raro",
-  epic: "Épico",
+  epic: "Ã‰pico",
   legendary: "Legendario",
 };
 
 const ROLE_LABELS: Record<string, string> = {
   aprendiz_minero: "Aprendiz Minero",
   minero_local: "Minero Local",
-  guardian_patrimonio: "Guardían del Patrimonio",
+  guardian_patrimonio: "GuardÃ­an del Patrimonio",
   maestro_hub: "Maestro del Hub",
   arquitecto_territorial: "Arquitecto Territorial",
 };
@@ -83,7 +87,7 @@ export function PlayerProfile() {
   const rareBadges = earnedBadges.filter(b => b.badge.rarity === "epic" || b.badge.rarity === "legendary");
   const commonBadges = earnedBadges.filter(b => b.badge.rarity === "common" || b.badge.rarity === "rare");
 
-  // Premium flag (supuesto: viene del player; adáptalo a tu modelo real)
+  // Premium flag (supuesto: viene del player; adÃ¡ptalo a tu modelo real)
   const isPremium = player.is_premium === true;
 
   return (
@@ -267,7 +271,7 @@ export function PlayerProfile() {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 className={`px-3 py-1.5 rounded-lg border ${RARITY_STYLES[pb.badge.rarity]}`}
-                title={`${pb.badge.name} — ${RARITY_LABELS[pb.badge.rarity]}`}
+                title={`${pb.badge.name} â€” ${RARITY_LABELS[pb.badge.rarity]}`}
               >
                 <span className="text-[10px] font-medium">{pb.badge.name}</span>
               </motion.div>

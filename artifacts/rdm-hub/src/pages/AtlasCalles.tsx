@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import SEOMeta from "@/components/SEOMeta";
 import { AtlasPageHeader } from "@/components/atlas/AtlasPageHeader";
@@ -8,13 +12,13 @@ export default function AtlasCalles() {
   return (
     <RDMLayout>
       <SEOMeta
-        title="Las calles — Real del Monte"
+        title="Las calles â€” Real del Monte"
         description="Las calles de Real del Monte: nombres, esquinas y memoria."
       />
       <AtlasPageHeader
-        kicker="Capa IV · Superficie"
+        kicker="Capa IV Â· Superficie"
         title="La ciudad se inclina contra la sierra."
-        intro="Real del Monte es un pueblo que se aprendió a sí mismo en pendiente. Las calles bajan donde la roca lo permitió y guardan, en sus nombres, un siglo de personas."
+        intro="Real del Monte es un pueblo que se aprendiÃ³ a sÃ­ mismo en pendiente. Las calles bajan donde la roca lo permitiÃ³ y guardan, en sus nombres, un siglo de personas."
         image={img}
       />
 

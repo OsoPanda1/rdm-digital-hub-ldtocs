@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // artifacts/api-server/src/services/narrator.ts
-// RDM Living World — Narrative engine (Realito & Isabella characters)
+// RDM Living World â€” Narrative engine (Realito & Isabella characters)
 // ADR-001: docs/adr/001-rdm-living-world-gamification.md
 // ADR-003: docs/adr/003-economia-prestigio-territorial.md
 
@@ -32,9 +36,9 @@ export interface PlayerContext {
   energy?: number;
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  CHARACTER PROFILES
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 const CHARACTERS: Record<CharacterKey, {
   name: string;
@@ -47,94 +51,94 @@ const CHARACTERS: Record<CharacterKey, {
     personality: "Curioso, alegre, sabio de la sierra. Habla con humor y conocimiento local profundo.",
     defaultTone: "amigable",
     catchphrases: [
-      "¡Bienvenido a mi pueblo!",
-      "Las montañas tienen mucho que contarte.",
-      "Cada piedra aquí tiene historia.",
-      "Real del Monte es más que un lugar, es un sentimiento.",
-      "¿Ya probaste el paste? ¡Es patrimonio!",
+      "Â¡Bienvenido a mi pueblo!",
+      "Las montaÃ±as tienen mucho que contarte.",
+      "Cada piedra aquÃ­ tiene historia.",
+      "Real del Monte es mÃ¡s que un lugar, es un sentimiento.",
+      "Â¿Ya probaste el paste? Â¡Es patrimonio!",
     ],
   },
   isabella: {
     name: "Isabella",
-    personality: "Profesional, empática, orientada a datos pero cálida. Experta en patrimonio y turismo sostenible.",
-    defaultTone: "formal-cálido",
+    personality: "Profesional, empÃ¡tica, orientada a datos pero cÃ¡lida. Experta en patrimonio y turismo sostenible.",
+    defaultTone: "formal-cÃ¡lido",
     catchphrases: [
-      "Tu exploración fortalece la memoria colectiva.",
-      "Cada interacción es un dato para preservar el patrimonio.",
+      "Tu exploraciÃ³n fortalece la memoria colectiva.",
+      "Cada interacciÃ³n es un dato para preservar el patrimonio.",
       "El turismo sostenible comienza contigo.",
-      "La tecnología al servicio de la cultura.",
+      "La tecnologÃ­a al servicio de la cultura.",
       "Tu impacto territorial crece con cada paso.",
     ],
   },
 };
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  NARRATIVE TEMPLATES BY EVENT TYPE
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 const TEMPLATES: Record<string, { character: CharacterKey; messages: string[] }> = {
   DISCOVER_POI: {
     character: "realito",
     messages: [
-      "¡Increíble! Has descubierto {poiName}. Esta zona guarda secretos que pocos conocen.",
-      "Bien encontrado. {poiName} es uno de los rincones más especiales de Real del Monte.",
-      "¡Muy bien! {poiName} te espera con sus historias del pasado.",
+      "Â¡IncreÃ­ble! Has descubierto {poiName}. Esta zona guarda secretos que pocos conocen.",
+      "Bien encontrado. {poiName} es uno de los rincones mÃ¡s especiales de Real del Monte.",
+      "Â¡Muy bien! {poiName} te espera con sus historias del pasado.",
     ],
   },
   CAPTURE_PHOTO: {
     character: "realito",
     messages: [
-      "¡Buena foto! Cada imagen que capturas ayuda a preservar la memoria visual del pueblo.",
-      "Excelente captura. Esta imagen será parte del archivo visual de Real del Monte.",
-      "¡Qué bonita vista! Las montañas nunca decepcionan.",
+      "Â¡Buena foto! Cada imagen que capturas ayuda a preservar la memoria visual del pueblo.",
+      "Excelente captura. Esta imagen serÃ¡ parte del archivo visual de Real del Monte.",
+      "Â¡QuÃ© bonita vista! Las montaÃ±as nunca decepcionan.",
     ],
   },
   LISTEN_RADIO: {
     character: "isabella",
     messages: [
       "Gracias por escuchar TAMV 92.5. La radio comunitaria es el pulso del pueblo.",
-      "Cada minuto de escucha fortalece la difusión cultural local.",
+      "Cada minuto de escucha fortalece la difusiÃ³n cultural local.",
       "TAMV 92.5: la voz de Real del Monte. Tu escucha hace la diferencia.",
     ],
   },
   ATTEND_EVENT: {
     character: "realito",
     messages: [
-      "¡Qué alegría que viniste! Los eventos son el corazón de nuestra comunidad.",
+      "Â¡QuÃ© alegrÃ­a que viniste! Los eventos son el corazÃ³n de nuestra comunidad.",
       "Tu presencia en este evento fortalece el tejido social de Real del Monte.",
-      "¡Excelente! Participar en eventos es la mejor forma de conocer el pueblo.",
+      "Â¡Excelente! Participar en eventos es la mejor forma de conocer el pueblo.",
     ],
   },
   COMPLETE_QUEST: {
     character: "isabella",
     messages: [
-      "¡Felicidades! Has completado una misión. Tu nivel de exploración sigue creciendo.",
-      "Tarea completada. Cada misión cumplida fortalece tu conexión con el territorio.",
-      "¡Logro desbloqueado! Tu dedicación es admirable.",
+      "Â¡Felicidades! Has completado una misiÃ³n. Tu nivel de exploraciÃ³n sigue creciendo.",
+      "Tarea completada. Cada misiÃ³n cumplida fortalece tu conexiÃ³n con el territorio.",
+      "Â¡Logro desbloqueado! Tu dedicaciÃ³n es admirable.",
     ],
   },
   SHARE_STORY: {
     character: "realito",
     messages: [
-      "¡Gracias por compartir tu historia! Las vivencias personales son tesoros del pueblo.",
-      "Tu relato será parte de la memoria colectiva de Real del Monte.",
-      "¡Qué hermosa historia! El pueblo crece cuando compartimos nuestras experiencias.",
+      "Â¡Gracias por compartir tu historia! Las vivencias personales son tesoros del pueblo.",
+      "Tu relato serÃ¡ parte de la memoria colectiva de Real del Monte.",
+      "Â¡QuÃ© hermosa historia! El pueblo crece cuando compartimos nuestras experiencias.",
     ],
   },
   COLLECT_ITEM: {
     character: "isabella",
     messages: [
-      "¡Nuevo objeto coleccionable! Cada pieza cuenta la historia de este territorio.",
+      "Â¡Nuevo objeto coleccionable! Cada pieza cuenta la historia de este territorio.",
       "Has encontrado algo especial. Este objeto es parte del patrimonio cultural.",
-      "Objeto coleccionado. Tu colección crece y fortalece el archivo digital.",
+      "Objeto coleccionado. Tu colecciÃ³n crece y fortalece el archivo digital.",
     ],
   },
   CHALLENGE_COMPLETE: {
     character: "isabella",
     messages: [
-      "¡Reto comunitario completado! Tu contribución fue clave para este logro colectivo.",
-      "El pueblo ha alcanzado una meta juntos. ¡Tu participación marcó la diferencia!",
-      "¡Victoria comunitaria! La fuerza colectiva de Real del Monte brilla.",
+      "Â¡Reto comunitario completado! Tu contribuciÃ³n fue clave para este logro colectivo.",
+      "El pueblo ha alcanzado una meta juntos. Â¡Tu participaciÃ³n marcÃ³ la diferencia!",
+      "Â¡Victoria comunitaria! La fuerza colectiva de Real del Monte brilla.",
     ],
   },
   SEASON_START: {
@@ -142,22 +146,22 @@ const TEMPLATES: Record<string, { character: CharacterKey; messages: string[] }>
     messages: [
       "Una nueva temporada ha comenzado. El paisaje cultural de Real del Monte se transforma.",
       "Bienvenido a una nueva etapa. Cada temporada trae nuevos descubrimientos.",
-      "La temporada actual ofrece experiencias únicas. ¡No te las pierdas!",
+      "La temporada actual ofrece experiencias Ãºnicas. Â¡No te las pierdas!",
     ],
   },
   LOW_ENERGY: {
     character: "realito",
     messages: [
-      "Parece que necesitas descansar. Las montañas siempre estarán aquí cuando vuelvas.",
-      "Tómate un respiro. Un buen paste y una pausa hacen maravillas.",
-      "La energía se recupera con el tiempo. ¡Vuelve pronto!",
+      "Parece que necesitas descansar. Las montaÃ±as siempre estarÃ¡n aquÃ­ cuando vuelvas.",
+      "TÃ³mate un respiro. Un buen paste y una pausa hacen maravillas.",
+      "La energÃ­a se recupera con el tiempo. Â¡Vuelve pronto!",
     ],
   },
 };
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 //  NARRATIVE ENGINE
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 let messageIdCounter = 0;
 
@@ -256,7 +260,7 @@ export function generateFeed(params: {
     characterKey: "realito",
     type: "GREETING",
     content: {
-      text: `¡Hola ${context.displayName}! ${pickRandom(CHARACTERS.realito.catchphrases)}`,
+      text: `Â¡Hola ${context.displayName}! ${pickRandom(CHARACTERS.realito.catchphrases)}`,
       emotion: "happy",
     },
     seasonId: context.currentSeasonId,
@@ -270,7 +274,7 @@ export function generateFeed(params: {
       characterKey: "isabella",
       type: "HINT",
       content: {
-        text: "Como explorador nuevo, te recomiendo comenzar por los puntos de interés principales del centro del pueblo.",
+        text: "Como explorador nuevo, te recomiendo comenzar por los puntos de interÃ©s principales del centro del pueblo.",
       },
       seasonId: context.currentSeasonId,
       createdAt: new Date().toISOString(),
@@ -283,7 +287,7 @@ export function generateFeed(params: {
       characterKey: "realito",
       type: "CELEBRATION",
       content: {
-        text: `¡Racha de ${context.streak} días! Tu constancia fortalece el espíritu de Real del Monte.`,
+        text: `Â¡Racha de ${context.streak} dÃ­as! Tu constancia fortalece el espÃ­ritu de Real del Monte.`,
         emotion: "enthusiastic",
       },
       seasonId: context.currentSeasonId,
@@ -297,7 +301,7 @@ export function generateFeed(params: {
       characterKey: "realito",
       type: "WARNING",
       content: {
-        text: "Tu energía está baja. Tómate un descanso y disfruta de un paste mientras te recuperas.",
+        text: "Tu energÃ­a estÃ¡ baja. TÃ³mate un descanso y disfruta de un paste mientras te recuperas.",
         emotion: "concerned",
       },
       seasonId: context.currentSeasonId,
@@ -311,7 +315,7 @@ export function generateFeed(params: {
       characterKey: "isabella",
       type: "CELEBRATION",
       content: {
-        text: `Has completado ${context.collectionsCompleted} colección${context.collectionsCompleted > 1 ? "es" : ""}. Tu contribución al patrimonio digital es valiosa.`,
+        text: `Has completado ${context.collectionsCompleted} colecciÃ³n${context.collectionsCompleted > 1 ? "es" : ""}. Tu contribuciÃ³n al patrimonio digital es valiosa.`,
       },
       seasonId: context.currentSeasonId,
       createdAt: new Date().toISOString(),
@@ -324,7 +328,7 @@ export function generateFeed(params: {
     characterKey: "isabella",
     type: "SEASONAL",
     content: {
-      text: "La temporada actual de Minería Colonial ofrece experiencias únicas en los túneles históricos. ¡No te las pierdas!",
+      text: "La temporada actual de MinerÃ­a Colonial ofrece experiencias Ãºnicas en los tÃºneles histÃ³ricos. Â¡No te las pierdas!",
     },
     seasonId: context.currentSeasonId,
     createdAt: new Date().toISOString(),
@@ -345,9 +349,9 @@ export function suggestActions(params: {
   if (context.level < 10) {
     suggestions.push({
       type: "DISCOVER_POI",
-      label: "Explorar nuevos puntos de interés",
+      label: "Explorar nuevos puntos de interÃ©s",
       description: "Descubre lugares ocultos y gana experiencia.",
-      icon: "🗺️",
+      icon: "ðŸ—ºï¸",
     });
   }
 
@@ -356,7 +360,7 @@ export function suggestActions(params: {
       type: "COLLECT_ITEM",
       label: "Completar colecciones",
       description: "Busca objetos coleccionables para fortalecer el archivo digital.",
-      icon: "🧩",
+      icon: "ðŸ§©",
     });
   }
 
@@ -364,14 +368,14 @@ export function suggestActions(params: {
     type: "LISTEN_RADIO",
     label: "Escuchar TAMV 92.5",
     description: "Sintoniza la radio del pueblo y gana recompensas.",
-    icon: "📻",
+    icon: "ðŸ“»",
   });
 
   suggestions.push({
     type: "CAPTURE_PHOTO",
     label: "Capturar una foto del territorio",
     description: "Cada imagen preserva la memoria visual de Real del Monte.",
-    icon: "📸",
+    icon: "ðŸ“¸",
   });
 
   if (context.territoriesVisited >= 5) {
@@ -379,7 +383,7 @@ export function suggestActions(params: {
       type: "SHARE_STORY",
       label: "Compartir una historia",
       description: "Tu experiencia puede inspirar a otros exploradores.",
-      icon: "📖",
+      icon: "ðŸ“–",
     });
   }
 

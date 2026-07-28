@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useEffect, useRef } from "react"
 
 interface Matrix3DProps {
@@ -7,7 +11,7 @@ interface Matrix3DProps {
   className?: string
 }
 
-const CHARS = "TAMVREALDIMONTE<>/{}[]|&^%$#@!アイウエオカキクケコサシスセソ"
+const CHARS = "TAMVREALDIMONTE<>/{}[]|&^%$#@!ã‚¢ã‚¤ã‚¦ã‚¨ã‚ªã‚«ã‚­ã‚¯ã‚±ã‚³ã‚µã‚·ã‚¹ã‚»ã‚½"
 
 export default function Matrix3DEffect({
   density = 80,

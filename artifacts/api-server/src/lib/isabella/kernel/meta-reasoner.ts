@@ -1,7 +1,11 @@
-// ══════════════════════════════════════════════════════════════════════════════
-// Isabella Ω Cognitive Kernel — Meta-Reasoner
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Isabella Î© Cognitive Kernel â€” Meta-Reasoner
 // Decides HOW to think before thinking. The brain of the brain.
-// ══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 import type {
   CognitiveRequest,
@@ -13,13 +17,13 @@ import type {
 } from "./types";
 import { logger } from "../../logger";
 
-// ── Built-in Strategies ─────────────────────────────────────────────────────
+// â”€â”€ Built-in Strategies â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const STRATEGIES: ThinkingStrategy[] = [
   {
     id: "quick-response",
     name: "Quick Response",
-    description: "Direct answer without planning — for simple factual queries",
+    description: "Direct answer without planning â€” for simple factual queries",
     phases: ["perceive", "understand", "execute"],
     requiredCapabilities: ["reasoning"],
     estimatedLatencyMs: 200,
@@ -95,7 +99,7 @@ const STRATEGIES: ThinkingStrategy[] = [
   },
 ];
 
-// ── Signal Patterns for Strategy Selection ───────────────────────────────────
+// â”€â”€ Signal Patterns for Strategy Selection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const SIGNAL_PATTERNS: Record<string, { keywords: string[]; strategy: string; risk: RiskAssessment["level"] }> = {
   simpleQuestion: {
@@ -119,7 +123,7 @@ const SIGNAL_PATTERNS: Record<string, { keywords: string[]; strategy: string; ri
     risk: "high",
   },
   creativeTask: {
-    keywords: ["escribir", "diseñar", "crear contenido", "historia", "narrativa", "arte"],
+    keywords: ["escribir", "diseÃ±ar", "crear contenido", "historia", "narrativa", "arte"],
     strategy: "creative-synthesis",
     risk: "low",
   },
@@ -130,7 +134,7 @@ const SIGNAL_PATTERNS: Record<string, { keywords: string[]; strategy: string; ri
   },
 };
 
-// ── Meta-Reasoner Engine ────────────────────────────────────────────────────
+// â”€â”€ Meta-Reasoner Engine â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface MetaReasoner {
   decide(request: CognitiveRequest): MetaDecision;

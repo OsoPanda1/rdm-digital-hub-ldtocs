@@ -1,7 +1,11 @@
-// ══════════════════════════════════════════════════════════════════════════════
-// Isabella Ω Cognitive Kernel — Continuous Learning
-// Feedback → Evaluation → Error ID → Memory update → Knowledge review → Rules
-// ══════════════════════════════════════════════════════════════════════════════
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Isabella Î© Cognitive Kernel â€” Continuous Learning
+// Feedback â†’ Evaluation â†’ Error ID â†’ Memory update â†’ Knowledge review â†’ Rules
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 import type {
   LearningCycle,
@@ -73,7 +77,7 @@ function generateCorrections(
         field: "knowledge",
         oldValue: null,
         newValue: input,
-        reason: "Knowledge gap identified — store for future reference",
+        reason: "Knowledge gap identified â€” store for future reference",
         confidence: 0.9,
       });
       break;

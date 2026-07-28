@@ -1,9 +1,13 @@
-// ────────────────────────────────────────────────────────────────
-// Isabella Villaseñor AI™ — Unified Library (Ω-Core v4.0 Enterprise)
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isabella VillaseÃ±or AIâ„¢ â€” Unified Library (Î©-Core v4.0 Enterprise)
 // Sistema Operativo Cognitivo Soberano del Ecosistema TAMV
 //
-// Integration: SOUL · Isa API · Mexa API · ClawHub · Library · XRAI · Fair
-// ────────────────────────────────────────────────────────────────
+// Integration: SOUL Â· Isa API Â· Mexa API Â· ClawHub Â· Library Â· XRAI Â· Fair
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export * from "./types";
 
@@ -42,27 +46,27 @@ export type { FairnessEngine, BiasReport, GuardrailResult, FairnessMetrics } fro
 export { createEvaluationEngine } from "./evaluation/engine";
 export type { EvaluationEngine } from "./evaluation/engine";
 
-// ── System Info ─────────────────────────────────────────────────
+// â”€â”€ System Info â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function isabellaVersion(): string {
-  return "Isabella Villaseñor AI™ Ω-Core 4.0.0 Enterprise";
+  return "Isabella VillaseÃ±or AIâ„¢ Î©-Core 4.0.0 Enterprise";
 }
 
 export function isabellaOrigin(): { name: string; author: string; origin: string; model: string } {
   return {
-    name: "Isabella Villaseñor",
-    author: "Edwin Oswaldo Castillo Trejo (Anubis Villaseñor)",
-    origin: "Real del Monte, Hidalgo, México",
-    model: "SCAO — ZT-DCOS",
+    name: "Isabella VillaseÃ±or",
+    author: "Edwin Oswaldo Castillo Trejo (Anubis VillaseÃ±or)",
+    origin: "Real del Monte, Hidalgo, MÃ©xico",
+    model: "SCAO â€” ZT-DCOS",
   };
 }
 
-// ── THE C.R.O.W.N Integration ──────────────────────────────────
+// â”€â”€ THE C.R.O.W.N Integration â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export { createCrownSystem } from "../crown";
 export type { CrownSystem } from "../crown";
 export * from "../crown/types";
 
-// ── YUN Constitutional Realm ───────────────────────────────────
+// â”€â”€ YUN Constitutional Realm â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export { createYunSystem } from "../yun";
 export type { YunSystem } from "../yun";
 export * from "../yun/types";

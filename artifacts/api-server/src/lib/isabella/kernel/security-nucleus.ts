@@ -1,7 +1,11 @@
-// ══════════════════════════════════════════════════════════════════════════════
-// Isabella Ω Cognitive Kernel — Security Nucleus
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// Isabella Î© Cognitive Kernel â€” Security Nucleus
 // Authorization, data classification, sensitivity, audit, signing, immutable.
-// ══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 import type { SecurityLevel, SecurityDecision, AuditRecord } from "./types";
 import { createHmac, randomBytes } from "crypto";
@@ -37,7 +41,7 @@ const SENSITIVE_PATTERNS = [
   { pattern: /\b\d{3}-\d{2}-\d{4}\b/, label: "SSN", level: "top_secret" as SecurityLevel },
   { pattern: /\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b/, label: "credit-card", level: "secret" as SecurityLevel },
   { pattern: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/, label: "email", level: "confidential" as SecurityLevel },
-  { pattern: /\bpassword|contraseña|secret|token|api[_-]?key\b/i, label: "credential", level: "secret" as SecurityLevel },
+  { pattern: /\bpassword|contraseÃ±a|secret|token|api[_-]?key\b/i, label: "credential", level: "secret" as SecurityLevel },
   { pattern: /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/, label: "ip-address", level: "confidential" as SecurityLevel },
 ];
 

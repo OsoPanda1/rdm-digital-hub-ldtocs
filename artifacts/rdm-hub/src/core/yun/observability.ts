@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * YUN Observability Stack — Metrics, Logs, Traces
+ * YUN Observability Stack â€” Metrics, Logs, Traces
  * Per YUN Constitution Principle #6 (Observable by Default)
  *
  * Provides: structured logging, metric collection, distributed tracing.

@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // @ts-nocheck
 import { useState, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -45,7 +49,7 @@ const TIERS = [
   { level: 1, name: "Aprendiz Minero", xpRequired: 0 },
   { level: 2, name: "Minero Local", xpRequired: 500 },
   { level: 3, name: "Explorador del Hub", xpRequired: 1500 },
-  { level: 4, name: "Guardián del Patrimonio", xpRequired: 3500 },
+  { level: 4, name: "GuardiÃ¡n del Patrimonio", xpRequired: 3500 },
   { level: 5, name: "Cronista Digital", xpRequired: 6000 },
   { level: 6, name: "Arquitecto Territorial", xpRequired: 10000 },
   { level: 7, name: "Maestro del Hub", xpRequired: 20000 },

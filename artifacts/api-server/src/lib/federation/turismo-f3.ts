@@ -1,7 +1,11 @@
-// ────────────────────────────────────────────────────────────────
-// F3 — Turismo Inteligente
-// POIs, rutas dinámicas, geofencing cultural, mapas de calor
-// ────────────────────────────────────────────────────────────────
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// F3 â€” Turismo Inteligente
+// POIs, rutas dinÃ¡micas, geofencing cultural, mapas de calor
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface POI {
   id: string;
@@ -38,13 +42,13 @@ export function createTurismoF3(): TurismoF3 {
   const routes = new Map<string, TurismoRoute>();
 
   const defaultPOIs: Omit<POI, "id">[] = [
-    { name: "Mina de Acosta", description: "Mina histórica colonial de plata", category: "museo", lat: 20.1833, lng: -98.6667, rating: 4.7, territory: "Real del Monte" },
-    { name: "Panteón Inglés", description: "Cementerio histórico de mineros británicos", category: "monumento", lat: 20.1820, lng: -98.6650, rating: 4.5, territory: "Real del Monte" },
-    { name: "Museo del Paste", description: "Museo del paste y la minería", category: "museo", lat: 20.1815, lng: -98.6680, rating: 4.6, territory: "Real del Monte" },
+    { name: "Mina de Acosta", description: "Mina histÃ³rica colonial de plata", category: "museo", lat: 20.1833, lng: -98.6667, rating: 4.7, territory: "Real del Monte" },
+    { name: "PanteÃ³n InglÃ©s", description: "Cementerio histÃ³rico de mineros britÃ¡nicos", category: "monumento", lat: 20.1820, lng: -98.6650, rating: 4.5, territory: "Real del Monte" },
+    { name: "Museo del Paste", description: "Museo del paste y la minerÃ­a", category: "museo", lat: 20.1815, lng: -98.6680, rating: 4.6, territory: "Real del Monte" },
   ];
 
   const defaultRoutes: Omit<TurismoRoute, "id">[] = [
-    { name: "Ruta Minera Colonial", description: "Recorrido por los sitios mineros históricos", stops: ["mina-acosta", "panteon-ingles", "museo-paste"], distanceKm: 2.5, estimatedMinutes: 120, category: "historica" },
+    { name: "Ruta Minera Colonial", description: "Recorrido por los sitios mineros histÃ³ricos", stops: ["mina-acosta", "panteon-ingles", "museo-paste"], distanceKm: 2.5, estimatedMinutes: 120, category: "historica" },
   ];
 
   for (const poi of defaultPOIs) {

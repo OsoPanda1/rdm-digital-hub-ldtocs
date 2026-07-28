@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useMemo } from 'react';
 import type { UserContribution, TerritorialHeatPoint } from '@/core/territorial/types';
 
@@ -72,7 +76,7 @@ export function ContributionMapLayer({ contributions, heatMap, onContributionCli
                     {point.coords.lat.toFixed(4)}, {point.coords.lng.toFixed(4)}
                   </p>
                   <p className="text-[10px] text-muted-foreground">
-                    {point.count} {point.count === 1 ? 'interaccion' : 'interacciones'} · Ultima: {formatRelativeTime(point.lastActivity)}
+                    {point.count} {point.count === 1 ? 'interaccion' : 'interacciones'} Â· Ultima: {formatRelativeTime(point.lastActivity)}
                   </p>
                 </div>
                 <div className="text-xs font-mono text-foreground/60">
@@ -140,7 +144,7 @@ function summarizePayload(contribution: UserContribution): string {
     case 'tip': return p.text.slice(0, 60) + (p.text.length > 60 ? '...' : '');
     case 'photo': return p.caption ?? 'Foto sin descripcion';
     case 'event_report': return p.eventName;
-    case 'route_trace': return `${p.waypoints.length} puntos · ${p.transportMode}`;
+    case 'route_trace': return `${p.waypoints.length} puntos Â· ${p.transportMode}`;
     case 'poi_suggestion': return p.suggestedName;
     default: return 'Contribucion';
   }

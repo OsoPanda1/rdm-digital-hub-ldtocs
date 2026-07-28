@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -145,7 +149,7 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
             {player.streak_days && player.streak_days > 0 && (
               <div className="flex items-center gap-1 text-[10px] text-[hsl(var(--muted-foreground))]">
                 <Flame className="w-3 h-3 text-orange-400" />
-                <span>Racha de {player.streak_days} días</span>
+                <span>Racha de {player.streak_days} dÃ­as</span>
               </div>
             )}
           </div>
@@ -297,7 +301,7 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
                       </span>
                       {pq.quest.reward_json.badge_code && (
                         <>
-                          <span className="text-[10px] text-[hsl(var(--muted-foreground))]">·</span>
+                          <span className="text-[10px] text-[hsl(var(--muted-foreground))]">Â·</span>
                           <Trophy className="w-3 h-3 text-purple-400" />
                           <span className="text-[10px] text-purple-400">Badge</span>
                         </>
@@ -316,7 +320,7 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
           <div className="text-center py-8">
             <Target className="w-8 h-8 text-[hsl(var(--muted-foreground)/0.3)] mx-auto mb-2" />
             <p className="text-xs text-[hsl(var(--muted-foreground))] mb-1">
-              No hay misiones en esta categoría
+              No hay misiones en esta categorÃ­a
             </p>
             <p className="text-[11px] text-[hsl(var(--muted-foreground))]">
               Explora el mapa o contribuye en tu territorio para desbloquear nuevas misiones.

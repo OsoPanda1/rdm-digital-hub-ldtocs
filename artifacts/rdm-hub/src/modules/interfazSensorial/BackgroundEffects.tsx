@@ -1,11 +1,15 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 
 import React, { useEffect, useRef, useState } from "react";
 
 /**
- * Interfaz Sensorial: Efectos de Fondo Dinámicos
+ * Interfaz Sensorial: Efectos de Fondo DinÃ¡micos
  * 
  * Componente que gestiona los efectos visuales de fondo que crean
- * la atmósfera inmersiva de TAMV Online Network.
+ * la atmÃ³sfera inmersiva de TAMV Online Network.
  */
 const BackgroundEffects: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });

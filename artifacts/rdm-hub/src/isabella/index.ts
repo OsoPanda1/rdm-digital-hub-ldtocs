@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 export { IdentidadIsabella, isabellaIdentidad } from "./core/identity";
 export { JuramentoIsabella, juramentoIsabella } from "./core/oath";
 export { MotorConciencia, motorConciencia } from "./core/consciousness";

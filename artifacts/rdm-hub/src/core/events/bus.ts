@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * RDM Core Service — Event Bus territorial tipado
+ * RDM Core Service â€” Event Bus territorial tipado
  */
 
 export type EventName =

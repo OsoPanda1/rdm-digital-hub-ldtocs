@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { Coordenadas } from "@/core/models";
 import { fastDistance } from "@/core/geo/haversine.fast";
 

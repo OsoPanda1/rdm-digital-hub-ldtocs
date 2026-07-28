@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { Router, Request, Response } from "express";
 import { logger } from "../lib/logger";
 import { rateLimitByRoute, requireRdmRole } from "../lib/security";

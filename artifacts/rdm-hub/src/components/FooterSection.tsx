@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Mountain, MapPin, Mail, Phone, Heart } from "lucide-react";
 import mistyMountains from "@/assets/misty-mountains.jpg";
@@ -19,10 +23,10 @@ export function FooterSection() {
           <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">
             Tu aventura
             <br />
-            <span className="text-accent">comienza aquí</span>
+            <span className="text-accent">comienza aquÃ­</span>
           </h2>
           <p className="text-foreground/60 font-body max-w-md mx-auto mb-8">
-            Real del Monte te espera con 500 años de historia, sabores únicos y la
+            Real del Monte te espera con 500 aÃ±os de historia, sabores Ãºnicos y la
             magia de la Sierra de Pachuca.
           </p>
           <a
@@ -44,19 +48,19 @@ export function FooterSection() {
               </div>
               <div>
                 <p className="font-display font-bold text-lg">RDM Digital</p>
-                <p className="text-xs text-muted-foreground font-body">OS v4.1 — Soberanía Territorial</p>
+                <p className="text-xs text-muted-foreground font-body">OS v4.1 â€” SoberanÃ­a Territorial</p>
               </div>
             </div>
             <p className="text-sm text-muted-foreground font-body leading-relaxed">
-              Sistema operativo territorial diseñado para transformar Real del Monte
-              en el primer nodo turístico inteligente de Latinoamérica.
+              Sistema operativo territorial diseÃ±ado para transformar Real del Monte
+              en el primer nodo turÃ­stico inteligente de LatinoamÃ©rica.
             </p>
           </div>
 
           <div>
             <h4 className="font-display font-semibold mb-4">Contacto</h4>
             <div className="space-y-3 text-sm text-muted-foreground font-body">
-              <p className="flex items-center gap-2"><MapPin className="w-4 h-4 text-accent" /> Real del Monte, Hidalgo, México</p>
+              <p className="flex items-center gap-2"><MapPin className="w-4 h-4 text-accent" /> Real del Monte, Hidalgo, MÃ©xico</p>
               <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-accent" /> info@rdmdigital.mx</p>
               <p className="flex items-center gap-2"><Phone className="w-4 h-4 text-accent" /> +52 771 123 4567</p>
             </div>
@@ -65,7 +69,7 @@ export function FooterSection() {
           <div>
             <h4 className="font-display font-semibold mb-4">Explorar</h4>
             <div className="space-y-2">
-              {["Historia", "Gastronomía", "Aventura", "Hospedaje", "Cultura"].map((item) => (
+              {["Historia", "GastronomÃ­a", "Aventura", "Hospedaje", "Cultura"].map((item) => (
                 <a
                   key={item}
                   href={`#${item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`}
@@ -88,11 +92,11 @@ export function FooterSection() {
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-muted-foreground font-body">
-            © 2026 RDM Digital. Sistema Soberano — Datos locales, infraestructura local, beneficio local.
+            Â© 2026 RDM Digital. Sistema Soberano â€” Datos locales, infraestructura local, beneficio local.
           </p>
           <div className="flex items-center gap-2 text-xs text-muted-foreground font-body">
             <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
-            Sistema Online — v4.1
+            Sistema Online â€” v4.1
           </div>
         </div>
       </div>

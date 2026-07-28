@@ -1,7 +1,11 @@
-// ────────────────────────────────────────────────────────────────
-// YUN Registry — Heptacapa Identity System
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// YUN Registry â€” Heptacapa Identity System
 // Materializes ADR-YUN-0001's identity model.
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { randomUUID } from "node:crypto";
 import type {
@@ -15,7 +19,7 @@ import type {
 } from "./types";
 import { FEDERATIONS } from "./types";
 
-// ── Types ──────────────────────────────────────────────────────
+// â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface YunAgent {
   agentId: string;
@@ -66,7 +70,7 @@ export interface YunIdentityBinding {
   boundAt: number;
 }
 
-// ── Registry ───────────────────────────────────────────────────
+// â”€â”€ Registry â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export class YunRegistry {
   private nodes = new Map<string, YunNode>();
@@ -82,7 +86,7 @@ export class YunRegistry {
     this.initializeLicenses();
   }
 
-  // ── Node Management ──────────────────────────────────────────
+  // â”€â”€ Node Management â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   registerNode(params: {
     name: string;
@@ -129,7 +133,7 @@ export class YunRegistry {
     if (node) node.lastSeenAt = Date.now();
   }
 
-  // ── Agent Management ─────────────────────────────────────────
+  // â”€â”€ Agent Management â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   registerAgent(params: {
     name: string;
@@ -173,7 +177,7 @@ export class YunRegistry {
     return agent;
   }
 
-  // ── Service Management ───────────────────────────────────────
+  // â”€â”€ Service Management â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   registerService(params: {
     name: string;
@@ -203,7 +207,7 @@ export class YunRegistry {
     return service;
   }
 
-  // ── Role Management ──────────────────────────────────────────
+  // â”€â”€ Role Management â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   getRoles(): YunRole[] {
     return Array.from(this.roles.values());
@@ -213,7 +217,7 @@ export class YunRegistry {
     return this.roles.get(roleId);
   }
 
-  // ── License Management ───────────────────────────────────────
+  // â”€â”€ License Management â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   getLicenses(): YunLicense[] {
     return Array.from(this.licenses.values());
@@ -252,7 +256,7 @@ export class YunRegistry {
     );
   }
 
-  // ── Binding Management ───────────────────────────────────────
+  // â”€â”€ Binding Management â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   getBinding(entityId: string): YunIdentityBinding | undefined {
     return this.bindings.get(entityId);
@@ -265,7 +269,7 @@ export class YunRegistry {
     }
   }
 
-  // ── Query ────────────────────────────────────────────────────
+  // â”€â”€ Query â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   findNodesByDomain(domain: YunDomain): YunNode[] {
     return Array.from(this.nodes.values()).filter((n) => n.domain === domain);
@@ -318,7 +322,7 @@ export class YunRegistry {
     };
   }
 
-  // ── Private ──────────────────────────────────────────────────
+  // â”€â”€ Private â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   private createBinding(entityId: string, entityType: YunIdentityBinding["entityType"], adrIds: string[], licenseIds: string[], roles: string[]): void {
     this.bindings.set(entityId, {

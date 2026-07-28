@@ -1,8 +1,12 @@
-// ────────────────────────────────────────────────────────────────
-// YUN Message Bus — Constitutional Event Transport
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-PRCL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// YUN Message Bus â€” Constitutional Event Transport
 // Enforces CP-002 (Desacoplamiento Reactivo): events first,
 // direct calls prohibited outside EMERGENCY mode.
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { randomUUID } from "node:crypto";
 import { createHmac } from "node:crypto";
@@ -16,7 +20,7 @@ import type {
   YunMode,
 } from "./types";
 
-// ── Types ──────────────────────────────────────────────────────
+// â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface BusNode {
   nodeId: string;
@@ -62,7 +66,7 @@ export interface EventPublishResult {
   timestamp: number;
 }
 
-// ── Message Bus ────────────────────────────────────────────────
+// â”€â”€ Message Bus â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export class YunMessageBus {
   private busId: string;
@@ -89,7 +93,7 @@ export class YunMessageBus {
     this.initChannels();
   }
 
-  // ── Publish ──────────────────────────────────────────────────
+  // â”€â”€ Publish â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   publish<T = unknown>(
     event: Omit<YunEvent<T>, "eventId" | "traceId" | "timestamp"> & {
@@ -150,7 +154,7 @@ export class YunMessageBus {
         this.stats.totalDelivered++;
         delivered = true;
       } catch (err) {
-        // Subscription callback error — don't crash bus
+        // Subscription callback error â€” don't crash bus
         logger.warn({ subscriberId: sub.subscriberId, eventId: fullEvent.eventId, error: (err as Error).message }, "Bus subscription callback error");
       }
     }
@@ -165,7 +169,7 @@ export class YunMessageBus {
     };
   }
 
-  // ── Subscribe ────────────────────────────────────────────────
+  // â”€â”€ Subscribe â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   subscribe(
     subscriberId: string,
@@ -189,7 +193,7 @@ export class YunMessageBus {
     this.subscriptions.delete(subId);
   }
 
-  // ── History & Query ──────────────────────────────────────────
+  // â”€â”€ History & Query â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   getHistory(options?: {
     domain?: YunDomain;
@@ -207,7 +211,7 @@ export class YunMessageBus {
     return events.slice(-limit);
   }
 
-  // ── Bus State ────────────────────────────────────────────────
+  // â”€â”€ Bus State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   getState(mode: YunMode = "NORMAL"): BusState {
     return {
@@ -238,13 +242,13 @@ export class YunMessageBus {
     }
   }
 
-  // ── Stats ────────────────────────────────────────────────────
+  // â”€â”€ Stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   getStats() {
     return { ...this.stats, busId: this.busId, subscriptionCount: this.subscriptions.size };
   }
 
-  // ── Private ──────────────────────────────────────────────────
+  // â”€â”€ Private â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   private initChannels(): void {
     const domains: YunDomain[] = ["identity", "commerce", "knowledge", "telemetry", "gameplay", "territorial", "media", "cognitive"];

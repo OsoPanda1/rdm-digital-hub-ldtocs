@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import path from 'path';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';

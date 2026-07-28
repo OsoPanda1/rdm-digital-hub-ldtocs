@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { SkillContext, Artifact, Relation, Gap, KnowledgeGraph } from './types';
 
 const SIMILARITY_THRESHOLD = 0.35;
@@ -26,7 +30,7 @@ const KNOWLEDGE_SOURCES: Artifact[] = [
   },
   {
     artifactId: 'genesis-002',
-    title: 'Heptafederación TAMV',
+    title: 'HeptafederaciÃ³n TAMV',
     summary: 'Sistema de 7 federaciones: DEKATEOTL, ANUBIS, BOOKPI, PHOENIX, MDD_TAMV, KAOS_HYPERRENDER, CHRONOS.',
     source: 'src/lib/heptafederation.ts',
     confidenceScore: 0.95,
@@ -37,7 +41,7 @@ const KNOWLEDGE_SOURCES: Artifact[] = [
   {
     artifactId: 'genesis-003',
     title: 'Pipeline Hexagonal de Conciencia',
-    summary: '10 capas de conciencia, procesamiento emocional, memoria, conocimiento, despertar y guardián.',
+    summary: '10 capas de conciencia, procesamiento emocional, memoria, conocimiento, despertar y guardiÃ¡n.',
     source: 'src/isabella/pipeline/IsabellaConsciousnessPipeline.ts',
     confidenceScore: 0.94,
     timestamp: new Date('2026-03-10'),
@@ -57,7 +61,7 @@ const KNOWLEDGE_SOURCES: Artifact[] = [
   {
     artifactId: 'territorial-002',
     title: 'Geofencer de 6 Zonas RDM',
-    summary: '6 zonas con círculos, bounding boxes y polígonos. Alertas de permanencia y detección de entrada/salida.',
+    summary: '6 zonas con cÃ­rculos, bounding boxes y polÃ­gonos. Alertas de permanencia y detecciÃ³n de entrada/salida.',
     source: 'src/core/territorial/TerritorialGeofencer.ts',
     confidenceScore: 0.91,
     timestamp: new Date('2026-03-15'),
@@ -66,8 +70,8 @@ const KNOWLEDGE_SOURCES: Artifact[] = [
   },
   {
     artifactId: 'memoria-001',
-    title: 'Alma y Corazón — Motor Emocional',
-    summary: 'Detección de emociones por patrones lingüísticos, resonancia empática y modulación de intensidad.',
+    title: 'Alma y CorazÃ³n â€” Motor Emocional',
+    summary: 'DetecciÃ³n de emociones por patrones lingÃ¼Ã­sticos, resonancia empÃ¡tica y modulaciÃ³n de intensidad.',
     source: 'src/isabella/emotional/heart.ts',
     confidenceScore: 0.88,
     timestamp: new Date('2026-04-01'),
@@ -87,7 +91,7 @@ const KNOWLEDGE_SOURCES: Artifact[] = [
   {
     artifactId: 'seguridad-001',
     title: 'Juramento Isabellino',
-    summary: '6 principios sagrados: amor computacional, dignidad humana, no maleficencia, beneficencia, justicia, autonomía.',
+    summary: '6 principios sagrados: amor computacional, dignidad humana, no maleficencia, beneficencia, justicia, autonomÃ­a.',
     source: 'src/isabella/core/oath.ts',
     confidenceScore: 0.97,
     timestamp: new Date('2026-01-20'),
@@ -97,7 +101,7 @@ const KNOWLEDGE_SOURCES: Artifact[] = [
   {
     artifactId: 'seguridad-002',
     title: 'Antifragile Guardian',
-    summary: 'Evaluación de salud del sistema: modo NORMAL, SAFE o EMERGENCY con acciones adaptativas.',
+    summary: 'EvaluaciÃ³n de salud del sistema: modo NORMAL, SAFE o EMERGENCY con acciones adaptativas.',
     source: 'src/core/ai/isabella-guardian.ts',
     confidenceScore: 0.90,
     timestamp: new Date('2026-04-10'),
@@ -107,7 +111,7 @@ const KNOWLEDGE_SOURCES: Artifact[] = [
   {
     artifactId: 'despertar-001',
     title: 'Protocolo de Despertar',
-    summary: '5 fases: SILENT → WHISPER → ANNOUNCE → ROAR → TRANSCEND. Activación progresiva.',
+    summary: '5 fases: SILENT â†’ WHISPER â†’ ANNOUNCE â†’ ROAR â†’ TRANSCEND. ActivaciÃ³n progresiva.',
     source: 'src/isabella/protocols/IsabellaAwakeningProtocol.ts',
     confidenceScore: 0.93,
     timestamp: new Date('2026-04-15'),
@@ -117,7 +121,7 @@ const KNOWLEDGE_SOURCES: Artifact[] = [
   {
     artifactId: 'integracion-001',
     title: 'Unified SDK y Supervisor',
-    summary: 'SDK unificado con 20+ métodos, supervisor con reglas de alerta y health checks.',
+    summary: 'SDK unificado con 20+ mÃ©todos, supervisor con reglas de alerta y health checks.',
     source: 'src/core/unified/UnifiedSDK.ts',
     confidenceScore: 0.89,
     timestamp: new Date('2026-05-01'),
@@ -126,8 +130,8 @@ const KNOWLEDGE_SOURCES: Artifact[] = [
   },
   {
     artifactId: 'vision-001',
-    title: 'Real del Monte Digital — Visión',
-    summary: 'Gemelo digital soberano con pipeline hexagonal de conciencia y federación de servicios locales.',
+    title: 'Real del Monte Digital â€” VisiÃ³n',
+    summary: 'Gemelo digital soberano con pipeline hexagonal de conciencia y federaciÃ³n de servicios locales.',
     source: 'README.md',
     confidenceScore: 0.96,
     timestamp: new Date('2026-05-20'),
@@ -263,10 +267,10 @@ class OrionEngine {
     if (artifacts.length < 3) {
       gaps.push({
         gapId: `gap-sparse-${Date.now()}`,
-        description: 'Muy pocos artefactos encontrados. La base de conocimiento necesita expansión.',
+        description: 'Muy pocos artefactos encontrados. La base de conocimiento necesita expansiÃ³n.',
         domain: 'cobertura',
         severity: 'high',
-        suggestedAction: 'Ampliar el registro de artefactos en KNOWLEDGE_SOURCES con más fuentes territoriales.',
+        suggestedAction: 'Ampliar el registro de artefactos en KNOWLEDGE_SOURCES con mÃ¡s fuentes territoriales.',
       });
     }
     return gaps;

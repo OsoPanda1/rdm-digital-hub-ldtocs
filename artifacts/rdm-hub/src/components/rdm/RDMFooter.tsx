@@ -1,14 +1,18 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { Mountain, MapPin, Mail, ExternalLink, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const TURISMO = [
   { to: "/mapa", label: "Mapa Interactivo" },
   { to: "/historia", label: "Historia" },
-  { to: "/gastronomia", label: "Gastronomía" },
+  { to: "/gastronomia", label: "GastronomÃ­a" },
   { to: "/ecoturismo", label: "Ecoturismo" },
-  { to: "/rutas", label: "Rutas Temáticas" },
+  { to: "/rutas", label: "Rutas TemÃ¡ticas" },
   { to: "/patrimonio-cultural", label: "Patrimonio" },
-  { to: "/estacionamientos", label: "Dónde Estacionar" },
+  { to: "/estacionamientos", label: "DÃ³nde Estacionar" },
 ];
 
 const COMUNIDAD = [
@@ -32,11 +36,11 @@ export function RDMFooter() {
               </div>
               <div>
                 <p className="font-bold text-lg" style={{ fontFamily: "var(--font-display)" }}>RDM Digital</p>
-                <p className="text-[10px] tracking-widest uppercase text-[hsl(var(--rdm-amber))]" style={{ fontFamily: "var(--font-body)" }}>Pueblo Mágico · Hidalgo</p>
+                <p className="text-[10px] tracking-widest uppercase text-[hsl(var(--rdm-amber))]" style={{ fontFamily: "var(--font-body)" }}>Pueblo MÃ¡gico Â· Hidalgo</p>
               </div>
             </div>
             <p className="text-sm text-[hsl(var(--muted-foreground))] leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>
-              Tu guía digital para explorar Real del Monte. Historia minera, gastronomía de pastes, naturaleza de montaña y una comunidad que te espera.
+              Tu guÃ­a digital para explorar Real del Monte. Historia minera, gastronomÃ­a de pastes, naturaleza de montaÃ±a y una comunidad que te espera.
             </p>
           </div>
 
@@ -76,7 +80,7 @@ export function RDMFooter() {
           <div>
             <h4 className="font-semibold mb-4 text-sm" style={{ fontFamily: "var(--font-display)" }}>Contacto</h4>
             <div className="space-y-3 text-sm text-[hsl(var(--muted-foreground))]" style={{ fontFamily: "var(--font-body)" }}>
-              <p className="flex items-center gap-2"><MapPin className="w-4 h-4 text-[hsl(var(--rdm-amber))]" /> Real del Monte, Hidalgo, México</p>
+              <p className="flex items-center gap-2"><MapPin className="w-4 h-4 text-[hsl(var(--rdm-amber))]" /> Real del Monte, Hidalgo, MÃ©xico</p>
               <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-[hsl(var(--rdm-amber))]" /> info@visitarealdelmonte.online</p>
               <a
                 href="https://visitarealdelmonte.online"
@@ -93,14 +97,14 @@ export function RDMFooter() {
                 className="inline-flex items-center gap-1 text-xs text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--rdm-amber))]"
                 style={{ fontFamily: "var(--font-body)" }}
               >
-                <ExternalLink className="w-3 h-3" /> Plataforma técnica
+                <ExternalLink className="w-3 h-3" /> Plataforma tÃ©cnica
               </Link>
               <Link
                 to="/quienes-somos"
                 className="inline-flex items-center gap-1 text-xs text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--rdm-amber))]"
                 style={{ fontFamily: "var(--font-body)" }}
               >
-                <ExternalLink className="w-3 h-3" /> Quiénes somos
+                <ExternalLink className="w-3 h-3" /> QuiÃ©nes somos
               </Link>
             </div>
           </div>
@@ -108,7 +112,7 @@ export function RDMFooter() {
 
         <div className="border-t border-[hsl(var(--border))] mt-8 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-[hsl(var(--muted-foreground))]" style={{ fontFamily: "var(--font-body)" }}>
-            © 2026 RDM Digital · <a href="https://visitarealdelmonte.online" target="_blank" rel="noopener noreferrer" className="hover:text-[hsl(var(--rdm-amber))] transition-colors">visitarealdelmonte.online</a> · TAMV Online
+            Â© 2026 RDM Digital Â· <a href="https://visitarealdelmonte.online" target="_blank" rel="noopener noreferrer" className="hover:text-[hsl(var(--rdm-amber))] transition-colors">visitarealdelmonte.online</a> Â· TAMV Online
           </p>
           <div className="flex items-center gap-2 text-xs text-[hsl(var(--muted-foreground))]">
             <span className="w-1.5 h-1.5 rounded-full bg-[hsl(var(--rdm-green))] animate-pulse" />

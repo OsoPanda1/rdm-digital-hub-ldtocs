@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 const BASE_URL = import.meta.env.VITE_SUPABASE_URL ?? ""
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {

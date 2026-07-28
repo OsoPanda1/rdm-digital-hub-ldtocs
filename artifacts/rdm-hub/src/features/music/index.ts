@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * RDM Ecos Música — Feature exports
+ * RDM Ecos MÃºsica â€” Feature exports
  */
 export * from './types';
 export * from './engine';

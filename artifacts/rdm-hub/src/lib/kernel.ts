@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * RDM Digital - Kernel REALITO Unificado GEN-7+
  * Motor de recomendaciones, narrativa e inteligencia territorial

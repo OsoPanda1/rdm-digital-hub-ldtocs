@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 export type FederationId = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 export type ThemeId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 export type AbstractionLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
@@ -85,6 +89,6 @@ export const FEDERATION_CHROMATIC: Record<FederationId, { primary: string; name:
   3: { primary: "#0f766e", name: "Territorial" },
   4: { primary: "#d4a017", name: "Cognitiva" },
   5: { primary: "#4b5563", name: "Interfaz (Nexo)" },
-  6: { primary: "#3730a3", name: "Criptográfica" },
+  6: { primary: "#3730a3", name: "CriptogrÃ¡fica" },
   7: { primary: "#047857", name: "Resiliencia" },
 };

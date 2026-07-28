@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Zap, Clock, Shield, AlertTriangle, CheckCircle2 } from "lucide-react";
 import Telemetry from "@/modules/control/Telemetry";
@@ -30,13 +34,13 @@ export default function ControlCenter() {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/15">
               <Shield className="h-5 w-5 text-gold" />
             </div>
-            <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/70">Control Center · RDM-TOS · Mini-Grafana Soberano</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/70">Control Center Â· RDM-TOS Â· Mini-Grafana Soberano</p>
           </div>
           <h1 className="text-5xl md:text-6xl font-display font-bold tracking-tight">
             Sistema Operativo <span className="text-gradient-gold italic">Territorial Soberano</span>
           </h1>
           <p className="mt-3 text-sm font-body text-muted-foreground max-w-xl">
-            Nodo Cero · Real del Monte. Health-check + histórico + alertas con umbrales auditables, sin dependencias externas.
+            Nodo Cero Â· Real del Monte. Health-check + histÃ³rico + alertas con umbrales auditables, sin dependencias externas.
           </p>
         </motion.div>
 
@@ -44,18 +48,18 @@ export default function ControlCenter() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="rounded-xl border border-amber-400/40 bg-amber-500/10 px-4 py-3 flex items-center gap-3">
             <AlertTriangle className="h-4 w-4 text-amber-400" />
             <p className="text-xs font-mono uppercase tracking-wider text-amber-300">
-              Alerta: {fed.filter((f) => f.status === "degraded").length} degradadas · {fed.filter((f) => f.status === "offline").length} offline
+              Alerta: {fed.filter((f) => f.status === "degraded").length} degradadas Â· {fed.filter((f) => f.status === "offline").length} offline
             </p>
           </motion.div>
         )}
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {[
-            { label: "Federaciones Online", value: sum ? `${sum.online}/${sum.total}` : "—", icon: CheckCircle2, color: "text-emerald-400" },
-            { label: "Latencia Promedio", value: sum ? `${sum.avg_latency_ms}ms` : "—", icon: Zap, color: sum && sum.avg_latency_ms > 300 ? "text-red-500" : "text-electric" },
-            { label: "Degradadas", value: sum?.degraded ?? "—", icon: AlertTriangle, color: "text-amber-400" },
-            { label: "Offline", value: sum?.offline ?? "—", icon: AlertTriangle, color: "text-red-500" },
-            { label: "Última lectura", value: data ? new Date(data.timestamp).toLocaleTimeString("es-MX") : "—", icon: Clock, color: "text-gold" },
+            { label: "Federaciones Online", value: sum ? `${sum.online}/${sum.total}` : "â€”", icon: CheckCircle2, color: "text-emerald-400" },
+            { label: "Latencia Promedio", value: sum ? `${sum.avg_latency_ms}ms` : "â€”", icon: Zap, color: sum && sum.avg_latency_ms > 300 ? "text-red-500" : "text-electric" },
+            { label: "Degradadas", value: sum?.degraded ?? "â€”", icon: AlertTriangle, color: "text-amber-400" },
+            { label: "Offline", value: sum?.offline ?? "â€”", icon: AlertTriangle, color: "text-red-500" },
+            { label: "Ãšltima lectura", value: data ? new Date(data.timestamp).toLocaleTimeString("es-MX") : "â€”", icon: Clock, color: "text-gold" },
           ].map((m) => (
             <motion.div key={m.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="glass-card rounded-xl p-4 border border-border/20">
               <m.icon className={`h-4 w-4 ${m.color}`} />
@@ -67,7 +71,7 @@ export default function ControlCenter() {
 
         <div className="glass-card rounded-2xl p-5 border border-border/20">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground">Integridad I_TAMV · últimas 30 lecturas</h2>
+            <h2 className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground">Integridad I_TAMV Â· Ãºltimas 30 lecturas</h2>
             <span className="text-[10px] font-mono text-muted-foreground/60">refresh 15s</span>
           </div>
           <HealthSparkline />
@@ -77,9 +81,9 @@ export default function ControlCenter() {
 
         <div className="glass-card rounded-2xl p-5 border border-border/20">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground">7 Federaciones TAMV — Estado Real</h2>
+            <h2 className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground">7 Federaciones TAMV â€” Estado Real</h2>
             {error && <span className="text-[10px] font-mono text-red-400">{error}</span>}
-            {loading && !data && <span className="text-[10px] font-mono text-muted-foreground">Cargando…</span>}
+            {loading && !data && <span className="text-[10px] font-mono text-muted-foreground">Cargandoâ€¦</span>}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
             {fed.map((f) => (
@@ -101,12 +105,12 @@ export default function ControlCenter() {
         </div>
 
         <div>
-          <h2 className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground mb-3">Telemetría e Infraestructura (datos reales)</h2>
+          <h2 className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground mb-3">TelemetrÃ­a e Infraestructura (datos reales)</h2>
           <Telemetry />
         </div>
 
         <div className="glass-card rounded-2xl p-6 border border-gold/20">
-          <p className="text-[11px] font-mono uppercase tracking-widest text-gold mb-2">TAMV-Consensus · Integridad Global</p>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-gold mb-2">TAMV-Consensus Â· Integridad Global</p>
           <div className="flex items-center gap-4">
             <div className="flex-1 h-2 bg-border/40 rounded-full overflow-hidden">
               <div className="h-full bg-gradient-to-r from-gold to-electric transition-all duration-700" style={{ width: `${integrity * 100}%` }} />
@@ -117,7 +121,7 @@ export default function ControlCenter() {
             </span>
           </div>
           <p className="mt-3 text-[10px] font-mono text-muted-foreground">
-            I_TAMV = Σ(Wn · σ(Vn) / Δt) × E_Dignity · Estatuto de Dignidad: ✓
+            I_TAMV = Î£(Wn Â· Ïƒ(Vn) / Î”t) Ã— E_Dignity Â· Estatuto de Dignidad: âœ“
           </p>
         </div>
       </div>

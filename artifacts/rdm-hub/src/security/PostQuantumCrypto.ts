@@ -1,6 +1,10 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { logger } from "@/lib/logger";
 
-// Web Crypto API (browser-native) — sin dependencia de Node.js crypto
+// Web Crypto API (browser-native) â€” sin dependencia de Node.js crypto
 
 interface PQCKeyPair {
   publicKey: string;

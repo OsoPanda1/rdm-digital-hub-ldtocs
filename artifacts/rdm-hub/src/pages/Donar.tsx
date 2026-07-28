@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState } from "react";
 import { toast } from "sonner";
 import { RDMLayout } from "@/components/rdm/RDMLayout";
@@ -29,7 +33,7 @@ export default function Donar() {
 
       window.location.href = "/gracias-donativo";
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "No se pudo procesar la donación");
+      toast.error(e instanceof Error ? e.message : "No se pudo procesar la donaciÃ³n");
     } finally {
       setIsLoading(false);
     }
@@ -50,7 +54,7 @@ export default function Donar() {
         <section className="max-w-2xl mx-auto glass-surface-strong p-8 space-y-6">
           <h1 className="text-3xl font-bold">Asegura el brillo de nuestro legado</h1>
           <p className="text-muted-foreground">
-            Apoyo para RDM Digital — tu donativo fortalece el patrimonio cultural, la narrativa viva y la visibilidad de
+            Apoyo para RDM Digital â€” tu donativo fortalece el patrimonio cultural, la narrativa viva y la visibilidad de
             los comercios locales.
           </p>
           <div className="flex flex-wrap gap-3">

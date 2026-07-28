@@ -1,11 +1,15 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { WikiPage } from "@/components/WikiPage";
 import { Section, InfoBox } from "@/components/WikiElements";
 import { Monitor, Cpu, Sparkles, Atom, Headphones, BookOpen } from "lucide-react";
 
 const XRTecnologia = () => (
   <WikiPage
-    title="Tecnología XR/VR/3D/4D"
-      subtitle="Motor de Render Hiperrealista — Espacios Inmersivos con Física Cuántica"
+    title="TecnologÃ­a XR/VR/3D/4D"
+      subtitle="Motor de Render Hiperrealista â€” Espacios Inmersivos con FÃ­sica CuÃ¡ntica"
     >
       {/* Hero Banner */}
       <div className="relative h-48 w-full overflow-hidden">
@@ -13,18 +17,18 @@ const XRTecnologia = () => (
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
       </div>
       <InfoBox type="info" title="Motor de Render 4D">
-      El motor TAMV4DRenderer combina Ray Tracing en tiempo real, física cuántica simulada,
-      IA generativa de texturas y haptic feedback en un único pipeline de renderizado inmersivo.
+      El motor TAMV4DRenderer combina Ray Tracing en tiempo real, fÃ­sica cuÃ¡ntica simulada,
+      IA generativa de texturas y haptic feedback en un Ãºnico pipeline de renderizado inmersivo.
     </InfoBox>
 
-    <Section title="Características del Motor" icon={Monitor}>
+    <Section title="CaracterÃ­sticas del Motor" icon={Monitor}>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {[
-          { icon: Sparkles, title: "Ray Tracing Real-Time", desc: "Iluminación fotorrealista con global illumination" },
-          { icon: Atom, title: "Física Cuántica", desc: "Comportamientos realistas de partículas simuladas" },
-          { icon: Cpu, title: "IA Generativa", desc: "Creación automática de texturas y materiales" },
-          { icon: Monitor, title: "Renderizado 4D", desc: "Visualización de dimensiones temporales" },
-          { icon: Headphones, title: "Haptic Feedback", desc: "Retroalimentación táctil y audio espacial" },
+          { icon: Sparkles, title: "Ray Tracing Real-Time", desc: "IluminaciÃ³n fotorrealista con global illumination" },
+          { icon: Atom, title: "FÃ­sica CuÃ¡ntica", desc: "Comportamientos realistas de partÃ­culas simuladas" },
+          { icon: Cpu, title: "IA Generativa", desc: "CreaciÃ³n automÃ¡tica de texturas y materiales" },
+          { icon: Monitor, title: "Renderizado 4D", desc: "VisualizaciÃ³n de dimensiones temporales" },
+          { icon: Headphones, title: "Haptic Feedback", desc: "RetroalimentaciÃ³n tÃ¡ctil y audio espacial" },
           { icon: BookOpen, title: "OpenXR Standard", desc: "Compatible con todos los headsets del mercado" },
         ].map((feat) => (
           <div key={feat.title} className="rounded-md border border-border/50 bg-card/30 p-4">
@@ -69,10 +73,10 @@ const XRTecnologia = () => (
     <Section title="Espacios Virtuales Nativos">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[
-          { name: "Home 3D", desc: "Espacios personales con criptografía verificable y personalización total" },
-          { name: "Metaverso Federado", desc: "Mundos interconectados con soberanía local por nodo" },
-          { name: "Salas de Gobernanza", desc: "Espacios para toma de decisiones democráticas inmersivas" },
-          { name: "Laboratorios Cuánticos", desc: "Entornos para experimentación científica colaborativa" },
+          { name: "Home 3D", desc: "Espacios personales con criptografÃ­a verificable y personalizaciÃ³n total" },
+          { name: "Metaverso Federado", desc: "Mundos interconectados con soberanÃ­a local por nodo" },
+          { name: "Salas de Gobernanza", desc: "Espacios para toma de decisiones democrÃ¡ticas inmersivas" },
+          { name: "Laboratorios CuÃ¡nticos", desc: "Entornos para experimentaciÃ³n cientÃ­fica colaborativa" },
         ].map((space) => (
           <div key={space.name} className="rounded-lg border border-border/50 bg-muted/20 p-4">
             <div className="font-semibold text-foreground text-sm mb-1">{space.name}</div>
@@ -82,11 +86,11 @@ const XRTecnologia = () => (
       </div>
     </Section>
 
-    <Section title="Métricas de Rendimiento XR">
+    <Section title="MÃ©tricas de Rendimiento XR">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
           { label: "Target FPS", value: "90" },
-          { label: "Latencia máx.", value: "< 20ms" },
+          { label: "Latencia mÃ¡x.", value: "< 20ms" },
           { label: "Usuarios concurrentes", value: "10K+" },
           { label: "Promedio actual", value: "90 FPS" },
         ].map((m) => (

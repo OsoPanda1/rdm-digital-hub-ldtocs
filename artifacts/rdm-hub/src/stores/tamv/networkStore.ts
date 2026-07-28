@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 // ============================================================================
-// TAMV — Network Store: nodos federados, MSR Bridge y cifrado cuántico
+// TAMV â€” Network Store: nodos federados, MSR Bridge y cifrado cuÃ¡ntico
 // ============================================================================
 import { create } from "zustand";
 

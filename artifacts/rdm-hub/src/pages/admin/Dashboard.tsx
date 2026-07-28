@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { 
@@ -28,19 +32,19 @@ import { supabase } from "@/integrations/supabase/client";
 
 // Business categories
 const BUSINESS_CATEGORIES = [
-  { value: "GASTRONOMIA", label: "Gastronomía", icon: "🍽️" },
-  { value: "HOSPEDAJE", label: "Hospedaje", icon: "🏨" },
-  { value: "ARTESANIA", label: "Artesanía", icon: "🎨" },
-  { value: "PLATERIA", label: "Platería", icon: "💍" },
-  { value: "BAR", label: "Bar", icon: "🍺" },
-  { value: "COMERCIO", label: "Comercio", icon: "🏪" },
-  { value: "SERVICIOS", label: "Servicios", icon: "🔧" },
-  { value: "TURISMO", label: "Turismo", icon: "🗺️" },
-  { value: "OTROS", label: "Otros", icon: "📦" },
+  { value: "GASTRONOMIA", label: "GastronomÃ­a", icon: "ðŸ½ï¸" },
+  { value: "HOSPEDAJE", label: "Hospedaje", icon: "ðŸ¨" },
+  { value: "ARTESANIA", label: "ArtesanÃ­a", icon: "ðŸŽ¨" },
+  { value: "PLATERIA", label: "PlaterÃ­a", icon: "ðŸ’" },
+  { value: "BAR", label: "Bar", icon: "ðŸº" },
+  { value: "COMERCIO", label: "Comercio", icon: "ðŸª" },
+  { value: "SERVICIOS", label: "Servicios", icon: "ðŸ”§" },
+  { value: "TURISMO", label: "Turismo", icon: "ðŸ—ºï¸" },
+  { value: "OTROS", label: "Otros", icon: "ðŸ“¦" },
 ];
 
 const PRICE_RANGES = [
-  { value: "ECONOMICO", label: "Económico ($)" },
+  { value: "ECONOMICO", label: "EconÃ³mico ($)" },
   { value: "MODERADO", label: "Moderado ($$)" },
   { value: "CARO", label: "Caro ($$$)" },
   { value: "LUJO", label: "Lujo ($$$$)" },
@@ -252,11 +256,11 @@ const AdminDashboard = () => {
     if (selectedBusiness) {
       const { error } = await supabase.from("businesses").update(payload).eq("id", selectedBusiness.id);
       if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
-      toast({ title: "Éxito", description: "Negocio actualizado correctamente" });
+      toast({ title: "Ã‰xito", description: "Negocio actualizado correctamente" });
     } else {
       const { error } = await supabase.from("businesses").insert({ ...payload, is_active: true, is_verified: false });
       if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
-      toast({ title: "Éxito", description: "Negocio creado correctamente" });
+      toast({ title: "Ã‰xito", description: "Negocio creado correctamente" });
     }
 
     await refreshBusinesses();
@@ -316,7 +320,7 @@ const AdminDashboard = () => {
               <div className="flex items-center gap-3 mb-2">
                 <Store className="w-8 h-8 text-white" />
                 <h1 className="font-serif text-3xl md:text-4xl font-bold text-white">
-                  Panel de Administración
+                  Panel de AdministraciÃ³n
                 </h1>
               </div>
               <p className="text-white/80">
@@ -395,7 +399,7 @@ s y contenido de RDM Digital
             <TabsList className="w-full justify-start mb-6">
               <TabsTrigger value="businesses">Negocios</TabsTrigger>
               <TabsTrigger value="dichos">Dichos del Pueblo</TabsTrigger>
-              <TabsTrigger value="analytics">Estadísticas</TabsTrigger>
+              <TabsTrigger value="analytics">EstadÃ­sticas</TabsTrigger>
             </TabsList>
 
             {/* Businesses Tab */}
@@ -412,10 +416,10 @@ s y contenido de RDM Digital
                 </div>
                 <Select value={categoryFilter} onValueChange={setCategoryFilter}>
                   <SelectTrigger className="w-full md:w-[200px]">
-                    <SelectValue placeholder="Categoría" />
+                    <SelectValue placeholder="CategorÃ­a" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">Todas las categorías</SelectItem>
+                    <SelectItem value="all">Todas las categorÃ­as</SelectItem>
                     {BUSINESS_CATEGORIES.map(cat => (
                       <SelectItem key={cat.value} value={cat.value}>
                         {cat.icon} {cat.label}
@@ -552,15 +556,15 @@ s y contenido de RDM Digital
                     </div>
                     <div className="grid gap-3">
                       {[
-                        { dicho: "El que nace pa' minero, del cielito le cae el pico", categoria: "Minería", estado: "Publicado" },
-                        { dicho: "Más vale paste en mano que cien en el horno", categoria: "Gastronomía", estado: "Publicado" },
-                        { dicho: "Cuando la niebla baja, el minero trabaja", categoria: "Minería", estado: "Publicado" },
-                        { dicho: "Plata que brilla no es siempre la mejor", categoria: "Sabiduría", estado: "Borrador" },
-                        { dicho: "El que come paste sin chile, no sabe lo que se pierde", categoria: "Gastronomía", estado: "Publicado" },
+                        { dicho: "El que nace pa' minero, del cielito le cae el pico", categoria: "MinerÃ­a", estado: "Publicado" },
+                        { dicho: "MÃ¡s vale paste en mano que cien en el horno", categoria: "GastronomÃ­a", estado: "Publicado" },
+                        { dicho: "Cuando la niebla baja, el minero trabaja", categoria: "MinerÃ­a", estado: "Publicado" },
+                        { dicho: "Plata que brilla no es siempre la mejor", categoria: "SabidurÃ­a", estado: "Borrador" },
+                        { dicho: "El que come paste sin chile, no sabe lo que se pierde", categoria: "GastronomÃ­a", estado: "Publicado" },
                       ].map((d, i) => (
                         <div key={i} className="flex items-center justify-between p-3 rounded-lg border border-border text-sm">
                           <div className="flex-1 min-w-0">
-                            <p className="font-medium truncate">«{d.dicho}»</p>
+                            <p className="font-medium truncate">Â«{d.dicho}Â»</p>
                             <div className="flex gap-2 mt-1">
                               <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">{d.categoria}</span>
                               <span className={`text-[10px] px-1.5 py-0.5 rounded ${d.estado === "Publicado" ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500"}`}>{d.estado}</span>
@@ -582,8 +586,8 @@ s y contenido de RDM Digital
             <TabsContent value="analytics">
               <Card>
                 <CardHeader>
-                  <CardTitle>Estadísticas del Portal</CardTitle>
-                  <CardDescription>Métricas clave de RDM Digital</CardDescription>
+                  <CardTitle>EstadÃ­sticas del Portal</CardTitle>
+                  <CardDescription>MÃ©tricas clave de RDM Digital</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -607,7 +611,7 @@ s y contenido de RDM Digital
                         "Nuevo usuario registrado: ana@ejemplo.com",
                         "Negocio actualizado: Pastes El Portal",
                         "Comentario moderado en Muro Social",
-                        "Donación recibida: $250 MXN",
+                        "DonaciÃ³n recibida: $250 MXN",
                         "Nuevo lugar agregado: Mirador del Bosque",
                       ].map((a, i) => (
                         <div key={i} className="flex items-center gap-2">
@@ -632,7 +636,7 @@ s y contenido de RDM Digital
               </DialogTitle>
               <DialogDescription>
                 {selectedBusiness 
-                  ? "Actualiza la información del negocio" 
+                  ? "Actualiza la informaciÃ³n del negocio" 
                   : "Completa los datos del nuevo negocio para el directorio"
                 }
               </DialogDescription>
@@ -652,7 +656,7 @@ s y contenido de RDM Digital
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Categoría *</label>
+                  <label className="text-sm font-medium">CategorÃ­a *</label>
                   <Select 
                     value={formData.category} 
                     onValueChange={(v) => handleSelectChange("category", v)}
@@ -692,7 +696,7 @@ s y contenido de RDM Digital
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">
-                  Descripción * <span className="text-muted-foreground">(Máx 500 caracteres)</span>
+                  DescripciÃ³n * <span className="text-muted-foreground">(MÃ¡x 500 caracteres)</span>
                 </label>
                 <Textarea
                   name="description"
@@ -708,12 +712,12 @@ s y contenido de RDM Digital
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">Descripción Corta</label>
+                <label className="text-sm font-medium">DescripciÃ³n Corta</label>
                 <Input
                   name="short_description"
                   value={formData.short_description}
                   onChange={handleInputChange}
-                  placeholder="Versión corta para el mapa y tarjetas"
+                  placeholder="VersiÃ³n corta para el mapa y tarjetas"
                   maxLength={200}
                 />
               </div>
@@ -721,7 +725,7 @@ s y contenido de RDM Digital
               {/* Contact Info */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Teléfono</label>
+                  <label className="text-sm font-medium">TelÃ©fono</label>
                   <Input
                     name="phone"
                     value={formData.phone}
@@ -764,12 +768,12 @@ s y contenido de RDM Digital
 
               {/* Address */}
               <div className="space-y-2">
-                <label className="text-sm font-medium">Dirección</label>
+                <label className="text-sm font-medium">DirecciÃ³n</label>
                 <Input
                   name="address"
                   value={formData.address}
                   onChange={handleInputChange}
-                  placeholder="Calle, número, colonia"
+                  placeholder="Calle, nÃºmero, colonia"
                 />
               </div>
 
@@ -801,7 +805,7 @@ s y contenido de RDM Digital
               {/* Media */}
               <div className="space-y-2">
                 <label className="text-sm font-medium">
-                  Imágenes <span className="text-muted-foreground">(Máx 3)</span>
+                  ImÃ¡genes <span className="text-muted-foreground">(MÃ¡x 3)</span>
                 </label>
               <div className="grid grid-cols-3 gap-2">
                   <div className="space-y-1">
@@ -848,7 +852,7 @@ s y contenido de RDM Digital
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">
-                  Video <span className="text-muted-foreground">(Máx 60 segundos)</span>
+                  Video <span className="text-muted-foreground">(MÃ¡x 60 segundos)</span>
                 </label>
                   <Input
                     name="video_url"
@@ -865,7 +869,7 @@ s y contenido de RDM Digital
                     name="schedule_display"
                     value={formData.schedule_display}
                     onChange={handleInputChange}
-                    placeholder="Lun-Vie: 9:00 - 18:00, Sáb: 10:00 - 14:00"
+                    placeholder="Lun-Vie: 9:00 - 18:00, SÃ¡b: 10:00 - 14:00"
                   />
               </div>
 

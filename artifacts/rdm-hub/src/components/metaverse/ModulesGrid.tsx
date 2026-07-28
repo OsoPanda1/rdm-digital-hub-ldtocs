@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import React from "react";
 import { motion } from "framer-motion";
 import { Users, MessageCircle, Star, Sparkles, Zap, Music } from "lucide-react";
@@ -140,8 +144,8 @@ const ModulesGrid: React.FC = () => {
       ]
     },
     {
-      title: "Puentes Oníricos",
-      description: "Portales de conexión entre diferentes Dream Spaces para experiencias colaborativas únicas",
+      title: "Puentes OnÃ­ricos",
+      description: "Portales de conexiÃ³n entre diferentes Dream Spaces para experiencias colaborativas Ãºnicas",
       icon: <Zap className="w-7 h-7 text-white" />,
       gradient: "bg-gradient-to-br from-orange-600 to-red-600",
       stats: [

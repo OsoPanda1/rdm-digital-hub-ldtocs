@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
  * Isabella Orb - Portal flotante para chat con Isabella AI
  * Orbe 3D que se transforma en ventana de chat
@@ -69,7 +73,7 @@ const IsabellaOrb: React.FC = () => {
       ctx.fillStyle = gradient;
       ctx.fill();
 
-      // Partículas orbitando
+      // PartÃ­culas orbitando
       for (let i = 0; i < 6; i++) {
         const angle = (time * 0.03) + (i * Math.PI / 3);
         const orbitRadius = 35 + Math.sin(time * 0.02 + i) * 5;
@@ -153,7 +157,7 @@ const IsabellaOrb: React.FC = () => {
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold">Isabella Villaseñor AI</h3>
+                  <h3 className="font-bold">Isabella VillaseÃ±or AI</h3>
                   <p className="text-xs text-muted-foreground">Triple Federado Activo</p>
                 </div>
               </div>
@@ -189,7 +193,7 @@ const IsabellaOrb: React.FC = () => {
                     <MessageCircle className="w-8 h-8 text-cyan-400" />
                   </div>
                   <p className="text-muted-foreground text-sm">
-                    Hola, soy Isabella. ¿En qué puedo ayudarte hoy?
+                    Hola, soy Isabella. Â¿En quÃ© puedo ayudarte hoy?
                   </p>
                 </div>
               )}
@@ -221,7 +225,7 @@ const IsabellaOrb: React.FC = () => {
                     <div className="w-2 h-2 rounded-full bg-cyan-400 animate-bounce" style={{ animationDelay: '150ms' }} />
                     <div className="w-2 h-2 rounded-full bg-cyan-400 animate-bounce" style={{ animationDelay: '300ms' }} />
                   </div>
-                  <span className="text-xs">Isabella está escribiendo...</span>
+                  <span className="text-xs">Isabella estÃ¡ escribiendo...</span>
                 </div>
               )}
               

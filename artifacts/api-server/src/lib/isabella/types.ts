@@ -1,9 +1,13 @@
-// ────────────────────────────────────────────────────────────────
-// Isabella Villaseñor AI™ — Shared Types (Ω-Core v4.0 Enterprise)
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isabella VillaseÃ±or AIâ„¢ â€” Shared Types (Î©-Core v4.0 Enterprise)
 // Sistema Operativo Cognitivo Soberano del Ecosistema TAMV
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-// ── Core Types ──────────────────────────────────────────────────
+// â”€â”€ Core Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type CognitiveProcess =
   | "perception" | "attention" | "memory" | "reasoning"
@@ -22,7 +26,7 @@ export type PersonalityConfig = {
   modo: PersonalityMode;
 };
 
-// ── SOUL Types ──────────────────────────────────────────────────
+// â”€â”€ SOUL Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type SoulValue =
   | "soberania_tecnologica" | "dignidad_humana" | "neutralidad_epistemica"
@@ -34,7 +38,7 @@ export type AgentAutonomy = "full" | "supervised" | "readonly";
 export type PolicySeverity = "critical" | "high" | "medium" | "low";
 export type PolicyAction = "block" | "flag" | "log" | "redirect";
 
-// ── Federation Types ────────────────────────────────────────────
+// â”€â”€ Federation Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type FederationId = "FED-1" | "FED-2" | "FED-3" | "FED-4" | "FED-5" | "FED-6" | "FED-7";
 
@@ -45,7 +49,7 @@ export type FederationMask = {
   signature: string;
 };
 
-// ── Cryptography Types ──────────────────────────────────────────
+// â”€â”€ Cryptography Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type SignedPayload = {
   payload: unknown;
@@ -61,7 +65,7 @@ export type VerificationResult = {
   reason?: string;
 };
 
-// ── Skill Types ─────────────────────────────────────────────────
+// â”€â”€ Skill Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type SkillLicense = "MIT-0" | "MIT" | "Apache-2.0" | "GPL-3.0" | "AGPL-3.0";
 export type SkillStatus = "registered" | "quarantine" | "approved" | "rejected" | "deprecated";
@@ -81,7 +85,7 @@ export type SkillManifest = {
   supportedIntents: string[];
 };
 
-// ── Library Types ───────────────────────────────────────────────
+// â”€â”€ Library Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type FileFormat = "pdf" | "docx" | "txt" | "md" | "html";
 
@@ -119,7 +123,7 @@ export type CompilationJob = {
   error?: string;
 };
 
-// ── Evaluation Types ────────────────────────────────────────────
+// â”€â”€ Evaluation Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type EvaluationMetric =
   | "response_quality" | "hallucination_rate" | "ethical_alignment"
@@ -134,27 +138,27 @@ export type EvaluationResult = {
   timestamp: number;
 };
 
-// ── Chat Types ──────────────────────────────────────────────────
+// â”€â”€ Chat Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type ChatMessage = {
   role: "system" | "user" | "assistant";
   content: string;
 };
 
-// ── Response Types ──────────────────────────────────────────────
+// â”€â”€ Response Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type ChatResponse = { success: boolean; reply?: string; error?: string };
 export type Intention = { domain: string; action: string; confidence: number; entities: Record<string, string>; raw: string };
 export type SanitizationResult = { safe: boolean; risk: "none" | "low" | "medium" | "high" | "critical"; flags: string[]; sanitized: string };
 
-// ── Emotional Engine Types ──────────────────────────────────────
+// â”€â”€ Emotional Engine Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type PrimaryEmotion =
   | "alegria" | "tristeza" | "enfado" | "miedo" | "sorpresa" | "asco";
 
 export type EmotionalState = {
   primary: PrimaryEmotion;
-  intensity: number;       // 0.0 – 1.0
+  intensity: number;       // 0.0 â€“ 1.0
   valence: number;         // -1.0 (negative) to +1.0 (positive)
   arousal: number;         // 0.0 (calm) to 1.0 (excited)
   timestamp: number;
@@ -168,7 +172,7 @@ export type EmotionalBlend = {
   overallArousal: number;
 };
 
-// ── Crisis Detection Types ──────────────────────────────────────
+// â”€â”€ Crisis Detection Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type CrisisLevel = "none" | "watch" | "elevated" | "high" | "critical";
 
@@ -180,7 +184,7 @@ export type CrisisIndicator = {
   redirect?: string;
 };
 
-// ── Guardian Types ──────────────────────────────────────────────
+// â”€â”€ Guardian Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type GuardianVerdict = {
   approved: boolean;
@@ -191,7 +195,7 @@ export type GuardianVerdict = {
   trace: string[];
 };
 
-// ── Session Types ───────────────────────────────────────────────
+// â”€â”€ Session Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type IsabellaSession = {
   id: string;
@@ -203,7 +207,7 @@ export type IsabellaSession = {
   emotionalBaseline: EmotionalBlend | null;
 };
 
-// ── Decision Types ──────────────────────────────────────────────
+// â”€â”€ Decision Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type IsabellaDecision = {
   id: string;
@@ -219,7 +223,7 @@ export type IsabellaDecision = {
   evaluationResults?: EvaluationResult[];
 };
 
-// ── Feedback Types ──────────────────────────────────────────────
+// â”€â”€ Feedback Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type IsabellaFeedback = {
   id: string;
@@ -230,7 +234,7 @@ export type IsabellaFeedback = {
   createdAt: string;
 };
 
-// ── Knowledge Types ─────────────────────────────────────────────
+// â”€â”€ Knowledge Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type KnowledgeEntry = {
   id: string;
@@ -245,14 +249,14 @@ export type KnowledgeEntry = {
   createdAt: string;
 };
 
-// ── TAMV Federation Map ─────────────────────────────────────────
+// â”€â”€ TAMV Federation Map â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const TAMV_FEDERATIONS: Record<FederationId, { name: string; domain: string; scope: string }> = {
-  "FED-1": { name: "Preservación",     domain: "seguridad",   scope: "DevSecOps, CI/CD, parches" },
-  "FED-2": { name: "Estándares",       domain: "calidad",     scope: "Normas, versiones, compatibilidad" },
-  "FED-3": { name: "Tecnología",       domain: "gobernanza",  scope: "Kernel, skills, quorum, auditoría" },
-  "FED-4": { name: "Curación",         domain: "contenido",   scope: "Biblioteca, publicación, XR" },
-  "FED-5": { name: "Integridad",       domain: "verificación", scope: "DAG, firmas, trazabilidad" },
-  "FED-6": { name: "Adopción",         domain: "educación",   scope: "UTAMV, tutorías, comunidades" },
-  "FED-7": { name: "Auditoría",        domain: "ética",       scope: "Triple bloqueo, incidentes, gobernanza" },
+  "FED-1": { name: "PreservaciÃ³n",     domain: "seguridad",   scope: "DevSecOps, CI/CD, parches" },
+  "FED-2": { name: "EstÃ¡ndares",       domain: "calidad",     scope: "Normas, versiones, compatibilidad" },
+  "FED-3": { name: "TecnologÃ­a",       domain: "gobernanza",  scope: "Kernel, skills, quorum, auditorÃ­a" },
+  "FED-4": { name: "CuraciÃ³n",         domain: "contenido",   scope: "Biblioteca, publicaciÃ³n, XR" },
+  "FED-5": { name: "Integridad",       domain: "verificaciÃ³n", scope: "DAG, firmas, trazabilidad" },
+  "FED-6": { name: "AdopciÃ³n",         domain: "educaciÃ³n",   scope: "UTAMV, tutorÃ­as, comunidades" },
+  "FED-7": { name: "AuditorÃ­a",        domain: "Ã©tica",       scope: "Triple bloqueo, incidentes, gobernanza" },
 };

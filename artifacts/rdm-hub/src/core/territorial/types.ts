@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import type { Coordenadas, BoundingBox } from '@/core/models';
 
 export type ContributionType = 'checkin' | 'review' | 'photo' | 'rating' | 'tip' | 'event_report' | 'route_trace' | 'poi_suggestion';

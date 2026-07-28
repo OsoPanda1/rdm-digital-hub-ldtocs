@@ -1,7 +1,11 @@
-// ────────────────────────────────────────────────────────────────
-// Isabella Genesis — Interpretability
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: TAMV-EOL
+ */
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Isabella Genesis â€” Interpretability
 // Explicabilidad de cada DecisionRecord
-// ────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { DecisionRecord } from "../types/decision-record";
 
@@ -41,7 +45,7 @@ export function createInterpretability(): Interpretability {
       if (decision.ledgerAnchor) factors.push("anchored_ledger");
 
       return {
-        summary: `Decisión ${decision.decisionId}: ${decision.decision.action} (confianza: ${(decision.decision.confidence * 100).toFixed(0)}%)`,
+        summary: `DecisiÃ³n ${decision.decisionId}: ${decision.decision.action} (confianza: ${(decision.decision.confidence * 100).toFixed(0)}%)`,
         technicalTrace: decision.plan.map((step) => ({
           stepId: step.stepId,
           tool: step.tool,

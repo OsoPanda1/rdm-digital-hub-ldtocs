@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 export type {
   SkillContext, Artifact, Relation, Gap, Reference,
   SimulationResult, RiskProfile, CanonicalEntry, Evidence,
@@ -32,7 +36,7 @@ export const SKILL_REGISTRY: SkillRegistration[] = [
     skillId: 'skill.orion',
     name: 'ORION',
     version: '1.0.0',
-    description: 'Motor de arqueología cognitiva para descubrir conocimiento y relaciones ocultas en el ecosistema TAMV',
+    description: 'Motor de arqueologÃ­a cognitiva para descubrir conocimiento y relaciones ocultas en el ecosistema TAMV',
     priority: 'alto',
     getStats: () => orion.getStats(),
   },
@@ -40,7 +44,7 @@ export const SKILL_REGISTRY: SkillRegistration[] = [
     skillId: 'skill.sophia',
     name: 'SOPHIA',
     version: '1.0.0',
-    description: 'Motor de investigación profunda y síntesis para comprender antes de responder',
+    description: 'Motor de investigaciÃ³n profunda y sÃ­ntesis para comprender antes de responder',
     priority: 'critico',
     getStats: () => sophia.getStats(),
   },
@@ -48,7 +52,7 @@ export const SKILL_REGISTRY: SkillRegistration[] = [
     skillId: 'skill.argus',
     name: 'ARGUS',
     version: '1.0.0',
-    description: 'Motor de simulación de escenarios y evaluación de riesgos para decisiones estratégicas',
+    description: 'Motor de simulaciÃ³n de escenarios y evaluaciÃ³n de riesgos para decisiones estratÃ©gicas',
     priority: 'critico',
     getStats: () => argus.getStats(),
   },
@@ -56,7 +60,7 @@ export const SKILL_REGISTRY: SkillRegistration[] = [
     skillId: 'skill.mnemos',
     name: 'MNEMOS',
     version: '1.0.0',
-    description: 'Motor de preservación histórica y canonización de la memoria civilizatoria TAMV',
+    description: 'Motor de preservaciÃ³n histÃ³rica y canonizaciÃ³n de la memoria civilizatoria TAMV',
     priority: 'maximo',
     getStats: () => mnemos.getStats(),
   },
@@ -64,7 +68,7 @@ export const SKILL_REGISTRY: SkillRegistration[] = [
     skillId: 'skill.lumen',
     name: 'LUMEN',
     version: '1.0.0',
-    description: 'Motor de gobernanza constitucional y supervisión ética para todas las acciones del sistema',
+    description: 'Motor de gobernanza constitucional y supervisiÃ³n Ã©tica para todas las acciones del sistema',
     priority: 'maximo',
     getStats: () => lumen.getStats(),
   },

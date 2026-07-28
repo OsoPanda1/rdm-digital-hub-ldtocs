@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 const points = [
   { id: "cultura", x: "60%", y: "38%" },
   { id: "gastronomia", x: "33%", y: "55%" },

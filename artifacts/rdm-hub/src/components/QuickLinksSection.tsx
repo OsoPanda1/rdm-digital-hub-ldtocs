@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import historiaImg from "@/assets/historia-hero.jpg";
@@ -10,26 +14,26 @@ import arteImg from "@/assets/arte-hero.jpg";
 import comunidadImg from "@/assets/cultura-hero.jpg";
 
 const quickLinks = [
-  { label: "Historia", path: "/historia", icon: "📜", desc: "Cinco siglos de herencia minera", image: historiaImg },
-  { label: "Gastronomía", path: "/gastronomia", icon: "🥟", desc: "Del paste al mole hidalguense", image: gastronomiaImg },
-  { label: "Rutas", path: "/rutas", icon: "🗺️", desc: "9 recorridos temáticos", image: rutasImg },
-  { label: "Eventos", path: "/eventos", icon: "🎪", desc: "Festivales y fiestas locales", image: eventosImg },
-  { label: "Ecoturismo", path: "/ecoturismo", icon: "🌲", desc: "Bosques, cascadas y aventura", image: ecoturismoImg },
-  { label: "Mitos", path: "/relatos", icon: "👻", desc: "Leyendas y relatos oscuros", image: mitosImg },
-  { label: "Arte", path: "/arte", icon: "💎", desc: "Platería y artesanía local", image: arteImg },
-  { label: "Comunidad", path: "/comunidad", icon: "🌍", desc: "Muro global de viajeros", image: comunidadImg },
+  { label: "Historia", path: "/historia", icon: "ðŸ“œ", desc: "Cinco siglos de herencia minera", image: historiaImg },
+  { label: "GastronomÃ­a", path: "/gastronomia", icon: "ðŸ¥Ÿ", desc: "Del paste al mole hidalguense", image: gastronomiaImg },
+  { label: "Rutas", path: "/rutas", icon: "ðŸ—ºï¸", desc: "9 recorridos temÃ¡ticos", image: rutasImg },
+  { label: "Eventos", path: "/eventos", icon: "ðŸŽª", desc: "Festivales y fiestas locales", image: eventosImg },
+  { label: "Ecoturismo", path: "/ecoturismo", icon: "ðŸŒ²", desc: "Bosques, cascadas y aventura", image: ecoturismoImg },
+  { label: "Mitos", path: "/relatos", icon: "ðŸ‘»", desc: "Leyendas y relatos oscuros", image: mitosImg },
+  { label: "Arte", path: "/arte", icon: "ðŸ’Ž", desc: "PlaterÃ­a y artesanÃ­a local", image: arteImg },
+  { label: "Comunidad", path: "/comunidad", icon: "ðŸŒ", desc: "Muro global de viajeros", image: comunidadImg },
 ];
 
 const QuickLinksSection = () => (
   <section className="py-24">
     <div className="container mx-auto px-6">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
-        <span className="font-mono text-xs uppercase tracking-widest text-primary mb-3 block">Navega el Pueblo Mágico</span>
+        <span className="font-mono text-xs uppercase tracking-widest text-primary mb-3 block">Navega el Pueblo MÃ¡gico</span>
         <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase">
           Explora <span className="text-gradient-cyan">Todo</span>
         </h2>
         <p className="mt-4 max-w-2xl text-sm text-muted-foreground">
-          Fotografías reales de Real del Monte para descubrir rutas, sabores y experiencias del pueblo.
+          FotografÃ­as reales de Real del Monte para descubrir rutas, sabores y experiencias del pueblo.
         </p>
       </motion.div>
 
@@ -47,7 +51,7 @@ const QuickLinksSection = () => (
               <div className="relative h-32 overflow-hidden">
                 <img
                   src={link.image}
-                  alt={`Fotografía de ${link.label} en Real del Monte`}
+                  alt={`FotografÃ­a de ${link.label} en Real del Monte`}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   loading="lazy"
                 />

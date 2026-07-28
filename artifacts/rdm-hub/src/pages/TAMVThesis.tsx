@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -39,8 +43,8 @@ const TAMVThesis = () => {
     return (
       <RDMLayout>
         <SEOMeta
-          title="Tesis Soberana TAMV — Nodo Cero Real del Monte"
-          description="Documento maestro público del primer Sistema Operativo Civilizatorio Triple-Federado. Anclajes verificables: ORCID, Zenodo DOI, GitHub, BookPI."
+          title="Tesis Soberana TAMV â€” Nodo Cero Real del Monte"
+          description="Documento maestro pÃºblico del primer Sistema Operativo Civilizatorio Triple-Federado. Anclajes verificables: ORCID, Zenodo DOI, GitHub, BookPI."
         />
         <div className="container mx-auto px-6 pt-32 pb-24 relative z-10">
           {/* HERO */}
@@ -56,14 +60,14 @@ const TAMVThesis = () => {
             >
               <Crown className="w-4 h-4 mr-2 text-[hsl(var(--gold))]" />
               <span className="font-body text-[10px] tracking-[0.3em] uppercase text-[hsl(var(--gold))]">
-                TAMV Online Network™ · Tesis Soberana
+                TAMV Online Networkâ„¢ Â· Tesis Soberana
               </span>
             </Badge>
             <h1 className="font-display text-5xl md:text-7xl font-light mb-6 leading-tight">
-              <span className="text-gradient-gold">{t.meta.title.split("—")[0].trim()}</span>
+              <span className="text-gradient-gold">{t.meta.title.split("â€”")[0].trim()}</span>
               <br />
               <span className="text-foreground/85 text-3xl md:text-5xl">
-                {t.meta.title.split("—")[1]?.trim()}
+                {t.meta.title.split("â€”")[1]?.trim()}
               </span>
             </h1>
             <p className="font-body text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -106,7 +110,7 @@ const TAMVThesis = () => {
                     {t.biography.yearsAlone}
                   </p>
                   <p className="font-body text-[10px] tracking-[0.2em] uppercase text-muted-foreground mt-1">
-                    Años en soledad creativa
+                    AÃ±os en soledad creativa
                   </p>
                 </div>
                 <div className="text-center">
@@ -131,10 +135,10 @@ const TAMVThesis = () => {
             >
               <div className="flex items-center gap-3 mb-4">
                 <ShieldCheck className="w-5 h-5 text-[hsl(var(--electric))]" />
-                <h2 className="font-display text-2xl">Anclajes Públicos Verificables</h2>
+                <h2 className="font-display text-2xl">Anclajes PÃºblicos Verificables</h2>
               </div>
               <p className="font-body text-xs text-muted-foreground mb-5">
-                Cada nodo del corpus está atado a una huella pública independiente.
+                Cada nodo del corpus estÃ¡ atado a una huella pÃºblica independiente.
               </p>
               <ul className="space-y-2">
                 {t.anchors.map((a) => (
@@ -304,7 +308,7 @@ const TAMVThesis = () => {
             </div>
           </section>
 
-          {/* DIAGNÓSTICO */}
+          {/* DIAGNÃ“STICO */}
           <section className="mb-20">
             <motion.div
               initial={{ opacity: 0, scale: 0.97 }}
@@ -315,7 +319,7 @@ const TAMVThesis = () => {
             >
               <Compass className="w-7 h-7 text-[hsl(var(--terracotta))] mb-4" />
               <h2 className="font-display text-3xl mb-3">
-                Diagnóstico:{" "}
+                DiagnÃ³stico:{" "}
                 <span className="text-[hsl(var(--terracotta))]">{t.diagnosis.name}</span>
               </h2>
               <p className="font-body text-base text-muted-foreground leading-relaxed">

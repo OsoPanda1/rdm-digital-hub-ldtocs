@@ -1,3 +1,7 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 import {
   BookOpen, Landmark, Layers, Shield, Brain, Clock, FileText,
   Home, Network, GraduationCap, Globe, Coins, ChevronDown,
@@ -25,17 +29,17 @@ import {
 
 const mainNav = [
   { title: "Inicio", url: "/", icon: Home },
-  { title: "Introducción", url: "/introduccion", icon: BookOpen },
-  { title: "Filosofía y Códice", url: "/filosofia", icon: Landmark },
+  { title: "IntroducciÃ³n", url: "/introduccion", icon: BookOpen },
+  { title: "FilosofÃ­a y CÃ³dice", url: "/filosofia", icon: Landmark },
   { title: "Arquitectura", url: "/arquitectura", icon: Layers },
   { title: "WikiTAMV", url: "/wiki", icon: Library },
 ];
 
 const dominios = [
-  { title: "ID‑NVIDA", url: "/dominios/id-nvida", icon: Shield },
+  { title: "IDâ€‘NVIDA", url: "/dominios/id-nvida", icon: Shield },
   { title: "UTAMV", url: "/dominios/utamv", icon: GraduationCap },
-  { title: "Metaverso MD‑X4", url: "/dominios/metaverso", icon: Globe },
-  { title: "Economía TAMV", url: "/dominios/economia", icon: Coins },
+  { title: "Metaverso MDâ€‘X4", url: "/dominios/metaverso", icon: Globe },
+  { title: "EconomÃ­a TAMV", url: "/dominios/economia", icon: Coins },
   { title: "Seguridad", url: "/dominios/seguridad", icon: Shield },
 ];
 
@@ -44,23 +48,23 @@ const ecosistema = [
   { title: "Seguridad TENOCHTITLAN", url: "/seguridad-tenochtitlan", icon: Shield },
   { title: "Blockchain MSR", url: "/blockchain-msr", icon: Link2 },
   { title: "XR/VR/3D/4D", url: "/xr-tecnologia", icon: Monitor },
-  { title: "Economía Federada", url: "/economia-federada", icon: Coins },
+  { title: "EconomÃ­a Federada", url: "/economia-federada", icon: Coins },
   { title: "Quantum Computing", url: "/quantum-computing", icon: Atom },
   { title: "Enciclopedia Universal", url: "/enciclopedia", icon: Search },
   { title: "Isabella AI", url: "/isabella-ai", icon: Heart },
-  { title: "Impacto & Expansión", url: "/impacto-civilizatorio", icon: Award },
+  { title: "Impacto & ExpansiÃ³n", url: "/impacto-civilizatorio", icon: Award },
 ];
 
 const extras = [
   { title: "IA & Agentes", url: "/ia-agentes", icon: Brain },
   { title: "Sistemas Avanzados", url: "/sistemas-avanzados", icon: Cpu },
   { title: "Dashboard", url: "/dashboard", icon: Activity },
-  { title: "Línea de Tiempo", url: "/timeline", icon: Clock },
-  { title: "Documentación", url: "/documentacion", icon: FileText },
+  { title: "LÃ­nea de Tiempo", url: "/timeline", icon: Clock },
+  { title: "DocumentaciÃ³n", url: "/documentacion", icon: FileText },
   { title: "Manuales", url: "/manuales", icon: BookMarked },
   { title: "Gobernanza", url: "/gobernanza", icon: Shield },
   { title: "Despliegue", url: "/despliegue", icon: Rocket },
-  { title: "Biografía CEO", url: "/biografia-ceo", icon: Crown },
+  { title: "BiografÃ­a CEO", url: "/biografia-ceo", icon: Crown },
   { title: "Casos de Uso", url: "/casos-de-uso", icon: Briefcase },
   { title: "Kit APIs", url: "/kit-apis", icon: Plug },
   { title: "Estrategia", url: "/estrategia", icon: Target },
@@ -135,7 +139,7 @@ export function WikiSidebar() {
 
         <SidebarGroup>
           <SidebarGroupLabel className="text-primary/70 uppercase text-xs tracking-widest">
-            Más
+            MÃ¡s
           </SidebarGroupLabel>
           <SidebarGroupContent>{renderItems(extras)}</SidebarGroupContent>
         </SidebarGroup>

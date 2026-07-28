@@ -1,5 +1,9 @@
+﻿/*
+ * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
+ * SPDX-License-Identifier: MIT
+ */
 /**
- * YUN Architecture — Core Module
+ * YUN Architecture â€” Core Module
  * Real del Monte Digital Hub
  *
  * Central export point for all YUN infrastructure.
@@ -63,7 +67,7 @@ export {
   federationManager,
 } from './federation-coordinator';
 
-// Event Bus Bridge (unified TAMV ↔ YUN ↔ Core)
+// Event Bus Bridge (unified TAMV â†” YUN â†” Core)
 export {
   publishUnified,
   subscribeUnified,
