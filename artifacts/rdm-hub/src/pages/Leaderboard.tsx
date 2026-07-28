@@ -3,29 +3,22 @@
  * SPDX-License-Identifier: MIT
  */
 import { RDMLayout } from "@/components/rdm/RDMLayout";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Trophy, Medal, Crown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { supabase } from "@/integrations/supabase/client";
+import { getLeaderboard } from "@/features/gamification/api";
+import type { LeaderboardEntry } from "@/features/gamification/types";
 
-interface Row { id: string; display_name: string; avatar_url: string | null; total_points: number; level: number; location: string | null; }
-
-export default function Leaderboard() {
-  const [rows, setRows] = useState<Row[]>([]);
+export default function LeaderboardPage() {
+  const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    (async () => {
-      const { data } = await supabase
-        .from("profiles_public")
-        .select("id, display_name, avatar_url, total_points, level, location")
-        .order("total_points", { ascending: false })
-        .limit(50);
-      setRows((data ?? []) as Row[]);
-      setLoading(false);
-    })();
+    getLeaderboard()
+      .then((data) => setEntries(data.entries))
+      .finally(() => setLoading(false));
   }, []);
 
   const podiumIcon = (idx: number) => {
@@ -42,7 +35,7 @@ export default function Leaderboard() {
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-8 text-center">
             <Trophy className="h-12 w-12 mx-auto text-[hsl(var(--rdm-amber))] mb-3" />
             <h1 className="text-4xl font-bold">Tabla de Honor</h1>
-            <p className="text-muted-foreground mt-2">Los exploradores mÃ¡s activos de Real del Monte</p>
+            <p className="text-muted-foreground mt-2">Los exploradores más activos de Real del Monte</p>
           </motion.div>
 
           <Card>
@@ -50,12 +43,12 @@ export default function Leaderboard() {
             <CardContent className="p-0">
               {loading ? (
                 <p className="p-6 text-center text-muted-foreground">Cargando...</p>
-              ) : rows.length === 0 ? (
-                <p className="p-6 text-center text-muted-foreground">AÃºn nadie en el ranking. Â¡SÃ© el primero!</p>
+              ) : entries.length === 0 ? (
+                <p className="p-6 text-center text-muted-foreground">Aún nadie en el ranking. ¡Sé el primero!</p>
               ) : (
                 <ul className="divide-y divide-border">
-                  {rows.map((r, i) => (
-                    <motion.li key={r.id}
+                  {entries.map((r, i) => (
+                    <motion.li key={r.player_id}
                       initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.02 }}
                       className={`flex items-center gap-3 p-4 hover:bg-muted/30 ${i < 3 ? "bg-[hsl(var(--rdm-amber)/0.05)]" : ""}`}>
                       <div className="w-6 flex justify-center">{podiumIcon(i)}</div>
@@ -65,11 +58,11 @@ export default function Leaderboard() {
                       </Avatar>
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold truncate">{r.display_name}</p>
-                        <p className="text-xs text-muted-foreground truncate">{r.location ?? "Pueblo MÃ¡gico"} Â· Nivel {r.level}</p>
+                        <p className="text-xs text-muted-foreground truncate">Nivel {r.level}</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-bold text-[hsl(var(--rdm-amber))]">{r.total_points}</p>
-                        <p className="text-[10px] uppercase text-muted-foreground">puntos</p>
+                        <p className="font-bold text-[hsl(var(--rdm-amber))]">{r.total_xp}</p>
+                        <p className="text-[10px] uppercase text-muted-foreground">XP</p>
                       </div>
                     </motion.li>
                   ))}

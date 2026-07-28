@@ -34,8 +34,8 @@ export {
 } from './useYunEventBus';
 
 // Gamification
-export { useGamification, getTierForLevel, getLevelForXp } from './use-gamification';
-export type { GamificationProfile, GamificationEvent, GamificationQuest, LeaderboardEntry } from './use-gamification';
+export { useGamification } from './use-gamification';
+export type { UseGamificationReturn } from './use-gamification';
 
 // Common hooks
 export { useWebSocket } from './useWebSocket';

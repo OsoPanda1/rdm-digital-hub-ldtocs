@@ -3,48 +3,35 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * GamificationHUD â€” Compact player progress widget
+ * GamificationHUD — Compact player progress widget
  * Shows in the navbar/layout for logged-in users.
- * Falls back to "Ãšnete" CTA when not authenticated.
+ * Falls back to "Únete" CTA when not authenticated.
  */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Trophy, Zap, Star, Shield, Flame, ChevronRight, Crown } from "lucide-react";
-import { getPlayerProfile } from "@/features/gamification/api";
-import { calculateLevel, levelProgress } from "@/features/gamification/engine";
-import type { GamificationPlayer } from "@/features/gamification/types";
+import { useGamification } from "@/hooks/use-gamification";
+import { calculateLevel, levelProgress, getRankConfig } from "@/features/gamification/engine";
 
 const RANK_CONFIG: Record<string, { label: string; color: string; icon: typeof Trophy }> = {
-  explorer:          { label: "Explorador",       color: "hsl(152 60% 45%)", icon: Star },
-  chronicler:        { label: "Cronista",          color: "hsl(210 80% 55%)", icon: Shield },
-  legendary_miner:   { label: "Minero Legendario", color: "hsl(43 80% 55%)",  icon: Flame },
-  guardian_of_the_town: { label: "GuardiÃ¡n",       color: "hsl(270 60% 60%)", icon: Crown },
+  visitante:    { label: "Visitante",     color: "hsl(0 0% 60%)",   icon: Star },
+  explorador:   { label: "Explorador",    color: "hsl(152 60% 45%)", icon: Star },
+  minero:       { label: "Minero",        color: "hsl(43 80% 55%)",  icon: Shield },
+  cronista:     { label: "Cronista",      color: "hsl(210 80% 55%)", icon: Shield },
+  guardian:     { label: "Guardian",      color: "hsl(270 60% 60%)", icon: Crown },
+  leyenda_rdm:  { label: "Leyenda RDM",   color: "hsl(43 90% 50%)",  icon: Flame },
 };
-
-function getRank(player: GamificationPlayer): keyof typeof RANK_CONFIG {
-  const xp = player.total_xp;
-  if (xp >= 10000) return "guardian_of_the_town";
-  if (xp >= 3000)  return "legendary_miner";
-  if (xp >= 1000)  return "chronicler";
-  return "explorer";
-}
 
 interface GamificationHUDProps {
   compact?: boolean;
 }
 
 export function GamificationHUD({ compact = false }: GamificationHUDProps) {
-  const [player, setPlayer] = useState<GamificationPlayer | null>(null);
+  const { profile, isLoading } = useGamification();
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    getPlayerProfile()
-      .then((p) => setPlayer(p.player))
-      .catch(() => setPlayer(null));
-  }, []);
-
-  if (!player) {
+  if (isLoading || !profile) {
     return (
       <Link
         to="/perfil"
@@ -57,10 +44,10 @@ export function GamificationHUD({ compact = false }: GamificationHUDProps) {
     );
   }
 
-  const rank = getRank(player);
-  const { label, color, icon: RankIcon } = RANK_CONFIG[rank] ?? RANK_CONFIG.explorer;
-  const level = calculateLevel(player.total_xp);
-  const progress = levelProgress(player.total_xp);
+  const rank = getRankConfig(profile.total_xp);
+  const rankStyle = RANK_CONFIG[rank.rank] ?? RANK_CONFIG.visitante;
+  const level = calculateLevel(profile.total_xp);
+  const progress = levelProgress(profile.total_xp);
 
   if (compact) {
     return (
@@ -68,20 +55,20 @@ export function GamificationHUD({ compact = false }: GamificationHUDProps) {
         to="/leaderboard"
         className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-white/5 transition-all"
       >
-        <RankIcon className="w-4 h-4" style={{ color }} />
+        <rankStyle.icon className="w-4 h-4" style={{ color: rankStyle.color }} />
         <div className="flex flex-col">
-          <span className="text-[10px] font-semibold" style={{ color, fontFamily: "var(--font-display)" }}>
+          <span className="text-[10px] font-semibold" style={{ color: rankStyle.color, fontFamily: "var(--font-display)" }}>
             Nv. {level}
           </span>
           <div className="w-16 h-0.5 rounded-full bg-white/10 overflow-hidden">
             <div
               className="h-full rounded-full"
-              style={{ width: `${progress * 100}%`, backgroundColor: color }}
+              style={{ width: `${progress * 100}%`, backgroundColor: rankStyle.color }}
             />
           </div>
         </div>
         <span className="text-[10px] text-white/50" style={{ fontFamily: "var(--font-body)" }}>
-          {player.total_xp.toLocaleString()} XP
+          {profile.total_xp.toLocaleString()} XP
         </span>
       </Link>
     );
@@ -93,16 +80,16 @@ export function GamificationHUD({ compact = false }: GamificationHUDProps) {
         onClick={() => setOpen(!open)}
         className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 transition-all"
       >
-        <RankIcon className="w-4 h-4" style={{ color }} />
+        <rankStyle.icon className="w-4 h-4" style={{ color: rankStyle.color }} />
         <div className="flex flex-col items-start">
-          <span className="text-[11px] font-semibold leading-none" style={{ color, fontFamily: "var(--font-display)" }}>
-            {label}
+          <span className="text-[11px] font-semibold leading-none" style={{ color: rankStyle.color, fontFamily: "var(--font-display)" }}>
+            {rankStyle.label}
           </span>
           <div className="flex items-center gap-1 mt-0.5">
             <div className="w-20 h-1 rounded-full bg-white/10 overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
-                style={{ backgroundColor: color }}
+                style={{ backgroundColor: rankStyle.color }}
                 initial={{ width: 0 }}
                 animate={{ width: `${progress * 100}%` }}
                 transition={{ duration: 1, ease: "easeOut" }}
@@ -127,15 +114,14 @@ export function GamificationHUD({ compact = false }: GamificationHUDProps) {
             exit={{ opacity: 0, y: 8, scale: 0.96 }}
             className="absolute right-0 mt-2 w-64 rounded-2xl border border-white/10 bg-[hsl(220_25%_10%/0.95)] backdrop-blur-xl shadow-2xl z-50 overflow-hidden"
           >
-            {/* XP tracks */}
             <div className="p-4 border-b border-white/5">
               <p className="text-xs text-white/50 uppercase tracking-widest mb-3" style={{ fontFamily: "var(--font-body)" }}>
-                XP por categorÃ­a
+                XP por categoría
               </p>
               {[
-                { label: "Cultura", xp: player.xp_cultura, icon: Star, color: "hsl(43 80% 55%)" },
-                { label: "Comunidad", xp: player.xp_comunidad, icon: Shield, color: "hsl(152 60% 45%)" },
-                { label: "Juego", xp: player.xp_juego, icon: Zap, color: "hsl(210 80% 55%)" },
+                { label: "Cultura", xp: profile.xp_cultura, icon: Star, color: "hsl(43 80% 55%)" },
+                { label: "Comunidad", xp: profile.xp_comunidad, icon: Shield, color: "hsl(152 60% 45%)" },
+                { label: "Juego", xp: profile.xp_juego, icon: Zap, color: "hsl(210 80% 55%)" },
               ].map((track) => (
                 <div key={track.label} className="flex items-center gap-2 mb-2">
                   <track.icon className="w-3.5 h-3.5 shrink-0" style={{ color: track.color }} />
@@ -147,7 +133,7 @@ export function GamificationHUD({ compact = false }: GamificationHUDProps) {
                     <div className="h-1 rounded-full bg-white/5 overflow-hidden">
                       <div
                         className="h-full rounded-full"
-                        style={{ width: `${Math.min((track.xp / player.total_xp) * 100, 100)}%`, backgroundColor: track.color }}
+                        style={{ width: `${Math.min((track.xp / profile.total_xp) * 100, 100)}%`, backgroundColor: track.color }}
                       />
                     </div>
                   </div>
@@ -155,12 +141,11 @@ export function GamificationHUD({ compact = false }: GamificationHUDProps) {
               ))}
             </div>
 
-            {/* Quick stats */}
             <div className="p-3 flex justify-between">
               {[
-                { label: "Misiones", value: player.quests_completed, icon: Trophy },
-                { label: "Rachas", value: player.streak_days, icon: Flame },
-                { label: "Combos", value: player.combos_total, icon: Zap },
+                { label: "Misiones", value: profile.quests_completed, icon: Trophy },
+                { label: "Rachas", value: profile.streak_days, icon: Flame },
+                { label: "Combos", value: profile.combos_total, icon: Zap },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col items-center gap-0.5">
                   <stat.icon className="w-4 h-4 text-[hsl(var(--rdm-amber))]" />

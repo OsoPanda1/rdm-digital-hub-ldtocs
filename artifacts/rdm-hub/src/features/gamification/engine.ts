@@ -3,26 +3,23 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * Gamification LTOS Engine â€” Core Logic
+ * Gamification LTOS Engine — Pure Calculation Functions
  * Real del Monte Digital Hub
  *
- * Processes game events, evaluates quests, awards XP and badges.
- * Integrates with YUN event bus for observability.
+ * Client-side helpers for level/XP/badge/quest evaluation.
+ * All server-authoritative logic lives in the backend.
  */
 
 import type {
   GamificationPlayer,
-  GamificationQuest,
-  GamificationEvent,
   GamificationBadge,
-  PostGameEventRequest,
-  PostGameEventResponse,
   XpTrack,
   QuestCriteria,
+  GamificationEvent,
 } from './types';
 
 // ============================================================================
-// XP LEVEL TABLE
+// XP LEVEL TABLE (must match backend)
 // ============================================================================
 
 const XP_LEVEL_TABLE: number[] = [
@@ -60,7 +57,40 @@ export function levelProgress(totalXp: number): number {
 }
 
 // ============================================================================
-// XP CALCULATION
+// RANK THRESHOLDS (must match backend)
+// ============================================================================
+
+const RANK_THRESHOLDS: { rank: string; label: string; minXp: number }[] = [
+  { rank: 'visitante', label: 'Visitante', minXp: 0 },
+  { rank: 'explorador', label: 'Explorador', minXp: 100 },
+  { rank: 'minero', label: 'Minero', minXp: 500 },
+  { rank: 'cronista', label: 'Cronista', minXp: 1500 },
+  { rank: 'guardian', label: 'Guardian', minXp: 4000 },
+  { rank: 'leyenda_rdm', label: 'Leyenda RDM', minXp: 10000 },
+];
+
+/**
+ * Returns the current rank label based on total XP.
+ */
+export function getRankForXp(totalXp: number): string {
+  for (let i = RANK_THRESHOLDS.length - 1; i >= 0; i--) {
+    if (totalXp >= RANK_THRESHOLDS[i].minXp) return RANK_THRESHOLDS[i].label;
+  }
+  return RANK_THRESHOLDS[0].label;
+}
+
+/**
+ * Returns the rank config for the given total XP.
+ */
+export function getRankConfig(totalXp: number): { rank: string; label: string; minXp: number } {
+  for (let i = RANK_THRESHOLDS.length - 1; i >= 0; i--) {
+    if (totalXp >= RANK_THRESHOLDS[i].minXp) return RANK_THRESHOLDS[i];
+  }
+  return RANK_THRESHOLDS[0];
+}
+
+// ============================================================================
+// XP CALCULATION (client-side estimates for UI feedback)
 // ============================================================================
 
 interface XpCalculation {
@@ -70,7 +100,8 @@ interface XpCalculation {
 }
 
 /**
- * Calculates XP for a game event based on type and payload.
+ * Estimates XP for a game event based on type and payload.
+ * The authoritative XP calculation happens on the server.
  */
 export function calculateEventXp(
   eventType: string,
@@ -111,22 +142,29 @@ function getBaseXp(eventType: string, payload: Record<string, unknown>): number 
       return 25;
     case 'badge_earned':
       return (payload.xp_bonus as number) ?? 50;
+    case 'poi_visit':
+      return (payload.xp_reward as number) ?? 50;
+    case 'photo_capture':
+      return (payload.xp_reward as number) ?? 20;
+    case 'radio_listen':
+      return (payload.xp_reward as number) ?? 15;
+    case 'purchase':
+      return (payload.xp_reward as number) ?? 75;
+    case 'streak_maintain':
+      return (payload.xp_reward as number) ?? 30;
     default:
       return 5;
   }
 }
 
 function inferTrack(eventType: string, payload: Record<string, unknown>): XpTrack {
-  // Explicit track in payload
   if (payload.xp_track && ['cultura', 'comunidad', 'juego'].includes(payload.xp_track as string)) {
     return payload.xp_track as XpTrack;
   }
 
-  // Infer from event type
   if (eventType === 'community_action') return 'comunidad';
   if (eventType === 'page_visit') return 'cultura';
 
-  // Infer from piece types
   const pieceTypes = (payload.piece_types as string[]) ?? [];
   if (pieceTypes.some(t => ['capillas', 'calles', 'personajes', 'minas'].includes(t))) {
     return 'cultura';
@@ -140,7 +178,7 @@ function inferTrack(eventType: string, payload: Record<string, unknown>): XpTrac
 // ============================================================================
 
 /**
- * Evaluates whether a quest criteria is met by an event.
+ * Evaluates whether quest criteria is met by an event.
  */
 export function evaluateQuestCriteria(
   criteria: QuestCriteria,
@@ -199,7 +237,6 @@ export function evaluateQuestCriteria(
       };
     }
     case 'all_season_quests': {
-      // This requires external context â€” mark as not met by default
       return { met: false, progress: { current: 0, target: 1 } };
     }
     case 'community_action': {
@@ -230,12 +267,10 @@ export function evaluateBadgeCriteria(
   player: GamificationPlayer,
   playerBadges: string[],
 ): boolean {
-  // Already has badge
   if (playerBadges.includes(badge.code)) return false;
 
   const criteria = badge.criteria_json;
 
-  // Quest completion criteria
   if (criteria.quests_completed_min) {
     if (player.quests_completed < (criteria.quests_completed_min as number)) return false;
   }
@@ -265,133 +300,4 @@ export function evaluateBadgeCriteria(
   }
 
   return true;
-}
-
-// ============================================================================
-// ROLE CALCULATION
-// ============================================================================
-
-const ROLE_THRESHOLDS: { role: string; minXp: number }[] = [
-  { role: 'aprendiz_minero', minXp: 0 },
-  { role: 'minero_local', minXp: 1000 },
-  { role: 'guardian_patrimonio', minXp: 5000 },
-  { role: 'maestro_hub', minXp: 15000 },
-  { role: 'arquitecto_territorial', minXp: 50000 },
-];
-
-/**
- * Calculates federated roles based on total XP.
- */
-export function calculateRoles(totalXp: number): string[] {
-  return ROLE_THRESHOLDS
-    .filter(r => totalXp >= r.minXp)
-    .map(r => r.role);
-}
-
-// ============================================================================
-// EVENT PROCESSOR (Main entry point)
-// ============================================================================
-
-/**
- * Processes a game event and returns the result.
- * This is the core of the Gamification LTOS Engine.
- */
-export function processGameEvent(
-  request: PostGameEventRequest,
-  player: GamificationPlayer,
-  activeQuests: GamificationQuest[],
-  playerQuests: { quest_code: string; status: string; progress_json: Record<string, unknown> }[],
-  playerBadges: string[],
-  seasonMultiplier: number = 1,
-): PostGameEventResponse {
-  const event: GamificationEvent = {
-    id: `evt_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-    player_id: player.id,
-    event_type: request.event_type,
-    source: request.source,
-    payload_json: request.payload,
-    xp_earned: 0,
-    xp_track: null,
-    territory_id: 'rdm',
-    derived_events: [],
-    created_at: new Date().toISOString(),
-  };
-
-  // 1. Calculate XP
-  const xpCalc = calculateEventXp(request.event_type, request.payload, seasonMultiplier);
-  event.xp_earned = xpCalc.xp;
-  event.xp_track = xpCalc.track;
-
-  // 2. Update player XP
-  const newXp = player.total_xp + xpCalc.xp;
-  const newLevel = calculateLevel(newXp);
-  const levelUp = newLevel > player.level;
-
-  // 3. Evaluate quests
-  const questProgress: PostGameEventResponse['quest_progress'] = [];
-  const completedQuests: string[] = [];
-
-  for (const quest of activeQuests) {
-    if (quest.status !== 'active') continue;
-    if (quest.quest_type !== (request.event_type as string) && quest.quest_type !== 'narrative' && quest.quest_type !== 'territorial') continue;
-
-    const pq = playerQuests.find(p => p.quest_code === quest.code);
-    const result = evaluateQuestCriteria(
-      quest.criteria_json,
-      event,
-      player,
-      [{ event_type: request.event_type, payload_json: request.payload }],
-    );
-
-    if (result.met && (!pq || pq.status !== 'completed')) {
-      completedQuests.push(quest.code);
-      questProgress.push({
-        quest_code: quest.code,
-        progress: result.progress,
-      });
-    } else if (pq) {
-      questProgress.push({
-        quest_code: quest.code,
-        progress: result.progress,
-      });
-    }
-  }
-
-  // 4. Check badge qualifications
-  const badgesEarned: string[] = [];
-  const allBadges = getAllBadges();
-  for (const badge of allBadges) {
-    if (evaluateBadgeCriteria(badge, { ...player, total_xp: newXp }, [...playerBadges, ...badgesEarned])) {
-      badgesEarned.push(badge.code);
-    }
-  }
-
-  return {
-    success: true,
-    event_id: event.id,
-    xp_earned: xpCalc.xp,
-    level_up: levelUp,
-    new_level: newLevel,
-    badges_earned: badgesEarned,
-    quest_progress: questProgress,
-  };
-}
-
-// ============================================================================
-// MOCK DATA (for client-side preview)
-// ============================================================================
-
-function getAllBadges(): GamificationBadge[] {
-  return [
-    { id: '1', code: 'aprendiz_minero', name: 'Aprendiz Minero', description: '', icon_url: null, rarity: 'common', category: 'cultural', criteria_json: { quests_completed_min: 1, track: 'cultura' }, xp_bonus: 50, max_earners: 0, status: 'active', metadata: {}, created_at: '' },
-    { id: '2', code: 'explorador_calles', name: 'Explorador de Calles', description: '', icon_url: null, rarity: 'common', category: 'territorial', criteria_json: { locations_visited_min: 5 }, xp_bonus: 100, max_earners: 0, status: 'active', metadata: {}, created_at: '' },
-    { id: '3', code: 'guardian_panteon', name: 'Guardian del Panteon', description: '', icon_url: null, rarity: 'rare', category: 'cultural', criteria_json: { quest_code: 'panteon_ingles' }, xp_bonus: 200, max_earners: 0, status: 'active', metadata: {}, created_at: '' },
-    { id: '4', code: 'maestro_pastes', name: 'Maestro de los Pastes', description: '', icon_url: null, rarity: 'rare', category: 'gameplay', criteria_json: { combos_pastes_min: 20 }, xp_bonus: 150, max_earners: 0, status: 'active', metadata: {}, created_at: '' },
-    { id: '5', code: 'minero_legendario', name: 'Minero Legendario', description: '', icon_url: null, rarity: 'epic', category: 'cultural', criteria_json: { level_cultura_min: 10 }, xp_bonus: 500, max_earners: 0, status: 'active', metadata: {}, created_at: '' },
-    { id: '6', code: 'corazon_comunidad', name: 'Corazon de la Comunidad', description: '', icon_url: null, rarity: 'rare', category: 'community', criteria_json: { community_actions_min: 3 }, xp_bonus: 300, max_earners: 0, status: 'active', metadata: {}, created_at: '' },
-    { id: '7', code: 'arquitecto_territorial', name: 'Arquitecto Territorial', description: '', icon_url: null, rarity: 'legendary', category: 'territorial', criteria_json: { all_tracks_max: true }, xp_bonus: 1000, max_earners: 0, status: 'active', metadata: {}, created_at: '' },
-    { id: '8', code: 'leyenda_viva', name: 'Leyenda Viva', description: '', icon_url: null, rarity: 'legendary', category: 'cultural', criteria_json: { all_season_quests: true }, xp_bonus: 2000, max_earners: 0, status: 'active', metadata: {}, created_at: '' },
-    { id: '9', code: 'combo_master', name: 'Combo Master', description: '', icon_url: null, rarity: 'epic', category: 'gameplay', criteria_json: { max_combo_min: 15 }, xp_bonus: 250, max_earners: 0, status: 'active', metadata: {}, created_at: '' },
-    { id: '10', code: 'culturalista', name: 'Culturalista', description: '', icon_url: null, rarity: 'epic', category: 'cultural', criteria_json: { cultural_quests_min: 10 }, xp_bonus: 400, max_earners: 0, status: 'active', metadata: {}, created_at: '' },
-  ];
 }

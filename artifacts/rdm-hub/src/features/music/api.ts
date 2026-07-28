@@ -19,7 +19,6 @@ import type {
 } from './types';
 import type { PostGameEventResponse } from '../gamification/types';
 import { musicActionToGameEvent } from './engine';
-import { processGameEvent } from '../gamification/engine';
 
 const API_BASE = import.meta.env.VITE_API_URL || '/api/v1';
 

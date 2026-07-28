@@ -2,192 +2,188 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-// @ts-nocheck
-import { useState, useCallback, useRef } from "react";
-import { supabase } from "@/integrations/supabase/client";
+/**
+ * useGamification — Unified gamification hook
+ * Uses the clean API client. Handles SSE live updates and auto-refresh.
+ */
+import { useState, useCallback, useEffect, useRef } from 'react';
+import {
+  getPlayerProfile,
+  getLeaderboard,
+  getQuests,
+  getRewards,
+  postGameEvent as apiPostEvent,
+  redeemReward as apiRedeemReward,
+  verifyPoi as apiVerifyPoi,
+  connectToLiveEvents,
+} from '@/features/gamification/api';
+import type {
+  GamificationPlayer,
+  GamificationQuest,
+  GamificationPlayerQuest,
+  GamificationBadge,
+  GamificationPlayerBadge,
+  GamificationReward,
+  GamificationPlayerReward,
+  GamificationSeason,
+  LeaderboardEntry,
+  StreakInfo,
+  LiveEvent,
+  PostGameEventRequest,
+  PostGameEventResponse,
+  RedeemRewardRequest,
+  RedeemRewardResponse,
+  VerifyPoiRequest,
+  VerifyPoiResponse,
+  GetPlayerProfileResponse,
+  XpTrack,
+} from '@/features/gamification/types';
 
-export interface GamificationProfile {
-  user_id: string;
-  points: number;
-  level: number;
-  badges: string[];
-  streak_days: number;
+export interface UseGamificationReturn {
+  profile: GamificationPlayer | null;
+  activeQuests: (GamificationPlayerQuest & { quest: GamificationQuest })[];
+  badges: (GamificationPlayerBadge & { badge: GamificationBadge })[];
+  rewards: GamificationReward[];
+  playerRewards: (GamificationPlayerReward & { reward: GamificationReward })[];
+  leaderboard: LeaderboardEntry[];
+  playerRank: number | null;
+  streak: StreakInfo | null;
+  season: GamificationSeason | null;
+  isLoading: boolean;
+  error: string | null;
+  postEvent: (request: PostGameEventRequest) => Promise<PostGameEventResponse>;
+  redeemReward: (request: RedeemRewardRequest) => Promise<RedeemRewardResponse>;
+  verifyPoi: (request: VerifyPoiRequest) => Promise<VerifyPoiResponse>;
+  refreshProfile: () => Promise<void>;
+  refreshLeaderboard: (track?: XpTrack) => Promise<void>;
 }
 
-export interface GamificationEvent {
-  id: string;
-  event_type: string;
-  points: number;
-  metadata: Record<string, unknown>;
-  created_at: string;
-}
-
-export interface GamificationQuest {
-  id: string;
-  code: string;
-  title: string;
-  description: string;
-  quest_type: string;
-  criteria: Record<string, unknown>;
-  reward_xp: number;
-  reward_badge: string | null;
-  starts_at: string | null;
-  ends_at: string | null;
-  is_active: boolean;
-}
-
-export interface LeaderboardEntry {
-  user_id: string;
-  display_name: string | null;
-  avatar_url: string | null;
-  points: number;
-  level: number;
-  rank: number;
-}
-
-const TIERS = [
-  { level: 1, name: "Aprendiz Minero", xpRequired: 0 },
-  { level: 2, name: "Minero Local", xpRequired: 500 },
-  { level: 3, name: "Explorador del Hub", xpRequired: 1500 },
-  { level: 4, name: "GuardiÃ¡n del Patrimonio", xpRequired: 3500 },
-  { level: 5, name: "Cronista Digital", xpRequired: 6000 },
-  { level: 6, name: "Arquitecto Territorial", xpRequired: 10000 },
-  { level: 7, name: "Maestro del Hub", xpRequired: 20000 },
-] as const;
-
-export function getTierForLevel(level: number) {
-  return TIERS.find((t) => t.level === level) ?? TIERS[TIERS.length - 1];
-}
-
-export function getLevelForXp(points: number) {
-  for (let i = TIERS.length - 1; i >= 0; i--) {
-    if (points >= TIERS[i].xpRequired) return TIERS[i].level;
-  }
-  return 1;
-}
-
-export function useGamification() {
-  const [profile, setProfile] = useState<GamificationProfile | null>(null);
-  const [quests, setQuests] = useState<GamificationQuest[]>([]);
+export function useGamification(): UseGamificationReturn {
+  const [profile, setProfile] = useState<GamificationPlayer | null>(null);
+  const [activeQuests, setActiveQuests] = useState<(GamificationPlayerQuest & { quest: GamificationQuest })[]>([]);
+  const [badges, setBadges] = useState<(GamificationPlayerBadge & { badge: GamificationBadge })[]>([]);
+  const [rewards, setRewards] = useState<GamificationReward[]>([]);
+  const [playerRewards, setPlayerRewards] = useState<(GamificationPlayerReward & { reward: GamificationReward })[]>([]);
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
-  const [events, setEvents] = useState<GamificationEvent[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [playerRank, setPlayerRank] = useState<number | null>(null);
+  const [streak, setStreak] = useState<StreakInfo | null>(null);
+  const [season, setSeason] = useState<GamificationSeason | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const loadedRef = useRef(false);
 
-  const fetchProfile = useCallback(async (userId: string) => {
-    const { data } = await supabase
-      .from("gamification_profiles")
-      .select("*")
-      .eq("user_id", userId)
-      .maybeSingle();
-    if (data) {
-      setProfile({
-        user_id: data.user_id,
-        points: data.points,
-        level: data.level,
-        badges: (data.badges as string[]) ?? [],
-        streak_days: data.streak_days,
-      });
+  const refreshProfile = useCallback(async () => {
+    try {
+      const data: GetPlayerProfileResponse = await getPlayerProfile();
+      setProfile(data.player);
+      setActiveQuests(data.active_quests);
+      setBadges(data.badges);
+      setPlayerRewards(data.rewards);
+      setSeason(data.season);
+      setStreak(data.streak);
+      setError(null);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to load profile');
     }
   }, []);
 
-  const fetchQuests = useCallback(async () => {
-    const { data } = await supabase
-      .from("gamification_quests")
-      .select("*")
-      .eq("is_active", true)
-      .order("created_at", { ascending: false });
-    if (data) setQuests(data as GamificationQuest[]);
-  }, []);
-
-  const fetchLeaderboard = useCallback(async () => {
-    const { data } = await supabase
-      .from("gamification_profiles")
-      .select("user_id, points, level, badges, streak_days")
-      .order("points", { ascending: false })
-      .limit(50);
-    if (data) {
-      setLeaderboard(
-        data.map((row, i) => ({
-          user_id: row.user_id,
-          display_name: null,
-          avatar_url: null,
-          points: row.points,
-          level: row.level,
-          rank: i + 1,
-        })),
-      );
+  const refreshLeaderboard = useCallback(async (track?: XpTrack) => {
+    try {
+      const data = await getLeaderboard(track);
+      setLeaderboard(data.entries);
+      setPlayerRank(data.player_rank);
+      if (data.season) setSeason(data.season);
+      setError(null);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to load leaderboard');
     }
   }, []);
 
-  const fetchEvents = useCallback(async (userId: string) => {
-    const { data } = await supabase
-      .from("gamification_events")
-      .select("*")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false })
-      .limit(20);
-    if (data) setEvents(data as GamificationEvent[]);
+  const refreshRewards = useCallback(async () => {
+    try {
+      const data = await getRewards();
+      setRewards(data.rewards);
+      setPlayerRewards(data.player_rewards);
+      setError(null);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to load rewards');
+    }
   }, []);
 
-  const recordEvent = useCallback(
-    async (userId: string, eventType: string, points: number, metadata?: Record<string, unknown>) => {
-      await supabase.from("gamification_events").insert({
-        user_id: userId,
-        event_type: eventType,
-        points,
-        metadata: (metadata ?? {}) as unknown as Record<string, string>,
-      });
+  const refreshAll = useCallback(async () => {
+    setIsLoading(true);
+    await Promise.allSettled([
+      refreshProfile(),
+      refreshLeaderboard(),
+      refreshRewards(),
+    ]);
+    setIsLoading(false);
+  }, [refreshProfile, refreshLeaderboard, refreshRewards]);
 
-      const { data: current } = await supabase
-        .from("gamification_profiles")
-        .select("points, level")
-        .eq("user_id", userId)
-        .maybeSingle();
+  useEffect(() => {
+    if (loadedRef.current) return;
+    loadedRef.current = true;
+    refreshAll();
+  }, [refreshAll]);
 
-      if (current) {
-        const newPoints = current.points + points;
-        const newLevel = getLevelForXp(newPoints);
-        await supabase
-          .from("gamification_profiles")
-          .update({ points: newPoints, level: newLevel, updated_at: new Date().toISOString() })
-          .eq("user_id", userId);
+  useEffect(() => {
+    const disconnect = connectToLiveEvents((event: LiveEvent) => {
+      switch (event.type) {
+        case 'xp_earned':
+        case 'level_up':
+        case 'badge_earned':
+        case 'streak_update':
+          refreshProfile();
+          break;
+        case 'quest_complete':
+          refreshProfile();
+          refreshLeaderboard();
+          break;
+        case 'leaderboard_update':
+          refreshLeaderboard();
+          break;
       }
+    });
 
-      await fetchProfile(userId);
-      await fetchEvents(userId);
-    },
-    [fetchProfile, fetchEvents],
-  );
+    return disconnect;
+  }, [refreshProfile, refreshLeaderboard]);
 
-  const loadAll = useCallback(
-    async (userId: string) => {
-      if (loadedRef.current) return;
-      setLoading(true);
-      await Promise.all([
-        fetchProfile(userId),
-        fetchQuests(),
-        fetchLeaderboard(),
-        fetchEvents(userId),
-      ]);
-      loadedRef.current = true;
-      setLoading(false);
-    },
-    [fetchProfile, fetchQuests, fetchLeaderboard, fetchEvents],
-  );
+  const postEvent = useCallback(async (request: PostGameEventRequest) => {
+    const result = await apiPostEvent(request);
+    refreshProfile();
+    refreshLeaderboard();
+    return result;
+  }, [refreshProfile, refreshLeaderboard]);
+
+  const redeemReward = useCallback(async (request: RedeemRewardRequest) => {
+    const result = await apiRedeemReward(request);
+    refreshRewards();
+    refreshProfile();
+    return result;
+  }, [refreshRewards, refreshProfile]);
+
+  const verifyPoi = useCallback(async (request: VerifyPoiRequest) => {
+    const result = await apiVerifyPoi(request);
+    refreshProfile();
+    return result;
+  }, [refreshProfile]);
 
   return {
     profile,
-    quests,
+    activeQuests,
+    badges,
+    rewards,
+    playerRewards,
     leaderboard,
-    events,
-    loading,
-    tiers: TIERS,
-    loadAll,
-    fetchProfile,
-    fetchQuests,
-    fetchLeaderboard,
-    fetchEvents,
-    recordEvent,
+    playerRank,
+    streak,
+    season,
+    isLoading,
+    error,
+    postEvent,
+    redeemReward,
+    verifyPoi,
+    refreshProfile,
+    refreshLeaderboard,
   };
 }

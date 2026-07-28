@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * Gamification LTOS Engine â€” Core Types
+ * Gamification LTOS Engine — Core Types
  * Real del Monte Digital Hub
  *
  * Federated gamification system integrated with LTOS.
@@ -26,14 +26,15 @@ export type RewardStatus = 'active' | 'paused' | 'expired' | 'redeemed';
 export type PlayerRewardStatus = 'claimed' | 'redeemed' | 'expired' | 'cancelled';
 export type SeasonStatus = 'upcoming' | 'active' | 'completed' | 'cancelled';
 export type GameEventType =
+  | 'page_visit'
+  | 'poi_visit'
   | 'combo'
   | 'quest_complete'
-  | 'level_up'
-  | 'badge_earned'
-  | 'voucher_redeemed'
-  | 'score'
-  | 'page_visit'
-  | 'community_action';
+  | 'community_action'
+  | 'photo_capture'
+  | 'radio_listen'
+  | 'purchase'
+  | 'streak_maintain';
 
 // ============================================================================
 // PLAYER
@@ -265,6 +266,28 @@ export interface LeaderboardEntry {
 }
 
 // ============================================================================
+// STREAK
+// ============================================================================
+
+export interface StreakInfo {
+  current_days: number;
+  longest_days: number;
+  last_active_date: string | null;
+  multiplier: number;
+}
+
+// ============================================================================
+// LIVE EVENT (SSE)
+// ============================================================================
+
+export interface LiveEvent {
+  type: 'xp_earned' | 'level_up' | 'badge_earned' | 'quest_complete' | 'leaderboard_update' | 'streak_update';
+  player_id: string;
+  data: Record<string, unknown>;
+  timestamp: string;
+}
+
+// ============================================================================
 // API REQUESTS/RESPONSES
 // ============================================================================
 
@@ -290,6 +313,7 @@ export interface GetPlayerProfileResponse {
   badges: (GamificationPlayerBadge & { badge: GamificationBadge })[];
   rewards: (GamificationPlayerReward & { reward: GamificationReward })[];
   season: GamificationSeason | null;
+  streak: StreakInfo;
 }
 
 export interface GetLeaderboardResponse {
@@ -297,4 +321,39 @@ export interface GetLeaderboardResponse {
   total_players: number;
   season: GamificationSeason | null;
   player_rank: number | null;
+}
+
+export interface RedeemRewardRequest {
+  reward_id: string;
+}
+
+export interface RedeemRewardResponse {
+  success: boolean;
+  player_reward_id: string;
+  voucher_code: string;
+  message: string;
+}
+
+export interface VerifyPoiRequest {
+  poi_id: string;
+  lat: number;
+  lng: number;
+  accuracy_meters: number;
+}
+
+export interface VerifyPoiResponse {
+  success: boolean;
+  verified: boolean;
+  distance_meters: number;
+  message: string;
+}
+
+export interface GetRewardsResponse {
+  rewards: GamificationReward[];
+  player_rewards: (GamificationPlayerReward & { reward: GamificationReward })[];
+}
+
+export interface GetQuestsResponse {
+  quests: GamificationQuest[];
+  player_quests: (GamificationPlayerQuest & { quest: GamificationQuest })[];
 }

@@ -2,15 +2,15 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-import { useState, useEffect, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Target, Trophy, Flame, Star, Clock, CheckCircle2,
   ChevronRight, Zap, Shield, Pickaxe, Mountain
 } from "lucide-react";
-import { getPlayerProfile } from "../api";
-import type { GamificationPlayerQuest, GamificationQuest, XpTrack } from "../types";
-import { calculateLevel, levelProgress } from "../engine";
+import { useGamification } from "@/hooks/use-gamification";
+import { calculateLevel, levelProgress } from "@/features/gamification/engine";
+import type { XpTrack } from "@/features/gamification/types";
 
 const TRACK_COLORS: Record<XpTrack, string> = {
   cultura: "hsl(43, 80%, 55%)",
@@ -42,43 +42,24 @@ interface QuestPanelProps {
 }
 
 export function QuestPanel({ compact = false }: QuestPanelProps) {
-  const [quests, setQuests] = useState<(GamificationPlayerQuest & { quest: GamificationQuest })[]>([]);
-  const [player, setPlayer] = useState<{ total_xp: number; level: number; streak_days?: number } | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { activeQuests, profile, isLoading } = useGamification();
   const [activeTrack, setActiveTrack] = useState<XpTrack | "all">("all");
 
-  useEffect(() => {
-    let mounted = true;
-    getPlayerProfile().then((profile) => {
-      if (!mounted) return;
-      setQuests(profile.active_quests || []);
-      setPlayer(profile.player || null);
-      setLoading(false);
-    }).catch(() => {
-      if (!mounted) return;
-      setLoading(false);
-    });
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
   const filteredQuests = activeTrack === "all"
-    ? quests
-    : quests.filter(q => q.quest.track === activeTrack);
+    ? activeQuests
+    : activeQuests.filter(q => q.quest.track === activeTrack);
 
-  const completedCount = quests.filter(q => q.status === "completed").length;
-  const totalCount = quests.length;
+  const completedCount = activeQuests.filter(q => q.status === "completed").length;
+  const totalCount = activeQuests.length;
 
-  // Next-action quest: la primera no completada, priorizando dificultad baja/normal.
   const nextQuest = useMemo(() => {
-    const pending = quests.filter(q => q.status !== "completed");
+    const pending = activeQuests.filter(q => q.status !== "completed");
     if (pending.length === 0) return undefined;
     return pending.sort((a, b) => {
       const order = { easy: 0, medium: 1, hard: 2, legendary: 3 } as Record<string, number>;
       return order[a.quest.difficulty] - order[b.quest.difficulty];
     })[0];
-  }, [quests]);
+  }, [activeQuests]);
 
   const trackSummary = useMemo(() => {
     const summary: Record<XpTrack, { total: number; completed: number }> = {
@@ -86,15 +67,15 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
       comunidad: { total: 0, completed: 0 },
       juego: { total: 0, completed: 0 },
     };
-    for (const pq of quests) {
+    for (const pq of activeQuests) {
       const t = pq.quest.track as XpTrack;
       summary[t].total += 1;
       if (pq.status === "completed") summary[t].completed += 1;
     }
     return summary;
-  }, [quests]);
+  }, [activeQuests]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="rdm-glass rounded-2xl p-6">
         <div className="animate-pulse space-y-4">
@@ -112,7 +93,6 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
 
   return (
     <div className="rdm-glass rounded-2xl overflow-hidden">
-      {/* Header */}
       <div className="p-5 border-b border-white/10">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
@@ -126,15 +106,14 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
           </span>
         </div>
 
-        {/* XP & streak */}
-        {player && (
+        {profile && (
           <div className="mb-3 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs text-[hsl(var(--muted-foreground))]">
-                Nivel {player.level}
+                Nivel {calculateLevel(profile.total_xp)}
               </span>
               <span className="text-xs text-[hsl(var(--rdm-amber))]">
-                {player.total_xp.toLocaleString()} XP
+                {profile.total_xp.toLocaleString()} XP
               </span>
             </div>
             <div className="h-2 bg-white/5 rounded-full overflow-hidden">
@@ -142,20 +121,19 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
                 className="h-full rounded-full"
                 style={{ background: "var(--gradient-gold)" }}
                 initial={{ width: 0 }}
-                animate={{ width: `${levelProgress(player.total_xp) * 100}%` }}
+                animate={{ width: `${levelProgress(profile.total_xp) * 100}%` }}
                 transition={{ duration: 1, ease: "easeOut" }}
               />
             </div>
-            {player.streak_days && player.streak_days > 0 && (
+            {profile.streak_days > 0 && (
               <div className="flex items-center gap-1 text-[10px] text-[hsl(var(--muted-foreground))]">
                 <Flame className="w-3 h-3 text-orange-400" />
-                <span>Racha de {player.streak_days} dÃ­as</span>
+                <span>Racha de {profile.streak_days} días</span>
               </div>
             )}
           </div>
         )}
 
-        {/* Track filters + resumen */}
         {!compact && (
           <div className="space-y-2">
             <div className="flex gap-1">
@@ -172,7 +150,6 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
               {(Object.keys(TRACK_COLORS) as XpTrack[]).map(track => {
                 const Icon = TRACK_ICONS[track];
                 const summary = trackSummary[track];
-                const completedRatio = summary.total ? (summary.completed / summary.total) : 0;
                 return (
                   <button
                     key={track}
@@ -200,7 +177,6 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
               })}
             </div>
 
-            {/* Next action highlight */}
             {nextQuest && (
               <motion.div
                 className="mt-1 flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2"
@@ -221,7 +197,6 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
         )}
       </div>
 
-      {/* Quest List */}
       <div className={`p-3 space-y-2 ${compact ? "max-h-[300px]" : "max-h-[500px]"} overflow-y-auto`}>
         <AnimatePresence>
           {filteredQuests.map((pq, i) => (
@@ -238,7 +213,6 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
               }`}
             >
               <div className="flex items-start gap-3">
-                {/* Track indicator */}
                 <div
                   className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
                   style={{ background: TRACK_COLORS[pq.quest.track] + "20" }}
@@ -274,7 +248,6 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
                     {pq.quest.description}
                   </p>
 
-                  {/* Progress bar */}
                   <div className="flex items-center gap-2">
                     <div className="flex-1 h-1.5 bg-white/5 rounded-full overflow-hidden">
                       <motion.div
@@ -292,7 +265,6 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
                     </span>
                   </div>
 
-                  {/* Reward preview */}
                   {pq.quest.reward_json.xp && (
                     <div className="flex items-center gap-1 mt-2">
                       <Star className="w-3 h-3 text-[hsl(var(--rdm-amber))]" />
@@ -301,7 +273,7 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
                       </span>
                       {pq.quest.reward_json.badge_code && (
                         <>
-                          <span className="text-[10px] text-[hsl(var(--muted-foreground))]">Â·</span>
+                          <span className="text-[10px] text-[hsl(var(--muted-foreground))]">·</span>
                           <Trophy className="w-3 h-3 text-purple-400" />
                           <span className="text-[10px] text-purple-400">Badge</span>
                         </>
@@ -320,7 +292,7 @@ export function QuestPanel({ compact = false }: QuestPanelProps) {
           <div className="text-center py-8">
             <Target className="w-8 h-8 text-[hsl(var(--muted-foreground)/0.3)] mx-auto mb-2" />
             <p className="text-xs text-[hsl(var(--muted-foreground))] mb-1">
-              No hay misiones en esta categorÃ­a
+              No hay misiones en esta categoría
             </p>
             <p className="text-[11px] text-[hsl(var(--muted-foreground))]">
               Explora el mapa o contribuye en tu territorio para desbloquear nuevas misiones.

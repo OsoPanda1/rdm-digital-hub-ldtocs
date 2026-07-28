@@ -2,21 +2,14 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   User, Trophy, Star, Shield, Flame, TrendingUp, Award,
   Calendar, Zap, Target, Crown, Lock
 } from "lucide-react";
-import { getPlayerProfile } from "../api";
-import type {
-  GamificationPlayer,
-  GamificationPlayerBadge,
-  GamificationBadge,
-  GamificationSeason,
-  XpTrack,
-} from "../types";
-import { calculateLevel, levelProgress, xpForNextLevel } from "../engine";
+import { useGamification } from "@/hooks/use-gamification";
+import { calculateLevel, levelProgress, xpForNextLevel } from "@/features/gamification/engine";
+import type { XpTrack } from "@/features/gamification/types";
 
 const TRACK_CONFIG: Record<XpTrack, { label: string; color: string; icon: typeof Target }> = {
   cultura: { label: "Cultura", color: "hsl(43, 80%, 55%)", icon: Star },
@@ -32,36 +25,24 @@ const RARITY_STYLES = {
 };
 
 const RARITY_LABELS = {
-  common: "ComÃºn",
+  common: "Común",
   rare: "Raro",
-  epic: "Ã‰pico",
+  epic: "Épico",
   legendary: "Legendario",
 };
 
 const ROLE_LABELS: Record<string, string> = {
   aprendiz_minero: "Aprendiz Minero",
   minero_local: "Minero Local",
-  guardian_patrimonio: "GuardÃ­an del Patrimonio",
+  guardian_patrimonio: "Guardián del Patrimonio",
   maestro_hub: "Maestro del Hub",
   arquitecto_territorial: "Arquitecto Territorial",
 };
 
 export function PlayerProfile() {
-  const [player, setPlayer] = useState<GamificationPlayer | null>(null);
-  const [badges, setBadges] = useState<(GamificationPlayerBadge & { badge: GamificationBadge })[]>([]);
-  const [season, setSeason] = useState<GamificationSeason | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { profile, badges: playerBadges, season, isLoading } = useGamification();
 
-  useEffect(() => {
-    getPlayerProfile().then((profile) => {
-      setPlayer(profile.player);
-      setBadges(profile.badges || []);
-      setSeason(profile.season || null);
-      setLoading(false);
-    });
-  }, []);
-
-  if (loading || !player) {
+  if (isLoading || !profile) {
     return (
       <div className="rdm-glass rounded-2xl p-6">
         <div className="animate-pulse space-y-4">
@@ -78,30 +59,27 @@ export function PlayerProfile() {
     );
   }
 
-  const level = calculateLevel(player.total_xp);
-  const progress = levelProgress(player.total_xp);
+  const level = calculateLevel(profile.total_xp);
+  const progress = levelProgress(profile.total_xp);
   const nextLevelXp = xpForNextLevel(level);
-  const earnedBadges = badges.filter(b => b.earned_at);
-  const currentRole = player.roles[player.roles.length - 1] ?? "aprendiz_minero";
+  const earnedBadges = playerBadges.filter(b => b.earned_at);
+  const currentRole = profile.roles[profile.roles.length - 1] ?? "aprendiz_minero";
 
   const rareBadges = earnedBadges.filter(b => b.badge.rarity === "epic" || b.badge.rarity === "legendary");
   const commonBadges = earnedBadges.filter(b => b.badge.rarity === "common" || b.badge.rarity === "rare");
 
-  // Premium flag (supuesto: viene del player; adÃ¡ptalo a tu modelo real)
-  const isPremium = player.is_premium === true;
+  const isPremium = (profile.metadata as Record<string, unknown>)?.is_premium === true;
 
   return (
     <div className="rdm-glass rounded-2xl overflow-hidden">
-      {/* Profile Header */}
       <div className="relative p-6 pb-4">
         <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-[hsl(var(--rdm-amber)/0.08)] to-transparent" />
 
         <div className="relative flex items-start gap-4">
-          {/* Avatar */}
           <div className="relative">
             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[hsl(var(--rdm-amber)/0.4)] to-[hsl(var(--rdm-terracotta)/0.4)] flex items-center justify-center ring-2 ring-[hsl(var(--rdm-amber)/0.3)]">
-              {player.avatar_url ? (
-                <img src={player.avatar_url} alt="" className="w-full h-full rounded-full object-cover" />
+              {profile.avatar_url ? (
+                <img src={profile.avatar_url} alt="" className="w-full h-full rounded-full object-cover" />
               ) : (
                 <User className="w-7 h-7 text-white" />
               )}
@@ -115,19 +93,18 @@ export function PlayerProfile() {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-bold" style={{ fontFamily: "var(--font-display)" }}>
-                  {player.display_name || "Jugador"}
+                  {profile.display_name || "Jugador"}
                 </h3>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="px-2 py-0.5 rounded-full bg-[hsl(var(--rdm-amber)/0.15)] text-[10px] font-medium text-[hsl(var(--rdm-amber))]">
                     {ROLE_LABELS[currentRole] || currentRole}
                   </span>
                   <span className="text-[10px] text-[hsl(var(--muted-foreground))]">
-                    {player.quests_completed} misiones
+                    {profile.quests_completed} misiones
                   </span>
                 </div>
               </div>
 
-              {/* Premium badge */}
               <div className="flex items-center gap-1">
                 {isPremium ? (
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[hsl(var(--rdm-amber)/0.15)] text-[10px] font-medium text-[hsl(var(--rdm-amber))]">
@@ -143,14 +120,13 @@ export function PlayerProfile() {
               </div>
             </div>
 
-            {/* Level Progress */}
             <div>
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[10px] text-[hsl(var(--muted-foreground))]">
                   Nivel {level}
                 </span>
                 <span className="text-[10px] text-[hsl(var(--muted-foreground))]">
-                  {player.total_xp.toLocaleString()} / {nextLevelXp.toLocaleString()} XP
+                  {profile.total_xp.toLocaleString()} / {nextLevelXp.toLocaleString()} XP
                 </span>
               </div>
               <div className="h-2 bg-white/5 rounded-full overflow-hidden">
@@ -166,15 +142,14 @@ export function PlayerProfile() {
         </div>
       </div>
 
-      {/* XP Tracks */}
       <div className="px-6 pb-4">
         <div className="grid grid-cols-3 gap-3">
           {(Object.keys(TRACK_CONFIG) as XpTrack[]).map(track => {
             const config = TRACK_CONFIG[track];
             const Icon = config.icon;
-            const xp = track === "cultura" ? player.xp_cultura
-              : track === "comunidad" ? player.xp_comunidad
-              : player.xp_juego;
+            const xp = track === "cultura" ? profile.xp_cultura
+              : track === "comunidad" ? profile.xp_comunidad
+              : profile.xp_juego;
             const trackLevel = calculateLevel(xp);
 
             return (
@@ -202,14 +177,13 @@ export function PlayerProfile() {
         </div>
       </div>
 
-      {/* Stats Row */}
       <div className="px-6 pb-4">
         <div className="grid grid-cols-4 gap-2">
           {[
-            { icon: Flame, label: "Combos", value: player.combos_total, color: "text-orange-400" },
-            { icon: Calendar, label: "Racha", value: `${player.streak_days}d`, color: "text-emerald-400" },
+            { icon: Flame, label: "Combos", value: profile.combos_total, color: "text-orange-400" },
+            { icon: Calendar, label: "Racha", value: `${profile.streak_days}d`, color: "text-emerald-400" },
             { icon: Trophy, label: "Insignias", value: earnedBadges.length, color: "text-purple-400" },
-            { icon: TrendingUp, label: "Total XP", value: player.total_xp.toLocaleString(), color: "text-[hsl(var(--rdm-amber))]" },
+            { icon: TrendingUp, label: "Total XP", value: profile.total_xp.toLocaleString(), color: "text-[hsl(var(--rdm-amber))]" },
           ].map((stat, i) => (
             <div key={i} className="text-center p-2 rounded-lg bg-white/[0.02]">
               <stat.icon className={`w-4 h-4 mx-auto mb-1 ${stat.color}`} />
@@ -220,7 +194,6 @@ export function PlayerProfile() {
         </div>
       </div>
 
-      {/* Badges & Rare Items */}
       {earnedBadges.length > 0 && (
         <div className="px-6 pb-6 border-t border-white/5">
           <div className="flex items-center justify-between mb-3">
@@ -235,7 +208,6 @@ export function PlayerProfile() {
             )}
           </div>
 
-          {/* Rare items highlight */}
           {rareBadges.length > 0 && (
             <div className="mb-3 flex gap-2 overflow-x-auto pb-1">
               {rareBadges.map((pb) => (
@@ -263,7 +235,6 @@ export function PlayerProfile() {
             </div>
           )}
 
-          {/* All badges compact */}
           <div className="flex flex-wrap gap-2">
             {commonBadges.map((pb) => (
               <motion.div
@@ -271,7 +242,7 @@ export function PlayerProfile() {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 className={`px-3 py-1.5 rounded-lg border ${RARITY_STYLES[pb.badge.rarity]}`}
-                title={`${pb.badge.name} â€” ${RARITY_LABELS[pb.badge.rarity]}`}
+                title={`${pb.badge.name} — ${RARITY_LABELS[pb.badge.rarity]}`}
               >
                 <span className="text-[10px] font-medium">{pb.badge.name}</span>
               </motion.div>
@@ -280,7 +251,6 @@ export function PlayerProfile() {
         </div>
       )}
 
-      {/* Season / Battle Pass */}
       {season && (
         <div className="px-6 pb-6 border-t border-white/5">
           <div className="flex items-center justify-between mb-2">
@@ -296,7 +266,6 @@ export function PlayerProfile() {
             </span>
           </div>
 
-          {/* Free vs Premium track (simplificado) */}
           {season.global_goal && (
             <div className="space-y-2">
               <div className="h-2 bg-white/5 rounded-full overflow-hidden">

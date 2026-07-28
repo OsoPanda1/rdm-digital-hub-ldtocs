@@ -18,10 +18,19 @@ export type {
   PostGameEventResponse,
   GetPlayerProfileResponse,
   GetLeaderboardResponse,
+  GetRewardsResponse,
+  GetQuestsResponse,
+  RedeemRewardRequest,
+  RedeemRewardResponse,
+  VerifyPoiRequest,
+  VerifyPoiResponse,
+  LiveEvent,
+  StreakInfo,
   XpTrack,
   QuestType,
   QuestDifficulty,
   BadgeRarity,
+  GameEventType,
 } from './types';
 
 export {
@@ -31,12 +40,17 @@ export {
   calculateEventXp,
   evaluateQuestCriteria,
   evaluateBadgeCriteria,
-  calculateRoles,
-  processGameEvent,
+  getRankForXp,
+  getRankConfig,
 } from './engine';
 
 export {
   postGameEvent,
   getPlayerProfile,
   getLeaderboard,
+  getQuests,
+  getRewards,
+  redeemReward,
+  verifyPoi,
+  connectToLiveEvents,
 } from './api';

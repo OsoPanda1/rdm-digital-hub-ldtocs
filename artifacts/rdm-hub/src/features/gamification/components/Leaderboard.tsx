@@ -7,8 +7,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Trophy, Medal, Crown, Star, TrendingUp, Users, Flame, Shield
 } from "lucide-react";
-import { getLeaderboard } from "../api";
-import type { LeaderboardEntry, XpTrack, GamificationSeason } from "../types";
+import { useGamification } from "@/hooks/use-gamification";
+import { getLeaderboard } from "@/features/gamification/api";
+import type { LeaderboardEntry, XpTrack, GamificationSeason } from "@/features/gamification/types";
 
 const TRACK_TABS: { key: XpTrack | 'total'; label: string; icon: typeof Trophy }[] = [
   { key: 'total', label: 'Total', icon: Crown },
@@ -29,6 +30,7 @@ interface LeaderboardProps {
 }
 
 export function Leaderboard({ compact = false, showSeason = true }: LeaderboardProps) {
+  const { profile } = useGamification();
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [season, setSeason] = useState<GamificationSeason | null>(null);
   const [playerRank, setPlayerRank] = useState<number | null>(null);
@@ -45,7 +47,7 @@ export function Leaderboard({ compact = false, showSeason = true }: LeaderboardP
       setPlayerRank(data.player_rank);
       setTotalPlayers(data.total_players);
       setLoading(false);
-    });
+    }).catch(() => setLoading(false));
   }, [activeTrack]);
 
   const getXp = (entry: LeaderboardEntry, track: XpTrack | 'total') => {
@@ -53,9 +55,10 @@ export function Leaderboard({ compact = false, showSeason = true }: LeaderboardP
     return track === 'cultura' ? entry.xp_cultura : track === 'comunidad' ? entry.xp_comunidad : entry.xp_juego;
   };
 
+  const myPlayerId = profile?.id ?? 'player-001';
+
   return (
     <div className="rdm-glass rounded-2xl overflow-hidden">
-      {/* Header */}
       <div className="p-5 border-b border-white/10">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
@@ -70,7 +73,6 @@ export function Leaderboard({ compact = false, showSeason = true }: LeaderboardP
           </div>
         </div>
 
-        {/* Season info */}
         {showSeason && season && (
           <div className="mb-3 p-2 rounded-lg bg-[hsl(var(--rdm-amber)/0.05)] border border-[hsl(var(--rdm-amber)/0.1)]">
             <div className="flex items-center justify-between">
@@ -79,7 +81,6 @@ export function Leaderboard({ compact = false, showSeason = true }: LeaderboardP
                 {new Date(season.end_date).toLocaleDateString('es-MX', { month: 'short', year: 'numeric' })}
               </span>
             </div>
-            {/* Global goal progress */}
             {season.global_goal && (
               <div className="mt-2">
                 <div className="flex items-center justify-between mb-1">
@@ -103,7 +104,6 @@ export function Leaderboard({ compact = false, showSeason = true }: LeaderboardP
           </div>
         )}
 
-        {/* Track tabs */}
         <div className="flex gap-1">
           {TRACK_TABS.map(tab => {
             const Icon = tab.icon;
@@ -125,7 +125,6 @@ export function Leaderboard({ compact = false, showSeason = true }: LeaderboardP
         </div>
       </div>
 
-      {/* Player's rank banner */}
       {playerRank && (
         <div className="px-5 py-2 bg-[hsl(var(--rdm-amber)/0.05)] border-b border-white/5">
           <div className="flex items-center justify-between">
@@ -137,7 +136,6 @@ export function Leaderboard({ compact = false, showSeason = true }: LeaderboardP
         </div>
       )}
 
-      {/* Leaderboard entries */}
       <div className={`p-2 space-y-1 ${compact ? 'max-h-[350px]' : 'max-h-[500px]'} overflow-y-auto`}>
         <AnimatePresence>
           {loading ? (
@@ -151,6 +149,7 @@ export function Leaderboard({ compact = false, showSeason = true }: LeaderboardP
               const isTop3 = i < 3;
               const rankStyle = isTop3 ? RANK_STYLES[i] : null;
               const xp = getXp(entry, activeTrack);
+              const isMe = entry.player_id === myPlayerId;
 
               return (
                 <motion.div
@@ -159,14 +158,13 @@ export function Leaderboard({ compact = false, showSeason = true }: LeaderboardP
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.03 }}
                   className={`relative flex items-center gap-3 p-3 rounded-xl transition-all ${
-                    entry.player_id === 'player-001'
+                    isMe
                       ? 'bg-[hsl(var(--rdm-amber)/0.08)] border border-[hsl(var(--rdm-amber)/0.15)]'
                       : isTop3
                         ? `bg-gradient-to-r ${rankStyle?.bg ?? ''} border ${rankStyle?.border ?? ''}`
                         : 'hover:bg-white/[0.03]'
                   }`}
                 >
-                  {/* Rank */}
                   <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
                     isTop3 ? `${rankStyle?.bg ?? ''}` : 'bg-white/5'
                   }`}>
@@ -179,14 +177,12 @@ export function Leaderboard({ compact = false, showSeason = true }: LeaderboardP
                     )}
                   </div>
 
-                  {/* Avatar */}
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[hsl(var(--rdm-amber)/0.3)] to-[hsl(var(--rdm-terracotta)/0.3)] flex items-center justify-center shrink-0">
                     <span className="text-xs font-bold text-white">
                       {entry.display_name.slice(0, 2).toUpperCase()}
                     </span>
                   </div>
 
-                  {/* Info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium truncate" style={{ fontFamily: "var(--font-display)" }}>
@@ -200,7 +196,7 @@ export function Leaderboard({ compact = false, showSeason = true }: LeaderboardP
                       <span className="text-[10px] text-[hsl(var(--muted-foreground))]">
                         Nv. {entry.level}
                       </span>
-                      <span className="text-[10px] text-[hsl(var(--muted-foreground))]">Â·</span>
+                      <span className="text-[10px] text-[hsl(var(--muted-foreground))]">·</span>
                       <div className="flex gap-1.5">
                         <span className="text-[9px] text-amber-400/70">
                           C:{entry.xp_cultura}
@@ -215,7 +211,6 @@ export function Leaderboard({ compact = false, showSeason = true }: LeaderboardP
                     </div>
                   </div>
 
-                  {/* XP */}
                   <div className="text-right shrink-0">
                     <span className="text-sm font-bold text-[hsl(var(--rdm-amber))]">
                       {xp.toLocaleString()}
