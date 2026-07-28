@@ -34,22 +34,26 @@ export function registerSearchRoutes(router: Router) {
   router.post("/search/index",
     requireRdmRole("operator"),
     rateLimitByRoute({ name: "search-index", limit: 30 }),
-    async (req: Request, res: Response) => {
-      const { type, title, content, tags, metadata } = req.body ?? {};
-      if (!type || !title || !content) {
-        res.status(400).json({ ok: false, error: "type, title, content required" }); return;
-      }
-      const doc = await indexer.index({ type, title, content, tags: tags ?? [], metadata: metadata ?? {} });
-      auditSecurityEvent(req, "search.index", { docId: doc.docId, type });
-      res.status(201).json({ ok: true, data: doc });
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { type, title, content, tags, metadata } = req.body ?? {};
+        if (!type || !title || !content) {
+          res.status(400).json({ ok: false, error: "type, title, content required" }); return;
+        }
+        const doc = await indexer.index({ type, title, content, tags: tags ?? [], metadata: metadata ?? {} });
+        auditSecurityEvent(req, "search.index", { docId: doc.docId, type });
+        res.status(201).json({ ok: true, data: doc });
+      } catch (err) { next(err); }
     }
   );
 
   router.delete("/search/document/:id",
     requireRdmRole("operator"),
-    async (req: Request, res: Response) => {
-      const removed = await indexer.removeDocument(req.params.id);
-      res.status(200).json({ ok: removed });
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const removed = await indexer.removeDocument(req.params.id);
+        res.status(200).json({ ok: removed });
+      } catch (err) { next(err); }
     }
   );
 

@@ -20,7 +20,12 @@ const FALLBACK_PLACES: Place[] = [
 async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, { credentials: 'include', ...init });
   if (!res.ok) throw new Error(`API ${res.status}`);
-  return res.json();
+  const json = await res.json();
+  if (json && typeof json === 'object' && 'ok' in json) {
+    if (!json.ok) throw new Error(json.error?.message || `API error`);
+    return json.data as T;
+  }
+  return json as T;
 }
 
 export async function getPlaces(filters?: PlaceFilters): Promise<Place[]> {
@@ -31,8 +36,8 @@ export async function getPlaces(filters?: PlaceFilters): Promise<Place[]> {
     if (filters?.minRating) params.set('minRating', String(filters.minRating));
     if (filters?.sortBy) params.set('sortBy', filters.sortBy);
     const qs = params.toString();
-    const data = await apiFetch<{ data: Place[] }>(`/v1/territory/places${qs ? `?${qs}` : ''}`);
-    if (data?.data && data.data.length > 0) return data.data;
+    const data = await apiFetch<Place[]>(`/territory/places${qs ? `?${qs}` : ''}`);
+    if (data && data.length > 0) return data;
     return filterFallback(filters);
   } catch {
     return filterFallback(filters);
@@ -41,8 +46,8 @@ export async function getPlaces(filters?: PlaceFilters): Promise<Place[]> {
 
 export async function getPlaceById(id: string): Promise<Place | null> {
   try {
-    const data = await apiFetch<{ data: Place }>(`/v1/territory/places/${id}`);
-    return data?.data ?? null;
+    const data = await apiFetch<Place>(`/territory/places/${id}`);
+    return data ?? null;
   } catch {
     return FALLBACK_PLACES.find((p) => p.id === id) ?? null;
   }
@@ -50,8 +55,8 @@ export async function getPlaceById(id: string): Promise<Place | null> {
 
 export async function getPlacesNearby(lat: number, lng: number, radius: number = 5000): Promise<Place[]> {
   try {
-    const data = await apiFetch<{ data: Place[] }>(`/v1/territory/places?lat=${lat}&lng=${lng}&radius=${radius}`);
-    if (data?.data && data.data.length > 0) return data.data;
+    const data = await apiFetch<Place[]>(`/territory/places?lat=${lat}&lng=${lng}&radius=${radius}`);
+    if (data && data.length > 0) return data;
     return FALLBACK_PLACES;
   } catch {
     return FALLBACK_PLACES;
@@ -60,8 +65,8 @@ export async function getPlacesNearby(lat: number, lng: number, radius: number =
 
 export async function searchPlaces(query: string): Promise<Place[]> {
   try {
-    const data = await apiFetch<{ data: Place[] }>(`/v1/territory/places?search=${encodeURIComponent(query)}`);
-    if (data?.data && data.data.length > 0) return data.data;
+    const data = await apiFetch<Place[]>(`/territory/places?search=${encodeURIComponent(query)}`);
+    if (data && data.length > 0) return data;
     return FALLBACK_PLACES.filter((p) =>
       p.name.toLowerCase().includes(query.toLowerCase()) ||
       p.description.toLowerCase().includes(query.toLowerCase()) ||

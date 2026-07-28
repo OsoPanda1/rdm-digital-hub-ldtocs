@@ -2,7 +2,6 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-// @ts-nocheck
 import type { Coordenadas, BoundingBox, PointOfInterest } from '@/core/models';
 import { withinBBox, fastDistance, createBBox } from '@/core/geo';
 import type { TerritorialZone, ZoneEvent, ZoneAlert } from './types';

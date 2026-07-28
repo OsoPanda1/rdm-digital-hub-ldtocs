@@ -2,7 +2,6 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-// @ts-nocheck
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Navigation, MapPin, Search, Car } from "lucide-react";

@@ -2,7 +2,6 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: TAMV-PRCL
  */
-// @ts-nocheck
 import { v4 as uuidv4 } from "uuid";
 import { logger } from "@/lib/logger";
 import { timeUpEngine } from "./TimeUpEngine";

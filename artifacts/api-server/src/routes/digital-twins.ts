@@ -7,7 +7,7 @@
 // GET/POST /api/twins/*
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-import type { Router, Request, Response } from "express";
+import type { Router, Request, Response, NextFunction } from "express";
 import { requireRdmRole, rateLimitByRoute } from "../lib/security";
 import { createTwinsF5 } from "../lib/federation/twins-f5";
 
@@ -34,24 +34,28 @@ export function registerTwinsRoutes(router: Router) {
   router.post("/twins/scene",
     requireRdmRole("operator"),
     rateLimitByRoute({ name: "twins-create", limit: 10 }),
-    async (req: Request, res: Response) => {
-      const { name, description, territoryId } = req.body ?? {};
-      if (!name) { res.status(400).json({ ok: false, error: "name required" }); return; }
-      const scene = await twins.createScene({ name, description: description ?? "", territoryId: territoryId ?? "ter-rdm" });
-      res.status(201).json({ ok: true, data: scene });
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { name, description, territoryId } = req.body ?? {};
+        if (!name) { res.status(400).json({ ok: false, error: "name required" }); return; }
+        const scene = await twins.createScene({ name, description: description ?? "", territoryId: territoryId ?? "ter-rdm" });
+        res.status(201).json({ ok: true, data: scene });
+      } catch (err) { next(err); }
     }
   );
 
   router.post("/twins/scene/:id/sensor",
     requireRdmRole("operator"),
     rateLimitByRoute({ name: "twins-sensor", limit: 30 }),
-    async (req: Request, res: Response) => {
-      const { sensorType, value, unit } = req.body ?? {};
-      if (!sensorType || value == null) {
-        res.status(400).json({ ok: false, error: "sensorType and value required" }); return;
-      }
-      const reading = await twins.addSensorReading(req.params.id, { sensorType, value: Number(value), unit: unit ?? "" });
-      res.status(201).json({ ok: true, data: reading });
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { sensorType, value, unit } = req.body ?? {};
+        if (!sensorType || value == null) {
+          res.status(400).json({ ok: false, error: "sensorType and value required" }); return;
+        }
+        const reading = await twins.addSensorReading(req.params.id, { sensorType, value: Number(value), unit: unit ?? "" });
+        res.status(201).json({ ok: true, data: reading });
+      } catch (err) { next(err); }
     }
   );
 

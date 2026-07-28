@@ -2,7 +2,6 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-// @ts-nocheck
 // ============================================================================
 // Unified Map System - RDM Digital LTOS
 // Leaflet-based map with federation-aware layers, real-time data, and performance optimization

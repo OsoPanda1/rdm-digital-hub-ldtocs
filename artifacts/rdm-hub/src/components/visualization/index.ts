@@ -2,7 +2,6 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-// @ts-nocheck
 // ============================================================================
 // Visualization Registry - Central registry for all map/3D/XR components
 // ============================================================================

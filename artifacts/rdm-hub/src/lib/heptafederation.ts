@@ -2,7 +2,6 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-// @ts-nocheck
 /**
  * RDM Digital - Sistema Heptafederado GEN-7+
  * Modelo de federacion civilizatoria con telemetria y health checks

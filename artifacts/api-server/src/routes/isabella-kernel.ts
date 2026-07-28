@@ -33,6 +33,7 @@ import type { Router, Request, Response } from "express";
 import { createCognitiveKernel } from "../lib/isabella/kernel";
 import { requireRdmRole, rateLimitByRoute, auditSecurityEvent } from "../lib/security";
 import { validate, schemas } from "../middlewares/validate";
+import { logger } from "../lib/logger";
 
 // ⚠️ IN-MEMORY — kernel singleton LOST ON SERVER RESTART
 const kernel = createCognitiveKernel();
@@ -78,7 +79,7 @@ export function registerKernelRoutes(router: Router) {
           },
         });
       } catch (err) {
-        console.error("[kernel/process] Unhandled error:", err);
+        logger.error({ err: (err as Error).message }, "[kernel/process] Unhandled error");
         res.status(500).json({ ok: false, error: "Internal server error" });
       }
     },

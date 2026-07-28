@@ -58,7 +58,9 @@ function useSystemHealth() {
         const res = await fetch(`${API_BASE}/v1/gamification/stats`, { signal: AbortSignal.timeout(5000) });
         if (res.ok) {
           const json = await res.json();
-          result.gamificationEngagement = json.totalEvents ?? json.activeUsers ?? 0;
+          const payload = json && typeof json === 'object' && 'ok' in json
+            ? (json.ok ? json.data : null) : json;
+          result.gamificationEngagement = payload?.totalEvents ?? payload?.activeUsers ?? 0;
         }
       } catch {
         // non-critical

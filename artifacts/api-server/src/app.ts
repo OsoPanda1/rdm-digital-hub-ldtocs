@@ -97,8 +97,14 @@ app.use(
       // Allow requests with no origin (curl, server-to-server)
       if (!origin) return callback(null, true);
 
-      // In development, allow all origins
-      if (NODE_ENV !== "production") return callback(null, true);
+      // In development, allow only localhost origins
+      if (NODE_ENV !== "production") {
+        const devOrigins = ["http://localhost:3000", "http://localhost:5173", "http://localhost:22942", "http://0.0.0.0:22942"];
+        if (!origin || devOrigins.includes(origin) || origin.startsWith("http://localhost:")) {
+          return callback(null, true);
+        }
+        return callback(new Error(`CORS: Dev origin ${origin} not allowed.`));
+      }
 
       // In production, check allowlist
       if (ALLOWED_ORIGINS.length === 0) {
@@ -187,7 +193,7 @@ app.use("/api", router);
 
 app.use((req, res) => {
   logger.warn({ path: req.path, method: req.method }, "API route not found");
-  res.status(404).json({ error: "Not found" });
+  res.status(404).json({ ok: false, error: { code: "NOT_FOUND", message: "Route not found" } });
 });
 
 // --------- GLOBAL ERROR HANDLER (PennyLane pattern) ---------
@@ -204,7 +210,8 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   );
 
   res.status(500).json({
-    error: "Internal server error",
+    ok: false,
+    error: { code: "INTERNAL_ERROR", message: "Internal server error" },
   });
 });
 

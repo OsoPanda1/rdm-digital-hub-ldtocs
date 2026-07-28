@@ -4,7 +4,7 @@
  */
 import type { Router } from "express";
 import { telemetrySnapshot } from "./telemetry";
-import { getPool } from "../lib/db-client";
+import { getPool, isDbAvailable } from "../lib/db-client";
 
 // Registra rutas de health en el router maestro.
 // Se usa en routes/index.ts: registerHealthRoutes(router).
@@ -27,6 +27,9 @@ export function registerHealthRoutes(router: Router) {
     const telemetryOk = telemetry.status !== "degraded";
     const ok = dbOk && telemetryOk;
 
-    res.status(ok ? 200 : 503).json({ status: ok ? "ok" : "degraded" });
+    res.status(ok ? 200 : 503).json({
+      status: ok ? "ok" : "degraded",
+      database: isDbAvailable() ? (dbOk ? "connected" : "error") : "unavailable",
+    });
   });
 }

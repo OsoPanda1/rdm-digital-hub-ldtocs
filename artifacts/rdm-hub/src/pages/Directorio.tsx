@@ -13,6 +13,7 @@ import {
   ChevronLeft, Globe, Instagram, ArrowUpDown, Loader2,
   AlertTriangle, X, MessageSquare,
 } from "lucide-react";
+import { useLoadingTimeout } from "@/hooks/useLoadingTimeout";
 
 import pasteriasImg from "@/assets/pasterias.png";
 import plateriasImg from "@/assets/platerias.png";
@@ -98,6 +99,7 @@ const DirectorioPage = () => {
   const [sortBy, setSortBy] = useState<SortOption>("name");
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+  const showSlowLoad = useLoadingTimeout(loading, 5000);
 
   const fetchBusinesses = useCallback(async () => {
     setLoading(true);
@@ -233,7 +235,12 @@ const DirectorioPage = () => {
           </div>
 
           {loading ? (
-            <div className="grid md:grid-cols-2 gap-4">{Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)}</div>
+            <div>
+              <div className="grid md:grid-cols-2 gap-4">{Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)}</div>
+              {showSlowLoad && (
+                <p className="text-muted-foreground text-sm text-center mt-4">Cargando... esto está tardando más de lo esperado</p>
+              )}
+            </div>
           ) : error ? (
             <div className="text-center py-16 rounded-2xl border border-red-500/20 bg-red-500/5">
               <AlertTriangle className="h-12 w-12 text-red-400 mx-auto mb-4" />

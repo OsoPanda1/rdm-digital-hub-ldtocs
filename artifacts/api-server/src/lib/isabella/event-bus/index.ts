@@ -8,6 +8,8 @@
 // Desacoplamiento total entre mÃ³dulos, trazabilidad con traceId
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
+import { logger } from "../../logger";
+
 export type EventSeverity = "info" | "warning" | "critical" | "incident";
 
 export type IsabellaEvent<T = unknown> = {
@@ -66,7 +68,7 @@ export function createEventBus(): EventBus {
       stats.totalDelivered++;
     } catch (err) {
       stats.errorCount++;
-      console.error(`[EventBus] Handler error for ${event.type}:`, err);
+      logger.error({ err: (err as Error).message, eventType: event.type, traceId: event.traceId }, "EventBus handler error");
     }
   }
 

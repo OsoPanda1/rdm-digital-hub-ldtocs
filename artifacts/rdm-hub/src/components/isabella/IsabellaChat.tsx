@@ -2,7 +2,6 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-// @ts-nocheck
 /**
  * Interfaz de Chat con Isabella AI
  * Triple Federado: Conceptual | Legal | TÃ©cnico

@@ -2,7 +2,6 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-// @ts-nocheck
 // ============================================================================
 // RDM Digital OS + TAMV â€” YUN-native Sovereign Module Manifest
 // Fundado sobre: YUN Manifesto, ConstituciÃ³n, Blueprint, ADR, HeptafederaciÃ³n

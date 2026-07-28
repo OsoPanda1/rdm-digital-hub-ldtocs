@@ -37,7 +37,12 @@ async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
     const body = await res.text().catch(() => '');
     throw new Error(`Gamification API ${res.status}: ${body || res.statusText}`);
   }
-  return res.json() as Promise<T>;
+  const json = await res.json();
+  if (json && typeof json === 'object' && 'ok' in json) {
+    if (!json.ok) throw new Error(json.error?.message || `Gamification API error`);
+    return json.data as T;
+  }
+  return json as T;
 }
 
 // ============================================================================

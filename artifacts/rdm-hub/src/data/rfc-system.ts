@@ -2,7 +2,6 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-// @ts-nocheck
 // src/data/rfc-system.ts
 // Sistema modular de RFCs (Request for Comments) del DOCUMENTO MAESTRO
 // Unifica las definiciones duplicadas de ThesisRFC en un solo lugar

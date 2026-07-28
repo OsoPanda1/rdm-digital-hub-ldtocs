@@ -7,6 +7,8 @@
 // Sistema nervioso central de las 7 federaciones TAMV
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
+import { logger } from "../logger";
+
 export type FederationId = "F1" | "F2" | "F3" | "F4" | "F5" | "F6" | "F7";
 
 export interface YunEvent {
@@ -38,7 +40,7 @@ export function createYunBus(): YunBus {
   const byType: Record<string, number> = {};
 
   function deliver(event: YunEvent, handler: YunEventHandler) {
-    try { handler(event); } catch (err) { console.error(`[YunBus] Handler error:`, err); }
+    try { handler(event); } catch (err) { logger.error({ err: (err as Error).message, traceId: event.traceId }, "YunBus handler error"); }
   }
 
   return {

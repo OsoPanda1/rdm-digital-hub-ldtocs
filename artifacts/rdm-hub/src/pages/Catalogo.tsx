@@ -2,7 +2,6 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-// @ts-nocheck
 import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { useState } from "react";
 import { motion } from "framer-motion";

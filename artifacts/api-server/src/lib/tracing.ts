@@ -116,6 +116,9 @@ export function tracingMiddleware(req: any, res: any, next: () => void) {
   req.traceId = span.traceId;
   req.spanId = span.spanId;
 
+  // Expose trace ID to clients for correlation
+  res.setHeader("X-Request-Id", span.traceId);
+
   // Hook into response finish
   res.on("finish", () => {
     const status = res.statusCode < 400 ? "ok" : "error";

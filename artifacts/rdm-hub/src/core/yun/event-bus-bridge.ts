@@ -2,7 +2,6 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-// @ts-nocheck
 /**
  * YUN Event Bus Bridge â€” Unifies the three event systems:
  * 1. YUN Constitutional Event Bus (src/core/yun/event-bus.ts)

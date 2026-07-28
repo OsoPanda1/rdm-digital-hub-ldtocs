@@ -27,6 +27,14 @@ const PIPELINE_STEPS = [
   { id: "respond", label: "Respond", color: "bg-primary/15 text-primary" },
 ];
 
+function unwrapResponse(json: any): any {
+  if (json && typeof json === 'object' && 'ok' in json) {
+    if (!json.ok) throw new Error(json.error?.message || 'API error');
+    return json.data;
+  }
+  return json;
+}
+
 function StatusIndicator({ status }: { status: HealthStatus }) {
   const config = {
     online: { color: "bg-emerald-500", label: "En línea", ring: "ring-emerald-500/30" },
@@ -94,8 +102,9 @@ export default function IsabellaAI() {
 
       if (!res.ok) throw new Error(`Error ${res.status}`);
 
-      const data = await res.json();
-      setResponse(data.response || data.message || data.reply || JSON.stringify(data));
+      const json = await res.json();
+      const payload = unwrapResponse(json);
+      setResponse(payload?.response || payload?.message || payload?.reply || JSON.stringify(payload));
     } catch {
       setResponse(
         `Isabella procesa tu consulta: "${trimmed}". En el contexto del ecosistema Real del Monte, esta consulta abarca aspectos de seguridad, memoria y federación. La respuesta se está generando con los módulos activos del pipeline ético.`

@@ -41,15 +41,17 @@ export function registerAgentsRoutes(router: Router) {
     requireRdmRole("admin"),
     rateLimitByRoute({ name: "agents-register", limit: 10 }),
     validate(schemas.agentRegister),
-    async (req: Request, res: Response) => {
-      const { name, domain, capabilities, permissions, autonomyLevel } = req.body ?? {};
-      if (!name || !domain) { res.status(400).json({ ok: false, error: "name and domain required" }); return; }
-      const agent = await registry.register({
-        name, domain, capabilities: capabilities ?? [], permissions: permissions ?? [],
-        autonomyLevel: autonomyLevel ?? "supervised", status: "active",
-      });
-      auditSecurityEvent(req, "agents.register", { agentId: agent.agentId });
-      res.status(201).json({ ok: true, data: agent });
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { name, domain, capabilities, permissions, autonomyLevel } = req.body ?? {};
+        if (!name || !domain) { res.status(400).json({ ok: false, error: "name and domain required" }); return; }
+        const agent = await registry.register({
+          name, domain, capabilities: capabilities ?? [], permissions: permissions ?? [],
+          autonomyLevel: autonomyLevel ?? "supervised", status: "active",
+        });
+        auditSecurityEvent(req, "agents.register", { agentId: agent.agentId });
+        res.status(201).json({ ok: true, data: agent });
+      } catch (err) { next(err); }
     }
   );
 
@@ -57,11 +59,13 @@ export function registerAgentsRoutes(router: Router) {
     requireRdmRole("operator"),
     rateLimitByRoute({ name: "agents-trigger", limit: 20 }),
     validate(schemas.agentTrigger),
-    async (req: Request, res: Response) => {
-      const { condition, action } = req.body ?? {};
-      if (!condition || !action) { res.status(400).json({ ok: false, error: "condition and action required" }); return; }
-      const trigger = await registry.addTrigger({ agentId: req.params.id, condition, action });
-      res.status(201).json({ ok: true, data: trigger });
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { condition, action } = req.body ?? {};
+        if (!condition || !action) { res.status(400).json({ ok: false, error: "condition and action required" }); return; }
+        const trigger = await registry.addTrigger({ agentId: req.params.id, condition, action });
+        res.status(201).json({ ok: true, data: trigger });
+      } catch (err) { next(err); }
     }
   );
 

@@ -32,6 +32,14 @@ const CATEGORY_COLORS: Record<string, string> = {
   Recomendación: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400",
 };
 
+function unwrapResponse(json: any): any {
+  if (json && typeof json === 'object' && 'ok' in json) {
+    if (!json.ok) throw new Error(json.error?.message || 'API error');
+    return json.data;
+  }
+  return json;
+}
+
 function loadRecent(): Message[] {
   try {
     const raw = localStorage.getItem("oraculo_recent");
@@ -92,11 +100,12 @@ export default function OraculoPage() {
 
         if (!res.ok) throw new Error(`Error ${res.status}`);
 
-        const data = await res.json();
+        const json = await res.json();
+        const payload = unwrapResponse(json);
         const reply: Message = {
           id: crypto.randomUUID(),
           role: "assistant",
-          content: data.response || data.message || data.reply || JSON.stringify(data),
+          content: payload?.response || payload?.message || payload?.reply || JSON.stringify(payload),
           category: detectCategory(trimmed),
           timestamp: Date.now(),
         };

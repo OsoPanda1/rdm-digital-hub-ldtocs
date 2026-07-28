@@ -73,7 +73,12 @@ export async function getTwinSignals(twinId: string): Promise<TwinSignal[]> {
   try {
     const res = await fetch(`${API_BASE}/twins/scene/${twinId}/sensors`, { credentials: 'include' });
     if (!res.ok) throw new Error('API unavailable');
-    return await res.json();
+    const json = await res.json();
+    if (json && typeof json === 'object' && 'ok' in json) {
+      if (!json.ok) throw new Error(json.error?.message || 'API error');
+      return json.data as TwinSignal[];
+    }
+    return json as TwinSignal[];
   } catch {
     return generateFallbackSignals([
       { id: twinId, name: twinId, category: 'default', lat: 20.14, lng: -98.67, description: '', image: '', type: 'place', isPremium: false, status: 'Activo' },
@@ -85,7 +90,12 @@ export async function getTwinScenes(): Promise<TwinScene[]> {
   try {
     const res = await fetch(`${API_BASE}/twins/scenes`, { credentials: 'include' });
     if (!res.ok) throw new Error('API unavailable');
-    return await res.json();
+    const json = await res.json();
+    if (json && typeof json === 'object' && 'ok' in json) {
+      if (!json.ok) throw new Error(json.error?.message || 'API error');
+      return json.data as TwinScene[];
+    }
+    return json as TwinScene[];
   } catch {
     return [
       {
@@ -120,7 +130,12 @@ export async function getTwinDetail(twinId: string): Promise<TwinScene | null> {
   try {
     const res = await fetch(`${API_BASE}/twins/scene/${twinId}`, { credentials: 'include' });
     if (!res.ok) throw new Error('API unavailable');
-    return await res.json();
+    const json = await res.json();
+    if (json && typeof json === 'object' && 'ok' in json) {
+      if (!json.ok) throw new Error(json.error?.message || 'API error');
+      return json.data as TwinScene;
+    }
+    return json as TwinScene;
   } catch {
     const scenes = await getTwinScenes();
     return scenes.find((s) => s.id === twinId) ?? null;
@@ -136,7 +151,12 @@ export async function createSensorReading(twinId: string, data: { sensorId: stri
       body: JSON.stringify(data),
     });
     if (!res.ok) throw new Error('API unavailable');
-    return await res.json();
+    const json = await res.json();
+    if (json && typeof json === 'object' && 'ok' in json) {
+      if (!json.ok) throw new Error(json.error?.message || 'API error');
+      return json.data as SensorReading;
+    }
+    return json as SensorReading;
   } catch {
     return { sensorId: data.sensorId, value: data.value, unit: data.unit, timestamp: new Date().toISOString(), quality: 'good' };
   }
@@ -146,7 +166,12 @@ export async function getTwinHistory(twinId: string, sensorType: string, timeRan
   try {
     const res = await fetch(`${API_BASE}/twins/scene/${twinId}/history?sensorType=${sensorType}&range=${timeRange}`, { credentials: 'include' });
     if (!res.ok) throw new Error('API unavailable');
-    return await res.json();
+    const json = await res.json();
+    if (json && typeof json === 'object' && 'ok' in json) {
+      if (!json.ok) throw new Error(json.error?.message || 'API error');
+      return json.data as SensorReading[];
+    }
+    return json as SensorReading[];
   } catch {
     const now = Date.now();
     return Array.from({ length: 24 }, (_, i) => ({
