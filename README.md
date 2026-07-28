@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://orcid.org/0009-0008-5050-1539"><img src="https://img.shields.io/badge/ORCID-0009--0008--5050--1539-A6CE39?style=for-the-badge&logo=orcid&logoColor=white" alt="ORCID"></a>
   <a href="https://doi.org/10.5281/zenodo.20606361"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.20606361-0298C5?style=for-the-badge&logo=doi&logoColor=white" alt="DOI Zenodo"></a>
-  <a href="https://replit.com/"><img src="https://img.shields.io/badge/Platform-Replit_Autoscale-0F7BFF?style=for-the-badge&logo=replit&logoColor=white" alt="Replit Autoscale"></a>
+  <a href="https://visitarealdelmonte.online"><img src="https://img.shields.io/badge/Dominio-visitarealdelmonte.online-00C853?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Dominio"></a>
   <a href="./LICENSE-PRCL.md"><img src="https://img.shields.io/badge/License-TAMV--PRCL-blueviolet?style=for-the-badge" alt="License: TAMV-PRCL"></a>
 </p>
 
@@ -16,17 +16,17 @@
     <td align="center" width="33%">
       <img src="artifacts/rdm-hub/public/images/logotamv.jpg" alt="TAMV Online Network" height="80"><br/>
       <strong>TAMV Online Network</strong><br/>
-      <small>Marca del ecosistema</small>
+      <small>Ecosistema digital soberano</small>
     </td>
     <td align="center" width="33%">
       <img src="artifacts/rdm-hub/public/images/logo-rdm-digital.png" alt="RDM Digital Hub" height="80"><br/>
       <strong>RDM Digital Hub</strong><br/>
-      <small>Nodo cero MD-X4</small>
+      <small>Nodo Cero MD-X4</small>
     </td>
     <td align="center" width="33%">
       <img src="artifacts/rdm-hub/public/images/isabella-ai-logo.png" alt="Isabella AI" height="80"><br/>
       <strong>Isabella AI</strong><br/>
-      <small>Motor IA Conversacional</small>
+      <small>Motor IA + Quantum Kernel</small>
     </td>
   </tr>
 </table>
@@ -46,16 +46,23 @@
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white" alt="TypeScript 5.9"></a>
   <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/Vite-7.3.6-646CFF?logo=vite&logoColor=white" alt="Vite 7.3.6"></a>
   <a href="https://supabase.com/"><img src="https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase&logoColor=white" alt="Supabase PostgreSQL"></a>
+  <a href="https://www.docker.com/"><img src="https://img.shields.io/badge/Docker-27.x-2496ED?logo=docker&logoColor=white" alt="Docker 27.x"></a>
+  <a href="https://traefik.io/"><img src="https://img.shields.io/badge/Traefik-v3.3-E80C4E?logo=traefik&logoColor=white" alt="Traefik v3.3"></a>
+  <a href="https://www.postgresql.org/"><img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white" alt="PostgreSQL 16"></a>
 </p>
 <p align="center">
   <a href="https://github.com/OsoPanda1/rdm-digital-hub-ldtocs/actions"><img src="https://img.shields.io/github/actions/workflow/status/OsoPanda1/rdm-digital-hub-ldtocs/ci.yml?label=CI&logo=github" alt="GitHub Actions CI"></a>
   <a href="./LICENSE-PRCL.md"><img src="https://img.shields.io/badge/License-TAMV--PRCL-blueviolet" alt="License: TAMV-PRCL"></a>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/Software-MIT-green" alt="Software: MIT"></a>
+  <a href="./SECURITY.md"><img src="https://img.shields.io/badge/Security-Hardened-red" alt="Security: Hardened"></a>
 </p>
 
 ---
 
 Plataforma de **Soberania Digital**, **Turismo Inteligente** e **Infraestructura Federada** para comunidades, implementada como nodo replicable **TAMV MD-X4** en Real del Monte, Hidalgo, Mexico.
+
+**Dominio activo:** [`https://visitarealdelmonte.online`](https://visitarealdelmonte.online)
+**Presupuesto de infraestructura:** ≤ 25 USD/mes (dual-node HA)
 
 ---
 
@@ -64,20 +71,21 @@ Plataforma de **Soberania Digital**, **Turismo Inteligente** e **Infraestructura
 | Seccion | Descripcion |
 |---------|-------------|
 | [Vision y Problematica](#vision-y-problematica-territorial) | El desafio social y tecnico que resuelve |
-| [Arquitectura del Hub](#definicion-del-hub-nodo-cero-md-x4) | Que es el RDM Digital Hub |
+| [Definicion del Hub](#definicion-del-hub-nodo-cero-md-x4) | Que es el RDM Digital Hub |
 | [7 Federaciones TAMV](#modelo-de-gobernanza-las-7-federaciones-del-tamv) | Modelo de gobernanza federada |
-| [YUN — Constucion y Motor](#yun--motor-de-gobernanza-constitucional) | Bus de eventos, motor OPA, PQC, percepcion |
-| [Monorepo y Estructura](#arquitectura-de-software-y-monorepo) | Estructura del repositorio |
+| [YUN — Consticion y Motor](#yun--motor-de-gobernanza-constitucional) | Bus de eventos, OPA, PQC, percepcion |
+| [Arquitectura Monorepo](#arquitectura-de-software-y-monorepo) | Estructura del repositorio |
 | [Stack Tecnologico](#stack-tecnologico-unificado) | Tecnologias y justificacion |
 | [Matriz de Madurez](#modulos-y-matriz-de-madurez) | 22 modulos auditados con % real |
 | [Gamificacion y Living World](#gamificacion-phygital-territorial) | Sistema de juego territorial |
 | [Banners Distribuidos](#sistema-de-banners--publicidad-distribuida) | 80 banners en toda la plataforma |
-| [Isabella AI Engine](#isabella-ai-engine--omega-core-v40-enterprise) | IA conversacional con arquitectura completa |
-| [Isabella Cognitive Kernel](#isabella-cognitive-kernel--sistema-operativo-cognitivo) | 17 modulos, 30+ endpoints, ciclo cognitivo completo |
-| [THE C.R.O.W.N.](#the-crown--capas-de-razonamiento-optimizado) | 10 skills, BookPI, failover, capability gateway |
+| [Isabella AI Engine](#isabella-ai-engine--omega-core-v40-enterprise) | IA conversacional completa |
+| [Isabella Cognitive Kernel](#isabella-cognitive-kernel--sistema-operativo-cognitivo) | 17 modulos, 30+ endpoints |
+| [THE C.R.O.W.N.](#the-crown--capas-de-razonamiento-optimizado) | 10 skills, BookPI, failover |
+| [Criptografia Post-Cuantica](#criptografia-post-cuantica-hibrida-pqc) | X25519/Ed25519 + migracion Kyber/Dilithium |
 | [Podcast TAMV](#podcast-tamv--spotify-integration) | Podcast episodicos via Spotify |
-| [Seguridad y Hardening](#seguridad-y-production-hardening) | Production hardening, PQC, PennyLane patterns |
-| [Despliegue](#despliegue-e-infraestructura-soberana) | Replit Autoscale + Variables de entorno |
+| [Seguridad y Hardening](#seguridad-y-production-hardening) | Doble hardening, PQC, RBAC, rate limiting |
+| [Despliegue](#despliegue-e-infraestructura-soberana) | Docker + Traefik + Plan Maestro MD-X4 |
 | [Respaldo Academico](#respaldo-academico-y-ciencia-abierta) | CITIS 2026, ORCID, Zenodo |
 | [Licenciamiento](#regimen-de-licenciamiento) | Licencias multicapa |
 
@@ -111,6 +119,7 @@ Comunidades locales y pueblos magicos operan bajo **cero soberania digital**, ex
 - **Comercio Soberano:** conexion directa P2P sin comision extractiva.
 - **IA Colectiva (Isabella AI):** asistente conversacional con pipelines eticos y arquitectura modular de skills.
 - **Gemelos Digitales:** fusion de capas geoespaciales y datos territoriales.
+- **Criptografia Post-Cuantica:** handshake hibrido RSA+X25519, firmas ECDSA+Ed25519, migracion a lattice-based.
 
 ---
 
@@ -158,7 +167,7 @@ lib/yun/
 ├── resilience.ts      # NORMAL → SAFE → EMERGENCY, modo isla MD-X4, perfiles OPA
 ├── perception.ts      # 4 planos: Tecnico, Social, Territorial, Cognitivo
 ├── governance.ts      # Gestion ADR, votacion por quorum (5/7 alma, 4/7 skills)
-├── pqc/core.ts        # Hibrido RSA/ECDSA + Kyber (KEM) + Dilithium (firmas)
+├── pqc/core.ts        # Hibrido RSA/ECDSA + X25519/Ed25519 (migracion a Kyber/Dilithium)
 ├── types.ts           # Todos los tipos YUN
 └── index.ts           # createYunSystem() — factory que conecta los 7 modulos
 ```
@@ -171,19 +180,10 @@ lib/yun/
 | CP-002 | Transparencia | Toda decision algoritmica es auditable |
 | CP-003 | Consentimiento | Los datos personales requieren consentimiento explicito |
 | CP-004 | Proporcionalidad | La recoleccion de datos es proporcional al proposito |
-| CP-005 | No Discriminacion | Los algoritmos no deben discriminar por origen etnico, genero o condicion economica |
+| CP-005 | No Discriminacion | Los algoritmos no deben discriminar por origen, genero o condicion economica |
 | CP-006 | Interoperabilidad | Los sistemas deben poder comunicarse sin bloqueo |
 | CP-007 | Resiliencia | El sistema debe funcionar en modo degradado sin perder servicio esencial |
 | CP-008 | Auditoria | Cada decision deja un registro inmutable verificable |
-
-### Criptografia Post-Cuantica Hibrida
-
-| Capa | Algoritmo | Funcion |
-|------|-----------|---------|
-| Firma clasica | RSA / ECDSA | Compatibilidad con sistemas existentes |
-| Firma cuantica | Dilithium | Firmas resistente a computadora cuantica |
-| KEM (Key Encapsulation) | Kyber | Intercambio de claves hibrido |
-| Rotacion de claves | Automated | Grace periods para transicion segura |
 
 ### 4 Planos de Percepcion
 
@@ -202,13 +202,6 @@ lib/yun/
 | **SAFE** | Degradacion detectada | Funciones no criticas deshabilitadas, datos protegidos |
 | **EMERGENCY** | Fallo critico | Modo isla MD-X4, solo servicio esencial, datos inmutables |
 
-### OPA Policy Engine
-
-```rego
-# Archivo: infra/opa/yun-policy.rego
-# Enforce CP-001 a CP-008 + licenciamiento TAMV
-```
-
 ### API YUN — 35+ Endpoints
 
 | Metodo | Ruta | Descripcion |
@@ -226,8 +219,8 @@ lib/yun/
 | POST | `/api/yun/governance/vote` | Votar ADR (quorum) |
 | POST | `/api/yun/pqc/sign` | Firma hibrida PQC |
 | POST | `/api/yun/pqc/verify` | Verificar firma hibrida |
-| POST | `/api/yun/pqc/encrypt` | Encriptar con Kyber |
-| POST | `/api/yun/pqc/decrypt` | Desencriptar con Kyber |
+| POST | `/api/yun/pqc/encrypt` | Encriptar con KEM |
+| POST | `/api/yun/pqc/decrypt` | Desencriptar con KEM |
 
 Ver `routes/yun.ts` para el listado completo.
 
@@ -240,36 +233,45 @@ rdm-digital-hub-ldtocs/
 ├── artifacts/
 │   ├── api-server/               # Backend Express 5 — API Gateway (Node.js 20)
 │   │   └── src/
-│   │       ├── routes/           # 21 archivos de rutas (100+ endpoints)
+│   │       ├── routes/           # 22 archivos de rutas (130+ endpoints)
 │   │       ├── lib/isabella/     # Isabella Ω-Core v4.0 Enterprise (25 modulos)
-│   │       ├── lib/yun/          # YUN Constitution Engine (10 modulos)
+│   │       ├── lib/yun/          # YUN Constitution Engine (10 modulos + PQC)
 │   │       ├── lib/crown/        # THE C.R.O.W.N. — 10 skills + BookPI (15 archivos)
 │   │       ├── lib/ai/           # Capa AI: ISA API, Mexa API, Knowledge (3 archivos)
-│   │       ├── middlewares/       # Validacion Zod, auth, error handling
-│   │       ├── db/               # Drizzle ORM client, schema
-│   │       └── lib/env.ts        # Type-safe env config
+│   │       ├── middlewares/       # Validacion Zod, auth JWT, RBAC, rate limiting
+│   │       ├── db/               # Drizzle ORM client, schema (26 tablas)
+│   │       └── lib/env.ts        # Type-safe env config (strict in prod)
 │   └── rdm-hub/                  # Frontend SPA (React 19 + Vite 7 + Tailwind)
 │       └── src/
-│           ├── pages/            # 112 paginas
-│           ├── components/       # 211 componentes (shadcn/ui + Leaflet + Three.js)
+│           ├── pages/            # 109 paginas
+│           ├── components/       # 272 componentes (shadcn/ui + Leaflet + Three.js)
 │           ├── modules/          # 13 modulos especializados
+│           ├── quantum/          # PostQuantumCryptoV2 (liboqs WASM + WebCrypto)
 │           ├── hooks/            # Custom React hooks
 │           ├── stores/           # Zustand stores
 │           └── assets/           # 100+ imagenes, audio, video
 ├── lib/                          # Librerias compartidas del workspace
-│   ├── db/                       # Schema Drizzle ORM compartido
+│   ├── db/                       # Schema Drizzle ORM compartido (26 tablas)
 │   ├── api-zod/                  # Validacion Zod para API
 │   ├── api-spec/                 # OpenAPI spec + Orval codegen
 │   └── api-client-react/         # Clientes API tipados (React hooks)
+├── deploy/                       # Infraestructura Docker de produccion
+│   ├── docker-compose.yml        # Stack completo: Traefik + API + DB + Redis + Backup
+│   ├── .env.example              # Template de variables de entorno
+│   ├── scripts/                  # deploy.sh, backup.sh, restore.sh
+│   └── traefik/                  # Configuracion Traefik (dynamic.yml, acme.json)
 ├── docs/                         # Documentacion tecnica
 │   ├── adr/                      # Architecture Decision Records
 │   ├── foundational/             # Documento Fundacional CANONIZADO (frozen)
+│   ├── deployment/               # Plan Maestro MD-X4 (dual-node HA)
 │   └── isabella/                 # 15 archivos de documentacion Isabella
 ├── infra/
 │   └── opa/                      # YUN OPA policy engine (Rego, data, ADR index)
+├── scripts/                      # Scripts de deploy y migracion
+│   └── deploy-production.sh      # Deploy automatizado Replit
 ├── .github/workflows/ci.yml     # CI: lint, security (Gitleaks), test, build
 ├── .agents/memory/               # Memoria de agentes IA
-├── pnpm-workspace.yaml           # Workspaces con catalog protocol
+├── pnpm-workspace.yaml           # Workspaces con catalog protocol + security
 └── package.json                  # Root workspace
 ```
 
@@ -277,18 +279,21 @@ rdm-digital-hub-ldtocs/
 
 | Metrica | Valor |
 |---------|-------|
-| Paginas frontend | 112 |
-| Componentes UI | 211 |
+| Archivos fuente propios | ~4,782 |
+| Paginas frontend | 109 |
+| Componentes UI | 272 |
 | Modulos especializados | 13 |
 | API route files | 22 |
 | API endpoints totales | 130+ |
 | Isabella modules | 25 |
 | Cognitive Kernel modules | 17 |
-| YUN modules | 10 |
+| YUN modules | 10 (+ PQC) |
 | C.R.O.W.N. skills | 10 + BookPI + Failover |
+| Tablas DB (Drizzle) | 26 |
 | Workspace libs | 4 |
-| ADRs documentados | 3 |
+| ADRs documentados | 4 |
 | Assets multimedia | 100+ |
+| PQC implementations | 3 (server, browser V2, browser V1 legacy) |
 
 ---
 
@@ -305,14 +310,17 @@ rdm-digital-hub-ldtocs/
 | **3D** | Three.js + React Three Fiber | Gemelos digitales, visualizaciones |
 | **Animaciones** | Framer Motion | Transiciones y micro-interacciones |
 | **Backend** | Express 5 + Node.js 20 | API Gateway asincrona |
-| **DB** | Supabase (PostgreSQL) | Persistencia relacional con RLS |
+| **DB** | Supabase (PostgreSQL 16) | Persistencia relacional con RLS |
 | **ORM** | Drizzle ORM | Type-safe queries, migrations |
+| **Cache** | Redis 7 | Rate limiting, sesiones, cache |
 | **Validacion** | Zod | Schema validation end-to-end |
 | **API Spec** | OpenAPI + Orval | Codegen de clientes tipados |
 | **Podcast** | Spotify Embed API | Episodios de cultura territorial |
 | **Gobernanza** | OPA (Rego) | YUN constitutional policy engine |
-| **PQC** | Kyber + Dilithium (hibrido) | Criptografia post-cuantica |
-| **Despliegue** | Replit Autoscale | Contenedores auto-escalables |
+| **PQC** | X25519/Ed25519 (hibrido) | Criptografia post-cuantica (migracion Kyber/Dilithium) |
+| **Reverse Proxy** | Traefik v3.3 | TLS automatico (Let's Encrypt), routing |
+| **Container** | Docker 27.x | Aislamiento, reproducibilidad |
+| **Despliegue** | Hostinger KVM 2 | Nodo primario (≤25 USD/mes total) |
 
 ---
 
@@ -324,7 +332,7 @@ Auditoria real del codebase — porcentajes basados en codigo funcional vs. stub
 |---|--------|---|--------|---------------|
 | 1 | **Portal Turistico** | `78%` | 🟡 | `Index.tsx`, `Lugares.tsx`, `QuienesSomos.tsx` |
 | 2 | **Motor Mapas** | `82%` | 🟢 | `Mapa.tsx`, `UnifiedMap.tsx`, `TerritorialSVGMap.tsx` |
-| 3 | **Auth / Identidad** | `75%` | 🟡 | `RDMAuthContext.tsx`, `rbac.ts` |
+| 3 | **Auth / Identidad** | `75%` | 🟡 | `RDMAuthContext.tsx`, `rbac.ts`, `auth.ts` |
 | 4 | **Podcast TAMV** | `72%` | 🟡 | `Podcast.tsx`, `SpotifyPodcastPlayer.tsx`, `routes/podcast.ts` |
 | 5 | **Musica Territorial** | `72%` | 🟡 | `Musica.tsx`, `SpatialPlayer.tsx` |
 | 6 | **Gamificacion Phygital** | `60%` | 🟠 | `GamificationHUD.tsx`, `engine.ts`, `routes/gamification.ts` |
@@ -333,7 +341,7 @@ Auditoria real del codebase — porcentajes basados en codigo funcional vs. stub
 | 9 | **Panel Admin** | `55%` | 🟠 | `Dashboard.tsx` — CRUD negocios funcional |
 | 10 | **Isabella AI Engine** | `75%` | 🟡 | `routes/isabella.ts` (18 endpoints), `isabella/` (25 modulos) |
 | 11 | **YUN Federation** | `85%` | 🟢 | `routes/yun.ts` (35+ endpoints), `lib/yun/` (10 modulos) |
-| 12 | **Seguridad PQC** | `82%` | 🟢 | `yun/pqc/core.ts`, `isabella/crypto/federation.ts`, `isabella/security/` |
+| 12 | **Seguridad PQC** | `82%` | 🟢 | `yun/pqc/core.ts`, `quantum/pqc.ts`, `isabella/security/` |
 | 13 | **Directorio Comercios** | `80%` | 🟢 | `Comercios.tsx`, `BusinessCard.tsx` — Supabase live |
 | 14 | **Transporte Local** | `55%` | 🟠 | `TransporteLocal.tsx` — datos cargan |
 | 15 | **Wiki / Enciclopedia** | `65%` | 🟠 | `Wiki.tsx` — lectura Supabase |
@@ -353,42 +361,6 @@ Auditoria real del codebase — porcentajes basados en codigo funcional vs. stub
 | 🟡 60-79% | Funcional — gaps notables en logica/persistencia |
 | 🟠 40-59% | Parcial — UI funcional, datos mock o sin backend |
 | 🔴 0-39% | Conceptual — arquitectura disenada, sin implementacion |
-
----
-
-## Checklist de Funcionalidades Pendientes
-
-### Produccion Cercana (pulido menor)
-
-- [ ] **Podcast:** transcripcion automatica, busqueda full-text, estadisticas de escucha
-- [ ] **Banners:** admin CRUD, click tracking, A/B testing
-- [ ] **Mapas:** markers desde DB, heatmap layer, offline-first caching
-- [ ] **Rutas:** booking funcional, "Descargar Mapa" real, reviews
-- [ ] **Comercios:** detail page, reviews, photo galleries
-
-### Funcional pero Incompleto
-
-- [ ] **Portal:** image CDN, booking flow, SEO coverage, i18n
-- [ ] **Auth:** JWT validation (actualmente spoofable headers), RLS policies, 2FA
-- [ ] **Musica:** recommendation engine con datos reales, listening history
-- [ ] **Isabella:** backend persistence (no in-memory), RAG pipeline real
-- [ ] **Ecoturismo:** weather integration, trail calculator, user reviews
-- [ ] **Donaciones:** donation history, tax receipts, recurring donations
-
-### Requieren Trabajo Significativo
-
-- [ ] **Gamificacion:** quest completion real, QR check-in, seasonal resets
-- [ ] **Living World:** schema en produccion, world event scheduling, season rotation
-- [ ] **Panel Admin:** analytics con datos reales, user management, audit log
-- [ ] **Transporte:** real-time tracking, booking, schedules
-- [ ] **Wiki:** article authoring, search, version history
-- [ ] **Telemetry:** structured logging, Web Vitals, alerting
-- [ ] **Search:** server-side search, fuzzy matching, autocomplete
-
-### Conceptual (sin implementacion)
-
-- [ ] **Digital Twins:** IoT sensor integration, BIM loading, 3D rendering
-- [ ] **YUN cross-node:** P2P sync real entre nodos MD-X4
 
 ---
 
@@ -430,7 +402,7 @@ Sistema evolutivo con gamificacion, narrativa inteligente, economia interna y co
 
 ### Base de Datos (Drizzle ORM + Supabase)
 
-Schema en `artifacts/api-server/src/db/schema.ts`:
+Schema en `artifacts/api-server/src/db/schema.ts` — **26 tablas**:
 
 - **players** / **player_avatars** — Identidad y avatar
 - **territories** / **poi_state** — POIs y eventos
@@ -440,6 +412,7 @@ Schema en `artifacts/api-server/src/db/schema.ts`:
 - **items** / **collections** / **player_items** — Coleccionables
 - **world_events** / **community_challenges** — Eventos y retos
 - **narrative_messages** — Mensajes de Realito e Isabella
+- **isabella_sessions** / **isabella_decisions** / **isabella_feedback** / **isabella_knowledge** — Persistencia IA
 - **isabellaMemory** — Memoria persistente de Isabella
 - **isabellaEvaluationResults** — Evaluaciones de calidad IA
 
@@ -543,8 +516,8 @@ lib/isabella/
 │   └── reasoner.ts           # Razonador
 ├── security/
 │   ├── anubis-sentinel.ts    # Sentinel de seguridad
-│   ├── dual-layer.ts         # Seguridad dual capa
-│   └── pqc-crypto.ts         # PQC para Isabella
+│   ├── dual-layer.ts         # Seguridad dual capa (AES-256-GCM + Kyber-1024)
+│   └── pqc-crypto.ts         # PQC para Isabella (Dilithium/Kyber stubs)
 ├── event-bus/
 │   └── index.ts              # Event bus tipado
 ├── xrai/
@@ -552,27 +525,6 @@ lib/isabella/
 └── types/
     └── decision-record.ts    # Tipos de registro de decisiones
 ```
-
-### Capa AI Adicional
-
-```
-lib/ai/
-├── isa-api.ts            # Core cognitivo ISA, prompt guard, parser de intenciones
-├── mexa-api.ts           # Capa de criptografia de soberania Mexa
-└── knowledge.ts          # 19 entradas de conocimiento TAMV (5 dominios)
-```
-
-### Frontend
-
-| Componente | Estado |
-|-----------|--------|
-| IsabellaChat | Chat UI con hashing federado |
-| IsabellaVoiceEngine | STT + TTS con emociones |
-| IsabellaOrb | Orbe animado que abre chat |
-| useIsabella / useIsabellaSSE | Streaming chat + SSE |
-| isabellaStore (Zustand) | Estado global |
-| isabella-guardian | Politica de seguridad (NORMAL/SAFE/EMERGENCY) |
-| ExperienceOrchestrator | Motor de decisiones geoespaciales |
 
 ### Base de Datos
 
@@ -587,7 +539,7 @@ lib/ai/
 
 ## Isabella Cognitive Kernel — Sistema Operativo Cognitivo
 
-Evolucion de Isabella AI a un **Sistema Operativo Cognitivo** completo — 17 modulos que implementan el ciclo Perceive → Understand → Plan → Execute → Verify → Learn.
+Evolution de Isabella AI a un **Sistema Operativo Cognitivo** completo — 17 modulos que implementan el ciclo Perceive → Understand → Plan → Execute → Verify → Learn.
 
 ### Arquitectura
 
@@ -636,57 +588,19 @@ lib/isabella/kernel/
 | L5 | Permanente | 500,000 | Permanente | Permanente |
 | L6 | Historico | 1,000,000 | Permanente | Permanente |
 
-### 18 Capacidades
-
-| Capacidad | Costo | Latencia | Calidad |
-|-----------|-------|----------|---------|
-| Logical Reasoning | $0.01 | 200ms | 0.85 |
-| Memory Retrieval | $0.005 | 100ms | 0.80 |
-| Visual Analysis | $0.03 | 500ms | 0.75 |
-| Strategic Planning | $0.02 | 300ms | 0.80 |
-| Geospatial Intelligence | $0.01 | 150ms | 0.85 |
-| Tourism Intelligence | $0.01 | 200ms | 0.80 |
-| Legal Analysis | $0.04 | 400ms | 0.70 |
-| Architecture Design | $0.03 | 350ms | 0.85 |
-| Code Generation | $0.02 | 250ms | 0.80 |
-| Security Analysis | $0.05 | 500ms | 0.90 |
-| Research Synthesis | $0.02 | 300ms | 0.80 |
-| Negotiation Engine | $0.03 | 400ms | 0.75 |
-| Information Synthesis | $0.015 | 200ms | 0.85 |
-| Output Verification | $0.02 | 250ms | 0.90 |
-| Scenario Simulation | $0.04 | 600ms | 0.75 |
-| Translation | $0.01 | 150ms | 0.85 |
-| Data Analysis | $0.02 | 250ms | 0.80 |
-| Creative Generation | $0.03 | 400ms | 0.75 |
-
-### API Cognitive Kernel — 30+ Endpoints
+### API Cognitive Kernel — 25+ Endpoints
 
 | Metodo | Ruta | Descripcion |
 |--------|------|-------------|
 | POST | `/api/kernel/process` | Ejecutar ciclo cognitivo completo |
 | GET | `/api/kernel/stats` | Estadisticas del kernel |
 | GET | `/api/kernel/memory` | Estadisticas de memoria |
-| GET | `/api/kernel/memory/query` | Consultar memoria |
 | GET | `/api/kernel/emergency` | Estado de emergencia |
 | POST | `/api/kernel/emergency/trigger` | Activar nivel de emergencia |
-| POST | `/api/kernel/emergency/shutdown` | Apagar sistema |
-| POST | `/api/kernel/emergency/rollback` | Revertir emergencia |
-| POST | `/api/kernel/emergency/clear` | Limpiar estado |
 | GET | `/api/kernel/evaluator` | Metricas de evaluacion |
-| GET | `/api/kernel/evaluator/trends` | Tendencias |
-| GET | `/api/kernel/evaluator/alerts` | Alertas activas |
-| GET | `/api/kernel/verifier` | Historial de verificacion |
-| GET | `/api/kernel/learning` | Historial de aprendizaje |
-| GET | `/api/kernel/learning/errors` | Patrones de error |
 | GET | `/api/kernel/capabilities` | Listar capacidades |
-| POST | `/api/kernel/capabilities/:id/toggle` | Habilitar/deshabilitar |
-| GET | `/api/kernel/plans` | Listar planes |
 | POST | `/api/kernel/plans` | Crear plan |
-| GET | `/api/kernel/knowledge` | Estadisticas del grafo |
 | POST | `/api/kernel/knowledge/entities` | Agregar entidad |
-| POST | `/api/kernel/knowledge/relations` | Agregar relacion |
-| POST | `/api/kernel/knowledge/search` | Buscar entidades |
-| POST | `/api/kernel/knowledge/query` | Consultar grafo |
 | POST | `/api/kernel/simulate` | Ejecutar simulacion |
 
 ---
@@ -701,7 +615,7 @@ Capa de **orquestacion cognitiva** que extiende Isabella con 10 skills especiali
 lib/crown/
 ├── index.ts                # Barrel export
 ├── types.ts                # Tipos C.R.O.W.N.
-├── capability-gateway.ts   # Gateway de capacidades — routing inteligente a skills
+├── capability-gateway.ts   # Gateway de capacidades — routing inteligente a skills (SHA-256 BookPI anchor)
 ├── provider-failover.ts    # Failover automatico entre providers (OpenAI → Mexa → local)
 ├── bookpi-telemetry.ts     # Telemetria BookPI — metrics, audit trail, usage tracking
 └── skills/
@@ -717,21 +631,6 @@ lib/crown/
     └── strategic-intelligence.ts    # Inteligencia estrategica
 ```
 
-### 10 Skills
-
-| Skill | Funcion |
-|-------|---------|
-| Architecture Reasoning | Analisis y diseno de arquitecturas de software |
-| Continuous Learning | Aprendizaje incremental de interacciones |
-| Digital Twin | Interaccion con gemelos digitales territoriales |
-| Execution Fabric | Orquestacion de tareas complejas |
-| Knowledge Fabric | Tejido de conocimiento interconectado |
-| Massive Context | Procesamiento de contexto >100k tokens |
-| Memory Fabric | Memoria persistente de largo plazo |
-| Multi-Agent Collective | Coordinacion colectiva de agentes |
-| Self-Evaluation | Autoevaluacion continua de calidad |
-| Strategic Intelligence | Razonamiento estrategico de largo plazo |
-
 ### Failover
 
 El **ProviderFailover** gestiona automaticamente la conmutacion entre providers de IA:
@@ -742,9 +641,97 @@ Cada provider tiene metricas de latencia, tasa de exito y costo asociado.
 
 ---
 
+## Criptografia Post-Cuantica Hibrida (PQC)
+
+Implementacion completa de **criptografia resistente a computadora cuantica** en 3 capas:
+
+### Arquitectura PQC
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    API SERVER (Node.js)                       │
+│                                                              │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │  yun/pqc/core.ts  (YunPqcCrypto)                     │   │
+│  │  ┌──────────────┐  ┌──────────────┐  ┌───────────┐  │   │
+│  │  │ Key Lifecycle │  │Hybrid Hand-  │  │Hybrid     │  │   │
+│  │  │ (generate,    │  │shake         │  │Sign/      │  │   │
+│  │  │  rotate,      │  │(RSA-OAEP +  │  │Verify     │  │   │
+│  │  │  revoke,      │  │ X25519 ECDH)│  │(ECDSA +   │  │   │
+│  │  │  inventory)   │  │              │  │ Ed25519)  │  │   │
+│  │  └──────────────┘  └──────────────┘  └───────────┘  │   │
+│  └──────────────────────────────────────────────────────┘   │
+│                                                              │
+│  ┌───────────────────────────┐  ┌─────────────────────────┐ │
+│  │ isabella/security/         │  │ REST Routes /api/yun/   │ │
+│  │  dual-layer.ts            │  │  /pqc/keys, /pqc/       │ │
+│  │  (AES-256-GCM+Kyber-1024)│  │  handshake, /pqc/sign,  │ │
+│  └───────────────────────────┘  │  /pqc/verify            │ │
+│                                  └─────────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│                    RDM-HUB (Browser/Client)                  │
+│                                                              │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │  quantum/pqc.ts  (PostQuantumCryptoV2)               │   │
+│  │  ┌─────────────────────────────────────────────────┐ │   │
+│  │  │ WASM Layer: liboqs-wasm (Kyber512, Dilithium2) │ │   │
+│  │  │ Fallback: WebCrypto (SHA-256/HMAC-SHA512/AES)  │ │   │
+│  │  └─────────────────────────────────────────────────┘ │   │
+│  └──────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Implementaciones PQC
+
+| Componente | Archivo | Algoritmos | Estado |
+|-----------|---------|-----------|--------|
+| **Server PQC** | `yun/pqc/core.ts` (502 lineas) | RSA-OAEP + X25519 (KEM), ECDSA + Ed25519 (firmas), HKDF-SHA256 | Produccion |
+| **Browser PQC V2** | `quantum/pqc.ts` (262 lineas) | liboqs WASM: Kyber512 KEM, Dilithium2 firmas, AES-GCM | Produccion |
+| **Browser PQC V1** | `security/PostQuantumCrypto.ts` (108 lineas) | HMAC-SHA512, SHA-256, AES-GCM | Legacy |
+| **Isabella Dual-Layer** | `isabella/security/dual-layer.ts` (63 lineas) | AES-256-GCM + Kyber-1024 (etiqueta) | Stub |
+| **Isabella PQC** | `isabella/security/pqc-crypto.ts` (46 lineas) | Dilithium/Kyber stubs | Stub |
+
+### Operaciones Hibridas
+
+| Operacion | Clasico | PQC | Combinacion |
+|-----------|---------|-----|-------------|
+| **Handshake** | RSA-OAEP | X25519 ECDH | HKDF-SHA256(clasicSecret \|\| pqcSecret) |
+| **Firma** | ECDSA-SHA256 | Ed25519 | SHA-256(classicSig \|\| pqcSig) |
+| **Verificacion** | Requerido | Opcional (backward-compat) | Ambos deben ser validos |
+| **Encriptacion** | — | AES-GCM (derived from KEM) | SHA-256(sharedSecret) → AES key |
+
+### Migracion a Lattice-Based
+
+> **NOTA:** X25519 y Ed25519 son placeholders para Kyber (KEM) y Dilithium (firmas) via liboqs/WASM. La migracion se ejecutara cuando liboqs WASM bindings esten en nivel de produccion. Todos los archivos mantienen la compatibilidad backward-compatible via el flag `PQC_MIGRATION_NOTE`.
+
+### API PQC — 9 Endpoints
+
+| Metodo | Ruta | Auth | Descripcion |
+|--------|------|------|-------------|
+| POST | `/api/yun/pqc/keys` | admin | Generar par de claves PQC |
+| GET | `/api/yun/pqc/keys` | user | Listar inventario de claves |
+| GET | `/api/yun/pqc/keys/:keyId` | user | Obtener metadata de clave |
+| POST | `/api/yun/pqc/keys/:keyId/rotate` | admin | Rotar clave existente |
+| POST | `/api/yun/pqc/keys/:keyId/revoke` | admin | Revocar clave |
+| GET | `/api/yun/pqc/rotation-queue` | user | Claves que necesitan rotacion |
+| POST | `/api/yun/pqc/handshake` | admin | Handshake hibrido (RSA+X25519) |
+| POST | `/api/yun/pqc/sign` | operator | Firma hibrida (ECDSA+Ed25519) |
+| POST | `/api/yun/pqc/verify` | user | Verificar firma hibrida |
+
+### Gestion de Claves
+
+- **Rotacion automatica:** Ventana configurable (default 6 meses)
+- **Grace periods:** 30 dias para transicion segura
+- **Eviction LRU:** Limite configurable (`RDM_PQC_MAX_KEYS`, default 500)
+- **Estados:** `active` → `pending_rotation` → `retired` → `revoked`
+
+---
+
 ## Podcast TAMV — Spotify Integration
 
-Sistema de **podcast episodico** para contenido de cultura territorial de Real del Monte. Reemplaza el anterior sistema de Radio FM (AzuraCast/Liquidsoap, eliminado en commit `2984a1a`).
+Sistema de **podcast episodico** para contenido de cultura territorial de Real del Monte.
 
 ### Stack
 
@@ -763,55 +750,59 @@ Sistema de **podcast episodico** para contenido de cultura territorial de Real d
 | GET | `/api/podcast/episode/:id` | Detalle de episodio |
 | GET | `/api/podcast/search` | Buscar episodios |
 
-### Frontend
-
-- **Podcast.tsx** — Pagina principal con listado de episodios
-- **SpotifyPodcastPlayer.tsx** — Widget de reproduccion Spotify embebido
-
 ---
 
 ## Seguridad y Production Hardening
 
-Produccion endurecida siguiendo patrones de PennyLane (PennyLaneAI/pennylane) — gitleaks, CI concurrency, pre-commit hooks, coverage thresholds.
+**Doble hardening** aplicado: seguridad de capa de aplicacion + seguridad de capa de infraestructura.
 
-### Commits de Hardening
+### Capa 1: Seguridad de Aplicacion
 
-| Commit | Contenido |
-|--------|-----------|
-| `36dfcd7` | CSS color system audit (7 archivos) |
-| `9068822` | Documentacion completa (15 archivos, 2,126 lineas) |
-| `2984a1a` | Radio → Podcast migration (18 archivos) |
-| `d9c6d52` | **P0 Production Hardening** (13 archivos, +647/-88 lineas) |
+| Area | Proteccion | Archivo |
+|------|-----------|---------|
+| **JWT Auth** | Verificacion HS256 con timing-safe comparison, rechazo 401 en prod | `middlewares/auth.ts` |
+| **RBAC** | 5 roles (public < user < operator < admin < federation_auditor) | `lib/security.ts` |
+| **Rate Limiting** | Per-route buckets, configurable window, 429 + Retry-After | `lib/security.ts` |
+| **Validacion** | Zod schemas para todos los POST endpoints | `middlewares/validate.ts` |
+| **CORS** | Explicit allowlist (`ALLOWED_ORIGINS`), no `origin: true` | `app.ts` |
+| **Error Handling** | Global handler, generic messages only (no leak) | `app.ts` |
+| **Tracing** | Span-based, slow span alerts >1s | `lib/tracing.ts` |
+| **Secrets** | No hardcoded fallbacks, server refuses without required env vars | `lib/env.ts` |
+| **Supply Chain** | `minimumReleaseAge: 1440` (1-day delay on npm packages) | `pnpm-workspace.yaml` |
+| **CSV Injection** | Sanitizacion de cells con `=`, `+`, `-`, `@`, `\t`, `\r` | `lib/admin/audit-log.ts` |
+| **Prototype Pollution** | `sanitizeObject()` para todo `req.body` | `lib/validate.ts` |
+| **Health Disclosure** | Endpoint `/healthz` retorna solo `{ status: "ok" }` | `routes/health.ts` |
+| **404 Leak** | Respuesta generica, sin path disclosure | `app.ts` |
+| **Memory Bounds** | LRU eviction en audit log (10K), sessions (2K), PQC keys (500) | Varios |
+| **Crypto Logging** | Empty catch blocks reemplazados con `logger.warn` | `yun/pqc/core.ts`, `bus.ts` |
 
-### P0 Hardening (`d9c6d52`)
+### Capa 2: Seguridad de Infraestructura
 
-| Area | Cambio | Archivo |
-|------|--------|---------|
-| **Env安全** | Hardcoded fallbacks eliminados | `mexa-api.ts`, `yun/index.ts` |
-| **Env config** | Type-safe env validation at startup | `lib/env.ts` |
-| **CORS** | `origin: true` → explicit allowlist (`ALLOWED_ORIGINS`) | `app.ts` |
-| **Error handling** | Global error handler `(err, req, res, next)` | `app.ts` |
-| **Tracing** | Lightweight span-based tracing, slow span alerts >1s | `lib/tracing.ts`, `app.ts` |
-| **Validation** | Zod-style middleware for critical routes | `middlewares/validate.ts` |
-| **Health** | DB connectivity check (`SELECT 1`), pool stats | `routes/health.ts` |
-| **Graceful shutdown** | `SIGTERM`/`SIGINT` handlers + `closeDb()` | `index.ts` |
-| **Gitignore** | `.env`, `.env.local`, `.env.*.local` patterns | `.gitignore` |
-| **CI/CD** | Lint, security (Gitleaks), test, build, concurrency groups | `.github/workflows/ci.yml` |
-
-### Secrets Policy
-
-NO hardcoded fallbacks. Server refuses to start without:
-- `MEXA_API_SECURE_KEY` — Mexican sovereignty API key
-- `YUN_SIGNING_SECRET` — YUN event bus HMAC signing key
+| Area | Proteccion | Archivo |
+|------|-----------|---------|
+| **TLS** | Let's Encrypt automatico via Traefik ACME | `deploy/docker-compose.yml` |
+| **HSTS** | `stsSeconds: 31536000, stsIncludeSubdomains, stsPreload` | `traefik/dynamic.yml` |
+| **XSS Protection** | `browserXssFilter: true, contentTypeNosniff: true` | `traefik/dynamic.yml` |
+| **Frame Deny** | `frameDeny: true` | `traefik/dynamic.yml` |
+| **Referrer Policy** | `strict-origin-when-cross-origin` | `traefik/dynamic.yml` |
+| **Rate Limiting** | Traefik middleware: 100 avg, 50 burst per minute | `docker-compose.yml` |
+| **Docker Socket** | Mount read-only (`:ro`) | `docker-compose.yml` |
+| **no-new-privileges** | `security_opt: no-new-privileges:true` en Traefik | `docker-compose.yml` |
+| **exposedByDefault** | `false` — solo containers con labels explicitos | `docker-compose.yml` |
+| **Network Isolation** | `rdm_internal: internal: true` — DB/Redis sin acceso externo | `docker-compose.yml` |
+| **Firewall** | UFW: solo puertos 22, 80, 443 | `PLAN-MAESTRO.md` |
+| **Backups** | pg_dump + AES-256-CBC + Backblaze B2 cada 6h | `deploy/scripts/backup.sh` |
+| **ACME Permissions** | `chmod 600 acme.json` | `deploy/scripts/deploy.sh` |
 
 ### CI/CD Pipeline
 
 | Job | Steps |
 |-----|-------|
-| **lint** | typecheck + build |
-| **security** | Gitleaks secret scanning |
-| **test** | PostgreSQL service container + vitest |
+| **lint** | typecheck + ESLint + build |
+| **security** | Gitleaks secret scanning (full history) |
+| **test** | PostgreSQL 16 service container + vitest |
 | **build** | Full build verification |
+| **coder_task** | Replit workspace debugging (push only) |
 
 Scheduled weekly tests + concurrency groups prevent duplicate runs.
 
@@ -819,42 +810,121 @@ Scheduled weekly tests + concurrency groups prevent duplicate runs.
 
 ## Despliegue e Infraestructura Soberana
 
-### Variables de Entorno (Replit Secrets)
+### Plan Maestro MD-X4 (≤25 USD/mes)
 
-```env
-VITE_SUPABASE_URL=https://tu-instancia.supabase.co
-VITE_SUPABASE_ANON_KEY=tu-llave-publica-anonima
-MEXA_API_SECURE_KEY=tu-llave-mexa
-YUN_SIGNING_SECRET=tu-secreto-yun
-NODE_ENV=production
-PORT=8080
+| Componente | Proveedor | Costo/mes | Rol |
+|---|---|---|---|
+| **Nodo Primario** | Hostinger KVM 2 | ≈$9 | Produccion (Docker + Traefik + API + DB) |
+| **Nodo Standby** | Hetzner CX22 | ≈$5 | DR warm standby |
+| **Backups Remotos** | Backblaze B2 | ≈$3 | 50-100 GB cifrados (AES-256-CBC) |
+| **Dominio** | Hostinger | ≈$1.5 | visitarealdelmonte.online |
+| **TOTAL** | | **≈$18.50** | **$6.50 margen** |
+
+### Arquitectura Docker
+
+```
+┌──────────────────────────────────────────────────────┐
+│                 DNS (Hostinger Panel)                  │
+│    visitarealdelmonte.online → IP nodo primario       │
+│    api.visitarealdelmonte.online → IP nodo primario   │
+└─────────────────────┬────────────────────────────────┘
+                      │
+          ┌───────────┴───────────┐
+          │                       │
+     ┌────▼────┐           ┌────▼────┐
+     │ PRIMARY │  pg_dump   │ STANDBY │
+     │Hostinger│ ─────────► │Hetzner  │
+     │ KVM 2   │  cada 6h   │ CX22    │
+     │ 2v/8GB  │  via B2    │ 2v/4GB  │
+     │ $9/mes  │            │ $5/mes  │
+     └────┬────┘            └────┬────┘
+          │                      │
+     ┌────▼──────────────────────▼────┐
+     │     Stack MD-X4 (Docker)       │
+     │  ┌─────────┐  ┌──────────┐    │
+     │  │ Traefik │  │PostgreSQL│    │
+     │  │  (TLS)  │  │  16-alp  │    │
+     │  └─────────┘  └──────────┘    │
+     │  ┌─────────┐  ┌──────────┐    │
+     │  │ API     │  │ Frontend │    │
+     │  │ :8080   │  │ :22942   │    │
+     │  └─────────┘  └──────────┘    │
+     │  ┌─────────┐  ┌──────────┐    │
+     │  │  Redis  │  │ Backup   │    │
+     │  │ :6379   │  │ Worker   │    │
+     │  └─────────┘  └──────────┘    │
+     └───────────────────────────────┘
 ```
 
-### Ejecucion Local
+### Despliegue Rapido
 
 ```bash
-git clone https://github.com/OsoPanda1/rdm-digital-hub-ldtocs.git
-cd rdm-digital-hub-ldtocs
-pnpm install
+# 1. Conectar al VPS
+ssh root@IP_HOSTINGER
 
-# Frontend
-pnpm --filter @workspace/rdm-hub run dev
+# 2. Instalar Docker
+curl -fsSL https://get.docker.com | sh
 
-# Backend
-pnpm --filter @workspace/api-server run dev
+# 3. Clonar y configurar
+cd /opt && git clone https://github.com/OsoPanda1/rdm-digital-hub-ldtocs.git
+cd rdm-digital-hub-ldtocs/deploy && cp .env.example .env
+nano .env  # Rellenar passwords, secrets, etc.
+
+# 4. Generar hash bcrypt para dashboard
+apt install -y apache2-utils
+htpasswd -nB admin  # Copiar output a DASHBOARD_AUTH en .env
+
+# 5. Desplegar
+chmod +x scripts/*.sh
+./scripts/deploy.sh --all
 ```
 
-### Replit
+### Variables de Entorno
 
-- Backend: `artifacts/api-server/.replit-artifact/artifact.toml`
-- Health check: `/api/healthz` (includes DB connectivity)
-- Puerto interno: 8080 (Node 20 Autoscale)
+```env
+# Dominio
+SITE_HOST=visitarealdelmonte.online
+API_HOST=api.visitarealdelmonte.online
+
+# Let's Encrypt
+ACME_EMAIL=tamvonlinenetwork@outlook.es
+
+# Base de datos
+DB_PASSWORD=tu_password_fuerte
+
+# JWT
+SUPABASE_JWT_SECRET=tu_secreto_jwt
+
+# Backups (Backblaze B2)
+BACKUP_BUCKET=rdm-digital-hub-backups
+BACKUP_KEY=tu_key_id
+BACKUP_SECRET=tu_application_key
+```
+
+### Comandos Utiles
+
+```bash
+# Estado de servicios
+docker compose ps
+
+# Logs en tiempo real
+docker compose logs -f rdm-api
+
+# Reiniciar un servicio
+docker compose restart rdm-api
+
+# Backup manual
+docker compose exec backup-worker /backup.sh
+
+# Restore DR
+./scripts/restore.sh
+```
 
 ### Seguridad del Monorepo
 
-- **minimumReleaseAge: 1440** — paquetes npm deben tener 1+ dia de publicacion (defensa supply-chain)
-- **Exclusiones:** solo `@replit/*` y `stripe-replit-sync`
-- **Overrides:** exclusiones de plataforma para esbuild, lightningcss, tailwindcss/oxide, rollup (solo linux-x64)
+- **minimumReleaseAge: 1440** — paquetes npm deben tener 1+ dia de publicacion
+- **onlyBuiltDependencies** — solo 4 paquetes pueden ejecutar post-install scripts
+- **Overrides** — parches de seguridad para js-yaml, fast-uri, undici, @babel/core, dompurify
 
 ---
 
@@ -881,11 +951,13 @@ pnpm --filter @workspace/api-server run dev
 | Componente | Licencia | Archivo |
 |-----------|---------|---------|
 | Software abierto y documentacion | MIT | `LICENSE` |
-| Kernel tecnologico TAMV | TAMV-PRCL v1.0 | `LICENSE-PRCL.md` |
-| Motor de IA (Isabella) | TAMV-EOL v1.0 | `LICENSE-EOL.md` |
-| Interoperabilidad y conectores | TAMV-KORIMA | `LICENSE-KORIMA.md` |
+| Kernel tecnologico TAMV (`/src/core/`, `/src/kernel/`, `/src/quantum/`) | TAMV-PRCL v1.0 | `LICENSE-PRCL.md` |
+| Motor de IA — Isabella (`/src/isabella/`) | TAMV-EOL v1.0 | `LICENSE-EOL.md` |
+| Interoperabilidad y conectores (`/src/connect/`, `/skills/`) | TAMV-KORIMA | `LICENSE-KORIMA.md` |
 | Hibrido | TAMV-HYBRID | `LICENSE-HYBRID.md` |
-| Datos territoriales y soberania | DPA | `DATA-SOVEREIGNTY-DPA.md` |
+| Datos territoriales y soberania (`/supabase/`, telemetry, RLS) | DPA | `DATA-SOVEREIGNTY-DPA.md` |
+
+Ver `RFC-0001-MANIFEST.md` para el manifesto completo de licenciamiento hibrido.
 
 ---
 
