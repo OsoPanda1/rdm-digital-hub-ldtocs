@@ -117,8 +117,8 @@ export function validate(schema: Schema) {
     const errors = validateBody(req.body, schema);
     if (errors.length > 0) {
       res.status(400).json({
-        error: "Validation Error",
-        details: errors,
+        ok: false,
+        error: { code: "VALIDATION_ERROR", message: "Request validation failed", details: errors },
       });
       return;
     }

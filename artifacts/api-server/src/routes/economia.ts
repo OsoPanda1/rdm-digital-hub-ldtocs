@@ -13,6 +13,7 @@ import { createEconomiaF4 } from "../lib/federation/economia-f4";
 import { validate, schemas } from "../middlewares/validate";
 
 export function registerEconomiaRoutes(router: Router) {
+  // ⚠️ IN-MEMORY — economia F4 ledger LOST ON SERVER RESTART
   const economia = createEconomiaF4();
 
   router.get("/economia/transactions", requireRdmRole("operator"), (_req: Request, res: Response) => {

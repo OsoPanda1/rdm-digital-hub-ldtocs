@@ -12,6 +12,7 @@ import { requireRdmRole, rateLimitByRoute } from "../lib/security";
 import { createTwinsF5 } from "../lib/federation/twins-f5";
 
 export function registerTwinsRoutes(router: Router) {
+  // ⚠️ IN-MEMORY — twins F5 state LOST ON SERVER RESTART
   const twins = createTwinsF5();
 
   router.get("/twins/scenes", (_req: Request, res: Response) => {

@@ -20,7 +20,7 @@ import { validate, schemas, sanitizeObject } from "../middlewares/validate";
 
 const router = Router();
 
-// Singleton YUN system
+// ⚠️ IN-MEMORY — yunSystem singleton LOST ON SERVER RESTART
 let yunSystem: YunSystem | null = null;
 
 function getYun(): YunSystem {

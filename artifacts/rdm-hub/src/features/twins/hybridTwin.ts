@@ -71,7 +71,7 @@ export interface SensorReading {
 
 export async function getTwinSignals(twinId: string): Promise<TwinSignal[]> {
   try {
-    const res = await fetch(`${API_BASE}/v1/digital-twins/${twinId}/signals`, { credentials: 'include' });
+    const res = await fetch(`${API_BASE}/twins/scene/${twinId}/sensors`, { credentials: 'include' });
     if (!res.ok) throw new Error('API unavailable');
     return await res.json();
   } catch {
@@ -83,7 +83,7 @@ export async function getTwinSignals(twinId: string): Promise<TwinSignal[]> {
 
 export async function getTwinScenes(): Promise<TwinScene[]> {
   try {
-    const res = await fetch(`${API_BASE}/v1/digital-twins/scenes`, { credentials: 'include' });
+    const res = await fetch(`${API_BASE}/twins/scenes`, { credentials: 'include' });
     if (!res.ok) throw new Error('API unavailable');
     return await res.json();
   } catch {
@@ -118,7 +118,7 @@ export async function getTwinScenes(): Promise<TwinScene[]> {
 
 export async function getTwinDetail(twinId: string): Promise<TwinScene | null> {
   try {
-    const res = await fetch(`${API_BASE}/v1/digital-twins/${twinId}`, { credentials: 'include' });
+    const res = await fetch(`${API_BASE}/twins/scene/${twinId}`, { credentials: 'include' });
     if (!res.ok) throw new Error('API unavailable');
     return await res.json();
   } catch {
@@ -129,7 +129,7 @@ export async function getTwinDetail(twinId: string): Promise<TwinScene | null> {
 
 export async function createSensorReading(twinId: string, data: { sensorId: string; value: number; unit: string }): Promise<SensorReading | null> {
   try {
-    const res = await fetch(`${API_BASE}/v1/digital-twins/${twinId}/readings`, {
+    const res = await fetch(`${API_BASE}/twins/scene/${twinId}/readings`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -144,7 +144,7 @@ export async function createSensorReading(twinId: string, data: { sensorId: stri
 
 export async function getTwinHistory(twinId: string, sensorType: string, timeRange: string): Promise<SensorReading[]> {
   try {
-    const res = await fetch(`${API_BASE}/v1/digital-twins/${twinId}/history?sensorType=${sensorType}&range=${timeRange}`, { credentials: 'include' });
+    const res = await fetch(`${API_BASE}/twins/scene/${twinId}/history?sensorType=${sensorType}&range=${timeRange}`, { credentials: 'include' });
     if (!res.ok) throw new Error('API unavailable');
     return await res.json();
   } catch {

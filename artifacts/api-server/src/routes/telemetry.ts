@@ -15,6 +15,7 @@ type TelemetryEvent = {
   metadata: Record<string, unknown>;
 };
 
+// ⚠️ IN-MEMORY — events buffer LOST ON SERVER RESTART
 const events: TelemetryEvent[] = [];
 const MAX_EVENTS = Number(process.env.RDM_TELEMETRY_BUFFER_SIZE ?? 500);
 

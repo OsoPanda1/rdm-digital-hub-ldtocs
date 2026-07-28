@@ -5,6 +5,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { getDb, isDbAvailable } from "../lib/db-client";
 import { requireRdmRole, rateLimitByRoute } from "../lib/security";
+import { apiSuccess, apiError, apiPaginated } from "../lib/api-response";
 
 const router = Router();
 
@@ -121,16 +122,12 @@ router.get("/featured", async (_req: Request, res: Response) => {
         `SELECT * FROM podcasts WHERE featured = true ORDER BY title`
       );
       if (result.rows && result.rows.length > 0) {
-        res.json({ ok: true, podcasts: result.rows, total: result.rows.length });
+        res.json(apiSuccess(result.rows));
         return;
       }
     } catch { /* fallback */ }
   }
-  res.json({
-    ok: true,
-    podcasts: FEATURED_PODCASTS.filter((p) => p.featured),
-    total: FEATURED_PODCASTS.filter((p) => p.featured).length,
-  });
+  res.json(apiSuccess(FEATURED_PODCASTS.filter((p) => p.featured)));
 });
 
 router.get("/all", async (req: Request, res: Response) => {
@@ -144,65 +141,78 @@ router.get("/all", async (req: Request, res: Response) => {
       const result = await db.execute(`SELECT * FROM podcasts ORDER BY title`);
       if (result.rows && result.rows.length > 0) {
         const paginated = result.rows.slice(offset, offset + limit);
-        res.json({ ok: true, podcasts: paginated, categories: CATEGORIES, total: result.rows.length, page, limit });
+        res.json(apiPaginated(paginated, result.rows.length, page, limit));
         return;
       }
     } catch { /* fallback */ }
   }
 
   const paginated = FEATURED_PODCASTS.slice(offset, offset + limit);
-  res.json({ ok: true, podcasts: paginated, categories: CATEGORIES, total: FEATURED_PODCASTS.length, page, limit });
+  res.json(apiPaginated(paginated, FEATURED_PODCASTS.length, page, limit));
 });
 
 router.get("/categories", (_req: Request, res: Response) => {
-  res.json({ ok: true, categories: CATEGORIES });
+  res.json(apiSuccess(CATEGORIES));
 });
 
 router.get("/:id", async (req: Request, res: Response) => {
+  const podcastId = String(req.params.id);
+  if (!podcastId || podcastId.length > 200 || /[;'"\\]/.test(podcastId)) {
+    res.status(400).json(apiError("INVALID_ID", "Invalid podcast ID."));
+    return;
+  }
+
   if (isDbAvailable()) {
     try {
       const db = getDb();
-      const result = await db.execute(`SELECT * FROM podcasts WHERE id = '${req.params.id}'`);
+      const result = await db.query("SELECT * FROM podcasts WHERE id = $1", [podcastId]);
       if (result.rows && result.rows.length > 0) {
-        res.json({ ok: true, podcast: result.rows[0] });
+        res.json(apiSuccess(result.rows[0]));
         return;
       }
     } catch { /* fallback */ }
   }
 
-  const podcast = FEATURED_PODCASTS.find((p) => p.id === req.params.id);
+  const podcast = FEATURED_PODCASTS.find((p) => p.id === podcastId);
   if (!podcast) {
-    res.status(404).json({ ok: false, error: "Podcast not found." });
+    res.status(404).json(apiError("NOT_FOUND", "Podcast not found."));
     return;
   }
-  res.json({ ok: true, podcast });
+  res.json(apiSuccess(podcast));
 });
 
 router.get("/:id/embed", (req: Request, res: Response) => {
   const podcast = FEATURED_PODCASTS.find((p) => p.id === req.params.id);
   if (!podcast) {
-    res.status(404).json({ ok: false, error: "Podcast not found." });
+    res.status(404).json(apiError("NOT_FOUND", "Podcast not found."));
     return;
   }
-  res.json({ ok: true, embedUrl: podcast.embedUrl, spotifyUri: podcast.spotifyUri, title: podcast.title });
+  res.json(apiSuccess({ embedUrl: podcast.embedUrl, spotifyUri: podcast.spotifyUri, title: podcast.title }));
 });
 
 router.get("/:id/episodes", async (req: Request, res: Response) => {
+  const podcastId = String(req.params.id);
+  if (!podcastId || podcastId.length > 200 || /[;'"\\]/.test(podcastId)) {
+    res.status(400).json(apiError("INVALID_ID", "Invalid podcast ID."));
+    return;
+  }
+
   if (isDbAvailable()) {
     try {
       const db = getDb();
-      const result = await db.execute(
-        `SELECT * FROM podcast_episodes WHERE podcast_id = '${req.params.id}' ORDER BY published_at DESC`
+      const result = await db.query(
+        "SELECT * FROM podcast_episodes WHERE podcast_id = $1 ORDER BY published_at DESC",
+        [podcastId]
       );
       if (result.rows && result.rows.length > 0) {
-        res.json({ ok: true, episodes: result.rows, total: result.rows.length });
+        res.json(apiSuccess(result.rows));
         return;
       }
     } catch { /* fallback */ }
   }
 
-  const episodes = MOCK_EPISODES[req.params.id] || [];
-  res.json({ ok: true, episodes, total: episodes.length });
+  const episodes = MOCK_EPISODES[podcastId] || [];
+  res.json(apiSuccess(episodes));
 });
 
 router.post("/", requireRdmRole("admin"), rateLimitByRoute({ name: "podcast-create", limit: 10 }), async (req: Request, res: Response, next: NextFunction) => {
@@ -213,21 +223,22 @@ router.post("/", requireRdmRole("admin"), rateLimitByRoute({ name: "podcast-crea
       try {
         const db = getDb();
         const id = `podcast-${Date.now()}`;
-        await db.execute(
+        await db.query(
           `INSERT INTO podcasts (id, title, description, category, spotify_uri, featured, language, created_at)
-           VALUES ('${id}', '${data.title.replace(/'/g, "''")}', '${data.description.replace(/'/g, "''")}', '${data.category}', '${data.spotifyUri ?? ""}', false, 'es', NOW())`
+           VALUES ($1, $2, $3, $4, $5, false, 'es', NOW())`,
+          [id, data.title, data.description, data.category, data.spotifyUri ?? ""]
         );
-        res.status(201).json({ ok: true, podcast: { id, ...data, featured: false, language: "es" } });
+        res.status(201).json(apiSuccess({ id, ...data, featured: false, language: "es" }));
         return;
       } catch { /* fallback */ }
     }
 
     const newPodcast = { id: `podcast-${Date.now()}`, ...data, featured: false, language: "es", tags: [], episodes: 0 };
     FEATURED_PODCASTS.push(newPodcast);
-    res.status(201).json({ ok: true, podcast: newPodcast });
+    res.status(201).json(apiSuccess(newPodcast));
   } catch (err) {
     if (err instanceof Error) {
-      res.status(400).json({ ok: false, error: err.message });
+      res.status(400).json(apiError("VALIDATION_ERROR", err.message));
       return;
     }
     next(err);
@@ -236,71 +247,89 @@ router.post("/", requireRdmRole("admin"), rateLimitByRoute({ name: "podcast-crea
 
 router.put("/:id", requireRdmRole("admin"), rateLimitByRoute({ name: "podcast-update", limit: 20 }), async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const podcastId = String(req.params.id);
+    if (!podcastId || podcastId.length > 200 || /[;'"\\]/.test(podcastId)) {
+      res.status(400).json(apiError("INVALID_ID", "Invalid podcast ID."));
+      return;
+    }
     const data = validatePodcastBody(req.body);
 
     if (isDbAvailable()) {
       try {
         const db = getDb();
-        await db.execute(
-          `UPDATE podcasts SET title = '${data.title.replace(/'/g, "''")}', description = '${data.description.replace(/'/g, "''")}', category = '${data.category}', spotify_uri = '${data.spotifyUri ?? ""}' WHERE id = '${req.params.id}'`
+        await db.query(
+          `UPDATE podcasts SET title = $1, description = $2, category = $3, spotify_uri = $4 WHERE id = $5`,
+          [data.title, data.description, data.category, data.spotifyUri ?? "", podcastId]
         );
-        res.json({ ok: true, podcast: { id: req.params.id, ...data } });
+        res.json(apiSuccess({ id: podcastId, ...data }));
         return;
       } catch { /* fallback */ }
     }
 
-    const idx = FEATURED_PODCASTS.findIndex((p) => p.id === req.params.id);
-    if (idx === -1) { res.status(404).json({ ok: false, error: "Podcast not found." }); return; }
+    const idx = FEATURED_PODCASTS.findIndex((p) => p.id === podcastId);
+    if (idx === -1) { res.status(404).json(apiError("NOT_FOUND", "Podcast not found.")); return; }
     FEATURED_PODCASTS[idx] = { ...FEATURED_PODCASTS[idx], ...data };
-    res.json({ ok: true, podcast: FEATURED_PODCASTS[idx] });
+    res.json(apiSuccess(FEATURED_PODCASTS[idx]));
   } catch (err) {
-    if (err instanceof Error) { res.status(400).json({ ok: false, error: err.message }); return; }
+    if (err instanceof Error) { res.status(400).json(apiError("VALIDATION_ERROR", err.message)); return; }
     next(err);
   }
 });
 
 router.delete("/:id", requireRdmRole("admin"), rateLimitByRoute({ name: "podcast-delete", limit: 5 }), async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const podcastId = String(req.params.id);
+    if (!podcastId || podcastId.length > 200 || /[;'"\\]/.test(podcastId)) {
+      res.status(400).json(apiError("INVALID_ID", "Invalid podcast ID."));
+      return;
+    }
+
     if (isDbAvailable()) {
       try {
         const db = getDb();
-        await db.execute(`DELETE FROM podcasts WHERE id = '${req.params.id}'`);
-        res.json({ ok: true, deleted: req.params.id });
+        await db.query("DELETE FROM podcasts WHERE id = $1", [podcastId]);
+        res.json(apiSuccess({ deleted: podcastId }));
         return;
       } catch { /* fallback */ }
     }
 
-    const idx = FEATURED_PODCASTS.findIndex((p) => p.id === req.params.id);
-    if (idx === -1) { res.status(404).json({ ok: false, error: "Podcast not found." }); return; }
+    const idx = FEATURED_PODCASTS.findIndex((p) => p.id === podcastId);
+    if (idx === -1) { res.status(404).json(apiError("NOT_FOUND", "Podcast not found.")); return; }
     FEATURED_PODCASTS.splice(idx, 1);
-    res.json({ ok: true, deleted: req.params.id });
+    res.json(apiSuccess({ deleted: podcastId }));
   } catch (err) { next(err); }
 });
 
 router.post("/:id/episodes", requireRdmRole("admin"), rateLimitByRoute({ name: "podcast-episode-create", limit: 10 }), async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const podcastId = String(req.params.id);
+    if (!podcastId || podcastId.length > 200 || /[;'"\\]/.test(podcastId)) {
+      res.status(400).json(apiError("INVALID_ID", "Invalid podcast ID."));
+      return;
+    }
     const data = validateEpisodeBody(req.body);
 
     if (isDbAvailable()) {
       try {
         const db = getDb();
         const epId = `ep-${Date.now()}`;
-        await db.execute(
+        await db.query(
           `INSERT INTO podcast_episodes (id, podcast_id, title, description, duration, spotify_uri, published_at)
-           VALUES ('${epId}', '${req.params.id}', '${data.title.replace(/'/g, "''")}', '${data.description.replace(/'/g, "''")}', '${data.duration}', '${data.spotifyUri ?? ""}', NOW())`
+           VALUES ($1, $2, $3, $4, $5, $6, NOW())`,
+          [epId, podcastId, data.title, data.description, data.duration, data.spotifyUri ?? ""]
         );
-        res.status(201).json({ ok: true, episode: { id: epId, podcastId: req.params.id, ...data } });
+        res.status(201).json(apiSuccess({ id: epId, podcastId, ...data }));
         return;
       } catch { /* fallback */ }
     }
 
     const epId = `ep-${Date.now()}`;
     const newEp = { id: epId, ...data, publishedAt: new Date().toISOString() };
-    if (!MOCK_EPISODES[req.params.id]) MOCK_EPISODES[req.params.id] = [];
-    MOCK_EPISODES[req.params.id].unshift(newEp);
-    res.status(201).json({ ok: true, episode: { podcastId: req.params.id, ...newEp } });
+    if (!MOCK_EPISODES[podcastId]) MOCK_EPISODES[podcastId] = [];
+    MOCK_EPISODES[podcastId].unshift(newEp);
+    res.status(201).json(apiSuccess({ podcastId, ...newEp }));
   } catch (err) {
-    if (err instanceof Error) { res.status(400).json({ ok: false, error: err.message }); return; }
+    if (err instanceof Error) { res.status(400).json(apiError("VALIDATION_ERROR", err.message)); return; }
     next(err);
   }
 });

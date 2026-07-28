@@ -31,7 +31,13 @@ export function getDb() {
     );
   }
 
-  _pool = new Pool({ connectionString: url, max: 20 });
+  _pool = new Pool({
+    connectionString: url,
+    max: 20,
+    min: 2,
+    idleTimeoutMillis: 30_000,
+    connectionTimeoutMillis: 10_000,
+  });
   _db = drizzle(_pool, { schema });
   return _db;
 }

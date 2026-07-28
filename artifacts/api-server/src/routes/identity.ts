@@ -20,7 +20,7 @@ export function registerIdentityRoutes(router: Router) {
     res.status(200).json({ ok: true, data: citizens });
   });
 
-  router.get("/identity/citizen/:id", (req: Request, res: Response) => {
+  router.get("/identity/citizen/:id", requireRdmRole("operator"), (req: Request, res: Response) => {
     const citizen = identity.getCitizen(req.params.id);
     if (!citizen) { res.status(404).json({ ok: false, error: "not_found" }); return; }
     res.status(200).json({ ok: true, data: citizen });

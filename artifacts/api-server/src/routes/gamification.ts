@@ -9,18 +9,20 @@
 import type { Router, Request, Response } from "express";
 import { auditSecurityEvent, rateLimitByRoute, requireRdmRole } from "../lib/security";
 import {
-  createUnifiedEngine,
+  createUnifiedGamificationEngine,
   RANKS,
   XP_LEVEL_TABLE,
   calculateLevel,
   calculateRank,
   gamificationBus,
 } from "../lib/gamification/engine";
+import { apiSuccess, apiError } from "../lib/api-response";
+import { validate, schemas } from "../middlewares/validate";
 
 // ─────────────────────────────────────────────────────────────────────
 //  Module-level engine singleton
 // ─────────────────────────────────────────────────────────────────────
-const engine = createUnifiedEngine();
+const engine = createUnifiedGamificationEngine();
 
 // ─────────────────────────────────────────────────────────────────────
 //  MOCK DATA — kept for Living World endpoints not yet backed by DB
@@ -241,21 +243,33 @@ export function registerGamificationRoutes(router: Router) {
       const identity = (req as any).rdmIdentity;
       const userId = identity?.subject !== "anonymous" ? identity.subject : undefined;
       const profile = await engine.getProfile(userId ?? "anonymous");
-      res.status(200).json({ ok: true, data: profile });
+      res.status(200).json(apiSuccess(profile));
     } catch (err) { next(err); }
   });
 
-  router.get("/v1/gamification/leaderboard", requireRdmRole("user"), async (_req: Request, res: Response, next) => {
+  router.get("/v1/gamification/leaderboard", requireRdmRole("user"), async (req: Request, res: Response, next) => {
     try {
+      const page = Math.max(1, parseInt(req.query.page as string) || 1);
+      const limit = Math.min(100, Math.max(1, parseInt(req.query.limit as string) || 50));
       const leaderboard = await engine.getLeaderboard();
-      res.status(200).json({ ok: true, data: leaderboard });
+      const arr = Array.isArray(leaderboard) ? leaderboard : (leaderboard && typeof leaderboard === "object" && Array.isArray((leaderboard as any).data) ? (leaderboard as any).data : []);
+      const total = arr.length;
+      const offset = (page - 1) * limit;
+      const paginated = arr.slice(offset, offset + limit);
+      res.status(200).json(apiSuccess(paginated, { pagination: { page, limit, total, totalPages: Math.ceil(total / limit) } }));
     } catch (err) { next(err); }
   });
 
-  router.get("/v1/gamification/quests", requireRdmRole("user"), async (_req: Request, res: Response, next) => {
+  router.get("/v1/gamification/quests", requireRdmRole("user"), async (req: Request, res: Response, next) => {
     try {
+      const page = Math.max(1, parseInt(req.query.page as string) || 1);
+      const limit = Math.min(100, Math.max(1, parseInt(req.query.limit as string) || 50));
       const quests = await engine.getQuests();
-      res.status(200).json({ ok: true, data: quests });
+      const arr = Array.isArray(quests) ? quests : (quests && typeof quests === "object" && Array.isArray((quests as any).data) ? (quests as any).data : []);
+      const total = arr.length;
+      const offset = (page - 1) * limit;
+      const paginated = arr.slice(offset, offset + limit);
+      res.status(200).json(apiSuccess(paginated, { pagination: { page, limit, total, totalPages: Math.ceil(total / limit) } }));
     } catch (err) { next(err); }
   });
 
@@ -265,7 +279,9 @@ export function registerGamificationRoutes(router: Router) {
     rateLimitByRoute({ name: "gamification-award-xp", limit: 20 }),
     async (req: Request, res: Response, next) => {
       try {
-        const { userId = "anonymous", amount = 0, reason = "manual", idempotencyKey = null } = req.body ?? {};
+        const identity = (req as any).rdmIdentity;
+        const userId = identity?.subject ?? "anonymous";
+        const { amount = 0, reason = "manual", idempotencyKey = null } = req.body ?? {};
         const numAmount = Math.max(0, Math.min(Number(amount) || 0, 250));
         auditSecurityEvent(req, "gamification.award_xp", { userId, amount: numAmount, reason });
 
@@ -274,13 +290,13 @@ export function registerGamificationRoutes(router: Router) {
           eventType: "AWARD_XP",
           payload: { amount: numAmount, reason, idempotencyKey },
         });
-        res.status(200).json({ ok: true, data: result });
+        res.status(200).json(apiSuccess(result));
       } catch (err) { next(err); }
     },
   );
 
   router.get("/v1/gamification/ranks", (_req: Request, res: Response) => {
-    res.status(200).json({ ok: true, data: RANKS });
+    res.status(200).json(apiSuccess(RANKS));
   });
 
   // ─────────────────────────────────────────────────────────────────
@@ -293,16 +309,18 @@ export function registerGamificationRoutes(router: Router) {
     rateLimitByRoute({ name: "gamification-events", limit: 30 }),
     async (req: Request, res: Response, next) => {
       try {
-        const { userId, eventType, payload = {} } = req.body ?? {};
-        if (!userId || !eventType) {
-          res.status(400).json({ ok: false, error: "userId and eventType are required" });
+        const identity = (req as any).rdmIdentity;
+        const userId = identity?.subject ?? "anonymous";
+        const { eventType, payload = {} } = req.body ?? {};
+        if (!eventType) {
+          res.status(400).json(apiError("MISSING_EVENT_TYPE", "eventType is required"));
           return;
         }
 
         auditSecurityEvent(req, "gamification.event", { userId, eventType });
 
         const eventResult = await engine.processEvent({ userId, eventType, payload });
-        res.status(200).json({ ok: true, eventResult });
+        res.status(200).json(apiSuccess(eventResult));
       } catch (err) { next(err); }
     },
   );
@@ -356,15 +374,17 @@ export function registerGamificationRoutes(router: Router) {
     rateLimitByRoute({ name: "gamification-verify-poi", limit: 15 }),
     async (req: Request, res: Response, next) => {
       try {
-        const { userId, poiId, lat, lng, accuracy } = req.body ?? {};
-        if (!userId || !poiId || lat == null || lng == null) {
-          res.status(400).json({ ok: false, error: "userId, poiId, lat, lng are required" });
+        const identity = (req as any).rdmIdentity;
+        const userId = identity?.subject ?? "anonymous";
+        const { poiId, lat, lng, accuracy } = req.body ?? {};
+        if (!poiId || lat == null || lng == null) {
+          res.status(400).json(apiError("MISSING_FIELDS", "poiId, lat, lng are required"));
           return;
         }
 
         const poi = MOCK_POI_COORDS[poiId];
         if (!poi) {
-          res.status(404).json({ ok: false, error: "POI not found" });
+          res.status(404).json(apiError("NOT_FOUND", "POI not found"));
           return;
         }
 
@@ -389,13 +409,12 @@ export function registerGamificationRoutes(router: Router) {
           xpAwarded = result.xpAwarded ?? 0;
         }
 
-        res.status(200).json({
-          ok: true,
+        res.status(200).json(apiSuccess({
           verified,
           poiName: poi.name,
           distanceMeters: Math.round(distance),
           xpAwarded,
-        });
+        }));
       } catch (err) { next(err); }
     },
   );
@@ -405,7 +424,7 @@ export function registerGamificationRoutes(router: Router) {
   // ─────────────────────────────────────────────────────────────────
 
   router.get("/v1/gamification/rewards", requireRdmRole("user"), (_req: Request, res: Response) => {
-    res.status(200).json({ ok: true, data: MOCK_REWARDS_CATALOG });
+    res.status(200).json(apiSuccess(MOCK_REWARDS_CATALOG));
   });
 
   router.post(
@@ -414,27 +433,24 @@ export function registerGamificationRoutes(router: Router) {
     rateLimitByRoute({ name: "gamification-redeem", limit: 10 }),
     async (req: Request, res: Response, next) => {
       try {
-        const { userId, rewardId } = req.body ?? {};
-        if (!userId || !rewardId) {
-          res.status(400).json({ ok: false, error: "userId and rewardId are required" });
+        const identity = (req as any).rdmIdentity;
+        const userId = identity?.subject ?? "anonymous";
+        const { rewardId } = req.body ?? {};
+        if (!rewardId) {
+          res.status(400).json(apiError("MISSING_REWARD_ID", "rewardId is required"));
           return;
         }
 
         const reward = MOCK_REWARDS_CATALOG.find((r) => r.id === rewardId);
         if (!reward) {
-          res.status(404).json({ ok: false, error: "Reward not found" });
+          res.status(404).json(apiError("REWARD_NOT_FOUND", "Reward not found"));
           return;
         }
 
         const profile = await engine.getProfile(userId);
         const currentXp = profile.xp ?? 0;
         if (currentXp < reward.xpCost) {
-          res.status(400).json({
-            ok: false,
-            error: "insufficient_xp",
-            currentXp,
-            required: reward.xpCost,
-          });
+          res.status(400).json(apiError("INSUFFICIENT_XP", `Need ${reward.xpCost} XP, have ${currentXp}`));
           return;
         }
 
@@ -447,11 +463,10 @@ export function registerGamificationRoutes(router: Router) {
         });
 
         const updatedProfile = await engine.getProfile(userId);
-        res.status(200).json({
-          ok: true,
+        res.status(200).json(apiSuccess({
           reward: { id: reward.id, name: reward.name, type: reward.type, rarity: reward.rarity },
           newBalance: updatedProfile.xp ?? 0,
-        });
+        }));
       } catch (err) { next(err); }
     },
   );
@@ -464,39 +479,36 @@ export function registerGamificationRoutes(router: Router) {
     try {
       const userId = String(req.params.id);
       const profile = await engine.getProfile(userId);
-      res.status(200).json({
-        ok: true,
-        data: {
-          ...profile,
-          avatar: MOCK_AVATAR,
-          collections: MOCK_COLLECTIONS,
-        },
-      });
+      res.status(200).json(apiSuccess({
+        ...profile,
+        avatar: MOCK_AVATAR,
+        collections: MOCK_COLLECTIONS,
+      }));
     } catch (err) { next(err); }
   });
 
   router.get("/v1/living-world/player/:id/avatar", requireRdmRole("user"), (_req: Request, res: Response) => {
-    res.status(200).json({ ok: true, data: MOCK_AVATAR });
+    res.status(200).json(apiSuccess(MOCK_AVATAR));
   });
 
   router.get("/v1/living-world/player/:id/collections", requireRdmRole("user"), (_req: Request, res: Response) => {
-    res.status(200).json({ ok: true, data: MOCK_COLLECTIONS });
+    res.status(200).json(apiSuccess(MOCK_COLLECTIONS));
   });
 
   router.get("/v1/living-world/player/:id/seasons/current", requireRdmRole("user"), (_req: Request, res: Response) => {
-    res.status(200).json({ ok: true, data: MOCK_CURRENT_SEASON });
+    res.status(200).json(apiSuccess(MOCK_CURRENT_SEASON));
   });
 
   router.get("/v1/living-world/world/state", requireRdmRole("user"), (_req: Request, res: Response) => {
-    res.status(200).json({ ok: true, data: MOCK_WORLD_STATE });
+    res.status(200).json(apiSuccess(MOCK_WORLD_STATE));
   });
 
   router.get("/v1/living-world/world/map-layer", requireRdmRole("user"), (_req: Request, res: Response) => {
-    res.status(200).json({ ok: true, data: MOCK_MAP_LAYER });
+    res.status(200).json(apiSuccess(MOCK_MAP_LAYER));
   });
 
   router.get("/v1/living-world/events/community-challenges", requireRdmRole("user"), (_req: Request, res: Response) => {
-    res.status(200).json({ ok: true, data: MOCK_COMMUNITY_CHALLENGES });
+    res.status(200).json(apiSuccess(MOCK_COMMUNITY_CHALLENGES));
   });
 
   router.post(
@@ -517,19 +529,16 @@ export function registerGamificationRoutes(router: Router) {
           payload: { territoryId, poiId, ...payload },
         });
 
-        res.status(200).json({
-          ok: true,
-          data: {
-            eventId: `evt-${Date.now()}`,
-            type,
-            territoryId,
-            poiId,
-            xpAwarded: result.xpAwarded ?? 0,
-            leveledUp: result.leveledUp ?? false,
-            newRank: result.newRank ?? null,
-            badgesEarned: result.badgesEarned ?? [],
-          },
-        });
+        res.status(200).json(apiSuccess({
+          eventId: `evt-${Date.now()}`,
+          type,
+          territoryId,
+          poiId,
+          xpAwarded: result.xpAwarded ?? 0,
+          leveledUp: result.leveledUp ?? false,
+          newRank: result.newRank ?? null,
+          badgesEarned: result.badgesEarned ?? [],
+        }));
       } catch (err) { next(err); }
     },
   );

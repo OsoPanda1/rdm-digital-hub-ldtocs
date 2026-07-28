@@ -7,6 +7,8 @@ import { getDb, isDbAvailable } from "../lib/db-client";
 import { territories, poiState } from "../../db/schema";
 import { requireRdmRole, rateLimitByRoute } from "../lib/security";
 import { eq, ilike, sql, and, or } from "drizzle-orm";
+import { apiSuccess, apiPaginated, apiError } from "../lib/api-response";
+import { validate, schemas } from "../middlewares/validate";
 
 type Place = {
   id: string;
@@ -31,17 +33,6 @@ type Commerce = {
   address?: string;
   rating?: number;
 };
-
-function parseAskBody(body: unknown): { message: string } {
-  if (!body || typeof body !== "object" || typeof (body as { message?: unknown }).message !== "string") {
-    throw new Error("message is required");
-  }
-  const message = (body as { message: string }).message.trim();
-  if (!message || message.length > 2000) {
-    throw new Error("message must be between 1 and 2000 characters");
-  }
-  return { message };
-}
 
 const MOCK_PLACES: Place[] = [
   { id: "rdm-centro", name: "Real del Monte Centro", type: "historico", lat: 20.1432, lng: -98.6694, description: "Centro historico del pueblo magico de Real del Monte.", category: "monumento" },
@@ -184,7 +175,7 @@ export function registerTerritoryRoutes(router: Router) {
         if (category) filtered = filtered.filter((p) => p.type === category);
         const total = filtered.length;
         const data = filtered.slice(offset, offset + limit);
-        res.status(200).json({ success: true, data, pagination: { page, limit, total, totalPages: Math.ceil(total / limit) } });
+        res.status(200).json(apiPaginated(data, total, page, limit));
         return;
       }
 
@@ -212,11 +203,7 @@ export function registerTerritoryRoutes(router: Router) {
         category: (r.metaJson as Record<string, unknown>)?.category as string | undefined,
       }));
 
-      res.status(200).json({
-        success: true,
-        data: places.length > 0 ? places : MOCK_PLACES,
-        pagination: { page, limit, total: total || MOCK_PLACES.length, totalPages: Math.ceil((total || MOCK_PLACES.length) / limit) },
-      });
+      res.status(200).json(apiPaginated(places.length > 0 ? places : MOCK_PLACES, total || MOCK_PLACES.length, page, limit));
     } catch (err) { next(err); }
   });
 
@@ -242,7 +229,7 @@ export function registerTerritoryRoutes(router: Router) {
             }));
             if (search) commerce = commerce.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()));
             if (category) commerce = commerce.filter((c) => c.category === category);
-            res.status(200).json({ success: true, data: commerce, total: commerce.length });
+            res.status(200).json(apiSuccess(commerce));
             return;
           }
         } catch { /* fallback */ }
@@ -251,41 +238,35 @@ export function registerTerritoryRoutes(router: Router) {
       let filtered = MOCK_COMMERCE;
       if (search) filtered = filtered.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()) || (c.description ?? "").toLowerCase().includes(search.toLowerCase()));
       if (category) filtered = filtered.filter((c) => c.category === category);
-      res.status(200).json({ success: true, data: filtered, total: filtered.length });
+      res.status(200).json(apiSuccess(filtered));
     } catch (err) { next(err); }
   });
 
-  router.post("/territory/ai/ask", requireRdmRole("user"), rateLimitByRoute({ name: "territory-ai-ask", limit: 30 }), (req: Request, res: Response, next: NextFunction) => {
+  router.post("/territory/ai/ask", requireRdmRole("user"), rateLimitByRoute({ name: "territory-ai-ask", limit: 30 }), validate(schemas.territoryAiAsk), (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { message } = parseAskBody(req.body);
+      const { message } = req.body;
       const matched = matchKnowledge(message);
 
       if (matched) {
-        res.status(200).json({
-          success: true,
-          data: {
-            response: matched.answer,
-            sources: matched.sources,
-            relatedPlaces: matched.relatedPlaces,
-            followUpSuggestions: matched.followUp,
-            mode: "NORMAL",
-            confidence: 0.85,
-          },
-        });
+        res.status(200).json(apiSuccess({
+          response: matched.answer,
+          sources: matched.sources,
+          relatedPlaces: matched.relatedPlaces,
+          followUpSuggestions: matched.followUp,
+          mode: "NORMAL",
+          confidence: 0.85,
+        }));
         return;
       }
 
-      res.status(200).json({
-        success: true,
-        data: {
-          response: `Isabella territorial operativo: "${message}". Aun estoy aprendiendo sobre Real del Monte. Prueba preguntar sobre mineria, paste, turismo, historia o el panteon ingles.`,
-          sources: [],
-          relatedPlaces: MOCK_PLACES.slice(0, 3).map((p) => p.name),
-          followUpSuggestions: ["Cuentame sobre la historia minera", "Que lugares puedo visitar?", "Donde comer pastes?"],
-          mode: "NORMAL",
-          confidence: 0.4,
-        },
-      });
+      res.status(200).json(apiSuccess({
+        response: `Isabella territorial operativo: "${message}". Aun estoy aprendiendo sobre Real del Monte. Prueba preguntar sobre mineria, paste, turismo, historia o el panteon ingles.`,
+        sources: [],
+        relatedPlaces: MOCK_PLACES.slice(0, 3).map((p) => p.name),
+        followUpSuggestions: ["Cuentame sobre la historia minera", "Que lugares puedo visitar?", "Donde comer pastes?"],
+        mode: "NORMAL",
+        confidence: 0.4,
+      }));
     } catch (err) { next(err); }
   });
 
@@ -296,28 +277,22 @@ export function registerTerritoryRoutes(router: Router) {
         try {
           const [placeCount] = await db.select({ count: sql<number>`count(*)::int` }).from(territories);
           const [poiCount] = await db.select({ count: sql<number>`count(*)::int` }).from(poiState);
-          res.status(200).json({
-            success: true,
-            data: {
-              totalPlaces: placeCount?.count ?? MOCK_PLACES.length,
-              totalCommerce: MOCK_COMMERCE.length,
-              totalReviews: poiCount?.count ?? 42,
-              lastUpdated: new Date().toISOString(),
-            },
-          });
+          res.status(200).json(apiSuccess({
+            totalPlaces: placeCount?.count ?? MOCK_PLACES.length,
+            totalCommerce: MOCK_COMMERCE.length,
+            totalReviews: poiCount?.count ?? 42,
+            lastUpdated: new Date().toISOString(),
+          }));
           return;
         } catch { /* fallback */ }
       }
 
-      res.status(200).json({
-        success: true,
-        data: {
-          totalPlaces: MOCK_PLACES.length,
-          totalCommerce: MOCK_COMMERCE.length,
-          totalReviews: 42,
-          lastUpdated: new Date().toISOString(),
-        },
-      });
+      res.status(200).json(apiSuccess({
+        totalPlaces: MOCK_PLACES.length,
+        totalCommerce: MOCK_COMMERCE.length,
+        totalReviews: 42,
+        lastUpdated: new Date().toISOString(),
+      }));
     } catch (err) { next(err); }
   });
 }

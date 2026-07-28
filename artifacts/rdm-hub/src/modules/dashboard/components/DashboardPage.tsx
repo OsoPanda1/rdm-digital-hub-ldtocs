@@ -2,7 +2,7 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-import { useState, useCallback } from "react";
+import { useState, useCallback, memo } from "react";
 import { motion } from "framer-motion";
 import {
   Activity,
@@ -71,7 +71,7 @@ const QUICK_LINKS: QuickLink[] = [
 ];
 
 // Simple CSS bar chart
-function MiniBarChart({ values, label }: { values: number[]; label: string }) {
+const MiniBarChart = memo(function MiniBarChart({ values, label }: { values: number[]; label: string }) {
   const max = Math.max(...values, 1);
   return (
     <div className="space-y-2">
@@ -89,7 +89,7 @@ function MiniBarChart({ values, label }: { values: number[]; label: string }) {
       </div>
     </div>
   );
-}
+});
 
 const STATUS_COLORS = {
   green: "bg-emerald-500",

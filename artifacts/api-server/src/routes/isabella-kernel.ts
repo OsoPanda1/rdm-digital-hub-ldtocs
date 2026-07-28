@@ -34,7 +34,7 @@ import { createCognitiveKernel } from "../lib/isabella/kernel";
 import { requireRdmRole, rateLimitByRoute, auditSecurityEvent } from "../lib/security";
 import { validate, schemas } from "../middlewares/validate";
 
-// Singleton kernel instance
+// ⚠️ IN-MEMORY — kernel singleton LOST ON SERVER RESTART
 const kernel = createCognitiveKernel();
 
 export function registerKernelRoutes(router: Router) {
@@ -42,6 +42,7 @@ export function registerKernelRoutes(router: Router) {
   // â”€â”€ Core Processing â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.post("/kernel/process",
+    requireRdmRole("user"),
     rateLimitByRoute({ name: "kernel-process", limit: 30 }),
     validate({ message: { type: "string", required: true, min: 1, max: 10000 } }),
     async (req: Request, res: Response) => {
@@ -85,17 +86,17 @@ export function registerKernelRoutes(router: Router) {
 
   // â”€â”€ Kernel Stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  router.get("/kernel/stats", (req: Request, res: Response) => {
+  router.get("/kernel/stats", requireRdmRole("user"), (req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: kernel.getKernelStats() });
   });
 
   // â”€â”€ Memory â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  router.get("/kernel/memory", (req: Request, res: Response) => {
+  router.get("/kernel/memory", requireRdmRole("user"), (req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: kernel.memory.getStats() });
   });
 
-  router.get("/kernel/memory/query", (req: Request, res: Response) => {
+  router.get("/kernel/memory/query", requireRdmRole("operator"), (req: Request, res: Response) => {
     const { text = "", levels, limit = 10 } = req.query;
     const memoryLevels = levels
       ? String(levels).split(",") as any
@@ -111,7 +112,7 @@ export function registerKernelRoutes(router: Router) {
 
   // â”€â”€ Emergency â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  router.get("/kernel/emergency", (req: Request, res: Response) => {
+  router.get("/kernel/emergency", requireRdmRole("operator"), (req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: kernel.emergency.getState() });
   });
 
@@ -164,7 +165,7 @@ export function registerKernelRoutes(router: Router) {
 
   // â”€â”€ Evaluator â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  router.get("/kernel/evaluator", (req: Request, res: Response) => {
+  router.get("/kernel/evaluator", requireRdmRole("user"), (req: Request, res: Response) => {
     const limit = Math.min(Number(req.query.limit) || 20, 100);
     res.status(200).json({
       ok: true,
@@ -175,24 +176,24 @@ export function registerKernelRoutes(router: Router) {
     });
   });
 
-  router.get("/kernel/evaluator/trends", (req: Request, res: Response) => {
+  router.get("/kernel/evaluator/trends", requireRdmRole("user"), (req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: kernel.evaluator.getTrends() });
   });
 
-  router.get("/kernel/evaluator/alerts", (req: Request, res: Response) => {
+  router.get("/kernel/evaluator/alerts", requireRdmRole("user"), (req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: kernel.evaluator.getAlerts() });
   });
 
   // â”€â”€ Verifier â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  router.get("/kernel/verifier", (req: Request, res: Response) => {
+  router.get("/kernel/verifier", requireRdmRole("user"), (req: Request, res: Response) => {
     const limit = Math.min(Number(req.query.limit) || 20, 100);
     res.status(200).json({ ok: true, data: kernel.verifier.getCheckHistory(limit) });
   });
 
   // â”€â”€ Learning â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  router.get("/kernel/learning", (req: Request, res: Response) => {
+  router.get("/kernel/learning", requireRdmRole("user"), (req: Request, res: Response) => {
     const limit = Math.min(Number(req.query.limit) || 20, 100);
     res.status(200).json({
       ok: true,
@@ -203,13 +204,13 @@ export function registerKernelRoutes(router: Router) {
     });
   });
 
-  router.get("/kernel/learning/errors", (req: Request, res: Response) => {
+  router.get("/kernel/learning/errors", requireRdmRole("user"), (req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: kernel.learning.getErrorPatterns() });
   });
 
   // â”€â”€ Capabilities â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  router.get("/kernel/capabilities", (req: Request, res: Response) => {
+  router.get("/kernel/capabilities", requireRdmRole("user"), (req: Request, res: Response) => {
     const caps = kernel.capabilityFabric.getAllCapabilities();
     const metrics = caps.map((c) => ({
       ...c,
@@ -230,11 +231,12 @@ export function registerKernelRoutes(router: Router) {
 
   // â”€â”€ Plans â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  router.get("/kernel/plans", (req: Request, res: Response) => {
+  router.get("/kernel/plans", requireRdmRole("user"), (req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: kernel.planner.listPlans() });
   });
 
   router.post("/kernel/plans",
+    requireRdmRole("user"),
     rateLimitByRoute({ name: "kernel-plans", limit: 10 }),
     validate({ objective: { type: "string", required: true, min: 1, max: 5000 } }),
     (req: Request, res: Response) => {
@@ -246,7 +248,7 @@ export function registerKernelRoutes(router: Router) {
 
   // â”€â”€ Knowledge Graph â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  router.get("/kernel/knowledge", (req: Request, res: Response) => {
+  router.get("/kernel/knowledge", requireRdmRole("user"), (req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: kernel.knowledgeGraph.getStats() });
   });
 
@@ -284,6 +286,7 @@ export function registerKernelRoutes(router: Router) {
   );
 
   router.post("/kernel/knowledge/search",
+    requireRdmRole("user"),
     rateLimitByRoute({ name: "kernel-kg-search", limit: 30 }),
     validate({ query: { type: "string", required: true, min: 1, max: 200 } }),
     (req: Request, res: Response) => {
@@ -294,6 +297,7 @@ export function registerKernelRoutes(router: Router) {
   );
 
   router.post("/kernel/knowledge/query",
+    requireRdmRole("user"),
     rateLimitByRoute({ name: "kernel-kg-query", limit: 20 }),
     validate({
       startEntityId: { type: "string", required: true },
@@ -311,6 +315,7 @@ export function registerKernelRoutes(router: Router) {
   // â”€â”€ Simulation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   router.post("/kernel/simulate",
+    requireRdmRole("operator"),
     rateLimitByRoute({ name: "kernel-simulate", limit: 10 }),
     validate({ objective: { type: "string", required: true, min: 1, max: 5000 } }),
     (req: Request, res: Response) => {

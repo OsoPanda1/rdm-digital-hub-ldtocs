@@ -153,7 +153,7 @@ export const useEconomyStore = create<EconomyState>((set, get) => ({
   syncBalances: async () => {
     set({ isLoading: true, error: null });
     try {
-      const urls = [`${API_BASE}/v1/yun/status`, `${API_BASE}/v1/economy/status`];
+      const urls = [`${API_BASE}/economia/plusvalia`, `${API_BASE}/economia/ledger`];
       for (const url of urls) {
         try {
           const res = await fetch(url, { signal: AbortSignal.timeout(8000) });

@@ -23,9 +23,10 @@ import type { FederationId } from "../lib/isabella/types";
 import { auditSecurityEvent, rateLimitByRoute, requireRdmRole } from "../lib/security";
 import { validate, schemas } from "../middlewares/validate";
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ────────────────────────────────────────────────────────────────
 //  SINGLETON INSTANCES (in-memory; replace with Supabase when wired)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+//  ⚠️ IN-MEMORY — sessions/decisions/feedback LOST ON SERVER RESTART
+// ────────────────────────────────────────────────────────────────
 
 const MAX_SESSIONS = Number(process.env.RDM_MAX_SESSIONS ?? 2000);
 const MAX_DECISIONS = Number(process.env.RDM_MAX_DECISIONS ?? 5000);
@@ -43,16 +44,19 @@ const mexa = createMexaClient();
 
 registerBuiltinSkills(skillRegistry);
 
-// In-memory session/decision/feedback stores
+// ⚠️ IN-MEMORY — sessions/decisions/feedback LOST ON SERVER RESTART
+// TODO: Migrate to Supabase tables for persistence
 const sessions = new Map<string, {
   id: string; playerId: string; startedAt: string; lastMessageAt: string;
   messageCount: number; status: "active" | "closed";
 }>();
+// ⚠️ IN-MEMORY — decisions array LOST ON SERVER RESTART
 const decisions: {
   id: string; playerId: string; type: string; confidence: number;
   territoryId?: string; payload: Record<string, unknown>; createdAt: string;
   mode: string; guardianVerdict?: { approved: boolean; guardian: string; reason: string };
 }[] = [];
+// ⚠️ IN-MEMORY — feedback array LOST ON SERVER RESTART
 const feedback: {
   id: string; playerId: string; decisionId: string; rating: 1 | 2 | 3 | 4 | 5;
   comment?: string; createdAt: string;
@@ -103,7 +107,9 @@ export function registerIsabellaRoutes(router: Router) {
   //  Body: { playerId, message, sessionId? }
   // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/isabella/chat", requireRdmRole("user"), rateLimitByRoute({ name: "isabella-chat", limit: 30 }), validate(schemas.isabellaChat), (req: Request, res: Response, next: NextFunction) => {
-    const { playerId = "anonymous", message = "", sessionId } = req.body ?? {};
+    const identity = (req as any).rdmIdentity;
+    const playerId = identity?.subject ?? "anonymous";
+    const { message = "", sessionId } = req.body ?? {};
 
     if (!message || typeof message !== "string") {
       res.status(400).json({ ok: false, error: "message is required" });
@@ -250,7 +256,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  GET /api/isabella/status
   //  Full system health â€” Î©-Core v4.0 metrics.
   // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  router.get("/isabella/status", (_req: Request, res: Response) => {
+  router.get("/isabella/status", requireRdmRole("user"), (_req: Request, res: Response) => {
     const activeSessions = [...sessions.values()].filter((s) => s.status === "active").length;
     const totalDecisions = decisions.length;
     const totalFeedback = feedback.length;
@@ -293,7 +299,9 @@ export function registerIsabellaRoutes(router: Router) {
   //  Body: { playerId, decisionId, rating, comment? }
   // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   router.post("/isabella/feedback", requireRdmRole("user"), validate(schemas.isabellaFeedback), (req: Request, res: Response) => {
-    const { playerId = "anonymous", decisionId = "", rating = 3, comment } = req.body ?? {};
+    const identity = (req as any).rdmIdentity;
+    const playerId = identity?.subject ?? "anonymous";
+    const { decisionId = "", rating = 3, comment } = req.body ?? {};
 
     if (!decisionId || typeof decisionId !== "string") {
       res.status(400).json({ ok: false, error: "decisionId is required" });
@@ -509,7 +517,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  GET /api/isabella/crypto/status
   //  Mexa API health and federation status.
   // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  router.get("/isabella/crypto/status", (_req: Request, res: Response) => {
+  router.get("/isabella/crypto/status", requireRdmRole("operator"), (_req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: mexa.health() });
   });
 

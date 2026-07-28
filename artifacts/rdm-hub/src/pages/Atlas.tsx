@@ -11,6 +11,7 @@ import {
   Clock, AlertTriangle, CheckCircle, XCircle, Search, RefreshCw,
   ChevronDown, MemoryStick, HardDrive,
 } from "lucide-react";
+import { useLoadingTimeout } from "@/hooks/useLoadingTimeout";
 
 const API_BASE = import.meta.env.VITE_API_URL || "/api/v1";
 
@@ -62,6 +63,7 @@ export default function Atlas() {
   const [sortBy, setSortBy] = useState<SortBy>("name");
   const [selectedNode, setSelectedNode] = useState<NodeData | null>(null);
   const [autoRefresh, setAutoRefresh] = useState(false);
+  const loadTimedOut = useLoadingTimeout(loading, 5000);
 
   const fetchNodes = useCallback(async () => {
     try {
@@ -199,16 +201,23 @@ export default function Atlas() {
         </div>
 
         {loading ? (
-          <div className="grid md:grid-cols-2 gap-3">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="rounded-2xl border border-[hsl(var(--border)/0.4)] bg-[hsl(var(--background))] p-4 animate-pulse">
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-2"><div className="w-8 h-8 rounded-lg bg-white/5" /><div className="space-y-1"><div className="h-4 w-32 bg-white/5 rounded" /><div className="h-3 w-24 bg-white/5 rounded" /></div></div>
+          <>
+            <div className="grid md:grid-cols-2 gap-3">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="rounded-2xl border border-[hsl(var(--border)/0.4)] bg-[hsl(var(--background))] p-4 animate-pulse">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center gap-2"><div className="w-8 h-8 rounded-lg bg-white/5" /><div className="space-y-1"><div className="h-4 w-32 bg-white/5 rounded" /><div className="h-3 w-24 bg-white/5 rounded" /></div></div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2"><div className="h-3 bg-white/5 rounded" /><div className="h-3 bg-white/5 rounded" /><div className="h-3 bg-white/5 rounded" /></div>
                 </div>
-                <div className="grid grid-cols-3 gap-2"><div className="h-3 bg-white/5 rounded" /><div className="h-3 bg-white/5 rounded" /><div className="h-3 bg-white/5 rounded" /></div>
+              ))}
+            </div>
+            {loadTimedOut && (
+              <div className="text-center py-4 text-xs font-mono text-amber-400/80">
+                La carga está tardando más de lo esperado. Mostrando datos de respaldo…
               </div>
-            ))}
-          </div>
+            )}
+          </>
         ) : (
           <div className="grid md:grid-cols-2 gap-3">
             <AnimatePresence>

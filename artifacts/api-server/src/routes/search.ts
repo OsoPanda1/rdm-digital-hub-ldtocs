@@ -7,7 +7,7 @@
 // GET/POST /api/search/*
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-import type { Router, Request, Response } from "express";
+import type { Router, Request, Response, NextFunction } from "express";
 import { requireRdmRole, rateLimitByRoute, auditSecurityEvent } from "../lib/security";
 import { createSearchIndexer } from "../lib/search/indexer";
 
@@ -23,11 +23,12 @@ export function registerSearchRoutes(router: Router) {
     res.status(200).json({ ok: true, data: results });
   });
 
-  router.get("/search/document/:id", (req: Request, res: Response) => {
-    indexer.getDocument(req.params.id).then((doc) => {
+  router.get("/search/document/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const doc = await indexer.getDocument(req.params.id);
       if (!doc) { res.status(404).json({ ok: false, error: "not_found" }); return; }
       res.status(200).json({ ok: true, data: doc });
-    });
+    } catch (err) { next(err); }
   });
 
   router.post("/search/index",
@@ -52,7 +53,10 @@ export function registerSearchRoutes(router: Router) {
     }
   );
 
-  router.get("/search/stats", (_req: Request, res: Response) => {
-    indexer.stats().then((stats) => res.status(200).json({ ok: true, data: stats }));
+  router.get("/search/stats", async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+      const stats = await indexer.stats();
+      res.status(200).json({ ok: true, data: stats });
+    } catch (err) { next(err); }
   });
 }

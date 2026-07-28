@@ -14,6 +14,7 @@ import {
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useLoadingTimeout } from "@/hooks/useLoadingTimeout";
 
 interface ToolbarItem {
   id: string;
@@ -98,6 +99,7 @@ const CATEGORIES = [
 const MetaverseHome: React.FC = () => {
   const navigate = useNavigate();
   const [networkStatus, setNetworkStatus] = useState<"online" | "offline" | "checking">("checking");
+  const networkTimedOut = useLoadingTimeout(networkStatus === "checking", 5000);
 
   useEffect(() => {
     const checkHealth = async () => {

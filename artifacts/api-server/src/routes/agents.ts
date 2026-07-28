@@ -7,7 +7,7 @@
 // GET/POST /api/agents/*
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-import type { Router, Request, Response } from "express";
+import type { Router, Request, Response, NextFunction } from "express";
 import { requireRdmRole, rateLimitByRoute, auditSecurityEvent } from "../lib/security";
 import { createAgentRegistry } from "../lib/federation/agents-registry";
 import { validate, schemas } from "../middlewares/validate";
@@ -15,21 +15,26 @@ import { validate, schemas } from "../middlewares/validate";
 export function registerAgentsRoutes(router: Router) {
   const registry = createAgentRegistry();
 
-  router.get("/agents/list", (_req: Request, res: Response) => {
-    registry.list().then((agents) => res.status(200).json({ ok: true, data: agents }));
+  router.get("/agents/list", async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+      const agents = await registry.list();
+      res.status(200).json({ ok: true, data: agents });
+    } catch (err) { next(err); }
   });
 
-  router.get("/agents/:id", (req: Request, res: Response) => {
-    registry.get(req.params.id).then((agent) => {
+  router.get("/agents/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const agent = await registry.get(req.params.id);
       if (!agent) { res.status(404).json({ ok: false, error: "not_found" }); return; }
       res.status(200).json({ ok: true, data: agent });
-    });
+    } catch (err) { next(err); }
   });
 
-  router.get("/agents/:id/triggers", (req: Request, res: Response) => {
-    registry.getTriggers(req.params.id).then((triggers) => {
+  router.get("/agents/:id/triggers", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const triggers = await registry.getTriggers(req.params.id);
       res.status(200).json({ ok: true, data: triggers });
-    });
+    } catch (err) { next(err); }
   });
 
   router.post("/agents/register",
@@ -60,7 +65,10 @@ export function registerAgentsRoutes(router: Router) {
     }
   );
 
-  router.get("/agents/stats", (_req: Request, res: Response) => {
-    registry.stats().then((stats) => res.status(200).json({ ok: true, data: stats }));
+  router.get("/agents/stats", async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+      const stats = await registry.stats();
+      res.status(200).json({ ok: true, data: stats });
+    } catch (err) { next(err); }
   });
 }

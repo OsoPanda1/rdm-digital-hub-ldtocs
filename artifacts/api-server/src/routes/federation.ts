@@ -14,6 +14,7 @@ import { createYunRouter } from "../lib/federation/yun-router";
 import { validate, schemas } from "../middlewares/validate";
 
 export function registerFederationRoutes(router: Router) {
+  // ⚠️ IN-MEMORY — bus/router state LOST ON SERVER RESTART
   const bus = createYunBus();
   const yunRouter = createYunRouter(bus);
 
