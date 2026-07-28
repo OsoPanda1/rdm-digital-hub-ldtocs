@@ -21,7 +21,7 @@ import artesaniasPlata from "@/assets/rdm-artesanias-plata.jpg";
 import festivalPaste from "@/assets/rdm-festival-paste.jpg";
 import callejonRomantico from "@/assets/rdm-callejon-romantico.jpg";
 import hospedajeCabana from "@/assets/rdm-hospedaje-cabana.jpg";
-import cafeMontana from "@/assets/rdm-cafe-montaÃ±a.jpg";
+import cafeMontana from "@/assets/rdm-cafe-montaña.jpg";
 import casaInglesa from "@/assets/rdm-casa-inglesa.jpg";
 
 export const RDM_IMAGES = {
@@ -59,7 +59,7 @@ export const IMAGE_MAP: Record<string, string> = {
   "rdm-festival-paste": festivalPaste,
   "rdm-callejon-romantico": callejonRomantico,
   "rdm-hospedaje-cabana": hospedajeCabana,
-  "rdm-cafe-montaÃ±a": cafeMontana,
+  "rdm-cafe-montaña": cafeMontana,
   "rdm-casa-inglesa": casaInglesa,
 };
 
