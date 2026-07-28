@@ -2,6 +2,7 @@
   "name": "@workspace/mockup-sandbox",
   "version": "2.0.0",
   "type": "module",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "vite dev",

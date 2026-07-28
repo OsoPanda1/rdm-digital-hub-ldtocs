@@ -1,6 +1,7 @@
 {
   "name": "rdm-kernel",
   "version": "1.0.0",
+  "license": "TAMV-PRCL",
   "private": true,
   "type": "module",
   "scripts": {
