@@ -3,6 +3,11 @@
 // Trazabilidad de acciones administrativas y de sistema
 // ────────────────────────────────────────────────────────────────
 
+import { logger } from "../logger";
+
+const MAX_AUDIT_ENTRIES = Number(process.env.RDM_AUDIT_MAX_ENTRIES ?? 10_000);
+const ENTRY_TTL_MS = Number(process.env.RDM_AUDIT_TTL_MS ?? 7 * 24 * 60 * 60 * 1000); // 7 days
+
 export interface AuditEntry {
   entryId: string;
   timestamp: string;
@@ -32,17 +37,47 @@ export interface AdminAuditLog {
   exportEntries(format: "json" | "csv", filters?: AuditQuery): Promise<string>;
 }
 
+function sanitizeCsvCell(value: string): string {
+  if (/^[=+\-@\t\r]/.test(value)) {
+    return `'${value}`;
+  }
+  return value;
+}
+
 export function createAdminAuditLog(): AdminAuditLog {
   const entries = new Map<string, AuditEntry>();
 
+  function evictExpired(): void {
+    const cutoff = Date.now() - ENTRY_TTL_MS;
+    for (const [id, entry] of entries) {
+      if (new Date(entry.timestamp).getTime() < cutoff) {
+        entries.delete(id);
+      }
+    }
+  }
+
+  function evictOldest(): void {
+    if (entries.size <= MAX_AUDIT_ENTRIES) return;
+    let oldestKey: string | null = null;
+    let oldestTs = Infinity;
+    for (const [id, entry] of entries) {
+      const ts = new Date(entry.timestamp).getTime();
+      if (ts < oldestTs) { oldestTs = ts; oldestKey = id; }
+    }
+    if (oldestKey) entries.delete(oldestKey);
+  }
+
   return {
     async record(data) {
+      evictExpired();
+
       const entry: AuditEntry = {
         ...data,
         entryId: `audit-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
         timestamp: new Date().toISOString(),
       };
       entries.set(entry.entryId, entry);
+      evictOldest();
       return entry;
     },
 
@@ -81,7 +116,16 @@ export function createAdminAuditLog(): AdminAuditLog {
       const entries = await this.query(filters ?? {});
       if (format === "csv") {
         const header = "entryId,timestamp,actor,actorRole,action,target,severity,sourceIp";
-        const rows = entries.map((e) => `${e.entryId},${e.timestamp},${e.actor},${e.actorRole},${e.action},${e.target},${e.severity},${e.sourceIp}`);
+        const rows = entries.map((e) => [
+          sanitizeCsvCell(e.entryId),
+          sanitizeCsvCell(e.timestamp),
+          sanitizeCsvCell(e.actor),
+          sanitizeCsvCell(e.actorRole),
+          sanitizeCsvCell(e.action),
+          sanitizeCsvCell(e.target),
+          sanitizeCsvCell(e.severity),
+          sanitizeCsvCell(e.sourceIp),
+        ].join(","));
         return [header, ...rows].join("\n");
       }
       return JSON.stringify(entries, null, 2);

@@ -6,6 +6,7 @@
 
 import { randomUUID } from "node:crypto";
 import { createHmac } from "node:crypto";
+import { logger } from "../logger";
 import type {
   YunEvent,
   YunDomain,
@@ -148,8 +149,9 @@ export class YunMessageBus {
         sub.callback(fullEvent);
         this.stats.totalDelivered++;
         delivered = true;
-      } catch {
+      } catch (err) {
         // Subscription callback error — don't crash bus
+        logger.warn({ subscriberId: sub.subscriberId, eventId: fullEvent.eventId, error: (err as Error).message }, "Bus subscription callback error");
       }
     }
 

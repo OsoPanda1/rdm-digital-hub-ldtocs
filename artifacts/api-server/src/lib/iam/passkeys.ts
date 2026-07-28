@@ -3,6 +3,12 @@
 // Autenticación passwordless para admins y usuarios críticos
 // ────────────────────────────────────────────────────────────────
 
+import { logger } from "../logger";
+
+const MAX_CREDENTIALS = Number(process.env.RDM_PASSKEY_MAX_CREDENTIALS ?? 1000);
+const MAX_CHALLENGES = Number(process.env.RDM_PASSKEY_MAX_CHALLENGES ?? 500);
+const CHALLENGE_TTL_MS = 300_000; // 5 minutes
+
 export interface PasskeyCredential {
   credentialId: string;
   userId: string;
@@ -31,15 +37,52 @@ export function createPasskeys(): Passkeys {
   const challenges = new Map<string, PasskeyChallenge>();
   let challengeCounter = 0;
 
+  function purgeExpiredChallenges(): void {
+    const now = Date.now();
+    for (const [id, ch] of challenges) {
+      if (new Date(ch.expiresAt).getTime() <= now) {
+        challenges.delete(id);
+      }
+    }
+  }
+
+  function evictOldestChallenge(): void {
+    if (challenges.size <= MAX_CHALLENGES) return;
+    let oldestKey: string | null = null;
+    let oldestTs = Infinity;
+    for (const [id, ch] of challenges) {
+      const ts = new Date(ch.expiresAt).getTime();
+      if (ts < oldestTs) { oldestTs = ts; oldestKey = id; }
+    }
+    if (oldestKey) challenges.delete(oldestKey);
+  }
+
+  function evictOldestCredential(): void {
+    if (credentials.size <= MAX_CREDENTIALS) return;
+    let oldestKey: string | null = null;
+    let oldestTs = Infinity;
+    for (const [id, cred] of credentials) {
+      const ts = new Date(cred.createdAt).getTime();
+      if (ts < oldestTs) { oldestTs = ts; oldestKey = id; }
+    }
+    if (oldestKey) {
+      logger.warn({ credentialId: oldestKey }, "Evicting oldest passkey credential due to capacity limit");
+      credentials.delete(oldestKey);
+    }
+  }
+
   return {
     async generateChallenge(userId) {
+      purgeExpiredChallenges();
+
       const challenge: PasskeyChallenge = {
         challengeId: `chal-${Date.now()}-${(challengeCounter++).toString(36)}`,
         userId,
         challenge: Buffer.from(`challenge-${userId}-${Date.now()}`).toString("base64url"),
-        expiresAt: new Date(Date.now() + 300000).toISOString(),
+        expiresAt: new Date(Date.now() + CHALLENGE_TTL_MS).toISOString(),
       };
       challenges.set(challenge.challengeId, challenge);
+      evictOldestChallenge();
       return challenge;
     },
 
@@ -50,6 +93,7 @@ export function createPasskeys(): Passkeys {
         createdAt: new Date().toISOString(),
       };
       credentials.set(cred.credentialId, cred);
+      evictOldestCredential();
       return cred;
     },
 

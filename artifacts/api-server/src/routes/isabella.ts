@@ -23,6 +23,11 @@ import { validate, schemas } from "../middlewares/validate";
 //  SINGLETON INSTANCES (in-memory; replace with Supabase when wired)
 // ═══════════════════════════════════════════════════════════════════════════════
 
+const MAX_SESSIONS = Number(process.env.RDM_MAX_SESSIONS ?? 2000);
+const MAX_DECISIONS = Number(process.env.RDM_MAX_DECISIONS ?? 5000);
+const MAX_FEEDBACK = Number(process.env.RDM_MAX_FEEDBACK ?? 3000);
+const SESSION_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
 const orchestrator = createCognitiveOrchestrator();
 const memory = createMemoryEngine();
 const skillRegistry = createSkillRegistry();
@@ -48,6 +53,38 @@ const feedback: {
   id: string; playerId: string; decisionId: string; rating: 1 | 2 | 3 | 4 | 5;
   comment?: string; createdAt: string;
 }[] = [];
+
+function purgeExpiredSessions(): void {
+  const cutoff = Date.now() - SESSION_TTL_MS;
+  for (const [id, session] of sessions) {
+    if (new Date(session.lastMessageAt).getTime() < cutoff) {
+      sessions.delete(id);
+    }
+  }
+}
+
+function evictOldestSession(): void {
+  if (sessions.size <= MAX_SESSIONS) return;
+  let oldestKey: string | null = null;
+  let oldestTs = Infinity;
+  for (const [id, s] of sessions) {
+    const ts = new Date(s.lastMessageAt).getTime();
+    if (ts < oldestTs) { oldestTs = ts; oldestKey = id; }
+  }
+  if (oldestKey) sessions.delete(oldestKey);
+}
+
+function evictDecisions(): void {
+  if (decisions.length > MAX_DECISIONS) {
+    decisions.splice(0, decisions.length - MAX_DECISIONS);
+  }
+}
+
+function evictFeedback(): void {
+  if (feedback.length > MAX_FEEDBACK) {
+    feedback.splice(0, feedback.length - MAX_FEEDBACK);
+  }
+}
 
 // ═══════════════════════════════════════════════════════════════════════════════
 //  ROUTE REGISTRATION
@@ -85,12 +122,14 @@ export function registerIsabellaRoutes(router: Router) {
     const intention = isa.interpret(sanitized.sanitized);
 
     // 3. Create or retrieve session
+    purgeExpiredSessions();
     const sid = sessionId ?? `sess-${Date.now()}-${playerId}`;
     if (!sessions.has(sid)) {
       sessions.set(sid, {
         id: sid, playerId, startedAt: new Date().toISOString(),
         lastMessageAt: new Date().toISOString(), messageCount: 0, status: "active",
       });
+      evictOldestSession();
     }
     const session = sessions.get(sid)!;
     session.lastMessageAt = new Date().toISOString();
@@ -119,6 +158,7 @@ export function registerIsabellaRoutes(router: Router) {
         guardianVerdict: { approved: true, guardian: "isabella-ethics-guardian", reason: "passed prompt guard" },
       };
       decisions.push(decision);
+      evictDecisions();
 
       // 9. Store in memory
       memory.store({
@@ -151,7 +191,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  GET /api/isabella/stream
   //  Server-Sent Events stream of Isabella decisions.
   // ─────────────────────────────────────────────────────────────────────────
-  router.get("/isabella/stream", rateLimitByRoute({ name: "isabella-stream", limit: 10 }), (req: Request, res: Response) => {
+  router.get("/isabella/stream", requireRdmRole("user"), rateLimitByRoute({ name: "isabella-stream", limit: 10 }), (req: Request, res: Response) => {
     res.setHeader("Content-Type", "text/event-stream");
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
@@ -176,6 +216,7 @@ export function registerIsabellaRoutes(router: Router) {
         createdAt: new Date().toISOString(), mode: "NORMAL",
       };
       decisions.push(decision);
+      evictDecisions();
       res.write(`data: ${JSON.stringify(decision)}\n\n`);
     }, 2000);
 
@@ -263,6 +304,7 @@ export function registerIsabellaRoutes(router: Router) {
       createdAt: new Date().toISOString(),
     };
     feedback.push(entry);
+    evictFeedback();
 
     memory.store({
       type: "lesson",

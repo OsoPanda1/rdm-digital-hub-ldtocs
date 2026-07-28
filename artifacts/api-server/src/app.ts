@@ -183,7 +183,7 @@ app.use("/api", router);
 
 app.use((req, res) => {
   logger.warn({ path: req.path, method: req.method }, "API route not found");
-  res.status(404).json({ error: "Not Found", path: req.path });
+  res.status(404).json({ error: "Not found" });
 });
 
 // --------- GLOBAL ERROR HANDLER (PennyLane pattern) ---------
@@ -199,13 +199,8 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
     "Unhandled error",
   );
 
-  // Never leak stack traces in production
-  const message = NODE_ENV === "production" ? "Internal Server Error" : err.message;
-
   res.status(500).json({
-    error: "Internal Server Error",
-    message,
-    path: req.path,
+    error: "Internal server error",
   });
 });
 

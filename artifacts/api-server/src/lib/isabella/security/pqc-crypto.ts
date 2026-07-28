@@ -3,6 +3,8 @@
 // Criptografía post-cuántica para firmas y key exchange
 // ────────────────────────────────────────────────────────────────
 
+import { logger } from "../../logger";
+
 let signCounter = 0;
 
 export function signDilithium(payload: string): string {
@@ -37,7 +39,8 @@ export async function decryptMemoryFragment(cipher: string): Promise<unknown> {
     const parts = raw.split(":");
     const plaintext = parts.slice(2).join(":");
     return JSON.parse(plaintext);
-  } catch {
+  } catch (err) {
+    logger.warn({ error: (err as Error).message }, "PQC memory fragment decryption failed");
     throw new Error("Decryption failed: invalid cipher format");
   }
 }

@@ -21,10 +21,12 @@ export function registerIamSecurityRoutes(router: Router) {
   });
 
   router.post("/iam/passkeys/challenge",
+    requireRdmRole("admin"),
     rateLimitByRoute({ name: "iam-challenge", limit: 10 }),
     async (req: Request, res: Response) => {
       const { userId } = req.body ?? {};
       if (!userId) { res.status(400).json({ ok: false, error: "userId required" }); return; }
+      auditSecurityEvent(req, "iam.passkey_challenge", { userId });
       const challenge = await passkeys.generateChallenge(userId);
       res.status(200).json({ ok: true, data: challenge });
     }

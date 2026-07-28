@@ -118,7 +118,7 @@ function extractRole(payload: JwtPayload): string {
 // ── Middleware: Attach JWT-derived identity ──
 
 export function attachJwtIdentity(jwtSecret: string | null) {
-  return (req: Request, _res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
     const token = authHeader?.startsWith("Bearer ") ? authHeader.slice(7) : null;
 
@@ -136,17 +136,29 @@ export function attachJwtIdentity(jwtSecret: string | null) {
         next();
         return;
       }
-      // JWT present but invalid — log and fall through to anonymous
-      logger.warn({ error: result.error }, "JWT verification failed, falling through");
+      // JWT present but invalid — REJECT. Never silently degrade to anonymous
+      // when a secret is configured, as that masks auth failures in production.
+      logger.warn({ error: result.error }, "JWT verification failed — rejecting request");
+      res.status(401).json({
+        ok: false,
+        error: "unauthorized",
+        message: "Invalid or expired token",
+      });
+      return;
     }
 
-    // No token or no secret configured — anonymous
+    if (token && !jwtSecret) {
+      // Token provided but no secret configured (dev mode) — log and allow through
+      logger.warn("Token provided but SUPABASE_JWT_SECRET not set — ignoring token (dev mode)");
+    }
+
+    // No token, or no secret configured (dev mode) — anonymous
     (req as any).rdmIdentity = {
       subject: "anonymous",
       email: "",
       role: "public",
       jwt: null,
-      authMethod: token ? "header" : "anonymous",
+      authMethod: jwtSecret ? "anonymous" : "anonymous",
     } satisfies AuthenticatedIdentity;
     next();
   };

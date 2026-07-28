@@ -11,6 +11,17 @@ import type {
 } from "./types";
 import { logger } from "../../logger";
 
+const FORBIDDEN_KEYS = new Set(["__proto__", "constructor", "prototype"]);
+
+function sanitizeKeys(obj: Record<string, unknown>): Record<string, unknown> {
+  const clean: Record<string, unknown> = {};
+  for (const key of Object.keys(obj)) {
+    if (FORBIDDEN_KEYS.has(key)) continue;
+    clean[key] = obj[key];
+  }
+  return clean;
+}
+
 export interface KnowledgeGraph {
   addEntity(entity: Omit<KnowledgeEntity, "id" | "createdAt" | "updatedAt">): KnowledgeEntity;
   addRelation(relation: Omit<KnowledgeRelation, "id" | "createdAt">): KnowledgeRelation;
@@ -137,7 +148,7 @@ export function createKnowledgeGraph(): KnowledgeGraph {
     updateEntity(id, updates) {
       const entity = entities.get(id);
       if (!entity) return false;
-      Object.assign(entity, updates, { updatedAt: Date.now() });
+      Object.assign(entity, sanitizeKeys(updates as Record<string, unknown>), { updatedAt: Date.now() });
       return true;
     },
 

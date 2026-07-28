@@ -37,6 +37,7 @@ import {
   verify as cryptoVerify,
   createPublicKey,
 } from "node:crypto";
+import { logger } from "../../logger";
 import type { YunNode } from "../types";
 
 // ── Types ──────────────────────────────────────────────────────
@@ -102,6 +103,7 @@ const DEFAULT_ROTATION_WINDOW_MS = 180 * 24 * 60 * 60 * 1000; // 6 months
 const GRACE_PERIOD_MS = 30 * 24 * 60 * 60 * 1000; // 30 days after expiry
 const HKDF_INFO = Buffer.from("yun-pqc-hybrid-handshake-v1");
 const HKDF_SALT = Buffer.alloc(32, 0);
+const MAX_KEYS = Number(process.env.RDM_PQC_MAX_KEYS ?? 500);
 
 // ── PQC Hybrid Crypto Engine ───────────────────────────────────
 
@@ -142,6 +144,31 @@ export class YunPqcCrypto {
     ownerId: string;
     usage: PqcKeyMeta["usage"];
   }): PqcKeyMeta {
+    // Evict oldest revoked/expired keys if at capacity
+    if (this.keys.size >= MAX_KEYS) {
+      const now = new Date();
+      const evictable = Array.from(this.keys.entries())
+        .filter(([, k]) => k.status === "revoked" || new Date(k.expiresAt) < now)
+        .sort((a, b) => new Date(a[1].createdAt).getTime() - new Date(b[1].createdAt).getTime());
+      for (const [id] of evictable.slice(0, Math.ceil(MAX_KEYS * 0.1))) {
+        this.keys.delete(id);
+        this.keyMaterial.delete(id);
+      }
+      // If still at capacity, evict oldest retired key
+      if (this.keys.size >= MAX_KEYS) {
+        const retired = Array.from(this.keys.entries())
+          .filter(([, k]) => k.status === "retired" || k.status === "pending_rotation")
+          .sort((a, b) => new Date(a[1].createdAt).getTime() - new Date(b[1].createdAt).getTime());
+        for (const [id] of retired.slice(0, 1)) {
+          this.keys.delete(id);
+          this.keyMaterial.delete(id);
+        }
+      }
+      if (this.keys.size >= MAX_KEYS) {
+        logger.warn({ keyCount: this.keys.size, max: MAX_KEYS }, "PQC key store at capacity — new key may displace active keys");
+      }
+    }
+
     const now = new Date();
     const expires = new Date(now.getTime() + this.rotationWindowMs);
 
@@ -281,8 +308,9 @@ export class YunPqcCrypto {
         pqcEncrypted = Buffer.from(
           ephemeral.publicKey.export({ type: "spki", format: "der" }) as Buffer,
         );
-      } catch {
+      } catch (err) {
         // Fallback: if X25519 fails (e.g., invalid key format), use random
+        logger.warn({ error: (err as Error).message }, "Hybrid handshake X25519 fallback — falling back to random secret");
         pqcSharedSecret = randomBytes(32);
         pqcEncrypted = randomBytes(32);
       }
@@ -358,8 +386,9 @@ export class YunPqcCrypto {
         // Ed25519 signing: algorithm is null (Ed25519 has a fixed internal hash)
         const sig = cryptoSign(null, params.data, pqKey);
         pqcSignature = sig.toString("base64");
-      } catch {
-        // If Ed25519 signing fails (e.g., wrong key type), leave pqcSignature empty
+      } catch (err) {
+        // If Ed25519 signing fails (e.g., wrong key type), log and leave pqcSignature empty
+        logger.warn({ error: (err as Error).message, keyId: params.keyId }, "Ed25519 signing failed — returning classic-only signature");
         pqcSignature = "";
       }
     }
@@ -423,7 +452,8 @@ export class YunPqcCrypto {
           if (!pqcValid) {
             return { valid: false, reason: "PQC signature invalid." };
           }
-        } catch {
+        } catch (err) {
+          logger.warn({ error: (err as Error).message }, "PQC signature verification error");
           return { valid: false, reason: "PQC signature verification failed." };
         }
       }

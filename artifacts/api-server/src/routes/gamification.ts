@@ -467,24 +467,88 @@ export function registerGamificationRoutes(router: Router) {
     res.status(200).json({ ok: true, data: MOCK_QUESTS });
   });
 
-  router.post("/v1/gamification/award-xp", rateLimitByRoute({ name: "gamification-award-xp", limit: 20 }), (req: Request, res: Response) => {
-    const { userId = "anonymous", amount = 0, reason = "manual" } = req.body ?? {};
-    const numAmount = Math.max(0, Math.min(Number(amount) || 0, 250));
-    auditSecurityEvent(req, "gamification.award_xp", { userId, amount: numAmount, reason });
-    const profile = buildMockProfile(userId);
-    const newXp = profile.xp + numAmount;
-    const newRank = getRank(newXp);
-    res.status(200).json({
-      ok: true,
-      data: {
-        userId,
-        xpAwarded: numAmount,
-        reason,
-        newXp,
-        rank: { name: newRank.name, icon: newRank.icon, color: newRank.color },
-        rankUp: newRank.name !== profile.rank.name,
-      },
-    });
+  router.post("/v1/gamification/award-xp", rateLimitByRoute({ name: "gamification-award-xp", limit: 20 }), async (req: Request, res: Response, next) => {
+    try {
+      const { userId = "anonymous", amount = 0, reason = "manual", idempotencyKey = null } = req.body ?? {};
+      const numAmount = Math.max(0, Math.min(Number(amount) || 0, 250));
+      auditSecurityEvent(req, "gamification.award_xp", { userId, amount: numAmount, reason });
+
+      if (!isDbAvailable()) {
+        const profile = buildMockProfile(userId);
+        const newXp = profile.xp + numAmount;
+        const newRank = getRank(newXp);
+        res.status(200).json({
+          ok: true,
+          data: {
+            userId,
+            xpAwarded: numAmount,
+            reason,
+            newXp,
+            rank: { name: newRank.name, icon: newRank.icon, color: newRank.color },
+            rankUp: newRank.name !== profile.rank.name,
+          },
+        });
+        return;
+      }
+
+      const db = getDb();
+      const [player] = await db.select().from(players).where(eq(players.externalId, userId)).limit(1);
+      if (!player) {
+        res.status(404).json({ ok: false, error: "Player not found" });
+        return;
+      }
+
+      if (idempotencyKey) {
+        const [existing] = await db.select({ id: playerEvents.id })
+          .from(playerEvents)
+          .where(eq(playerEvents.playerId, player.id))
+          .where(sql`${playerEvents.payloadJson}->>'idempotencyKey' = ${idempotencyKey}`)
+          .limit(1);
+        if (existing) {
+          res.status(200).json({ ok: true, data: { userId, xpAwarded: 0, reason, duplicate: true } });
+          return;
+        }
+      }
+
+      const [oldXpRow] = await db.select({ amount: playerCurrencies.amount })
+        .from(playerCurrencies)
+        .where(eq(playerCurrencies.playerId, player.id))
+        .where(eq(playerCurrencies.currencyType, "XP"))
+        .limit(1);
+      const oldXp = Number(oldXpRow?.amount ?? 0);
+
+      await db.transaction(async (tx) => {
+        await tx.insert(playerEvents).values({
+          playerId: player.id,
+          type: "AWARD_XP",
+          payloadJson: { reason, xpAwarded: numAmount, idempotencyKey },
+        });
+        await tx.insert(playerCurrencies).values({
+          playerId: player.id,
+          currencyType: "XP",
+          amount: numAmount,
+          updatedAt: new Date(),
+        }).onConflictDoUpdate({
+          target: [playerCurrencies.playerId, playerCurrencies.currencyType],
+          set: { amount: sql`${playerCurrencies.amount} + ${numAmount}`, updatedAt: new Date() },
+        });
+      });
+
+      const newXp = oldXp + numAmount;
+      const newRank = getRank(newXp);
+      const oldRank = getRank(oldXp);
+      res.status(200).json({
+        ok: true,
+        data: {
+          userId,
+          xpAwarded: numAmount,
+          reason,
+          newXp,
+          rank: { name: newRank.name, icon: newRank.icon, color: newRank.color },
+          rankUp: newRank.name !== oldRank.name,
+        },
+      });
+    } catch (err) { next(err); }
   });
 
   router.get("/v1/gamification/ranks", (_req: Request, res: Response) => {
@@ -622,7 +686,7 @@ export function registerGamificationRoutes(router: Router) {
   // Registers a player event and returns updated currencies + possible unlocks
   router.post("/v1/living-world/player/action", rateLimitByRoute({ name: "living-world-action", limit: 30 }), async (req: Request, res: Response, next) => {
     try {
-      const { type = "UNKNOWN", territoryId = null, poiId = null, payload = {} } = req.body ?? {};
+      const { type = "UNKNOWN", territoryId = null, poiId = null, payload = {}, idempotencyKey = null } = req.body ?? {};
 
       const xpRewards: Record<string, number> = {
         DISCOVER_POI: 50,
@@ -637,7 +701,7 @@ export function registerGamificationRoutes(router: Router) {
       const xpAwarded = Math.min(xpRewards[type] ?? 10, 100);
       auditSecurityEvent(req, "living_world.player_action", { type, territoryId, poiId, xpAwarded });
 
-      // Persist event to DB if available
+      // Persist event and award XP atomically if DB is available
       if (isDbAvailable()) {
         const db = getDb();
         const identity = (req as any).rdmIdentity;
@@ -645,31 +709,46 @@ export function registerGamificationRoutes(router: Router) {
 
         const [player] = await db.select().from(players).where(eq(players.externalId, externalId)).limit(1);
         if (player) {
-          await db.insert(playerEvents).values({
-            playerId: player.id,
-            type,
-            territoryId: territoryId ?? undefined,
-            poiId: poiId ?? undefined,
-            payloadJson: { ...payload, xpAwarded },
-          });
+          // Idempotency: reject duplicate within same transaction
+          if (idempotencyKey) {
+            const [existing] = await db.select({ id: playerEvents.id })
+              .from(playerEvents)
+              .where(eq(playerEvents.playerId, player.id))
+              .where(sql`${playerEvents.payloadJson}->>'idempotencyKey' = ${idempotencyKey}`)
+              .limit(1);
+            if (existing) {
+              res.status(200).json({
+                ok: true,
+                data: {
+                  eventId: existing.id, type, territoryId, poiId,
+                  xpAwarded: 0, currenciesAwarded: [],
+                  possibleUnlock: null, narrativeTrigger: null, duplicate: true,
+                },
+              });
+              return;
+            }
+          }
 
-          // Award XP to player currency
-          const [existingXp] = await db.select().from(playerCurrencies)
-            .where(eq(playerCurrencies.playerId, player.id))
-            .where(eq(playerCurrencies.currencyType, "XP"))
-            .limit(1);
-
-          if (existingXp) {
-            await db.update(playerCurrencies)
-              .set({ amount: existingXp.amount + BigInt(xpAwarded) })
-              .where(eq(playerCurrencies.playerId, player.id));
-          } else {
-            await db.insert(playerCurrencies).values({
+          // Atomic: event insert + currency upsert inside a single transaction
+          await db.transaction(async (tx) => {
+            await tx.insert(playerEvents).values({
+              playerId: player.id,
+              type,
+              territoryId: territoryId ?? undefined,
+              poiId: poiId ?? undefined,
+              payloadJson: { ...payload, xpAwarded, idempotencyKey },
+            });
+            // Atomic increment — eliminates read-modify-write race condition
+            await tx.insert(playerCurrencies).values({
               playerId: player.id,
               currencyType: "XP",
-              amount: BigInt(xpAwarded),
+              amount: xpAwarded,
+              updatedAt: new Date(),
+            }).onConflictDoUpdate({
+              target: [playerCurrencies.playerId, playerCurrencies.currencyType],
+              set: { amount: sql`${playerCurrencies.amount} + ${xpAwarded}`, updatedAt: new Date() },
             });
-          }
+          });
         }
       }
 

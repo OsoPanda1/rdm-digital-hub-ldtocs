@@ -73,7 +73,8 @@ export function registerKernelRoutes(router: Router) {
           },
         });
       } catch (err) {
-        res.status(500).json({ ok: false, error: String(err) });
+        console.error("[kernel/process] Unhandled error:", err);
+        res.status(500).json({ ok: false, error: "Internal server error" });
       }
     },
   );

@@ -3,6 +3,8 @@
 // AES-256-GCM + Kyber-1024 para fragmentos de memoria
 // ────────────────────────────────────────────────────────────────
 
+import { logger } from "../../logger";
+
 export interface DualLayerResult {
   cipher: string;
   algorithm: string;
@@ -45,7 +47,8 @@ export function createDualLayer(): DualLayer {
         const plaintext = parts.slice(2).join(":");
         totalDecrypted++;
         return JSON.parse(plaintext);
-      } catch {
+      } catch (err) {
+        logger.warn({ error: (err as Error).message }, "Dual-layer decryption failed");
         throw new Error("Decryption failed");
       }
     },
