@@ -14,6 +14,27 @@ Sovereign Digital Infrastructure platform for Real del Monte: smart tourism, loc
 - **API dev:** `pnpm --filter @workspace/api-server run dev` (PORT 8080)
 - Both are configured as Replit workflows and start automatically.
 
+## Custom Domain: visitarealdelmonte.online
+Production URL: `https://visitarealdelmonte.online`
+
+### Replit Dashboard Setup
+1. Go to **Settings → Domains** in your Replit project
+2. Click **Custom Domain** → enter `visitarealdelmonte.online`
+3. Replit will show DNS records to configure at your registrar
+
+### DNS Configuration (at your registrar)
+Add these DNS records:
+- **Type A** → Name: `@` → Value: Replit's IP (from dashboard)
+- **Type CNAME** → Name: `www` → Value: your-replit-project.repl.co
+
+### Environment Variables
+The following env vars are configured in `.replit` userenv and are used at runtime:
+- `ALLOWED_ORIGINS` — `https://visitarealdelmonte.online,https://www.visitarealdelmonte.online`
+- `VITE_API_URL` — `/api/v1` (relative, same origin)
+- `VITE_API_BASE_URL` — `/api/v1` (relative, same origin)
+- `VITE_API_GATEWAY` — `/api` (relative, same origin)
+- `VITE_SITE_URL` — `https://visitarealdelmonte.online`
+
 ## Required Replit Secrets
 Add these in Replit Secrets panel. Server refuses to start without mandatory secrets.
 
@@ -34,7 +55,7 @@ Add these in Replit Secrets panel. Server refuses to start without mandatory sec
 
 ## Architecture Highlights
 - **Isabella Cognitive Kernel:** 17-module cognitive OS (Meta-Reasoner, Capability Fabric, 7-level Memory, Planner, Verifier, Knowledge Graph, Confidence, Context, Learning, Security, Emergency, Simulation, Agent Coordinator, Evaluator)
-- **YUN Constitutional Realm:** 8 immutable principles, OPA policy engine, PQC hybrid crypto (Kyber+Dilithium), 4-plane perception, resilience modes
+- **YUN Constitutional Realm:** 8 immutable principles, OPA policy engine, PQC hybrid crypto (X25519+Ed25519, Kyber+Dilithium planned), 4-plane perception, resilience modes
 - **THE C.R.O.W.N.:** 10 cognitive skills + BookPI telemetry + failover
 - **30+ Kernel API endpoints** at `/api/kernel/*`
 - **35+ YUN API endpoints** at `/api/yun/*`
