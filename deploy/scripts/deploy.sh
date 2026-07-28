@@ -1,8 +1,9 @@
 #!/bin/bash
 ##############################################################################
-# RDM Digital Hub — Deploy Script (Producción)
+# RDM Digital Hub — Deploy Script (Produccion)
 # Ejecutar en el VPS primario (Hostinger KVM 2)
 # Uso: ./deploy.sh [--build] [--migrate] [--restart]
+# SPDX-License-Identifier: MIT
 ##############################################################################
 
 set -euo pipefail

@@ -3,6 +3,7 @@
 # RDM Digital Hub — Backup Worker
 # Ejecuta dumps de PostgreSQL cifrados y sube a Backblaze B2
 # Frecuencia: cada 6 horas (configurable via cron del contenedor)
+# SPDX-License-Identifier: MIT
 ##############################################################################
 
 set -eu

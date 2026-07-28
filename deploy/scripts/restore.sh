@@ -3,6 +3,7 @@
 # RDM Digital Hub — DR Restore Script
 # Ejecutar en el nodo standby (Hetzner) para restaurar desde B2
 # Uso: ./restore.sh [backup-file]
+# SPDX-License-Identifier: MIT
 ##############################################################################
 
 set -euo pipefail
