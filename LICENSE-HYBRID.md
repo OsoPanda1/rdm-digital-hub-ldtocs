@@ -10,10 +10,11 @@ Este documento describe la arquitectura de licenciamiento híbrido del Ecosistem
 
 | Capa / Ruta | Régimen | Archivo | Naturaleza |
 |---|---|---|---|
-| `/src/core/` | **TAMV‑PRCL v1.0** | [LICENSE-PRCL.md](./LICENSE-PRCL.md) | Propietario, reservado, secreto industrial |
-| `/src/kernel/`, `/src/quantum/` | **TAMV‑PRCL v1.0** | [LICENSE-PRCL.md](./LICENSE-PRCL.md) | Propietario, reservado, secreto industrial |
-| `/src/isabella/` | **TAMV‑EOL v1.0** | [LICENSE-EOL.md](./LICENSE-EOL.md) | Restringido, inviolable, ético-ontológico |
-| `src/connect/`, `src/skills/` | **TAMV‑KÓRIMA** | [LICENSE-KORIMA.md](./LICENSE-KORIMA.md) | Abierto con reciprocidad |
+| `artifacts/api-server/src/lib/yun/`, `artifacts/api-server/src/lib/crown/`, `artifacts/rdm-hub/src/kernel/` | **TAMV‑PRCL v1.0** | [LICENSE-PRCL.md](./LICENSE-PRCL.md) | Propietario, reservado, secreto industrial |
+| `artifacts/api-server/src/lib/isabella/` (excepto `skills/`) | **TAMV‑EOL v1.0** | [LICENSE-EOL.md](./LICENSE-EOL.md) | Restringido, inviolable, ético-ontológico |
+| `artifacts/api-server/src/lib/isabella/skills/` | **TAMV‑KÓRIMA** | [LICENSE-KORIMA.md](./LICENSE-KORIMA.md) | Abierto con reciprocidad |
+| `artifacts/api-server/src/routes/`, `artifacts/api-server/src/middlewares/` | **MIT** | [LICENSE](./LICENSE) | API surface, permisivo |
+| `artifacts/rdm-hub/src/`, `lib/`, `scripts/`, `deploy/` | **MIT** | [LICENSE](./LICENSE) | Frontend, librerías compartidas, herramientas |
 | Documentación / DOI / FAIR | **MIT‑0 / FAIR** | [LICENSE](./LICENSE) | Libre para estudio y cita |
 | `supabase/`, telemetría, RLS | **DPA / Soberanía de datos** | [DATA-SOVEREIGNTY-DPA.md](./DATA-SOVEREIGNTY-DPA.md) | Confidencial y regulado |
 

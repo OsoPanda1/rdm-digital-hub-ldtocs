@@ -97,6 +97,13 @@ Add these in Replit Secrets panel. Server refuses to start without mandatory sec
 - Prototype pollution prevention in validation
 - Environment validation at startup (fail-fast)
 
+## Licensing
+Hybrid layered licensing — see LICENSE-HYBRID.md for full mapping:
+- **TAMV-PRCL v1.0** (Proprietary): `artifacts/api-server/src/lib/yun/`, `artifacts/api-server/src/lib/crown/`, `artifacts/rdm-hub/src/kernel/`
+- **TAMV-EOL v1.0** (Ethical): `artifacts/api-server/src/lib/isabella/`
+- **TAMV-KORIMA v1.0** (Reciprocity): `artifacts/api-server/src/lib/isabella/skills/`
+- **MIT**: `artifacts/api-server/src/routes/`, `artifacts/api-server/src/middlewares/`, `artifacts/rdm-hub/src/`, `lib/`, `scripts/`, `deploy/`
+
 ## User preferences
 - Language: Spanish (project is for Real del Monte, Hidalgo, Mexico)
 - Keep existing project structure and stack

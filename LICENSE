@@ -33,9 +33,10 @@ El resto del ecosistema está cubierto por licencias específicas más restricti
 
 | Régimen | Archivo | Aplica a |
 |---------|---------|----------|
-| **TAMV‑PRCL v1.0** (Propietario) | [LICENSE-PRCL.md](./LICENSE-PRCL.md) | `src/core/`, `src/kernel/`, `src/quantum/` |
-| **TAMV‑EOL v1.0** (Ética) | [LICENSE-EOL.md](./LICENSE-EOL.md) | `src/isabella/` (Isabella Villaseñor AI™) |
-| **TAMV‑KÓRIMA** (Reciprocidad) | [LICENSE-KORIMA.md](./LICENSE-KORIMA.md) | `src/connect/`, `src/skills/` |
+| **TAMV‑PRCL v1.0** (Propietario) | [LICENSE-PRCL.md](./LICENSE-PRCL.md) | `artifacts/api-server/src/lib/yun/`, `artifacts/api-server/src/lib/crown/`, `artifacts/rdm-hub/src/kernel/` |
+| **TAMV‑EOL v1.0** (Ética) | [LICENSE-EOL.md](./LICENSE-EOL.md) | `artifacts/api-server/src/lib/isabella/` (Isabella Villaseñor AI™) |
+| **TAMV‑KÓRIMA** (Reciprocidad) | [LICENSE-KORIMA.md](./LICENSE-KORIMA.md) | `artifacts/api-server/src/lib/isabella/skills/` |
+| **MIT** (Permisivo) | [LICENSE](./LICENSE) | `artifacts/api-server/src/routes/`, `artifacts/api-server/src/middlewares/`, `artifacts/rdm-hub/src/`, `lib/`, `scripts/`, `deploy/` |
 | **DPA** (Soberanía de datos) | [DATA-SOVEREIGNTY-DPA.md](./DATA-SOVEREIGNTY-DPA.md) | Datos personales y territoriales |
 
 **Documento rector**: [RFC-0001-MANIFEST.md](./RFC-0001-MANIFEST.md) — Manifiesto de Licenciamiento Híbrido, Estatuto Constitutivo y Blindaje Jurídico-Técnico del Nodo Cero.

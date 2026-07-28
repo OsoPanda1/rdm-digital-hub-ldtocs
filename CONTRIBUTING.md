@@ -91,10 +91,10 @@ pnpm run test       # Test runner (cuando esté configurado)
 
 Este proyecto opera bajo un **régimen de licenciamiento híbrido por capas** (ver [LICENSE-HYBRID.md](./LICENSE-HYBRID.md)). Al contribuir, aceptas que tus contribuciones queden sujetas al régimen que corresponda según la capa donde se realicen:
 
-- **`src/core/`, `src/kernel/`, `src/quantum/`** → TAMV‑PRCL v1.0 (Propietario)
-- **`src/isabella/`** → TAMV‑EOL v1.0 (Ética)
-- **`src/connect/`, componentes KÓRIMA** → TAMV‑KÓRIMA (Reciprocidad)
-- **Documentación, tests, config** → MIT
+- **`artifacts/api-server/src/lib/yun/`, `artifacts/api-server/src/lib/crown/`, `artifacts/rdm-hub/src/kernel/`** → TAMV‑PRCL v1.0 (Propietario)
+- **`artifacts/api-server/src/lib/isabella/`** (excepto `skills/`) → TAMV‑EOL v1.0 (Ética)
+- **`artifacts/api-server/src/lib/isabella/skills/`** → TAMV‑KÓRIMA (Reciprocidad)
+- **`artifacts/api-server/src/routes/`, `artifacts/api-server/src/middlewares/`, `artifacts/rdm-hub/src/`, `lib/`, `scripts/`, `deploy/`, `docs/`** → MIT
 
 No contribuyas si no estás de acuerdo con los términos de la licencia aplicable a cada capa.
 
