@@ -1,0 +1,204 @@
+##############################################################################
+# RDM Digital Hub — Docker Compose (Producción)
+# Nodo Cero MD-X4 — visitarealdelmonte.online
+# Presupuesto: ≤25 USD/mes | Hostinger KVM 2 primario
+##############################################################################
+
+version: "3.9"
+
+services:
+  # ─── REVERSE PROXY / TLS TERMINATOR ───────────────────────────────────────
+  traefik:
+    image: traefik:v3.3
+    container_name: rdm-traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    command:
+      - --api.dashboard=true
+      - --api.insecure=false
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=rdm_proxy
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+      - --entrypoints.web.http.redirections.entryPoint.permanent=true
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.le.acme.email=${ACME_EMAIL:-tamvonlinenetwork@outlook.es}
+      - --certificatesresolvers.le.acme.storage=/acme.json
+      - --certificatesresolvers.le.acme.tlschallenge=true
+      - --log.level=INFO
+      - --accesslog=true
+      - --ping=true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/acme.json:/acme.json
+    networks:
+      - rdm_proxy
+    labels:
+      - "traefik.enable=true"
+      # Dashboard — solo accesible con auth
+      - "traefik.http.routers.dashboard.rule=Host(`${DASHBOARD_HOST:-traefik.visitarealdelmonte.online}`)"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls.certresolver=le"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.middlewares=dashboard-auth,security-headers"
+      - "traefik.http.middlewares.dashboard-auth.basicauth.users=${DASHBOARD_AUTH:-admin:$$2y$$10$$PLACEHOLDER}"
+      - "traefik.http.middlewares.security-headers.headers.stsSeconds=31536000"
+      - "traefik.http.middlewares.security-headers.headers.stsIncludeSubdomains=true"
+      - "traefik.http.middlewares.security-headers.headers.contentTypeNosniff=true"
+      - "traefik.http.middlewares.security-headers.headers.browserXssFilter=true"
+      - "traefik.http.middlewares.security-headers.headers.referrerPolicy=strict-origin-when-cross-origin"
+      - "traefik.http.middlewares.security-headers.headers.frameDeny=true"
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  # ─── FRONTEND (React/Vite) ────────────────────────────────────────────────
+  rdm-frontend:
+    build:
+      context: ../artifacts/rdm-hub
+      dockerfile: Dockerfile
+    container_name: rdm-frontend
+    restart: unless-stopped
+    environment:
+      - VITE_API_URL=https://${API_HOST:-api.visitarealdelmonte.online}
+      - VITE_API_BASE_URL=https://${API_HOST:-api.visitarealdelmonte.online}/v1
+      - VITE_API_GATEWAY=https://${API_HOST:-api.visitarealdelmonte.online}
+      - VITE_SITE_URL=https://${SITE_HOST:-visitarealdelmonte.online}
+    networks:
+      - rdm_proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`${SITE_HOST:-visitarealdelmonte.online}`) || Host(`www.${SITE_HOST:-visitarealdelmonte.online}`)"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls.certresolver=le"
+      - "traefik.http.services.frontend.loadbalancer.server.port=22942"
+      - "traefik.http.routers.frontend.middlewares=security-headers"
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:22942/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ─── API SERVER (Node/Express) ────────────────────────────────────────────
+  rdm-api:
+    build:
+      context: ../artifacts/api-server
+      dockerfile: Dockerfile
+    container_name: rdm-api
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=8080
+      - DATABASE_URL=postgresql://rdm:${DB_PASSWORD}@postgres:5432/rdm_db
+      - SUPABASE_JWT_SECRET=${SUPABASE_JWT_SECRET}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+      - ALLOWED_ORIGINS=https://${SITE_HOST:-visitarealdelmonte.online},https://www.${SITE_HOST:-visitarealdelmonte.online},https://${API_HOST:-api.visitarealdelmonte.online}
+    networks:
+      - rdm_proxy
+      - rdm_internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`${API_HOST:-api.visitarealdelmonte.online}`)"
+      - "traefik.http.routers.api.entrypoints=websecure"
+      - "traefik.http.routers.api.tls.certresolver=le"
+      - "traefik.http.services.api.loadbalancer.server.port=8080"
+      - "traefik.http.routers.api.middlewares=api-ratelimit,security-headers"
+      - "traefik.http.middlewares.api-ratelimit.ratelimit.average=100"
+      - "traefik.http.middlewares.api-ratelimit.ratelimit.burst=50"
+      - "traefik.http.middlewares.api-ratelimit.ratelimit.period=1m"
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ─── POSTGRESQL ───────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: rdm-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: rdm
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: rdm_db
+      POSTGRES_INITDB_ARGS: "--data-checksums"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - rdm_internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rdm -d rdm_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    shm_size: 128mb
+
+  # ─── REDIS (cache + rate limiting) ────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: rdm-redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --appendonly yes
+      --appendfsync everysec
+    volumes:
+      - redis_data:/data
+    networks:
+      - rdm_internal
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # ─── BACKUP WORKER ────────────────────────────────────────────────────────
+  backup-worker:
+    image: postgres:16-alpine
+    container_name: rdm-backup
+    restart: unless-stopped
+    environment:
+      PGHOST: postgres
+      PGUSER: rdm
+      PGPASSWORD: ${DB_PASSWORD}
+      PGDATABASE: rdm_db
+      BACKUP_BUCKET: ${BACKUP_BUCKET:-}
+      BACKUP_KEY: ${BACKUP_KEY:-}
+      BACKUP_SECRET: ${BACKUP_SECRET:-}
+      BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-30}
+    volumes:
+      - ./backups:/backups
+      - ./scripts/backup.sh:/backup.sh:ro
+    entrypoint: ["/bin/sh", "/backup.sh"]
+    networks:
+      - rdm_internal
+
+# ─── NETWORKS ─────────────────────────────────────────────────────────────
+networks:
+  rdm_proxy:
+    name: rdm_proxy
+    driver: bridge
+  rdm_internal:
+    internal: true
+
+# ─── VOLUMES ──────────────────────────────────────────────────────────────
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local

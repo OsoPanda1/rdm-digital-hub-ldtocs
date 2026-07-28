@@ -1,0 +1,51 @@
+# RDM Digital Hub — Traefik Dynamic Config
+# Middlewares reutilizables
+
+http:
+  middlewares:
+    # Seguridad HTTP headers
+    security-headers:
+      headers:
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        contentTypeNosniff: true
+        browserXssFilter: true
+        frameDeny: true
+        referrerPolicy: strict-origin-when-cross-origin
+        customResponseHeaders:
+          X-Powered-By: ""
+          Server: ""
+
+    # Rate limiting general
+    rate-limit:
+      rateLimit:
+        average: 100
+        burst: 50
+        period: 1m
+
+    # Rate limiting estricto para auth
+    auth-rate-limit:
+      rateLimit:
+        average: 10
+        burst: 5
+        period: 1m
+
+    # Compresión gzip
+    gzip:
+      compress: {}
+
+    # CORS para API
+    cors-headers:
+      headers:
+        accessControlAllowMethods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - OPTIONS
+        accessControlAllowHeaders:
+          - Authorization
+          - Content-Type
+          - X-Idempotency-Key
+        accessControlMaxAge: 86400
