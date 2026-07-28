@@ -439,4 +439,77 @@ export const schemas = {
     voterId: { type: "string" as const, required: true, min: 1 },
     vote: { type: "string" as const, required: true, enum: ["approve", "reject", "abstain"] },
   },
+
+  yunRegistryAgent: {
+    agentId: { type: "string" as const, required: true, min: 1, max: 200 },
+    name: { type: "string" as const, required: true, min: 1, max: 200 },
+    domain: { type: "string" as const, required: true, min: 1, max: 100 },
+    capabilities: { type: "array" as const, required: false },
+    permissions: { type: "array" as const, required: false },
+    autonomyLevel: { type: "number" as const, required: false, min: 0, max: 5 },
+  },
+
+  yunRegistryService: {
+    serviceId: { type: "string" as const, required: true, min: 1, max: 200 },
+    name: { type: "string" as const, required: true, min: 1, max: 200 },
+    domain: { type: "string" as const, required: true, min: 1, max: 100 },
+    endpoint: { type: "string" as const, required: false, max: 500 },
+  },
+
+  yunRegistryLicense: {
+    licenseId: { type: "string" as const, required: true, min: 1, max: 200 },
+    type: { type: "string" as const, required: true, min: 1, max: 100 },
+    subject: { type: "string" as const, required: true, min: 1, max: 200 },
+    domain: { type: "string" as const, required: true, min: 1, max: 100 },
+  },
+
+  yunPerceptionOpaLog: {
+    decision_id: { type: "string" as const, required: true, min: 1, max: 200 },
+    policy: { type: "string" as const, required: true, min: 1, max: 200 },
+    timestamp: { type: "string" as const, required: true, min: 1 },
+    input: { type: "object" as const, required: true },
+    result: { type: "object" as const, required: true },
+  },
+
+  yunPqcKeyGenerate: {
+    algorithm: { type: "string" as const, required: true, min: 1, max: 100 },
+    purpose: { type: "string" as const, required: false, max: 100 },
+  },
+
+  yunPqcHandshake: {
+    keyId: { type: "string" as const, required: true, min: 1, max: 200 },
+    peerPublicKey: { type: "string" as const, required: true, min: 1 },
+  },
+
+  yunPqcSign: {
+    keyId: { type: "string" as const, required: true, min: 1, max: 200 },
+    message: { type: "string" as const, required: true, min: 1 },
+  },
+
+  yunPqcVerify: {
+    keyId: { type: "string" as const, required: true, min: 1, max: 200 },
+    message: { type: "string" as const, required: true, min: 1 },
+    signature: { type: "string" as const, required: true, min: 1 },
+  },
 };
+
+// ── Prototype-Pollution-Safe Object Sanitizer ─────────────────
+
+const FORBIDDEN_KEYS = new Set(["__proto__", "constructor", "prototype"]);
+
+export function sanitizeObject<T extends Record<string, unknown>>(obj: T): T {
+  for (const key of Object.keys(obj)) {
+    if (FORBIDDEN_KEYS.has(key)) {
+      delete obj[key];
+    } else if (typeof obj[key] === "object" && obj[key] !== null && !Array.isArray(obj[key])) {
+      sanitizeObject(obj[key] as Record<string, unknown>);
+    } else if (Array.isArray(obj[key])) {
+      for (const item of obj[key] as unknown[]) {
+        if (typeof item === "object" && item !== null && !Array.isArray(item)) {
+          sanitizeObject(item as Record<string, unknown>);
+        }
+      }
+    }
+  }
+  return obj;
+}
