@@ -189,6 +189,12 @@ app.use(tracingMiddleware);
 
 app.use("/api", router);
 
+// --------- ROOT HEALTH (Docker healthcheck) ---------
+
+app.get("/healthz", (_req, res) => {
+  res.status(200).json({ ok: true });
+});
+
 // --------- 404 ---------
 
 app.use((req, res) => {

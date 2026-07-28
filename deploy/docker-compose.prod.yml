@@ -1,0 +1,16 @@
+# Production overrides — use with: docker compose -f docker-compose.yml -f docker-compose.prod.yml up
+version: "3.9"
+services:
+  rdm-frontend:
+    build:
+      context: ../
+      dockerfile: artifacts/rdm-hub/Dockerfile
+    environment:
+      - NODE_ENV=production
+
+  rdm-api:
+    build:
+      context: ../
+      dockerfile: artifacts/api-server/Dockerfile
+    environment:
+      - NODE_ENV=production

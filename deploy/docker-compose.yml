@@ -64,8 +64,8 @@ services:
   # ─── FRONTEND (React/Vite) ────────────────────────────────────────────────
   rdm-frontend:
     build:
-      context: ../artifacts/rdm-hub
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: artifacts/rdm-hub/Dockerfile
     container_name: rdm-frontend
     restart: unless-stopped
     environment:
@@ -92,8 +92,8 @@ services:
   # ─── API SERVER (Node/Express) ────────────────────────────────────────────
   rdm-api:
     build:
-      context: ../artifacts/api-server
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: artifacts/api-server/Dockerfile
     container_name: rdm-api
     restart: unless-stopped
     environment:

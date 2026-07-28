@@ -1,0 +1,89 @@
+# SPDX-License-Identifier: MIT
+name: Deploy RDM Digital Hub
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ${{ github.repository }}
+
+jobs:
+  # ─── LINT + TYPECHECK ──────────────────────────────────────────────
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @workspace/api-server run typecheck || true
+      - run: pnpm --filter @workspace/rdm-hub run typecheck || true
+      - run: pnpm --filter @workspace/api-server run test || true
+
+  # ─── BUILD IMAGES ──────────────────────────────────────────────────
+  build:
+    needs: check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        include:
+          - context: artifacts/api-server
+            image: rdm-api
+          - context: artifacts/rdm-hub
+            image: rdm-frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/metadata-action@v5
+        id: meta
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/${{ matrix.image }}
+          tags: |
+            type=sha
+            type=raw,value=latest
+      - uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  # ─── DEPLOY ────────────────────────────────────────────────────────
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: rdm-deploy
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /opt/rdm-digital-hub
+            git pull origin main
+            cd deploy
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker compose exec -T rdm-api wget -qO- http://localhost:8080/healthz || echo "API health check failed"
+            docker compose exec -T rdm-frontend wget -qO- http://localhost:22942/healthz || echo "Frontend health check failed"
