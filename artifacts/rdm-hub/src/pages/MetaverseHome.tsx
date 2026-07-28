@@ -2,180 +2,285 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { 
-  Search, Bell, Wallet, Globe, User, Settings, CreditCard, 
-  ShoppingBag, Shield, Home, Users, Music, Sparkles, 
-  GraduationCap, Image, Gavel, Bot,
-  TrendingUp, Award, Ticket, MessageCircle, Video
+import {
+  Map, Bot, Users, Gamepad2, MapPin, Globe, Music2,
+  Send, Sparkles, Building2, TrendingUp, CheckCircle2,
+  Clock, ChevronRight, Layers, Palette, Compass, Zap,
+  CircleDot
 } from "lucide-react";
-import Matrix3DEffect from "@/components/metaverse/Matrix3DEffect";
-import RetractableToolbar from "@/components/metaverse/RetractableToolbar";
-import StoriesSection from "@/components/metaverse/StoriesSection";
-import SocialWall from "@/components/metaverse/SocialWall";
-import ModulesGrid from "@/components/metaverse/ModulesGrid";
-import { VideoGrid } from "@/components/metaverse/VideoCard";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+
+interface ToolbarItem {
+  id: string;
+  icon: React.ReactNode;
+  label: string;
+  path: string;
+}
+
+const TOOLBAR_ITEMS: ToolbarItem[] = [
+  { id: "atlas", icon: <Map className="h-4 w-4" />, label: "Mapa 3D", path: "/atlas" },
+  { id: "isabella", icon: <Bot className="h-4 w-4" />, label: "Isabella AI", path: "/isabella-ai" },
+  { id: "comunidad", icon: <Users className="h-4 w-4" />, label: "Comunidad", path: "/comunidad" },
+  { id: "gamificacion", icon: <Gamepad2 className="h-4 w-4" />, label: "Gamificación", path: "/gamificacion" },
+  { id: "territorio", icon: <MapPin className="h-4 w-4" />, label: "Territorio", path: "/territorial-dashboard" },
+  { id: "constelacion", icon: <Globe className="h-4 w-4" />, label: "Constelación", path: "/constelacion" },
+  { id: "nexo", icon: <Send className="h-4 w-4" />, label: "Nexo Estelar", path: "/nexo-estelar" },
+  { id: "musica", icon: <Music2 className="h-4 w-4" />, label: "Música", path: "/musica" },
+];
+
+const FEATURED_CONTENT = [
+  {
+    title: "Ruta del Paste",
+    desc: "Recorrido turístico por los pastes más emblemáticos del pueblo.",
+    path: "/ruta-del-paste",
+    icon: <Compass className="h-6 w-6" />,
+    color: "from-amber-500 to-orange-600",
+  },
+  {
+    title: "Isabella AI",
+    desc: "Tu asistente inteligente que conoce cada rincón de Real del Monte.",
+    path: "/isabella-ai",
+    icon: <Bot className="h-6 w-6" />,
+    color: "from-blue-500 to-indigo-600",
+  },
+  {
+    title: "Gobernanza DAO",
+    desc: "Participa en las decisiones que moldean el futuro del territorio.",
+    path: "/gobernanza",
+    icon: <Building2 className="h-6 w-6" />,
+    color: "from-teal-500 to-emerald-600",
+  },
+  {
+    title: "Mina Virtual",
+    desc: "Explora la historia minera y gana Realitos.",
+    path: "/mina",
+    icon: <Sparkles className="h-6 w-6" />,
+    color: "from-purple-500 to-violet-600",
+  },
+];
+
+const MODULES = [
+  { name: "Isabella Ω-Core", status: "active" as const },
+  { name: "YUN Network", status: "active" as const },
+  { name: "C.R.O.W.N", status: "active" as const },
+  { name: "Gamificación", status: "active" as const },
+  { name: "Territorio", status: "active" as const },
+  { name: "Comunidad", status: "active" as const },
+  { name: "Comercio B2B", status: "active" as const },
+  { name: "Música RDM", status: "active" as const },
+  { name: "Constelación", status: "active" as const },
+  { name: "Nexo Estelar", status: "active" as const },
+  { name: "Realito", status: "development" as const },
+  { name: "Cultura Digital", status: "development" as const },
+];
+
+const RECENT_ACTIVITY = [
+  { text: "Nueva reseña en Pastes El Portal", time: "hace 1h", icon: <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" /> },
+  { text: "Isabella actualizó su conocimiento", time: "hace 3h", icon: <Bot className="h-3.5 w-3.5 text-blue-400" /> },
+  { text: "3 nuevos comercios registrados", time: "hace 5h", icon: <TrendingUp className="h-3.5 w-3.5 text-purple-400" /> },
+  { text: "Festival del Paste — Evento activo", time: "hace 8h", icon: <Sparkles className="h-3.5 w-3.5 text-amber-400" /> },
+  { text: "Comunidad: 12 nuevos miembros", time: "hace 1d", icon: <Users className="h-3.5 w-3.5 text-teal-400" /> },
+];
+
+const CATEGORIES = [
+  { name: "Cultura", icon: <Palette className="h-5 w-5" />, count: 24, path: "/cultura" },
+  { name: "Turismo", icon: <Compass className="h-5 w-5" />, count: 18, path: "/directorio" },
+  { name: "Comercio", icon: <Building2 className="h-5 w-5" />, count: 42, path: "/b2b" },
+  { name: "Tecnología", icon: <Zap className="h-5 w-5" />, count: 15, path: "/oraculo" },
+  { name: "Comunidad", icon: <Users className="h-5 w-5" />, count: 31, path: "/comunidad" },
+];
 
 const MetaverseHome: React.FC = () => {
-  const [activeNotification, setActiveNotification] = useState<string | undefined>();
+  const navigate = useNavigate();
+  const [networkStatus, setNetworkStatus] = useState<"online" | "offline" | "checking">("checking");
 
-  // Toolbar configurations
-  const topBarItems = [
-    { id: "home", icon: <Home className="w-5 h-5" />, label: "Inicio" },
-    { id: "search", icon: <Search className="w-5 h-5" />, label: "Buscar" },
-    { id: "profile", icon: <User className="w-5 h-5" />, label: "Perfil", badge: 3 },
-    { id: "notifications", icon: <Bell className="w-5 h-5" />, label: "Notificaciones", badge: 12 },
-    { id: "wallet", icon: <Wallet className="w-5 h-5" />, label: "NubiWallet" },
-    { id: "global", icon: <Globe className="w-5 h-5" />, label: "Muro Global" },
-  ];
-
-  const leftBarItems = [
-    { id: "dreamspaces", icon: <Sparkles className="w-5 h-5" />, label: "Dream Spaces" },
-    { id: "channels", icon: <Users className="w-5 h-5" />, label: "Mis Canales" },
-    { id: "groups", icon: <MessageCircle className="w-5 h-5" />, label: "Mis Grupos" },
-    { id: "videos", icon: <Video className="w-5 h-5" />, label: "Mis Videos" },
-    { id: "music", icon: <Music className="w-5 h-5" />, label: "Mi MÃºsica" },
-  ];
-
-  const rightBarItems = [
-    { id: "trending", icon: <TrendingUp className="w-5 h-5" />, label: "Tendencias" },
-    { id: "university", icon: <GraduationCap className="w-5 h-5" />, label: "Universidad TAMV" },
-    { id: "lottery", icon: <Ticket className="w-5 h-5" />, label: "LoterÃ­a TAMV" },
-    { id: "popular", icon: <Award className="w-5 h-5" />, label: "Populares" },
-    { id: "isabella", icon: <Bot className="w-5 h-5" />, label: "Isabella AI" },
-  ];
-
-  const bottomBarItems = [
-    { id: "settings", icon: <Settings className="w-5 h-5" />, label: "Ajustes" },
-    { id: "monetization", icon: <CreditCard className="w-5 h-5" />, label: "MonetizaciÃ³n" },
-    { id: "payments", icon: <Wallet className="w-5 h-5" />, label: "Pagos" },
-    { id: "membership", icon: <Award className="w-5 h-5" />, label: "MembresÃ­as" },
-    { id: "marketplace", icon: <ShoppingBag className="w-5 h-5" />, label: "Marketplace" },
-    { id: "security", icon: <Shield className="w-5 h-5" />, label: "Seguridad" },
-  ];
-
-  // Mock data
-  const rdmThumbs = [
-    '/images/dia-muertos.jpg', '/images/penas-cargadas.jpg', '/images/plaza-noche.jpg',
-    '/images/mine-entrance.jpg', '/images/calles-coloridas.jpg', '/images/waterfall-forest.jpg',
-    '/images/panteon-ingles.jpg', '/images/iglesia.jpg', '/images/artesanias.jpg',
-    '/images/mirador-sunset.jpg', '/images/landscape-fog.jpg',
-  ];
-  const rdmAvatars = [
-    '/images/ceo-tamv.jpg', '/images/pueblo.jpg', '/images/centro.jpg',
-    '/images/niebla.jpg', '/images/ecoturismo.jpg',
-  ];
-
-  const mockStories = Array.from({ length: 12 }, (_, i) => ({
-    id: `story-${i}`,
-    username: `creator_${i + 1}`,
-    avatar: rdmAvatars[i % rdmAvatars.length],
-    hasNew: i < 5,
-  }));
-
-  const mockVideos = Array.from({ length: 11 }, (_, i) => ({
-    id: `video-${i}`,
-    thumbnail: rdmThumbs[i % rdmThumbs.length],
-    title: `Contenido Exclusivo #${i + 1} - Experiencia Inmersiva`,
-    creator: `Creator ${i + 1}`,
-    creatorAvatar: rdmAvatars[i % rdmAvatars.length],
-    views: Math.floor(Math.random() * 100000),
-    likes: Math.floor(Math.random() * 10000),
-    duration: `${Math.floor(Math.random() * 20) + 1}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
-    isLive: i === 0,
-  }));
-
-  const mockPosts = Array.from({ length: 10 }, (_, i) => ({
-    id: `post-${i}`,
-    author: {
-      id: `user-${i}`,
-      name: `Creador ${i + 1}`,
-      username: `creator${i + 1}`,
-      avatar: rdmAvatars[i % rdmAvatars.length],
-      verified: i < 3,
-    },
-    content: "Explorando las infinitas posibilidades del metaverso TAMV. Â¡El futuro de las redes sociales estÃ¡ aquÃ­! ðŸš€âœ¨",
-    media: i % 2 === 0 ? [{ type: "image" as const, url: rdmThumbs[i % rdmThumbs.length] }] : undefined,
-    likes: Math.floor(Math.random() * 5000),
-    comments: Math.floor(Math.random() * 500),
-    shares: Math.floor(Math.random() * 200),
-    timestamp: "hace 2h",
-    visibility: "public" as const,
-    federationHash: `0x${Math.random().toString(16).slice(2, 18)}`,
-  }));
+  useEffect(() => {
+    const checkHealth = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || "/api"}/health`, {
+          signal: AbortSignal.timeout(5000),
+        });
+        setNetworkStatus(res.ok ? "online" : "offline");
+      } catch {
+        setNetworkStatus("offline");
+      }
+    };
+    checkHealth();
+    const interval = setInterval(checkHealth, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden">
-      {/* Matrix 3D Background */}
-      <Matrix3DEffect />
+      {/* Animated Gradient Background */}
+      <div className="fixed inset-0 -z-10">
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            background: "radial-gradient(ellipse at 30% 20%, rgba(59,130,246,0.15) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(139,92,246,0.1) 0%, transparent 50%)",
+          }}
+        />
+      </div>
 
-      {/* 4 Retractable Toolbars */}
-      <RetractableToolbar position="top" items={topBarItems} notificationType={activeNotification as any} />
-      <RetractableToolbar position="left" items={leftBarItems} />
-      <RetractableToolbar position="right" items={rightBarItems} />
-      <RetractableToolbar position="bottom" items={bottomBarItems} />
-
-      {/* Main Content */}
-      <main className="relative z-10 pt-16 pb-16 px-16 space-y-12">
-        {/* Hero Section */}
+      <main className="relative z-10 pt-20 sm:pt-24 pb-16 px-4 sm:px-6 max-w-6xl mx-auto space-y-12">
+        {/* Hero */}
         <motion.section
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center py-16"
+          className="text-center py-8 sm:py-12"
         >
-          <h1 className="text-5xl md:text-7xl font-black mb-4"
-            style={{
-              background: "linear-gradient(180deg, #fff 0%, #00f0ff 50%, #0066ff 100%)",
-              backgroundClip: "text",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-              textShadow: "0 0 40px rgba(0, 240, 255, 0.5)"
-            }}
-          >
-            TAMV ONLINE
+          <h1 className="text-4xl sm:text-6xl font-black tracking-tight">
+            <span
+              style={{
+                background: "linear-gradient(180deg, #fff 0%, #00f0ff 50%, #0066ff 100%)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              Metaverso RDM
+            </span>
           </h1>
-          <p className="text-xl text-red-400 tracking-[0.2em] font-bold">EL METAVERSO DESTRUCTOR</p>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-            Redefiniendo el futuro de las redes sociales. Donde los creadores son los verdaderos hÃ©roes.
+          <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-lg mx-auto">
+            Explora el ecosistema digital de Real del Monte. Navega entre módulos, conecta con la comunidad y descubre el territorio.
           </p>
+
+          {/* Network Status */}
+          <div className="mt-4 flex items-center justify-center gap-2">
+            <div className={`w-2 h-2 rounded-full ${
+              networkStatus === "online"
+                ? "bg-emerald-500 animate-pulse"
+                : networkStatus === "checking"
+                  ? "bg-amber-500 animate-pulse"
+                  : "bg-red-500"
+            }`} />
+            <span className="text-[10px] font-mono text-muted-foreground">
+              {networkStatus === "online"
+                ? "RED ACTIVA"
+                : networkStatus === "checking"
+                  ? "VERIFICANDO..."
+                  : "RED INACTIVA"}
+            </span>
+          </div>
         </motion.section>
 
-        {/* Featured Videos */}
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold flex items-center gap-3">
-            <div className="w-1 h-8 bg-gradient-to-b from-accent to-primary rounded-full" />
+        {/* Functional Toolbar */}
+        <section>
+          <h2 className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
+            Navegación Rápida
+          </h2>
+          <div className="grid grid-cols-4 sm:grid-cols-8 gap-3">
+            {TOOLBAR_ITEMS.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => navigate(item.path)}
+                className="group flex flex-col items-center gap-2 p-3 rounded-xl border bg-card hover:bg-accent/50 hover:border-primary/30 transition-all duration-200 hover:shadow-md"
+              >
+                <div className="text-primary group-hover:scale-110 transition-transform">
+                  {item.icon}
+                </div>
+                <span className="text-[10px] font-medium text-muted-foreground group-hover:text-foreground transition-colors text-center leading-tight">
+                  {item.label}
+                </span>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* Featured Content */}
+        <section>
+          <h2 className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
             Contenido Destacado
           </h2>
-          <VideoGrid videos={mockVideos} columns={5} showFeatured />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {FEATURED_CONTENT.map((item) => (
+              <motion.div
+                key={item.title}
+                whileHover={{ y: -4 }}
+                onClick={() => navigate(item.path)}
+                className="cursor-pointer"
+              >
+                <Card className="p-5 h-full hover:shadow-lg transition-all duration-200">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center text-white mb-4`}>
+                    {item.icon}
+                  </div>
+                  <h3 className="font-bold text-sm">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
         </section>
 
-        {/* Stories */}
-        <StoriesSection stories={mockStories} />
+        <div className="grid lg:grid-cols-[1fr_320px] gap-6">
+          <div className="space-y-8">
+            {/* Active Modules */}
+            <section>
+              <h2 className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
+                Módulos Activos
+              </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {MODULES.map((m) => (
+                  <div
+                    key={m.name}
+                    className="flex items-center gap-2 p-3 rounded-lg border bg-card"
+                  >
+                    <div className={`w-2 h-2 rounded-full shrink-0 ${
+                      m.status === "active" ? "bg-emerald-500" : "bg-amber-500"
+                    }`} />
+                    <span className="text-xs font-medium truncate">{m.name}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
 
-        {/* Social Wall */}
-        <SocialWall posts={mockPosts} />
+            {/* Categories */}
+            <section>
+              <h2 className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
+                Explorar por Categoría
+              </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat.name}
+                    onClick={() => navigate(cat.path)}
+                    className="group text-left p-4 rounded-xl border bg-card hover:bg-accent/50 transition-all duration-200"
+                  >
+                    <div className="text-primary mb-2 group-hover:scale-110 transition-transform inline-block">
+                      {cat.icon}
+                    </div>
+                    <p className="text-sm font-semibold">{cat.name}</p>
+                    <p className="text-[10px] text-muted-foreground">{cat.count} items</p>
+                  </button>
+                ))}
+              </div>
+            </section>
+          </div>
 
-        {/* Modules Grid */}
-        <ModulesGrid />
-
-        {/* Additional Sections */}
-        <section className="grid md:grid-cols-3 gap-4">
-          {[
-            { title: "Marketplace", icon: ShoppingBag, color: "from-emerald-600 to-green-600" },
-            { title: "GalerÃ­a de Arte", icon: Image, color: "from-violet-600 to-purple-600" },
-            { title: "Subastas", icon: Gavel, color: "from-amber-600 to-orange-600" },
-          ].map((item) => (
-            <motion.div
-              key={item.title}
-              whileHover={{ scale: 1.02 }}
-              className={`p-8 rounded-2xl bg-gradient-to-br ${item.color} cursor-pointer`}
-            >
-              <item.icon className="w-10 h-10 text-white mb-4" />
-              <h3 className="text-2xl font-bold text-white">{item.title}</h3>
-            </motion.div>
-          ))}
-        </section>
+          {/* Recent Activity Feed */}
+          <Card className="p-5 h-fit">
+            <h3 className="font-semibold text-sm flex items-center gap-2 mb-4">
+              <Clock className="h-4 w-4" />
+              Actividad Reciente
+            </h3>
+            <div className="space-y-4">
+              {RECENT_ACTIVITY.map((a, i) => (
+                <div key={i} className="flex items-start gap-2.5">
+                  <div className="mt-0.5 shrink-0">{a.icon}</div>
+                  <div className="min-w-0">
+                    <p className="text-xs">{a.text}</p>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">{a.time}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
       </main>
     </div>
   );

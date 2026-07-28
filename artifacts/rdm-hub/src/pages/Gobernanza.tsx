@@ -2,234 +2,266 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-import { WikiPage } from "@/components/WikiPage";
-import { Section, InfoCard } from "@/components/WikiElements";
-import { Shield, Users, FileCheck, RefreshCw, BookOpen, Scale, Eye, GitBranch, Globe, Crown, Code, Building, Landmark } from "lucide-react";
+import { useState } from "react";
+import {
+  Shield,
+  Users,
+  FileCheck,
+  RefreshCw,
+  BookOpen,
+  Scale,
+  Eye,
+  GitBranch,
+  Globe,
+  Crown,
+  Code,
+  Building,
+  ChevronDown,
+  ChevronUp,
+  Vote,
+  CheckCircle2,
+  XCircle,
+  Minus,
+} from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 
-const Gobernanza = () => (
-  <WikiPage
-    title="Gobernanza y PolÃ­ticas"
-      subtitle="Reglas de contribuciÃ³n, roles y principios del ecosistema TAMV"
-    >
-      {/* Hero Banner */}
-      <div className="relative h-48 w-full overflow-hidden">
-        <img src="/images/streets-colonial.jpg" alt="Calles coloniales de Real del Monte" className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-      </div>
-      <Section title="Principios de gobernanza">
-      <p className="text-muted-foreground leading-relaxed">
-        TAMV opera bajo un modelo de gobernanza abierta progresiva, donde la transparencia, el respeto
-        y el enfoque civilizatorio son pilares fundamentales. El{" "}
-        <strong className="text-primary">CÃ³dice Maestro</strong> establece los lineamientos Ã©ticos y
-        tÃ©cnicos que rigen toda contribuciÃ³n al ecosistema.
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-        <InfoCard icon={Scale} title="Claridad y respeto" description="Toda comunicaciÃ³n y contribuciÃ³n debe ser clara, respetuosa y con enfoque civilizatorio." variant="gold" />
-        <InfoCard icon={Eye} title="Transparencia" description="Decisiones documentadas pÃºblicamente. No duplicar contenido: enlazar antes de copiar." variant="cyan" />
-        <InfoCard icon={BookOpen} title="Coherencia terminolÃ³gica" description="Usar siempre los nombres oficiales de mÃ³dulos, guardianÃ­as y protocolos." variant="gold" />
-        <InfoCard icon={GitBranch} title="No duplicar" description="Antes de crear contenido nuevo, verificar si ya existe algo similar y enlazarlo." variant="cyan" />
-      </div>
-    </Section>
+const PRINCIPLES = [
+  { id: "CP-001", name: "Constitución Primordial", icon: Scale, desc: "Marco ético y técnico fundamental que rige todo el ecosistema TAMV." },
+  { id: "CP-002", name: "Soberanía del Pueblo", icon: Users, desc: "Decisiones colectivas participativas, voz y voto para todos los niveles de membresía." },
+  { id: "CP-003", name: "Integridad del Territorio", icon: Shield, desc: "Protección del patrimonio cultural, histórico y digital de Real del Monte." },
+  { id: "CP-004", name: "Transparencia Radical", icon: Eye, desc: "Todas las decisiones documentadas públicamente, trazabilidad total en operaciones." },
+  { id: "CP-005", name: "Acción Sostenible", icon: RefreshCw, desc: "Operaciones que minimizan impacto ambiental y maximizan beneficio comunitario." },
+  { id: "CP-006", name: "Seguridad Primero", icon: Shield, desc: "Protección de datos, identidad y operaciones con estándares Zero-Trust." },
+  { id: "CP-007", name: "Interoperabilidad", icon: Globe, desc: "Sistemas abiertos que se conectan con ecosistemas externos sin perder soberanía." },
+  { id: "CP-008", name: "Resiliencia", icon: RefreshCw, desc: "Capacidad de recuperación ante fallos, adaptación continua y redundancia inteligente." },
+];
 
-    <Section title="Roles del ecosistema">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <InfoCard icon={Shield} title="Fundador / GuardiÃ¡n Supremo" description="Anubis VillaseÃ±or (Edwin Oswaldo Castillo Trejo). VisiÃ³n, arquitectura y decisiones finales del ecosistema." variant="gold" />
-        <InfoCard icon={Users} title="Colaboradores de Alta Confianza" description="Fase inicial: solo el fundador y colaboradores directos validan y editan contenido crÃ­tico." variant="cyan" />
-        <InfoCard icon={FileCheck} title="Contribuidores Moderados" description="Fase posterior: contribuciones abiertas moderadas mediante pull requests y sugerencias revisadas." variant="gold" />
-        <InfoCard icon={Eye} title="DueÃ±os de SecciÃ³n" description="Cada pÃ¡gina o secciÃ³n tiene un responsable que garantiza la precisiÃ³n y vigencia del contenido." variant="cyan" />
-      </div>
-    </Section>
+const ADRS = [
+  {
+    id: "ADR-YUN-0001",
+    title: "YUN Constitution Framework",
+    status: "ACCEPTED" as const,
+    date: "2026-03-15",
+    desc: "Definición del marco constitucional YUN para gobernanza del ecosistema TAMV.",
+    content: "Este ADR establece la estructura de gobernanza basada en principios YUN, definiendo roles, niveles de autoridad y procesos de decisión. La constitución sirve como contrato social digital entre todos los participantes del ecosistema.",
+  },
+  {
+    id: "ADR-YUN-0002",
+    title: "PQC Hybrid Cryptography",
+    status: "ACCEPTED" as const,
+    date: "2026-04-01",
+    desc: "Implementación de criptografía híbrida post-cuántica para seguridad futura.",
+    content: "Adopción de algoritmos híbridos que combinan criptografía clásica (RSA/ECC) con esquemas post-cuánticos (CRYSTALS-Kyber, CRYSTALS-Dilithium) para protección contra amenazas cuánticas futuras.",
+  },
+  {
+    id: "ADR-YUN-0003",
+    title: "Multi-Node Deployment",
+    status: "ACCEPTED" as const,
+    date: "2026-04-20",
+    desc: "Arquitectura de despliegue federado con múltiples nodos geográficos.",
+    content: "Cada nodo del ecosistema TAMV opera de forma independiente pero interoperable, con sincronización de datos en tiempo real y tolerancia a fallos distribuida.",
+  },
+  {
+    id: "ADR-YUN-0004",
+    title: "Gamification Engine Unification",
+    status: "ACCEPTED" as const,
+    date: "2026-05-10",
+    desc: "Unificación del motor de gamificación para experiencias consistentes.",
+    content: "Consolidación de todos los sistemas de puntos, logros y recompensas en un motor unificado que permite gamificación transversal a todos los módulos del ecosistema.",
+  },
+  {
+    id: "ADR-RDM-0001",
+    title: "Domain Migration to visitarealdelmonte.online",
+    status: "ACCEPTED" as const,
+    date: "2026-06-01",
+    desc: "Migración del dominio principal a visitarealdelmonte.online.",
+    content: "Migración completa del dominio de operación para consolidar la marca turística de Real del Monte bajo un dominio memorable y descriptivo.",
+  },
+];
 
-    <Section title="MembresÃ­as y roles de participaciÃ³n">
-      <p className="text-muted-foreground leading-relaxed mb-4">
-        Cada nivel de membresÃ­a del ecosistema TAMV se asocia a un rol de participaciÃ³n en la gobernanza,
-        definiendo el alcance de las decisiones que cada miembro puede influir.
-      </p>
-      <div className="space-y-3">
-        {[
-          { icon: Users, level: "Free", role: "Observador civilizatorio", permissions: "Acceso de lectura a la wiki y Social Core. Voz en foros pÃºblicos, sin voto en gobernanza." },
-          { icon: BookOpen, level: "Premium", role: "Usuario avanzado", permissions: "Acceso a dashboards y contenidos ampliados. Voz en Social Core con participaciÃ³n limitada en encuestas." },
-          { icon: Code, level: "Devs", role: "Desarrollador TAMV", permissions: "Puede proponer cambios tÃ©cnicos (PR/MR) en dominios asignados. Participa en revisiones de cÃ³digo y Social Core." },
-          { icon: Building, level: "Advance", role: "Operador / Aliado institucional", permissions: "Participa en decisiones de despliegue federado. Puede configurar nodos y proponer polÃ­ticas de dominio." },
-          { icon: Crown, level: "Enterprise", role: "Nodo federado / Entidad civilizatoria asociada", permissions: "Gobernanza compartida con el ecosistema. Voto en decisiones crÃ­ticas, designaciÃ³n de guardianes de nodo." },
-        ].map((m) => (
-          <div key={m.level} className="rounded-lg border border-border/50 bg-card/60 p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <m.icon className="h-4 w-4 text-primary shrink-0" />
-              <h4 className="font-semibold text-foreground text-sm">{m.level} â€” {m.role}</h4>
+const PROPOSALS = [
+  {
+    id: "PROP-001",
+    title: "Aumentar fondo comunitario al 30%",
+    desc: "Propuesta para incrementar la participación del fondo comunitario del 25% al 30% de los ingresos totales.",
+    votes: { for: 23, against: 5, abstain: 3 },
+  },
+  {
+    id: "PROP-002",
+    title: "Nodo Pachuca — Certificación Guardián",
+    desc: "Solicitud del nodo Pachuca para alcanzar el nivel de certificación Guardián.",
+    votes: { for: 31, against: 1, abstain: 4 },
+  },
+  {
+    id: "PROP-003",
+    title: "Integración con Red Turística Hidalgo",
+    desc: "Propuesta para federar el ecosistema turístico de Real del Monte con la red estatal de Hidalgo.",
+    votes: { for: 18, against: 7, abstain: 6 },
+  },
+];
+
+const COUNCIL = [
+  { name: "Edwin Castillo Trejo", role: "Fundador & Arquitecto Principal", icon: Crown, term: "Permanente" },
+  { name: "Isabella Villaseñor", role: "IA Consejera (Ω-Core)", icon: Shield, term: "Permanente" },
+  { name: "Realito", role: "Asistente Digital", icon: Users, term: "Permanente" },
+];
+
+function AdrStatusBadge({ status }: { status: typeof ADRS[number]["status"] }) {
+  const styles = {
+    ACCEPTED: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400",
+    PROPOSED: "bg-amber-500/15 text-amber-700 dark:text-amber-400",
+    DEPRECATED: "bg-muted text-muted-foreground",
+  };
+  return <Badge className={`${styles[status]} border-0`} variant="outline">{status}</Badge>;
+}
+
+export default function Gobernanza() {
+  const [expandedAdr, setExpandedAdr] = useState<string | null>(null);
+  const [votes, setVotes] = useState<Record<string, "for" | "against" | "abstain" | null>>({});
+
+  const handleVote = (proposalId: string, vote: "for" | "against" | "abstain") => {
+    setVotes((prev) => ({
+      ...prev,
+      [proposalId]: prev[proposalId] === vote ? null : vote,
+    }));
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Hero */}
+      <section className="relative overflow-hidden border-b border-border/40 bg-gradient-to-br from-background via-amber-950/5 to-primary/5">
+        <div className="relative mx-auto max-w-6xl px-4 py-12 sm:py-16">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-center justify-center h-10 w-10 rounded-xl bg-amber-500/10">
+              <Shield className="h-5 w-5 text-amber-500" />
             </div>
-            <p className="text-xs text-muted-foreground pl-6">{m.permissions}</p>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Gobernanza TAMV</h1>
           </div>
-        ))}
-      </div>
-    </Section>
-
-    <Section title="Mapa de decisiones por nivel">
-      <div className="rounded-lg border border-border/50 overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-muted/30 border-b border-border/50">
-              <th className="text-left px-3 py-2.5 text-foreground font-medium text-xs">Tipo de decisiÃ³n</th>
-              <th className="text-center px-2 py-2.5 text-foreground font-medium text-xs">Free</th>
-              <th className="text-center px-2 py-2.5 text-foreground font-medium text-xs">Premium</th>
-              <th className="text-center px-2 py-2.5 text-foreground font-medium text-xs">Devs</th>
-              <th className="text-center px-2 py-2.5 text-foreground font-medium text-xs">Advance</th>
-              <th className="text-center px-2 py-2.5 text-foreground font-medium text-xs">Enterprise</th>
-            </tr>
-          </thead>
-          <tbody className="text-xs text-muted-foreground">
-            {[
-              { decision: "Voz en Social Core", levels: ["âœ”ï¸", "âœ”ï¸", "âœ”ï¸", "âœ”ï¸", "âœ”ï¸"] },
-              { decision: "Proponer contenido wiki", levels: ["âŒ", "âœ”ï¸", "âœ”ï¸", "âœ”ï¸", "âœ”ï¸"] },
-              { decision: "PRs tÃ©cnicos en dominios", levels: ["âŒ", "âŒ", "âœ”ï¸", "âœ”ï¸", "âœ”ï¸"] },
-              { decision: "Configurar nodos propios", levels: ["âŒ", "âŒ", "âŒ", "âœ”ï¸", "âœ”ï¸"] },
-              { decision: "Decisiones de despliegue federado", levels: ["âŒ", "âŒ", "âŒ", "âœ”ï¸", "âœ”ï¸"] },
-              { decision: "Voto en gobernanza crÃ­tica", levels: ["âŒ", "âŒ", "âŒ", "âŒ", "âœ”ï¸"] },
-              { decision: "Designar guardianes de nodo", levels: ["âŒ", "âŒ", "âŒ", "âŒ", "âœ”ï¸"] },
-            ].map((row) => (
-              <tr key={row.decision} className="border-b border-border/30">
-                <td className="px-3 py-2 text-foreground">{row.decision}</td>
-                {row.levels.map((v, i) => (
-                  <td key={i} className="px-2 py-2 text-center">{v}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </Section>
-
-    <Section title="Sistema de CertificaciÃ³n Federada TAMV">
-      <p className="text-muted-foreground leading-relaxed mb-4">
-        Cada rÃ©plica del ecosistema TAMV puede alcanzar un nivel de certificaciÃ³n federada que
-        valida su cumplimiento tÃ©cnico, Ã©tico y operativo dentro de la red.
-      </p>
-      <div className="space-y-3">
-        {[
-          { level: "Nodo Observador", criteria: "Registro bÃ¡sico, cumplimiento mÃ­nimo de estÃ¡ndares. Acceso de lectura a la federaciÃ³n. Asociado a niveles Free/Premium.", color: "text-muted-foreground" },
-          { level: "Nodo Colaborador", criteria: "Cumplimiento tÃ©cnico parcial (seguridad base, APIs estÃ¡ndar). Puede aportar datos y propuestas. Asociado a nivel Devs.", color: "text-secondary" },
-          { level: "Nodo Operador", criteria: "Cumplimiento tÃ©cnico completo, uptime > 99.5%, auditorÃ­a aprobada. Opera servicios activos. Asociado a nivel Advance.", color: "text-primary" },
-          { level: "Nodo GuardiÃ¡n", criteria: "MÃ¡ximo nivel. Cumplimiento Ã©tico y contractual total, guardiÃ¡n de nodo designado, participaciÃ³n activa en gobernanza. Solo Enterprise.", color: "text-primary" },
-        ].map((n) => (
-          <div key={n.level} className="rounded-lg border border-border/50 bg-card/50 p-4">
-            <h4 className={`font-semibold text-sm ${n.color}`}>{n.level}</h4>
-            <p className="text-xs text-muted-foreground mt-1">{n.criteria}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 mt-4">
-        <p className="text-sm text-muted-foreground">
-          <strong className="text-primary">Proceso de certificaciÃ³n:</strong> Solicitud â†’ AuditorÃ­a tÃ©cnica (seguridad, uptime, APIs)
-          â†’ AuditorÃ­a de gobernanza (Ã©tica, documentaciÃ³n, comunidad) â†’ EmisiÃ³n de certificado con firma criptogrÃ¡fica
-          â†’ RevisiÃ³n periÃ³dica cada 12 meses.
-        </p>
-      </div>
-    </Section>
-
-    <Section title="Proceso de contribuciÃ³n">
-      <div className="space-y-3">
-        {[
-          { step: "1", text: "Buscar si ya existe contenido similar antes de crear una pÃ¡gina nueva." },
-          { step: "2", text: "Usar siempre las plantillas definidas: ArtÃ­culo General, MÃ³dulo, EspecificaciÃ³n TÃ©cnica o GuÃ­a/Tutorial." },
-          { step: "3", text: "Proponer cambios grandes mediante issue/ticket con discusiÃ³n previa." },
-          { step: "4", text: "Seguir el estilo de escritura: voz clara, en presente, sin marketing. 1 frase de resumen antes del detalle." },
-          { step: "5", text: "Secciones con tÃ­tulos descriptivos, listas para pasos o elementos, citar fuentes internas." },
-          { step: "6", text: "RevisiÃ³n por el dueÃ±o de secciÃ³n antes de publicar cambios." },
-        ].map((s) => (
-          <div key={s.step} className="flex gap-3 items-start p-3 rounded-lg bg-muted/30 border border-border/50">
-            <span className="flex items-center justify-center w-7 h-7 rounded-full bg-primary/20 text-primary text-sm font-bold shrink-0">
-              {s.step}
-            </span>
-            <p className="text-muted-foreground text-sm leading-relaxed">{s.text}</p>
-          </div>
-        ))}
-      </div>
-    </Section>
-
-    <Section title="Plantillas de ediciÃ³n">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="p-4 rounded-lg border border-border/50 bg-card/60">
-          <h4 className="font-semibold text-foreground mb-2">ðŸ“„ ArtÃ­culo General</h4>
-          <ul className="text-sm text-muted-foreground space-y-1">
-            <li>â€¢ Resumen (1â€“3 lÃ­neas)</li>
-            <li>â€¢ DefiniciÃ³n y contexto en TAMV</li>
-            <li>â€¢ Componentes clave</li>
-            <li>â€¢ Casos de uso y riesgos</li>
-            <li>â€¢ RelaciÃ³n con otros mÃ³dulos</li>
-          </ul>
+          <p className="text-muted-foreground max-w-2xl">
+            Marco constitucional y principios del ecosistema Real del Monte — gobernanza abierta, transparencia radical y acción civilizatoria.
+          </p>
         </div>
-        <div className="p-4 rounded-lg border border-border/50 bg-card/60">
-          <h4 className="font-semibold text-foreground mb-2">ðŸ§© MÃ³dulo del Ecosistema</h4>
-          <ul className="text-sm text-muted-foreground space-y-1">
-            <li>â€¢ Tipo: Dominio / GuardianÃ­a / Servicio</li>
-            <li>â€¢ PropÃ³sito y funciones clave</li>
-            <li>â€¢ Entradas, salidas e integraciones</li>
-            <li>â€¢ Estado actual del mÃ³dulo</li>
-          </ul>
-        </div>
-        <div className="p-4 rounded-lg border border-border/50 bg-card/60">
-          <h4 className="font-semibold text-foreground mb-2">âš™ï¸ EspecificaciÃ³n TÃ©cnica</h4>
-          <ul className="text-sm text-muted-foreground space-y-1">
-            <li>â€¢ Arquitectura y modelos de datos</li>
-            <li>â€¢ Flujos principales y APIs</li>
-            <li>â€¢ Seguridad y cumplimiento</li>
-            <li>â€¢ Testing y mÃ©tricas</li>
-          </ul>
-        </div>
-        <div className="p-4 rounded-lg border border-border/50 bg-card/60">
-          <h4 className="font-semibold text-foreground mb-2">ðŸ“˜ GuÃ­a / Tutorial</h4>
-          <ul className="text-sm text-muted-foreground space-y-1">
-            <li>â€¢ Objetivo y requisitos previos</li>
-            <li>â€¢ Pasos detallados numerados</li>
-            <li>â€¢ Ejemplos de uso</li>
-            <li>â€¢ Errores comunes y soluciones</li>
-          </ul>
-        </div>
-      </div>
-    </Section>
+      </section>
 
-    <Section title="RevisiÃ³n y mantenimiento">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <InfoCard icon={RefreshCw} title="Revisiones periÃ³dicas" description="Cada 3â€“6 meses se revisan las secciones crÃ­ticas: Arquitectura, Seguridad y APIs." variant="gold" />
-        <InfoCard icon={FileCheck} title="Contenido archivado" description="El contenido obsoleto se marca como 'Archivado' o 'HistÃ³rico', nunca se borra si tiene valor documental." variant="cyan" />
-      </div>
-    </Section>
+      <div className="mx-auto max-w-6xl px-4 py-8">
+        <Tabs defaultValue="principios" className="space-y-6">
+          <TabsList className="w-full justify-start flex-wrap h-auto gap-1 p-1 bg-muted/40">
+            <TabsTrigger value="principios" className="gap-1.5"><Scale className="h-3.5 w-3.5" /> Principios</TabsTrigger>
+            <TabsTrigger value="adrs" className="gap-1.5"><FileCheck className="h-3.5 w-3.5" /> ADRs</TabsTrigger>
+            <TabsTrigger value="votaciones" className="gap-1.5"><Vote className="h-3.5 w-3.5" /> Votaciones</TabsTrigger>
+            <TabsTrigger value="consejo" className="gap-1.5"><Users className="h-3.5 w-3.5" /> Consejo</TabsTrigger>
+          </TabsList>
 
-    <Section title="Compliance y estÃ¡ndares">
-      <p className="text-muted-foreground leading-relaxed">
-        Toda contribuciÃ³n al ecosistema TAMV debe alinearse con los estÃ¡ndares internacionales y nacionales
-        adoptados por el proyecto:
-      </p>
-      <div className="flex flex-wrap gap-2 mt-3">
-        {["AI Act (EU)", "GDPR", "ISO 27001", "ISO 42001", "NOMâ€‘151", "Zeroâ€‘Trust", "OWASP Top 10"].map((std) => (
-          <span key={std} className="px-3 py-1.5 rounded-md border border-border/50 bg-muted/30 text-sm text-foreground">
-            {std}
-          </span>
-        ))}
-      </div>
-    </Section>
+          {/* PRINCIPIOS */}
+          <TabsContent value="principios">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {PRINCIPLES.map((p) => (
+                <div key={p.id} className="rounded-xl border border-border/40 bg-card/40 p-5 hover:border-primary/20 transition-all">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <p.icon className="h-4 w-4 text-primary" />
+                    </div>
+                    <span className="text-[10px] font-mono text-muted-foreground">{p.id}</span>
+                  </div>
+                  <h3 className="font-semibold text-sm text-foreground mb-1">{p.name}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
+                </div>
+              ))}
+            </div>
+          </TabsContent>
 
-    <Section title="Enlaces oficiales">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <a href="https://github.com/OsoPanda1" target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 p-3 rounded-lg border border-border/50 bg-card/60 hover:border-primary/50 transition-colors">
-          <GitBranch className="h-4 w-4 text-primary" />
-          <span className="text-sm text-foreground">GitHub â€” OsoPanda1</span>
-        </a>
-        <a href="https://tamvonline-oficial.odoo.com" target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 p-3 rounded-lg border border-border/50 bg-card/60 hover:border-primary/50 transition-colors">
-          <Globe className="h-4 w-4 text-secondary" />
-          <span className="text-sm text-foreground">Sitio Oficial â€” Odoo</span>
-        </a>
-        <a href="https://tamvonlinenetwork.blogspot.com" target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 p-3 rounded-lg border border-border/50 bg-card/60 hover:border-primary/50 transition-colors">
-          <BookOpen className="h-4 w-4 text-primary" />
-          <span className="text-sm text-foreground">Blog Oficial â€” Blogspot</span>
-        </a>
-      </div>
-    </Section>
-  </WikiPage>
-);
+          {/* ADRs */}
+          <TabsContent value="adrs">
+            <div className="space-y-3">
+              {ADRS.map((adr) => (
+                <div key={adr.id} className="rounded-xl border border-border/40 bg-card/40 overflow-hidden">
+                  <button
+                    onClick={() => setExpandedAdr(expandedAdr === adr.id ? null : adr.id)}
+                    className="w-full flex items-center justify-between p-5 text-left hover:bg-muted/20 transition-colors"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span className="text-xs font-mono text-muted-foreground shrink-0">{adr.id}</span>
+                      <span className="text-sm font-medium text-foreground truncate">{adr.title}</span>
+                      <AdrStatusBadge status={adr.status} />
+                    </div>
+                    {expandedAdr === adr.id ? (
+                      <ChevronUp className="h-4 w-4 text-muted-foreground shrink-0" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4 text-muted-foreground shrink-0" />
+                    )}
+                  </button>
+                  {expandedAdr === adr.id && (
+                    <div className="px-5 pb-5 border-t border-border/30">
+                      <p className="text-xs text-muted-foreground mt-1 mb-2">
+                        Fecha: {new Date(adr.date).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" })}
+                      </p>
+                      <p className="text-xs text-muted-foreground mb-3">{adr.desc}</p>
+                      <div className="rounded-lg bg-muted/30 p-4">
+                        <p className="text-sm text-foreground leading-relaxed">{adr.content}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </TabsContent>
 
-export default Gobernanza;
+          {/* VOTACIONES */}
+          <TabsContent value="votaciones">
+            <div className="space-y-4">
+              {PROPOSALS.map((p) => (
+                <div key={p.id} className="rounded-xl border border-border/40 bg-card/40 p-5">
+                  <h3 className="font-semibold text-sm text-foreground mb-1">{p.title}</h3>
+                  <p className="text-xs text-muted-foreground mb-4">{p.desc}</p>
+
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {([
+                      { key: "for" as const, label: "A favor", icon: CheckCircle2, color: "emerald" },
+                      { key: "against" as const, label: "En contra", icon: XCircle, color: "rose" },
+                      { key: "abstain" as const, label: "Abstención", icon: Minus, color: "muted" },
+                    ] as const).map(({ key, label, icon: Icon, color }) => {
+                      const isSelected = votes[p.id] === key;
+                      const count = p.votes[key] + (isSelected ? 1 : 0);
+                      return (
+                        <button
+                          key={key}
+                          onClick={() => handleVote(p.id, key)}
+                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all border ${
+                            isSelected
+                              ? `bg-${color}-500/15 border-${color}-500/30 text-${color}-600 dark:text-${color}-400`
+                              : "border-border/40 text-muted-foreground hover:bg-muted/30"
+                          }`}
+                        >
+                          <Icon className="h-3 w-3" />
+                          {label}
+                          <span className="ml-1 tabular-nums">{count}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </TabsContent>
+
+          {/* CONSEJO */}
+          <TabsContent value="consejo">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {COUNCIL.map((m) => (
+                <div key={m.name} className="rounded-xl border border-border/40 bg-card/40 p-6 text-center">
+                  <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                    <m.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-sm text-foreground mb-0.5">{m.name}</h3>
+                  <p className="text-xs text-muted-foreground mb-2">{m.role}</p>
+                  <Badge variant="outline" className="text-[10px] border-border/40">{m.term}</Badge>
+                </div>
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+}

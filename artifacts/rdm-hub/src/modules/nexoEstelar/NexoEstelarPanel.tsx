@@ -2,214 +2,482 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-
-import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Upload, File, FileText, Image, FileArchive, Trash2,
+  Download, Share2, Search, HardDrive, BarChart3,
+  Clock, Loader2, AlertCircle, X, CheckCircle2
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import PrismaticCard from "@/components/PrismaticCard";
-import FileUpload from "@/components/FileUpload";
-import { Separator } from "@/components/ui/separator";
-import { Settings, Zap, Github } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { toast } from "sonner";
 
-/**
- * Nexo Estelar: Interfaz Principal - Panel Central
- * 
- * Punto de acceso centralizado para todas las funcionalidades de TAMV Online Network.
- * Interfaz intuitiva y personalizable que permite a los usuarios navegar a las diferentes 
- * secciones de la plataforma, gestionar su perfil, acceder a Dream Spaces, chats, la galerÃ­a, y mÃ¡s.
- */
-const NexoEstelarPanel = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+interface StoredFile {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+  uploadedAt: string;
+  base64?: string;
+}
+
+const STORAGE_KEY = "rdm_nexo_files";
+const MAX_STORAGE_SIZE = 5 * 1024 * 1024; // 5MB for base64 storage
+
+const RECENT_ACTIVITY = [
+  { user: "Isabella", action: "subió", file: "memory_graph.json", time: "hace 2h" },
+  { user: "Carlos", action: "descargó", file: "reporte_ventas.pdf", time: "hace 4h" },
+  { user: "María", action: "compartió", file: "festival_poster.png", time: "hace 6h" },
+  { user: "Admin", action: "eliminó", file: "cache_temp.tmp", time: "hace 8h" },
+  { user: "Ana", action: "subió", file: "artesania_foto.jpg", time: "hace 1d" },
+];
+
+function formatBytes(bytes: number): string {
+  if (bytes === 0) return "0 B";
+  const k = 1024;
+  const sizes = ["B", "KB", "MB", "GB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
+}
+
+function getFileIcon(type: string) {
+  if (type.startsWith("image/")) return <Image className="h-4 w-4 text-pink-400" />;
+  if (type.includes("pdf")) return <FileText className="h-4 w-4 text-red-400" />;
+  if (type.includes("zip") || type.includes("archive")) return <FileArchive className="h-4 w-4 text-amber-400" />;
+  return <File className="h-4 w-4 text-blue-400" />;
+}
+
+function loadFiles(): StoredFile[] {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function saveFiles(files: StoredFile[]) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(files));
+}
+
+export default function NexoEstelarPanel() {
+  const [files, setFiles] = useState<StoredFile[]>(loadFiles);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
 
-  // Handle mouse movement for parallax effects
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouse = (e: MouseEvent) => {
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
-        setMousePosition({
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top
+        setMousePos({
+          x: ((e.clientX - rect.left) / rect.width - 0.5) * 10,
+          y: ((e.clientY - rect.top) / rect.height - 0.5) * 10,
         });
       }
     };
-
-    const handleScroll = () => {
-      setScrollPosition(window.scrollY);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
-    };
+    window.addEventListener("mousemove", handleMouse);
+    return () => window.removeEventListener("mousemove", handleMouse);
   }, []);
 
-  // Calculate parallax transformations
-  const getParallaxStyle = (depth: number) => {
-    const x = (mousePosition.x - (containerRef.current?.offsetWidth || 0) / 2) / depth;
-    const y = (mousePosition.y - (containerRef.current?.offsetHeight || 0) / 2) / depth;
-    return {
-      transform: `translate(${x}px, ${y}px)`,
-    };
+  const processFiles = useCallback(async (fileList: FileList | File[]) => {
+    const newFiles = Array.from(fileList);
+    const validTypes = ["image/", "application/pdf", "text/"];
+    const maxSize = 10 * 1024 * 1024; // 10MB
+
+    setUploading(true);
+    setUploadProgress(0);
+    setError(null);
+
+    const processed: StoredFile[] = [];
+    let totalSize = 0;
+
+    for (let i = 0; i < newFiles.length; i++) {
+      const f = newFiles[i];
+      setUploadProgress(((i + 1) / newFiles.length) * 80);
+
+      if (!validTypes.some((vt) => f.type.startsWith(vt))) {
+        setError(`"${f.name}" — tipo no soportado`);
+        continue;
+      }
+      if (f.size > maxSize) {
+        setError(`"${f.name}" excede 10MB`);
+        continue;
+      }
+
+      const stored: StoredFile = {
+        id: `${Date.now()}-${i}`,
+        name: f.name,
+        size: f.size,
+        type: f.type,
+        uploadedAt: new Date().toISOString(),
+      };
+
+      totalSize += f.size;
+      if (totalSize <= MAX_STORAGE_SIZE) {
+        try {
+          const b64 = await fileToBase64(f);
+          stored.base64 = b64;
+        } catch {
+          // skip base64 for this file
+        }
+      }
+
+      processed.push(stored);
+    }
+
+    setUploadProgress(100);
+    const updated = [...files, ...processed];
+    setFiles(updated);
+    saveFiles(updated);
+
+    setTimeout(() => {
+      setUploading(false);
+      setUploadProgress(0);
+      if (processed.length > 0) {
+        toast.success(`${processed.length} archivo(s) cargado(s)`);
+      }
+    }, 300);
+  }, [files]);
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragOver(false);
+      if (e.dataTransfer.files.length > 0) {
+        processFiles(e.dataTransfer.files);
+      }
+    },
+    [processFiles]
+  );
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  }, []);
+
+  const handleDragLeave = useCallback(() => {
+    setIsDragOver(false);
+  }, []);
+
+  const handleFileSelect = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files && e.target.files.length > 0) {
+        processFiles(e.target.files);
+        e.target.value = "";
+      }
+    },
+    [processFiles]
+  );
+
+  const deleteFile = (id: string) => {
+    const updated = files.filter((f) => f.id !== id);
+    setFiles(updated);
+    saveFiles(updated);
+    toast.success("Archivo eliminado");
   };
 
+  const downloadFile = (file: StoredFile) => {
+    if (file.base64) {
+      const a = document.createElement("a");
+      a.href = file.base64;
+      a.download = file.name;
+      a.click();
+    } else {
+      toast.error("Archivo no disponible para descarga (solo metadata almacenada)");
+    }
+  };
+
+  const copyShareLink = (file: StoredFile) => {
+    navigator.clipboard.writeText(
+      `${window.location.origin}/nexo-estelar?file=${file.id}`
+    );
+    toast.success("Enlace copiado");
+  };
+
+  const filteredFiles = files.filter((f) =>
+    f.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const totalSize = files.reduce((s, f) => s + f.size, 0);
+  const typeBreakdown = files.reduce(
+    (acc, f) => {
+      if (f.type.startsWith("image/")) acc.images++;
+      else if (f.type.includes("pdf")) acc.pdfs++;
+      else acc.others++;
+      return acc;
+    },
+    { images: 0, pdfs: 0, others: 0 }
+  );
+
   return (
-    <div ref={containerRef} className="container max-w-4xl mx-auto px-4 py-8">
-      <div className="space-y-12">
-        {/* Hero section with enhanced visuals */}
-        <section className="text-center space-y-6 relative pt-8">
-          {/* Holographic Effect */}
-          <div className="absolute -top-20 -left-20 w-[140%] h-[140%] bg-gradient-prismatic opacity-5 blur-3xl animate-pulse-slow" />
-          
+    <div ref={containerRef} className="min-h-screen">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-16 space-y-8">
+        {/* Hero */}
+        <section className="text-center space-y-4 relative pt-4">
+          <div
+            className="absolute -top-20 left-1/2 -translate-x-1/2 w-[600px] h-[300px] opacity-10 blur-3xl pointer-events-none"
+            style={{
+              background: "linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899)",
+              transform: `translate(${mousePos.x}px, ${mousePos.y}px)`,
+            }}
+          />
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
             className="relative"
           >
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight relative mb-2 leading-tight">
-              <span className="text-gradient bg-gradient-crystal animate-text-shimmer inline-block">
-                GÃ‰NESIS
+            <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
+              Nexo{" "}
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Estelar
               </span>
             </h1>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white/90 tracking-wider">
-              DIGYTAMV
-            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground mt-2 max-w-xl mx-auto">
+              Centro de Intercambio Digital — Sube, organiza y comparte archivos del ecosistema RDM.
+            </p>
           </motion.div>
-          
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light tracking-wide">
-            Arquitectura Visionaria para la DocumentaciÃ³n y Desarrollo del Futuro
-          </p>
-          
-          <div className="flex justify-center">
-            <Separator className="bg-gradient-crystal h-0.5 opacity-70 w-24 rounded-full" />
-          </div>
         </section>
 
-        {/* Main content with panels representing the blueprint structure */}
-        <section className="relative">
-          {/* Neural Network Background Effect */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-purple-900/20 opacity-10 rounded-2xl" />
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            <motion.div 
-              className="md:col-span-2"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
+        <div className="grid lg:grid-cols-[1fr_280px] gap-6">
+          {/* Main Content */}
+          <div className="space-y-6">
+            {/* Upload Zone */}
+            <Card
+              className={`
+                relative overflow-hidden border-2 border-dashed transition-all duration-300 cursor-pointer
+                ${isDragOver
+                  ? "border-blue-400 bg-blue-500/5"
+                  : "border-muted hover:border-primary/30"
+                }
+              `}
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onClick={() => fileInputRef.current?.click()}
             >
-              <PrismaticCard className="h-full flex flex-col backdrop-blur-lg border-white/10 p-6">
-                <div className="absolute inset-0 bg-gradient-quantum opacity-5 animate-pulse-slow rounded-lg" />
-                <div className="flex items-center mb-4">
-                  <div className="mr-3 p-2 rounded-full bg-blue-500/20 text-blue-400">
-                    <Settings className="h-5 w-5" />
-                  </div>
-                  <h2 className="text-xl font-semibold relative z-10">IntegraciÃ³n Neural de Datos</h2>
+              <input
+                ref={fileInputRef}
+                type="file"
+                multiple
+                accept="image/*,.pdf,.txt,.csv,.json,.md"
+                className="hidden"
+                onChange={handleFileSelect}
+              />
+              <div className="p-8 sm:p-12 flex flex-col items-center gap-4 text-center">
+                <div className={`
+                  w-16 h-16 rounded-full flex items-center justify-center transition-all
+                  ${isDragOver ? "bg-blue-500/20 scale-110" : "bg-muted"}
+                `}>
+                  <Upload className={`h-7 w-7 ${isDragOver ? "text-blue-400" : "text-muted-foreground"}`} />
                 </div>
-                <p className="text-sm text-muted-foreground mb-6 relative z-10 leading-relaxed">
-                  La plataforma GÃ©nesis Digytamv permite la asimilaciÃ³n de documentos en 
-                  su estructura n-dimensional mediante un proceso de cristalizaciÃ³n dinÃ¡mica.
+                <div>
+                  <p className="font-semibold text-sm">
+                    {isDragOver ? "Suelta los archivos aquí" : "Arrastra archivos o haz clic para seleccionar"}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Imágenes, PDFs, texto — Máx 10MB por archivo
+                  </p>
+                </div>
+              </div>
+
+              {/* Upload Progress */}
+              {uploading && (
+                <div className="absolute bottom-0 left-0 right-0 bg-background/80 backdrop-blur-sm p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Loader2 className="h-3 w-3 animate-spin text-blue-400" />
+                    <span className="text-xs text-muted-foreground">Subiendo...</span>
+                  </div>
+                  <Progress value={uploadProgress} className="h-1.5" />
+                </div>
+              )}
+            </Card>
+
+            {error && (
+              <div className="flex items-center gap-2 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
+                <AlertCircle className="h-4 w-4 shrink-0" />
+                {error}
+                <button onClick={() => setError(null)} className="ml-auto">
+                  <X className="h-3 w-3" />
+                </button>
+              </div>
+            )}
+
+            {/* Search */}
+            {files.length > 0 && (
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Buscar archivos..."
+                  className="pl-9"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+            )}
+
+            {/* File List */}
+            {filteredFiles.length > 0 ? (
+              <div className="space-y-2">
+                <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                  Archivos ({filteredFiles.length})
                 </p>
-                
-                <FileUpload className="flex-1 relative z-10" />
-              </PrismaticCard>
-            </motion.div>
-            
-            <div className="space-y-6">
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7, delay: 0.5 }}
-              >
-                <PrismaticCard variant="crystal" className="relative overflow-hidden p-5">
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/20 to-blue-900/20 opacity-20 rounded-lg" />
-                  <div className="flex items-center mb-2">
-                    <div className="mr-2 p-1.5 rounded-full bg-cyan-500/20 text-cyan-300">
-                      <Github className="h-4 w-4" />
-                    </div>
-                    <h3 className="font-medium relative z-10">Prisma Cognitivo</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground relative z-10 leading-relaxed">
-                    Explora la arquitectura multidimensional donde el conocimiento 
-                    trasciende las estructuras lineales convencionales.
-                  </p>
-                </PrismaticCard>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7, delay: 0.7 }}
-              >
-                <PrismaticCard variant="quantum" className="relative overflow-hidden p-5">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-pink-900/20 opacity-20 rounded-lg" />
-                  <div className="flex items-center mb-2">
-                    <div className="mr-2 p-1.5 rounded-full bg-purple-500/20 text-purple-300">
-                      <Zap className="h-4 w-4" />
-                    </div>
-                    <h3 className="font-medium relative z-10">Nodos SimbiÃ³ticos</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground relative z-10 leading-relaxed">
-                    Los elementos documentales existen en un estado de refinamiento constante, 
-                    mejorando automÃ¡ticamente su precisiÃ³n y relevancia.
-                  </p>
-                </PrismaticCard>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7, delay: 0.9 }}
-              >
-                <PrismaticCard variant="nebula" className="relative overflow-hidden p-5">
-                  <div className="absolute inset-0 bg-gradient-to-br from-rose-900/20 to-orange-900/20 opacity-20 rounded-lg" />
-                  <div className="flex items-center mb-2">
-                    <div className="mr-2 p-1.5 rounded-full bg-rose-500/20 text-rose-300">
-                      <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2"/>
-                        <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" strokeWidth="2"/>
-                        <path d="M19 12H21M3 12H5M12 19V21M12 3V5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                      </svg>
-                    </div>
-                    <h3 className="font-medium relative z-10">Seguridad Exoplanar</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground relative z-10 leading-relaxed">
-                    Sistema inmune digital que detecta y neutraliza inconsistencias lÃ³gicas
-                    mediante cifrado homomÃ³rfico completo.
-                  </p>
-                </PrismaticCard>
-              </motion.div>
-            </div>
+                <AnimatePresence>
+                  {filteredFiles.map((file) => (
+                    <motion.div
+                      key={file.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                    >
+                      <Card className="p-3 sm:p-4 hover:bg-accent/30 transition-colors">
+                        <div className="flex items-center gap-3">
+                          {getFileIcon(file.type)}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium truncate">{file.name}</p>
+                            <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                              <span>{formatBytes(file.size)}</span>
+                              <span>·</span>
+                              <span>{new Date(file.uploadedAt).toLocaleDateString("es-MX")}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-1 shrink-0">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={(e) => { e.stopPropagation(); copyShareLink(file); }}
+                              title="Compartir"
+                            >
+                              <Share2 className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={(e) => { e.stopPropagation(); downloadFile(file); }}
+                              title="Descargar"
+                            >
+                              <Download className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-destructive hover:text-destructive"
+                              onClick={(e) => { e.stopPropagation(); deleteFile(file.id); }}
+                              title="Eliminar"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            ) : files.length === 0 ? (
+              <Card className="p-12 text-center">
+                <File className="h-12 w-12 mx-auto text-muted-foreground/30 mb-4" />
+                <p className="text-sm text-muted-foreground">
+                  No hay archivos aún. Arrastra o selecciona archivos para empezar.
+                </p>
+              </Card>
+            ) : (
+              <Card className="p-8 text-center">
+                <Search className="h-8 w-8 mx-auto text-muted-foreground/30 mb-3" />
+                <p className="text-sm text-muted-foreground">
+                  No se encontraron archivos para "{searchQuery}"
+                </p>
+              </Card>
+            )}
           </div>
-        </section>
-        
-        {/* Call to action section */}
-        <motion.section 
-          className="text-center pt-4 pb-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.1 }}
-        >
-          <div className="mb-8">
-            <Button 
-              className="bg-gradient-crystal hover:bg-gradient-quantum hover:shadow-lg transition-all duration-300 text-white px-6 py-6 rounded-md font-medium text-lg" 
-              size="lg"
-            >
-              Explorar el Universo TAMV
-            </Button>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Stats */}
+            <Card className="p-5 space-y-4">
+              <h3 className="font-semibold text-sm flex items-center gap-2">
+                <BarChart3 className="h-4 w-4" />
+                Estadísticas
+              </h3>
+              <div className="space-y-3">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Total archivos</span>
+                  <span className="font-medium">{files.length}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Tamaño total</span>
+                  <span className="font-medium">{formatBytes(totalSize)}</span>
+                </div>
+                <div className="border-t pt-3 space-y-2">
+                  <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                    Por tipo
+                  </p>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted-foreground flex items-center gap-1">
+                      <Image className="h-3 w-3 text-pink-400" /> Imágenes
+                    </span>
+                    <span>{typeBreakdown.images}</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted-foreground flex items-center gap-1">
+                      <FileText className="h-3 w-3 text-red-400" /> PDFs
+                    </span>
+                    <span>{typeBreakdown.pdfs}</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted-foreground flex items-center gap-1">
+                      <File className="h-3 w-3 text-blue-400" /> Otros
+                    </span>
+                    <span>{typeBreakdown.others}</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Recent Activity */}
+            <Card className="p-5 space-y-4">
+              <h3 className="font-semibold text-sm flex items-center gap-2">
+                <Clock className="h-4 w-4" />
+                Actividad Reciente
+              </h3>
+              <div className="space-y-3">
+                {RECENT_ACTIVITY.map((a, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <CheckCircle2 className="h-3 w-3 mt-1 text-emerald-500 shrink-0" />
+                    <div>
+                      <p className="text-xs">
+                        <span className="font-medium">{a.user}</span>{" "}
+                        <span className="text-muted-foreground">{a.action}</span>{" "}
+                        <span className="font-medium">{a.file}</span>
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">{a.time}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
           </div>
-          
-          <p className="text-xs text-muted-foreground">
-            TAMV ONLINE NETWORK Â© 2025 â€” Metaconsciencia SistÃ©mica v1.0
-          </p>
-        </motion.section>
+        </div>
       </div>
     </div>
   );
-};
+}
 
-export default NexoEstelarPanel;
+function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}

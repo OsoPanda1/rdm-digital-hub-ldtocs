@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { motion } from "framer-motion";
-import { TrendingUp, TrendingDown } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 
 interface KpiTileProps {
   label: string;
@@ -11,6 +11,9 @@ interface KpiTileProps {
   delta?: number;
   icon?: string;
   accent?: "gold" | "teal" | "copper" | "electric";
+  loading?: boolean;
+  error?: boolean;
+  onRetry?: () => void;
 }
 
 const accentMap = {
@@ -20,7 +23,36 @@ const accentMap = {
   electric: "from-electric/20 to-electric/5 border-electric/30 text-electric",
 } as const;
 
-export function KpiTile({ label, value, delta, icon = "ðŸ“Š", accent = "gold" }: KpiTileProps) {
+export function KpiTile({ label, value, delta, icon = "📊", accent = "gold", loading, error, onRetry }: KpiTileProps) {
+  if (loading) {
+    return (
+      <div className="relative rounded-2xl border border-border/20 bg-secondary/10 p-5 animate-pulse">
+        <div className="flex items-start justify-between">
+          <div className="space-y-2 flex-1">
+            <div className="h-2 w-20 rounded bg-secondary/40" />
+            <div className="h-7 w-16 rounded bg-secondary/40 mt-2" />
+          </div>
+          <div className="h-7 w-7 rounded-lg bg-secondary/40" />
+        </div>
+        <div className="h-2 w-12 rounded bg-secondary/40 mt-3" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="relative rounded-2xl border border-destructive/30 bg-destructive/5 p-5">
+        <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-destructive/70">{label}</p>
+        <p className="mt-2 text-sm font-mono text-destructive">Error</p>
+        {onRetry && (
+          <button onClick={onRetry} className="mt-2 text-[10px] font-mono text-destructive underline hover:no-underline">
+            Reintentar
+          </button>
+        )}
+      </div>
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -36,7 +68,13 @@ export function KpiTile({ label, value, delta, icon = "ðŸ“Š", accent = "gol
       </div>
       {delta !== undefined && (
         <div className="mt-3 flex items-center gap-1 text-[11px] font-mono">
-          {delta >= 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+          {delta > 0 ? (
+            <TrendingUp className="h-3 w-3" />
+          ) : delta < 0 ? (
+            <TrendingDown className="h-3 w-3" />
+          ) : (
+            <Minus className="h-3 w-3" />
+          )}
           <span>{delta >= 0 ? "+" : ""}{delta}% vs ayer</span>
         </div>
       )}
