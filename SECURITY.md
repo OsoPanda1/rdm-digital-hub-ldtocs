@@ -16,7 +16,7 @@ Actualmente, RDM Digital Hub está en fase alpha. Solo la última versión de `m
 En su lugar, envía un reporte a:
 
 1. **GitHub Security Advisories**: [https://github.com/OsoPanda1/rdm-digital-hub-ldtocs/security/advisories](https://github.com/OsoPanda1/rdm-digital-hub-ldtocs/security/advisories)
-2. **Email**: [INSERTAR CORREO DE SEGURIDAD]
+2. **Email**: [tamvonlinenetwork@outlook.es](mailto:tamvonlinenetwork@outlook.es)
 
 ### Proceso
 

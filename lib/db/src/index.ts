@@ -4,13 +4,24 @@ import * as schema from "./schema";
 
 const { Pool } = pg;
 
-if (!process.env.DATABASE_URL) {
-  throw new Error(
-    "DATABASE_URL must be set. Did you forget to provision a database?",
+// In development, gracefully degrade if DATABASE_URL is not set.
+// In production, fail fast — the server must have a database.
+const databaseUrl = process.env.DATABASE_URL;
+if (!databaseUrl) {
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      "DATABASE_URL must be set. Did you forget to provision a database?",
+    );
+  }
+  console.warn(
+    "[DB] DATABASE_URL not set — running in dev-degraded mode. DB features disabled.",
   );
 }
 
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-export const db = drizzle(pool, { schema });
+export const pool = databaseUrl
+  ? new Pool({ connectionString: databaseUrl })
+  : null;
+
+export const db = pool ? drizzle(pool, { schema }) : null;
 
 export * from "./schema";

@@ -11,19 +11,86 @@ import {
   suggestActions,
   type PlayerContext,
 } from "../services/narrator";
+import { getDb, isDbAvailable } from "../lib/db-client";
+import { players, playerEvents, playerCurrencies } from "../../db/schema";
+import { eq, desc, sql } from "drizzle-orm";
 
-function buildMockContext(playerId: string): PlayerContext {
-  return {
-    playerId,
-    displayName: "Edwin Castillo",
-    level: 18,
-    territoriesVisited: 12,
-    collectionsCompleted: 2,
-    currentSeasonId: "season-mining-colonial",
-    lastEvent: "DISCOVER_POI",
-    streak: 5,
-    energy: 80,
-  };
+async function buildPlayerContext(playerId: string): Promise<PlayerContext> {
+  if (!isDbAvailable()) {
+    return {
+      playerId,
+      displayName: "Edwin Castillo",
+      level: 18,
+      territoriesVisited: 12,
+      collectionsCompleted: 2,
+      currentSeasonId: "season-mining-colonial",
+      lastEvent: "DISCOVER_POI",
+      streak: 5,
+      energy: 80,
+    };
+  }
+
+  try {
+    const db = getDb();
+    const [player] = await db.select().from(players).where(eq(players.externalId, playerId)).limit(1);
+
+    if (!player) {
+      return {
+        playerId,
+        displayName: playerId,
+        level: 1,
+        territoriesVisited: 0,
+        collectionsCompleted: 0,
+        currentSeasonId: "season-mining-colonial",
+        lastEvent: "UNKNOWN",
+        streak: 0,
+        energy: 100,
+      };
+    }
+
+    const [xpRow] = await db.select({ amount: playerCurrencies.amount })
+      .from(playerCurrencies)
+      .where(eq(playerCurrencies.playerId, player.id))
+      .where(eq(playerCurrencies.currencyType, "XP"))
+      .limit(1);
+
+    const xp = Number(xpRow?.amount ?? 0);
+    const level = Math.floor(xp / 100) + 1;
+
+    const [lastEvent] = await db.select({ type: playerEvents.type })
+      .from(playerEvents)
+      .where(eq(playerEvents.playerId, player.id))
+      .orderBy(desc(playerEvents.createdAt))
+      .limit(1);
+
+    const eventCount = await db.select({ count: sql<number>`count(*)`.as("count") })
+      .from(playerEvents)
+      .where(eq(playerEvents.playerId, player.id));
+
+    return {
+      playerId: player.externalId,
+      displayName: player.displayName,
+      level,
+      territoriesVisited: Math.min(Number(eventCount[0]?.count ?? 0), 50),
+      collectionsCompleted: 0,
+      currentSeasonId: "season-mining-colonial",
+      lastEvent: lastEvent?.type ?? "UNKNOWN",
+      streak: 0,
+      energy: 80,
+    };
+  } catch {
+    return {
+      playerId,
+      displayName: playerId,
+      level: 1,
+      territoriesVisited: 0,
+      collectionsCompleted: 0,
+      currentSeasonId: "season-mining-colonial",
+      lastEvent: "UNKNOWN",
+      streak: 0,
+      energy: 100,
+    };
+  }
 }
 
 export function registerNarrativeRoutes(router: Router) {
@@ -32,18 +99,19 @@ export function registerNarrativeRoutes(router: Router) {
   //  Body: { playerId, limit? }
   //  Returns contextual feed of narrative messages for a player.
   // ───────────────────────────────────────────────────────────────────────────
-  router.post("/v1/narrative/feed", validate(schemas.narrativeFeed), (req: Request, res: Response) => {
-    const { playerId = "anonymous", limit = 5 } = req.body ?? {};
+  router.post("/v1/narrative/feed", validate(schemas.narrativeFeed), async (req: Request, res: Response, next) => {
+    try {
+      const { playerId = "anonymous", limit = 5 } = req.body ?? {};
 
-    if (!playerId || typeof playerId !== "string") {
-      res.status(400).json({ ok: false, error: "playerId is required" });
-      return;
-    }
+      if (!playerId || typeof playerId !== "string") {
+        res.status(400).json({ ok: false, error: "playerId is required" });
+        return;
+      }
 
-    const context = buildMockContext(playerId);
-    const messages = generateFeed({ context, limit: Math.min(limit, 20) });
+      const context = await buildPlayerContext(playerId);
+      const messages = generateFeed({ context, limit: Math.min(limit, 20) });
 
-    res.status(200).json({
+      res.status(200).json({
       ok: true,
       data: {
         playerId,
@@ -62,6 +130,7 @@ export function registerNarrativeRoutes(router: Router) {
         },
       },
     });
+    } catch (err) { next(err); }
   });
 
   // ───────────────────────────────────────────────────────────────────────────
@@ -69,59 +138,61 @@ export function registerNarrativeRoutes(router: Router) {
   //  Body: { playerId, actionType, poiName?, eventName?, itemId? }
   //  Returns a single narrative message triggered by a player action.
   // ───────────────────────────────────────────────────────────────────────────
-  router.post("/v1/narrative/trigger", validate(schemas.narrativeTrigger), (req: Request, res: Response) => {
-    const {
-      playerId = "anonymous",
-      actionType = "UNKNOWN",
-      poiName,
-      eventName,
-      itemId,
-    } = req.body ?? {};
+  router.post("/v1/narrative/trigger", validate(schemas.narrativeTrigger), async (req: Request, res: Response, next) => {
+    try {
+      const {
+        playerId = "anonymous",
+        actionType = "UNKNOWN",
+        poiName,
+        eventName,
+        itemId,
+      } = req.body ?? {};
 
-    if (!playerId || typeof playerId !== "string") {
-      res.status(400).json({ ok: false, error: "playerId is required" });
-      return;
-    }
+      if (!playerId || typeof playerId !== "string") {
+        res.status(400).json({ ok: false, error: "playerId is required" });
+        return;
+      }
 
-    if (!actionType || typeof actionType !== "string") {
-      res.status(400).json({ ok: false, error: "actionType is required" });
-      return;
-    }
+      if (!actionType || typeof actionType !== "string") {
+        res.status(400).json({ ok: false, error: "actionType is required" });
+        return;
+      }
 
-    const validActions = [
-      "DISCOVER_POI",
-      "CAPTURE_PHOTO",
-      "LISTEN_RADIO",
-      "ATTEND_EVENT",
-      "COMPLETE_QUEST",
-      "SHARE_STORY",
-      "COLLECT_ITEM",
-      "CHALLENGE_COMPLETE",
-      "SEASON_START",
-      "LOW_ENERGY",
-    ];
+      const validActions = [
+        "DISCOVER_POI",
+        "CAPTURE_PHOTO",
+        "LISTEN_RADIO",
+        "ATTEND_EVENT",
+        "COMPLETE_QUEST",
+        "SHARE_STORY",
+        "COLLECT_ITEM",
+        "CHALLENGE_COMPLETE",
+        "SEASON_START",
+        "LOW_ENERGY",
+      ];
 
-    if (!validActions.includes(actionType)) {
-      res.status(400).json({
-        ok: false,
-        error: `Invalid actionType. Valid types: ${validActions.join(", ")}`,
+      if (!validActions.includes(actionType)) {
+        res.status(400).json({
+          ok: false,
+          error: `Invalid actionType. Valid types: ${validActions.join(", ")}`,
+        });
+        return;
+      }
+
+      const context = await buildPlayerContext(playerId);
+      const message = generateNarrative({
+        actionType,
+        context,
+        poiName,
+        eventName,
+        itemId,
       });
-      return;
-    }
 
-    const context = buildMockContext(playerId);
-    const message = generateNarrative({
-      actionType,
-      context,
-      poiName,
-      eventName,
-      itemId,
-    });
-
-    res.status(200).json({
-      ok: true,
-      data: message,
-    });
+      res.status(200).json({
+        ok: true,
+        data: message,
+      });
+    } catch (err) { next(err); }
   });
 
   // ───────────────────────────────────────────────────────────────────────────
@@ -129,24 +200,26 @@ export function registerNarrativeRoutes(router: Router) {
   //  Body: { playerId }
   //  Returns suggested next actions for a player.
   // ───────────────────────────────────────────────────────────────────────────
-  router.post("/v1/narrative/suggest", validate(schemas.narrativeSuggest), (req: Request, res: Response) => {
-    const { playerId = "anonymous" } = req.body ?? {};
+  router.post("/v1/narrative/suggest", validate(schemas.narrativeSuggest), async (req: Request, res: Response, next) => {
+    try {
+      const { playerId = "anonymous" } = req.body ?? {};
 
-    if (!playerId || typeof playerId !== "string") {
-      res.status(400).json({ ok: false, error: "playerId is required" });
-      return;
-    }
+      if (!playerId || typeof playerId !== "string") {
+        res.status(400).json({ ok: false, error: "playerId is required" });
+        return;
+      }
 
-    const context = buildMockContext(playerId);
-    const suggestions = suggestActions({ context });
+      const context = await buildPlayerContext(playerId);
+      const suggestions = suggestActions({ context });
 
-    res.status(200).json({
-      ok: true,
-      data: {
-        playerId,
-        suggestions,
-      },
-    });
+      res.status(200).json({
+        ok: true,
+        data: {
+          playerId,
+          suggestions,
+        },
+      });
+    } catch (err) { next(err); }
   });
 
   // ───────────────────────────────────────────────────────────────────────────

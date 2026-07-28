@@ -5,6 +5,9 @@
 
 import type { Router, Request, Response } from "express";
 import { auditSecurityEvent, rateLimitByRoute } from "../lib/security";
+import { getDb, isDbAvailable } from "../lib/db-client";
+import { players, playerCurrencies, playerProgressions, progressionBranches, playerEvents } from "../../db/schema";
+import { eq, desc, sql } from "drizzle-orm";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 //  LEGACY SYSTEM (kept for backward compatibility)
@@ -378,14 +381,86 @@ export function registerGamificationRoutes(router: Router) {
   //  LEGACY ENDPOINTS (backward compatible)
   // ───────────────────────────────────────────────────────────────────────────
 
-  router.get("/v1/gamification/profile", (req: Request, res: Response) => {
-    const identity = (req as any).rdmIdentity;
-    const userId = identity?.subject !== "anonymous" ? identity.subject : undefined;
-    res.status(200).json({ ok: true, data: buildMockProfile(userId) });
+  router.get("/v1/gamification/profile", async (req: Request, res: Response, next) => {
+    try {
+      const identity = (req as any).rdmIdentity;
+      const userId = identity?.subject !== "anonymous" ? identity.subject : undefined;
+
+      if (!isDbAvailable() || !userId) {
+        res.status(200).json({ ok: true, data: buildMockProfile(userId) });
+        return;
+      }
+
+      const db = getDb();
+      const [player] = await db.select().from(players).where(eq(players.externalId, userId)).limit(1);
+      if (!player) {
+        res.status(200).json({ ok: true, data: buildMockProfile(userId) });
+        return;
+      }
+
+      const [xpRow] = await db.select({ amount: playerCurrencies.amount })
+        .from(playerCurrencies)
+        .where(eq(playerCurrencies.playerId, player.id))
+        .where(eq(playerCurrencies.currencyType, "XP"))
+        .limit(1);
+
+      const xp = Number(xpRow?.amount ?? 0);
+      const rank = getRank(xp);
+      const next = nextRank(xp);
+
+      res.status(200).json({
+        ok: true,
+        data: {
+          userId: player.externalId,
+          displayName: player.displayName,
+          xp,
+          rank: { name: rank.name, icon: rank.icon, color: rank.color },
+          nextRank: next
+            ? { name: next.name, icon: next.icon, xpRequired: next.minXp, xpRemaining: next.minXp - xp }
+            : null,
+          streak: 0,
+          totalDiscoveries: 0,
+          badges: [],
+        },
+      });
+    } catch (err) { next(err); }
   });
 
-  router.get("/v1/gamification/leaderboard", (_req: Request, res: Response) => {
-    res.status(200).json({ ok: true, data: MOCK_LEADERBOARD });
+  router.get("/v1/gamification/leaderboard", async (_req: Request, res: Response, next) => {
+    try {
+      if (!isDbAvailable()) {
+        res.status(200).json({ ok: true, data: MOCK_LEADERBOARD });
+        return;
+      }
+
+      const db = getDb();
+      const rows = await db
+        .select({
+          userId: players.externalId,
+          displayName: players.displayName,
+          xp: sql<number>`COALESCE(SUM(${playerCurrencies.amount}), 0)`.as("xp"),
+        })
+        .from(players)
+        .leftJoin(playerCurrencies, eq(players.id, playerCurrencies.playerId))
+        .groupBy(players.id, players.externalId, players.displayName)
+        .orderBy(desc(sql`COALESCE(SUM(${playerCurrencies.amount}), 0)`))
+        .limit(50);
+
+      const leaderboard = rows.map((r, i) => {
+        const xp = Number(r.xp);
+        const rank = getRank(xp);
+        return {
+          rank: i + 1,
+          userId: r.userId,
+          displayName: r.displayName,
+          xp,
+          rankName: rank.name,
+          avatar: null,
+        };
+      });
+
+      res.status(200).json({ ok: true, data: leaderboard.length > 0 ? leaderboard : MOCK_LEADERBOARD });
+    } catch (err) { next(err); }
   });
 
   router.get("/v1/gamification/quests", (_req: Request, res: Response) => {
@@ -422,18 +497,80 @@ export function registerGamificationRoutes(router: Router) {
 
   // GET /api/v1/living-world/player/:id
   // Full player profile: avatar, currencies, progression, collections
-  router.get("/v1/living-world/player/:id", (req: Request, res: Response) => {
-    const userId = String(req.params.id);
-    res.status(200).json({
-      ok: true,
-      data: {
-        ...buildLivingWorldPlayer(userId),
-        avatar: buildMockAvatar(),
-        currencies: buildMockCurrencies(),
-        progression: buildMockProgression(),
-        collections: MOCK_COLLECTIONS,
-      },
-    });
+  router.get("/v1/living-world/player/:id", async (req: Request, res: Response, next) => {
+    try {
+      const userId = String(req.params.id);
+
+      if (!isDbAvailable()) {
+        res.status(200).json({
+          ok: true,
+          data: {
+            ...buildLivingWorldPlayer(userId),
+            avatar: buildMockAvatar(),
+            currencies: buildMockCurrencies(),
+            progression: buildMockProgression(),
+            collections: MOCK_COLLECTIONS,
+          },
+        });
+        return;
+      }
+
+      const db = getDb();
+      const [player] = await db.select().from(players).where(eq(players.externalId, userId)).limit(1);
+
+      if (!player) {
+        res.status(200).json({
+          ok: true,
+          data: {
+            ...buildLivingWorldPlayer(userId),
+            avatar: buildMockAvatar(),
+            currencies: buildMockCurrencies(),
+            progression: buildMockProgression(),
+            collections: MOCK_COLLECTIONS,
+          },
+        });
+        return;
+      }
+
+      const currencies = await db.select().from(playerCurrencies).where(eq(playerCurrencies.playerId, player.id));
+      const progressions = await db.select({
+        branchKey: progressionBranches.key,
+        branchName: progressionBranches.name,
+        branchDescription: progressionBranches.description,
+        level: playerProgressions.level,
+        xpInBranch: playerProgressions.xpInBranch,
+      })
+        .from(playerProgressions)
+        .innerJoin(progressionBranches, eq(playerProgressions.branchId, progressionBranches.id))
+        .where(eq(playerProgressions.playerId, player.id));
+
+      const xp = Number(currencies.find((c) => c.currencyType === "XP")?.amount ?? 0);
+      const rank = getRank(xp);
+
+      res.status(200).json({
+        ok: true,
+        data: {
+          userId: player.externalId,
+          displayName: player.displayName,
+          level: Math.floor(xp / 100) + 1,
+          xp,
+          rank: { name: rank.name, icon: rank.icon, color: rank.color },
+          streak: 0,
+          createdAt: player.createdAt?.toISOString() ?? new Date().toISOString(),
+          lastSeenAt: player.lastSeenAt?.toISOString() ?? new Date().toISOString(),
+          homeTerritory: { id: "ter-rdm", name: "Real del Monte", type: "TOWN" },
+          avatar: buildMockAvatar(),
+          currencies: CURRENCY_TYPES.map((ct) => {
+            const row = currencies.find((c) => c.currencyType === ct.type);
+            return { type: ct.type, icon: ct.icon, description: ct.description, amount: Number(row?.amount ?? 0) };
+          }),
+          progression: progressions.length > 0
+            ? progressions.map((p) => ({ id: p.branchKey, key: p.branchKey, name: p.branchName, description: p.branchDescription, level: p.level, xpInBranch: Number(p.xpInBranch) }))
+            : buildMockProgression(),
+          collections: MOCK_COLLECTIONS,
+        },
+      });
+    } catch (err) { next(err); }
   });
 
   // GET /api/v1/living-world/player/:id/avatar
@@ -483,45 +620,83 @@ export function registerGamificationRoutes(router: Router) {
   // POST /api/v1/living-world/player/action
   // Body: { type, territoryId?, poiId?, payload? }
   // Registers a player event and returns updated currencies + possible unlocks
-  router.post("/v1/living-world/player/action", rateLimitByRoute({ name: "living-world-action", limit: 30 }), (req: Request, res: Response) => {
-    const { type = "UNKNOWN", territoryId = null, poiId = null, payload = {} } = req.body ?? {};
+  router.post("/v1/living-world/player/action", rateLimitByRoute({ name: "living-world-action", limit: 30 }), async (req: Request, res: Response, next) => {
+    try {
+      const { type = "UNKNOWN", territoryId = null, poiId = null, payload = {} } = req.body ?? {};
 
-    const xpRewards: Record<string, number> = {
-      DISCOVER_POI: 50,
-      CAPTURE_PHOTO: 25,
-      LISTEN_RADIO: 15,
-      ATTEND_EVENT: 75,
-      COMPLETE_QUEST: 100,
-      SHARE_STORY: 30,
-      COLLECT_ITEM: 40,
-    };
+      const xpRewards: Record<string, number> = {
+        DISCOVER_POI: 50,
+        CAPTURE_PHOTO: 25,
+        LISTEN_RADIO: 15,
+        ATTEND_EVENT: 75,
+        COMPLETE_QUEST: 100,
+        SHARE_STORY: 30,
+        COLLECT_ITEM: 40,
+      };
 
-    const xpAwarded = Math.min(xpRewards[type] ?? 10, 100);
-    auditSecurityEvent(req, "living_world.player_action", { type, territoryId, poiId, xpAwarded });
+      const xpAwarded = Math.min(xpRewards[type] ?? 10, 100);
+      auditSecurityEvent(req, "living_world.player_action", { type, territoryId, poiId, xpAwarded });
 
-    res.status(200).json({
-      ok: true,
-      data: {
-        eventId: `evt-${Date.now()}`,
-        type,
-        territoryId,
-        poiId,
-        xpAwarded,
-        currenciesAwarded: [
-          { type: "XP", amount: xpAwarded },
-          { type: "COIN", amount: Math.floor(xpAwarded / 5) },
-        ],
-        possibleUnlock: Math.random() > 0.7 ? {
-          itemId: `item-random-${Date.now()}`,
-          name: "Fragmento de Historia",
-          rarity: "COMMON",
-          collectionId: "col-mining-heritage",
-        } : null,
-        narrativeTrigger: type === "DISCOVER_POI" ? {
-          type: "DISCOVERY",
-          message: "Has descubierto un nuevo punto de interés. Realito tiene algo que contarte...",
-        } : null,
-      },
-    });
+      // Persist event to DB if available
+      if (isDbAvailable()) {
+        const db = getDb();
+        const identity = (req as any).rdmIdentity;
+        const externalId = identity?.subject ?? "anonymous";
+
+        const [player] = await db.select().from(players).where(eq(players.externalId, externalId)).limit(1);
+        if (player) {
+          await db.insert(playerEvents).values({
+            playerId: player.id,
+            type,
+            territoryId: territoryId ?? undefined,
+            poiId: poiId ?? undefined,
+            payloadJson: { ...payload, xpAwarded },
+          });
+
+          // Award XP to player currency
+          const [existingXp] = await db.select().from(playerCurrencies)
+            .where(eq(playerCurrencies.playerId, player.id))
+            .where(eq(playerCurrencies.currencyType, "XP"))
+            .limit(1);
+
+          if (existingXp) {
+            await db.update(playerCurrencies)
+              .set({ amount: existingXp.amount + BigInt(xpAwarded) })
+              .where(eq(playerCurrencies.playerId, player.id));
+          } else {
+            await db.insert(playerCurrencies).values({
+              playerId: player.id,
+              currencyType: "XP",
+              amount: BigInt(xpAwarded),
+            });
+          }
+        }
+      }
+
+      res.status(200).json({
+        ok: true,
+        data: {
+          eventId: `evt-${Date.now()}`,
+          type,
+          territoryId,
+          poiId,
+          xpAwarded,
+          currenciesAwarded: [
+            { type: "XP", amount: xpAwarded },
+            { type: "COIN", amount: Math.floor(xpAwarded / 5) },
+          ],
+          possibleUnlock: Math.random() > 0.7 ? {
+            itemId: `item-random-${Date.now()}`,
+            name: "Fragmento de Historia",
+            rarity: "COMMON",
+            collectionId: "col-mining-heritage",
+          } : null,
+          narrativeTrigger: type === "DISCOVER_POI" ? {
+            type: "DISCOVERY",
+            message: "Has descubierto un nuevo punto de interés. Realito tiene algo que contarte...",
+          } : null,
+        },
+      });
+    } catch (err) { next(err); }
   });
 }

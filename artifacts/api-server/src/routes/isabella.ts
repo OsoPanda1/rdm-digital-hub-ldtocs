@@ -3,7 +3,7 @@
 // Integración: SOUL · Isa API · Mexa API · Memory · Skills · Evaluation · Fairness · XRAI
 // Endpoints: /api/isabella/*
 
-import type { Router, Request, Response } from "express";
+import type { Router, Request, Response, NextFunction } from "express";
 import { createCognitiveOrchestrator } from "../lib/isabella/core/orchestrator";
 import { createMemoryEngine } from "../lib/isabella/memory/engine";
 import { createSkillRegistry, registerBuiltinSkills } from "../lib/isabella/skills/registry";
@@ -61,7 +61,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  sanitize → interpret → policy check → knowledge lookup → personality → evaluate
   //  Body: { playerId, message, sessionId? }
   // ─────────────────────────────────────────────────────────────────────────
-  router.post("/isabella/chat", rateLimitByRoute({ name: "isabella-chat", limit: 30 }), validate(schemas.isabellaChat), (req: Request, res: Response) => {
+  router.post("/isabella/chat", requireRdmRole("user"), rateLimitByRoute({ name: "isabella-chat", limit: 30 }), validate(schemas.isabellaChat), (req: Request, res: Response, next: NextFunction) => {
     const { playerId = "anonymous", message = "", sessionId } = req.body ?? {};
 
     if (!message || typeof message !== "string") {
@@ -144,7 +144,7 @@ export function registerIsabellaRoutes(router: Router) {
           messageCount: session.messageCount,
         },
       });
-    });
+    }).catch(next);
   });
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -247,7 +247,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  Submit user feedback on an Isabella interaction.
   //  Body: { playerId, decisionId, rating, comment? }
   // ─────────────────────────────────────────────────────────────────────────
-  router.post("/isabella/feedback", validate(schemas.isabellaFeedback), (req: Request, res: Response) => {
+  router.post("/isabella/feedback", requireRdmRole("user"), validate(schemas.isabellaFeedback), (req: Request, res: Response) => {
     const { playerId = "anonymous", decisionId = "", rating = 3, comment } = req.body ?? {};
 
     if (!decisionId || typeof decisionId !== "string") {
@@ -284,7 +284,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  Knowledge base search.
   //  Query: ?category=&q=&limit=20&domain=
   // ─────────────────────────────────────────────────────────────────────────
-  router.get("/isabella/knowledge", (req: Request, res: Response) => {
+  router.get("/isabella/knowledge", requireRdmRole("user"), (req: Request, res: Response) => {
     const domain = (req.query.domain as string) ?? "";
     const query = (req.query.q as string) ?? "";
     const category = (req.query.category as string) ?? "";
@@ -331,7 +331,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  Text-to-Speech proxy for Isabella voice generation.
   //  Body: { text, emotion?, speed? }
   // ─────────────────────────────────────────────────────────────────────────
-  router.post("/tts-isabella", validate(schemas.ttsIsabella), (req: Request, res: Response) => {
+  router.post("/tts-isabella", requireRdmRole("user"), validate(schemas.ttsIsabella), (req: Request, res: Response) => {
     const { text = "", emotion = "neutral", speed = 1.0 } = req.body ?? {};
     if (!text || typeof text !== "string") {
       res.status(400).json({ ok: false, error: "text is required" });
@@ -383,7 +383,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  GET /api/isabella/compliance
   //  Ω-Core compliance audit — SOUL, policies, ethics status.
   // ─────────────────────────────────────────────────────────────────────────
-  router.get("/isabella/compliance", (_req: Request, res: Response) => {
+  router.get("/isabella/compliance", requireRdmRole("operator"), (_req: Request, res: Response) => {
     res.status(200).json({
       ok: true,
       data: {
@@ -448,7 +448,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  Verify a signed payload.
   //  Body: SignedPayload
   // ─────────────────────────────────────────────────────────────────────────
-  router.post("/isabella/crypto/verify", validate(schemas.isabellaCryptoVerify), (req: Request, res: Response) => {
+  router.post("/isabella/crypto/verify", requireRdmRole("operator"), validate(schemas.isabellaCryptoVerify), (req: Request, res: Response) => {
     const signed = req.body;
     if (!signed || !signed.federationMask || !signed.hash || !signed.nonce) {
       res.status(400).json({ ok: false, error: "SignedPayload required (federationMask, hash, nonce)" });
@@ -472,7 +472,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  Generate an XR scene manifest from a description.
   //  Body: { description, options? }
   // ─────────────────────────────────────────────────────────────────────────
-  router.post("/isabella/xr/scene", validate(schemas.isabellaXrScene), async (req: Request, res: Response) => {
+  router.post("/isabella/xr/scene", requireRdmRole("user"), validate(schemas.isabellaXrScene), async (req: Request, res: Response, next: NextFunction) => {
     const { description, options } = req.body ?? {};
     if (!description || typeof description !== "string") {
       res.status(400).json({ ok: false, error: "description is required" });
@@ -481,13 +481,14 @@ export function registerIsabellaRoutes(router: Router) {
 
     const scene = await xrRenderer.generateScene(description, options);
     res.status(201).json({ ok: true, data: scene });
+  } catch (err) { next(err); }
   });
 
   // ─────────────────────────────────────────────────────────────────────────
   //  GET /api/isabella/isa/health
   //  Isa API health and cognitive process count.
   // ─────────────────────────────────────────────────────────────────────────
-  router.get("/isabella/isa/health", (_req: Request, res: Response) => {
+  router.get("/isabella/isa/health", requireRdmRole("user"), (_req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: isa.health() });
   });
 
@@ -496,7 +497,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  Isa API structured reasoning.
   //  Body: { query, context?, knowledgeGraph?, maxDepth? }
   // ─────────────────────────────────────────────────────────────────────────
-  router.post("/isabella/isa/reason", validate(schemas.isabellaIsaReason), async (req: Request, res: Response) => {
+  router.post("/isabella/isa/reason", requireRdmRole("user"), validate(schemas.isabellaIsaReason), async (req: Request, res: Response, next: NextFunction) => {
     const { query, context, knowledgeGraph, maxDepth } = req.body ?? {};
     if (!query || typeof query !== "string") {
       res.status(400).json({ ok: false, error: "query is required" });
@@ -505,13 +506,14 @@ export function registerIsabellaRoutes(router: Router) {
 
     const result = await isa.reason({ query, context, knowledgeGraph, maxDepth });
     res.status(200).json({ ok: true, data: result });
+  } catch (err) { next(err); }
   });
 
   // ─────────────────────────────────────────────────────────────────────────
   //  GET /api/isabella/fairness
   //  Fairness engine metrics.
   // ─────────────────────────────────────────────────────────────────────────
-  router.get("/isabella/fairness", (_req: Request, res: Response) => {
+  router.get("/isabella/fairness", requireRdmRole("operator"), (_req: Request, res: Response) => {
     res.status(200).json({ ok: true, data: fairness.metrics() });
   });
 
@@ -520,7 +522,7 @@ export function registerIsabellaRoutes(router: Router) {
   //  Evaluate text for bias and guardrails.
   //  Body: { text, context? }
   // ─────────────────────────────────────────────────────────────────────────
-  router.post("/isabella/fairness/evaluate", validate(schemas.isabellaFairnessEvaluate), (req: Request, res: Response) => {
+  router.post("/isabella/fairness/evaluate", requireRdmRole("operator"), validate(schemas.isabellaFairnessEvaluate), (req: Request, res: Response) => {
     const { text, context } = req.body ?? {};
     if (!text || typeof text !== "string") {
       res.status(400).json({ ok: false, error: "text is required" });

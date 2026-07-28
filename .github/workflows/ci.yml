@@ -33,6 +33,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Typecheck
         run: pnpm run typecheck
+      - name: Lint (ESLint)
+        run: pnpm -r --if-present run lint 2>/dev/null || echo "No ESLint configured in all workspaces"
       - name: Build (validates TypeScript)
         run: pnpm run build
 
@@ -96,7 +98,7 @@ jobs:
         with: { node-version: "${{ env.NODE_VERSION }}", cache: "pnpm" }
       - run: pnpm install --frozen-lockfile
       - name: Run tests (frontend)
-        run: pnpm --filter @workspace/rdm-hub run test 2>/dev/null || echo "No frontend tests configured"
+        run: pnpm --filter @workspace/rdm-hub run test
       - name: Run tests (api-server)
         run: pnpm --filter @workspace/api-server run test
 
