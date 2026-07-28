@@ -5,6 +5,7 @@
 
 import type { Router, Request, Response } from "express";
 import { validate, schemas } from "../middlewares/validate";
+import { requireRdmRole, rateLimitByRoute } from "../lib/security";
 import {
   generateNarrative,
   generateFeed,
@@ -99,7 +100,7 @@ export function registerNarrativeRoutes(router: Router) {
   //  Body: { playerId, limit? }
   //  Returns contextual feed of narrative messages for a player.
   // ───────────────────────────────────────────────────────────────────────────
-  router.post("/v1/narrative/feed", validate(schemas.narrativeFeed), async (req: Request, res: Response, next) => {
+  router.post("/v1/narrative/feed", requireRdmRole("user"), rateLimitByRoute({ name: "narrative-feed", limit: 30 }), validate(schemas.narrativeFeed), async (req: Request, res: Response, next) => {
     try {
       const { playerId = "anonymous", limit = 5 } = req.body ?? {};
 
@@ -138,7 +139,7 @@ export function registerNarrativeRoutes(router: Router) {
   //  Body: { playerId, actionType, poiName?, eventName?, itemId? }
   //  Returns a single narrative message triggered by a player action.
   // ───────────────────────────────────────────────────────────────────────────
-  router.post("/v1/narrative/trigger", validate(schemas.narrativeTrigger), async (req: Request, res: Response, next) => {
+  router.post("/v1/narrative/trigger", requireRdmRole("user"), rateLimitByRoute({ name: "narrative-trigger", limit: 60 }), validate(schemas.narrativeTrigger), async (req: Request, res: Response, next) => {
     try {
       const {
         playerId = "anonymous",
@@ -200,7 +201,7 @@ export function registerNarrativeRoutes(router: Router) {
   //  Body: { playerId }
   //  Returns suggested next actions for a player.
   // ───────────────────────────────────────────────────────────────────────────
-  router.post("/v1/narrative/suggest", validate(schemas.narrativeSuggest), async (req: Request, res: Response, next) => {
+  router.post("/v1/narrative/suggest", requireRdmRole("user"), rateLimitByRoute({ name: "narrative-suggest", limit: 20 }), validate(schemas.narrativeSuggest), async (req: Request, res: Response, next) => {
     try {
       const { playerId = "anonymous" } = req.body ?? {};
 
@@ -226,7 +227,7 @@ export function registerNarrativeRoutes(router: Router) {
   //  GET /api/v1/narrative/characters
   //  Returns available character profiles.
   // ───────────────────────────────────────────────────────────────────────────
-  router.get("/v1/narrative/characters", (_req: Request, res: Response) => {
+  router.get("/v1/narrative/characters", requireRdmRole("user"), (_req: Request, res: Response) => {
     res.status(200).json({
       ok: true,
       data: [

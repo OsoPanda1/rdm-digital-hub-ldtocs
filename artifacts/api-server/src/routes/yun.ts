@@ -12,7 +12,7 @@ import {
   type FederationId,
 } from "../lib/yun";
 import { requireRdmRole, rateLimitByRoute, auditSecurityEvent } from "../lib/security";
-import { validate, schemas } from "../middlewares/validate";
+import { validate, schemas, sanitizeObject } from "../middlewares/validate";
 
 const router = Router();
 
@@ -26,7 +26,7 @@ function getYun(): YunSystem {
 
 // ── System Status ──────────────────────────────────────────────
 
-router.get("/status", (_req: Request, res: Response) => {
+router.get("/status", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
   const mode = yun.resilience.getCurrentMode();
   const profile = yun.resilience.getProfile();
@@ -58,10 +58,11 @@ router.get("/status", (_req: Request, res: Response) => {
 // ── Policy Engine ──────────────────────────────────────────────
 
 router.post("/policy/evaluate",
+  requireRdmRole("user"),
   rateLimitByRoute({ name: "yun-policy-eval", limit: 30 }),
   validate(schemas.yunPolicyEvaluate),
   (req: Request, res: Response) => {
-  const input: PolicyInput = req.body;
+  const input: PolicyInput = sanitizeObject(req.body) as PolicyInput;
   if (!input.principal || !input.action || !input.resource || !input.context) {
     res.status(400).json({ ok: false, error: "Missing required fields: principal, action, resource, context." });
     return;
@@ -83,7 +84,7 @@ router.post("/policy/evaluate",
   res.json({ ok: true, decision: result });
 });
 
-router.get("/policy/history", (req: Request, res: Response) => {
+router.get("/policy/history", requireRdmRole("user"), (req: Request, res: Response) => {
   const yun = getYun();
   const limit = parseInt(req.query.limit as string) || 50;
   const decisions = yun.policyEngine.getDecisionHistory(limit);
@@ -98,7 +99,7 @@ router.get("/policy/history", (req: Request, res: Response) => {
   });
 });
 
-router.get("/policy/stats", (_req: Request, res: Response) => {
+router.get("/policy/stats", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
   res.json({ ok: true, stats: yun.policyEngine.getStats() });
 });
@@ -111,11 +112,11 @@ router.post("/registry/nodes",
   validate(schemas.yunRegistryNode),
   (req: Request, res: Response) => {
   const yun = getYun();
-  const node = yun.registry.registerNode(req.body);
+  const node = yun.registry.registerNode(sanitizeObject(req.body));
   res.json({ ok: true, node });
 });
 
-router.get("/registry/nodes", (req: Request, res: Response) => {
+router.get("/registry/nodes", requireRdmRole("user"), (req: Request, res: Response) => {
   const yun = getYun();
   const domain = req.query.domain as YunDomain | undefined;
   const federation = req.query.federation as FederationId | undefined;
@@ -129,7 +130,7 @@ router.get("/registry/nodes", (req: Request, res: Response) => {
   }
 });
 
-router.get("/registry/nodes/:nodeId", (req: Request, res: Response) => {
+router.get("/registry/nodes/:nodeId", requireRdmRole("user"), (req: Request, res: Response) => {
   const yun = getYun();
   const node = yun.registry.getNode(req.params.nodeId);
   if (!node) {
@@ -142,13 +143,14 @@ router.get("/registry/nodes/:nodeId", (req: Request, res: Response) => {
 router.post("/registry/agents",
   requireRdmRole("operator"),
   rateLimitByRoute({ name: "yun-registry-agents", limit: 10 }),
+  validate(schemas.yunRegistryAgent),
   (req: Request, res: Response) => {
   const yun = getYun();
-  const agent = yun.registry.registerAgent(req.body);
+  const agent = yun.registry.registerAgent(sanitizeObject(req.body));
   res.json({ ok: true, agent });
 });
 
-router.get("/registry/agents", (_req: Request, res: Response) => {
+router.get("/registry/agents", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
   res.json({ ok: true, agents: yun.registry.findActiveAgents() });
 });
@@ -156,13 +158,14 @@ router.get("/registry/agents", (_req: Request, res: Response) => {
 router.post("/registry/services",
   requireRdmRole("operator"),
   rateLimitByRoute({ name: "yun-registry-services", limit: 10 }),
+  validate(schemas.yunRegistryService),
   (req: Request, res: Response) => {
   const yun = getYun();
-  const service = yun.registry.registerService(req.body);
+  const service = yun.registry.registerService(sanitizeObject(req.body));
   res.json({ ok: true, service });
 });
 
-router.get("/registry/licenses", (_req: Request, res: Response) => {
+router.get("/registry/licenses", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
   res.json({ ok: true, licenses: yun.registry.getLicenses() });
 });
@@ -170,13 +173,14 @@ router.get("/registry/licenses", (_req: Request, res: Response) => {
 router.post("/registry/licenses",
   requireRdmRole("admin"),
   rateLimitByRoute({ name: "yun-licenses", limit: 5 }),
+  validate(schemas.yunRegistryLicense),
   (req: Request, res: Response) => {
   const yun = getYun();
-  const license = yun.registry.issueLicense(req.body);
+  const license = yun.registry.issueLicense(sanitizeObject(req.body));
   res.json({ ok: true, license });
 });
 
-router.get("/registry/stats", (_req: Request, res: Response) => {
+router.get("/registry/stats", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
   res.json({ ok: true, stats: yun.registry.getStats() });
 });
@@ -190,11 +194,11 @@ router.post("/bus/publish",
   (req: Request, res: Response) => {
   const yun = getYun();
   const mode = yun.resilience.getCurrentMode();
-  const result = yun.bus.publish(req.body, mode);
+  const result = yun.bus.publish(sanitizeObject(req.body), mode);
   res.json({ ok: true, result });
 });
 
-router.get("/bus/history", (req: Request, res: Response) => {
+router.get("/bus/history", requireRdmRole("user"), (req: Request, res: Response) => {
   const yun = getYun();
   const domain = req.query.domain as YunDomain | undefined;
   const federation = req.query.federation as FederationId | undefined;
@@ -205,20 +209,20 @@ router.get("/bus/history", (req: Request, res: Response) => {
   res.json({ ok: true, events, count: events.length });
 });
 
-router.get("/bus/state", (req: Request, res: Response) => {
+router.get("/bus/state", requireRdmRole("user"), (req: Request, res: Response) => {
   const yun = getYun();
   const mode = yun.resilience.getCurrentMode();
   res.json({ ok: true, state: yun.bus.getState(mode) });
 });
 
-router.get("/bus/stats", (_req: Request, res: Response) => {
+router.get("/bus/stats", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
   res.json({ ok: true, stats: yun.bus.getStats() });
 });
 
 // ── Resilience ─────────────────────────────────────────────────
 
-router.get("/resilience/mode", (_req: Request, res: Response) => {
+router.get("/resilience/mode", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
   res.json({
     ok: true,
@@ -254,12 +258,12 @@ router.post("/resilience/island-mode",
   res.json({ ok: true, isIslandMode: enter, services });
 });
 
-router.get("/resilience/opa-profile", (_req: Request, res: Response) => {
+router.get("/resilience/opa-profile", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
   res.json({ ok: true, profile: yun.resilience.getOpaDegradationProfile() });
 });
 
-router.get("/resilience/history", (_req: Request, res: Response) => {
+router.get("/resilience/history", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
   res.json({ ok: true, transitions: yun.resilience.getTransitionHistory() });
 });
@@ -272,12 +276,12 @@ router.post("/perception/ingest",
   validate(schemas.yunPerceptionIngest),
   (req: Request, res: Response) => {
   const yun = getYun();
-  const signal: PerceptionSignal = req.body;
+  const signal: PerceptionSignal = sanitizeObject(req.body) as PerceptionSignal;
   const event = yun.perception.ingestSignal(signal);
   res.json({ ok: true, event });
 });
 
-router.get("/perception/signals", (req: Request, res: Response) => {
+router.get("/perception/signals", requireRdmRole("user"), (req: Request, res: Response) => {
   const yun = getYun();
   const limit = parseInt(req.query.limit as string) || 50;
   const source = req.query.source as PerceptionSignal["source"] | undefined;
@@ -285,32 +289,36 @@ router.get("/perception/signals", (req: Request, res: Response) => {
   res.json({ ok: true, signals, count: signals.length });
 });
 
-router.get("/perception/narrative", async (_req: Request, res: Response) => {
+router.get("/perception/narrative", requireRdmRole("user"), async (_req: Request, res: Response) => {
   const yun = getYun();
   const narrative = await yun.perception.getCurrentNarrative();
   res.json({ ok: true, narrative });
 });
 
-router.get("/perception/risk", async (_req: Request, res: Response) => {
+router.get("/perception/risk", requireRdmRole("user"), async (_req: Request, res: Response) => {
   const yun = getYun();
   const risk = await yun.perception.getRiskAssessment();
   res.json({ ok: true, risk });
 });
 
-router.post("/perception/opa-log", (req: Request, res: Response) => {
+router.post("/perception/opa-log",
+  requireRdmRole("operator"),
+  rateLimitByRoute({ name: "yun-perception-opa", limit: 20 }),
+  validate(schemas.yunPerceptionOpaLog),
+  (req: Request, res: Response) => {
   const yun = getYun();
-  const event = yun.perception.ingestOpaDecisionLog(req.body);
+  const event = yun.perception.ingestOpaDecisionLog(sanitizeObject(req.body));
   res.json({ ok: true, event });
 });
 
 // ── Governance ─────────────────────────────────────────────────
 
-router.get("/governance/adrs", (_req: Request, res: Response) => {
+router.get("/governance/adrs", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
   res.json({ ok: true, adrs: yun.governance.getADRs() });
 });
 
-router.get("/governance/adrs/:adrId", (req: Request, res: Response) => {
+router.get("/governance/adrs/:adrId", requireRdmRole("user"), (req: Request, res: Response) => {
   const yun = getYun();
   const adr = yun.governance.getADR(req.params.adrId);
   if (!adr) {
@@ -327,7 +335,7 @@ router.post("/governance/adrs",
   validate(schemas.yunGovernanceAdr),
   (req: Request, res: Response) => {
   const yun = getYun();
-  const proposal = yun.governance.proposeADR(req.body);
+  const proposal = yun.governance.proposeADR(sanitizeObject(req.body));
   res.json({ ok: true, proposal });
 });
 
@@ -337,7 +345,7 @@ router.post("/governance/vote",
   validate(schemas.yunGovernanceVote),
   (req: Request, res: Response) => {
   const yun = getYun();
-  const result = yun.governance.castVote(req.body);
+  const result = yun.governance.castVote(sanitizeObject(req.body));
   if (!result.success) {
     res.status(400).json({ ok: false, ...result });
     return;
@@ -345,7 +353,7 @@ router.post("/governance/vote",
   res.json({ ok: true, ...result });
 });
 
-router.get("/governance/stats", (_req: Request, res: Response) => {
+router.get("/governance/stats", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
   res.json({ ok: true, stats: yun.governance.getGovernanceStats() });
 });
@@ -355,18 +363,19 @@ router.get("/governance/stats", (_req: Request, res: Response) => {
 router.post("/pqc/keys",
   requireRdmRole("admin"),
   rateLimitByRoute({ name: "yun-pqc-keys", limit: 5 }),
+  validate(schemas.yunPqcKeyGenerate),
   (req: Request, res: Response) => {
   const yun = getYun();
-  const key = yun.pqc.generateKeyPair(req.body);
+  const key = yun.pqc.generateKeyPair(sanitizeObject(req.body));
   res.json({ ok: true, key });
 });
 
-router.get("/pqc/keys", (_req: Request, res: Response) => {
+router.get("/pqc/keys", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
   res.json({ ok: true, inventory: yun.pqc.getInventory(), stats: yun.pqc.getInventoryStats() });
 });
 
-router.get("/pqc/keys/:keyId", (req: Request, res: Response) => {
+router.get("/pqc/keys/:keyId", requireRdmRole("user"), (req: Request, res: Response) => {
   const yun = getYun();
   const key = yun.pqc.getKey(req.params.keyId);
   if (!key) {
@@ -402,7 +411,7 @@ router.post("/pqc/keys/:keyId/revoke",
   res.json({ ok: true });
 });
 
-router.get("/pqc/rotation-queue", (_req: Request, res: Response) => {
+router.get("/pqc/rotation-queue", requireRdmRole("user"), (_req: Request, res: Response) => {
   const yun = getYun();
   res.json({ ok: true, keys: yun.pqc.getKeysNeedingRotation() });
 });
@@ -410,30 +419,36 @@ router.get("/pqc/rotation-queue", (_req: Request, res: Response) => {
 router.post("/pqc/handshake",
   requireRdmRole("admin"),
   rateLimitByRoute({ name: "yun-pqc-handshake", limit: 10 }),
+  validate(schemas.yunPqcHandshake),
   (req: Request, res: Response) => {
   const yun = getYun();
-  const result = yun.pqc.hybridHandshake(req.body);
+  const result = yun.pqc.hybridHandshake(sanitizeObject(req.body));
   res.json({ ok: true, handshake: result });
 });
 
 router.post("/pqc/sign",
   requireRdmRole("operator"),
   rateLimitByRoute({ name: "yun-pqc-sign", limit: 20 }),
+  validate(schemas.yunPqcSign),
   (req: Request, res: Response) => {
   const yun = getYun();
-  const result = yun.pqc.hybridSign(req.body);
+  const result = yun.pqc.hybridSign(sanitizeObject(req.body));
   res.json({ ok: true, signature: result });
 });
 
-router.post("/pqc/verify", (req: Request, res: Response) => {
+router.post("/pqc/verify",
+  requireRdmRole("user"),
+  rateLimitByRoute({ name: "yun-pqc-verify", limit: 30 }),
+  validate(schemas.yunPqcVerify),
+  (req: Request, res: Response) => {
   const yun = getYun();
-  const result = yun.pqc.hybridVerify(req.body);
+  const result = yun.pqc.hybridVerify(sanitizeObject(req.body));
   res.json({ ok: true, ...result });
 });
 
 // ── Constitution ───────────────────────────────────────────────
 
-router.get("/constitution/principles", (_req: Request, res: Response) => {
+router.get("/constitution/principles", requireRdmRole("user"), (_req: Request, res: Response) => {
   // Lazy import to avoid circular dependencies
   const constitution = require("../lib/yun/constitution");
   res.json({
