@@ -1,0 +1,56 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  DEPLOY_DIR: /opt/rdm-digital-hub
+  DOCKER_COMPOSE_DIR: /opt/rdm-digital-hub/deploy
+
+jobs:
+  deploy:
+    name: Deploy to Production VPS
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.VPS_SSH_KEY }}
+          known_hosts: ${{ secrets.VPS_KNOWN_HOSTS }}
+
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no rdm-deploy@${{ secrets.VPS_HOST }} "
+            set -euo pipefail;
+            echo '=== Pulling latest code ===';
+            cd ${{ env.DEPLOY_DIR }};
+            git fetch origin;
+            git reset --hard origin/main;
+            echo '';
+            echo '=== Rebuilding services ===';
+            cd ${{ env.DOCKER_COMPOSE_DIR }};
+            docker compose build --no-cache 2>&1;
+            echo '';
+            echo '=== Restarting stack ===';
+            docker compose down --remove-orphans;
+            docker compose up -d 2>&1;
+            echo '';
+            echo '=== Health checks ===';
+            sleep 15;
+            curl -sf http://localhost:8080/healthz && echo ' API OK' || echo ' API FAIL';
+            docker compose ps --format 'table {{.Name}}\t{{.Status}}';
+            echo '';
+            echo '=== Deploy complete ===';
+          "
+
+      - name: Notify failure
+        if: failure()
+        run: |
+          echo "Deploy to ${{ secrets.VPS_HOST }} failed at $(date)"

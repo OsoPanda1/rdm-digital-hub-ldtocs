@@ -85,6 +85,25 @@ if [ ! -f traefik/acme.json ]; then
   ok "acme.json creado con permisos 600"
 fi
 
+# ─── Validate secrets (block placeholders) ────────────────────────────────
+PLACEHOLDER_VALUES=("CHANGE_ME" "your-" "placeholder")
+SECRET_VARS=("DB_PASSWORD" "SUPABASE_JWT_SECRET" "MEXA_API_SECURE_KEY" "YUN_SIGNING_SECRET")
+SECRETS_OK=true
+for var in "${SECRET_VARS[@]}"; do
+  val="${!var:-}"
+  for ph in "${PLACEHOLDER_VALUES[@]}"; do
+    if [[ "$val" == *"$ph"* ]]; then
+      err "$var contiene valor placeholder '$ph' — actualiza deploy/.env antes de desplegar"
+      SECRETS_OK=false
+      break
+    fi
+  done
+done
+if [ "$SECRETS_OK" = false ]; then
+  exit 1
+fi
+ok "Secrets validated"
+
 # ─── Source .env ───────────────────────────────────────────────────────────
 set -a
 source .env
