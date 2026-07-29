@@ -89,14 +89,9 @@ pnpm run test       # Test runner (cuando esté configurado)
 
 ## ⚖️ Licencia
 
-Este proyecto opera bajo un **régimen de licenciamiento híbrido por capas** (ver [LICENSE-HYBRID.md](./LICENSE-HYBRID.md)). Al contribuir, aceptas que tus contribuciones queden sujetas al régimen que corresponda según la capa donde se realicen:
+Este proyecto se rige por el **Contrato Marco de Licenciamiento** ([LICENSE-TAMV-HUB.md](./LICENSE-TAMV-HUB.md)) y la **licencia MIT** ([LICENSE](./LICENSE)) para el código fuente. Al contribuir, aceptas que tus contribuciones queden sujetas a los términos del Contrato Marco y la licencia MIT.
 
-- **`artifacts/api-server/src/lib/yun/`, `artifacts/api-server/src/lib/crown/`, `artifacts/rdm-hub/src/kernel/`** → TAMV‑PRCL v1.0 (Propietario)
-- **`artifacts/api-server/src/lib/isabella/`** (excepto `skills/`) → TAMV‑EOL v1.0 (Ética)
-- **`artifacts/api-server/src/lib/isabella/skills/`** → TAMV‑KÓRIMA (Reciprocidad)
-- **`artifacts/api-server/src/routes/`, `artifacts/api-server/src/middlewares/`, `artifacts/rdm-hub/src/`, `lib/`, `scripts/`, `deploy/`, `docs/`** → MIT
-
-No contribuyas si no estás de acuerdo con los términos de la licencia aplicable a cada capa.
+No contribuyas si no estás de acuerdo con estos términos.
 
 ## ❓ Preguntas
 

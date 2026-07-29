@@ -1,3 +1,5 @@
+> **DEPRECADO** — Este documento ha sido sustituido por el Contrato Marco de Licenciamiento (`LICENSE-TAMV-HUB.md`). Conserva valor histórico. Para efectos legales y operativos, rige exclusivamente lo dispuesto en `LICENSE-TAMV-HUB.md`.
+
 # TAMV‑EOL v1.0 — Licencia Ética y Ontológica para Isabella Villaseñor AI™
 
 **Parte integrante del RFC-0001 / Ecosistema TAMV Online Network™**

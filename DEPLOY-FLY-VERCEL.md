@@ -68,7 +68,7 @@ bash deploy/scripts/setup-vercel.sh
 3. Root Directory: `artifacts/rdm-hub`
 4. Framework Preset: **Vite**
 5. Build Command: `pnpm install --frozen-lockfile && pnpm --filter @workspace/rdm-hub run build`
-6. Output Directory: `dist/public`
+6. Output Directory: `dist`
 7. Deploy
 
 Después del deploy:

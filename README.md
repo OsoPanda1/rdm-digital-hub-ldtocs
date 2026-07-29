@@ -8,7 +8,8 @@
   <a href="https://orcid.org/0009-0008-5050-1539"><img src="https://img.shields.io/badge/ORCID-0009--0008--5050--1539-A6CE39?style=for-the-badge&logo=orcid&logoColor=white" alt="ORCID"></a>
   <a href="https://doi.org/10.5281/zenodo.20606361"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.20606361-0298C5?style=for-the-badge&logo=doi&logoColor=white" alt="DOI Zenodo"></a>
   <a href="https://visitarealdelmonte.online"><img src="https://img.shields.io/badge/Dominio-visitarealdelmonte.online-00C853?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Dominio"></a>
-  <a href="./LICENSE-PRCL.md"><img src="https://img.shields.io/badge/License-TAMV--PRCL-blueviolet?style=for-the-badge" alt="License: TAMV-PRCL"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/Software-MIT-green?style=for-the-badge" alt="Software: MIT"></a>
+  <a href="./LICENSE-TAMV-HUB.md"><img src="https://img.shields.io/badge/Contrato%20Marco-TAMV--HUB-blue?style=for-the-badge" alt="Contract: TAMV-HUB"></a>
 </p>
 
 <table align="center" cellpadding="10">
@@ -52,8 +53,8 @@
 </p>
 <p align="center">
   <a href="https://github.com/OsoPanda1/rdm-digital-hub-ldtocs/actions"><img src="https://img.shields.io/github/actions/workflow/status/OsoPanda1/rdm-digital-hub-ldtocs/ci.yml?label=CI&logo=github" alt="GitHub Actions CI"></a>
-  <a href="./LICENSE-PRCL.md"><img src="https://img.shields.io/badge/License-TAMV--PRCL-blueviolet" alt="License: TAMV-PRCL"></a>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/Software-MIT-green" alt="Software: MIT"></a>
+  <a href="./LICENSE-TAMV-HUB.md"><img src="https://img.shields.io/badge/License-TAMV--HUB-blue" alt="License: TAMV-HUB"></a>
   <a href="./SECURITY.md"><img src="https://img.shields.io/badge/Security-Hardened-red" alt="Security: Hardened"></a>
 </p>
 
@@ -950,14 +951,11 @@ docker compose exec backup-worker /backup.sh
 
 | Componente | Licencia | Archivo |
 |-----------|---------|---------|
-| Software abierto y documentacion | MIT | `LICENSE` |
-| Kernel tecnologico TAMV (`/src/core/`, `/src/kernel/`, `/src/quantum/`) | TAMV-PRCL v1.0 | `LICENSE-PRCL.md` |
-| Motor de IA — Isabella (`/src/isabella/`) | TAMV-EOL v1.0 | `LICENSE-EOL.md` |
-| Interoperabilidad y conectores (`/src/connect/`, `/skills/`) | TAMV-KORIMA | `LICENSE-KORIMA.md` |
-| Hibrido | TAMV-HYBRID | `LICENSE-HYBRID.md` |
-| Datos territoriales y soberania (`/supabase/`, telemetry, RLS) | DPA | `DATA-SOVEREIGNTY-DPA.md` |
+| Software (codigo fuente) | MIT | `LICENSE` |
+| Contrato Marco (datos, contenido, IA, operacion, gobernanza territorial) | TAMV-HUB | `LICENSE-TAMV-HUB.md` |
+| Datos territoriales y soberania | DPA | `DATA-SOVEREIGNTY-DPA.md` |
 
-Ver `RFC-0001-MANIFEST.md` para el manifesto completo de licenciamiento hibrido.
+El `LICENSE-TAMV-HUB.md` es el documento rector del Sistema y sustituye los anteriores regimenes por capas (PRCL, EOL, KORIMA, HYBRID), que se conservan como referencia historica.
 
 ---
 

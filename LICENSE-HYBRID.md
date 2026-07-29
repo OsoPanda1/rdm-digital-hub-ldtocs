@@ -1,3 +1,5 @@
+> **DEPRECADO** — Este documento ha sido sustituido por el Contrato Marco de Licenciamiento (`LICENSE-TAMV-HUB.md`). Conserve valor histórico y arquitectónico como referencia del diseño original por capas. Para efectos legales y operativos, rige exclusivamente lo dispuesto en `LICENSE-TAMV-HUB.md`.
+
 # ARCHITECTURE OF HYBRID LICENSING — TAMV ONLINE NETWORK™
 
 ## Marco de Licenciamiento por Capas

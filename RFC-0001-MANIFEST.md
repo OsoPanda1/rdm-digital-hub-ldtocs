@@ -239,11 +239,11 @@ La respuesta debe ser rápida, consistente y documentada para que la prueba no s
 
 Este documento deberá conservarse en:
 - `/RFC-0001-MANIFEST.md` (← estás aquí)
-- `/LICENSE-HYBRID.md`
-- `/LICENSE-PRCL.md`
-- `/LICENSE-EOL.md`
-- `/LICENSE-KORIMA.md`
+- `/LICENSE-TAMV-HUB.md` (Contrato Marco — documento rector)
+- `/LICENSE` (MIT para software)
 - `/DATA-SOVEREIGNTY-DPA.md`
+
+Los anteriores `LICENSE-HYBRID.md`, `LICENSE-PRCL.md`, `LICENSE-EOL.md` y `LICENSE-KORIMA.md` se conservan como referencia histórica, derogados por `LICENSE-TAMV-HUB.md`.
 
 La versión canónica será la última firmada digitalmente por el titular del proyecto y respaldada por evidencia de integridad.
 
