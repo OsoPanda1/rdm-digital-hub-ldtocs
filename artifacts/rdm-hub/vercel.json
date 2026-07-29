@@ -1,0 +1,9 @@
+{
+  "buildCommand": "pnpm install --frozen-lockfile && pnpm --filter @workspace/rdm-hub run build",
+  "outputDirectory": "dist/public",
+  "installCommand": null,
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

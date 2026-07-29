@@ -1,0 +1,45 @@
+# fly.toml — RDM Digital Hub API Server (Fly.io)
+app = "rdm-api"
+primary_region = "iad"
+
+[build]
+  dockerfile = "artifacts/api-server/Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  PORT = "8080"
+  RDM_SECURITY_PROFILE = "production"
+  RDM_FEDERATION_MODE = "heptafederado-prod"
+  RDM_OBSERVABILITY_MODE = "standard"
+  LOG_LEVEL = "info"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  max_machines_running = 1
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "connections"
+    hard_limit = 100
+    soft_limit = 50
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "10s"
+    grace_period = "30s"
+    method = "get"
+    path = "/healthz"
+    protocol = "http"
+
+[mounts]
+  source = "rdm_data"
+  destination = "/data"
+
+[metadata]
+  description = "RDM Digital Hub API — Heptafederation Gateway"
+  platform = "rdm"
+  node = "cero"
