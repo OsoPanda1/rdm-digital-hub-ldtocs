@@ -10,7 +10,8 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 60 * 1000, // 1 minute
-      retry: 1,
+      retry: 2,
+      retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 10000),
       refetchOnWindowFocus: false,
     },
   },
@@ -23,6 +24,8 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || '/api/v1';
 
 // Request timeout
 const TIMEOUT_MS = 30000;
+
+const MAX_RETRIES = 2;
 
 export interface ApiError {
   code: string;
@@ -41,6 +44,14 @@ export interface ApiResponse<T> {
   };
 }
 
+// Offline detection
+let isOnline = typeof navigator !== 'undefined' ? navigator.onLine : true;
+if (typeof window !== 'undefined') {
+  window.addEventListener('online', () => { isOnline = true; });
+  window.addEventListener('offline', () => { isOnline = false; });
+}
+export function getOnlineStatus(): boolean { return isOnline; }
+
 // Helper function to get auth token
 const getToken = (): string | null => {
   if (typeof window !== 'undefined') {
@@ -49,11 +60,16 @@ const getToken = (): string | null => {
   return null;
 };
 
-// Helper for API requests
+// Helper for API requests with retry + offline fallback
 async function apiRequest<T>(
   endpoint: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  retries = MAX_RETRIES
 ): Promise<T> {
+  if (!isOnline) {
+    throw { code: 'OFFLINE', message: 'No internet connection' } as ApiError;
+  }
+
   const token = getToken();
   
   const headers: HeadersInit = {
@@ -94,9 +110,18 @@ async function apiRequest<T>(
     return response.json();
   } catch (error: unknown) {
     clearTimeout(timeoutId);
+
     if (error instanceof DOMException && error.name === 'AbortError') {
       throw { code: 'TIMEOUT', message: 'Request timed out' } as ApiError;
     }
+
+    const apiErr = error as ApiError;
+    // Retry on server errors or network failures (not 4xx)
+    if (retries > 0 && (!apiErr.code || apiErr.code === 'TIMEOUT' || apiErr.code === 'UNKNOWN_ERROR')) {
+      await new Promise((r) => setTimeout(r, Math.min(1000 * 2 ** (MAX_RETRIES - retries + 1), 10000)));
+      return apiRequest<T>(endpoint, options, retries - 1);
+    }
+
     throw error;
   }
 }

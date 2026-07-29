@@ -111,6 +111,30 @@ app.use(
   }),
 );
 
+// --------- COOKIE & SESSION HARDENING (MD-X4 Phase 1) ---------
+
+app.use((_req, res, next) => {
+  // Remove fingerprinting headers
+  res.removeHeader("X-Powered-By");
+  // Set cookie hardening defaults via Set-Cookie rewriting
+  const originalSetHeader = res.setHeader.bind(res);
+  res.setHeader = function (name: string, value: string | number | readonly string[]) {
+    const lower = name.toLowerCase();
+    if (lower === "set-cookie" && typeof value === "string") {
+      const parts = value.split(";").map((p) => p.trim());
+      const hasSameSite = parts.some((p) => p.toLowerCase().startsWith("samesite"));
+      const hasSecure = parts.some((p) => p.toLowerCase() === "secure");
+      const hasHttpOnly = parts.some((p) => p.toLowerCase() === "httponly");
+      if (!hasSameSite) parts.push("SameSite=Lax");
+      if (!hasSecure && NODE_ENV === "production") parts.push("Secure");
+      if (!hasHttpOnly) parts.push("HttpOnly");
+      value = parts.join("; ");
+    }
+    return originalSetHeader(name, value);
+  };
+  next();
+});
+
 // CORS: explicit allowlist in production, permissive in dev only
 app.use(
   cors({
