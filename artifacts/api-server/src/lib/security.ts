@@ -28,9 +28,25 @@ function roleRank(role: RdmRole) {
   return ROLE_ORDER.indexOf(role);
 }
 
+const TRUSTED_PROXY_RANGES = ["127.0.0.0/8", "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"];
+
+function isPrivateIp(ip: string): boolean {
+  if (ip.startsWith("127.") || ip.startsWith("10.") || ip.startsWith("192.168.")) return true;
+  if (ip.startsWith("172.")) { const seg = parseInt(ip.split(".")[1]!, 10); return seg >= 16 && seg <= 31; }
+  return ip === "::1" || ip === "localhost";
+}
+
 function clientIp(req: Request): string {
   const forwarded = req.headers["x-forwarded-for"];
-  if (typeof forwarded === "string" && forwarded.trim()) return forwarded.split(",")[0]!.trim();
+  if (typeof forwarded === "string" && forwarded.trim()) {
+    const ips = forwarded.split(",").map((s) => s.trim()).filter(Boolean);
+    // Walk the chain from right to left, skipping trusted proxies
+    for (let i = ips.length - 1; i >= 0; i--) {
+      if (!isPrivateIp(ips[i]!)) return ips[i]!;
+    }
+    // All IPs in chain are private — return the leftmost (original client)
+    return ips[0]!;
+  }
   return req.ip || req.socket.remoteAddress || "unknown";
 }
 

@@ -1,0 +1,31 @@
+# RDM Digital Hub — CODEOWNERS
+# Only administrators can approve changes to critical paths.
+# @OsoPanda1 is the sole admin until the collaboration model is ratified.
+
+# ─── Foundational & Governance ──────────────────────────────────────────────
+/docs/foundational/          @OsoPanda1
+/docs/adr/                   @OsoPanda1
+/.github/                    @OsoPanda1
+CODEOWNERS                   @OsoPanda1
+LICENSE                      @OsoPanda1
+
+# ─── Security & Authentication ─────────────────────────────────────────────
+/artifacts/api-server/src/lib/security.ts       @OsoPanda1
+/artifacts/api-server/src/lib/env.ts            @OsoPanda1
+/artifacts/api-server/src/middlewares/auth.ts   @OsoPanda1
+/artifacts/api-server/src/lib/api-response.ts   @OsoPanda1
+/supabase/policies/            @OsoPanda1
+
+# ─── Deployment & Infrastructure ────────────────────────────────────────────
+/deploy/                      @OsoPanda1
+Dockerfile                    @OsoPanda1
+docker-compose.yml            @OsoPanda1
+
+# ─── CI/CD ──────────────────────────────────────────────────────────────────
+/.github/workflows/           @OsoPanda1
+
+# ─── Core API Routes ────────────────────────────────────────────────────────
+/artifacts/api-server/src/routes/ @OsoPanda1
+
+# ─── Everything else (requires at least one review) ─────────────────────────
+*                              @OsoPanda1

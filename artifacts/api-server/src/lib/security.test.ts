@@ -8,7 +8,7 @@ import type { Request, Response, NextFunction } from "express";
 // We test security.ts functions by importing them directly.
 // Since security.ts uses logger which needs pino, we mock it.
 vi.mock("../lib/logger", () => ({
-  logger: { warn: vi.fn(), info: vi.fn(), error: vi.fn(), info: vi.fn() },
+  logger: { warn: vi.fn(), info: vi.fn(), error: vi.fn() },
 }));
 
 import { attachRdmIdentity, requireRdmRole, rateLimitByRoute, type RdmRole } from "../lib/security";

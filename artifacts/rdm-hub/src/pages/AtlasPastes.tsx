@@ -11,7 +11,7 @@ import img from "@/assets/chapter-pastes.jpg";
 const tags: Record<string, string> = {
   tradicional: "Tradicional",
   mestizo: "Mestizo",
-  contemporÃ¡neo: "ContemporÃ¡neo",
+  contemporáneo: "Contemporáneo",
 };
 
 export default function AtlasPastes() {

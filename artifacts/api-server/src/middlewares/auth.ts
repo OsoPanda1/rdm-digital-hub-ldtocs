@@ -23,6 +23,7 @@ export interface JwtPayload {
   exp: number;
   iat: number;
   iss: string;
+  nbf?: number;
 }
 
 export interface AuthenticatedIdentity {
@@ -84,16 +85,30 @@ export function verifySupabaseJwt(
   try {
     const payload: JwtPayload = JSON.parse(base64UrlDecode(payloadB64).toString("utf8"));
 
-    // Check expiration
     const now = Math.floor(Date.now() / 1000);
+
+    // Check expiration
     if (payload.exp && payload.exp < now) {
       return { valid: false, error: "JWT expired" };
     }
 
-    // Check issuer (Supabase uses its project URL as issuer)
-    if (payload.iss && !payload.iss.startsWith("https://")) {
-      // Soft check â€” log warning but don't reject (Supabase issuer format varies)
-      logger.warn({ iss: payload.iss }, "JWT issuer unexpected format");
+    // nbf (not before) claim — reject if token used before nbf
+    if (payload.nbf && payload.nbf > now) {
+      return { valid: false, error: "JWT not yet valid (nbf)" };
+    }
+
+    // aud (audience) claim — must match our API
+    const expectedAud = process.env.JWT_EXPECTED_AUDIENCE || "authenticated";
+    if (payload.aud && payload.aud !== expectedAud) {
+      logger.warn({ aud: payload.aud, expected: expectedAud }, "JWT audience mismatch");
+      return { valid: false, error: "JWT audience mismatch" };
+    }
+
+    // iss (issuer) claim — must be a known Supabase project URL
+    const expectedIss = process.env.JWT_EXPECTED_ISSUER;
+    if (payload.iss && expectedIss && payload.iss !== expectedIss) {
+      logger.warn({ iss: payload.iss, expected: expectedIss }, "JWT issuer mismatch");
+      return { valid: false, error: "JWT issuer mismatch" };
     }
 
     return { valid: true, payload };

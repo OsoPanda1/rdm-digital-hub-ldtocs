@@ -71,9 +71,24 @@ app.use(
 
 // --------- SEGURIDAD BASE ---------
 
+const CSP_DIRECTIVES = {
+  "default-src": ["'self'"],
+  "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://*.supabase.co"],
+  "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+  "img-src": ["'self'", "data:", "blob:", "https://*.supabase.co", "https://*.hostinger.com"],
+  "font-src": ["'self'", "https://fonts.gstatic.com"],
+  "connect-src": ["'self'", "https://*.supabase.co", "https://api.visitarealdelmonte.online"],
+  "frame-ancestors": ["'none'"],
+  "form-action": ["'self'"],
+  "base-uri": ["'self'"],
+  "upgrade-insecure-requests": [],
+};
+
 app.use(
   helmet({
-    contentSecurityPolicy: NODE_ENV === "production" ? undefined : false,
+    contentSecurityPolicy: NODE_ENV === "production"
+      ? { directives: CSP_DIRECTIVES }
+      : false,
     hsts: NODE_ENV === "production" ? { maxAge: 31536000, includeSubDomains: true, preload: true } : false,
     referrerPolicy: { policy: "strict-origin-when-cross-origin" },
     permissionsPolicy: {
@@ -94,32 +109,41 @@ app.use(
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (curl, server-to-server)
       if (!origin) return callback(null, true);
 
-      // In development, allow only localhost origins
       if (NODE_ENV !== "production") {
         const devOrigins = ["http://localhost:3000", "http://localhost:5173", "http://localhost:22942", "http://0.0.0.0:22942"];
-        if (!origin || devOrigins.includes(origin) || origin.startsWith("http://localhost:")) {
+        if (devOrigins.includes(origin) || origin.startsWith("http://localhost:")) {
           return callback(null, true);
         }
-        return callback(new Error(`CORS: Dev origin ${origin} not allowed.`));
+        callback(new Error(`CORS: Dev origin ${origin} not allowed.`));
+        return;
       }
 
-      // In production, check allowlist
       if (ALLOWED_ORIGINS.length === 0) {
-        logger.warn("ALLOWED_ORIGINS is empty â€” CORS will reject all cross-origin requests.");
-        return callback(new Error("CORS: No allowed origins configured."));
+        logger.warn("ALLOWED_ORIGINS is empty — CORS will reject all cross-origin requests.");
+        callback(new Error("CORS: No allowed origins configured."));
+        return;
       }
       if (ALLOWED_ORIGINS.includes(origin)) {
-        return callback(null, true);
+        callback(null, true);
+        return;
       }
       logger.warn({ origin }, "CORS: Origin not in allowlist.");
-      return callback(new Error(`CORS: Origin ${origin} not allowed.`));
+      callback(new Error(`CORS: Origin ${origin} not allowed.`));
     },
     credentials: true,
   }),
 );
+
+// Custom CORS error handler — return 403 JSON instead of 500
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  if (err.message.startsWith("CORS:")) {
+    res.status(403).json({ ok: false, error: { code: "CORS_ERROR", message: err.message } });
+    return;
+  }
+  next(err);
+});
 
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true, limit: "1mb" }));

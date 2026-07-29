@@ -38,6 +38,13 @@ function requireEnv(key: string, fallback?: string): string {
   return value;
 }
 
+const PLACEHOLDER_PATTERNS = ["placeholder", "changeme", "not-for-production", "your-"];
+
+function isPlaceholder(val: string): boolean {
+  const lower = val.toLowerCase();
+  return PLACEHOLDER_PATTERNS.some((p) => lower.includes(p));
+}
+
 let _config: EnvConfig | null = null;
 
 export function loadEnv(): EnvConfig {
@@ -58,15 +65,32 @@ export function loadEnv(): EnvConfig {
   if (isProduction && missing.length > 0) {
     throw new Error(
       `Missing required environment variables: ${missing.join(", ")}. ` +
-      `Set them in your deployment environment (Replit Secrets).`
+      `Set them in your deployment environment.`
     );
   }
 
   if (missing.length > 0) {
     logger.warn(
       { missing, nodeEnv: env },
-      "Missing environment variables â€” using dev fallbacks. Do NOT use these values in production.",
+      "Missing environment variables — using dev fallbacks. Do NOT use these values in production.",
     );
+  }
+
+  // Block placeholder values in production
+  if (isProduction) {
+    const placeholderVars = [
+      ["MEXA_API_SECURE_KEY", mexaKey],
+      ["YUN_SIGNING_SECRET", yunSecret],
+      ["SUPABASE_JWT_SECRET", process.env.SUPABASE_JWT_SECRET ?? ""],
+      ["DATABASE_URL", databaseUrl],
+    ].filter(([_, v]) => isPlaceholder(v));
+    if (placeholderVars.length > 0) {
+      const names = placeholderVars.map(([n]) => n).join(", ");
+      throw new Error(
+        `Placeholder values detected in production for: ${names}. ` +
+        `Set real secrets before deploying.`
+      );
+    }
   }
 
   _config = {

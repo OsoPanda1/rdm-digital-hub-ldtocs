@@ -57,7 +57,15 @@ export function usePaginated<T>(
 
         // Normalize response format
         let normalized: PaginatedResponse<T>;
-        if (json.data && typeof json.totalItems === "number") {
+        if (json.ok && json.data && json.pagination) {
+          normalized = {
+            data: json.data,
+            page: json.pagination.page,
+            pageSize: json.pagination.pageSize,
+            totalItems: json.pagination.totalItems,
+            totalPages: json.pagination.totalPages,
+          };
+        } else if (json.data && typeof json.totalItems === "number") {
           normalized = json as PaginatedResponse<T>;
         } else if (json.items && json.pagination) {
           normalized = {
