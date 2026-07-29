@@ -17,7 +17,7 @@ import {
   type PlayerContext,
 } from "../services/narrator";
 import { getDb, isDbAvailable } from "../lib/db-client";
-import { players, playerEvents, playerCurrencies } from "../../db/schema";
+import { players, playerEvents, playerCurrencies } from "../db/schema";
 import { eq, desc, sql } from "drizzle-orm";
 
 async function buildPlayerContext(playerId: string): Promise<PlayerContext> {

@@ -119,6 +119,7 @@ export function validate(schema: Schema) {
       res.status(400).json({
         ok: false,
         error: { code: "VALIDATION_ERROR", message: "Request validation failed", details: errors },
+        details: errors,
       });
       return;
     }

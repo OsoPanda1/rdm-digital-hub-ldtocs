@@ -57,3 +57,16 @@ export function createPRA(): PRA {
     },
   };
 }
+
+
+export function createScorePra() {
+  const pra = createPRA();
+  return {
+    score: (_contentId: string, input: { timestamp?: number; frequency?: number }) => pra.compute({
+      queryTime: Date.now(),
+      lastAccessTime: input.timestamp ?? Date.now(),
+      accessCount: input.frequency ?? 1,
+      relevanceScore: 0.75,
+    }),
+  };
+}

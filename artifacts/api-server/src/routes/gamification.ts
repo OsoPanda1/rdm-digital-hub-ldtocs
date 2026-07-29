@@ -6,14 +6,13 @@
 // Gamification API — Unified engine + SSE + GPS verification + Rewards.
 // ADR-001: docs/adr/001-rdm-living-world-gamification.md
 
+import { createHmac, timingSafeEqual } from "node:crypto";
 import type { Router, Request, Response } from "express";
 import { auditSecurityEvent, rateLimitByRoute, requireRdmRole } from "../lib/security";
 import {
   createUnifiedGamificationEngine,
-  RANKS,
+  RANK_THRESHOLDS,
   XP_LEVEL_TABLE,
-  calculateLevel,
-  calculateRank,
   gamificationBus,
 } from "../lib/gamification/engine";
 import { apiSuccess, apiError } from "../lib/api-response";
@@ -23,6 +22,31 @@ import { validate, schemas } from "../middlewares/validate";
 //  Module-level engine singleton
 // ─────────────────────────────────────────────────────────────────────
 const engine = createUnifiedGamificationEngine();
+
+const GAMIFICATION_SIGNING_SECRET = process.env.RDM_GAMIFICATION_SIGNING_SECRET ?? process.env.YUN_SIGNING_SECRET ?? "";
+
+function canonicalizeRewardPayload(userId: string, eventType: string, payload: unknown, timestamp: unknown, nonce: unknown): string {
+  return JSON.stringify({ userId, eventType, payload: payload ?? {}, timestamp: String(timestamp ?? ""), nonce: String(nonce ?? "") });
+}
+
+function verifyGamificationSignature(req: Request, userId: string, eventType: string, payload: unknown): { ok: true } | { ok: false; error: string } {
+  if (!GAMIFICATION_SIGNING_SECRET) return { ok: false, error: "missing_server_signing_secret" };
+  const signature = String(req.headers["x-rdm-signature"] ?? "");
+  const timestamp = req.headers["x-rdm-timestamp"];
+  const nonce = req.headers["x-rdm-nonce"];
+  if (!signature || !timestamp || !nonce) return { ok: false, error: "missing_signature_headers" };
+  const ts = Number(timestamp);
+  if (!Number.isFinite(ts) || Math.abs(Date.now() - ts) > 5 * 60_000) return { ok: false, error: "stale_signature" };
+  const expected = createHmac("sha256", GAMIFICATION_SIGNING_SECRET)
+    .update(canonicalizeRewardPayload(userId, eventType, payload, timestamp, nonce))
+    .digest("hex");
+  const received = signature.startsWith("sha256=") ? signature.slice(7) : signature;
+  const a = Buffer.from(expected, "hex");
+  const b = Buffer.from(received, "hex");
+  if (a.length !== b.length || !timingSafeEqual(a, b)) return { ok: false, error: "invalid_signature" };
+  return { ok: true };
+}
+
 
 // ─────────────────────────────────────────────────────────────────────
 //  MOCK DATA — kept for Living World endpoints not yet backed by DB
@@ -283,12 +307,18 @@ export function registerGamificationRoutes(router: Router) {
         const userId = identity?.subject ?? "anonymous";
         const { amount = 0, reason = "manual", idempotencyKey = null } = req.body ?? {};
         const numAmount = Math.max(0, Math.min(Number(amount) || 0, 250));
+        const signatureCheck = verifyGamificationSignature(req, userId, "AWARD_XP", { amount: numAmount, reason, idempotencyKey });
+        if (!signatureCheck.ok) {
+          auditSecurityEvent(req, "gamification.award_xp.rejected", { userId, reason: signatureCheck.error });
+          res.status(401).json(apiError("INVALID_REWARD_SIGNATURE", signatureCheck.error));
+          return;
+        }
         auditSecurityEvent(req, "gamification.award_xp", { userId, amount: numAmount, reason });
 
-        const result = await engine.processEvent({
-          userId,
-          eventType: "AWARD_XP",
+        const result = await engine.processEvent(userId, {
+          type: "AWARD_XP",
           payload: { amount: numAmount, reason, idempotencyKey },
+          idempotencyKey: idempotencyKey ?? undefined,
         });
         res.status(200).json(apiSuccess(result));
       } catch (err) { next(err); }
@@ -296,7 +326,7 @@ export function registerGamificationRoutes(router: Router) {
   );
 
   router.get("/v1/gamification/ranks", (_req: Request, res: Response) => {
-    res.status(200).json(apiSuccess(RANKS));
+    res.status(200).json(apiSuccess(RANK_THRESHOLDS));
   });
 
   // ─────────────────────────────────────────────────────────────────
@@ -317,9 +347,15 @@ export function registerGamificationRoutes(router: Router) {
           return;
         }
 
+        const signatureCheck = verifyGamificationSignature(req, userId, eventType, payload);
+        if (!signatureCheck.ok) {
+          auditSecurityEvent(req, "gamification.event.rejected", { userId, eventType, reason: signatureCheck.error });
+          res.status(401).json(apiError("INVALID_REWARD_SIGNATURE", signatureCheck.error));
+          return;
+        }
         auditSecurityEvent(req, "gamification.event", { userId, eventType });
 
-        const eventResult = await engine.processEvent({ userId, eventType, payload });
+        const eventResult = await engine.processEvent(userId, { type: eventType, payload });
         res.status(200).json(apiSuccess(eventResult));
       } catch (err) { next(err); }
     },
@@ -401,9 +437,9 @@ export function registerGamificationRoutes(router: Router) {
 
         let xpAwarded = 0;
         if (verified) {
-          const result = await engine.processEvent({
-            userId,
-            eventType: "DISCOVER_POI",
+          const result = await engine.processEvent(userId, {
+            type: "poi_visit",
+            poiId,
             payload: { poiId, distance: Math.round(distance), lat, lng },
           });
           xpAwarded = result.xpAwarded ?? 0;
@@ -456,9 +492,8 @@ export function registerGamificationRoutes(router: Router) {
 
         auditSecurityEvent(req, "gamification.redeem", { userId, rewardId, xpCost: reward.xpCost });
 
-        await engine.processEvent({
-          userId,
-          eventType: "REWARD_REDEEMED",
+        await engine.processEvent(userId, {
+          type: "REWARD_REDEEMED",
           payload: { rewardId, xpCost: reward.xpCost },
         });
 
@@ -521,11 +556,18 @@ export function registerGamificationRoutes(router: Router) {
         const identity = (req as any).rdmIdentity;
         const userId = identity?.subject ?? "anonymous";
 
+        const signatureCheck = verifyGamificationSignature(req, userId, type, { territoryId, poiId, ...payload });
+        if (!signatureCheck.ok) {
+          auditSecurityEvent(req, "living_world.player_action.rejected", { userId, type, reason: signatureCheck.error });
+          res.status(401).json(apiError("INVALID_REWARD_SIGNATURE", signatureCheck.error));
+          return;
+        }
         auditSecurityEvent(req, "living_world.player_action", { userId, type, territoryId, poiId });
 
-        const result = await engine.processEvent({
-          userId,
-          eventType: type,
+        const result = await engine.processEvent(userId, {
+          type,
+          territoryId: territoryId ?? undefined,
+          poiId: poiId ?? undefined,
           payload: { territoryId, poiId, ...payload },
         });
 
@@ -537,7 +579,7 @@ export function registerGamificationRoutes(router: Router) {
           xpAwarded: result.xpAwarded ?? 0,
           leveledUp: result.leveledUp ?? false,
           newRank: result.newRank ?? null,
-          badgesEarned: result.badgesEarned ?? [],
+          badgesEarned: [],
         }));
       } catch (err) { next(err); }
     },

@@ -395,3 +395,8 @@ export async function recordMusicAction(
     return null;
   }
 }
+
+// Backward-compatible mock aliases consumed by legacy music page during Vercel builds.
+export const MOCK_TRACKS = FALLBACK_TRACKS;
+export const MOCK_CRONICAS = FALLBACK_CRONICAS;
+export const MOCK_EVENTS = FALLBACK_EVENTS;

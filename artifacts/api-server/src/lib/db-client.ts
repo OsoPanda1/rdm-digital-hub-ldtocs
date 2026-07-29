@@ -9,7 +9,7 @@
 
 import { drizzle } from "drizzle-orm/node-postgres";
 import pg from "pg";
-import * as schema from "../../db/schema";
+import * as schema from "../db/schema";
 
 const { Pool } = pg;
 
@@ -57,3 +57,11 @@ export async function closeDb(): Promise<void> {
 export function isDbAvailable(): boolean {
   return !!process.env.DATABASE_URL;
 }
+
+export const db = new Proxy({}, {
+  get(_target, prop) {
+    const current = getDb() as any;
+    const value = current[prop as keyof typeof current];
+    return typeof value === "function" ? value.bind(current) : value;
+  },
+}) as ReturnType<typeof getDb>;

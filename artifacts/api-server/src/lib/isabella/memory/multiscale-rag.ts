@@ -8,7 +8,7 @@
 // segÃºn 7 tipos de memoria: session, persona, ecosystem, cultural, lesson, pattern, incident
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-import { db } from "../../../db-client";
+import { db } from "../../db-client";
 import { isabellaKnowledge, isabellaMemory } from "../../../db/schema";
 import { sql } from "drizzle-orm";
 import type { MemoryType } from "../memory/engine";
@@ -130,5 +130,15 @@ export function createMultiscaleRAG(): MultiscaleRAG {
         return { totalMemory: lastIngestCount, totalKnowledge: 0, byType: {} };
       }
     },
+  };
+}
+
+
+export function createMultiscaleRag() {
+  const rag = createMultiscaleRAG();
+  return {
+    ...rag,
+    query: (query: string, types?: MemoryType[], limit?: number) => rag.query({ text: query, types, maxResults: limit }),
+    store: async (entry: { type: string; content: string; tags?: string[]; source?: string; ttl?: number; confidence?: number }) => ({ id: `mem-${Date.now()}`, ...entry, createdAt: new Date().toISOString() }),
   };
 }

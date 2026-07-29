@@ -261,7 +261,7 @@ export const validateRdmPoiCoordinates = (poi: Pick<RdmPoi, "lat" | "lng">) =>
 export const CATEGORY_META: Record<RdmCategory, { color: string; emoji: string; label: string }> = {
   Historia: { color: "#D4A03C", emoji: "â›ï¸", label: "Historia" },
   Cultura: { color: "#3B82F6", emoji: "ðŸŽ­", label: "Cultura" },
-  GastronomÃ­a: { color: "#F97316", emoji: "ðŸ¥Ÿ", label: "GastronomÃ­a" },
+  "Gastronomía": { color: "#F97316", emoji: "ðŸ¥Ÿ", label: "GastronomÃ­a" },
   Ecoturismo: { color: "#22C55E", emoji: "ðŸŒ²", label: "Ecoturismo" },
   Patrimonio: { color: "#A855F7", emoji: "ðŸ›ï¸", label: "Patrimonio" },
   Religioso: { color: "#EC4899", emoji: "â›ª", label: "Religioso" },
