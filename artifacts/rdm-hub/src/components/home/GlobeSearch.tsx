@@ -4,7 +4,7 @@
  */
 /**
  * Globe Search - Buscador global con globo 3D interactivo
- * Se transforma de globo a barra de bÃºsqueda
+ * Se transforma de globo a barra de búsqueda
  */
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -63,7 +63,7 @@ const GlobeSearch: React.FC<GlobeSearchProps> = ({ onSearch }) => {
       ctx.fillStyle = gradient;
       ctx.fill();
 
-      // LÃ­neas de longitud
+      // Líneas de longitud
       ctx.strokeStyle = 'rgba(0, 240, 255, 0.3)';
       ctx.lineWidth = 0.5;
       for (let i = 0; i < 12; i++) {
@@ -81,7 +81,7 @@ const GlobeSearch: React.FC<GlobeSearchProps> = ({ onSearch }) => {
         ctx.stroke();
       }
 
-      // LÃ­neas de latitud
+      // Líneas de latitud
       for (let i = 1; i < 6; i++) {
         const y = centerY - radius + (i * radius * 2 / 6);
         const latRadius = Math.sqrt(radius * radius - Math.pow(y - centerY, 2));
@@ -156,7 +156,7 @@ const GlobeSearch: React.FC<GlobeSearchProps> = ({ onSearch }) => {
 
   const quickFilters = [
     { icon: Users, label: 'Grupos', color: 'text-cyan-400' },
-    { icon: Music, label: 'MÃºsica', color: 'text-green-400' },
+    { icon: Music, label: 'Música', color: 'text-green-400' },
     { icon: Calendar, label: 'Eventos', color: 'text-purple-400' },
     { icon: ShoppingBag, label: 'Marketplace', color: 'text-amber-400' },
   ];
@@ -188,7 +188,7 @@ const GlobeSearch: React.FC<GlobeSearchProps> = ({ onSearch }) => {
             <div className="absolute inset-0 rounded-full bg-cyan-500/10 blur-xl animate-pulse pointer-events-none" />
           </motion.div>
         ) : (
-          // Barra de bÃºsqueda expandida
+          // Barra de búsqueda expandida
           <motion.div
             key="searchbar"
             initial={{ opacity: 0, width: 300 }}
@@ -242,7 +242,7 @@ const GlobeSearch: React.FC<GlobeSearchProps> = ({ onSearch }) => {
                 </Button>
               </div>
 
-              {/* Filtros rÃ¡pidos */}
+              {/* Filtros rápidos */}
               <div className="flex items-center gap-2 mt-4 justify-center">
                 {quickFilters.map((filter) => (
                   <Button
@@ -276,7 +276,7 @@ const GlobeSearch: React.FC<GlobeSearchProps> = ({ onSearch }) => {
         )}
       </AnimatePresence>
 
-      {/* TÃ­tulo */}
+      {/* Título */}
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

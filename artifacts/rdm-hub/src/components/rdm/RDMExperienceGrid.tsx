@@ -11,11 +11,11 @@ import plateriasImg from "@/assets/platerias.png";
 import artesaniasImg from "@/assets/artesanias.png";
 
 const EXPERIENCES = [
-  { id: "historia", title: "Historia Minera", subtitle: "500 aÃ±os de plata", icon: Pickaxe, to: "/historia", span: "col-span-2 row-span-2", gradient: "from-amber-900/80 via-amber-800/40", image: null },
-  { id: "gastronomia", title: "GastronomÃ­a", subtitle: "Pastes & tradiciÃ³n", icon: Utensils, to: "/gastronomia", span: "col-span-1 row-span-1", gradient: "from-emerald-900/80 via-emerald-800/40", image: pasteriasImg },
+  { id: "historia", title: "Historia Minera", subtitle: "500 años de plata", icon: Pickaxe, to: "/historia", span: "col-span-2 row-span-2", gradient: "from-amber-900/80 via-amber-800/40", image: null },
+  { id: "gastronomia", title: "Gastronomía", subtitle: "Pastes & tradición", icon: Utensils, to: "/gastronomia", span: "col-span-1 row-span-1", gradient: "from-emerald-900/80 via-emerald-800/40", image: pasteriasImg },
   { id: "aventura", title: "Aventura", subtitle: "Sierra salvaje", icon: Mountain, to: "/ecoturismo", span: "col-span-1 row-span-1", gradient: "from-red-900/80 via-red-800/40", image: null },
-  { id: "hospedaje", title: "PlaterÃ­as", subtitle: "ArtesanÃ­a en plata", icon: Bed, to: "/directorio", span: "col-span-1 row-span-1", gradient: "from-purple-900/80 via-purple-800/40", image: plateriasImg },
-  { id: "cultura", title: "ArtesanÃ­as", subtitle: "Tradiciones ancestrales", icon: Palette, to: "/cultura", span: "col-span-1 row-span-1", gradient: "from-blue-900/80 via-blue-800/40", image: artesaniasImg },
+  { id: "hospedaje", title: "Platerías", subtitle: "Artesanía en plata", icon: Bed, to: "/directorio", span: "col-span-1 row-span-1", gradient: "from-purple-900/80 via-purple-800/40", image: plateriasImg },
+  { id: "cultura", title: "Artesanías", subtitle: "Tradiciones ancestrales", icon: Palette, to: "/cultura", span: "col-span-1 row-span-1", gradient: "from-blue-900/80 via-blue-800/40", image: artesaniasImg },
 ];
 
 export function RDMExperienceGrid() {

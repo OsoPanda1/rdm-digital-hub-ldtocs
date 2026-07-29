@@ -101,7 +101,7 @@ export class GuardianLearningLoop {
         .slice(0, 100);
     }
 
-    logger.debug("[GUARDIAN_LEARN] PatrÃ³n registrado", {
+    logger.debug("[GUARDIAN_LEARN] Patrón registrado", {
       condition,
       action,
       outcome: sample.outcome,

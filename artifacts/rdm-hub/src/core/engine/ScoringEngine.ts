@@ -213,7 +213,7 @@ export class ScoringEngine {
   ): RetentionIntent {
     const { factors } = score;
 
-    // Si esta muy cerca de la salida y moviÃ©ndose rapido
+    // Si esta muy cerca de la salida y moviéndose rapido
     if (factors.proximity_to_exit > 0.8 && factors.movement_speed > 0.6) {
       return 'SAFE_EXIT';
     }

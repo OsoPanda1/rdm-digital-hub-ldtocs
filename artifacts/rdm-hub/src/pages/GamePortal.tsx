@@ -107,7 +107,7 @@ export default function GamePortal() {
       .getSession()
       .then(({ data }) => setUser(data.session?.user ?? null))
       .catch(() => {
-        // Harden: no romper UI si falla la sesiÃ³n
+        // Harden: no romper UI si falla la sesión
         setUser(null);
       });
 
@@ -225,13 +225,13 @@ export default function GamePortal() {
 
   const handleActivatePremium = async (tier: "99" | "129") => {
     if (!user) {
-      toast.error("Inicia sesiÃ³n para activar Premium");
+      toast.error("Inicia sesión para activar Premium");
       navigate("/auth");
       return;
     }
 
     if (busyTier === tier) {
-      // Harden: evitar doble clic / doble peticiÃ³n
+      // Harden: evitar doble clic / doble petición
       return;
     }
 
@@ -249,7 +249,7 @@ export default function GamePortal() {
       if (data?.url && typeof data.url === "string") {
         window.location.href = data.url;
       } else {
-        toast.error("No se recibiÃ³ una URL vÃ¡lida de checkout");
+        toast.error("No se recibió una URL válida de checkout");
       }
     } catch (e: unknown) {
       const message =
@@ -262,7 +262,7 @@ export default function GamePortal() {
 
   const handleManageSubscription = async () => {
     if (!user) {
-      toast.error("Inicia sesiÃ³n para gestionar tu suscripciÃ³n");
+      toast.error("Inicia sesión para gestionar tu suscripción");
       navigate("/auth");
       return;
     }
@@ -278,7 +278,7 @@ export default function GamePortal() {
       if (data?.url && typeof data.url === "string") {
         window.open(data.url, "_blank", "noopener,noreferrer");
       } else {
-        toast.error("No se recibiÃ³ una URL vÃ¡lida de portal");
+        toast.error("No se recibió una URL válida de portal");
       }
     } catch (e: unknown) {
       const message =
@@ -293,11 +293,11 @@ export default function GamePortal() {
       supabase.functions
         .invoke("check-subscription")
         .then(() => {
-          toast.success("Â¡Premium activado!");
+          toast.success("¡Premium activado!");
           window.history.replaceState({}, "", "/game");
         })
         .catch(() => {
-          toast.error("No se pudo verificar la suscripciÃ³n");
+          toast.error("No se pudo verificar la suscripción");
         });
     }
   }, [user]);
@@ -305,7 +305,7 @@ export default function GamePortal() {
   // ---------- REDEEM ----------
   const handleRedeem = async (reward: Reward) => {
     if (!user) {
-      toast.error("Inicia sesiÃ³n para canjear premios");
+      toast.error("Inicia sesión para canjear premios");
       navigate("/auth");
       return;
     }
@@ -343,8 +343,8 @@ export default function GamePortal() {
 
       // Harden: validar que data tenga code
       const code =
-        (data as { code?: string } | null)?.code ?? "sin cÃ³digo visible";
-      toast.success(`Â¡Canjeado! CÃ³digo: ${code}`);
+        (data as { code?: string } | null)?.code ?? "sin código visible";
+      toast.success(`¡Canjeado! Código: ${code}`);
 
       const { error: updateError } = await supabase
         .from("profiles")
@@ -371,7 +371,7 @@ export default function GamePortal() {
       {/* HEADER HERO */}
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <p className="mb-2 text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground">
-          GamificaciÃ³n Territorial Â· EconomÃ­a Sostenible
+          Gamificación Territorial · Economía Sostenible
         </p>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -380,7 +380,7 @@ export default function GamePortal() {
             </h1>
             <p className="mt-1 text-sm font-body text-muted-foreground max-w-xl">
               Mina minerales digitales recorriendo Real del Monte, sube de nivel
-              y canjÃ©alos por experiencias reales en comercios federados.
+              y canjéalos por experiencias reales en comercios federados.
             </p>
           </div>
           {user && (
@@ -475,11 +475,11 @@ export default function GamePortal() {
               <p className="text-2xl font-display font-bold">
                 {streak}{" "}
                 <span className="text-[11px] font-mono text-muted-foreground">
-                  dÃ­as
+                  días
                 </span>
               </p>
               <p className="text-[11px] text-muted-foreground">
-                MantÃ©n la racha para bonus de XP.
+                Mantén la racha para bonus de XP.
               </p>
             </div>
           </div>
@@ -514,7 +514,7 @@ export default function GamePortal() {
                   isPremium && "text-gradient-gold",
                 )}
               >
-                {isPremium ? "Premium activo" : "Cuenta bÃ¡sica"}
+                {isPremium ? "Premium activo" : "Cuenta básica"}
               </p>
               {isPremium ? (
                 <button
@@ -558,7 +558,7 @@ export default function GamePortal() {
             Activa Veta Soberana Premium
           </h3>
           <p className="mt-3 mx-auto max-w-2xl text-sm font-body text-muted-foreground">
-            Elige tu plan y desbloquea minerÃ­a digital, multiplicadores y acceso
+            Elige tu plan y desbloquea minería digital, multiplicadores y acceso
             completo a la bolsa de premios.
           </p>
 
@@ -567,16 +567,16 @@ export default function GamePortal() {
             {[
               {
                 id: "99" as const,
-                name: "BÃ¡sico",
+                name: "Básico",
                 price: "$99",
-                features: ["MinerÃ­a digital", "Bolsa de premios", "Misiones diarias"],
+                features: ["Minería digital", "Bolsa de premios", "Misiones diarias"],
               },
               {
                 id: "129" as const,
                 name: "Minero",
                 price: "$129",
                 highlight: true,
-                features: ["Multiplicador x2", "MinerÃ­a remota", "Premios de alto valor", "Insignia exclusiva"],
+                features: ["Multiplicador x2", "Minería remota", "Premios de alto valor", "Insignia exclusiva"],
               },
             ].map((t) => (
               <button
@@ -628,12 +628,12 @@ export default function GamePortal() {
               ? "Procesando..."
               : user
               ? `Activar ${
-                  selectedTier === "129" ? "Minero" : "BÃ¡sico"
+                  selectedTier === "129" ? "Minero" : "Básico"
                 }`
-              : "Iniciar sesiÃ³n y activar"}
+              : "Iniciar sesión y activar"}
           </button>
           <p className="mt-3 text-[10px] font-mono text-muted-foreground">
-            Pago seguro con Stripe Â· Cancela cuando quieras Â·{" "}
+            Pago seguro con Stripe · Cancela cuando quieras ·{" "}
             <button
               onClick={() => navigate("/premium")}
               className="text-gold underline-offset-2 hover:underline"
@@ -728,7 +728,7 @@ export default function GamePortal() {
               })}
               {!missions?.length && (
                 <p className="col-span-2 text-[12px] font-body text-muted-foreground">
-                  AÃºn no hay misiones activas. Vuelve pronto.
+                  Aún no hay misiones activas. Vuelve pronto.
                 </p>
               )}
             </div>
@@ -778,7 +778,7 @@ export default function GamePortal() {
               })}
               {!achievements?.length && (
                 <p className="text-[12px] font-body text-muted-foreground">
-                  AÃºn no tienes logros. Completa misiones y canjea premios para
+                  Aún no tienes logros. Completa misiones y canjea premios para
                   empezar a desbloquearlos.
                 </p>
               )}
@@ -794,7 +794,7 @@ export default function GamePortal() {
                   </p>
                   <p className="text-[11px] font-body text-muted-foreground">
                     Los premios provienen de comercios reales que sostienen la
-                    economÃ­a local.
+                    economía local.
                   </p>
                 </div>
               </div>
@@ -884,7 +884,7 @@ export default function GamePortal() {
                   )}
                 >
                   {!user
-                    ? "Inicia sesiÃ³n"
+                    ? "Inicia sesión"
                     : !isPremium
                     ? "Requiere Premium"
                     : totalMinerals < r.points_cost
@@ -908,12 +908,12 @@ export default function GamePortal() {
       >
         <h3 className="flex items-center gap-2 font-display text-lg font-bold">
           <Sparkles className="h-4 w-4 text-gold" />
-          FÃ³rmula de sostenibilidad
+          Fórmula de sostenibilidad
         </h3>
         <p className="mt-2 text-[12px] font-body text-muted-foreground leading-relaxed">
           Cada premio tiene un{" "}
           <span className="font-mono text-gold">points_cost</span> asociado que
-          refleja su valor dentro de la economÃ­a federada. Al recorrer Real del
+          refleja su valor dentro de la economía federada. Al recorrer Real del
           Monte, ganar minerales y canjearlos en la bolsa de premios, impulsas
           comercios locales y activas una red de turismo sostenible.
         </p>

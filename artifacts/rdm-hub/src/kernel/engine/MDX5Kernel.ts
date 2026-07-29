@@ -21,7 +21,7 @@ interface MDX5Config {
   maxQueueSize: number;
   enableTimeUp: boolean;
   enableLedger: boolean;
-  // Nuevo: Â¿permitimos ejecuciÃ³n con PENDING_* o exigimos resoluciÃ³n previa?
+  // Nuevo: ¿permitimos ejecución con PENDING_* o exigimos resolución previa?
   allowPendingIsabellaToProceed: boolean;
   allowPendingHumanToProceed: boolean;
 }
@@ -130,7 +130,7 @@ export class MDX5Kernel {
           timeUpVerdict: decision.timeupVerdict,
         });
 
-        // Emitir evento de soberanÃ­a cuando se rechaza o queda pendiente humano/Isabella.
+        // Emitir evento de soberanía cuando se rechaza o queda pendiente humano/Isabella.
         await this.emitSovereigntyOnStop(intent, phase, decision);
 
         this.processed.push(intent);
@@ -169,7 +169,7 @@ export class MDX5Kernel {
 
   private async phaseReceive(base: MDX5Decision, intent: PendingIntent): Promise<MDX5Decision> {
     logger.info("[MDX5] Fase RECEIVE", { intentId: intent.id, type: intent.type });
-    // AquÃ­ podrÃ­as integrar Chronus para registrar el inicio de ciclo.
+    // Aquí podrías integrar Chronus para registrar el inicio de ciclo.
     this.chronus.markPhaseStart(intent, "RECEIVE");
     return { ...base, approved: true, reason: "Intent recibido en kernel" };
   }
@@ -189,7 +189,7 @@ export class MDX5Kernel {
           ...base,
           approved: false,
           timeupVerdict: "REJECTED",
-          reason: "TIME UP: PolÃ­ticas Ã©ticas no aprobadas",
+          reason: "TIME UP: Políticas éticas no aprobadas",
         };
       }
 
@@ -198,7 +198,7 @@ export class MDX5Kernel {
           ...base,
           approved: false,
           timeupVerdict: "PENDING_ISABELLA",
-          reason: "TIME UP: Pendiente validaciÃ³n Isabella, ejecuciÃ³n bloqueada",
+          reason: "TIME UP: Pendiente validación Isabella, ejecución bloqueada",
         };
       }
 
@@ -207,7 +207,7 @@ export class MDX5Kernel {
           ...base,
           approved: false,
           timeupVerdict: "PENDING_HUMAN",
-          reason: "TIME UP: Pendiente intervenciÃ³n humana, ejecuciÃ³n bloqueada",
+          reason: "TIME UP: Pendiente intervención humana, ejecución bloqueada",
         };
       }
 
@@ -220,7 +220,7 @@ export class MDX5Kernel {
             ? "TIME UP: Pendiente Isabella pero permitido avanzar"
             : globalVerdict === "PENDING_HUMAN"
             ? "TIME UP: Pendiente humano pero permitido avanzar"
-            : "TIME UP: EvaluaciÃ³n completada",
+            : "TIME UP: Evaluación completada",
       };
     }
 
@@ -232,7 +232,7 @@ export class MDX5Kernel {
 
     this.chronus.markPhaseStart(intent, "PLAN");
 
-    // Solo emitimos evento de "POLICY_VIOLATION" si TIME UP dejÃ³ algo pendiente o rechazado.
+    // Solo emitimos evento de "POLICY_VIOLATION" si TIME UP dejó algo pendiente o rechazado.
     if (intent.timeUpVerdict && intent.timeUpVerdict !== "APPROVED") {
       try {
         await this.federationBus.emitSovereigntyEvent("POLICY_VIOLATION", {
@@ -243,7 +243,7 @@ export class MDX5Kernel {
           timestamp: new Date().toISOString(),
         });
       } catch (error) {
-        logger.warn("[MDX5] Error al emitir evento de soberanÃ­a", error as Record<string, unknown>);
+        logger.warn("[MDX5] Error al emitir evento de soberanía", error as Record<string, unknown>);
       }
     }
 
@@ -255,16 +255,16 @@ export class MDX5Kernel {
 
     this.chronus.markPhaseStart(intent, "EXECUTE");
 
-    // AquÃ­ es donde realmente ejecutarÃ­as la acciÃ³n federada.
-    // PodrÃ­as delegar al FederationBus segÃºn intent.federation/operation.
+    // Aquí es donde realmente ejecutarías la acción federada.
+    // Podrías delegar al FederationBus según intent.federation/operation.
     try {
       await this.federationBus.executeIntent(intent);
     } catch (error) {
-      logger.error("[MDX5] Error en ejecuciÃ³n federada", { intentId: intent.id, error });
-      return { ...base, approved: false, reason: "Error en ejecuciÃ³n federada" };
+      logger.error("[MDX5] Error en ejecución federada", { intentId: intent.id, error });
+      return { ...base, approved: false, reason: "Error en ejecución federada" };
     }
 
-    return { ...base, approved: true, reason: "EjecuciÃ³n completada" };
+    return { ...base, approved: true, reason: "Ejecución completada" };
   }
 
   private async phaseCommit(base: MDX5Decision, intent: PendingIntent): Promise<MDX5Decision> {
@@ -280,7 +280,7 @@ export class MDX5Kernel {
         timestamp: new Date().toISOString(),
       });
     } catch (error) {
-      logger.warn("[MDX5] Error al emitir seÃ±al de observabilidad", error as Record<string, unknown>);
+      logger.warn("[MDX5] Error al emitir señal de observabilidad", error as Record<string, unknown>);
     }
 
     return { ...base, approved: true, reason: "Commit registrado en ledger" };
@@ -294,12 +294,12 @@ export class MDX5Kernel {
     if (this.config.enableLedger) {
       const chainValid = ledger.verifyChain();
       if (!chainValid) {
-        logger.error("[MDX5] Cadena de ledger corrupta en reconciliaciÃ³n", { intentId: intent.id });
-        // PodrÃ­as marcar aquÃ­ un REJECTED para futuras intents o emitir un evento de crisis.
+        logger.error("[MDX5] Cadena de ledger corrupta en reconciliación", { intentId: intent.id });
+        // Podrías marcar aquí un REJECTED para futuras intents o emitir un evento de crisis.
       }
     }
 
-    return { ...base, approved: true, reason: "ReconciliaciÃ³n completada" };
+    return { ...base, approved: true, reason: "Reconciliación completada" };
   }
 
   private async emitSovereigntyOnStop(
@@ -325,7 +325,7 @@ export class MDX5Kernel {
         timestamp: decision.timestamp.toISOString(),
       });
     } catch (error) {
-      logger.warn("[MDX5] Error al emitir evento de soberanÃ­a al detener intent", error as Record<string, unknown>);
+      logger.warn("[MDX5] Error al emitir evento de soberanía al detener intent", error as Record<string, unknown>);
     }
   }
 }

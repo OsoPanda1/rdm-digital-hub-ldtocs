@@ -4,8 +4,8 @@
  */
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Isabella Event Bus â€” Typed pub/sub system (Î©-Core v4.0 Enterprise)
-// Sistema nervioso central de la HeptafederaciÃ³n TAMV
-// Desacoplamiento total entre mÃ³dulos, trazabilidad con traceId
+// Sistema nervioso central de la Heptafederación TAMV
+// Desacoplamiento total entre módulos, trazabilidad con traceId
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { logger } from "../../logger";

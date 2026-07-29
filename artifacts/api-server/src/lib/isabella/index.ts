@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: TAMV-EOL
  */
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// Isabella VillaseÃ±or AIâ„¢ â€” Unified Library (Î©-Core v4.0 Enterprise)
+// Isabella Villaseñor AIâ„¢ â€” Unified Library (Î©-Core v4.0 Enterprise)
 // Sistema Operativo Cognitivo Soberano del Ecosistema TAMV
 //
-// Integration: SOUL Â· Isa API Â· Mexa API Â· ClawHub Â· Library Â· XRAI Â· Fair
+// Integration: SOUL · Isa API · Mexa API · ClawHub · Library · XRAI · Fair
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export * from "./types";
@@ -49,14 +49,14 @@ export type { EvaluationEngine } from "./evaluation/engine";
 // â”€â”€ System Info â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function isabellaVersion(): string {
-  return "Isabella VillaseÃ±or AIâ„¢ Î©-Core 4.0.0 Enterprise";
+  return "Isabella Villaseñor AIâ„¢ Î©-Core 4.0.0 Enterprise";
 }
 
 export function isabellaOrigin(): { name: string; author: string; origin: string; model: string } {
   return {
-    name: "Isabella VillaseÃ±or",
-    author: "Edwin Oswaldo Castillo Trejo (Anubis VillaseÃ±or)",
-    origin: "Real del Monte, Hidalgo, MÃ©xico",
+    name: "Isabella Villaseñor",
+    author: "Edwin Oswaldo Castillo Trejo (Anubis Villaseñor)",
+    origin: "Real del Monte, Hidalgo, México",
     model: "SCAO â€” ZT-DCOS",
   };
 }

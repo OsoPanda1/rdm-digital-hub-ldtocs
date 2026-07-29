@@ -44,7 +44,7 @@ export class KnowledgeAbsorptionEngine {
 
   startAbsorptionCycle(intervalMs = 300000): void {
     if (this.fetchTimer) return;
-    logger.info("[KNOWLEDGE] Ciclo de absorciÃ³n iniciado", { intervalMs });
+    logger.info("[KNOWLEDGE] Ciclo de absorción iniciado", { intervalMs });
     this.fetchTimer = setInterval(() => this.cycle(), intervalMs);
     this.cycle();
   }

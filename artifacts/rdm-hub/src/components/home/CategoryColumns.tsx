@@ -4,7 +4,7 @@
  */
 /**
  * Category Columns - 4 columnas verticales con parallax
- * Grupos, Noticias, Hashtags/LoterÃ­a, Conciertos/MÃºsica
+ * Grupos, Noticias, Hashtags/Lotería, Conciertos/Música
  */
 
 import React from 'react';
@@ -120,7 +120,7 @@ const NewsColumn: React.FC<{ news: NewsItem[] }> = ({ news }) => (
   </div>
 );
 
-// Columna de Hashtags y LoterÃ­a
+// Columna de Hashtags y Lotería
 const HashtagsLotteryColumn: React.FC<{ hashtags: HashtagItem[]; lottery: LotteryItem[] }> = ({ hashtags, lottery }) => (
   <div className="space-y-6">
     {/* Hashtags */}
@@ -151,11 +151,11 @@ const HashtagsLotteryColumn: React.FC<{ hashtags: HashtagItem[]; lottery: Lotter
       </div>
     </div>
 
-    {/* LoterÃ­a */}
+    {/* Lotería */}
     <div>
       <div className="flex items-center gap-2 mb-4">
         <Ticket className="w-5 h-5 text-amber-400" />
-        <h3 className="font-bold">LoterÃ­a TAMV</h3>
+        <h3 className="font-bold">Lotería TAMV</h3>
       </div>
       {lottery.map((item, i) => (
         <motion.div
@@ -180,12 +180,12 @@ const HashtagsLotteryColumn: React.FC<{ hashtags: HashtagItem[]; lottery: Lotter
   </div>
 );
 
-// Columna de Conciertos y MÃºsica
+// Columna de Conciertos y Música
 const ConcertsColumn: React.FC<{ concerts: ConcertItem[] }> = ({ concerts }) => (
   <div className="space-y-3">
     <div className="flex items-center gap-2 mb-4">
       <Music className="w-5 h-5 text-green-400" />
-      <h3 className="font-bold">Conciertos & MÃºsica</h3>
+      <h3 className="font-bold">Conciertos & Música</h3>
     </div>
     {concerts.map((concert, i) => (
       <motion.div
@@ -224,12 +224,12 @@ const CategoryColumns: React.FC = () => {
     { id: '1', name: 'TAMV Developers', avatar: 'https://api.dicebear.com/7.x/shapes/svg?seed=dev', members: 2450, isActive: true },
     { id: '2', name: 'Creadores Elite', avatar: 'https://api.dicebear.com/7.x/shapes/svg?seed=elite', members: 8900, isActive: true },
     { id: '3', name: 'XR Explorers', avatar: 'https://api.dicebear.com/7.x/shapes/svg?seed=xr', members: 5200, isActive: false },
-    { id: '4', name: 'MÃºsica Sensitiva', avatar: 'https://api.dicebear.com/7.x/shapes/svg?seed=music', members: 12000, isActive: true },
+    { id: '4', name: 'Música Sensitiva', avatar: 'https://api.dicebear.com/7.x/shapes/svg?seed=music', members: 12000, isActive: true },
   ];
 
   const news: NewsItem[] = [
-    { id: '1', title: 'TAMV lanza nuevo protocolo FÃ©nix Rex 4.0', category: 'Tech', isLive: false, timestamp: 'hace 2h' },
-    { id: '2', title: 'Concierto sensorial rompe rÃ©cord de asistencia', category: 'Eventos', isLive: true, timestamp: 'AHORA' },
+    { id: '1', title: 'TAMV lanza nuevo protocolo Fénix Rex 4.0', category: 'Tech', isLive: false, timestamp: 'hace 2h' },
+    { id: '2', title: 'Concierto sensorial rompe récord de asistencia', category: 'Eventos', isLive: true, timestamp: 'AHORA' },
     { id: '3', title: 'Isabella AI alcanza 1M de conversaciones', category: 'IA', isLive: false, timestamp: 'hace 5h' },
   ];
 
@@ -247,7 +247,7 @@ const CategoryColumns: React.FC = () => {
   ];
 
   const concerts: ConcertItem[] = [
-    { id: '1', title: 'SinfonÃ­a CuÃ¡ntica', artist: 'DJ Nebula', thumbnail: '/images/dia-muertos.jpg', isLive: true, viewers: 15420 },
+    { id: '1', title: 'Sinfonía Cuántica', artist: 'DJ Nebula', thumbnail: '/images/dia-muertos.jpg', isLive: true, viewers: 15420 },
     { id: '2', title: 'Ecos del Metaverso', artist: 'Isabella Orchestra', thumbnail: '/images/penas-cargadas.jpg', isLive: false },
     { id: '3', title: 'Noche de Creadores', artist: 'Various Artists', thumbnail: '/images/plaza-noche.jpg', isLive: false },
   ];

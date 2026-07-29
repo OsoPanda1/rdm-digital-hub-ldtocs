@@ -7,17 +7,17 @@ import { Section } from "@/components/WikiElements";
 
 const Timeline = () => {
   const events = [
-    { year: "2019â€“2020", title: "ConceptualizaciÃ³n", desc: "Primeras ideas y autoestudio intensivo. Nace la visiÃ³n de un ecosistema digital soberano." },
-    { year: "2021", title: "DiseÃ±o arquitectÃ³nico", desc: "Se define la estructura modular de dominios y guardianÃ­as. Se crea el CÃ³dice Maestro v0.1." },
-    { year: "2022", title: "Primeros prototipos", desc: "ImplementaciÃ³n de demos funcionales: UTAMV, interfaces XR iniciales y mÃ³dulos de identidad." },
-    { year: "2023", title: "Isabella AI & Seguridad", desc: "IntegraciÃ³n de la IA contextual Isabella y los mÃ³dulos de seguridad ANUBIS y HORUS." },
-    { year: "2024", title: "MDâ€‘X4 & FederaciÃ³n", desc: "Lanzamiento del framework MDâ€‘X4. ConsolidaciÃ³n de 177 repositorios en el Digital Nexus." },
-    { year: "2025", title: "ExpansiÃ³n CITEMESH", desc: "Apertura de nodos federados, economÃ­a TAMV y guardianÃ­a TENOCHTITLAN." },
-    { year: "2026+", title: "SoberanÃ­a plena", desc: "Infraestructura pÃºblica, gobernanza ciudadana y escalamiento latinoamericano." },
+    { year: "2019â€“2020", title: "Conceptualización", desc: "Primeras ideas y autoestudio intensivo. Nace la visión de un ecosistema digital soberano." },
+    { year: "2021", title: "Diseño arquitectónico", desc: "Se define la estructura modular de dominios y guardianías. Se crea el Códice Maestro v0.1." },
+    { year: "2022", title: "Primeros prototipos", desc: "Implementación de demos funcionales: UTAMV, interfaces XR iniciales y módulos de identidad." },
+    { year: "2023", title: "Isabella AI & Seguridad", desc: "Integración de la IA contextual Isabella y los módulos de seguridad ANUBIS y HORUS." },
+    { year: "2024", title: "MDâ€‘X4 & Federación", desc: "Lanzamiento del framework MDâ€‘X4. Consolidación de 177 repositorios en el Digital Nexus." },
+    { year: "2025", title: "Expansión CITEMESH", desc: "Apertura de nodos federados, economía TAMV y guardianía TENOCHTITLAN." },
+    { year: "2026+", title: "Soberanía plena", desc: "Infraestructura pública, gobernanza ciudadana y escalamiento latinoamericano." },
   ];
 
   return (
-    <WikiPage title="LÃ­nea de Tiempo" subtitle="La evoluciÃ³n del ecosistema TAMV desde su origen">
+    <WikiPage title="Línea de Tiempo" subtitle="La evolución del ecosistema TAMV desde su origen">
       <Section title="Hitos principales">
         <div className="relative">
           {/* Vertical line */}

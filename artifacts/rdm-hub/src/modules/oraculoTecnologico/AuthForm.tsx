@@ -19,17 +19,17 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useRDMAuth } from "@/contexts/RDMAuthContext";
 
 /**
- * OrÃ¡culo TecnolÃ³gico: Panel de Control - Centro de AdministraciÃ³n
+ * Oráculo Tecnológico: Panel de Control - Centro de Administración
  * 
- * Componente para la autenticaciÃ³n de usuarios en TAMV Online Network.
- * Permite el inicio de sesiÃ³n con email y contraseÃ±a o mediante redes sociales.
+ * Componente para la autenticación de usuarios en TAMV Online Network.
+ * Permite el inicio de sesión con email y contraseña o mediante redes sociales.
  */
 const loginSchema = z.object({
   email: z.string().email({
-    message: "Por favor ingresa un correo vÃ¡lido.",
+    message: "Por favor ingresa un correo válido.",
   }),
   password: z.string().min(1, {
-    message: "Por favor ingresa tu contraseÃ±a.",
+    message: "Por favor ingresa tu contraseña.",
   }),
 });
 
@@ -71,7 +71,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
         toast.error(error);
         return;
       }
-      toast.success("Inicio de sesiÃ³n exitoso!");
+      toast.success("Inicio de sesión exitoso!");
       navigate("/");
     } else {
       const { error } = await signUpEmail(values.email, values.password, values.email);
@@ -121,7 +121,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-blue-300">ContraseÃ±a</FormLabel>
+                <FormLabel className="text-blue-300">Contraseña</FormLabel>
                 <FormControl>
                   <Input 
                     type="password"
@@ -150,7 +150,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
 
             <div className="text-sm">
               <a href="#" className="text-blue-400 hover:text-blue-300 hover:underline">
-                Â¿Olvidaste tu contraseÃ±a?
+                ¿Olvidaste tu contraseña?
               </a>
             </div>
           </div>
@@ -173,7 +173,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
           </div>
           <div className="relative flex justify-center text-xs uppercase">
             <span className="bg-background px-2 text-muted-foreground">
-              O {type === "login" ? "inicia sesiÃ³n" : "regÃ­strate"} con
+              O {type === "login" ? "inicia sesión" : "regístrate"} con
             </span>
           </div>
         </div>
@@ -193,7 +193,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
         Al continuar aceptas nuestro{" "}
         <Link to="/reglamento" className="text-blue-400 hover:underline">Reglamento</Link>
         {" y "}
-        <a href="/PRIVACY.md" className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">PolÃ­tica de Privacidad</a>.
+        <a href="/PRIVACY.md" className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>.
       </p>
     </motion.div>
   );

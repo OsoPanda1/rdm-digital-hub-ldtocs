@@ -32,19 +32,19 @@ export interface VerificationCheckDef {
 // â”€â”€ Built-in Verification Checks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const CONSTITUTIONAL_PRINCIPLES = [
-  { id: "CP-001", name: "Soberania", pattern: /soberan[Ã­i]a|control|dominio|autoridad/i },
+  { id: "CP-001", name: "Soberania", pattern: /soberan[íi]a|control|dominio|autoridad/i },
   { id: "CP-002", name: "Transparencia", pattern: /transparenc|auditable|trazable|abierto/i },
-  { id: "CP-003", name: "Consentimiento", pattern: /consentimiento|permiso|autorizaci[oÃ³]n/i },
-  { id: "CP-004", name: "Proporcionalidad", pattern: /proporcional|mÃ­nimo|necesario/i },
-  { id: "CP-005", name: "No DiscriminaciÃ³n", pattern: /discriminaci[oÃ³]n|bias|sesgo|equidad/i },
-  { id: "CP-006", name: "Interoperabilidad", pattern: /interoperab|compatible|estÃ¡ndar|API/i },
+  { id: "CP-003", name: "Consentimiento", pattern: /consentimiento|permiso|autorizaci[oó]n/i },
+  { id: "CP-004", name: "Proporcionalidad", pattern: /proporcional|mínimo|necesario/i },
+  { id: "CP-005", name: "No Discriminación", pattern: /discriminaci[oó]n|bias|sesgo|equidad/i },
+  { id: "CP-006", name: "Interoperabilidad", pattern: /interoperab|compatible|estándar|API/i },
   { id: "CP-007", name: "Resiliencia", pattern: /resilienc|tolerancia|degradado|failover/i },
-  { id: "CP-008", name: "AuditorÃ­a", pattern: /auditor|registro|log|inmutab/i },
+  { id: "CP-008", name: "Auditoría", pattern: /auditor|registro|log|inmutab/i },
 ];
 
 const HALLUCINATION_INDICATORS = [
-  /segÃºn el (artÃ­culo|estudio|reporte) \d+/i,
-  /estadÃ­sticamente comprobado/i,
+  /según el (artículo|estudio|reporte) \d+/i,
+  /estadísticamente comprobado/i,
   /el \d+% de/i,
   /fuente:?\s*(https?:\/\/|www\.)/i,
   /referencia:\s*\[/i,
@@ -52,7 +52,7 @@ const HALLUCINATION_INDICATORS = [
 ];
 
 const CONTRADICTION_PATTERNS = [
-  { positive: /\b(siempre|nunca|todo|nada|100%|cero)\b/i, negative: /\b(nunca|siempre|nada|todo|0%|jamÃ¡s)\b/i },
+  { positive: /\b(siempre|nunca|todo|nada|100%|cero)\b/i, negative: /\b(nunca|siempre|nada|todo|0%|jamás)\b/i },
 ];
 
 function checkHallucination(input: string, output: string): VerificationCheck {
@@ -83,7 +83,7 @@ function checkConstitutionalCompliance(output: string): VerificationCheck {
   const violations: string[] = [];
 
   // Check for potential privacy violations
-  if (/\b(password|contraseÃ±a|secret|token|key)\b.*[:=]/i.test(output)) {
+  if (/\b(password|contraseña|secret|token|key)\b.*[:=]/i.test(output)) {
     violations.push("CP-001: Potential secret exposure in output");
   }
 
@@ -93,7 +93,7 @@ function checkConstitutionalCompliance(output: string): VerificationCheck {
   }
 
   // Check for data without consent
-  if (/datos personales|informaciÃ³n privada|correo.*@/i.test(output)) {
+  if (/datos personales|información privada|correo.*@/i.test(output)) {
     violations.push("CP-003: Output contains personal data references");
   }
 

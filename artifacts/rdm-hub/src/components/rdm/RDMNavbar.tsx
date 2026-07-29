@@ -67,10 +67,10 @@ const PRIMARY_LINKS: NavLink[] = [
   { path: "/", label: "Inicio", icon: Home },
   { path: "/mapa", label: "Mapa", icon: MapPin },
   { path: "/historia", label: "Historia", icon: Pickaxe },
-  { path: "/gastronomia", label: "GastronomÃ­a", icon: Utensils },
+  { path: "/gastronomia", label: "Gastronomía", icon: Utensils },
   { path: "/ecoturismo", label: "Naturaleza", icon: TreePine },
   { path: "/rutas", label: "Rutas", icon: Compass },
-  { path: "/musica", label: "MÃºsica", icon: Music2 },
+  { path: "/musica", label: "Música", icon: Music2 },
   { path: "/eventos", label: "Eventos", icon: Calendar },
 ];
 
@@ -81,12 +81,12 @@ const MEGA_CATEGORIES: MegaCategory[] = [
     label: "Turismo",
     accent: "hsl(var(--rdm-amber))",
     links: [
-      { path: "/lugares",            label: "Lugares de interÃ©s",  icon: MapPin,        desc: "POIs y atracciones" },
+      { path: "/lugares",            label: "Lugares de interés",  icon: MapPin,        desc: "POIs y atracciones" },
       { path: "/patrimonio-cultural",label: "Patrimonio Cultural", icon: Landmark,      desc: "Monumentos y UNESCO" },
-      { path: "/arte",               label: "Arte y ArtesanÃ­as",   icon: Palette,       desc: "PlaterÃ­as y talleres" },
+      { path: "/arte",               label: "Arte y Artesanías",   icon: Palette,       desc: "Platerías y talleres" },
       { path: "/cultura",            label: "Cultura",             icon: Globe,         desc: "Tradiciones vivas" },
       { path: "/relatos",            label: "Leyendas",            icon: BookOpen,      desc: "Mitos mineros" },
-      { path: "/estacionamientos",   label: "CÃ³mo llegar",         icon: Car,           desc: "Rutas y parking" },
+      { path: "/estacionamientos",   label: "Cómo llegar",         icon: Car,           desc: "Rutas y parking" },
     ],
   },
   {
@@ -95,10 +95,10 @@ const MEGA_CATEGORIES: MegaCategory[] = [
     accent: "hsl(var(--rdm-blue))",
     links: [
       { path: "/comunidad",          label: "Foro",                icon: MessageSquare, desc: "Publicaciones y noticias" },
-      { path: "/musica",             label: "MÃºsica RDM",          icon: Music2,        desc: "Escucha y descarga" },
-      { path: "/archivo-sonoro",     label: "TAMV 92.5 Radio",     icon: Radio,         desc: "Radio en vivo Â· Caster FM" },
+      { path: "/musica",             label: "Música RDM",          icon: Music2,        desc: "Escucha y descarga" },
+      { path: "/archivo-sonoro",     label: "TAMV 92.5 Radio",     icon: Radio,         desc: "Radio en vivo · Caster FM" },
       { path: "/directorio",         label: "Directorio",          icon: Store,         desc: "Negocios locales" },
-      { path: "/gamificacion",        label: "GamificaciÃ³n",        icon: Zap,           desc: "XP, rangos y misiones" },
+      { path: "/gamificacion",        label: "Gamificación",        icon: Zap,           desc: "XP, rangos y misiones" },
       { path: "/leaderboard",        label: "Tabla de Honor",      icon: Trophy,        desc: "Ranking de exploradores" },
       { path: "/perfil",             label: "Mi Perfil",           icon: UserIcon,      desc: "Puntos y logros" },
       { path: "/registro-comercio",  label: "Registra tu Negocio", icon: ShoppingBag,   desc: "Ãšnete al directorio" },
@@ -109,10 +109,10 @@ const MEGA_CATEGORIES: MegaCategory[] = [
     label: "Atlas & Historia",
     accent: "hsl(var(--rdm-green))",
     links: [
-      { path: "/capitulos",           label: "CapÃ­tulos narrativos", icon: BookOpen, desc: "Historia por capÃ­tulos" },
+      { path: "/capitulos",           label: "Capítulos narrativos", icon: BookOpen, desc: "Historia por capítulos" },
       { path: "/capitulos/minas",     label: "Las Minas",            icon: Pickaxe,  desc: "Historia minera" },
-      { path: "/capitulos/pastes",    label: "Los Pastes",           icon: Coffee,   desc: "GastronomÃ­a tÃ­pica" },
-      { path: "/capitulos/cementerio",label: "PanteÃ³n InglÃ©s",       icon: Landmark, desc: "Legado britÃ¡nico" },
+      { path: "/capitulos/pastes",    label: "Los Pastes",           icon: Coffee,   desc: "Gastronomía típica" },
+      { path: "/capitulos/cementerio",label: "Panteón Inglés",       icon: Landmark, desc: "Legado británico" },
       { path: "/capitulos/calles",    label: "Las Calles",           icon: Map,      desc: "Arquitectura colonial" },
       { path: "/capitulos/leyendas",  label: "Leyendas",             icon: Mic2,     desc: "Relatos del pueblo" },
     ],
@@ -122,13 +122,13 @@ const MEGA_CATEGORIES: MegaCategory[] = [
     label: "Servicios",
     accent: "hsl(var(--rdm-purple))",
     links: [
-      { path: "/paquetes",          label: "Paquetes turÃ­sticos", icon: Star,       desc: "Experiencias curadas" },
+      { path: "/paquetes",          label: "Paquetes turísticos", icon: Star,       desc: "Experiencias curadas" },
       { path: "/transporte-local",  label: "Transporte Local",    icon: Bus,        desc: "Movilidad en RDM" },
       { path: "/shuttle-cdmx-rdm",  label: "Shuttle CDMXâ†”RDM",   icon: Bus,        desc: "Traslados directos" },
       { path: "/negocios",          label: "Portal Negocios",     icon: Store,      desc: "Panel de comercios" },
-      { path: "/admin/marketing",   label: "Panel Marketing",     icon: Star,       desc: "CampaÃ±as y banners" },
+      { path: "/admin/marketing",   label: "Panel Marketing",     icon: Star,       desc: "Campañas y banners" },
       { path: "/donar",             label: "Donar",               icon: Heart,      desc: "Apoya la plataforma" },
-      { path: "/quienes-somos",     label: "QuiÃ©nes somos",       icon: Users,      desc: "El equipo RDM Digital" },
+      { path: "/quienes-somos",     label: "Quiénes somos",       icon: Users,      desc: "El equipo RDM Digital" },
       { path: "/premium",           label: "Planes Premium",      icon: Crown,      desc: "$99/mes â€” canjea puntos por premios reales" },
     ],
   },
@@ -231,7 +231,7 @@ export function RDMNavbar() {
                 className="text-[9px] tracking-[0.25em] uppercase text-[hsl(var(--rdm-amber))]"
                 style={{ fontFamily: "var(--font-body)" }}
               >
-                Pueblo MÃ¡gico
+                Pueblo Mágico
               </span>
             </div>
           </Link>
@@ -308,13 +308,13 @@ export function RDMNavbar() {
                     {/* Header strip */}
                     <div className="flex items-center justify-between px-5 py-3 border-b border-[hsl(var(--border)/0.25)] bg-[hsl(var(--rdm-amber)/0.03)]">
                       <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[hsl(var(--muted-foreground))]">
-                        Explorar todo Â· RDM Digital Hub
+                        Explorar todo · RDM Digital Hub
                       </span>
                       <button
                         type="button"
                         onClick={() => setMegaOpen(false)}
                         className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors p-1 rounded-lg hover:bg-white/5"
-                        aria-label="Cerrar menÃº"
+                        aria-label="Cerrar menú"
                       >
                         <X className="w-3.5 h-3.5" />
                       </button>
@@ -437,7 +437,7 @@ export function RDMNavbar() {
               onClick={() => setMobileOpen((o) => !o)}
               className="xl:hidden w-9 h-9 flex items-center justify-center rounded-xl hover:bg-[hsl(var(--rdm-amber)/0.1)] transition-colors text-[hsl(var(--foreground))]"
               whileTap={{ scale: 0.92 }}
-              aria-label={mobileOpen ? "Cerrar menÃº" : "Abrir menÃº"}
+              aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={mobileOpen}
             >
               <AnimatePresence mode="wait">
@@ -484,13 +484,13 @@ export function RDMNavbar() {
                     RDM Digital
                   </span>
                   <span className="block text-[9px] tracking-widest uppercase text-[hsl(var(--rdm-amber))]" style={{ fontFamily: "var(--font-body)" }}>
-                    Pueblo MÃ¡gico
+                    Pueblo Mágico
                   </span>
                 </div>
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[hsl(var(--rdm-amber)/0.1)] text-[hsl(var(--foreground))] transition-colors"
-                  aria-label="Cerrar menÃº"
+                  aria-label="Cerrar menú"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -604,7 +604,7 @@ export function RDMNavbar() {
                     style={{ fontFamily: "var(--font-body)" }}
                   >
                     <LogIn className="w-3.5 h-3.5" />
-                    Iniciar sesiÃ³n
+                    Iniciar sesión
                   </Link>
                 )}
               </div>

@@ -10,9 +10,9 @@ import Logo from "@/components/Logo";
 import { motion } from "framer-motion";
 
 /**
- * PÃ¡gina de inicio de sesiÃ³n
+ * Página de inicio de sesión
  * 
- * Implementa el OrÃ¡culo TecnolÃ³gico para la autenticaciÃ³n de usuarios
+ * Implementa el Oráculo Tecnológico para la autenticación de usuarios
  */
 const Login = () => {
   return (
@@ -32,10 +32,10 @@ const Login = () => {
         
         <AuthForm 
           type="login"
-          title="Iniciar SesiÃ³n"
-          buttonText="Iniciar SesiÃ³n"
-          footerText="Â¿No tienes una cuenta?"
-          footerLinkText="RegÃ­strate"
+          title="Iniciar Sesión"
+          buttonText="Iniciar Sesión"
+          footerText="¿No tienes una cuenta?"
+          footerLinkText="Regístrate"
           footerLinkUrl="/register"
         />
       </motion.main>

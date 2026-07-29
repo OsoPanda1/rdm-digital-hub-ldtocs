@@ -48,8 +48,8 @@ const MAIN_ITEMS: NavItem[] = [
     highlight: true,
   },
   { id: "university", icon: GraduationCap, label: "Universidad", path: "/university" },
-  { id: "music", icon: Music, label: "MÃºsica", path: "/music" },
-  { id: "lottery", icon: Ticket, label: "LoterÃ­a", path: "/lottery" },
+  { id: "music", icon: Music, label: "Música", path: "/music" },
+  { id: "lottery", icon: Ticket, label: "Lotería", path: "/lottery" },
   {
     id: "marketplace",
     icon: ShoppingBag,
@@ -129,7 +129,7 @@ const NavigationBar: React.FC = () => {
           transition={{ duration: 0.35, ease: "easeOut" }}
           className="fixed bottom-4 left-1/2 z-40 -translate-x-1/2"
           role="navigation"
-          aria-label="NavegaciÃ³n principal de Real del Monte Digital"
+          aria-label="Navegación principal de Real del Monte Digital"
         >
           <div className="relative">
             {/* Barra principal: anillo cristal TAMV */}
@@ -172,7 +172,7 @@ const NavigationBar: React.FC = () => {
                           </span>
                         </motion.span>
 
-                        {/* Indicador activo como â€œestrellaâ€ en la Ã³rbita */}
+                        {/* Indicador activo como â€œestrellaâ€ en la órbita */}
                         {isActive && (
                           <motion.div
                             layoutId="activeIndicator"
@@ -188,14 +188,14 @@ const NavigationBar: React.FC = () => {
               {/* Separador */}
               <div className="relative z-10 mx-1 h-8 w-px bg-gradient-to-b from-cyan-400/40 via-slate-500/40 to-blue-500/40" />
 
-              {/* BotÃ³n de expandir HUD */}
+              {/* Botón de expandir HUD */}
               <Button
                 type="button"
                 variant="ghost"
                 size="icon"
                 onClick={toggleExpanded}
                 aria-expanded={isExpanded}
-                aria-label={isExpanded ? "Cerrar panel de acciones rÃ¡pidas" : "Abrir panel de acciones rÃ¡pidas"}
+                aria-label={isExpanded ? "Cerrar panel de acciones rápidas" : "Abrir panel de acciones rápidas"}
                 className="relative z-10 h-10 w-10 rounded-2xl border border-cyan-300/40 bg-slate-900/70 text-slate-100 shadow-[0_0_18px_rgba(15,23,42,0.9)] hover:bg-slate-800/80"
               >
                 {isExpanded ? (
@@ -273,7 +273,7 @@ const NavigationBar: React.FC = () => {
                     window.scrollTo({ top: 0, behavior: "smooth" })
                   }
                   className="absolute -top-12 left-1/2 -translate-x-1/2 rounded-full border border-slate-500/60 bg-slate-950/85 p-2 text-slate-300 shadow-[0_0_24px_rgba(15,23,42,0.95)] backdrop-blur-md transition-colors hover:bg-slate-900/90 hover:text-slate-50"
-                  aria-label="Volver al inicio de la pÃ¡gina"
+                  aria-label="Volver al inicio de la página"
                 >
                   <ChevronUp className="h-4 w-4" />
                 </motion.button>

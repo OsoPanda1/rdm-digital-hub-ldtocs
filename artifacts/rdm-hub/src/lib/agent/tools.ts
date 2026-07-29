@@ -32,27 +32,27 @@ export const convertFahrenheitToCelsius = tool({
 export const rdmPlacesTool = tool({
   description: "Get information about tourist places in Real del Monte, Hidalgo",
   inputSchema: z.object({
-    placeName: z.string().describe("The name of the place (e.g., 'Mina Acosta', 'PanteÃ³n InglÃ©s', 'Pastes')"),
+    placeName: z.string().describe("The name of the place (e.g., 'Mina Acosta', 'Panteón Inglés', 'Pastes')"),
   }),
   execute: async ({ placeName }) => {
     const places: Record<string, { desc: string; horario: string }> = {
       "mina acosta": {
-        desc: "Mina histÃ³rica del siglo XVIII, actualmente museo de sitio con recorridos guiados",
+        desc: "Mina histórica del siglo XVIII, actualmente museo de sitio con recorridos guiados",
         horario: "10:00-17:00 (cerrado lunes)",
       },
-      "panteÃ³n inglÃ©s": {
+      "panteón inglés": {
         desc: "Cementerio del siglo XIX con tumbas de mineros ingleses, rodeado de leyendas",
         horario: "9:00-18:00",
       },
       pastes: {
-        desc: "El paste es el platillo tÃ­pico de Real del Monte, herencia de la minerÃ­a inglesa",
-        horario: "Disponible en pastelerÃ­as todo el dÃ­a",
+        desc: "El paste es el platillo típico de Real del Monte, herencia de la minería inglesa",
+        horario: "Disponible en pastelerías todo el día",
       },
     };
     const key = placeName.toLowerCase();
     const info = places[key];
     if (!info) {
-      return { found: false, message: `No tengo informaciÃ³n sobre "${placeName}"` };
+      return { found: false, message: `No tengo información sobre "${placeName}"` };
     }
     return { found: true, name: placeName, ...info };
   },

@@ -22,63 +22,63 @@ import rdmInfografia from "@/assets/rdm-infografia.png";
 
 const activities = [
   {
-    title: "Senderismo a PeÃ±as Cargadas",
+    title: "Senderismo a Peñas Cargadas",
     difficulty: "Moderada",
     duration: "3-4 horas",
     distance: "5 km",
-    description: "Ascenso a las impresionantes formaciones rocosas que parecen desafiar la gravedad. El recorrido ofrece vistas panorÃ¡micas del valle y bosque de oyamel.",
+    description: "Ascenso a las impresionantes formaciones rocosas que parecen desafiar la gravedad. El recorrido ofrece vistas panorámicas del valle y bosque de oyamel.",
     image: penasImg,
-    highlights: ["Vistas panorÃ¡micas", "Formaciones rocosas", "Bosque de niebla", "FotografÃ­a"],
+    highlights: ["Vistas panorámicas", "Formaciones rocosas", "Bosque de niebla", "Fotografía"],
     bestTime: "Abril - Noviembre"
   },
   {
-    title: "Caminata HistÃ³rica Centro",
-    difficulty: "FÃ¡cil",
+    title: "Caminata Histórica Centro",
+    difficulty: "Fácil",
     duration: "2 horas",
     distance: "3 km",
-    description: "Recorrido por las calles empedradas del Centro HistÃ³rico visitando puntos de interÃ©s arquitectÃ³nico y cultural, incluyendo el PanteÃ³n InglÃ©s.",
+    description: "Recorrido por las calles empedradas del Centro Histórico visitando puntos de interés arquitectónico y cultural, incluyendo el Panteón Inglés.",
     image: callesImg,
-    highlights: ["Arquitectura colonial", "PanteÃ³n InglÃ©s", "Plaza Principal", "Museos"],
-    bestTime: "Todo el aÃ±o"
+    highlights: ["Arquitectura colonial", "Panteón Inglés", "Plaza Principal", "Museos"],
+    bestTime: "Todo el año"
   },
   {
     title: "Tour de Minas Acosta",
     difficulty: "Moderada",
     duration: "2 horas",
     distance: "1 km",
-    description: "Descenso de 450 metros bajo tierra en la mina mÃ¡s famosa del distrito. Incluye explicaciÃ³n de tÃ©cnicas mineras histÃ³ricas y actuales.",
+    description: "Descenso de 450 metros bajo tierra en la mina más famosa del distrito. Incluye explicación de técnicas mineras históricas y actuales.",
     image: minaImg,
-    highlights: ["TÃºneles histÃ³ricos", "Museo minero", "Experiencia subterrÃ¡nea", "GuÃ­a especializado"],
-    bestTime: "Todo el aÃ±o"
+    highlights: ["Túneles históricos", "Museo minero", "Experiencia subterránea", "Guía especializado"],
+    bestTime: "Todo el año"
   },
   {
-    title: "ObservaciÃ³n de Neblina",
-    difficulty: "FÃ¡cil",
+    title: "Observación de Neblina",
+    difficulty: "Fácil",
     duration: "Variable",
     distance: "Libre",
-    description: "Real del Monte es famoso por su neblina etÃ©rea. Los mejores puntos para observar este fenÃ³meno natural son los miradores al amanecer y atardecer.",
+    description: "Real del Monte es famoso por su neblina etérea. Los mejores puntos para observar este fenómeno natural son los miradores al amanecer y atardecer.",
     image: miradorPurisimaImg,
-    highlights: ["FotografÃ­a artÃ­stica", "AtmÃ³sfera mÃ­stica", "Miradores", "Amanecer/Atardecer"],
+    highlights: ["Fotografía artística", "Atmósfera mística", "Miradores", "Amanecer/Atardecer"],
     bestTime: "Junio - Septiembre"
   },
   {
-    title: "Recorrido FotogrÃ¡fico Urbano",
-    difficulty: "FÃ¡cil",
+    title: "Recorrido Fotográfico Urbano",
+    difficulty: "Fácil",
     duration: "2-3 horas",
     distance: "2.5 km",
-    description: "Explora las calles empedradas y la arquitectura colonial de Real del Monte. Ideal para fotografÃ­a de arquitectura y vida cotidiana del pueblo mÃ¡gico.",
+    description: "Explora las calles empedradas y la arquitectura colonial de Real del Monte. Ideal para fotografía de arquitectura y vida cotidiana del pueblo mágico.",
     image: callesJpg,
-    highlights: ["Arquitectura", "Calles empedradas", "FotografÃ­a urbana", "Cultura local"],
-    bestTime: "Todo el aÃ±o"
+    highlights: ["Arquitectura", "Calles empedradas", "Fotografía urbana", "Cultura local"],
+    bestTime: "Todo el año"
   },
   {
     title: "Ruta del Minero",
-    difficulty: "DifÃ­cil",
+    difficulty: "Difícil",
     duration: "4-5 horas",
     distance: "8 km",
-    description: "Desafiante ruta que sigue los pasos de los antiguos mineros. Atraviesa terrenos irregulares, tÃºneles abandonados y ofrece vistas de la sierra que pocos conocen.",
+    description: "Desafiante ruta que sigue los pasos de los antiguos mineros. Atraviesa terrenos irregulares, túneles abandonados y ofrece vistas de la sierra que pocos conocen.",
     image: laDificultadImg,
-    highlights: ["TÃºneles histÃ³ricos", "Terreno desafiante", "Vistas Ãºnicas", "Historia minera"],
+    highlights: ["Túneles históricos", "Terreno desafiante", "Vistas únicas", "Historia minera"],
     bestTime: "Octubre - Marzo"
   }
 ];
@@ -87,19 +87,19 @@ const floraFauna = [
   {
     category: "Flora",
     items: [
-      { name: "Oyamel", description: "Abies religiosa, Ã¡rbol sÃ­mbolo de la regiÃ³n" },
+      { name: "Oyamel", description: "Abies religiosa, árbol símbolo de la región" },
       { name: "Pino Amarillo", description: "Pinus montezumae, predominante en la zona" },
-      { name: "Encino", description: "Quercus spp., bosques de galerÃ­a" },
-      { name: "Wildflowers", description: "Diversas especies de orquÃ­deas y flores silvestres" }
+      { name: "Encino", description: "Quercus spp., bosques de galería" },
+      { name: "Wildflowers", description: "Diversas especies de orquídeas y flores silvestres" }
     ]
   },
   {
     category: "Fauna",
     items: [
       { name: "Zorrillo", description: "Spilogale sp., habitante nocturno frecuente" },
-      { name: "Ardilla", description: "Sciurus aureogaster, comÃºn en Ã¡reas boscosas" },
-      { name: "Tecolote", description: "Otus spp., bÃºhos que habitan la zona" },
-      { name: "ColibrÃ­es", description: "Diversas especies, especialmente en jardines florales" }
+      { name: "Ardilla", description: "Sciurus aureogaster, común en áreas boscosas" },
+      { name: "Tecolote", description: "Otus spp., búhos que habitan la zona" },
+      { name: "Colibríes", description: "Diversas especies, especialmente en jardines florales" }
     ]
   }
 ];
@@ -108,12 +108,12 @@ const tips = [
   {
     icon: Sun,
     title: "Clima Variable",
-    description: "La temperatura puede cambiar drÃ¡sticamente. Lleva capas de ropa y algo impermeable."
+    description: "La temperatura puede cambiar drásticamente. Lleva capas de ropa y algo impermeable."
   },
   {
     icon: Footprints,
     title: "Calzado Apropiado",
-    description: "Botas de senderismo con buen agarre son esenciales, especialmente para PeÃ±as Cargadas."
+    description: "Botas de senderismo con buen agarre son esenciales, especialmente para Peñas Cargadas."
   },
   {
     icon: CloudFog,
@@ -122,8 +122,8 @@ const tips = [
   },
   {
     icon: Camera,
-    title: "FotografÃ­a",
-    description: "Las mejores fotos son al amanecer y atardecer cuando la neblina crea atmÃ³sferas Ãºnicas."
+    title: "Fotografía",
+    description: "Las mejores fotos son al amanecer y atardecer cuando la neblina crea atmósferas únicas."
   }
 ];
 
@@ -139,7 +139,7 @@ const EcoturismoPage = () => {
             youtubeId="dQw4w9WgXcQ"
             title="Aventura en la Sierra de Pachuca"
             variant="hero"
-            caption="Senderismo, naturaleza y paisajes de ensueÃ±o"
+            caption="Senderismo, naturaleza y paisajes de ensueño"
           />
         </div>
         
@@ -186,7 +186,7 @@ const EcoturismoPage = () => {
                 Actividades al Aire Libre
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                Desde caminatas histÃ³ricas hasta expediciones a formaciones rocosas Ãºnicas
+                Desde caminatas históricas hasta expediciones a formaciones rocosas únicas
               </p>
             </motion.div>
 
@@ -246,7 +246,7 @@ const EcoturismoPage = () => {
 
                     <div className="flex items-center justify-between pt-4 border-t border-border">
                       <span className="text-xs text-muted-foreground">
-                        <span className="font-medium text-foreground">Mejor Ã©poca:</span> {activity.bestTime}
+                        <span className="font-medium text-foreground">Mejor época:</span> {activity.bestTime}
                       </span>
                       <button className="px-4 py-2 rounded-lg bg-forest text-white text-sm font-medium hover:bg-forest/90 transition-colors">
                         Reservar
@@ -368,10 +368,10 @@ const EcoturismoPage = () => {
                 <div className="px-8 md:px-16 max-w-xl">
                   <Tent className="w-12 h-12 text-white mb-4" />
                   <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
-                    Â¿Listo para la aventura?
+                    ¿Listo para la aventura?
                   </h2>
                   <p className="text-white/80 mb-6">
-                    Descubre los tours guiados con expertos locales que conocen cada rincÃ³n 
+                    Descubre los tours guiados con expertos locales que conocen cada rincón 
                     de la sierra y sus secretos mejor guardados.
                   </p>
                   <button className="px-8 py-3 rounded-xl bg-white text-forest font-semibold hover:bg-white/90 transition-colors">
@@ -382,7 +382,7 @@ const EcoturismoPage = () => {
             </motion.div>
           </div>
 
-          {/* InfografÃ­a */}
+          {/* Infografía */}
           <div className="container mx-auto px-4 md:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -392,12 +392,12 @@ const EcoturismoPage = () => {
             >
               <img
                 src={rdmInfografia}
-                alt="InfografÃ­a Real del Monte"
+                alt="Infografía Real del Monte"
                 loading="lazy" className="max-w-full h-auto mx-auto rounded-xl"
                 style={{ maxHeight: "500px" }}
               />
               <p className="text-xs text-muted-foreground mt-4">
-                Datos y cifras de Real del Monte â€” Un pueblo mÃ¡gico con historia minera
+                Datos y cifras de Real del Monte â€” Un pueblo mágico con historia minera
               </p>
             </motion.div>
           </div>

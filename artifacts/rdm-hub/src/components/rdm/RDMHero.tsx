@@ -19,7 +19,7 @@ const HERO_IMAGES = [
 ];
 
 const STATS = [
-  { value: "500+", label: "AÃ±os de historia", icon: Calendar },
+  { value: "500+", label: "Años de historia", icon: Calendar },
   { value: "2,700m", label: "Altitud", icon: Mountain },
   { value: "14Â°C", label: "Temperatura", icon: null },
 ];
@@ -152,7 +152,7 @@ export function RDMHero() {
               className="text-[11px] font-semibold uppercase tracking-widest text-white/75 group-hover:text-white/95 transition-colors"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              TAMV 92.5 Â· En vivo
+              TAMV 92.5 · En vivo
             </span>
             <Radio className="w-3 h-3 text-white/40" />
           </Link>
@@ -170,7 +170,7 @@ export function RDMHero() {
             className="mb-3 text-[10px] md:text-xs uppercase tracking-[0.45em] text-cyan-400/70 font-medium"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            Pueblo MÃ¡gico Â· Hidalgo Â· MÃ©xico
+            Pueblo Mágico · Hidalgo · México
           </p>
 
           <h1
@@ -200,7 +200,7 @@ export function RDMHero() {
           className="mb-9 max-w-lg text-center text-base md:text-lg text-white/55 leading-relaxed"
           style={{ fontFamily: "var(--font-body)" }}
         >
-          El portal soberano del Pueblo MÃ¡gico â€” donde la niebla abraza
+          El portal soberano del Pueblo Mágico â€” donde la niebla abraza
           la historia minera y la cultura cobra vida digital.
         </motion.p>
 

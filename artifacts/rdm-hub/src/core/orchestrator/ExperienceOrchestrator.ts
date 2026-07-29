@@ -364,7 +364,7 @@ export class ExperienceOrchestrator {
         mensaje: 'Modo descubrimiento activo: tengo opciones cercanas con equilibrio entre historia, paisaje y gastronomia.',
       },
       RETENTION: {
-        titulo: 'QuÃ©date un Poco Mas',
+        titulo: 'Quédate un Poco Mas',
         mensaje: 'Hay algo especial cerca que no querras perderte.',
       },
       ENGAGEMENT: {

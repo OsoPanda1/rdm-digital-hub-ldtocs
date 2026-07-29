@@ -4,7 +4,7 @@
  */
 /**
  * Banco TAMV - Sistema Financiero
- * Triple Federado: Conceptual | Legal | TÃ©cnico
+ * Triple Federado: Conceptual | Legal | Técnico
  */
 
 import { useState } from 'react';
@@ -97,7 +97,7 @@ const BancoTAMV = () => {
           </div>
           <div>
             <h1 className="text-3xl font-bold">Banco TAMV</h1>
-            <p className="text-muted-foreground">Sistema financiero del metaverso Â· Triple Federado</p>
+            <p className="text-muted-foreground">Sistema financiero del metaverso · Triple Federado</p>
           </div>
         </div>
       </motion.div>
@@ -157,7 +157,7 @@ const BancoTAMV = () => {
         {[
           { icon: TrendingUp, label: 'Ingresos del mes', value: '+2,450 TAU', color: 'text-green-500' },
           { icon: ArrowUpRight, label: 'Gastos del mes', value: '-890 TAU', color: 'text-red-500' },
-          { icon: Percent, label: 'InterÃ©s ganado', value: '+45.5 TAU', color: 'text-blue-500' },
+          { icon: Percent, label: 'Interés ganado', value: '+45.5 TAU', color: 'text-blue-500' },
           { icon: Coins, label: 'Recompensas', value: '+120 TAU', color: 'text-yellow-500' }
         ].map((stat, index) => (
           <motion.div
@@ -191,10 +191,10 @@ const BancoTAMV = () => {
         </TabsList>
 
         <TabsContent value="dashboard" className="space-y-6">
-          {/* Acciones rÃ¡pidas */}
+          {/* Acciones rápidas */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Acciones rÃ¡pidas</CardTitle>
+              <CardTitle className="text-lg">Acciones rápidas</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -299,12 +299,12 @@ const BancoTAMV = () => {
           <Card>
             <CardHeader>
               <CardTitle>Enviar TAU</CardTitle>
-              <CardDescription>Transferencia instantÃ¡nea con Triple Federado</CardDescription>
+              <CardDescription>Transferencia instantánea con Triple Federado</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label>Destinatario</Label>
-                <Input placeholder="@username o direcciÃ³n TAMV" />
+                <Input placeholder="@username o dirección TAMV" />
               </div>
               <div className="space-y-2">
                 <Label>Cantidad</Label>
@@ -315,7 +315,7 @@ const BancoTAMV = () => {
               </div>
               <div className="space-y-2">
                 <Label>Concepto (opcional)</Label>
-                <Input placeholder="DescripciÃ³n de la transferencia" />
+                <Input placeholder="Descripción de la transferencia" />
               </div>
               <Button className="w-full bg-emerald-600 hover:bg-emerald-700">
                 <ArrowUpRight className="w-4 h-4 mr-2" />

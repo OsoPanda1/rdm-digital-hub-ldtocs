@@ -66,7 +66,7 @@ export class IsabellaAPI {
   private clasificarIntencion(texto: string): "crisis_existencial" | "terapeutico" | "cocreacion" | "general" {
     const crisisWords = ["suicidio", "morir", "terminar", "sin sentido", "no quiero vivir"];
     const terapeuticoWords = ["terapia", "ayuda", "problema", "sufro", "dolor", "ansiedad"];
-    const cocreacionWords = ["sueÃ±o", "crear", "proyecto", "vision", "futuro", "meta"];
+    const cocreacionWords = ["sueño", "crear", "proyecto", "vision", "futuro", "meta"];
 
     const lower = texto.toLowerCase();
     if (crisisWords.some(w => lower.includes(w))) return "crisis_existencial";

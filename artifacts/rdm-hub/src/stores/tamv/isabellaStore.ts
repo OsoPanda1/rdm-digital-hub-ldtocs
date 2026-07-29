@@ -4,7 +4,7 @@
  */
 // ============================================================================
 // TAMV â€” Isabella AI NextGenâ„¢ Store (federated state)
-// SoberanÃ­a conceptual + legal + tÃ©cnica (Triple Federado)
+// Soberanía conceptual + legal + técnica (Triple Federado)
 // ============================================================================
 import { create } from "zustand";
 

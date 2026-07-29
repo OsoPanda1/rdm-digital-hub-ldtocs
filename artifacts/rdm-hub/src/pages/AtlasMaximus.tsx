@@ -12,7 +12,7 @@ import { comercios, comercioCategoriaLabel } from "@/data/atlas/comercios-catalo
 import { dichos, type Dicho } from "@/data/atlas/dichos";
 
 const TABS = [
-  { id: "pois", label: "POIs CanÃ³nicos", icon: MapPin },
+  { id: "pois", label: "POIs Canónicos", icon: MapPin },
   { id: "mines", label: "Minas", icon: Pickaxe },
   { id: "pastes", label: "Pastes", icon: Sparkles },
   { id: "streets", label: "Calles", icon: Building2 },
@@ -54,13 +54,13 @@ export default function AtlasMaximus() {
       <div className="relative overflow-hidden border-b border-border bg-gradient-to-br from-[hsl(var(--rdm-amber)/0.15)] via-background to-background pt-24 pb-12 px-6">
         <div className="max-w-6xl mx-auto">
           <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-xs uppercase tracking-[0.3em] text-[hsl(var(--rdm-amber))] mb-3">
-            Corpus Maximus Â· Atlas Territorial
+            Corpus Maximus · Atlas Territorial
           </motion.p>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-6xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
             Expediente vivo de Real del Monte
           </motion.h1>
           <p className="text-muted-foreground max-w-2xl mb-6">
-            {RDM_TERRITORY_POIS.length} POIs canÃ³nicos Â· {mines.length} minas Â· {pastes.length} pastes Â· {streets.length} calles Â· {legends.length} leyendas Â· {routes.length} rutas Â· {events.length} eventos Â· {comercios.length} comercios federados.
+            {RDM_TERRITORY_POIS.length} POIs canónicos · {mines.length} minas · {pastes.length} pastes · {streets.length} calles · {legends.length} leyendas · {routes.length} rutas · {events.length} eventos · {comercios.length} comercios federados.
           </p>
           <div className="flex flex-wrap gap-2">
             {TABS.map((t) => {
@@ -116,7 +116,7 @@ export default function AtlasMaximus() {
 
         <div className="mt-10 rounded-2xl border border-border bg-card/40 p-6">
           <h3 className="text-lg font-semibold mb-3">Comercios federados</h3>
-          <p className="text-sm text-muted-foreground mb-4">CatÃ¡logo importado del repo LTOS â€” sÃ³lo los que completan registro y membresÃ­a aparecerÃ¡n en el mapa pÃºblico.</p>
+          <p className="text-sm text-muted-foreground mb-4">Catálogo importado del repo LTOS â€” sólo los que completan registro y membresía aparecerán en el mapa público.</p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
             {comercios.slice(0, 12).map((c: any) => (
               <div key={c.id} className="rounded-lg border border-border/50 p-3">

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 // ============================================================================
-// YUN Manifest Validator â€” aplica principios de ConstituciÃ³n YUN
+// YUN Manifest Validator â€” aplica principios de Constitución YUN
 // ============================================================================
 
 import {
@@ -36,7 +36,7 @@ export const validateYunManifest = (
 ): ValidationIssue[] => {
   const issues: ValidationIssue[] = [];
 
-  // 1. Cada mÃ³dulo con dominio YUN debe producir al menos un evento
+  // 1. Cada módulo con dominio YUN debe producir al menos un evento
   for (const m of modules) {
     if (m.yun.domain && m.yun.events.produces.length === 0) {
       issues.push({
@@ -44,7 +44,7 @@ export const validateYunManifest = (
         moduleId: m.id,
         code: "YUN_EVT_NO_PRODUCES",
         message:
-          "MÃ³dulo con dominio YUN debe producir al menos un evento relevante (evento antes que acoplamiento).",
+          "Módulo con dominio YUN debe producir al menos un evento relevante (evento antes que acoplamiento).",
       });
     }
   }
@@ -61,12 +61,12 @@ export const validateYunManifest = (
         moduleId: m.id,
         code: "YUN_SENS_INVALID",
         message:
-          "MÃ³dulo core de dominio identity/commerce no puede tener sensibilidad P2; debe ser P0 o P1.",
+          "Módulo core de dominio identity/commerce no puede tener sensibilidad P2; debe ser P0 o P1.",
       });
     }
   }
 
-  // 3. MÃ³dulos core deben soportar resiliencia degradable
+  // 3. Módulos core deben soportar resiliencia degradable
   for (const m of modules) {
     if (
       m.criticality === "core" &&
@@ -78,12 +78,12 @@ export const validateYunManifest = (
         moduleId: m.id,
         code: "YUN_RESILIENCE_MISSING",
         message:
-          "MÃ³dulo core debe soportar al menos un modo degradado (dominio o federaciÃ³n) para resiliencia.",
+          "Módulo core debe soportar al menos un modo degradado (dominio o federación) para resiliencia.",
       });
     }
   }
 
-  // 4. Todo mÃ³dulo con dominio YUN debe vincularse a ConstituciÃ³n y al menos un ADR
+  // 4. Todo módulo con dominio YUN debe vincularse a Constitución y al menos un ADR
   for (const m of modules) {
     if (m.yun.domain) {
       if (!m.yun.governance.constitutionVersion) {
@@ -92,7 +92,7 @@ export const validateYunManifest = (
           moduleId: m.id,
           code: "YUN_GOV_NO_CONST",
           message:
-            "MÃ³dulo con dominio YUN debe indicar versiÃ³n de ConstituciÃ³n YUN aplicada.",
+            "Módulo con dominio YUN debe indicar versión de Constitución YUN aplicada.",
         });
       }
       if (m.yun.governance.adrRefs.length === 0) {
@@ -101,13 +101,13 @@ export const validateYunManifest = (
           moduleId: m.id,
           code: "YUN_GOV_NO_ADR",
           message:
-            "MÃ³dulo con dominio YUN debe referenciar al menos un ADR en su gobernanza.",
+            "Módulo con dominio YUN debe referenciar al menos un ADR en su gobernanza.",
         });
       }
     }
   }
 
-  // 5. Cada federaciÃ³n debe tener al menos un mÃ³dulo con modo degradado
+  // 5. Cada federación debe tener al menos un módulo con modo degradado
   for (const fed of REQUIRED_FEDERATIONS) {
     const fedModules = modules.filter((m) => m.yun.federation === fed);
     if (fedModules.length === 0) {
@@ -115,7 +115,7 @@ export const validateYunManifest = (
         severity: "P2",
         moduleId: null,
         code: "YUN_FED_EMPTY",
-        message: `FederaciÃ³n ${fed} no tiene ningÃºn mÃ³dulo declarado en el manifiesto.`,
+        message: `Federación ${fed} no tiene ningún módulo declarado en el manifiesto.`,
       });
       continue;
     }
@@ -129,7 +129,7 @@ export const validateYunManifest = (
         severity: "P1",
         moduleId: null,
         code: "YUN_FED_NO_DEGRADED",
-        message: `FederaciÃ³n ${fed} no tiene ningÃºn mÃ³dulo que soporte modo degradado-federation.`,
+        message: `Federación ${fed} no tiene ningún módulo que soporte modo degradado-federation.`,
       });
     }
   }
@@ -143,7 +143,7 @@ export const validateYunManifest = (
           severity: "P1",
           moduleId: m.id,
           code: "YUN_DEP_MISSING",
-          message: `Dependencia ${dep} declarada en mÃ³dulo ${m.id} no existe en el manifiesto.`,
+          message: `Dependencia ${dep} declarada en módulo ${m.id} no existe en el manifiesto.`,
         });
       }
     }

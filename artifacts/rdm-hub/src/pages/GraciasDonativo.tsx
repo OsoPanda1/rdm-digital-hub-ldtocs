@@ -70,11 +70,11 @@ export default function GraciasDonativo() {
         </motion.div>
         <Sparkles className="mb-4 h-6 w-6 text-[#3BD5FF]/60" />
         <h1 className="mb-3 text-3xl font-bold text-white/90" style={{ fontFamily: "var(--font-display)" }}>
-          Â¡Gracias por tu donativo!
+          ¡Gracias por tu donativo!
         </h1>
         <p className="mb-8 text-sm leading-relaxed text-white/50">
           Tu apoyo ayuda a que Real del Monte siga brillando en su gemelo digital vivo.
-          Cada contribuciÃ³n nos acerca mÃ¡s a un territorio mÃ¡s conectado, inteligente y lleno de memoria.
+          Cada contribución nos acerca más a un territorio más conectado, inteligente y lleno de memoria.
         </p>
         <Link
           to="/"

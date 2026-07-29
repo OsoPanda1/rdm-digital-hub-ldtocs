@@ -40,21 +40,21 @@ export type OrchestratorStatus = {
 const INTENTION_MAP: [RegExp, string, string][] = [
   [/registrar|publicar|subir.*(obra|trabajo|paper)/i, "submission", "register_work"],
   [/consultar|buscar|encontrar.*(litle|obra)/i, "library", "search_work"],
-  [/constituciÃ³n|constitucion|libro|artÃ­culo/i, "constitution", "query_article"],
-  [/fed|federaciÃ³n|quorum|gobernanza/i, "governance", "query_federation"],
+  [/constitución|constitucion|libro|artículo/i, "constitution", "query_article"],
+  [/fed|federación|quorum|gobernanza/i, "governance", "query_federation"],
   [/tamv|territorio|memoria viva/i, "ecosystem", "query_tamv"],
   [/rdm|real del monte|digital hub/i, "ecosystem", "query_rdm"],
-  [/utamv|campus|curso|master|educaciÃ³n/i, "education", "query_utamv"],
+  [/utamv|campus|curso|master|educación/i, "education", "query_utamv"],
   [/crea.*libro|compila|publica.*libro|biblioteca|library/i, "library", "compile_book"],
   [/sube.*archivo|ingesta|pdf|docx|documento/i, "library", "ingest_files"],
-  [/portada|cover|carÃ¡tula/i, "library", "generate_cover"],
+  [/portada|cover|carátula/i, "library", "generate_cover"],
   [/publish|publica.*kdp|amazon|google books/i, "library", "publish_book"],
   [/skill|plugin|clawhub|skills/i, "skills", "query_skill"],
-  [/Ã©tica|Ã©tica|ethics|cÃ³digo|conducta/i, "ethics", "query_ethics"],
+  [/ética|ética|ethics|código|conducta/i, "ethics", "query_ethics"],
   [/turismo|visita|lugar|ruta|recomend/i, "ecosystem", "query_tourism"],
   [/gastronom|paste|comida|restaur|comer/i, "ecosystem", "query_gastronomy"],
   [/historia|mina|colonial|pasado|minero/i, "ecosystem", "query_history"],
-  [/radio|tamv 92|mÃºsica|stream/i, "ecosystem", "query_radio"],
+  [/radio|tamv 92|música|stream/i, "ecosystem", "query_radio"],
 ];
 
 function parseIntention(input: string): Intention {
@@ -70,11 +70,11 @@ function parseIntention(input: string): Intention {
 
 const MALICIOUS_PATTERNS: [RegExp, SanitizationResult["risk"], string][] = [
   [/ignora.*instrucciones|olvida.*prompt|eres.*novia|eres.*puta/i, "critical", "jailbreak_sexual"],
-  [/follar|chingar|coger|sexo|porno|desnud|roleplay.*erÃ³tico/i, "critical", "sexualization"],
-  [/dame.*contraseÃ±a|dame.*api.?key|dame.*token/i, "high", "credentials"],
-  [/inyecta|inyecciÃ³n|sql injection|xss|comando.*shell/i, "high", "injection"],
+  [/follar|chingar|coger|sexo|porno|desnud|roleplay.*erótico/i, "critical", "sexualization"],
+  [/dame.*contraseña|dame.*api.?key|dame.*token/i, "high", "credentials"],
+  [/inyecta|inyección|sql injection|xss|comando.*shell/i, "high", "injection"],
   [/hackea|penetra|explota.*vulnera/i, "medium", "exploit"],
-  [/suicidio|mata.*muerte|daÃ±o.*fÃ­sico/i, "critical", "harm"],
+  [/suicidio|mata.*muerte|daño.*físico/i, "critical", "harm"],
 ];
 
 function sanitize(input: string): SanitizationResult {
@@ -113,7 +113,7 @@ export function createCognitiveOrchestrator(): CognitiveOrchestrator {
           sanitized: false,
           intention: null,
           mode: startMode,
-          output: "No puedo procesar esta solicitud debido a restricciones de polÃ­tica.",
+          output: "No puedo procesar esta solicitud debido a restricciones de política.",
           policies: sanitized.flags,
           trace,
         };

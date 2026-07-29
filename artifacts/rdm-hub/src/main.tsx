@@ -11,8 +11,8 @@ import './index.css'
 const container = document.getElementById('root')
 
 if (!container) {
-  // Error crÃ­tico temprano: si el DOM no tiene #root, no hay app que montar.
-  throw new Error('No se encontrÃ³ el elemento #root en el DOM.')
+  // Error crítico temprano: si el DOM no tiene #root, no hay app que montar.
+  throw new Error('No se encontró el elemento #root en el DOM.')
 }
 
 const root = createRoot(container)
@@ -28,10 +28,10 @@ const BootstrapFallback = ({
         Error de arranque
       </p>
       <h1 className="mt-3 font-serif text-2xl font-bold">
-        No pudimos cargar la aplicaciÃ³n
+        No pudimos cargar la aplicación
       </h1>
       <p className="mt-3 text-sm text-muted-foreground">
-        El paquete principal no se inicializÃ³ correctamente. Recarga la pÃ¡gina para intentar de
+        El paquete principal no se inicializó correctamente. Recarga la página para intentar de
         nuevo.
       </p>
       {error instanceof Error && (
@@ -43,7 +43,7 @@ const BootstrapFallback = ({
         onClick={() => window.location.reload()}
         className="btn-hero-primary mt-6 inline-flex items-center justify-center"
       >
-        Recargar aplicaciÃ³n
+        Recargar aplicación
       </button>
     </div>
   </div>

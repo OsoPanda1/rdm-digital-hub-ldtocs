@@ -186,13 +186,13 @@ const queryClient = new QueryClient({
     queries: {
       // 5 minutos: suficiente para datos de turismo/directorio que no cambian cada segundo
       staleTime: 5 * 60 * 1000,
-      // Mantener en cachÃ© 30 minutos tras quedar sin suscriptores
+      // Mantener en caché 30 minutos tras quedar sin suscriptores
       gcTime: 30 * 60 * 1000,
       retry: 1,
       retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30_000),
       refetchOnWindowFocus: false,
       refetchOnReconnect: true,
-      // Evitar refetch en mount si los datos aÃºn son frescos
+      // Evitar refetch en mount si los datos aún son frescos
       refetchOnMount: true,
     },
     mutations: {
@@ -224,14 +224,14 @@ const AuthStatusBanner = () => {
     <div className="w-full bg-amber-900 text-amber-100 text-xs sm:text-sm px-4 py-2 z-50 shadow-md">
       {!isSupabaseReady && (
         <p>
-          AutenticaciÃ³n temporalmente deshabilitada: Supabase no estÃ¡ disponible en este
-          entorno. Puedes seguir explorando mapas, rutas, economÃ­a y narrativas sin iniciar
-          sesiÃ³n.
+          Autenticación temporalmente deshabilitada: Supabase no está disponible en este
+          entorno. Puedes seguir explorando mapas, rutas, economía y narrativas sin iniciar
+          sesión.
         </p>
       )}
       {error && (
         <p className="mt-1">
-          Detalle tÃ©cnico: <span className="font-mono break-all">{error}</span>
+          Detalle técnico: <span className="font-mono break-all">{error}</span>
         </p>
       )}
     </div>
@@ -242,20 +242,20 @@ const AppCrashFallback = () => (
   <div className="min-h-screen w-full flex items-center justify-center bg-background p-6">
     <div className="max-w-lg rounded-2xl border border-destructive/30 bg-card p-6 text-center shadow-xl">
       <p className="text-xs font-semibold uppercase tracking-[0.3em] text-destructive">
-        Error crÃ­tico
+        Error crítico
       </p>
       <h1 className="mt-3 font-serif text-2xl font-bold text-foreground">
         No pudimos iniciar la experiencia
       </h1>
       <p className="mt-3 text-sm text-muted-foreground">
-        Se detectÃ³ un fallo durante el arranque de la aplicaciÃ³n. Recarga la pÃ¡gina o
+        Se detectó un fallo durante el arranque de la aplicación. Recarga la página o
         vuelve a intentar en unos segundos.
       </p>
       <button
         onClick={() => window.location.reload()}
         className="btn-hero-primary mt-6 inline-flex items-center justify-center"
       >
-        Recargar aplicaciÃ³n
+        Recargar aplicación
       </button>
     </div>
   </div>
@@ -487,7 +487,7 @@ const AppInner = () => {
     return undefined
   }, [showIntro, introComplete])
 
-  // Analytics post-pintado: se montan vÃ­a requestIdleCallback para no bloquear el main thread
+  // Analytics post-pintado: se montan vía requestIdleCallback para no bloquear el main thread
   const [analyticsReady, setAnalyticsReady] = useState(false)
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -498,7 +498,7 @@ const AppInner = () => {
     }
   }, [])
 
-  // Arranque dinÃ¡mico de Isabella AI â€” FusionEngine se importa bajo demanda
+  // Arranque dinámico de Isabella AI â€” FusionEngine se importa bajo demanda
   useEffect(() => {
     const isBrowser = typeof window !== 'undefined'
     if (!isBrowser) return

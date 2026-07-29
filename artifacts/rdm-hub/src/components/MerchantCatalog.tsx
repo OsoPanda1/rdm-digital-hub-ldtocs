@@ -26,20 +26,20 @@ const categories = [
   { type: "Hoteles", price: 500, tier: "L1", icon: "ðŸ¨", category: "LODGING" },
   { type: "Camiones Rojos", price: 500, tier: "L1", icon: "ðŸšŒ", category: "TRANSPORT" },
   { type: "Racers", price: 500, tier: "L1", icon: "ðŸŽï¸", category: "TRANSPORT" },
-  { type: "PasterÃ­as", price: 400, tier: "L2", icon: "ðŸ¥Ÿ", category: "FOOD" },
+  { type: "Pasterías", price: 400, tier: "L2", icon: "ðŸ¥Ÿ", category: "FOOD" },
   { type: "Cuatrimotos", price: 400, tier: "L2", icon: "ðŸï¸", category: "ACTIVITY" },
-  { type: "PlaterÃ­as", price: 350, tier: "L2", icon: "ðŸ’Ž", category: "HANDCRAFTS" },
+  { type: "Platerías", price: 350, tier: "L2", icon: "ðŸ’Ž", category: "HANDCRAFTS" },
   { type: "Bares", price: 350, tier: "L2", icon: "ðŸ¸", category: "BAR" },
   { type: "Restaurantes", price: 300, tier: "L2", icon: "ðŸ½ï¸", category: "FOOD" },
-  { type: "ArtesanÃ­as", price: 300, tier: "L2", icon: "ðŸŽ¨", category: "HANDCRAFTS" },
+  { type: "Artesanías", price: 300, tier: "L2", icon: "ðŸŽ¨", category: "HANDCRAFTS" },
   { type: "Recorridos Teatrales", price: 300, tier: "L2", icon: "ðŸŽ­", category: "ACTIVITY" },
-  { type: "Abarrotes / MiscelÃ¡neas", price: 250, tier: "L3", icon: "ðŸª", category: "RETAIL" },
-  { type: "GÃ³ndolas (Semifijo)", price: 150, tier: "L3", icon: "ðŸ›’", category: "RETAIL" },
+  { type: "Abarrotes / Misceláneas", price: 250, tier: "L3", icon: "ðŸª", category: "RETAIL" },
+  { type: "Góndolas (Semifijo)", price: 150, tier: "L3", icon: "ðŸ›’", category: "RETAIL" },
 ];
 
 const extras = [
   { label: "Publicidad en todas las unidades (Camiones Rojos)", price: "Incluido" },
-  { label: "Publicidad personalizada en camiÃ³n especÃ­fico", price: "+$150 MXN" },
+  { label: "Publicidad personalizada en camión específico", price: "+$150 MXN" },
 ];
 
 const tierColors: Record<string, string> = {
@@ -65,10 +65,10 @@ const MerchantCatalog = () => {
           className="mb-12"
         >
           <span className="font-mono text-xs uppercase tracking-widest text-secondary mb-3 block">
-            CatÃ¡logo Soberano Â· Gemelo Digital
+            Catálogo Soberano · Gemelo Digital
           </span>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase">
-            Ãšnete a la <span className="text-gradient-gold">FederaciÃ³n</span>
+            Ãšnete a la <span className="text-gradient-gold">Federación</span>
           </h2>
           <p className="mt-4 text-muted-foreground max-w-xl">
             Registra tu negocio en el ecosistema digital de Real del Monte.
@@ -99,7 +99,7 @@ const MerchantCatalog = () => {
                 >
                   <div className="flex items-start justify-between mb-3">
                     <span className="font-mono text-[9px] uppercase tracking-widest text-primary">
-                      L{merchant.immersionLevel} Â· {merchant.category}
+                      L{merchant.immersionLevel} · {merchant.category}
                     </span>
                     <span className="text-[10px] text-muted-foreground">{merchant.priceRange}</span>
                   </div>

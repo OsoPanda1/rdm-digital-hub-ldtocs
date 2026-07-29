@@ -62,12 +62,12 @@ export default function GastronomiaPage() {
       try {
         const response = await fetch(`${API_BASE_URL}/businesses?category=GASTRONOMIA`);
         if (!response.ok) {
-          throw new Error("No se pudo cargar la categorÃ­a de gastronomÃ­a");
+          throw new Error("No se pudo cargar la categoría de gastronomía");
         }
         const data = await response.json();
         setBusinesses(data.data ?? []);
       } catch (error) {
-        logger.error("Error loading gastronomÃ­a:", error as Record<string, unknown>);
+        logger.error("Error loading gastronomía:", error as Record<string, unknown>);
         setBusinesses([]);
       } finally {
         setLoading(false);
@@ -126,12 +126,12 @@ export default function GastronomiaPage() {
 
         <GradientSeparator animated />
 
-        {/* Video: GastronomÃ­a de Real del Monte */}
+        {/* Video: Gastronomía de Real del Monte */}
         <VideoEmbed
           youtubeId="dQw4w9WgXcQ"
           title="Los Pastes de Real del Monte"
           variant="mid"
-          caption="La tradiciÃ³n pastelera que define nuestra gastronomÃ­a"
+          caption="La tradición pastelera que define nuestra gastronomía"
         />
 
         {/* Culinary Highlights */}

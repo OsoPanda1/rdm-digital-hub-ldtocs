@@ -15,10 +15,10 @@ const TRAILS = [
     difficulty: "Moderado",
     distance: "4.2 km",
     time: "2.5 hrs",
-    desc: "Recorre las antiguas minas con guÃ­as locales expertos.",
+    desc: "Recorre las antiguas minas con guías locales expertos.",
   },
   {
-    name: "PeÃ±a del Cuervo",
+    name: "Peña del Cuervo",
     difficulty: "Avanzado",
     distance: "6.8 km",
     time: "4 hrs",
@@ -26,7 +26,7 @@ const TRAILS = [
   },
   {
     name: "Bosque de Oyamel",
-    difficulty: "FÃ¡cil",
+    difficulty: "Fácil",
     distance: "2.1 km",
     time: "1 hr",
     desc: "Caminata relajante entre bosques de niebla ancestrales.",
@@ -91,7 +91,7 @@ export function AdventureSection() {
               transition={{ delay: 0.1 }}
               className="rounded-2xl overflow-hidden h-[240px]"
             >
-              <img src={mistyMountains} alt="MontaÃ±as" loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              <img src={mistyMountains} alt="Montañas" loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
             </motion.div>
           </div>
 
@@ -103,9 +103,9 @@ export function AdventureSection() {
               mientras descubres senderos que conectan con siglos de historia.
             </p>
             <p className="text-foreground/70 font-body text-base leading-relaxed mb-10">
-              Esta vertical combina aventura ligera, interpretaciÃ³n ambiental y paradas narrativas:
-              miradores para fotografÃ­a romÃ¡ntica, rutas con memoria minera y travesÃ­as de baja
-              complejidad pensadas para visitantes que quieren emociÃ³n sin perder seguridad.
+              Esta vertical combina aventura ligera, interpretación ambiental y paradas narrativas:
+              miradores para fotografía romántica, rutas con memoria minera y travesías de baja
+              complejidad pensadas para visitantes que quieren emoción sin perder seguridad.
             </p>
 
             <div className="space-y-4">

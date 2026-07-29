@@ -37,7 +37,7 @@ const ICONS: Record<string, (props: { className?: string }) => JSX.Element> = {
   ),
 };
 
-export function EmptyState({ icon = 'data', customIcon, title = 'Sin resultados', message = 'No encontramos informaciÃ³n para mostrar.', action, className = '' }: EmptyStateProps) {
+export function EmptyState({ icon = 'data', customIcon, title = 'Sin resultados', message = 'No encontramos información para mostrar.', action, className = '' }: EmptyStateProps) {
   const IconComponent = icon !== 'custom' ? ICONS[icon] : null;
 
   return (

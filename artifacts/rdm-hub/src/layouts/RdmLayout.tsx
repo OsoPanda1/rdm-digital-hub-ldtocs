@@ -15,7 +15,7 @@ export function RdmLayout() {
           <header className="sticky top-0 z-40 h-12 flex items-center gap-3 border-b border-platinum/10 bg-background/70 backdrop-blur-xl px-3">
             <SidebarTrigger className="text-platinum hover:text-gold" />
             <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground">
-              RDM_OS Â· Panel Soberano
+              RDM_OS · Panel Soberano
             </span>
           </header>
           <div
@@ -29,7 +29,7 @@ export function RdmLayout() {
             <Outlet />
           </div>
           <div className="border-t border-white/5 py-2 text-center text-[10px] text-muted-foreground">
-            Â© 2026 RDM Digital Â· TecnologÃ­a al servicio de la memoria
+            Â© 2026 RDM Digital · Tecnología al servicio de la memoria
           </div>
         </SidebarInset>
       </div>

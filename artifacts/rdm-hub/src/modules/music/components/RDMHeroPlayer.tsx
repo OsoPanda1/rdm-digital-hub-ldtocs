@@ -30,7 +30,7 @@ export function RDMHeroPlayer({ autoplay = false }: { autoplay?: boolean }) {
           ) : "RDM"}
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/70">Ahora sonando Â· RDM Radio</p>
+          <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/70">Ahora sonando · RDM Radio</p>
           <h3 className="text-base font-display font-semibold truncate">{p.currentTrack.title}</h3>
           <p className="text-[11px] font-body text-muted-foreground truncate">{p.currentTrack.artist}</p>
         </div>

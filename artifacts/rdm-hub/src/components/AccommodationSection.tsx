@@ -21,7 +21,7 @@ const HOTELS = [
     type: "Hotel Boutique",
     rating: 4.9,
     price: "Desde $1,800/noche",
-    features: ["Chimenea", "Vista a la montaÃ±a", "Spa", "Desayuno local"],
+    features: ["Chimenea", "Vista a la montaña", "Spa", "Desayuno local"],
     image: hotelColonial,
     tags: [
       { icon: MountainIcon, label: "2,700 msnm" },
@@ -33,7 +33,7 @@ const HOTELS = [
     type: "Casa Colonial",
     rating: 4.7,
     price: "Desde $1,200/noche",
-    features: ["JardÃ­n interior", "Cocina equipada", "Wiâ€‘Fi rÃ¡pido", "Petâ€‘friendly"],
+    features: ["Jardín interior", "Cocina equipada", "Wiâ€‘Fi rápido", "Petâ€‘friendly"],
     image: courtyardColonial,
     tags: [
       { icon: Wifi, label: "Wiâ€‘Fi fibra" },
@@ -63,15 +63,15 @@ export function AccommodationSection() {
     >
       {/* HERO INMERSIVO */}
       <div className="relative h-[60vh] min-h-[420px] overflow-hidden">
-        {/* Fondo montaÃ±a */}
+        {/* Fondo montaña */}
         <motion.img
           style={{ y: bgY }}
           src={hotelColonial}
-          alt="Paisaje hotel en montaÃ±a"
+          alt="Paisaje hotel en montaña"
           className="absolute inset-0 h-[120%] w-full object-cover brightness-[0.65] saturate-110"
         />
 
-        {/* Capa de neblina / atmÃ³sfera */}
+        {/* Capa de neblina / atmósfera */}
         <motion.div
           style={{ y: mistY }}
           className="pointer-events-none absolute inset-0"
@@ -93,11 +93,11 @@ export function AccommodationSection() {
             className="inline-flex items-center gap-3 rounded-full bg-background/70 px-4 py-2 text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground/80 backdrop-blur-md"
           >
             <MountainIcon className="h-3.5 w-3.5 text-accent" />
-            <span className="font-body">Hospedaje en altura Â· Real del Monte</span>
+            <span className="font-body">Hospedaje en altura · Real del Monte</span>
           </motion.div>
         </div>
 
-        {/* Bloque principal de tÃ­tulo */}
+        {/* Bloque principal de título */}
         <div className="absolute inset-x-0 bottom-0 pb-10 md:pb-16 lg:pb-20">
           <motion.div
             style={{ y: headingY, opacity: headingOpacity }}
@@ -111,7 +111,7 @@ export function AccommodationSection() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="mb-3 text-[0.7rem] font-body uppercase tracking-[0.35em] text-accent/90"
               >
-                Estancias que abrazan la montaÃ±a
+                Estancias que abrazan la montaña
               </motion.p>
 
               <motion.h2
@@ -136,8 +136,8 @@ export function AccommodationSection() {
                 className="mt-4 max-w-xl text-sm font-body text-muted-foreground/90 md:text-base"
               >
                 Seleccionamos hospedajes que combinan arquitectura colonial, calor
-                de chimenea y vistas al bosque. Cada espacio estÃ¡ curado para
-                que tu noche en la montaÃ±a se sienta Ã­ntima, segura y memorables.
+                de chimenea y vistas al bosque. Cada espacio está curado para
+                que tu noche en la montaña se sienta íntima, segura y memorables.
               </motion.p>
 
               {/* Mini badges contexto clima / amenities principales */}
@@ -150,7 +150,7 @@ export function AccommodationSection() {
               >
                 <span className="inline-flex items-center gap-2 rounded-full bg-background/80 px-3 py-1 text-muted-foreground/90 backdrop-blur">
                   <ThermometerSun className="h-3.5 w-3.5 text-accent" />
-                  Noches frescas Â· 10â€“14Â°C
+                  Noches frescas · 10â€“14Â°C
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full bg-background/80 px-3 py-1 text-muted-foreground/90 backdrop-blur">
                   <Flame className="h-3.5 w-3.5 text-accent" />
@@ -176,11 +176,11 @@ export function AccommodationSection() {
                 Hospedaje seleccionado
               </p>
               <h3 className="mt-2 font-display text-2xl text-foreground md:text-3xl">
-                Colonial, cÃ¡lido y hecho a medida de tu visita
+                Colonial, cálido y hecho a medida de tu visita
               </h3>
               <p className="mt-3 max-w-xl text-sm font-body text-muted-foreground">
                 Desde casas con patios llenos de bugambilias hasta haciendas con
-                spa enclavadas en la montaÃ±a, aquÃ­ empiezan tus noches en Real
+                spa enclavadas en la montaña, aquí empiezan tus noches en Real
                 del Monte.
               </p>
             </div>
@@ -192,7 +192,7 @@ export function AccommodationSection() {
               </div>
               <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card/50 px-3 py-1 backdrop-blur">
                 <Star className="h-3.5 w-3.5 text-accent" />
-                Basado en reseÃ±as recientes
+                Basado en reseñas recientes
               </div>
             </div>
           </div>
@@ -262,7 +262,7 @@ export function AccommodationSection() {
                     </div>
                     <div className="mt-1 flex flex-col items-end text-right text-[0.7rem] font-body text-muted-foreground">
                       <span className="rounded-full bg-background/80 px-2 py-1">
-                        Estancia recomendada Â· 2â€“3 noches
+                        Estancia recomendada · 2â€“3 noches
                       </span>
                     </div>
                   </header>
@@ -307,10 +307,10 @@ export function AccommodationSection() {
             <p>
               Todos los espacios listados han sido visitados y fotografiados por
               nuestro equipo en Real del Monte, para asegurar una experiencia
-              coherente con lo que ves en esta guÃ­a.
+              coherente con lo que ves en esta guía.
             </p>
             <p className="text-[0.7rem] uppercase tracking-[0.3em] text-muted-foreground/80">
-              Hospedaje Â· CuradurÃ­a local RDM Digital
+              Hospedaje · Curaduría local RDM Digital
             </p>
           </motion.div>
         </div>

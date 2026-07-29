@@ -31,8 +31,8 @@ export default function AuthCallback() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <p className="text-destructive">Error de autenticaciÃ³n: {error}</p>
-          <button onClick={() => navigate("/auth")} className="text-primary underline">Volver al inicio de sesiÃ³n</button>
+          <p className="text-destructive">Error de autenticación: {error}</p>
+          <button onClick={() => navigate("/auth")} className="text-primary underline">Volver al inicio de sesión</button>
         </div>
       </div>
     );
@@ -42,7 +42,7 @@ export default function AuthCallback() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center space-y-4">
         <Loader2 className="h-8 w-8 animate-spin mx-auto text-primary" />
-        <p>Completando autenticaciÃ³n...</p>
+        <p>Completando autenticación...</p>
       </div>
     </div>
   );

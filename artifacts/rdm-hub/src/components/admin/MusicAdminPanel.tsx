@@ -77,7 +77,7 @@ export function MusicAdminPanel() {
 
   const handleUpload = useCallback(async () => {
     if (!file || !title.trim()) {
-      toast.error("TÃ­tulo y archivo requeridos");
+      toast.error("Título y archivo requeridos");
       return;
     }
 
@@ -168,7 +168,7 @@ export function MusicAdminPanel() {
   );
 
   const remove = useCallback(async (track: Track) => {
-    const confirmed = window.confirm(`Â¿Eliminar "${track.title}"?`);
+    const confirmed = window.confirm(`¿Eliminar "${track.title}"?`);
     if (!confirmed) return;
 
     try {
@@ -201,8 +201,8 @@ export function MusicAdminPanel() {
             Playlist administrable
           </h3>
           <p className="text-[11px] text-muted-foreground">
-            Sube mÃºsica original. Toda pista activa serÃ¡ escuchada por los
-            usuarios con un botÃ³n de donaciÃ³n visible (mÃ­n. 25 MXN).
+            Sube música original. Toda pista activa será escuchada por los
+            usuarios con un botón de donación visible (mín. 25 MXN).
           </p>
         </div>
       </header>
@@ -211,7 +211,7 @@ export function MusicAdminPanel() {
         <input
           value={title}
           onChange={(event) => setTitle(event.target.value)}
-          placeholder="TÃ­tulo de la pista"
+          placeholder="Título de la pista"
           className="rounded-xl border border-border/30 bg-background/60 px-3 py-2 text-sm outline-none focus:border-gold/60"
         />
         <input
@@ -231,7 +231,7 @@ export function MusicAdminPanel() {
 
       <div className="flex items-center justify-between gap-3">
         <span className="text-[11px] text-muted-foreground">
-          {file ? `Archivo seleccionado: ${file.name}` : "NingÃºn archivo seleccionado"}
+          {file ? `Archivo seleccionado: ${file.name}` : "Ningún archivo seleccionado"}
         </span>
         <button
           onClick={handleUpload}
@@ -255,7 +255,7 @@ export function MusicAdminPanel() {
           </div>
         ) : tracks.length === 0 ? (
           <p className="text-[11px] text-muted-foreground">
-            AÃºn no hay pistas publicadas.
+            Aún no hay pistas publicadas.
           </p>
         ) : (
           <ul className="mt-2 divide-y divide-border/20">
@@ -269,10 +269,10 @@ export function MusicAdminPanel() {
                     {track.title}
                   </p>
                   <p className="truncate font-mono text-[10px] text-muted-foreground">
-                    {track.artist} Â·{" "}
+                    {track.artist} ·{" "}
                     {track.audio_url ? "audio disponible" : "sin audio"}
                     {track.duration_seconds
-                      ? ` Â· ${track.duration_seconds}s`
+                      ? ` · ${track.duration_seconds}s`
                       : null}
                   </p>
                 </div>

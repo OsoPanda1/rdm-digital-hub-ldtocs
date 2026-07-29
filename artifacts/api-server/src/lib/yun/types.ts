@@ -32,13 +32,13 @@ export interface FederationDef {
 }
 
 export const FEDERATIONS: FederationDef[] = [
-  { id: "FED-1", name: "PreservaciÃ³n",   domain: "identity",    description: "Seguridad, DevSecOps, CI/CD" },
-  { id: "FED-2", name: "EstÃ¡ndares",     domain: "knowledge",   description: "Calidad, normas, versiones" },
-  { id: "FED-3", name: "TecnologÃ­a",     domain: "telemetry",   description: "Kernel, skills, quorum" },
-  { id: "FED-4", name: "CuraciÃ³n",       domain: "media",       description: "Contenido, biblioteca, narrativa" },
+  { id: "FED-1", name: "Preservación",   domain: "identity",    description: "Seguridad, DevSecOps, CI/CD" },
+  { id: "FED-2", name: "Estándares",     domain: "knowledge",   description: "Calidad, normas, versiones" },
+  { id: "FED-3", name: "Tecnología",     domain: "telemetry",   description: "Kernel, skills, quorum" },
+  { id: "FED-4", name: "Curación",       domain: "media",       description: "Contenido, biblioteca, narrativa" },
   { id: "FED-5", name: "Integridad",     domain: "territorial", description: "DAG, firmas, trazabilidad" },
-  { id: "FED-6", name: "AdopciÃ³n",       domain: "gameplay",    description: "EducaciÃ³n, comunidades, tutorÃ­as" },
-  { id: "FED-7", name: "AuditorÃ­a",      domain: "cognitive",   description: "Ã‰tica, incidentes, veto" },
+  { id: "FED-6", name: "Adopción",       domain: "gameplay",    description: "Educación, comunidades, tutorías" },
+  { id: "FED-7", name: "Auditoría",      domain: "cognitive",   description: "Ã‰tica, incidentes, veto" },
 ];
 
 // â”€â”€ Resilience Modes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€

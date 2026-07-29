@@ -17,16 +17,16 @@ import { useRDMAuth } from "@/contexts/RDMAuthContext";
 import { toast } from "sonner";
 
 const giros = [
-  { value: "hoteleria", label: "HotelerÃ­a / Hospedaje", price: 500 },
-  { value: "platerias", label: "PlaterÃ­as", price: 400 },
-  { value: "pasterias", label: "PasterÃ­as", price: 400 },
+  { value: "hoteleria", label: "Hotelería / Hospedaje", price: 500 },
+  { value: "platerias", label: "Platerías", price: 400 },
+  { value: "pasterias", label: "Pasterías", price: 400 },
   { value: "bares", label: "Bares", price: 350 },
-  { value: "artesanias", label: "Locales de ArtesanÃ­as", price: 300 },
-  { value: "tiendas", label: "Tiendas / MiscelÃ¡neas", price: 250 },
-  { value: "camiones", label: "Recorridos TurÃ­sticos (Camiones)", price: 400 },
+  { value: "artesanias", label: "Locales de Artesanías", price: 300 },
+  { value: "tiendas", label: "Tiendas / Misceláneas", price: 250 },
+  { value: "camiones", label: "Recorridos Turísticos (Camiones)", price: 400 },
   { value: "cuatrimotos", label: "Cuatrimotos", price: 400 },
   { value: "caminatas", label: "Caminatas y Representaciones", price: 200 },
-  { value: "gondolas", label: "GÃ³ndolas y Semifijos", price: 150 },
+  { value: "gondolas", label: "Góndolas y Semifijos", price: 150 },
 ];
 
 type Step = "info" | "giro" | "contacto" | "revisar"
@@ -39,7 +39,7 @@ const stepIcons: Record<Step, React.ComponentType<{ className?: string }>> = {
 }
 
 const stepLabels: Record<Step, string> = {
-  info: "InformaciÃ³n",
+  info: "Información",
   giro: "Giro",
   contacto: "Contacto",
   revisar: "Revisar",
@@ -129,7 +129,7 @@ const RegistroComercio = () => {
       return;
     }
     setSubmitted(true);
-    toast.success("Solicitud enviada. Tu registro estÃ¡ pendiente de aprobaciÃ³n.");
+    toast.success("Solicitud enviada. Tu registro está pendiente de aprobación.");
   };
 
   if (submitted) {
@@ -146,9 +146,9 @@ const RegistroComercio = () => {
             <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center mx-auto mb-6">
               <Check className="w-8 h-8 text-gold" />
             </div>
-            <h2 className="font-display text-3xl text-gradient-gold mb-4">Â¡Solicitud Recibida!</h2>
+            <h2 className="font-display text-3xl text-gradient-gold mb-4">¡Solicitud Recibida!</h2>
             <p className="font-body text-sm text-muted-foreground mb-6">
-              Tu registro estÃ¡ <span className="text-gold font-semibold">pendiente de aprobaciÃ³n</span>. Te contactaremos pronto al <strong>{formData.phone}</strong>.
+              Tu registro está <span className="text-gold font-semibold">pendiente de aprobación</span>. Te contactaremos pronto al <strong>{formData.phone}</strong>.
             </p>
             {selectedGiro && (
               <div className="glass-gold rounded-xl p-4 mb-6">
@@ -261,13 +261,13 @@ const RegistroComercio = () => {
 
                 <div className="glass-card rounded-xl p-5">
                   <label className="font-body text-[10px] tracking-[0.2em] uppercase text-gold/60 mb-2 flex items-center gap-2">
-                    <MapPin className="w-3 h-3" /> DirecciÃ³n
+                    <MapPin className="w-3 h-3" /> Dirección
                   </label>
                   <input
                     type="text"
                     value={formData.address}
                     onChange={(e) => updateField("address", e.target.value)}
-                    placeholder="Calle, nÃºmero, colonia"
+                    placeholder="Calle, número, colonia"
                     className="w-full bg-transparent font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none mt-2 border-b border-border/30 pb-2 focus:border-gold/40 transition-colors"
                   />
                 </div>
@@ -319,7 +319,7 @@ const RegistroComercio = () => {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="glass-card rounded-xl p-5">
                     <label className="font-body text-[10px] tracking-[0.2em] uppercase text-gold/60 mb-2 flex items-center gap-2">
-                      <Phone className="w-3 h-3" /> TelÃ©fono <span className="text-red-400">*</span>
+                      <Phone className="w-3 h-3" /> Teléfono <span className="text-red-400">*</span>
                     </label>
                     <input
                       type="tel"
@@ -345,13 +345,13 @@ const RegistroComercio = () => {
 
                 <div className="glass-card rounded-xl p-5">
                   <label className="font-body text-[10px] tracking-[0.2em] uppercase text-gold/60 mb-2 flex items-center gap-2">
-                    <Clock className="w-3 h-3" /> Horario de atenciÃ³n
+                    <Clock className="w-3 h-3" /> Horario de atención
                   </label>
                   <input
                     type="text"
                     value={formData.schedule}
                     onChange={(e) => updateField("schedule", e.target.value)}
-                    placeholder="Ej: Lunes a sÃ¡bado 9:00 - 18:00"
+                    placeholder="Ej: Lunes a sábado 9:00 - 18:00"
                     className="w-full bg-transparent font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none mt-2 border-b border-border/30 pb-2 focus:border-gold/40 transition-colors"
                   />
                 </div>
@@ -371,12 +371,12 @@ const RegistroComercio = () => {
 
                 <div className="glass-card rounded-xl p-5">
                   <label className="font-body text-[10px] tracking-[0.2em] uppercase text-gold/60 mb-2 block">
-                    DescripciÃ³n breve
+                    Descripción breve
                   </label>
                   <textarea
                     value={formData.description}
                     onChange={(e) => updateField("description", e.target.value)}
-                    placeholder="CuÃ©ntanos sobre tu negocio..."
+                    placeholder="Cuéntanos sobre tu negocio..."
                     rows={3}
                     className="w-full bg-transparent font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none mt-2 border-b border-border/30 pb-2 focus:border-gold/40 transition-colors resize-none"
                   />
@@ -400,7 +400,7 @@ const RegistroComercio = () => {
                     </div>
                     {formData.address && (
                       <div className="flex justify-between items-center pb-3 border-b border-white/5">
-                        <span className="text-[10px] uppercase tracking-wider text-white/40">DirecciÃ³n</span>
+                        <span className="text-[10px] uppercase tracking-wider text-white/40">Dirección</span>
                         <span className="text-sm text-white/80">{formData.address}</span>
                       </div>
                     )}
@@ -409,7 +409,7 @@ const RegistroComercio = () => {
                       <span className="text-sm text-gold">{selectedGiro?.label}</span>
                     </div>
                     <div className="flex justify-between items-center pb-3 border-b border-white/5">
-                      <span className="text-[10px] uppercase tracking-wider text-white/40">TelÃ©fono</span>
+                      <span className="text-[10px] uppercase tracking-wider text-white/40">Teléfono</span>
                       <span className="text-sm text-white/80">{formData.phone}</span>
                     </div>
                     {formData.email && (
@@ -428,7 +428,7 @@ const RegistroComercio = () => {
                 <div className="glass-card rounded-xl p-5 flex items-center gap-3">
                   <CreditCard className="w-5 h-5 text-gold/60 shrink-0" />
                   <p className="text-xs text-white/50">
-                    El pago se realizarÃ¡ al momento de la aprobaciÃ³n. RecibirÃ¡s instrucciones por telÃ©fono o email.
+                    El pago se realizará al momento de la aprobación. Recibirás instrucciones por teléfono o email.
                   </p>
                 </div>
               </div>
@@ -447,7 +447,7 @@ const RegistroComercio = () => {
                 className="inline-flex items-center gap-2 glass rounded-xl px-5 py-3 text-sm text-white/60 hover:text-white transition-all"
               >
                 <ChevronLeft className="w-4 h-4" />
-                AtrÃ¡s
+                Atrás
               </motion.button>
             )}
           </div>

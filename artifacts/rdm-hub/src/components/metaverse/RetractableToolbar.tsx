@@ -123,10 +123,10 @@ const RetractableToolbar: React.FC<RetractableToolbarProps> = ({
       {/* halo iridiscente interno */}
       <div className="pointer-events-none absolute inset-[1px] rounded-[1.4rem] border border-transparent bg-[conic-gradient(from_150deg,rgba(59,245,255,0.4),rgba(192,132,252,0.45),rgba(59,245,255,0.4))] opacity-40 mix-blend-soft-light" />
 
-      {/* ruido cuÃ¡ntico */}
+      {/* ruido cuántico */}
       <div className="pointer-events-none absolute inset-0 opacity-45 mix-blend-soft-light bg-[url('data:image/svg+xml,%3Csvg%20viewBox=%220%200%20160%20160%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter%20id=%22n%22%3E%3CfeTurbulence%20type=%22fractalNoise%22%20baseFrequency=%221.6%22%20numOctaves=%223%22%20stitchTiles=%22noStitch%22/%3E%3C/filter%3E%3Crect%20width=%22100%25%22%20height=%22100%25%22%20filter=%22url(%23n)%22%20opacity=%220.28%22/%3E%3C/svg%3E')]" />
 
-      {/* pulso de notificaciÃ³n */}
+      {/* pulso de notificación */}
       <AnimatePresence>
         {isPulsing && notificationColor && (
           <motion.div
@@ -262,7 +262,7 @@ const RetractableToolbar: React.FC<RetractableToolbarProps> = ({
           ))}
         </div>
 
-        {/* indicador de expansiÃ³n tipo â€œchevron cuÃ¡nticoâ€ */}
+        {/* indicador de expansión tipo â€œchevron cuánticoâ€ */}
         <motion.div
           className={cn(
             "flex items-center justify-center",

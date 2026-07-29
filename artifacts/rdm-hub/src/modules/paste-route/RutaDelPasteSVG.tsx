@@ -142,7 +142,7 @@ export default function RutaDelPasteSVG() {
                 <h3 className="font-display text-2xl text-platinum">{selected.icon} {selected.name}</h3>
                 <p className="mt-2 text-sm font-body text-muted-foreground">{selected.description}</p>
                 <div className="mt-3 flex flex-wrap gap-3 text-xs text-platinum/75">
-                  <span className="inline-flex items-center gap-1"><Star className="h-3 w-3 text-gold fill-gold" /> {selected.avg_rating} ({selected.rating_count} reseÃ±as)</span>
+                  <span className="inline-flex items-center gap-1"><Star className="h-3 w-3 text-gold fill-gold" /> {selected.avg_rating} ({selected.rating_count} reseñas)</span>
                   <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3 text-gold" /> Real del Monte</span>
                 </div>
                 <button onClick={() => setRateOpen(true)} className="mt-4 inline-flex items-center gap-2 rounded-xl border border-gold/40 bg-gold/10 text-gold px-4 py-2 text-xs font-semibold hover:bg-gold/15 transition-all">

@@ -8,7 +8,7 @@ import { Volume2, VolumeX } from "lucide-react";
 
 /**
  * AmbientAudio â€” control de sonido ambiental inmersivo.
- * Arranca silenciado (las polÃ­ticas de autoplay de los navegadores lo exigen)
+ * Arranca silenciado (las políticas de autoplay de los navegadores lo exigen)
  * y respeta prefers-reduced-motion / la preferencia guardada del visitante.
  */
 const AmbientAudio = () => {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * Capas dinÃ¡micas del Gemelo Digital.
+ * Capas dinámicas del Gemelo Digital.
  * Lee `dt_layers` y permite togglear capas en memoria.
  */
 import { useQuery } from "@tanstack/react-query";

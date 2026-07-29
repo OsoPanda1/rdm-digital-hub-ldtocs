@@ -54,39 +54,39 @@ const typeColors: Record<string, string> = {
 };
 
 const typeLabels: Record<string, string> = {
-  HISTORIC: "HistÃ³rico",
+  HISTORIC: "Histórico",
   MUSEUM: "Museo",
   MINE: "Mina",
   RELIGIOUS: "Religioso",
   VIEWPOINT: "Mirador",
   NATURE: "Naturaleza",
-  FOOD: "GastronomÃ­a",
+  FOOD: "Gastronomía",
   LODGING: "Hospedaje",
-  HANDCRAFTS: "ArtesanÃ­as",
+  HANDCRAFTS: "Artesanías",
   ACTIVITY: "Actividad",
   BAR: "Bar",
   CULTURE: "Cultura",
 };
 
 function crowdBadge(level: number): string {
-  if (level > 0.7) return '<span style="color:#f58ca6;font-size:10px;">â— Alta ocupaciÃ³n</span>';
+  if (level > 0.7) return '<span style="color:#f58ca6;font-size:10px;">â— Alta ocupación</span>';
   if (level > 0.4) return '<span style="color:#f2c27d;font-size:10px;">â— Moderado</span>';
   return '<span style="color:#7ad6b8;font-size:10px;">â— Tranquilo</span>';
 }
 
 function immersionBadge(level: string): string {
   const colors: Record<string, string> = { L1: "#9ca3af", L2: "#7cccf3", L3: "#f2c27d" };
-  return `<span style="color:${colors[level] ?? "#9ca3af"};font-size:10px;font-family:'IBM Plex Mono',monospace;">InmersiÃ³n ${level}</span>`;
+  return `<span style="color:${colors[level] ?? "#9ca3af"};font-size:10px;font-family:'IBM Plex Mono',monospace;">Inmersión ${level}</span>`;
 }
 
 // Fallback twins when API is unavailable
 const fallbackTwins: TwinNode[] = [
-  { id: "twin-centro", modelType: "PLACE_TWIN", sourceId: "centro-historico", name: "Centro HistÃ³rico", lat: 20.1407, lng: -98.6725, tags: ["HISTORIA"], immersionLevel: 0.7, popularityScore: 0.9, telemetry: { crowdLevel: 0.45, openStatus: true }, properties: { type: "HISTORIC", immersion: "L2" } },
+  { id: "twin-centro", modelType: "PLACE_TWIN", sourceId: "centro-historico", name: "Centro Histórico", lat: 20.1407, lng: -98.6725, tags: ["HISTORIA"], immersionLevel: 0.7, popularityScore: 0.9, telemetry: { crowdLevel: 0.45, openStatus: true }, properties: { type: "HISTORIC", immersion: "L2" } },
   { id: "twin-mina", modelType: "PLACE_TWIN", sourceId: "mina-acosta", name: "Mina de Acosta", lat: 20.1448, lng: -98.6653, tags: ["MUSEO"], immersionLevel: 0.9, popularityScore: 0.95, telemetry: { crowdLevel: 0.3, openStatus: true }, properties: { type: "MUSEUM", immersion: "L3" } },
-  { id: "twin-panteon", modelType: "PLACE_TWIN", sourceId: "panteon-ingles", name: "PanteÃ³n InglÃ©s", lat: 20.1397, lng: -98.6769, tags: ["HISTORIA"], immersionLevel: 0.8, popularityScore: 0.85, telemetry: { crowdLevel: 0.15, openStatus: true }, properties: { type: "HISTORIC", immersion: "L2" } },
+  { id: "twin-panteon", modelType: "PLACE_TWIN", sourceId: "panteon-ingles", name: "Panteón Inglés", lat: 20.1397, lng: -98.6769, tags: ["HISTORIA"], immersionLevel: 0.8, popularityScore: 0.85, telemetry: { crowdLevel: 0.15, openStatus: true }, properties: { type: "HISTORIC", immersion: "L2" } },
   { id: "twin-cristo", modelType: "PLACE_TWIN", sourceId: "cristo-rey", name: "Cristo Rey", lat: 20.1460, lng: -98.6690, tags: ["MIRADOR"], immersionLevel: 0.7, popularityScore: 0.8, telemetry: { crowdLevel: 0.25, openStatus: true }, properties: { type: "VIEWPOINT", immersion: "L2" } },
   { id: "twin-bosque", modelType: "PLACE_TWIN", sourceId: "bosque-pinos", name: "Bosque de Pinos", lat: 20.1556, lng: -98.6856, tags: ["NATURALEZA"], immersionLevel: 0.6, popularityScore: 0.65, telemetry: { crowdLevel: 0.08, openStatus: true }, properties: { type: "NATURE", immersion: "L1" } },
-  { id: "twin-paste", modelType: "MERCHANT_TWIN", sourceId: "pasteria-portal", name: "PasterÃ­a El Portal", lat: 20.1409, lng: -98.6723, tags: ["GASTRONOMIA"], immersionLevel: 0.7, popularityScore: 0.9, telemetry: { crowdLevel: 0.6, openStatus: true }, properties: { type: "FOOD", immersion: "L2" } },
+  { id: "twin-paste", modelType: "MERCHANT_TWIN", sourceId: "pasteria-portal", name: "Pastería El Portal", lat: 20.1409, lng: -98.6723, tags: ["GASTRONOMIA"], immersionLevel: 0.7, popularityScore: 0.9, telemetry: { crowdLevel: 0.6, openStatus: true }, properties: { type: "FOOD", immersion: "L2" } },
   { id: "twin-coffee", modelType: "MERCHANT_TWIN", sourceId: "mina-coffee", name: "Mina Coffee House", lat: 20.1391, lng: -98.6752, tags: ["CAFE"], immersionLevel: 0.6, popularityScore: 0.7, telemetry: { crowdLevel: 0.4, openStatus: true }, properties: { type: "FOOD", immersion: "L2" } },
   { id: "twin-hotel", modelType: "MERCHANT_TWIN", sourceId: "hotel-real", name: "Hotel Real del Monte", lat: 20.1456, lng: -98.6800, tags: ["HOSPEDAJE"], immersionLevel: 0.8, popularityScore: 0.75, telemetry: { crowdLevel: 0.3, openStatus: true }, properties: { type: "LODGING", immersion: "L3" } },
   { id: "twin-eco", modelType: "MERCHANT_TWIN", sourceId: "eco-aventuras", name: "Eco Aventuras RDM", lat: 20.1500, lng: -98.6820, tags: ["AVENTURA"], immersionLevel: 0.9, popularityScore: 0.7, telemetry: { crowdLevel: 0.15, openStatus: true }, properties: { type: "ACTIVITY", immersion: "L3" } },
@@ -167,7 +167,7 @@ const MapSection = () => {
         ">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
             <span style="font-size:9px; text-transform:uppercase; letter-spacing:0.15em; color:${color}; font-family:'IBM Plex Mono',monospace;">
-              ${isPlace ? label : `Comercio Â· ${label}`}
+              ${isPlace ? label : `Comercio · ${label}`}
             </span>
             ${immersionBadge(immersion)}
           </div>
@@ -195,11 +195,11 @@ const MapSection = () => {
 
   const filterOptions = [
     { key: null, label: "Todos" },
-    { key: "HISTORIC", label: "HistÃ³rico" },
+    { key: "HISTORIC", label: "Histórico" },
     { key: "MUSEUM", label: "Museos" },
     { key: "VIEWPOINT", label: "Miradores" },
     { key: "NATURE", label: "Naturaleza" },
-    { key: "FOOD", label: "GastronomÃ­a" },
+    { key: "FOOD", label: "Gastronomía" },
     { key: "LODGING", label: "Hospedaje" },
     { key: "ACTIVITY", label: "Actividades" },
   ];
@@ -214,14 +214,14 @@ const MapSection = () => {
           className="mb-12"
         >
           <span className="font-mono text-xs uppercase tracking-widest text-primary mb-3 block">
-            Gemelo Digital Territorial Â· TelemetrÃ­a Viva
+            Gemelo Digital Territorial · Telemetría Viva
           </span>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase">
             Mapa <span className="text-gradient-cyan">en Tiempo Real</span>
           </h2>
           <p className="mt-4 text-muted-foreground max-w-lg">
-            Cada nodo representa un punto activo del gemelo digital con telemetrÃ­a de aforo,
-            nivel de inmersiÃ³n y estado operativo. Los nodos mÃ¡s brillantes tienen menor saturaciÃ³n.
+            Cada nodo representa un punto activo del gemelo digital con telemetría de aforo,
+            nivel de inmersión y estado operativo. Los nodos más brillantes tienen menor saturación.
           </p>
         </motion.div>
 
@@ -256,9 +256,9 @@ const MapSection = () => {
         <div className="mt-6 flex flex-wrap gap-6 font-mono text-xs uppercase tracking-widest">
           {[
             { label: "Museos/Minas", color: "bg-secondary" },
-            { label: "HistÃ³rico", color: "bg-primary" },
+            { label: "Histórico", color: "bg-primary" },
             { label: "Miradores", colorHex: "#74e3c7" },
-            { label: "GastronomÃ­a", colorHex: "#f8a16f" },
+            { label: "Gastronomía", colorHex: "#f8a16f" },
             { label: "Hospedaje", colorHex: "#e39cca" },
             { label: "Comercios", colorHex: "#c5a3ff" },
           ].map((item) => (
@@ -290,7 +290,7 @@ const MapSection = () => {
             Comercios: <span className="text-secondary">{merchantsCount}</span>
           </span>
           <span>
-            OcupaciÃ³n Promedio: <span className={avgCrowd > 50 ? "text-secondary" : "text-primary"}>{avgCrowd}%</span>
+            Ocupación Promedio: <span className={avgCrowd > 50 ? "text-secondary" : "text-primary"}>{avgCrowd}%</span>
           </span>
           <span>
             Altitud: <span className="text-foreground">2,700m</span>

@@ -123,7 +123,7 @@ const SIGNAL_PATTERNS: Record<string, { keywords: string[]; strategy: string; ri
     risk: "high",
   },
   creativeTask: {
-    keywords: ["escribir", "diseÃ±ar", "crear contenido", "historia", "narrativa", "arte"],
+    keywords: ["escribir", "diseñar", "crear contenido", "historia", "narrativa", "arte"],
     strategy: "creative-synthesis",
     risk: "low",
   },

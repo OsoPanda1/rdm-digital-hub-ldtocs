@@ -18,42 +18,42 @@ const legends = [
     category: "Leyenda Minera",
     icon: Ghost,
     image: minaImg,
-    story: `En las profundidades de la Mina de Acosta, los trabajadores nocturnos juraban ver la figura de un minero sin cabeza, paseÃ¡ndose por los tÃºneles con su lÃ¡mpara de carburo. Se dice que era un inglÃ©s que muriÃ³ en un derrumbe en 1890, y que aparece para advertir a los mineros de peligros inminentes.
+    story: `En las profundidades de la Mina de Acosta, los trabajadores nocturnos juraban ver la figura de un minero sin cabeza, paseándose por los túneles con su lámpara de carburo. Se dice que era un inglés que murió en un derrumbe en 1890, y que aparece para advertir a los mineros de peligros inminentes.
 
-Los ancianos del pueblo cuentan que antes de cualquier accidente grave, varios trabajadores han reportado ver la figura fantasmal iluminando las galerÃ­as oscuras. Algunos incluso afirman que el espÃ­ritu les ha salvado la vida al hacerles retroceder justo antes de un derrumbe.`,
+Los ancianos del pueblo cuentan que antes de cualquier accidente grave, varios trabajadores han reportado ver la figura fantasmal iluminando las galerías oscuras. Algunos incluso afirman que el espíritu les ha salvado la vida al hacerles retroceder justo antes de un derrumbe.`,
     location: "Mina de Acosta",
     theme: "from-red-500/20 to-orange-500/20"
   },
   {
-    title: "La Novia del PanteÃ³n",
-    category: "Romance TrÃ¡gico",
+    title: "La Novia del Panteón",
+    category: "Romance Trágico",
     icon: Heart,
     image: panteonImg,
-    story: `En el PanteÃ³n InglÃ©s descansa Elizabeth Browning, una joven cornish que muriÃ³ de tristeza tras la muerte de su prometido, un minero mexicano llamado JosÃ© MarÃ­a. La leyenda dice que cada noche de luna llena, se puede ver a Elizabeth caminando entre las tumbas con su vestido de novia blanco, esperando la llegada de su amado.
+    story: `En el Panteón Inglés descansa Elizabeth Browning, una joven cornish que murió de tristeza tras la muerte de su prometido, un minero mexicano llamado José María. La leyenda dice que cada noche de luna llena, se puede ver a Elizabeth caminando entre las tumbas con su vestido de novia blanco, esperando la llegada de su amado.
 
-Los visitantes nocturnos han reportado escuchar sus suspiros entre los pinos, y algunos aseguran haber visto una figura femenina de pie junto a la tumba con una rosa en las manos. Los lugareÃ±os dicen que si pides un deseo frente a su lÃ¡pida con respeto, Elizabeth lo harÃ¡ realidad.`,
-    location: "PanteÃ³n InglÃ©s",
+Los visitantes nocturnos han reportado escuchar sus suspiros entre los pinos, y algunos aseguran haber visto una figura femenina de pie junto a la tumba con una rosa en las manos. Los lugareños dicen que si pides un deseo frente a su lápida con respeto, Elizabeth lo hará realidad.`,
+    location: "Panteón Inglés",
     theme: "from-pink-500/20 to-rose-500/20"
   },
   {
-    title: "Las PeÃ±as que Cargan",
+    title: "Las Peñas que Cargan",
     category: "Mito Natural",
     icon: TreePine,
     image: penasImg,
-    story: `Las imponentes PeÃ±as Cargadas no son solo formaciones rocosas. SegÃºn la tradiciÃ³n otomÃ­, eran guardianes espirituales que sostenÃ­an el cielo. Cuando los dioses vieron la codicia de los espaÃ±oles por la plata, decidieron retirar su protecciÃ³n, pero las peÃ±as se negaron a abandonar su puesto.
+    story: `Las imponentes Peñas Cargadas no son solo formaciones rocosas. Según la tradición otomí, eran guardianes espirituales que sostenían el cielo. Cuando los dioses vieron la codicia de los españoles por la plata, decidieron retirar su protección, pero las peñas se negaron a abandonar su puesto.
 
-Como castigo, fueron condenadas a permanecer en equilibrio precario por toda la eternidad, recordando a los humanos que la naturaleza siempre prevalece sobre la ambiciÃ³n. Hasta hoy, los ancianos otomÃ­es realizan ofrendas en la base de las peÃ±as para honrar a estos guardianes caÃ­dos.`,
-    location: "PeÃ±as Cargadas",
+Como castigo, fueron condenadas a permanecer en equilibrio precario por toda la eternidad, recordando a los humanos que la naturaleza siempre prevalece sobre la ambición. Hasta hoy, los ancianos otomíes realizan ofrendas en la base de las peñas para honrar a estos guardianes caídos.`,
+    location: "Peñas Cargadas",
     theme: "from-green-500/20 to-emerald-500/20"
   },
   {
-    title: "El TÃºnel del Tiempo",
+    title: "El Túnel del Tiempo",
     category: "Misterio",
     icon: Moon,
     image: minaImg,
-    story: `En una de las galerÃ­as menos transitadas de la Mina Dificultad, existe lo que los mineros llaman "El TÃºnel del Tiempo". Quienes se adentran demasiado profundo en esta secciÃ³n han reportado experimentar visiones del pasado: mineros del siglo XIX trabajando, fiestas cornish, e incluso conversaciones en inglÃ©s antiguo.
+    story: `En una de las galerías menos transitadas de la Mina Dificultad, existe lo que los mineros llaman "El Túnel del Tiempo". Quienes se adentran demasiado profundo en esta sección han reportado experimentar visiones del pasado: mineros del siglo XIX trabajando, fiestas cornish, e incluso conversaciones en inglés antiguo.
 
-Un geÃ³logo de la UNAM que estudiÃ³ el fenÃ³meno descubriÃ³ anomalÃ­as electromagnÃ©ticas en la zona, pero no pudo explicar las visiones. Los lugareÃ±os prefieren no hablar mucho del lugar, pues creen que "el tiempo estÃ¡ delgado" en ese punto y se pueden cruzar mundos.`,
+Un geólogo de la UNAM que estudió el fenómeno descubrió anomalías electromagnéticas en la zona, pero no pudo explicar las visiones. Los lugareños prefieren no hablar mucho del lugar, pues creen que "el tiempo está delgado" en ese punto y se pueden cruzar mundos.`,
     location: "Mina Dificultad",
     theme: "from-purple-500/20 to-indigo-500/20"
   }
@@ -62,22 +62,22 @@ Un geÃ³logo de la UNAM que estudiÃ³ el fenÃ³meno descubriÃ³ anomalÃ­as
 const shortStories = [
   {
     title: "El Ãšltimo Pastelero Cornish",
-    excerpt: "Don William Hosking era el Ãºltimo pastelero de pura sangre cornish en Real del Monte. Su receta secreta del paste tradicional...",
+    excerpt: "Don William Hosking era el último pastelero de pura sangre cornish en Real del Monte. Su receta secreta del paste tradicional...",
     readTime: "5 min"
   },
   {
-    title: "La Boda de la MontaÃ±a",
-    excerpt: "En 1885, la boda entre Sarah Jenkins y Miguel Ãngel HernÃ¡ndez uniÃ³ a dos familias y dos culturas en una celebraciÃ³n que durÃ³ tres dÃ­as...",
+    title: "La Boda de la Montaña",
+    excerpt: "En 1885, la boda entre Sarah Jenkins y Miguel Ãngel Hernández unió a dos familias y dos culturas en una celebración que duró tres días...",
     readTime: "8 min"
   },
   {
     title: "El Rescate de San Cayetano",
-    excerpt: "Cuando la mina se inundÃ³ en 1920, fue un perro llamado San Cayetano quien guiÃ³ a los rescatistas hasta los sobrevivientes atrapados...",
+    excerpt: "Cuando la mina se inundó en 1920, fue un perro llamado San Cayetano quien guió a los rescatistas hasta los sobrevivientes atrapados...",
     readTime: "6 min"
   },
   {
-    title: "La MaldiciÃ³n de la Veta Madre",
-    excerpt: "La veta de plata mÃ¡s rica del distrito trajo fortuna y desgracia por igual. Esta es la historia de los hombres que la encontraron...",
+    title: "La Maldición de la Veta Madre",
+    excerpt: "La veta de plata más rica del distrito trajo fortuna y desgracia por igual. Esta es la historia de los hombres que la encontraron...",
     readTime: "10 min"
   }
 ];
@@ -131,7 +131,7 @@ const RelatosPage = () => {
 
   return (
     <RDMLayout>
-      <SEOMeta title="Relatos y Leyendas" description="Leyendas, misterios y relatos de tradiciÃ³n oral de Real del Monte, Pueblo MÃ¡gico." />
+      <SEOMeta title="Relatos y Leyendas" description="Leyendas, misterios y relatos de tradición oral de Real del Monte, Pueblo Mágico." />
       <div className="min-h-screen bg-background">
         
         {/* Video Modal */}
@@ -178,14 +178,14 @@ const RelatosPage = () => {
               >
                 <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium mb-4">
                   <Ghost className="w-4 h-4" />
-                  Misterio y TradiciÃ³n Oral
+                  Misterio y Tradición Oral
                 </span>
                 <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4">
                   Relatos y Leyendas
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-2xl mb-6">
-                  Historias que se cuentan al calor de la chimenea, entre la neblina de la montaÃ±a, 
-                  transmitidas de generaciÃ³n en generaciÃ³n.
+                  Historias que se cuentan al calor de la chimenea, entre la neblina de la montaña, 
+                  transmitidas de generación en generación.
                 </p>
                 
                 {/* Video Button */}
@@ -277,7 +277,7 @@ const RelatosPage = () => {
                 Relatos Cortos
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                PequeÃ±as historias que revelan el alma de Real del Monte
+                Pequeñas historias que revelan el alma de Real del Monte
               </p>
             </motion.div>
 
@@ -322,11 +322,11 @@ const RelatosPage = () => {
               <div className="relative z-10">
                 <Star className="w-12 h-12 text-white mx-auto mb-4" />
                 <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
-                  Â¿Tienes una historia que contar?
+                  ¿Tienes una historia que contar?
                 </h2>
                 <p className="text-white/90 max-w-xl mx-auto mb-6">
-                  Real del Monte estÃ¡ lleno de historias esperando ser contadas. Si conoces una leyenda, 
-                  un relato familiar o una experiencia paranormal, compÃ¡rtela con nosotros.
+                  Real del Monte está lleno de historias esperando ser contadas. Si conoces una leyenda, 
+                  un relato familiar o una experiencia paranormal, compártela con nosotros.
                 </p>
                 <button className="px-8 py-3 rounded-xl bg-white text-terracotta font-semibold hover:bg-white/90 transition-colors">
                   Compartir mi historia

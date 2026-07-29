@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * RDM Ecos MÃºsica â€” Recommendation Engine
- * Suggests tracks, crÃ³nicas, and events based on:
+ * RDM Ecos Música â€” Recommendation Engine
+ * Suggests tracks, crónicas, and events based on:
  * - User location / territory
  * - Listening history
  * - Canonical level (historical > artistic > community)
@@ -79,7 +79,7 @@ export function recommendTracks(
 }
 
 /**
- * Recommends crÃ³nicas based on territory.
+ * Recommends crónicas based on territory.
  */
 export function recommendCronicas(
   allCronicas: MusicCronica[],

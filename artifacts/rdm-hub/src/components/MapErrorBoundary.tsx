@@ -38,7 +38,7 @@ export default class MapErrorBoundary extends Component<Props, State> {
               <AlertTriangle className="h-10 w-10 text-[hsl(var(--rdm-amber))] mx-auto mb-3" />
               <h3 className="text-lg font-semibold text-[hsl(var(--foreground))] mb-2">Mapa no disponible</h3>
               <p className="text-sm text-[hsl(var(--muted-foreground))]">
-                El componente cartogrÃ¡fico no pudo cargarse. Intenta recargar la pÃ¡gina o vuelve mÃ¡s tarde.
+                El componente cartográfico no pudo cargarse. Intenta recargar la página o vuelve más tarde.
               </p>
             </div>
           </div>

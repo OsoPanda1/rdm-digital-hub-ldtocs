@@ -59,7 +59,7 @@ registerNarrativeRoutes(router);
 // --------- ISABELLA AI ---------
 registerIsabellaRoutes(router);
 
-// --------- TELEMETRÃA ---------
+// --------- TELEMETRÍA ---------
 registerTelemetryRoutes(router);
 
 // â”€â”€ Batch 7: C.R.O.W.N Federation Routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€

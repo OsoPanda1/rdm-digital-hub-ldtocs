@@ -22,7 +22,7 @@ export function PublicLayout() {
             <Outlet />
           </main>
           <div className="border-t border-white/5 py-2 text-center text-[10px] text-muted-foreground">
-            Â© 2026 RDM Digital Â· TecnologÃ­a al servicio de la memoria
+            Â© 2026 RDM Digital · Tecnología al servicio de la memoria
           </div>
           <RDMFooter />
         </SidebarInset>

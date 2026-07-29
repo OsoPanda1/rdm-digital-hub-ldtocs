@@ -48,9 +48,9 @@ export function TelemetryView() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-display font-semibold tracking-tight">TelemetrÃ­a en Vivo</h1>
+          <h1 className="text-2xl font-display font-semibold tracking-tight">Telemetría en Vivo</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            MÃ©tricas Prometheus del kernel territorial Â· ActualizaciÃ³n cada 5s
+            Métricas Prometheus del kernel territorial · Actualización cada 5s
             {error && <span className="ml-2 text-xs text-destructive">âš  {error}</span>}
           </p>
         </div>
@@ -69,7 +69,7 @@ export function TelemetryView() {
           { label: "Usuarios Activos", value: summary.activeUsers, icon: Network, color: "text-accent" },
           { label: "Decisiones/s", value: summary.decisionsPerSecond.toFixed(1), icon: Zap, color: "text-success" },
           { label: "Latencia P50", value: `${summary.avgLatencyMs.toFixed(0)}ms`, icon: Activity, color: summary.avgLatencyMs > 200 ? "text-destructive" : "text-accent" },
-          { label: "Salud FederaciÃ³n", value: `${(summary.federationHealth * 100).toFixed(0)}%`, icon: Server, color: summary.federationHealth > 0.8 ? "text-success" : summary.federationHealth > 0.5 ? "text-warning" : "text-destructive" },
+          { label: "Salud Federación", value: `${(summary.federationHealth * 100).toFixed(0)}%`, icon: Server, color: summary.federationHealth > 0.8 ? "text-success" : summary.federationHealth > 0.5 ? "text-warning" : "text-destructive" },
         ].map((item, i) => (
           <motion.div
             key={item.label}
@@ -113,7 +113,7 @@ export function TelemetryView() {
       <div className={card}>
         <div className="flex items-center gap-2 mb-4">
           <Server className="w-4 h-4 text-accent" />
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Salud por FederaciÃ³n (HeptafederaciÃ³n)</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Salud por Federación (Heptafederación)</p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
@@ -154,7 +154,7 @@ export function TelemetryView() {
       <div className={card}>
         <div className="flex items-center gap-2 mb-3">
           <Database className="w-4 h-4 text-accent" />
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Log de MÃ©tricas en Tiempo Real</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Log de Métricas en Tiempo Real</p>
           <div className="flex-1" />
           <span className={`w-2 h-2 rounded-full ${loading ? "bg-yellow-500 animate-pulse" : "bg-success"}`} />
         </div>
@@ -169,7 +169,7 @@ export function TelemetryView() {
             `[${new Date().toISOString()}] kernel.intents â†’ ${decisionsTotal} processed`,
             `[${new Date().toISOString()}] geo.lru.size â†’ ${cacheHits + cacheMisses} entries`,
           ] : [
-            `[${new Date().toISOString()}] Cargando mÃ©tricas...`,
+            `[${new Date().toISOString()}] Cargando métricas...`,
           ]).map((log, i) => (
             <p key={i} className="opacity-80">{log}</p>
           ))}

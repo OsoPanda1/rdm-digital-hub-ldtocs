@@ -22,11 +22,11 @@ export function OperationalReadinessBoard() {
     <div className="space-y-4">
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Centro de PreparaciÃ³n Operativa</CardTitle>
-          <CardDescription>Estado consolidado para pasar de beta privada a stage semi-real y producciÃ³n pÃºblica.</CardDescription>
+          <CardTitle className="text-base">Centro de Preparación Operativa</CardTitle>
+          <CardDescription>Estado consolidado para pasar de beta privada a stage semi-real y producción pública.</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 md:grid-cols-3">
-          {[{ label: "Progreso global", value: globalProgress }, { label: "Meta stage", value: stageProgress }, { label: "Meta producciÃ³n", value: productionProgress }].map((m) => (
+          {[{ label: "Progreso global", value: globalProgress }, { label: "Meta stage", value: stageProgress }, { label: "Meta producción", value: productionProgress }].map((m) => (
             <div key={m.label}>
               <div className="flex items-center justify-between text-sm mb-1"><span>{m.label}</span><span className="font-semibold">{m.value}%</span></div>
               <Progress value={m.value} />
@@ -47,7 +47,7 @@ export function OperationalReadinessBoard() {
                 <div key={task.id} className="flex items-start justify-between gap-2 border border-border rounded-md p-2">
                   <div>
                     <p className="text-sm font-medium">{task.title}</p>
-                    <p className="text-xs text-muted-foreground">Owner: {task.owner} Â· Milestone: {task.milestone}</p>
+                    <p className="text-xs text-muted-foreground">Owner: {task.owner} · Milestone: {task.milestone}</p>
                   </div>
                   <Badge className={`gap-1 ${statusClass[task.status]}`}>{statusIcon[task.status]}{statusLabel[task.status]}</Badge>
                 </div>

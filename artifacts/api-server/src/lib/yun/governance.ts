@@ -240,7 +240,7 @@ export class YunGovernanceConsole {
       date: "2026-07-25",
       authors: ["Edwin Castillo Trejo", "Isabella"],
       context: "Establishes the constitutional realm (YUN) as the foundational governance layer of the TAMV ecosystem, defining 8 immutable principles, identity heptacapa, and operational rules.",
-      decision: "YUN operates under 8 constitutional principles: SoberanÃ­a del Dato, Desacoplamiento Reactivo, Seguridad Transparente, Resiliencia Degradable, Gobernanza Documentada, Observabilidad Obligatoria, Gobernanza Federada, and Neutralidad EpistÃ©mica.",
+      decision: "YUN operates under 8 constitutional principles: Soberanía del Dato, Desacoplamiento Reactivo, Seguridad Transparente, Resiliencia Degradable, Gobernanza Documentada, Observabilidad Obligatoria, Gobernanza Federada, and Neutralidad Epistémica.",
       consequences: "All TAMV subsystems must comply with YUN principles. Non-compliance results in automatic policy denial. Changes to constitution require 5/7 federation quorum.",
       alternatives: ["Ad-hoc governance without constitutional framework", "External governance model borrowed from existing blockchains"],
     };

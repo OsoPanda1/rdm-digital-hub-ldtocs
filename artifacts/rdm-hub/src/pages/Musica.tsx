@@ -31,7 +31,7 @@ import ReactMarkdown from "react-markdown"
 import { useAudioPlayer, type Track } from "@/contexts/AudioPlayerContext"
 import playlistMd from "@/assets/musica/playlist.md?raw"
 
-// Ecos MÃºsica â€” New system components
+// Ecos Música â€” New system components
 import { SpatialPlayer } from "@/features/music/components/SpatialPlayer"
 import { CronicaPanel } from "@/features/music/components/CronicaPanel"
 import { MecenasPanel } from "@/features/music/components/MecenasPanel"
@@ -78,18 +78,18 @@ const PLAYLIST: Track[] = [
     id: "tumirada",
     title: "Tu Mirada",
     artist: "RDM Digital",
-    description: "MelodÃ­a Ã­ntima que captura la esencia de una mirada que lo dice todo.",
+    description: "Melodía íntima que captura la esencia de una mirada que lo dice todo.",
     src: tumiradaMp3,
     duration: 240,
     bpm: 72,
-    mood: "MelancÃ³lico",
+    mood: "Melancólico",
   },
   {
     id: "adicted_toyou",
     title: "Adicted to You",
     artist: "Edwin Castillo",
     description:
-      "CanciÃ³n que explora la adicciÃ³n emocional que nace del corazÃ³n y se niega a soltar los recuerdos del ayer.",
+      "Canción que explora la adicción emocional que nace del corazón y se niega a soltar los recuerdos del ayer.",
     src: adictedToyouMp3,
     duration: 220,
     bpm: 85,
@@ -99,7 +99,7 @@ const PLAYLIST: Track[] = [
     id: "cada_noche",
     title: "Cada Noche",
     artist: "Edwin Castillo",
-    description: "Ritmo nocturno que evoca las madrugadas de insomnio y reflexiÃ³n.",
+    description: "Ritmo nocturno que evoca las madrugadas de insomnio y reflexión.",
     src: cadaNocheMp3,
     duration: 230,
     bpm: 78,
@@ -107,7 +107,7 @@ const PLAYLIST: Track[] = [
   },
   {
     id: "el_senalado",
-    title: "El SeÃ±alado",
+    title: "El Señalado",
     artist: "Edwin Castillo",
     description: "Narrativa musical sobre llevar una marca distinta y encontrar fuerza en la propia identidad.",
     src: elSenaladoMp3,
@@ -117,7 +117,7 @@ const PLAYLIST: Track[] = [
   },
   {
     id: "legado_1",
-    title: "Legado (VersiÃ³n Extendida)",
+    title: "Legado (Versión Extendida)",
     artist: "RDM Digital",
     description:
       "Como deseo ser recordado, que dejo como legado, una pregunta que vive a diario en mi mente.",
@@ -130,11 +130,11 @@ const PLAYLIST: Track[] = [
     id: "patio_detierra",
     title: "Patio de Tierra",
     artist: "Edwin Castillo",
-    description: "MelodÃ­a que evoca los patios de las casas antiguas y las memorias que ahÃ­ habitan.",
+    description: "Melodía que evoca los patios de las casas antiguas y las memorias que ahí habitan.",
     src: patioDetierraMp3,
     duration: 200,
     bpm: 65,
-    mood: "NostÃ¡lgico",
+    mood: "Nostálgico",
   },
   {
     id: "puro_dolor",
@@ -151,7 +151,7 @@ const PLAYLIST: Track[] = [
     title: "Shooting Star",
     artist: "Edwin Castillo",
     description:
-      "Inspirado en la estrella fugaz que iluminÃ³ mi andar y cruza el cielo de Real del Monte.",
+      "Inspirado en la estrella fugaz que iluminó mi andar y cruza el cielo de Real del Monte.",
     src: shootingStarMp3,
     duration: 225,
     bpm: 88,
@@ -161,7 +161,7 @@ const PLAYLIST: Track[] = [
     id: "rdm_yoteadoro",
     title: "RDM Yo Te Adoro",
     artist: "RDM Digital",
-    description: "DeclaraciÃ³n de amor al Pueblo MÃ¡gico de Real del Monte.",
+    description: "Declaración de amor al Pueblo Mágico de Real del Monte.",
     src: rdmYoteadoroMp3,
     duration: 210,
     bpm: 76,
@@ -169,9 +169,9 @@ const PLAYLIST: Track[] = [
   },
   {
     id: "rdm_intro",
-    title: "RDM Intro (VersiÃ³n Extendida)",
+    title: "RDM Intro (Versión Extendida)",
     artist: "RDM Digital",
-    description: "MelodÃ­a de apertura extendida de la plataforma RDM Digital.",
+    description: "Melodía de apertura extendida de la plataforma RDM Digital.",
     src: rdmintroMp3,
     duration: 195,
     bpm: 70,
@@ -207,13 +207,13 @@ function TrackRow({
   const [expanded, setExpanded] = useState(false)
   const open = expanded || (isActive && isPlaying)
 
-  // Colores de mood (verde limÃ³n / rojo cereza / azul elÃ©ctrico)
+  // Colores de mood (verde limón / rojo cereza / azul eléctrico)
   const moodColor =
     track.mood === "Triste" || track.mood === "Intenso"
       ? "#FF1744" // rojo cereza
-      : track.mood === "EnergÃ©tico" || track.mood === "Ã‰pico"
-      ? "#00D4FF" // azul elÃ©ctrico
-      : "#A7F300" // verde limÃ³n por defecto
+      : track.mood === "Energético" || track.mood === "Ã‰pico"
+      ? "#00D4FF" // azul eléctrico
+      : "#A7F300" // verde limón por defecto
 
   return (
     <motion.div
@@ -405,7 +405,7 @@ function NowPlayingBadge() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  ECOS MUSICA â€” Spatial audio, crÃ³nicas, events                      */
+/*  ECOS MUSICA â€” Spatial audio, crónicas, events                      */
 /* ------------------------------------------------------------------ */
 
 const recommendedTracks = recommendTracks(MOCK_TRACKS, { territory_id: "rdm" }, 4)
@@ -683,7 +683,7 @@ function EcosMusicaSection() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  PAGE: MÃºsica streaming hÃ­brido sobre fondo blanco                  */
+/*  PAGE: Música streaming híbrido sobre fondo blanco                  */
 /* ------------------------------------------------------------------ */
 
 export default function Musica() {
@@ -718,20 +718,20 @@ export default function Musica() {
   return (
     <RDMLayout>
       <SEOMeta
-        title="MÃºsica de Real del Monte â€” RDM Digital"
-        description="Archivo histÃ³rico musical del Pueblo MÃ¡gico. MelodÃ­as que capturan el espÃ­ritu de Real del Monte. Apoya con una donaciÃ³n."
+        title="Música de Real del Monte â€” RDM Digital"
+        description="Archivo histórico musical del Pueblo Mágico. Melodías que capturan el espíritu de Real del Monte. Apoya con una donación."
       />
 
       {/* â”€â”€ Podcast Cross-Promo â”€â”€ */}
 
-      {/* Video: MÃºsica de Real del Monte */}
+      {/* Video: Música de Real del Monte */}
       <section className="py-8 px-6 md:px-16">
         <div className="max-w-5xl mx-auto">
           <VideoEmbed
             youtubeId="dQw4w9WgXcQ"
-            title="MÃºsica y Sonidos de Real del Monte"
+            title="Música y Sonidos de Real del Monte"
             variant="hero"
-            caption="MelodÃ­as que capturan el espÃ­ritu de nuestra tierra"
+            caption="Melodías que capturan el espíritu de nuestra tierra"
           />
         </div>
       </section>
@@ -750,7 +750,7 @@ export default function Musica() {
               </div>
               <div>
                 <p className="text-[10px] tracking-[0.2em] uppercase text-green-400 font-semibold" style={{ fontFamily: "var(--font-body)" }}>Spotify Podcast</p>
-                <p className="text-sm font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>Podcast del Ecosistema â€” Voces del Pueblo MÃ¡gico</p>
+                <p className="text-sm font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>Podcast del Ecosistema â€” Voces del Pueblo Mágico</p>
               </div>
             </div>
             <span className="shrink-0 text-[11px] font-semibold text-green-400 group-hover:translate-x-1 transition-transform" style={{ fontFamily: "var(--font-body)" }}>
@@ -800,17 +800,17 @@ export default function Musica() {
                 <div className="flex-1">
                   <div className="inline-flex items-center gap-2 rounded-full border border-[#00D4FF] bg-[#00D4FF]/10 px-4 py-1.5 text-[9px] uppercase tracking-[0.25em] text-[#0b1020] mb-3">
                     <Sparkles className="h-3 w-3 text-[#00D4FF]" />
-                    <span>Archivo HistÃ³rico Musical</span>
+                    <span>Archivo Histórico Musical</span>
                   </div>
                   <h1
                     className="text-[1.9rem] md:text-[2.7rem] font-bold text-[#0b1020] tracking-tight"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
-                    MÃºsica de Real del Monte
+                    Música de Real del Monte
                   </h1>
                   <p className="mt-2 text-[13px] text-[#1c2540] max-w-md">
-                    Una colecciÃ³n viva de canciones que narran la historia, el amor y la memoria del
-                    Pueblo MÃ¡gico. DiseÃ±ado como un archivo sonoro, disponible siempre para todos.
+                    Una colección viva de canciones que narran la historia, el amor y la memoria del
+                    Pueblo Mágico. Diseñado como un archivo sonoro, disponible siempre para todos.
                   </p>
 
                   <div className="mt-4 flex flex-wrap items-center gap-3 text-[11px] text-[#4B5563]">
@@ -857,7 +857,7 @@ export default function Musica() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-[10px] uppercase tracking-[0.22em] text-[#9CA3AF]">
-                    CatÃ¡logo sonoro
+                    Catálogo sonoro
                   </span>
                 </div>
 
@@ -880,7 +880,7 @@ export default function Musica() {
                   ))}
                 </div>
 
-                {/* Descargar todo (zip prÃ³ximamente) */}
+                {/* Descargar todo (zip próximamente) */}
               </div>
 
               {/* Donaciones */}
@@ -904,10 +904,10 @@ export default function Musica() {
                     <Heart className="w-7 h-7 text-[#050814]" />
                     <div>
                       <h3 className="text-sm font-bold text-[#0b1020]">
-                        Apoya esta mÃºsica
+                        Apoya esta música
                       </h3>
                       <p className="text-[11px] text-[#24304f]">
-                        Tu donaciÃ³n mantiene vivo este archivo sonoro.
+                        Tu donación mantiene vivo este archivo sonoro.
                       </p>
                     </div>
                   </div>
@@ -915,9 +915,9 @@ export default function Musica() {
 
                 <div className="px-6 pb-6 pt-4">
                   <p className="text-[13px] text-[#1c2540] leading-relaxed mb-5">
-                    Esta mÃºsica es y serÃ¡ siempre gratuita. Pero mantener servidores, dominio y el
-                    desarrollo de RDM Digital requiere inversiÃ³n constante. Si este proyecto resuena
-                    contigo, considera hacer una contribuciÃ³n.
+                    Esta música es y será siempre gratuita. Pero mantener servidores, dominio y el
+                    desarrollo de RDM Digital requiere inversión constante. Si este proyecto resuena
+                    contigo, considera hacer una contribución.
                   </p>
 
                   <DonationControls
@@ -935,7 +935,7 @@ export default function Musica() {
         </div>
       </section>
 
-      {/* Ecos Musica â€” Spatial audio, crÃ³nicas, events */}
+      {/* Ecos Musica â€” Spatial audio, crónicas, events */}
       <EcosMusicaSection />
     </RDMLayout>
   )
@@ -982,7 +982,7 @@ function DonationControls({
             ${amount.toLocaleString()}
             {amount === 500 && (
               <span className="block text-[9px] font-normal opacity-70">
-                MÃ¡s apoyado
+                Más apoyado
               </span>
             )}
             {amount === 1000 && (
@@ -1038,7 +1038,7 @@ function DonationControls({
 
       <p className="mt-3 text-[9px] text-[#6B7280] leading-relaxed">
         <ExternalLink className="w-3 h-3 inline mr-1" />
-        Pago procesado vÃ­a Stripe. No almacenamos datos bancarios.
+        Pago procesado vía Stripe. No almacenamos datos bancarios.
       </p>
     </>
   )

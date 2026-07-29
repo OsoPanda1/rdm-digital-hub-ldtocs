@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * RDM Ecos MÃºsica â€” Spatial Audio Engine
+ * RDM Ecos Música â€” Spatial Audio Engine
  * Web Audio API with 3D spatial profiles
  *
  * Three modes:

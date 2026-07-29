@@ -33,7 +33,7 @@ export default function Donar() {
 
       window.location.href = "/gracias-donativo";
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "No se pudo procesar la donaciÃ³n");
+      toast.error(e instanceof Error ? e.message : "No se pudo procesar la donación");
     } finally {
       setIsLoading(false);
     }

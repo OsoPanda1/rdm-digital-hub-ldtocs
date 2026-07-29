@@ -11,7 +11,7 @@ import { RFC_SECTIONS, RFC_COLORS, type RFCStatus } from "@/data/rfc-system";
 
 const statusLabels: Record<RFCStatus, string> = {
   draft: "Borrador",
-  review: "RevisiÃ³n",
+  review: "Revisión",
   ratified: "Ratificado",
   superseded: "Sustituido",
 };
@@ -32,7 +32,7 @@ export default function RFCList() {
               RFC â€” Request for Comments
             </h1>
             <p className="text-muted-foreground mt-1">
-              Documentos de especificaciÃ³n y consenso del ecosistema soberano TAMV
+              Documentos de especificación y consenso del ecosistema soberano TAMV
             </p>
           </div>
         </div>

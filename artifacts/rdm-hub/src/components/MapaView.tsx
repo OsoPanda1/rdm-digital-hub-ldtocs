@@ -20,7 +20,7 @@ const DEFAULT_MARKERS: MapMarkerData[] = [
     category: "Historia",
     lat: 20.1377,
     lng: -98.6759,
-    description: "Patrimonio minero con recorrido guiado por tÃºneles histÃ³ricos.",
+    description: "Patrimonio minero con recorrido guiado por túneles históricos.",
     image: "/placeholder.svg",
     type: "place",
     isPremium: true,
@@ -29,7 +29,7 @@ const DEFAULT_MARKERS: MapMarkerData[] = [
   {
     id: "paste-leyenda",
     name: "Pastes de la Leyenda",
-    category: "GastronomÃ­a",
+    category: "Gastronomía",
     lat: 20.1394,
     lng: -98.6724,
     description: "Cocina local con receta tradicional de paste hidalguense.",
@@ -39,11 +39,11 @@ const DEFAULT_MARKERS: MapMarkerData[] = [
   },
   {
     id: "panteon-ingles",
-    name: "PanteÃ³n InglÃ©s",
+    name: "Panteón Inglés",
     category: "Turismo",
     lat: 20.1421,
     lng: -98.6768,
-    description: "Sitio emblemÃ¡tico y mirador panorÃ¡mico de Real del Monte.",
+    description: "Sitio emblemático y mirador panorámico de Real del Monte.",
     image: "/placeholder.svg",
     type: "place",
     status: "En alta demanda",
@@ -66,7 +66,7 @@ export default function MapaView() {
           </h2>
           <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-slate-500">
             <Hexagon className="w-3 h-3 text-blue-400" />
-            <span>SincronizaciÃ³n LSM v4.2 - Activa</span>
+            <span>Sincronización LSM v4.2 - Activa</span>
           </div>
         </div>
 

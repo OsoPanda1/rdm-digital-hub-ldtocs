@@ -23,29 +23,29 @@ const TIPO_LABEL: Record<string, string> = {
 };
 
 const CONSEJOS = [
-  { icon: Clock, title: "Horarios pico", desc: "SÃ¡bados y domingos 11:00â€“15:00 son los horarios de mayor afluencia. Recomendamos llegar temprano." },
-  { icon: Navigation, title: "Acceso principal", desc: "La Av. JuÃ¡rez es la entrada principal al pueblo. El Estacionamiento Mayor (EST-03) es el mÃ¡s accesible." },
+  { icon: Clock, title: "Horarios pico", desc: "Sábados y domingos 11:00â€“15:00 son los horarios de mayor afluencia. Recomendamos llegar temprano." },
+  { icon: Navigation, title: "Acceso principal", desc: "La Av. Juárez es la entrada principal al pueblo. El Estacionamiento Mayor (EST-03) es el más accesible." },
   { icon: AlertCircle, title: "Contingencia / Ferias", desc: "Durante eventos especiales, se habilitan zonas de desahogo en Tezoantla y la periferia del Barrio Viento." },
 ];
 
 export default function EstacionamientosPage() {
   return (
     <RDMLayout>
-      <SEOMeta title="DÃ³nde Estacionar â€” Real del Monte" description="GuÃ­a completa de estacionamientos en Real del Monte. Ubicaciones, capacidad y consejos de movilidad para tu visita." />
+      <SEOMeta title="Dónde Estacionar â€” Real del Monte" description="Guía completa de estacionamientos en Real del Monte. Ubicaciones, capacidad y consejos de movilidad para tu visita." />
 
       {/* Hero */}
       <section className="pt-24 pb-12 px-6 md:px-16 lg:px-24">
         <div className="max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <p className="text-sm tracking-[0.3em] uppercase text-[hsl(var(--rdm-amber))] mb-3" style={{ fontFamily: "var(--font-body)" }}>
-              Movilidad y LogÃ­stica
+              Movilidad y Logística
             </p>
             <h1 className="text-4xl md:text-6xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
-              DÃ³nde <span className="text-[hsl(var(--rdm-amber))]">estacionar</span>
+              Dónde <span className="text-[hsl(var(--rdm-amber))]">estacionar</span>
             </h1>
             <p className="text-[hsl(var(--muted-foreground))] max-w-2xl text-lg leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>
-              Real del Monte cuenta con 7 estacionamientos principales distribuidos estratÃ©gicamente.
-              Encuentra el mÃ¡s cercano a tu destino.
+              Real del Monte cuenta con 7 estacionamientos principales distribuidos estratégicamente.
+              Encuentra el más cercano a tu destino.
             </p>
           </motion.div>
         </div>

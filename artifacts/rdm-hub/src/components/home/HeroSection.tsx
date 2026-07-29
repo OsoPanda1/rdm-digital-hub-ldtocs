@@ -25,7 +25,7 @@ const HeroSection: React.FC = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight * 0.7;
 
-    // PartÃ­culas fluidas
+    // Partículas fluidas
     const particles: Array<{
       x: number;
       y: number;
@@ -69,7 +69,7 @@ const HeroSection: React.FC = () => {
         ctx.globalAlpha = 1;
       });
 
-      // Conexiones entre partÃ­culas cercanas
+      // Conexiones entre partículas cercanas
       particles.forEach((p1, i) => {
         particles.slice(i + 1).forEach(p2 => {
           const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
@@ -146,14 +146,14 @@ const HeroSection: React.FC = () => {
             EL METAVERSO DESTRUCTOR
           </motion.p>
 
-          {/* SubtÃ­tulo */}
+          {/* Subtítulo */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.6 }}
             className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8"
           >
-            CivilizaciÃ³n Digital Quantum XR-IA â€” Social, Ã‰tica, Autosuficiente y Auditable
+            Civilización Digital Quantum XR-IA â€” Social, Ã‰tica, Autosuficiente y Auditable
           </motion.p>
 
           {/* CTAs */}
@@ -168,7 +168,7 @@ const HeroSection: React.FC = () => {
               className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold px-8 py-6 text-lg rounded-full shadow-lg shadow-cyan-500/30"
             >
               <Sparkles className="w-5 h-5 mr-2" />
-              Entrar al NÃºcleo
+              Entrar al Núcleo
             </Button>
             <Button
               size="lg"

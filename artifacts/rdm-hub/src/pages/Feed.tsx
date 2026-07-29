@@ -21,12 +21,12 @@ interface FeedPost {
 }
 
 const DEMO_POSTS: FeedPost[] = [
-  { id: "1", author: { name: "Mina de Acosta", avatar: "/images/mine-entrance.jpg", badge: "Lugar verificado" }, content: "Hoy inauguramos la nueva experiencia de realidad aumentada en el tÃºnel principal. Los visitantes podrÃ¡n ver cÃ³mo era la minerÃ­a en 1880 a travÃ©s de sus dispositivos mÃ³viles.", timestamp: new Date("2026-06-25T10:30:00"), likes: 47, comments: 12, tags: ["mina", "realidad-aumentada", "turismo"], location: "Mina de Acosta" },
-  { id: "2", author: { name: "Cultura RDM", avatar: "/images/dia-muertos.jpg", badge: "Cultural" }, content: "Ãšltimos dÃ­as de la exposiciÃ³n 'Plata y MemorÃ­a' en el Museo del Paste. Entrada libre. No te pierdas las piezas de platerÃ­a tradicional.", timestamp: new Date("2026-06-24T14:00:00"), likes: 32, comments: 8, tags: ["cultura", "exposiciÃ³n", "plata"], location: "Museo del Paste" },
-  { id: "3", author: { name: "Comunidad RDM", avatar: "/images/bosque-niebla.jpg", badge: "Comunitario" }, content: "Gracias a todos los que participaron en la jornada de limpieza del bosque de niebla. Â¡Recolectamos mÃ¡s de 200 kg de residuos! El siguiente sÃ¡bado haremos otra jornada.", timestamp: new Date("2026-06-23T09:00:00"), likes: 89, comments: 24, tags: ["comunidad", "ambiente", "voluntariado"] },
-  { id: "4", author: { name: "GastronomÃ­a RDM", avatar: "/images/gastronomia-paste.jpg", badge: "GastronÃ³mico" }, content: "Nuevo paste de temporada: Â¡Paste de hongos y queso de cabra! Disponible en Pastes El Portal y pastelerÃ­as locales. AcompaÃ±ado de salsa de chile morita.", timestamp: new Date("2026-06-22T12:00:00"), likes: 56, comments: 15, tags: ["gastronomÃ­a", "paste", "tradiciÃ³n"] },
-  { id: "5", author: { name: "Junta Local", avatar: "/images/plaza-principal.jpg", badge: "Oficial" }, content: "Convocatoria abierta para el Festival de la Luz y la Plata 2026. Inscripciones hasta el 15 de julio. CategorÃ­as: fotografÃ­a, video, arte digital y mÃºsica.", timestamp: new Date("2026-06-21T08:00:00"), likes: 124, comments: 31, tags: ["festival", "convocatoria", "cultura"] },
-  { id: "6", author: { name: "Isabella AI", avatar: "/images/ceo-tamv.jpg", badge: "IA TAMV" }, content: "He estado analizando los patrones de visita de este mes. La afluencia turÃ­stica ha aumentado un 34% vs el mes anterior. Recomiendo activar el plan de capacidad extendida los fines de semana.", timestamp: new Date("2026-06-20T16:00:00"), likes: 73, comments: 9, tags: ["isabella", "datos", "turismo"] },
+  { id: "1", author: { name: "Mina de Acosta", avatar: "/images/mine-entrance.jpg", badge: "Lugar verificado" }, content: "Hoy inauguramos la nueva experiencia de realidad aumentada en el túnel principal. Los visitantes podrán ver cómo era la minería en 1880 a través de sus dispositivos móviles.", timestamp: new Date("2026-06-25T10:30:00"), likes: 47, comments: 12, tags: ["mina", "realidad-aumentada", "turismo"], location: "Mina de Acosta" },
+  { id: "2", author: { name: "Cultura RDM", avatar: "/images/dia-muertos.jpg", badge: "Cultural" }, content: "Ãšltimos días de la exposición 'Plata y Memoría' en el Museo del Paste. Entrada libre. No te pierdas las piezas de platería tradicional.", timestamp: new Date("2026-06-24T14:00:00"), likes: 32, comments: 8, tags: ["cultura", "exposición", "plata"], location: "Museo del Paste" },
+  { id: "3", author: { name: "Comunidad RDM", avatar: "/images/bosque-niebla.jpg", badge: "Comunitario" }, content: "Gracias a todos los que participaron en la jornada de limpieza del bosque de niebla. ¡Recolectamos más de 200 kg de residuos! El siguiente sábado haremos otra jornada.", timestamp: new Date("2026-06-23T09:00:00"), likes: 89, comments: 24, tags: ["comunidad", "ambiente", "voluntariado"] },
+  { id: "4", author: { name: "Gastronomía RDM", avatar: "/images/gastronomia-paste.jpg", badge: "Gastronómico" }, content: "Nuevo paste de temporada: ¡Paste de hongos y queso de cabra! Disponible en Pastes El Portal y pastelerías locales. Acompañado de salsa de chile morita.", timestamp: new Date("2026-06-22T12:00:00"), likes: 56, comments: 15, tags: ["gastronomía", "paste", "tradición"] },
+  { id: "5", author: { name: "Junta Local", avatar: "/images/plaza-principal.jpg", badge: "Oficial" }, content: "Convocatoria abierta para el Festival de la Luz y la Plata 2026. Inscripciones hasta el 15 de julio. Categorías: fotografía, video, arte digital y música.", timestamp: new Date("2026-06-21T08:00:00"), likes: 124, comments: 31, tags: ["festival", "convocatoria", "cultura"] },
+  { id: "6", author: { name: "Isabella AI", avatar: "/images/ceo-tamv.jpg", badge: "IA TAMV" }, content: "He estado analizando los patrones de visita de este mes. La afluencia turística ha aumentado un 34% vs el mes anterior. Recomiendo activar el plan de capacidad extendida los fines de semana.", timestamp: new Date("2026-06-20T16:00:00"), likes: 73, comments: 9, tags: ["isabella", "datos", "turismo"] },
 ];
 
 const TRENDING_TAGS = ["#cultura", "#mina", "#paste", "#festival", "#realidad-aumentada", "#turismo", "#comunidad", "#plata"];
@@ -129,7 +129,7 @@ export default function Feed() {
             <div className="rounded-2xl border border-[hsl(var(--border)/0.4)] bg-[hsl(var(--background))] p-5">
               <h3 className="flex items-center gap-2 text-sm font-semibold mb-4"><Users className="h-4 w-4 text-[hsl(var(--rdm-amber))]" />Actividad Reciente</h3>
               <div className="space-y-3 text-xs text-[hsl(var(--muted-foreground))]">
-                {["MarÃ­a G. visitÃ³ Mina de Acosta", "Carlos L. compartiÃ³ 3 fotos", "Ana R. comentÃ³ en 'Paste de temporada'", "Turismo RDM publicÃ³ un evento", "Isabella AI analizÃ³ 45 reviews"].map((activity, i) => (
+                {["María G. visitó Mina de Acosta", "Carlos L. compartió 3 fotos", "Ana R. comentó en 'Paste de temporada'", "Turismo RDM publicó un evento", "Isabella AI analizó 45 reviews"].map((activity, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-[hsl(var(--rdm-amber)/0.5)]" />
                     <span>{activity}</span>
@@ -140,7 +140,7 @@ export default function Feed() {
 
             <div className="rounded-2xl border border-[hsl(var(--rdm-amber)/0.25)] bg-[hsl(var(--rdm-amber)/0.06)] p-5">
               <h3 className="flex items-center gap-2 text-sm font-semibold mb-3"><BookOpen className="h-4 w-4 text-[hsl(var(--rdm-amber))]" />Sobre el Feed</h3>
-              <p className="text-xs text-[hsl(var(--muted-foreground))] leading-relaxed">Este espacio estÃ¡ moderado por el Guardian de Isabella AI con supervisiÃ³n humana (HITL). Las publicaciones siguen el cÃ³digo de conducta TAMV y promueven el respeto, la cultura y la memoria de Real del Monte.</p>
+              <p className="text-xs text-[hsl(var(--muted-foreground))] leading-relaxed">Este espacio está moderado por el Guardian de Isabella AI con supervisión humana (HITL). Las publicaciones siguen el código de conducta TAMV y promueven el respeto, la cultura y la memoria de Real del Monte.</p>
             </div>
           </div>
         </div>

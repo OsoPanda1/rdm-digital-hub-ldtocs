@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * RDM Ecos MÃºsica â€” Core Types
+ * RDM Ecos Música â€” Core Types
  * The sonic nervous system of LTOS
  */
 

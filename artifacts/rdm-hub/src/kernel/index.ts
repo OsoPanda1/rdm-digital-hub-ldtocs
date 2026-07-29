@@ -25,7 +25,7 @@ const mockPubSub: PublishClient = {
 };
 
 if (databaseUrl && !redisUrl) {
-  logger.warn('[KERNEL] DATABASE_URL y REDIS_URL no configurados. Se usarÃ¡ modo mock local.');
+  logger.warn('[KERNEL] DATABASE_URL y REDIS_URL no configurados. Se usará modo mock local.');
 }
 
 const chronus = new ChronusEngine({ db: mockDb, pubsub: mockPubSub });
@@ -54,7 +54,7 @@ export function startKernel() {
 
   logger.info('[KERNEL] MD-X5 activo en modo soberano edge-first.');
   logger.info('[KERNEL] TIME UP engine cargado con', { politicas: 10 });
-  logger.info('[KERNEL] Ledger listo para registrar acciones crÃ­ticas');
+  logger.info('[KERNEL] Ledger listo para registrar acciones críticas');
 }
 
 export function stopKernel() {

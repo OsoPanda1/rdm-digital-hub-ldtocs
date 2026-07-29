@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * RDM Core Service â€” Recolector de mÃ©tricas internas del sistema
+ * RDM Core Service â€” Recolector de métricas internas del sistema
  */
 
 import type { SystemMetrics } from "./modes";

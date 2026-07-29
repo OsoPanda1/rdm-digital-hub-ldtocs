@@ -21,77 +21,77 @@ const centinelas = [
     color: "hsl(210,100%,55%)",
     gradient: "linear-gradient(135deg, hsl(210,100%,55%), hsl(210,80%,40%))",
     items: [
-      "Identidad criptogrÃ¡fica (DID + claves rotativas)",
-      "AnÃ¡lisis de trÃ¡fico y comportamiento en tiempo real",
-      "Control de acceso por propÃ³sito (RBAC + ABAC)",
+      "Identidad criptográfica (DID + claves rotativas)",
+      "Análisis de tráfico y comportamiento en tiempo real",
+      "Control de acceso por propósito (RBAC + ABAC)",
       "Registro probatorio inmutable (blockchain-backed)",
     ],
-    description: "Primera lÃ­nea de defensa. Siempre activo. Protege todas las comunicaciones, identidades y accesos del ecosistema RDM Digital.",
+    description: "Primera línea de defensa. Siempre activo. Protege todas las comunicaciones, identidades y accesos del ecosistema RDM Digital.",
   },
   {
     id: "horus",
     name: "HORUS CENTINEL",
     subtitle: "Standby Evolutivo",
     capas: 10,
-    totalCapas: "6+2+2 capas de protecciÃ³n",
+    totalCapas: "6+2+2 capas de protección",
     icon: Eye,
     color: "hsl(43,80%,55%)",
     gradient: "linear-gradient(135deg, hsl(43,80%,55%), hsl(35,70%,40%))",
     items: [
       "Arquitectura independiente de ANUBIS",
       "Modelos de amenaza actualizados con IA",
-      "ActivaciÃ³n solo con aprobaciÃ³n humana",
+      "Activación solo con aprobación humana",
       "Redundancia total ante fallo primario",
     ],
-    description: "Centinela de respaldo evolutivo. Opera de forma autÃ³noma e independiente. Se activa cuando ANUBIS detecta compromiso o fallo sistÃ©mico.",
+    description: "Centinela de respaldo evolutivo. Opera de forma autónoma e independiente. Se activa cuando ANUBIS detecta compromiso o fallo sistémico.",
   },
   {
     id: "dekateotl",
     name: "DEKATEOTL",
-    subtitle: "OrquestaciÃ³n Suprema",
+    subtitle: "Orquestación Suprema",
     capas: 11,
-    totalCapas: "11 capas de verificaciÃ³n",
+    totalCapas: "11 capas de verificación",
     icon: Cpu,
     color: "hsl(145,50%,50%)",
     gradient: "linear-gradient(135deg, hsl(145,50%,50%), hsl(160,40%,35%))",
     items: [
-      "Consenso mÃ­nimo requerido entre centinelas",
-      "Kill-Switch Ã©tico con supervisiÃ³n humana",
+      "Consenso mínimo requerido entre centinelas",
+      "Kill-Switch ético con supervisión humana",
       "Cumplimiento constitucional y normativo",
-      "CoordinaciÃ³n de todos los centinelas",
+      "Coordinación de todos los centinelas",
     ],
-    description: "Orquestador supremo del sistema. Coordina decisiones entre centinelas, requiere consenso humano para acciones crÃ­ticas.",
+    description: "Orquestador supremo del sistema. Coordina decisiones entre centinelas, requiere consenso humano para acciones críticas.",
   },
   {
     id: "aztekgods",
     name: "AZTEK GODS",
-    subtitle: "Standby Absoluto â€” Ãšltima LÃ­nea",
+    subtitle: "Standby Absoluto â€” Ãšltima Línea",
     capas: 22,
     totalCapas: "22 capas para continuidad civilizatoria",
     icon: Zap,
     color: "hsl(0,70%,55%)",
     gradient: "linear-gradient(135deg, hsl(0,70%,55%), hsl(350,60%,40%))",
     items: [
-      "Ãšltima lÃ­nea de defensa â€” activaciÃ³n ante catÃ¡strofe",
-      "PreservaciÃ³n del nÃºcleo inmortal del ecosistema",
-      "RecuperaciÃ³n autÃ³noma del sistema completo",
+      "Ãšltima línea de defensa â€” activación ante catástrofe",
+      "Preservación del núcleo inmortal del ecosistema",
+      "Recuperación autónoma del sistema completo",
       "Protocolos de continuidad civilizatoria",
     ],
-    description: "Protocolo de Ãºltimo recurso. Se activa Ãºnicamente ante catÃ¡strofe total del sistema. Preserva la esencia digital de RDM para generaciones futuras.",
+    description: "Protocolo de último recurso. Se activa únicamente ante catástrofe total del sistema. Preserva la esencia digital de RDM para generaciones futuras.",
   },
 ];
 
 const radares = [
-  { icon: Radar, name: "QUETZALCOATL", desc: "Anti-fraude econÃ³mico â€” detecta patrones de lavado y manipulaciÃ³n", color: "hsl(210,100%,55%)" },
+  { icon: Radar, name: "QUETZALCOATL", desc: "Anti-fraude económico â€” detecta patrones de lavado y manipulación", color: "hsl(210,100%,55%)" },
   { icon: Eye, name: "OJO DE RA", desc: "Anti-contenido ilegal â€” no censura ideas, protege dignidad", color: "hsl(43,80%,55%)" },
-  { icon: Users, name: "MOS GEMELOS", desc: "ValidaciÃ³n cruzada â€” A valida, B cuestiona, consenso decide", color: "hsl(145,50%,50%)" },
+  { icon: Users, name: "MOS GEMELOS", desc: "Validación cruzada â€” A valida, B cuestiona, consenso decide", color: "hsl(145,50%,50%)" },
 ];
 
 const securityMetrics = [
-  { label: "DetecciÃ³n", value: "< 1s", icon: Zap },
+  { label: "Detección", value: "< 1s", icon: Zap },
   { label: "Falsos Positivos", value: "< 0.1%", icon: Shield },
   { label: "Cobertura", value: "99.9%", icon: Network },
-  { label: "ResoluciÃ³n", value: "< 1 hora", icon: AlertTriangle },
+  { label: "Resolución", value: "< 1 hora", icon: AlertTriangle },
 ];
 
 /* â”€â”€ Interactive Layer Visualization â”€â”€ */
@@ -302,10 +302,10 @@ const SeguridadTenochtitlan = () => {
         </div>
       </Section>
 
-      {/* GuardianÃ­a Humana */}
-      <Section title="GuardianÃ­a Humana" icon={Users}>
+      {/* Guardianía Humana */}
+      <Section title="Guardianía Humana" icon={Users}>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {["TÃ©cnico", "Ã‰tico", "Legal", "EconÃ³mico"].map((tipo, i) => (
+          {["Técnico", "Ã‰tico", "Legal", "Económico"].map((tipo, i) => (
             <motion.div
               key={tipo}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -315,34 +315,34 @@ const SeguridadTenochtitlan = () => {
               className="rounded-xl border border-border/30 p-4 text-center"
               style={{ background: "hsla(210,100%,55%,0.05)" }}
             >
-              <div className="text-sm font-bold text-foreground">GuardiÃ¡n {tipo}</div>
-              <div className="text-xs text-muted-foreground mt-1">SupervisiÃ³n paralela</div>
+              <div className="text-sm font-bold text-foreground">Guardián {tipo}</div>
+              <div className="text-xs text-muted-foreground mt-1">Supervisión paralela</div>
             </motion.div>
           ))}
         </div>
         <InfoBox type="info">
-          Ninguna IA tiene autoridad final. Todas las decisiones crÃ­ticas requieren supervisiÃ³n humana redundante.
+          Ninguna IA tiene autoridad final. Todas las decisiones críticas requieren supervisión humana redundante.
         </InfoBox>
       </Section>
 
       {/* Security Config */}
-      <Section title="ConfiguraciÃ³n de Seguridad" icon={Lock}>
+      <Section title="Configuración de Seguridad" icon={Lock}>
         <div className="rounded-xl border border-border/30 p-6 font-mono text-xs space-y-4" style={{ background: "hsla(220,40%,8%,0.5)" }}>
           <div>
-            <div className="text-muted-foreground mb-1"># EncriptaciÃ³n</div>
+            <div className="text-muted-foreground mb-1"># Encriptación</div>
             <div><span style={{ color: "hsl(210,100%,60%)" }}>at_rest:</span> AES-256</div>
             <div><span style={{ color: "hsl(210,100%,60%)" }}>in_transit:</span> TLS 1.3</div>
-            <div><span style={{ color: "hsl(210,100%,60%)" }}>key_rotation:</span> 90 dÃ­as</div>
+            <div><span style={{ color: "hsl(210,100%,60%)" }}>key_rotation:</span> 90 días</div>
             <div><span style={{ color: "hsl(210,100%,60%)" }}>pqc_migration:</span> lattice-based (CRYSTALS-Kyber)</div>
           </div>
           <div>
-            <div className="text-muted-foreground mb-1"># AutenticaciÃ³n</div>
+            <div className="text-muted-foreground mb-1"># Autenticación</div>
             <div><span style={{ color: "hsl(43,80%,55%)" }}>method:</span> DID + JWT</div>
             <div><span style={{ color: "hsl(43,80%,55%)" }}>mfa:</span> obligatorio</div>
             <div><span style={{ color: "hsl(43,80%,55%)" }}>session_timeout:</span> 1 hora</div>
           </div>
           <div>
-            <div className="text-muted-foreground mb-1"># AutorizaciÃ³n</div>
+            <div className="text-muted-foreground mb-1"># Autorización</div>
             <div><span style={{ color: "hsl(145,50%,50%)" }}>model:</span> RBAC + ABAC</div>
             <div><span style={{ color: "hsl(145,50%,50%)" }}>principle:</span> least privilege</div>
             <div><span style={{ color: "hsl(145,50%,50%)" }}>quantum_aware:</span> true</div>
@@ -351,7 +351,7 @@ const SeguridadTenochtitlan = () => {
       </Section>
 
       {/* Metrics */}
-      <Section title="MÃ©tricas de Seguridad" icon={Fingerprint}>
+      <Section title="Métricas de Seguridad" icon={Fingerprint}>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {securityMetrics.map((m, i) => {
             const Icon = m.icon;
@@ -375,9 +375,9 @@ const SeguridadTenochtitlan = () => {
       </Section>
 
       {/* Audit Results */}
-      <Section title="Resultados de AuditorÃ­a Extrema (Stress Test)" icon={Activity}>
+      <Section title="Resultados de Auditoría Extrema (Stress Test)" icon={Activity}>
         <p className="text-muted-foreground text-sm mb-4">
-          El sistema fue sometido a pruebas de estrÃ©s con 65,000 usuarios concurrentes. Resultados certificados por el protocolo BookPIâ„¢.
+          El sistema fue sometido a pruebas de estrés con 65,000 usuarios concurrentes. Resultados certificados por el protocolo BookPIâ„¢.
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -386,12 +386,12 @@ const SeguridadTenochtitlan = () => {
                 <th className="text-left py-2 px-3 text-muted-foreground font-medium">Componente</th>
                 <th className="text-center py-2 px-3 text-muted-foreground font-medium">Resistencia</th>
                 <th className="text-center py-2 px-3 text-muted-foreground font-medium">% Fallo</th>
-                <th className="text-center py-2 px-3 text-muted-foreground font-medium">CalificaciÃ³n</th>
+                <th className="text-center py-2 px-3 text-muted-foreground font-medium">Calificación</th>
               </tr>
             </thead>
             <tbody>
               {[
-                { comp: "NÃºcleo Isabella (IA)", res: "99.8%", fallo: "0.2%", cal: "EXCELENTE", color: "hsl(145,50%,50%)" },
+                { comp: "Núcleo Isabella (IA)", res: "99.8%", fallo: "0.2%", cal: "EXCELENTE", color: "hsl(145,50%,50%)" },
                 { comp: "Directorio Comercial", res: "94.5%", fallo: "5.5%", cal: "Ã“PTIMO", color: "hsl(210,100%,60%)" },
                 { comp: "Micro-Presentaciones", res: "88.0%", fallo: "12.0%", cal: "MEJORABLE", color: "hsl(43,80%,55%)" },
                 { comp: "Motor de Pagos", res: "100.0%", fallo: "0.0%", cal: "SÃ“LIDO", color: "hsl(145,50%,50%)" },
@@ -409,13 +409,13 @@ const SeguridadTenochtitlan = () => {
         <div className="mt-4 rounded-lg border border-border/30 p-4" style={{ background: "hsla(145,50%,50%,0.08)" }}>
           <p className="text-sm font-semibold" style={{ color: "hsl(145,50%,50%)" }}>DIAGNÃ“STICO: RDM-TOS es ANTI-FRÃGIL</p>
           <p className="text-xs text-muted-foreground mt-1">
-            Al forzarlo al mÃ¡ximo, el cÃ³digo no solo no se rompiÃ³, sino que Isabella aprendiÃ³ a priorizar
+            Al forzarlo al máximo, el código no solo no se rompió, sino que Isabella aprendió a priorizar
             el contenido textual sobre el visual para mantener la operatividad del territorio.
           </p>
         </div>
         <div className="mt-4 text-xs text-muted-foreground">
-          <p>CÃ³digo de ValidaciÃ³n: <span className="font-mono text-foreground">RDM-AUD-GOV-2026</span></p>
-          <p>ClasificaciÃ³n: Documento TÃ©cnico Institucional Â· TAMV Enterprise â€” Todos los derechos reservados, 2026</p>
+          <p>Código de Validación: <span className="font-mono text-foreground">RDM-AUD-GOV-2026</span></p>
+          <p>Clasificación: Documento Técnico Institucional · TAMV Enterprise â€” Todos los derechos reservados, 2026</p>
         </div>
       </Section>
     </WikiPage>

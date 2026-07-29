@@ -18,7 +18,7 @@ export default function RutaDelPaste() {
             <div className="h-10 w-10 rounded-xl bg-gold/15 flex items-center justify-center">
               <Utensils className="h-5 w-5 text-gold" />
             </div>
-            <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/70">Experiencia GastronÃ³mica Â· Interactiva</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/70">Experiencia Gastronómica · Interactiva</p>
           </div>
           <h1 className="text-5xl md:text-6xl font-display font-bold tracking-tight">
             La <span className="text-gradient-gold italic">Ruta del Paste</span>
@@ -30,7 +30,7 @@ export default function RutaDelPaste() {
 
         {demo && (
           <div className="rounded-xl border border-amber-400/30 bg-amber-500/5 px-4 py-2 text-[11px] font-mono text-amber-300">
-            Modo demo activo Â· datos de respaldo locales (Supabase no disponible).
+            Modo demo activo · datos de respaldo locales (Supabase no disponible).
           </div>
         )}
 
@@ -39,7 +39,7 @@ export default function RutaDelPaste() {
         <div className="glass-card rounded-2xl border border-gold/20 p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/70">Mis valoraciones</p>
-            <p className="text-sm font-body text-muted-foreground">Exporta tu recorrido en PDF o comparte tu opiniÃ³n con el municipio.</p>
+            <p className="text-sm font-body text-muted-foreground">Exporta tu recorrido en PDF o comparte tu opinión con el municipio.</p>
           </div>
           <ShareRatingsButton pois={pois} />
         </div>
@@ -48,7 +48,7 @@ export default function RutaDelPaste() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
             { label: "Distancia", value: "2.8 km" },
-            { label: "DuraciÃ³n", value: "1.5 â€“ 2 hrs" },
+            { label: "Duración", value: "1.5 â€“ 2 hrs" },
             { label: "Paradas culinarias", value: "6 puntos" },
           ].map((s) => (
             <div key={s.label} className="glass-card rounded-2xl p-5 border border-gold/15">

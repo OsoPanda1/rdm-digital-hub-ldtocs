@@ -10,12 +10,12 @@ const servicios = [
   {
     icon: Video,
     title: "Videos HD/4K/8K",
-    items: ["EdiciÃ³n avanzada integrada", "Reels interactivos con elementos 3D/4D", "Historias persistentes con lÃ­nea temporal", "Streaming 4K/8K nativo"],
+    items: ["Edición avanzada integrada", "Reels interactivos con elementos 3D/4D", "Historias persistentes con línea temporal", "Streaming 4K/8K nativo"],
   },
   {
     icon: MessageCircle,
-    title: "ComunicaciÃ³n Cifrada",
-    items: ["Chats privados con cifrado cuÃ¡ntico", "Grupos temÃ¡ticos hasta 100K miembros", "Canales de difusiÃ³n premium", "Muro global con algoritmo Ã©tico"],
+    title: "Comunicación Cifrada",
+    items: ["Chats privados con cifrado cuántico", "Grupos temáticos hasta 100K miembros", "Canales de difusión premium", "Muro global con algoritmo ético"],
   },
   {
     icon: Gift,
@@ -25,25 +25,25 @@ const servicios = [
   {
     icon: Gamepad2,
     title: "Entretenimiento",
-    items: ["Conciertos sensoriales XR", "Gaming integral (Casual, MMO, Esports)", "Mascotas digitales con IA genÃ©tica", "LoterÃ­a TAMV blockchain transparente"],
+    items: ["Conciertos sensoriales XR", "Gaming integral (Casual, MMO, Esports)", "Mascotas digitales con IA genética", "Lotería TAMV blockchain transparente"],
   },
   {
     icon: Globe,
     title: "Dream Spaces",
-    items: ["Espacios privados customizables", "Mundos temÃ¡ticos comunitarios", "Arquitectura imposible (fÃ­sica cuÃ¡ntica)", "ColaboraciÃ³n en tiempo real"],
+    items: ["Espacios privados customizables", "Mundos temáticos comunitarios", "Arquitectura imposible (física cuántica)", "Colaboración en tiempo real"],
   },
   {
     icon: Shield,
     title: "ID-NVIDA Verificada",
-    items: ["Avatares con biometrÃ­a avanzada", "Certificaciones profesionales blockchain", "Sistema de reputaciÃ³n verificable", "Privacidad selectiva y revelaciÃ³n controlada"],
+    items: ["Avatares con biometría avanzada", "Certificaciones profesionales blockchain", "Sistema de reputación verificable", "Privacidad selectiva y revelación controlada"],
   },
 ];
 
 const metricas = [
   { label: "Usuarios Registrados", value: "8.5M" },
   { label: "Usuarios Activos Mensuales", value: "6.2M" },
-  { label: "Tiempo Promedio SesiÃ³n", value: "45 min" },
-  { label: "RetenciÃ³n 30 dÃ­as", value: "78%" },
+  { label: "Tiempo Promedio Sesión", value: "45 min" },
+  { label: "Retención 30 días", value: "78%" },
   { label: "NPS Score", value: "72" },
   { label: "Regalos Virtuales / mes", value: "$15M" },
 ];
@@ -51,11 +51,11 @@ const metricas = [
 const RedSocial = () => (
   <WikiPage
     title="Red Social Avanzada"
-    subtitle="Plataforma social federada superior â€” Videos, Chats, CGIFTS, Dream Spaces y mÃ¡s"
+    subtitle="Plataforma social federada superior â€” Videos, Chats, CGIFTS, Dream Spaces y más"
   >
     <InfoBox type="info" title="Ecosistema Social Completo">
-      La red social TAMV integra comunicaciÃ³n cifrada, contenido inmersivo XR, economÃ­a de regalos CGIFTS, 
-      espacios virtuales Dream Spaces e identidad soberana ID-NVIDA en una Ãºnica plataforma Ã©tica y federada.
+      La red social TAMV integra comunicación cifrada, contenido inmersivo XR, economía de regalos CGIFTS, 
+      espacios virtuales Dream Spaces e identidad soberana ID-NVIDA en una única plataforma ética y federada.
     </InfoBox>
 
     <Section title="Servicios del Ecosistema Social" icon={Users}>
@@ -84,10 +84,10 @@ const RedSocial = () => (
     <Section title="Publicidad Ã‰tica" icon={Radio}>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[
-          { label: "Experiencias XR nativas", desc: "InmersiÃ³n publicitaria no intrusiva" },
+          { label: "Experiencias XR nativas", desc: "Inmersión publicitaria no intrusiva" },
           { label: "Consentimiento transparente", desc: "Control total del usuario" },
           { label: "Revenue Sharing", desc: "60% para creadores" },
-          { label: "Valor educativo", desc: "Publicidad que enseÃ±a y aporta" },
+          { label: "Valor educativo", desc: "Publicidad que enseña y aporta" },
         ].map((item) => (
           <div key={item.label} className="rounded-md border border-border/50 bg-muted/20 p-4">
             <div className="font-medium text-foreground text-sm">{item.label}</div>
@@ -100,7 +100,7 @@ const RedSocial = () => (
     <Section title="Programa de Referidos 500">
       <InfoBox type="success">
         <ul className="space-y-1.5">
-          <li><strong>$1,000 USD</strong> por alcanzar 500 seguidores con membresÃ­a</li>
+          <li><strong>$1,000 USD</strong> por alcanzar 500 seguidores con membresía</li>
           <li><strong>Bonos escalonados</strong> hasta $500,000 USD</li>
           <li><strong>Beneficios exclusivos:</strong> Equity, partnerships, embajadas</li>
           <li><strong>Crecimiento exponencial</strong> con sistema de incentivos masivo</li>
@@ -108,7 +108,7 @@ const RedSocial = () => (
       </InfoBox>
     </Section>
 
-    <Section title="MÃ©tricas de Rendimiento">
+    <Section title="Métricas de Rendimiento">
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {metricas.map((m) => (
           <div key={m.label} className="rounded-lg border border-border/50 bg-card/30 p-4 text-center">
@@ -123,8 +123,8 @@ const RedSocial = () => (
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {[
           "SDK completo XR/VR para desarrollo",
-          "DocumentaciÃ³n y tutoriales avanzados",
-          "ColaboraciÃ³n Open Source comunitaria",
+          "Documentación y tutoriales avanzados",
+          "Colaboración Open Source comunitaria",
           "Hackathons mensuales con premios",
           "Bolsa de trabajo exclusiva global",
         ].map((item) => (

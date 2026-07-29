@@ -24,7 +24,7 @@ const endpoints: Endpoint[] = [
   { method: "POST", path: "/api/tamv/identity", desc: "Emite DID + ancla BookPI", group: "identity" },
   { method: "GET", path: "/api/tamv/governance/proposals", desc: "Propuestas DAO", group: "governance" },
   { method: "POST", path: "/api/tamv/governance/proposals", desc: "Crea propuesta", group: "governance" },
-  { method: "POST", path: "/api/tamv/economy/distribute", desc: "Distribuye Phoenix 20Â·30Â·50", group: "economy" },
+  { method: "POST", path: "/api/tamv/economy/distribute", desc: "Distribuye Phoenix 20·30·50", group: "economy" },
   { method: "POST", path: "/api/tamv/ai/decision", desc: "Registra DecisionRecord (SHA-256)", group: "ai" },
   { method: "GET", path: "/api/tamv/ai/decisions", desc: "Audita decisiones IA", group: "ai" },
   { method: "GET", path: "/api/tamv/metaverse/dreamspaces", desc: "DreamSpaces XR activos", group: "metaverse" },
@@ -87,7 +87,7 @@ const TAMVApiExplorer = () => {
       <RDMLayout>
         <SEOMeta
           title="Explorador de API TAMV â€” RDM Digital"
-          description="Explorador interactivo de la API TAMV Blockchain MSR: identidad, gobernanza, economÃ­a, IA Ã©tica y metaverso."
+          description="Explorador interactivo de la API TAMV Blockchain MSR: identidad, gobernanza, economía, IA ética y metaverso."
         />
         <div className="container mx-auto px-6 pt-32 pb-24">
           <motion.div
@@ -97,7 +97,7 @@ const TAMVApiExplorer = () => {
           >
             <Badge className="mb-4 bg-[hsl(var(--gold))]/10 text-[hsl(var(--gold))] border-[hsl(var(--gold))]/30">
               <Code2 className="w-3 h-3 mr-2" />
-              TAMV Blockchain MSR API Â· v1.0.0
+              TAMV Blockchain MSR API · v1.0.0
             </Badge>
             <h1 className="font-display text-4xl md:text-6xl font-light mb-3">
               Explorador de <span className="text-gradient-gold">API</span>

@@ -28,15 +28,15 @@ const Footer = () => {
       await newsletterApi.subscribe({ email, source: 'footer' });
       setSubscribed(true);
       toast({
-        title: "Â¡Suscrito! ðŸŽ‰",
-        description: "RecibirÃ¡s las mejores ofertas y eventos de Real del Monte.",
+        title: "¡Suscrito! ðŸŽ‰",
+        description: "Recibirás las mejores ofertas y eventos de Real del Monte.",
       });
     } catch {
       // Still show success to user (email may already exist)
       setSubscribed(true);
       toast({
-        title: "Â¡Gracias! ðŸŽ‰",
-        description: "Gracias por tu interÃ©s en RDM Digital.",
+        title: "¡Gracias! ðŸŽ‰",
+        description: "Gracias por tu interés en RDM Digital.",
       });
     } finally {
       setLoading(false);
@@ -70,12 +70,12 @@ const Footer = () => {
                 </span>
                 <div className="flex items-center gap-1 text-[10px] tracking-wider" style={{ color: "hsl(43,70%,55%)" }}>
                   <Sparkles className="w-3 h-3" />
-                  InnovaciÃ³n TurÃ­stica 2026
+                  Innovación Turística 2026
                 </div>
               </div>
             </div>
             <p className="text-sm leading-relaxed mb-6" style={{ color: "hsl(210,20%,45%)" }}>
-              Tu guÃ­a comunitaria digital para descubrir Real del Monte, Pueblo MÃ¡gico de Hidalgo. 
+              Tu guía comunitaria digital para descubrir Real del Monte, Pueblo Mágico de Hidalgo. 
               Servicios de altura para visitantes exigentes.
             </p>
             
@@ -90,7 +90,7 @@ const Footer = () => {
                   style={{ background: "hsla(145,60%,40%,0.12)", color: "hsl(145,60%,60%)", border: "1px solid hsla(145,60%,40%,0.2)" }}
                 >
                   <CheckCircle className="w-5 h-5" />
-                  <span className="text-sm">Â¡Te has suscrito exitosamente!</span>
+                  <span className="text-sm">¡Te has suscrito exitosamente!</span>
                 </div>
               ) : (
                 <form onSubmit={handleSubscribe} className="flex gap-2">
@@ -153,7 +153,7 @@ const Footer = () => {
               {[
                 { label: "Historia", path: "/historia" },
                 { label: "Cultura", path: "/cultura" },
-                { label: "GastronomÃ­a", path: "/gastronomia" },
+                { label: "Gastronomía", path: "/gastronomia" },
                 { label: "Ecoturismo", path: "/ecoturismo" },
                 { label: "Relatos", path: "/relatos" },
                 { label: "Rutas", path: "/rutas" },
@@ -208,7 +208,7 @@ const Footer = () => {
                 onMouseOver={(e) => e.currentTarget.style.color = "hsl(210,100%,70%)"}
                 onMouseOut={(e) => e.currentTarget.style.color = "hsl(210,20%,45%)"}
               >
-                ðŸ” Iniciar SesiÃ³n
+                ðŸ” Iniciar Sesión
               </Link>
             </div>
           </div>
@@ -218,7 +218,7 @@ const Footer = () => {
         <div className="mt-12 pt-8" style={{ borderTop: "1px solid hsla(210,100%,55%,0.08)" }}>
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-xs" style={{ color: "hsl(210,20%,30%)" }}>
-              Â© 2026 RDM Digital. Hecho con â¤ï¸ para Real del Monte, Pueblo MÃ¡gico.
+              Â© 2026 RDM Digital. Hecho con â¤ï¸ para Real del Monte, Pueblo Mágico.
             </p>
             
             <div className="flex items-center gap-4">
@@ -238,13 +238,13 @@ const Footer = () => {
           <div className="flex flex-col items-center gap-4 mt-8">
             <img
               src={logoTamv}
-              alt="TAMV Online â€“ TecnologÃ­a Avanzada Mexicana VersÃ¡til"
+              alt="TAMV Online â€“ Tecnología Avanzada Mexicana Versátil"
               className="h-12 md:h-14 object-contain opacity-40 hover:opacity-80 transition-opacity duration-500"
               loading="lazy"
             />
             <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6">
               <p className="text-xs font-light tracking-wide" style={{ color: "hsl(210,30%,35%)" }}>
-                Proyecto creado con amor â™¥ TecnologÃ­a TAMV Online
+                Proyecto creado con amor â™¥ Tecnología TAMV Online
               </p>
               <span className="hidden md:inline" style={{ color: "hsl(210,30%,15%)" }}>|</span>
               <p className="text-xs font-medium tracking-wide" style={{ color: "hsl(43,50%,40%)" }}>

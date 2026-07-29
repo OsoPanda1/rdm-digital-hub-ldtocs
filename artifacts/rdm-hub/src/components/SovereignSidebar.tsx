@@ -27,7 +27,7 @@ const NAV_ITEMS = [
   { id: "routes", label: "Rutas", icon: Compass },
   { id: "commerce", label: "Comercio", icon: Store },
   { id: "heritage", label: "Patrimonio", icon: History },
-  { id: "telemetry", label: "TelemetrÃ­a", icon: Activity },
+  { id: "telemetry", label: "Telemetría", icon: Activity },
 ];
 
 export function SovereignSidebar({ activeView, onViewChange }: SovereignSidebarProps) {

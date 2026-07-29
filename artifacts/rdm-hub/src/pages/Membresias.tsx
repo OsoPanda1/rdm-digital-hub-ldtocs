@@ -22,8 +22,8 @@ const PLANS = [
     accent: "from-cyan-300/20 to-cyan-500/5",
     features: [
       "Acceso a historia, mitos y rutas",
-      "Mapa interactivo con geolocalizaciÃ³n",
-      "CatÃ¡logo de comercios locales",
+      "Mapa interactivo con geolocalización",
+      "Catálogo de comercios locales",
       "Muro de comunidad",
     ],
   },
@@ -39,7 +39,7 @@ const PLANS = [
       "Acceso completo a la Mina â›ï¸",
       "Acumula minerales y puntos",
       "Canjea por productos reales: pastes, plata, hospedaje, cenas",
-      "EnergÃ­a y recompensas exclusivas",
+      "Energía y recompensas exclusivas",
     ],
   },
 ];
@@ -67,13 +67,13 @@ export default function Membresias() {
     setBusy(true);
     const { data, error } = await supabase.functions.invoke("rdm-membership-activate");
     setBusy(false);
-    if (error) return toast.error("No se pudo activar la membresÃ­a");
-    if (data?.membership) { toast.success("Â¡MembresÃ­a minera activada por 30 dÃ­as!"); loadStatus(); }
+    if (error) return toast.error("No se pudo activar la membresía");
+    if (data?.membership) { toast.success("¡Membresía minera activada por 30 días!"); loadStatus(); }
   };
 
   return (
     <RDMLayout>
-      <SEOMeta title="MembresÃ­as Â· RDM Digital" description="Elige tu plan en Real del Monte: explora gratis o conviÃ©rtete en Minero RDM y canjea puntos por productos reales." />
+      <SEOMeta title="Membresías · RDM Digital" description="Elige tu plan en Real del Monte: explora gratis o conviértete en Minero RDM y canjea puntos por productos reales." />
       {/* Hero Banner */}
       <div className="relative h-48 w-full overflow-hidden">
         <img src="/images/mine-entrance.jpg" alt="Entrada de la mina de Real del Monte" className="h-full w-full object-cover" />
@@ -82,12 +82,12 @@ export default function Membresias() {
       <section className="pb-20 pt-8">
         <div className="container mx-auto max-w-5xl px-6">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10 text-center">
-            <span className="mb-3 block font-mono text-xs uppercase tracking-widest text-primary">Plano II Â· Servicios</span>
+            <span className="mb-3 block font-mono text-xs uppercase tracking-widest text-primary">Plano II · Servicios</span>
             <h1 className="mb-3 text-4xl font-bold uppercase leading-[0.9] tracking-tighter md:text-5xl">
-              <span className="text-gradient-cyan">MembresÃ­as</span>
+              <span className="text-gradient-cyan">Membresías</span>
             </h1>
             <p className="mx-auto max-w-xl text-muted-foreground">
-              Apoya la digitalizaciÃ³n del pueblo y vive una experiencia mÃ¡s profunda. La membresÃ­a minera impulsa a los negocios locales.
+              Apoya la digitalización del pueblo y vive una experiencia más profunda. La membresía minera impulsa a los negocios locales.
             </p>
           </motion.div>
 
@@ -121,7 +121,7 @@ export default function Membresias() {
                   </ul>
                   {plan.highlight ? (
                     active ? (
-                      <Button disabled className="w-full">MembresÃ­a activa âœ“</Button>
+                      <Button disabled className="w-full">Membresía activa âœ“</Button>
                     ) : (
                       <Button onClick={activate} disabled={busy} className="w-full gap-2">
                         <Crown className="h-4 w-4" /> {busy ? "Activando..." : "Activar Minero RDM"}
@@ -138,7 +138,7 @@ export default function Membresias() {
           </div>
 
           <p className="mt-8 text-center text-xs text-muted-foreground">
-            Â¿Dudas sobre los planes? Visita las{" "}
+            ¿Dudas sobre los planes? Visita las{" "}
             <button onClick={() => navigate("/faq")} className="text-cyan-200 underline-offset-2 hover:underline">
               Preguntas Frecuentes
             </button>.

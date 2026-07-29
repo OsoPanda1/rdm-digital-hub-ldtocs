@@ -4,7 +4,7 @@
  */
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Isabella Genesis â€” Ethical Firewall
-// PolÃ­ticas Ã©ticas aplicadas a cada DecisionRecord
+// Políticas éticas aplicadas a cada DecisionRecord
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import type { DecisionRecord, FirewallAction } from "../types/decision-record";
@@ -95,7 +95,7 @@ export function createEthicalFirewall(): EthicalFirewall {
       }
 
       const soulPolicyCount = POLICIES.length;
-      result.decision.explanation += ` [SOUL: ${soulPolicyCount} polÃ­ticas activas]`;
+      result.decision.explanation += ` [SOUL: ${soulPolicyCount} políticas activas]`;
 
       return result;
     },

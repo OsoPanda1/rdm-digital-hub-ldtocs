@@ -280,8 +280,8 @@ export class CommerceAdapter implements DataHandler {
 
   private getNeonUrl(): string | null {
     return import.meta.env.VITE_NEON_DATABASE_URL
-      || process.env.NEON_DATABASE_URL
-      || process.env.COMMERCE_DB_URL
+      || (typeof process !== 'undefined' ? process.env.NEON_DATABASE_URL : null)
+      || (typeof process !== 'undefined' ? process.env.COMMERCE_DB_URL : null)
       || null;
   }
 

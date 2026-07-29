@@ -25,16 +25,16 @@ const formSchema = z.object({
     message: "El usuario debe tener al menos 3 caracteres.",
   }),
   email: z.string().email({
-    message: "Por favor ingresa un correo vÃ¡lido.",
+    message: "Por favor ingresa un correo válido.",
   }),
   password: z.string().min(8, {
-    message: "La contraseÃ±a debe tener al menos 8 caracteres.",
+    message: "La contraseña debe tener al menos 8 caracteres.",
   }),
   confirmPassword: z.string().min(8, {
-    message: "Por favor confirma tu contraseÃ±a.",
+    message: "Por favor confirma tu contraseña.",
   }),
 }).refine((data) => data.password === data.confirmPassword, {
-  message: "Las contraseÃ±as no coinciden.",
+  message: "Las contraseñas no coinciden.",
   path: ["confirmPassword"],
 });
 
@@ -140,7 +140,7 @@ const Register = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-blue-300">ContraseÃ±a</FormLabel>
+                    <FormLabel className="text-blue-300">Contraseña</FormLabel>
                     <FormControl>
                       <Input 
                         type="password"
@@ -159,7 +159,7 @@ const Register = () => {
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-blue-300">Confirmar ContraseÃ±a</FormLabel>
+                    <FormLabel className="text-blue-300">Confirmar Contraseña</FormLabel>
                     <FormControl>
                       <Input 
                         type="password"
@@ -191,7 +191,7 @@ const Register = () => {
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-background px-2 text-muted-foreground">
-                  O regÃ­strate con
+                  O regístrate con
                 </span>
               </div>
             </div>
@@ -213,16 +213,16 @@ const Register = () => {
           </div>
           
           <p className="text-center text-sm text-muted-foreground mt-6">
-            Â¿Ya tienes una cuenta?{" "}
+            ¿Ya tienes una cuenta?{" "}
             <Link to="/login" className="text-blue-400 hover:text-blue-300 hover:underline">
-              Inicia sesiÃ³n
+              Inicia sesión
             </Link>
           </p>
           <p className="text-center text-[10px] text-muted-foreground/50 mt-4 px-4">
             Al registrarte aceptas nuestro{" "}
             <Link to="/reglamento" className="text-blue-400 hover:underline">Reglamento de la Comunidad</Link>
             {" y "}
-            <a href="/PRIVACY.md" className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">PolÃ­tica de Privacidad</a>.
+            <a href="/PRIVACY.md" className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>.
           </p>
         </div>
       </motion.main>

@@ -333,7 +333,7 @@ const kernelResonanceUpdate: RouteHandler = async (body, headers) => {
       friction_zones: result.frictionZones.map(z => ({
         node_id: z,
         severity: 'medium',
-        description: `FricciÃ³n detectada en nodo ${z}`,
+        description: `Fricción detectada en nodo ${z}`,
       })),
       redirect_plan: result.redirectPlan,
     },
@@ -392,12 +392,12 @@ const topologyNodoCero: RouteHandler = async (_body, headers) => {
 
   const workflow: NodoCeroWorkflow = {
     stages: [
-      { stage_id: 'nc-001', name: 'Despertar', description: 'ActivaciÃ³n progresiva del Nodo Cero', dependencies: [] },
-      { stage_id: 'nc-002', name: 'Resonancia', description: 'SincronizaciÃ³n con la HeptafederaciÃ³n TAMV', dependencies: ['nc-001'] },
-      { stage_id: 'nc-003', name: 'OrquestaciÃ³n', description: 'CoordinaciÃ³n de subsistemas territoriales', dependencies: ['nc-002'] },
-      { stage_id: 'nc-004', name: 'Trascendencia', description: 'Escalamiento y visiÃ³n estratÃ©gica', dependencies: ['nc-003'] },
+      { stage_id: 'nc-001', name: 'Despertar', description: 'Activación progresiva del Nodo Cero', dependencies: [] },
+      { stage_id: 'nc-002', name: 'Resonancia', description: 'Sincronización con la Heptafederación TAMV', dependencies: ['nc-001'] },
+      { stage_id: 'nc-003', name: 'Orquestación', description: 'Coordinación de subsistemas territoriales', dependencies: ['nc-002'] },
+      { stage_id: 'nc-004', name: 'Trascendencia', description: 'Escalamiento y visión estratégica', dependencies: ['nc-003'] },
     ],
-    owner: 'isabella-villaseÃ±or',
+    owner: 'isabella-villaseñor',
     status: 'active',
   };
 

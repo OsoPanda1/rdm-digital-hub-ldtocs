@@ -12,13 +12,13 @@ const endpoints = {
     { method: "POST", path: "/api/v1/identity/create", desc: "Crear identidad soberana con DID verificable" },
     { method: "GET", path: "/api/v1/identity/:did", desc: "Consultar identidad por DID" },
     { method: "POST", path: "/api/v1/identity/verify", desc: "Verificar credencial con ZK-Proof" },
-    { method: "PUT", path: "/api/v1/identity/:did/rotate", desc: "Rotar claves criptogrÃ¡ficas" },
-    { method: "DELETE", path: "/api/v1/identity/:did/revoke", desc: "Revocar credencial especÃ­fica" },
+    { method: "PUT", path: "/api/v1/identity/:did/rotate", desc: "Rotar claves criptográficas" },
+    { method: "DELETE", path: "/api/v1/identity/:did/revoke", desc: "Revocar credencial específica" },
   ],
   educacion: [
     { method: "POST", path: "/api/v1/edu/course", desc: "Crear curso inmersivo con contenido XR" },
-    { method: "GET", path: "/api/v1/edu/courses", desc: "Listar cursos con filtros y paginaciÃ³n" },
-    { method: "POST", path: "/api/v1/edu/enroll", desc: "Matricular estudiante con verificaciÃ³n ID-NVIDA" },
+    { method: "GET", path: "/api/v1/edu/courses", desc: "Listar cursos con filtros y paginación" },
+    { method: "POST", path: "/api/v1/edu/enroll", desc: "Matricular estudiante con verificación ID-NVIDA" },
     { method: "GET", path: "/api/v1/edu/progress/:studentId", desc: "Consultar progreso y certificaciones" },
     { method: "POST", path: "/api/v1/edu/certificate", desc: "Emitir certificado verificable en blockchain" },
   ],
@@ -34,18 +34,18 @@ const endpoints = {
     { method: "GET", path: "/api/v1/economy/balance/:did", desc: "Consultar balance de wallet" },
     { method: "GET", path: "/api/v1/economy/transactions", desc: "Historial de transacciones con filtros" },
     { method: "POST", path: "/api/v1/economy/stake", desc: "Participar en gobernanza con staking" },
-    { method: "GET", path: "/api/v1/economy/metrics", desc: "MÃ©tricas econÃ³micas del ecosistema" },
+    { method: "GET", path: "/api/v1/economy/metrics", desc: "Métricas económicas del ecosistema" },
   ],
   metaverso: [
-    { method: "POST", path: "/api/v1/metaverse/space", desc: "Crear DreamSpace con configuraciÃ³n XR" },
-    { method: "GET", path: "/api/v1/metaverse/spaces", desc: "Listar espacios con geolocalizaciÃ³n" },
+    { method: "POST", path: "/api/v1/metaverse/space", desc: "Crear DreamSpace con configuración XR" },
+    { method: "GET", path: "/api/v1/metaverse/spaces", desc: "Listar espacios con geolocalización" },
     { method: "POST", path: "/api/v1/metaverse/avatar", desc: "Crear/actualizar avatar vinculado a DID" },
     { method: "POST", path: "/api/v1/metaverse/event", desc: "Programar evento inmersivo" },
     { method: "GET", path: "/api/v1/metaverse/twin/:id", desc: "Consultar gemelo digital" },
   ],
   ia: [
-    { method: "POST", path: "/api/v1/ai/chat", desc: "ConversaciÃ³n con Isabella AI (streaming)" },
-    { method: "POST", path: "/api/v1/ai/analyze", desc: "AnÃ¡lisis de datos con agentes especializados" },
+    { method: "POST", path: "/api/v1/ai/chat", desc: "Conversación con Isabella AI (streaming)" },
+    { method: "POST", path: "/api/v1/ai/analyze", desc: "Análisis de datos con agentes especializados" },
     { method: "GET", path: "/api/v1/ai/agents", desc: "Listar agentes IA disponibles y su estado" },
     { method: "POST", path: "/api/v1/ai/compliance-check", desc: "Verificar compliance de contenido" },
     { method: "GET", path: "/api/v1/ai/models", desc: "Modelos disponibles y capacidades" },
@@ -61,35 +61,35 @@ const methodColor: Record<string, string> = {
 
 const tabs = [
   { key: "identidad", label: "Identidad", icon: Shield, data: endpoints.identidad },
-  { key: "educacion", label: "EducaciÃ³n", icon: GraduationCap, data: endpoints.educacion },
+  { key: "educacion", label: "Educación", icon: GraduationCap, data: endpoints.educacion },
   { key: "seguridad", label: "Seguridad", icon: Shield, data: endpoints.seguridad },
-  { key: "economia", label: "EconomÃ­a", icon: Coins, data: endpoints.economia },
+  { key: "economia", label: "Economía", icon: Coins, data: endpoints.economia },
   { key: "metaverso", label: "Metaverso", icon: Globe, data: endpoints.metaverso },
   { key: "ia", label: "IA", icon: Brain, data: endpoints.ia },
 ];
 
 const KitAPIs = () => (
   <WikiPage
-    title="Kit de IntegraciÃ³n Externa (APIs)"
-    subtitle="Conectores listos para economÃ­a digital, educaciÃ³n inmersiva, seguridad avanzada y XR"
+    title="Kit de Integración Externa (APIs)"
+    subtitle="Conectores listos para economía digital, educación inmersiva, seguridad avanzada y XR"
   >
-    <Section title="AutenticaciÃ³n">
+    <Section title="Autenticación">
       <div className="rounded-lg border border-border/50 bg-muted/20 p-4 font-mono text-xs text-muted-foreground space-y-1 mb-6">
-        <div className="text-primary"># Todas las peticiones requieren header de autenticaciÃ³n</div>
+        <div className="text-primary"># Todas las peticiones requieren header de autenticación</div>
         <div>Authorization: Bearer {"<ID-NVIDA-TOKEN>"}</div>
         <div>X-Node-ID: {"<FEDERATED-NODE-ID>"}</div>
         <div>Content-Type: application/json</div>
         <div className="mt-2 text-primary"># Rate limits por defecto</div>
-        <div>100 req/min (anÃ³nimo) | 1000 req/min (autenticado) | 10000 req/min (nodo federado)</div>
+        <div>100 req/min (anónimo) | 1000 req/min (autenticado) | 10000 req/min (nodo federado)</div>
       </div>
     </Section>
 
-    <Section title="Acceso por nivel de membresÃ­a">
+    <Section title="Acceso por nivel de membresía">
       <div className="rounded-lg border border-border/50 bg-muted/20 p-4 mb-6">
         <div className="flex items-start gap-2 mb-3">
           <AlertTriangle className="h-4 w-4 text-primary mt-0.5 shrink-0" />
           <p className="text-sm text-muted-foreground">
-            El acceso a endpoints varÃ­a segÃºn el nivel de membresÃ­a. Los <strong className="text-foreground">rate limits</strong> y
+            El acceso a endpoints varía según el nivel de membresía. Los <strong className="text-foreground">rate limits</strong> y
             <strong className="text-foreground"> dominios disponibles</strong> dependen del plan contratado.
           </p>
         </div>
@@ -108,29 +108,29 @@ const KitAPIs = () => (
                 <td className="px-3 py-2 font-medium text-foreground">Free</td>
                 <td className="px-3 py-2">Sin acceso a APIs</td>
                 <td className="px-3 py-2 text-center">â€”</td>
-                <td className="px-3 py-2">Solo lectura de documentaciÃ³n pÃºblica</td>
+                <td className="px-3 py-2">Solo lectura de documentación pública</td>
               </tr>
               <tr className="border-b border-border/30">
                 <td className="px-3 py-2 font-medium text-foreground">Premium</td>
                 <td className="px-3 py-2">Docs read-only</td>
                 <td className="px-3 py-2 text-center">â€”</td>
-                <td className="px-3 py-2">DocumentaciÃ³n completa sin sandbox</td>
+                <td className="px-3 py-2">Documentación completa sin sandbox</td>
               </tr>
               <tr className="border-b border-border/30">
                 <td className="px-3 py-2 font-medium text-foreground">Devs</td>
                 <td className="px-3 py-2">Sandbox completo</td>
                 <td className="px-3 py-2 text-center">500 req/min</td>
-                <td className="px-3 py-2">Sin acceso a Seguridad crÃ­tica ni CertificaciÃ³n</td>
+                <td className="px-3 py-2">Sin acceso a Seguridad crítica ni Certificación</td>
               </tr>
               <tr className="border-b border-border/30">
                 <td className="px-3 py-2 font-medium text-foreground">Advance</td>
-                <td className="px-3 py-2">ProducciÃ³n parcial</td>
+                <td className="px-3 py-2">Producción parcial</td>
                 <td className="px-3 py-2 text-center">2000 req/min</td>
-                <td className="px-3 py-2">Sin acceso a NOA operativo ni CertificaciÃ³n emisiÃ³n</td>
+                <td className="px-3 py-2">Sin acceso a NOA operativo ni Certificación emisión</td>
               </tr>
               <tr>
                 <td className="px-3 py-2 font-medium text-foreground">Enterprise</td>
-                <td className="px-3 py-2">ProducciÃ³n completa</td>
+                <td className="px-3 py-2">Producción completa</td>
                 <td className="px-3 py-2 text-center">10000 req/min</td>
                 <td className="px-3 py-2">Acceso total. SLA dedicado.</td>
               </tr>

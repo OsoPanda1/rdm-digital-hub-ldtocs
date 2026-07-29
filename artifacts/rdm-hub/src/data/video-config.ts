@@ -18,7 +18,7 @@ export const PAGE_VIDEOS: Record<string, { hero?: PageVideo; mid?: PageVideo }> 
   index: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
-      title: "Conoce Real del Monte â€” Pueblo MÃ¡gico",
+      title: "Conoce Real del Monte â€” Pueblo Mágico",
       caption: "Descubre la magia de Real del Monte, Hidalgo",
     },
   },
@@ -28,7 +28,7 @@ export const PAGE_VIDEOS: Record<string, { hero?: PageVideo; mid?: PageVideo }> 
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
       title: "Cultura y Tradiciones de Real del Monte",
-      caption: "Fiestas, tradiciones y el espÃ­ritu vivente de nuestra comunidad",
+      caption: "Fiestas, tradiciones y el espíritu vivente de nuestra comunidad",
     },
   },
 
@@ -36,26 +36,26 @@ export const PAGE_VIDEOS: Record<string, { hero?: PageVideo; mid?: PageVideo }> 
   historia: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
-      title: "500 AÃ±os de Historia Minera",
+      title: "500 Años de Historia Minera",
       caption: "Del descubrimiento de la Veta Madre a la identidad actual",
     },
   },
 
-  // â”€â”€ GastronomÃ­a â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â”€â”€ Gastronomía â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   gastronomia: {
     mid: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
       title: "Los Pastes de Real del Monte",
-      caption: "La tradiciÃ³n pastelera que define nuestra gastronomÃ­a",
+      caption: "La tradición pastelera que define nuestra gastronomía",
     },
   },
 
-  // â”€â”€ MÃºsica â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â”€â”€ Música â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   musica: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
-      title: "MÃºsica y Sonidos de Real del Monte",
-      caption: "MelodÃ­as que capturan el espÃ­ritu de nuestra tierra",
+      title: "Música y Sonidos de Real del Monte",
+      caption: "Melodías que capturan el espíritu de nuestra tierra",
     },
   },
 
@@ -64,7 +64,7 @@ export const PAGE_VIDEOS: Record<string, { hero?: PageVideo; mid?: PageVideo }> 
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
       title: "Aventura en la Sierra de Pachuca",
-      caption: "Senderismo, naturaleza y paisajes de ensueÃ±o",
+      caption: "Senderismo, naturaleza y paisajes de ensueño",
     },
   },
 
@@ -81,7 +81,7 @@ export const PAGE_VIDEOS: Record<string, { hero?: PageVideo; mid?: PageVideo }> 
   rutas: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
-      title: "Rutas TurÃ­sticas de Real del Monte",
+      title: "Rutas Turísticas de Real del Monte",
       caption: "Recorridos que conectan historia, naturaleza y cultura",
     },
   },
@@ -91,7 +91,7 @@ export const PAGE_VIDEOS: Record<string, { hero?: PageVideo; mid?: PageVideo }> 
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
       title: "Mapa Interactivo de Real del Monte",
-      caption: "Explora nuestros puntos de interÃ©s en tiempo real",
+      caption: "Explora nuestros puntos de interés en tiempo real",
     },
   },
 
@@ -99,8 +99,8 @@ export const PAGE_VIDEOS: Record<string, { hero?: PageVideo; mid?: PageVideo }> 
   arte: {
     hero: {
       youtubeId: "REPLACE_WITH_YOUTUBE_ID",
-      title: "ArtesanÃ­as y PlaterÃ­a de Real del Monte",
-      caption: "El arte que nace de la plata y la tradiciÃ³n",
+      title: "Artesanías y Platería de Real del Monte",
+      caption: "El arte que nace de la plata y la tradición",
     },
   },
 

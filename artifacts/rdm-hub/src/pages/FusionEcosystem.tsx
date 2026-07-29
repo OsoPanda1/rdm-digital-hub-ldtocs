@@ -34,7 +34,7 @@ const FusionEcosystem = () => {
   return (
     <RDMLayout>
       <SEOMeta
-        title="FusiÃ³n Funcional RDMÂ·X â€” Nodo Cero, Turismo, Twin y CiteMesh"
+        title="Fusión Funcional RDM·X â€” Nodo Cero, Turismo, Twin y CiteMesh"
         description="Panel operativo que unifica RDM Digital Nodo Cero, RDM Turismo Digital, Real del Monte Twin y CiteMesh Roots dentro de RDM Digital Nexus."
       />
 
@@ -48,15 +48,15 @@ const FusionEcosystem = () => {
           <Badge variant="outline" className="mb-5 border-[hsl(var(--gold))]/40 bg-[hsl(var(--gold))]/5 px-4 py-2">
             <GitBranch className="mr-2 h-4 w-4 text-[hsl(var(--gold))]" />
             <span className="font-body text-[10px] uppercase tracking-[0.28em] text-[hsl(var(--gold))]">
-              FusiÃ³n funcional Â· 4 repositorios
+              Fusión funcional · 4 repositorios
             </span>
           </Badge>
           <h1 className="font-display text-4xl font-light leading-tight md:text-7xl">
-            UnificaciÃ³n <span className="text-gradient-gold">RDMÂ·X</span> operativa
+            Unificación <span className="text-gradient-gold">RDM·X</span> operativa
           </h1>
           <p className="mx-auto mt-6 max-w-3xl font-body text-base leading-relaxed text-muted-foreground md:text-lg">
             Nodo Cero, Turismo Digital, Gemelo Digital y CiteMesh Roots dejan de verse como piezas aisladas:
-            aquÃ­ se exponen como un solo sistema navegable con rutas, contratos y responsabilidades claras.
+            aquí se exponen como un solo sistema navegable con rutas, contratos y responsabilidades claras.
           </p>
         </motion.div>
 
@@ -169,7 +169,7 @@ const FusionEcosystem = () => {
 
         <Card className="border-cyan-200/15 bg-card/60 backdrop-blur-md">
           <CardHeader>
-            <CardTitle className="font-display text-2xl font-light">Flujo de integraciÃ³n funcional</CardTitle>
+            <CardTitle className="font-display text-2xl font-light">Flujo de integración funcional</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-3 md:grid-cols-4">

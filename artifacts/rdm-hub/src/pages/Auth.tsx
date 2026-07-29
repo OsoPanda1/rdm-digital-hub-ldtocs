@@ -16,13 +16,13 @@ import { Loader2, Mail, Lock, User as UserIcon, Mountain } from "lucide-react";
 import { useRDMAuth } from "@/contexts/RDMAuthContext";
 
 const signupSchema = z.object({
-  displayName: z.string().trim().min(2, "MÃ­nimo 2 caracteres").max(60, "MÃ¡ximo 60"),
-  email: z.string().trim().email("Email invÃ¡lido").max(255),
-  password: z.string().min(8, "MÃ­nimo 8 caracteres").max(128),
+  displayName: z.string().trim().min(2, "Mínimo 2 caracteres").max(60, "Máximo 60"),
+  email: z.string().trim().email("Email inválido").max(255),
+  password: z.string().min(8, "Mínimo 8 caracteres").max(128),
 });
 
 const loginSchema = z.object({
-  email: z.string().trim().email("Email invÃ¡lido").max(255),
+  email: z.string().trim().email("Email inválido").max(255),
   password: z.string().min(1, "Requerida"),
 });
 
@@ -44,17 +44,17 @@ export default function Auth() {
     e.preventDefault();
     const parsed = loginSchema.safeParse(login);
     if (!parsed.success) {
-      toast({ title: "Datos invÃ¡lidos", description: parsed.error.errors[0].message, variant: "destructive" });
+      toast({ title: "Datos inválidos", description: parsed.error.errors[0].message, variant: "destructive" });
       return;
     }
     setLoading(true);
     const { error } = await signInEmail(parsed.data.email, parsed.data.password);
     setLoading(false);
     if (error) {
-      toast({ title: "Error al iniciar sesiÃ³n", description: error, variant: "destructive" });
+      toast({ title: "Error al iniciar sesión", description: error, variant: "destructive" });
       return;
     }
-    toast({ title: "Â¡Bienvenido de vuelta!" });
+    toast({ title: "¡Bienvenido de vuelta!" });
     navigate("/perfil");
   };
 
@@ -62,14 +62,14 @@ export default function Auth() {
     e.preventDefault();
     const parsed = signupSchema.safeParse(signup);
     if (!parsed.success) {
-      toast({ title: "Datos invÃ¡lidos", description: parsed.error.errors[0].message, variant: "destructive" });
+      toast({ title: "Datos inválidos", description: parsed.error.errors[0].message, variant: "destructive" });
       return;
     }
     setLoading(true);
     const { error } = await signUpEmail(parsed.data.email, parsed.data.password, parsed.data.displayName);
     setLoading(false);
     if (error) {
-      // Detectar si es error de confirmaciÃ³n de email
+      // Detectar si es error de confirmación de email
       const isEmailConfirmationError = error.includes('email') || 
         error.includes('confirm') || 
         error.includes('verify') ||
@@ -87,7 +87,7 @@ export default function Auth() {
       }
       return;
     }
-    toast({ title: "Â¡Cuenta creada!", description: "Bienvenido a RDM Digital." });
+    toast({ title: "¡Cuenta creada!", description: "Bienvenido a RDM Digital." });
     navigate("/perfil");
   };
 
@@ -109,13 +109,13 @@ export default function Auth() {
               <Mountain className="w-7 h-7 text-white" />
             </div>
             <CardTitle className="text-2xl font-bold">RDM Digital</CardTitle>
-            <CardDescription>Pueblo MÃ¡gico de Real del Monte</CardDescription>
+            <CardDescription>Pueblo Mágico de Real del Monte</CardDescription>
           </CardHeader>
 
           <CardContent>
             <Tabs defaultValue={params.get("tab") === "signup" ? "signup" : "login"} className="w-full">
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="login">Iniciar sesiÃ³n</TabsTrigger>
+                <TabsTrigger value="login">Iniciar sesión</TabsTrigger>
                 <TabsTrigger value="signup">Registrarse</TabsTrigger>
               </TabsList>
 
@@ -130,7 +130,7 @@ export default function Auth() {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="li-pwd">ContraseÃ±a</Label>
+                    <Label htmlFor="li-pwd">Contraseña</Label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input id="li-pwd" type="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" className="pl-10"
@@ -138,7 +138,7 @@ export default function Auth() {
                     </div>
                   </div>
                   <Button type="submit" className="w-full bg-[hsl(var(--rdm-amber))] hover:opacity-90" disabled={loading}>
-                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Iniciar sesiÃ³n
+                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Iniciar sesión
                   </Button>
                 </form>
               </TabsContent>
@@ -162,10 +162,10 @@ export default function Auth() {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="su-pwd">ContraseÃ±a</Label>
+                    <Label htmlFor="su-pwd">Contraseña</Label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input id="su-pwd" type="password" placeholder="MÃ­nimo 8 caracteres" className="pl-10" minLength={8}
+                      <Input id="su-pwd" type="password" placeholder="Mínimo 8 caracteres" className="pl-10" minLength={8}
                         value={signup.password} onChange={(e) => setSignup({ ...signup, password: e.target.value })} required />
                     </div>
                   </div>
@@ -179,7 +179,7 @@ export default function Auth() {
             <div className="relative my-5">
               <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-border" /></div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground">o continÃºa con</span>
+                <span className="bg-card px-2 text-muted-foreground">o continúa con</span>
               </div>
             </div>
 
@@ -195,8 +195,8 @@ export default function Auth() {
               Al registrarte aceptas nuestro{" "}
               <Link to="/reglamento" className="text-primary hover:underline">Reglamento de la Comunidad</Link>
               {" y "}
-              <a href="/PRIVACY.md" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">PolÃ­tica de Privacidad</a>.
-              Nos proclamamos en contra del odio, racismo, clasismo, explotaciÃ³n y actividades criminales.
+              <a href="/PRIVACY.md" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>.
+              Nos proclamamos en contra del odio, racismo, clasismo, explotación y actividades criminales.
             </p>
           </CardFooter>
         </Card>

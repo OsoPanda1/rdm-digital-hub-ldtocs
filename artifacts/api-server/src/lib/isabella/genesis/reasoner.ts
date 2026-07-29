@@ -126,7 +126,7 @@ export function createReasoner(): Reasoner {
 
     explain(record) {
       return {
-        summary: `DecisiÃ³n ${record.decisionId}: acciÃ³n=${record.decision.action}, confianza=${record.decision.confidence}`,
+        summary: `Decisión ${record.decisionId}: acción=${record.decision.action}, confianza=${record.decision.confidence}`,
         technicalTrace: record.plan.map((step) => ({
           stepId: step.stepId,
           tool: step.tool,

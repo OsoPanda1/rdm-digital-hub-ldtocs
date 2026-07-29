@@ -4,7 +4,7 @@
  */
 /**
  * Marketplace TAMV
- * Triple Federado: Conceptual | Legal | TÃ©cnico
+ * Triple Federado: Conceptual | Legal | Técnico
  */
 
 import { useState } from 'react';
@@ -85,8 +85,8 @@ const MOCK_PRODUCTS: Product[] = [
   },
   {
     id: '3',
-    title: 'ColecciÃ³n NFT GÃ©nesis',
-    description: 'Los primeros 100 NFTs de la colecciÃ³n fundadora',
+    title: 'Colección NFT Génesis',
+    description: 'Los primeros 100 NFTs de la colección fundadora',
     seller: 'Anubis Arts',
     price: 1500,
     rating: 5.0,
@@ -101,13 +101,13 @@ const MOCK_PRODUCTS: Product[] = [
   },
   {
     id: '4',
-    title: 'Curso Premium: CreaciÃ³n XR',
+    title: 'Curso Premium: Creación XR',
     description: 'Aprende a crear experiencias de realidad extendida',
     seller: 'Universidad TAMV',
     price: 450,
     rating: 4.7,
     reviews: 2345,
-    category: 'EducaciÃ³n',
+    category: 'Educación',
     isDigital: true,
     isAuction: false,
     federationHash: 'TF-MKT004',
@@ -115,7 +115,7 @@ const MOCK_PRODUCTS: Product[] = [
   },
   {
     id: '5',
-    title: 'Mascota Digital - DragÃ³n CÃ³smico',
+    title: 'Mascota Digital - Dragón Cósmico',
     description: 'Mascota interactiva con IA integrada',
     seller: 'Pet Universe',
     price: 320,
@@ -144,7 +144,7 @@ const MOCK_PRODUCTS: Product[] = [
   }
 ];
 
-const CATEGORIES = ['Todos', 'Digital', 'NFT', 'Templates', 'EducaciÃ³n', 'Audio', 'Mascotas'];
+const CATEGORIES = ['Todos', 'Digital', 'NFT', 'Templates', 'Educación', 'Audio', 'Mascotas'];
 
 const Marketplace = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
@@ -190,7 +190,7 @@ const Marketplace = () => {
             </div>
             <div>
               <h1 className="text-3xl font-bold">Marketplace TAMV</h1>
-              <p className="text-muted-foreground">Compra y vende en el metaverso Â· Triple Federado</p>
+              <p className="text-muted-foreground">Compra y vende en el metaverso · Triple Federado</p>
             </div>
           </div>
 
@@ -276,8 +276,8 @@ const Marketplace = () => {
                 <SelectValue placeholder="Ordenar" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="popular">MÃ¡s popular</SelectItem>
-                <SelectItem value="recent">MÃ¡s reciente</SelectItem>
+                <SelectItem value="popular">Más popular</SelectItem>
+                <SelectItem value="recent">Más reciente</SelectItem>
                 <SelectItem value="price-low">Precio: Menor</SelectItem>
                 <SelectItem value="price-high">Precio: Mayor</SelectItem>
               </SelectContent>
@@ -334,7 +334,7 @@ const Marketplace = () => {
                         <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
                         <span>{product.rating}</span>
                       </div>
-                      <span className="text-muted-foreground">({product.reviews.toLocaleString()} reseÃ±as)</span>
+                      <span className="text-muted-foreground">({product.reviews.toLocaleString()} reseñas)</span>
                     </div>
 
                     <p className="text-xs text-muted-foreground mt-2">
@@ -415,7 +415,7 @@ const Marketplace = () => {
           {wishlist.length === 0 ? (
             <Card className="p-12 text-center">
               <Heart className="w-16 h-16 mx-auto text-muted-foreground/30 mb-4" />
-              <h3 className="text-xl font-bold mb-2">Tu lista estÃ¡ vacÃ­a</h3>
+              <h3 className="text-xl font-bold mb-2">Tu lista está vacía</h3>
               <p className="text-muted-foreground mb-4">Agrega productos que te interesen</p>
               <Button onClick={() => setActiveTab('products')}>Explorar productos</Button>
             </Card>

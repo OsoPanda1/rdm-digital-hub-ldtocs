@@ -9,12 +9,12 @@ import { Compass, Search, Mountain, Network, Scale } from "lucide-react";
 import { openSearchOverlay } from "@/features/search/tourismIndex";
 
 /**
- * CompassNav â€” NavegaciÃ³n tripartita flotante (Territorio Â· Ecosistema Â· Gobernanza).
- * NO reemplaza la RDMNavbar; complementa la experiencia con una brÃºjula soberana
- * inferior que organiza las rutas existentes en 3 cuadrantes semÃ¡nticos.
+ * CompassNav â€” Navegación tripartita flotante (Territorio · Ecosistema · Gobernanza).
+ * NO reemplaza la RDMNavbar; complementa la experiencia con una brújula soberana
+ * inferior que organiza las rutas existentes en 3 cuadrantes semánticos.
  *
- * Cada cuadrante despliega un panel glassmÃ³rfico con links a rutas ya registradas
- * en App.tsx â€” no se rompe ningÃºn path.
+ * Cada cuadrante despliega un panel glassmórfico con links a rutas ya registradas
+ * en App.tsx â€” no se rompe ningún path.
  */
 
 type QuadrantKey = "territorio" | "ecosistema" | "gobernanza";
@@ -41,7 +41,7 @@ const QUADRANTS: Quadrant[] = [
     tone: "hsl(var(--gold))",
     links: [
       { to: "/mapa", label: "Mapa vivo", hint: "POIs y rutas reales" },
-      { to: "/rutas", label: "Rutas turÃ­sticas" },
+      { to: "/rutas", label: "Rutas turísticas" },
       { to: "/historia", label: "Historia y minas" },
       { to: "/ecoturismo", label: "Naturaleza" },
       { to: "/patrimonio-cultural", label: "Patrimonio" },
@@ -55,7 +55,7 @@ const QUADRANTS: Quadrant[] = [
     tone: "hsl(var(--electric))",
     links: [
       { to: "/directorio", label: "Directorio de comercios" },
-      { to: "/gastronomia", label: "GastronomÃ­a / Pastes" },
+      { to: "/gastronomia", label: "Gastronomía / Pastes" },
       { to: "/comunidad", label: "Comunidad" },
       { to: "/eventos", label: "Eventos" },
       { to: "/relatos", label: "Leyendas" },
@@ -71,7 +71,7 @@ const QUADRANTS: Quadrant[] = [
       { to: "/leaderboard", label: "Tabla de honor" },
       { to: "/perfil", label: "Mi perfil" },
       { to: "/gobernanza", label: "Gobernanza federada" },
-      { to: "/arquitectura", label: "Arquitectura tÃ©cnica" },
+      { to: "/arquitectura", label: "Arquitectura técnica" },
       { to: "/apoya", label: "Apoya el proyecto" },
     ],
   },
@@ -132,13 +132,13 @@ export default function CompassNav() {
         )}
       </AnimatePresence>
 
-      {/* BrÃºjula tripartita */}
+      {/* Brújula tripartita */}
       <motion.nav
         initial={{ y: 60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
         className="pointer-events-auto flex items-stretch rounded-full glass-card border border-[hsl(var(--gold)/0.25)] shadow-premium overflow-hidden"
-        aria-label="BrÃºjula de navegaciÃ³n"
+        aria-label="Brújula de navegación"
       >
         {QUADRANTS.map((q, i) => {
           const Icon = q.icon;
@@ -169,10 +169,10 @@ export default function CompassNav() {
           );
         })}
 
-        {/* Centro: bÃºsqueda */}
+        {/* Centro: búsqueda */}
         <button
           onClick={() => openSearchOverlay()}
-          aria-label="Abrir bÃºsqueda turÃ­stica"
+          aria-label="Abrir búsqueda turística"
           className="relative flex items-center justify-center px-4 border-l border-[hsl(var(--border))] hover:bg-[hsl(var(--electric)/0.08)] transition-colors"
         >
           <span className="absolute inset-2 rounded-full magic-pulse" aria-hidden />
@@ -185,7 +185,7 @@ export default function CompassNav() {
 
       <div className="pointer-events-none mt-1 flex items-center justify-center gap-1 text-[9px] uppercase tracking-[0.3em] text-[hsl(var(--muted-foreground))]">
         <Compass className="h-3 w-3" />
-        BrÃºjula soberana RDM
+        Brújula soberana RDM
       </div>
     </div>
   );

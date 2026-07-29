@@ -28,13 +28,13 @@ const VideoTrailer = () => {
           className="text-center mb-16"
         >
           <span className="font-body text-[10px] tracking-[0.4em] uppercase text-gold/60">
-            Experiencia CinematogrÃ¡fica
+            Experiencia Cinematográfica
           </span>
           <h2 className="font-display text-4xl md:text-6xl mt-4 tracking-tight">
             <span className="text-gradient-gold">Leyendas de la Mina</span>
           </h2>
           <p className="font-display text-lg text-platinum/50 italic mt-4 max-w-lg mx-auto">
-            PrÃ³ximamente â€” cortometraje documental
+            Próximamente â€” cortometraje documental
           </p>
         </motion.div>
 
@@ -49,7 +49,7 @@ const VideoTrailer = () => {
               <div className="text-center z-10">
                 <div className="text-6xl mb-4 opacity-40">ðŸŽ¬</div>
                 <p className="font-display text-xl md:text-2xl text-gold/50 italic">
-                  Video prÃ³ximamente
+                  Video próximamente
                 </p>
                 <p className="font-body text-sm text-platinum/30 mt-2">
                   Estamos produciendo el contenido audiovisual
@@ -59,7 +59,7 @@ const VideoTrailer = () => {
           </div>
 
           <p className="text-center font-body text-[10px] tracking-[0.2em] uppercase text-muted-foreground mt-6">
-            ðŸŽ§ Recomendado con audÃ­fonos Â· Audio original de la sierra
+            ðŸŽ§ Recomendado con audífonos · Audio original de la sierra
           </p>
         </motion.div>
       </div>

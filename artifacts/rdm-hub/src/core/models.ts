@@ -183,13 +183,13 @@ export const FEDERATION_DOMAIN: Record<FederationId, string> = {
  * Human-readable names for each federation
  */
 export const FEDERATION_NAMES: Record<FederationId, string> = {
-  fed1_commerce_local: 'FederaciÃ³n de Comercio Local (Fed1)',
-  fed2_tourism_culture: 'FederaciÃ³n de Turismo y Cultura (Fed2)',
-  fed3_academia_science: 'FederaciÃ³n de Academia y Ciencia (Fed3)',
-  fed4_local_government: 'FederaciÃ³n de Gobierno Local (Fed4)',
-  fed5_tech_infra: 'FederaciÃ³n de TecnologÃ­a e Infraestructura (Fed5)',
-  fed6_community_orgs: 'FederaciÃ³n de Comunidad y Organizaciones (Fed6)',
-  fed7_metaverse_xr: 'FederaciÃ³n de Metaverso y XR (Fed7)',
+  fed1_commerce_local: 'Federación de Comercio Local (Fed1)',
+  fed2_tourism_culture: 'Federación de Turismo y Cultura (Fed2)',
+  fed3_academia_science: 'Federación de Academia y Ciencia (Fed3)',
+  fed4_local_government: 'Federación de Gobierno Local (Fed4)',
+  fed5_tech_infra: 'Federación de Tecnología e Infraestructura (Fed5)',
+  fed6_community_orgs: 'Federación de Comunidad y Organizaciones (Fed6)',
+  fed7_metaverse_xr: 'Federación de Metaverso y XR (Fed7)',
 };
 
 /**
@@ -236,13 +236,13 @@ export const YUN_TO_TAMV_FEDERATION: Record<FederationId, TamvFederationId> = {
  * @deprecated Use FEDERATION_NAMES with FederationId instead
  */
 export const TAMV_FEDERATION_NAMES: Record<TamvFederationId, string> = {
-  DEKATEOTL: 'FederaciÃ³n de Datos (DATA)',
-  ANUBIS: 'FederaciÃ³n de Inteligencia (INTEL)',
-  BOOKPI_DATAGIT: 'FederaciÃ³n de Seguridad (SEC)',
-  PHOENIX: 'FederaciÃ³n de Gobernanza (GOV)',
-  MDD_TAMV: 'FederaciÃ³n EconÃ³mica (ECON)',
-  KAOS_HYPERRENDER: 'FederaciÃ³n Visual (VIS)',
-  CHRONOS: 'FederaciÃ³n Territorial (TERRITORY)',
+  DEKATEOTL: 'Federación de Datos (DATA)',
+  ANUBIS: 'Federación de Inteligencia (INTEL)',
+  BOOKPI_DATAGIT: 'Federación de Seguridad (SEC)',
+  PHOENIX: 'Federación de Gobernanza (GOV)',
+  MDD_TAMV: 'Federación Económica (ECON)',
+  KAOS_HYPERRENDER: 'Federación Visual (VIS)',
+  CHRONOS: 'Federación Territorial (TERRITORY)',
 };
 
 /**

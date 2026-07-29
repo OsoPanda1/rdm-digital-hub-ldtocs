@@ -16,7 +16,7 @@ type LayoutProps = {
 
 /**
  * Layout principal de TAMV Online Network
- * NÃºcleo visual compartido (TAMVTRIX 3.0, Header y contenedor de contenido)
+ * Núcleo visual compartido (TAMVTRIX 3.0, Header y contenedor de contenido)
  */
 const Layout: React.FC<LayoutProps> = ({
   children,
@@ -25,7 +25,7 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <TooltipProvider>
       <div className="flex flex-col min-h-screen bg-gradient-to-b from-background via-background/95 to-background/90 relative overflow-hidden perspective-1000">
-        {/* TAMVTRIX 3.0 â€” Efecto de campo cuÃ¡ntico con letras T A M V O N L I N E */}
+        {/* TAMVTRIX 3.0 â€” Efecto de campo cuántico con letras T A M V O N L I N E */}
         {showTAMVtrixEffect && (
           <TAMVTrixEffect
             baseColor="#3bf5ff"
@@ -38,7 +38,7 @@ const Layout: React.FC<LayoutProps> = ({
           />
         )}
 
-        {/* Nexo Estelar: Header / navegaciÃ³n principal */}
+        {/* Nexo Estelar: Header / navegación principal */}
         <Header />
 
         {/* Contenido principal */}

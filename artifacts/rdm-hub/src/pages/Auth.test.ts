@@ -32,7 +32,7 @@ describe("auth form schemas", () => {
   });
   it("accepts a valid signup payload", () => {
     const r = signupSchema.safeParse({
-      displayName: "Ana LÃ³pez",
+      displayName: "Ana López",
       email: "ana@real.mx",
       password: "supersegura",
     });

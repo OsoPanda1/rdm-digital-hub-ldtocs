@@ -91,7 +91,7 @@ export function useIsabellaVoice(options: UseIsabellaVoiceOptions = {}) {
         }
         utterance.onstart = () => { isPlayingRef.current = true; setIsSpeaking(true); };
         utterance.onend = () => { finishCurrentClip(); playNextFromQueue(); };
-        utterance.onerror = () => { finishCurrentClip(); setError("Error en sÃ­ntesis local"); };
+        utterance.onerror = () => { finishCurrentClip(); setError("Error en síntesis local"); };
         window.speechSynthesis.speak(utterance);
         return prev;
       }
@@ -145,7 +145,7 @@ export function useIsabellaVoice(options: UseIsabellaVoiceOptions = {}) {
       });
       if (!res.ok) throw new Error(`TTS request failed with status ${res.status}`);
       const data = (await res.json()) as TtsIsabellaResponse;
-      if (!data.audioUrl) throw new Error("Edge Function no devolviÃ³ audioUrl");
+      if (!data.audioUrl) throw new Error("Edge Function no devolvió audioUrl");
       return { audioUrl: data.audioUrl, mode: data.mode ?? "cloud" };
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Error en tts-isabella");
@@ -157,7 +157,7 @@ export function useIsabellaVoice(options: UseIsabellaVoiceOptions = {}) {
     async (text: string, context?: IsabellaVoiceContext) => {
       setError(null);
       if (!consentAudio) {
-        setError("Audio deshabilitado por configuraciÃ³n del usuario");
+        setError("Audio deshabilitado por configuración del usuario");
         return;
       }
 

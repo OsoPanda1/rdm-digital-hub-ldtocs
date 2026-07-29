@@ -24,12 +24,12 @@ export function ShareRatingsButton({ pois }: { pois: Poi[] }) {
     setLoading(true);
     try {
       const { user, ratings } = await fetchMine();
-      if (!user) { toast.error("Inicia sesiÃ³n para exportar"); return; }
-      if (!ratings.length) { toast.error("AÃºn no tienes valoraciones"); return; }
+      if (!user) { toast.error("Inicia sesión para exportar"); return; }
+      if (!ratings.length) { toast.error("Aún no tienes valoraciones"); return; }
       const escapeHtml = (s: string) =>
         s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
       const poiMap = Object.fromEntries(pois.map((p) => [p.id, p.name]));
-      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Mis valoraciones Â· Ruta del Paste</title>
+      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Mis valoraciones · Ruta del Paste</title>
         <style>
           body{font-family:Georgia,serif;color:#1a1a1a;max-width:760px;margin:40px auto;padding:0 24px}
           h1{color:#b8860b;font-size:28px;border-bottom:2px solid #b8860b;padding-bottom:8px}
@@ -40,8 +40,8 @@ export function ShareRatingsButton({ pois }: { pois: Poi[] }) {
           .date{color:#888;font-size:11px;float:right}
           footer{margin-top:40px;text-align:center;color:#999;font-size:11px;font-style:italic}
         </style></head><body>
-        <h1>Mis valoraciones Â· Ruta del Paste</h1>
-        <p class="meta">Real del Monte, Hidalgo Â· ${escapeHtml(user.email ?? "Usuario")} Â· ${new Date().toLocaleString("es-MX")}</p>
+        <h1>Mis valoraciones · Ruta del Paste</h1>
+        <p class="meta">Real del Monte, Hidalgo · ${escapeHtml(user.email ?? "Usuario")} · ${new Date().toLocaleString("es-MX")}</p>
         ${ratings.map((r) => `
           <div class="item">
             <span class="date">${new Date(r.created_at).toLocaleDateString("es-MX")}</span>
@@ -49,7 +49,7 @@ export function ShareRatingsButton({ pois }: { pois: Poi[] }) {
             <div class="stars">${"â˜…".repeat(r.score)}${"â˜†".repeat(5 - r.score)}</div>
             ${r.review ? `<p>${escapeHtml(r.review)}</p>` : ""}
           </div>`).join("")}
-        <footer>Orgullosamente Realmontenses Â· Proyecto dedicado a Reyna Trejo Serrano</footer>
+        <footer>Orgullosamente Realmontenses · Proyecto dedicado a Reyna Trejo Serrano</footer>
         </body></html>`;
       const w = window.open("", "_blank");
       if (!w) { toast.error("Permite popups para exportar"); return; }
@@ -63,13 +63,13 @@ export function ShareRatingsButton({ pois }: { pois: Poi[] }) {
     setLoading(true);
     try {
       const { user, ratings } = await fetchMine();
-      if (!user) { toast.error("Inicia sesiÃ³n"); return; }
+      if (!user) { toast.error("Inicia sesión"); return; }
       if (!ratings.length) { toast.error("Sin valoraciones para compartir"); return; }
       const avg = (ratings.reduce((a, r) => a + r.score, 0) / ratings.length).toFixed(1);
-      const text = `CalifiquÃ© ${ratings.length} pastes en la Ruta del Paste de Real del Monte Â· promedio ${avg}â˜… ðŸ¥Ÿâ›ï¸`;
+      const text = `Califiqué ${ratings.length} pastes en la Ruta del Paste de Real del Monte · promedio ${avg}â˜… ðŸ¥Ÿâ›ï¸`;
       const url = `${location.origin}/ruta-del-paste`;
       if (navigator.share) {
-        await navigator.share({ title: "Mis valoraciones Â· RDM", text, url });
+        await navigator.share({ title: "Mis valoraciones · RDM", text, url });
       } else {
         await navigator.clipboard.writeText(`${text} â†’ ${url}`);
         toast.success("Enlace copiado");

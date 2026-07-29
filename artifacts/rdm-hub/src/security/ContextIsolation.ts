@@ -46,7 +46,7 @@ export class ContextIsolation {
     this.sessions.set(sessionId, session);
     this.cleanup();
 
-    logger.info("[CONTEXT] SesiÃ³n creada", { sessionId: sessionId.slice(0, 8), userId: userId.slice(0, 8) });
+    logger.info("[CONTEXT] Sesión creada", { sessionId: sessionId.slice(0, 8), userId: userId.slice(0, 8) });
     return session;
   }
 
@@ -56,7 +56,7 @@ export class ContextIsolation {
 
     if (Date.now() > session.expiresAt.getTime()) {
       this.sessions.delete(sessionId);
-      logger.warn("[CONTEXT] SesiÃ³n expirada", { sessionId: sessionId.slice(0, 8) });
+      logger.warn("[CONTEXT] Sesión expirada", { sessionId: sessionId.slice(0, 8) });
       return null;
     }
 
@@ -98,7 +98,7 @@ export class ContextIsolation {
 
   destroySession(sessionId: string): void {
     this.sessions.delete(sessionId);
-    logger.info("[CONTEXT] SesiÃ³n destruida", { sessionId: sessionId.slice(0, 8) });
+    logger.info("[CONTEXT] Sesión destruida", { sessionId: sessionId.slice(0, 8) });
   }
 
   destroyUserSessions(userId: string): void {

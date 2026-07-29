@@ -13,10 +13,10 @@ type SocialLinksProps = {
 };
 
 /**
- * Componente de enlaces sociales que forma parte de la ConstelaciÃ³n Interactiva
+ * Componente de enlaces sociales que forma parte de la Constelación Interactiva
  * 
  * Este componente proporciona acceso a las diferentes plataformas sociales
- * y puede presentarse en diferentes variantes segÃºn el contexto.
+ * y puede presentarse en diferentes variantes según el contexto.
  */
 const SocialLinks = ({ className = "", iconSize = 4, variant = "links" }: SocialLinksProps) => {
   const socialLinks = [

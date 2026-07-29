@@ -7,17 +7,17 @@ import { Section, InfoBox } from "@/components/WikiElements";
 import { Globe, Award, MapPin, TrendingUp } from "lucide-react";
 
 const regiones = [
-  { region: "AmÃ©rica del Norte", paises: "USA, CanadÃ¡, MÃ©xico" },
-  { region: "Europa", paises: "Alemania, Francia, EspaÃ±a, Italia, Reino Unido" },
-  { region: "Asia-PacÃ­fico", paises: "JapÃ³n, Corea del Sur, Australia, Singapur" },
-  { region: "AmÃ©rica Latina", paises: "Brasil, Argentina, Chile, Colombia, PerÃº" },
+  { region: "América del Norte", paises: "USA, Canadá, México" },
+  { region: "Europa", paises: "Alemania, Francia, España, Italia, Reino Unido" },
+  { region: "Asia-Pacífico", paises: "Japón, Corea del Sur, Australia, Singapur" },
+  { region: "América Latina", paises: "Brasil, Argentina, Chile, Colombia, Perú" },
 ];
 
 const expansion = [
-  { region: "India y Sudeste AsiÃ¡tico", emoji: "ðŸ‡®ðŸ‡³" },
-  { region: "Ãfrica (SudÃ¡frica, Nigeria, Kenia)", emoji: "ðŸ‡¿ðŸ‡¦" },
-  { region: "Medio Oriente (UAE, Arabia SaudÃ­)", emoji: "ðŸ‡¦ðŸ‡ª" },
-  { region: "Europa NÃ³rdica (Noruega, Suecia, Dinamarca)", emoji: "ðŸ‡³ðŸ‡´" },
+  { region: "India y Sudeste Asiático", emoji: "ðŸ‡®ðŸ‡³" },
+  { region: "Ãfrica (Sudáfrica, Nigeria, Kenia)", emoji: "ðŸ‡¿ðŸ‡¦" },
+  { region: "Medio Oriente (UAE, Arabia Saudí)", emoji: "ðŸ‡¦ðŸ‡ª" },
+  { region: "Europa Nórdica (Noruega, Suecia, Dinamarca)", emoji: "ðŸ‡³ðŸ‡´" },
 ];
 
 const premios = [
@@ -29,21 +29,21 @@ const premios = [
 
 const ImpactoCivilizatorio = () => (
   <WikiPage
-    title="Impacto Civilizatorio & ExpansiÃ³n"
-    subtitle="25 PaÃ­ses Activos â€” MÃ©tricas Globales â€” Reconocimientos Internacionales"
+    title="Impacto Civilizatorio & Expansión"
+    subtitle="25 Países Activos â€” Métricas Globales â€” Reconocimientos Internacionales"
   >
-    <InfoBox type="success" title="Primer Sistema AntifrÃ¡gil Federado Transgeneracional">
-      TAMV busca inscripciÃ³n histÃ³rica, elevaciÃ³n de dignidad, redistribuciÃ³n de riqueza 
-      y construir el primer legado digital antifrÃ¡gil que trascienda generaciones.
+    <InfoBox type="success" title="Primer Sistema Antifrágil Federado Transgeneracional">
+      TAMV busca inscripción histórica, elevación de dignidad, redistribución de riqueza 
+      y construir el primer legado digital antifrágil que trascienda generaciones.
     </InfoBox>
 
     <Section title="Objetivos Civilizatorios" icon={Globe}>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[
-          { title: "InscripciÃ³n HistÃ³rica", desc: "Registro vivo de comunidades olvidadas con memoria defensiva" },
-          { title: "ElevaciÃ³n de Dignidad", desc: "Transformar vulnerabilidad en liderazgo tecnolÃ³gico" },
-          { title: "RedistribuciÃ³n de Riqueza", desc: "Elevar millonarios del 0.75% al 10% mundial" },
-          { title: "Legado Transgeneracional", desc: "Primer sistema antifrÃ¡gil federado que hereden las generaciones futuras" },
+          { title: "Inscripción Histórica", desc: "Registro vivo de comunidades olvidadas con memoria defensiva" },
+          { title: "Elevación de Dignidad", desc: "Transformar vulnerabilidad en liderazgo tecnológico" },
+          { title: "Redistribución de Riqueza", desc: "Elevar millonarios del 0.75% al 10% mundial" },
+          { title: "Legado Transgeneracional", desc: "Primer sistema antifrágil federado que hereden las generaciones futuras" },
         ].map((obj) => (
           <div key={obj.title} className="rounded-md border border-border/50 bg-primary/5 p-4">
             <div className="font-semibold text-foreground text-sm mb-1">{obj.title}</div>
@@ -53,7 +53,7 @@ const ImpactoCivilizatorio = () => (
       </div>
     </Section>
 
-    <Section title="Presencia Global (25 paÃ­ses)" icon={MapPin}>
+    <Section title="Presencia Global (25 países)" icon={MapPin}>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {regiones.map((r) => (
           <div key={r.region} className="rounded-md border border-border/50 bg-muted/20 p-3">
@@ -62,7 +62,7 @@ const ImpactoCivilizatorio = () => (
           </div>
         ))}
       </div>
-      <h4 className="font-semibold text-foreground mt-4">PrÃ³xima ExpansiÃ³n (Q1 2026)</h4>
+      <h4 className="font-semibold text-foreground mt-4">Próxima Expansión (Q1 2026)</h4>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
         {expansion.map((e) => (
           <div key={e.region} className="rounded-md border border-border/50 bg-card/30 p-3 text-center">
@@ -87,9 +87,9 @@ const ImpactoCivilizatorio = () => (
     <Section title="Hitos Alcanzados" icon={TrendingUp}>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {[
-          "Primer millÃ³n de usuarios (Enero 2026)",
+          "Primer millón de usuarios (Enero 2026)",
           "$50M en volumen de transacciones",
-          "25 paÃ­ses con operaciones activas",
+          "25 países con operaciones activas",
           "500+ proveedores de salud integrados",
           "150+ cursos UTAMV disponibles",
         ].map((h) => (
@@ -104,11 +104,11 @@ const ImpactoCivilizatorio = () => (
     <Section title="Licenciamiento">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="rounded-md border border-border/50 bg-muted/20 p-4">
-          <div className="font-semibold text-foreground text-sm">NÃºcleo FilosÃ³fico-PolÃ­tico</div>
+          <div className="font-semibold text-foreground text-sm">Núcleo Filosófico-Político</div>
           <div className="text-xs text-muted-foreground mt-1">TAMV-PRCL v1.0 (Propietario)</div>
         </div>
         <div className="rounded-md border border-border/50 bg-muted/20 p-4">
-          <div className="font-semibold text-foreground text-sm">Especificaciones TÃ©cnicas</div>
+          <div className="font-semibold text-foreground text-sm">Especificaciones Técnicas</div>
           <div className="text-xs text-muted-foreground mt-1">TAMV-KÃ“RIMA v1.0 (Reciprocidad abierta)</div>
         </div>
       </div>

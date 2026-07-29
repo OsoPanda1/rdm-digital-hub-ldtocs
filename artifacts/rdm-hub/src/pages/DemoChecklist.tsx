@@ -9,21 +9,21 @@ import { Link } from "react-router-dom";
 
 type Step = { route: string; title: string; screen: string; success: string };
 const STEPS: Step[] = [
-  { route: "/", title: "Apertura cinematogrÃ¡fica", screen: "Intro + Home con KPIs en vivo y banda dedicatoria platino.", success: "El video de intro corre y los KPIs cargan en <2s." },
-  { route: "/ltos", title: "Manifiesto LTOS", screen: "7 ejes TAMV y fÃ³rmula I_TAMV visible.", success: "La fÃ³rmula se renderiza y la secciÃ³n dorada brilla." },
-  { route: "/historia", title: "Historia de Real del Monte", screen: "Editorial con parallax y Ken Burns.", success: "ImÃ¡genes y lÃ­nea de tiempo cargan." },
-  { route: "/ruta-del-paste", title: "Ruta del Paste interactiva", screen: "SVG con pan/zoom, 6 POIs con rating dinÃ¡mico.", success: "Se puede arrastrar, hacer zoom y abrir el modal de valoraciÃ³n." },
-  { route: "/mitos", title: "Mitos y Leyendas", screen: "GalerÃ­a editorial cornish-mexicana.", success: "Cada tarjeta tiene narrativa y CTA." },
+  { route: "/", title: "Apertura cinematográfica", screen: "Intro + Home con KPIs en vivo y banda dedicatoria platino.", success: "El video de intro corre y los KPIs cargan en <2s." },
+  { route: "/ltos", title: "Manifiesto LTOS", screen: "7 ejes TAMV y fórmula I_TAMV visible.", success: "La fórmula se renderiza y la sección dorada brilla." },
+  { route: "/historia", title: "Historia de Real del Monte", screen: "Editorial con parallax y Ken Burns.", success: "Imágenes y línea de tiempo cargan." },
+  { route: "/ruta-del-paste", title: "Ruta del Paste interactiva", screen: "SVG con pan/zoom, 6 POIs con rating dinámico.", success: "Se puede arrastrar, hacer zoom y abrir el modal de valoración." },
+  { route: "/mitos", title: "Mitos y Leyendas", screen: "Galería editorial cornish-mexicana.", success: "Cada tarjeta tiene narrativa y CTA." },
   { route: "/mapa", title: "Mapa Leaflet CartoDB Dark", screen: "Capas vivas (POIs, comercios, mining).", success: "Marcadores renderizan y se hace clic." },
-  { route: "/comercios", title: "FederaciÃ³n B2B", screen: "Directorio con planes y CTA de registro.", success: "Lista visible y el botÃ³n a /registrar-comercio funciona." },
-  { route: "/registrar-comercio", title: "Pago de membresÃ­a", screen: "Stripe Checkout MXN.", success: "Se abre Stripe (modo test) sin errores." },
-  { route: "/music", title: "RDM Radio & Music", screen: "Hero player + playlist + Donar (mÃ­n. 25 MXN).", success: "Reproduce audio (o demo silencioso) y abre checkout de donaciÃ³n." },
+  { route: "/comercios", title: "Federación B2B", screen: "Directorio con planes y CTA de registro.", success: "Lista visible y el botón a /registrar-comercio funciona." },
+  { route: "/registrar-comercio", title: "Pago de membresía", screen: "Stripe Checkout MXN.", success: "Se abre Stripe (modo test) sin errores." },
+  { route: "/music", title: "RDM Radio & Music", screen: "Hero player + playlist + Donar (mín. 25 MXN).", success: "Reproduce audio (o demo silencioso) y abre checkout de donación." },
   { route: "/juegos", title: "Mini-juegos territoriales", screen: "Trivia + Memorama cornish.", success: "Se juega una ronda completa." },
   { route: "/realito", title: "Realito AI Oracle", screen: "Chat con Gemini en streaming.", success: "Responde una pregunta sobre Real del Monte." },
-  { route: "/perfil", title: "Perfil de usuario", screen: "Auth + KPIs + comercios + recompensas.", success: "SesiÃ³n activa, KPIs cargan, ediciÃ³n de nombre OK." },
-  { route: "/control", title: "Control Center Â· TelemetrÃ­a real", screen: "Sparklines I_TAMV, salud de 7 federaciones, alertas.", success: "Latencia visible, alertas se generan si umbral se cruza." },
-  { route: "/admin", title: "Panel Admin de Federaciones", screen: "Umbrales editables, roles, auditorÃ­a, subida de mÃºsica.", success: "Guardar umbral genera entrada en audit_log." },
-  { route: "/wiki", title: "Enciclopedia RDM", screen: "ArtÃ­culos curados de cultura local.", success: "Al menos un artÃ­culo abre y se lee completo." },
+  { route: "/perfil", title: "Perfil de usuario", screen: "Auth + KPIs + comercios + recompensas.", success: "Sesión activa, KPIs cargan, edición de nombre OK." },
+  { route: "/control", title: "Control Center · Telemetría real", screen: "Sparklines I_TAMV, salud de 7 federaciones, alertas.", success: "Latencia visible, alertas se generan si umbral se cruza." },
+  { route: "/admin", title: "Panel Admin de Federaciones", screen: "Umbrales editables, roles, auditoría, subida de música.", success: "Guardar umbral genera entrada en audit_log." },
+  { route: "/wiki", title: "Enciclopedia RDM", screen: "Artículos curados de cultura local.", success: "Al menos un artículo abre y se lee completo." },
 ];
 
 export default function DemoChecklist() {
@@ -36,7 +36,7 @@ export default function DemoChecklist() {
       <div className="mx-auto max-w-4xl space-y-6">
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/80">Lista de verificaciÃ³n</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/80">Lista de verificación</p>
             <h1 className="text-4xl md:text-5xl font-display font-bold">Demo Municipal <span className="text-gradient-gold">Real del Monte</span></h1>
             <p className="mt-2 text-sm text-muted-foreground">{completed}/{STEPS.length} pasos verificados.</p>
           </div>

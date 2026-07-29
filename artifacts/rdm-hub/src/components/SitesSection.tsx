@@ -10,21 +10,21 @@ import callesImg from "@/assets/imported/calles-colonial.webp";
 const sites = [
   {
     title: "Museo de Mina La Acosta",
-    category: "Museo Â· HistÃ³rico",
-    description: "Desciende 400m bajo tierra en una de las minas mÃ¡s emblemÃ¡ticas del siglo XIX.",
+    category: "Museo · Histórico",
+    description: "Desciende 400m bajo tierra en una de las minas más emblemáticas del siglo XIX.",
     image: museoImg,
     glow: "glow-gold",
   },
   {
     title: "Pastes del Portal",
-    category: "GastronomÃ­a Â· Herencia Cornish",
-    description: "La receta original traÃ­da por mineros ingleses en 1824, horneada con fuego de leÃ±a.",
+    category: "Gastronomía · Herencia Cornish",
+    description: "La receta original traída por mineros ingleses en 1824, horneada con fuego de leña.",
     image: pasteImg,
     glow: "glow-cyan",
   },
   {
-    title: "Centro HistÃ³rico",
-    category: "Arquitectura Â· Colonial",
+    title: "Centro Histórico",
+    category: "Arquitectura · Colonial",
     description: "Calles empedradas con fachadas del siglo XVIII, cada esquina cuenta una historia.",
     image: callesImg,
     glow: "glow-cyan",
@@ -45,7 +45,7 @@ const SitesSection = () => {
             Descubrimiento
           </span>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase">
-            Sitios <span className="text-gradient-gold">EmblemÃ¡ticos</span>
+            Sitios <span className="text-gradient-gold">Emblemáticos</span>
           </h2>
         </motion.div>
 

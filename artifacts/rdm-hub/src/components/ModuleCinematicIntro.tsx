@@ -39,7 +39,7 @@ export function ModuleCinematicIntro({
     >
       <img
         src={cinematicBackdrop}
-        alt="Fondo cinematogrÃ¡fico de Real del Monte"
+        alt="Fondo cinematográfico de Real del Monte"
         className="absolute inset-0 h-full w-full object-cover"
         loading="eager"
         onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}

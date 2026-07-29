@@ -9,8 +9,8 @@ import { RDMLayout } from "@/components/rdm/RDMLayout";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-// PÃ¡gina de checkout. En producciÃ³n se reemplaza por la redirecciÃ³n al
-// proveedor (Stripe/Paddle). En modo manual permite simular la confirmaciÃ³n
+// Página de checkout. En producción se reemplaza por la redirección al
+// proveedor (Stripe/Paddle). En modo manual permite simular la confirmación
 // disparando el webhook con la cuenta del propietario.
 export default function ComerciosCheckout() {
   const [params] = useSearchParams();
@@ -38,7 +38,7 @@ export default function ComerciosCheckout() {
         body: JSON.stringify({ session_id: sessionId, status: "succeeded", payment_id: `manual_${Date.now()}` }),
       });
       if (!r.ok) throw new Error(await r.text());
-      toast.success("Pago confirmado. Tu negocio ya estÃ¡ publicado.");
+      toast.success("Pago confirmado. Tu negocio ya está publicado.");
       setTimeout(() => (window.location.href = "/catalogo"), 1500);
     } catch (e: any) {
       toast.error(e.message ?? "Error al confirmar");
@@ -52,22 +52,22 @@ export default function ComerciosCheckout() {
       <div className="container mx-auto px-6 pt-28 pb-20 max-w-2xl">
         <h1 className="text-3xl font-bold">Checkout</h1>
         {!payment || !merchant ? (
-          <p className="text-muted-foreground mt-4">Cargando informaciÃ³nâ€¦</p>
+          <p className="text-muted-foreground mt-4">Cargando informaciónâ€¦</p>
         ) : (
           <div className="glass-surface p-6 mt-6 space-y-3">
             <p><strong>Negocio:</strong> {merchant.name}</p>
-            <p><strong>CategorÃ­a:</strong> {merchant.category_id}</p>
+            <p><strong>Categoría:</strong> {merchant.category_id}</p>
             <p><strong>Monto:</strong> ${payment.amount_mxn} MXN</p>
             <p><strong>Estado:</strong> {payment.status}</p>
             <hr className="my-4 border-border" />
             <p className="text-sm text-muted-foreground">
-              Cuando se conecte el proveedor de pagos, esta pantalla redirigirÃ¡ automÃ¡ticamente a su checkout.
-              En modo de configuraciÃ³n inicial puedes simular la confirmaciÃ³n:
+              Cuando se conecte el proveedor de pagos, esta pantalla redirigirá automáticamente a su checkout.
+              En modo de configuración inicial puedes simular la confirmación:
             </p>
             <Button onClick={simulatePaid} disabled={loading || payment.status === "succeeded"} className="w-full">
               {payment.status === "succeeded" ? "Ya pagado" : loading ? "Confirmandoâ€¦" : "Confirmar pago (modo manual)"}
             </Button>
-            <Link to="/catalogo" className="text-sm underline block text-center">Volver al catÃ¡logo</Link>
+            <Link to="/catalogo" className="text-sm underline block text-center">Volver al catálogo</Link>
           </div>
         )}
       </div>

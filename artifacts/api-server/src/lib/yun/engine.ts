@@ -224,7 +224,7 @@ export class YunPolicyEngine {
 
     // CP-007: Soul modification requires FED-7
     if (input.action === "yun.soul.modify" && input.principal.federation !== "FED-7") {
-      return "CP-007: Gobernanza federada â€” soul modification only by FED-7 (AuditorÃ­a).";
+      return "CP-007: Gobernanza federada â€” soul modification only by FED-7 (Auditoría).";
     }
 
     // CP-005: No architectural changes without ADR

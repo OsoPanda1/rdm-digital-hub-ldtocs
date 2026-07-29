@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * Hook para interactuar con Isabella AI - Optimizado con caching y deduplicaciÃ³n
- * Triple Federado: Conceptual | Legal | TÃ©cnico
+ * Hook para interactuar con Isabella AI - Optimizado con caching y deduplicación
+ * Triple Federado: Conceptual | Legal | Técnico
  */
 
 import { useState, useCallback, useRef, useEffect } from 'react';
@@ -68,7 +68,7 @@ export const useIsabella = () => {
     };
   }, []);
 
-  // Enviar mensaje a Isabella con streaming y deduplicaciÃ³n
+  // Enviar mensaje a Isabella con streaming y deduplicación
   const sendMessage = useCallback(async (
     content: string,
     options?: {
@@ -103,7 +103,7 @@ export const useIsabella = () => {
       activeProtocol: options?.protocol || null
     }));
 
-    // Cancelar peticiÃ³n anterior si existe
+    // Cancelar petición anterior si existe
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
@@ -111,7 +111,7 @@ export const useIsabella = () => {
 
     const executeRequest = async () => {
       try {
-        // Obtener sesiÃ³n actual
+        // Obtener sesión actual
         const { data: { session } } = await supabase.auth.getSession();
 
         // Preparar mensajes para la API (usar ref para evitar stale closure)
@@ -151,7 +151,7 @@ export const useIsabella = () => {
         let assistantContent = '';
         let textBuffer = '';
 
-        // Crear mensaje vacÃ­o de Isabella
+        // Crear mensaje vacío de Isabella
         const assistantMessageId = generateFederationHash();
 
         setState(prev => ({
@@ -171,7 +171,7 @@ export const useIsabella = () => {
 
           textBuffer += decoder.decode(value, { stream: true });
 
-          // Procesar lÃ­neas del stream SSE
+          // Procesar líneas del stream SSE
           let newlineIndex: number;
           while ((newlineIndex = textBuffer.indexOf('\n')) !== -1) {
             let line = textBuffer.slice(0, newlineIndex);
@@ -191,7 +191,7 @@ export const useIsabella = () => {
               if (deltaContent) {
                 assistantContent += deltaContent;
 
-                // Actualizar el Ãºltimo mensaje
+                // Actualizar el último mensaje
                 setState(prev => ({
                   ...prev,
                   messages: prev.messages.map((m, i) =>
@@ -202,7 +202,7 @@ export const useIsabella = () => {
                 }));
               }
             } catch {
-              // JSON incompleto, esperar mÃ¡s datos
+              // JSON incompleto, esperar más datos
             }
           }
         }
@@ -211,7 +211,7 @@ export const useIsabella = () => {
 
       } catch (error) {
         if (error instanceof Error && error.name === 'AbortError') {
-          return; // Ignorar errores de cancelaciÃ³n
+          return; // Ignorar errores de cancelación
         }
 
         setState(prev => ({
@@ -235,11 +235,11 @@ export const useIsabella = () => {
   const activateProtocol = useCallback((protocol: 'fenix_rex' | 'iniciacion' | 'hoyo_negro') => {
     setState(prev => ({ ...prev, activeProtocol: protocol }));
     
-    // Enviar mensaje de activaciÃ³n
+    // Enviar mensaje de activación
     sendMessage(`[ACTIVACIÃ“N DE PROTOCOLO: ${protocol.toUpperCase()}]`, { protocol });
   }, [sendMessage]);
 
-  // Limpiar conversaciÃ³n
+  // Limpiar conversación
   const clearConversation = useCallback(() => {
     setState({
       messages: [],
@@ -252,7 +252,7 @@ export const useIsabella = () => {
     requestCache.clear();
   }, []);
 
-  // Cancelar peticiÃ³n actual
+  // Cancelar petición actual
   const cancelRequest = useCallback(() => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();

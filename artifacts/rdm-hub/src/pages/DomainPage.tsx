@@ -13,24 +13,24 @@ const domainData: Record<string, { title: string; tipo: string; proposito: strin
     tipo: "Dominio de Identidad",
     proposito: "Identidad civilizatoria soberana con control total del usuario sobre su huella digital.",
     funciones: [
-      "GestiÃ³n de identidad descentralizada (DID)",
+      "Gestión de identidad descentralizada (DID)",
       "Control de datos personales por el usuario",
-      "VerificaciÃ³n sin exposiciÃ³n (Zeroâ€‘Knowledge Proofs)",
+      "Verificación sin exposición (Zeroâ€‘Knowledge Proofs)",
       "Onboarding sensorial seguro",
     ],
-    integraciones: ["ANUBIS (seguridad)", "EconomÃ­a TAMV (trazabilidad)", "Isabella AI (contextualizaciÃ³n)"],
+    integraciones: ["ANUBIS (seguridad)", "Economía TAMV (trazabilidad)", "Isabella AI (contextualización)"],
   },
   utamv: {
     title: "UTAMV",
     tipo: "Dominio Educativo",
-    proposito: "Universidad/escuela inmersiva para formaciÃ³n profunda en tecnologÃ­a y competencias clave.",
+    proposito: "Universidad/escuela inmersiva para formación profunda en tecnología y competencias clave.",
     funciones: [
       "Cursos inmersivos en entornos XR",
-      "EvaluaciÃ³n adaptativa con IA",
+      "Evaluación adaptativa con IA",
       "Certificaciones trazables en blockchain",
       "Laboratorios virtuales y gemelos digitales",
     ],
-    integraciones: ["Metaverso MDâ€‘X4 (entornos)", "Isabella AI (tutorizaciÃ³n)", "IDâ€‘NVIDA (certificaciÃ³n)"],
+    integraciones: ["Metaverso MDâ€‘X4 (entornos)", "Isabella AI (tutorización)", "IDâ€‘NVIDA (certificación)"],
   },
   metaverso: {
     title: "Metaverso MDâ€‘X4",
@@ -39,34 +39,34 @@ const domainData: Record<string, { title: string; tipo: string; proposito: strin
     funciones: [
       "DreamSpaces: entornos sensoriales inmersivos",
       "Gemelos digitales de infraestructura",
-      "InteracciÃ³n 4D con realidad aumentada",
+      "Interacción 4D con realidad aumentada",
       "Espacios colaborativos multiusuario",
     ],
-    integraciones: ["UTAMV (educaciÃ³n)", "EconomÃ­a TAMV (intercambio)", "ANUBIS (seguridad perimetral)"],
+    integraciones: ["UTAMV (educación)", "Economía TAMV (intercambio)", "ANUBIS (seguridad perimetral)"],
   },
   economia: {
-    title: "EconomÃ­a TAMV",
-    tipo: "Dominio EconÃ³mico",
-    proposito: "Modelos de intercambio y valor con enfoque Ã©tico, trazabilidad y reciprocidad.",
+    title: "Economía TAMV",
+    tipo: "Dominio Económico",
+    proposito: "Modelos de intercambio y valor con enfoque ético, trazabilidad y reciprocidad.",
     funciones: [
-      "Tokens de valor Ã©tico (TAU/TCEP)",
+      "Tokens de valor ético (TAU/TCEP)",
       "Trazabilidad de transacciones",
-      "Modelos de reciprocidad KÃ³rima",
+      "Modelos de reciprocidad Kórima",
       "Compliance multinorma integrado",
     ],
-    integraciones: ["EOCT Blockchain (ledger)", "IDâ€‘NVIDA (identidad)", "Isabella AI (anÃ¡lisis)"],
+    integraciones: ["EOCT Blockchain (ledger)", "IDâ€‘NVIDA (identidad)", "Isabella AI (análisis)"],
   },
   seguridad: {
-    title: "Seguridad â€” GuardianÃ­as",
-    tipo: "GuardianÃ­a",
-    proposito: "ProtecciÃ³n integral mediante ANUBIS, HORUS, TENOCHTITLAN y mÃ³dulos Zeroâ€‘Trust.",
+    title: "Seguridad â€” Guardianías",
+    tipo: "Guardianía",
+    proposito: "Protección integral mediante ANUBIS, HORUS, TENOCHTITLAN y módulos Zeroâ€‘Trust.",
     funciones: [
       "ANUBIS: honeypots y defensa proactiva",
       "HORUS: monitoreo multi-sensorial",
       "TENOCHTITLAN: resiliencia de infraestructura",
-      "Zeroâ€‘Trust cultural integrado al cÃ³digo",
+      "Zeroâ€‘Trust cultural integrado al código",
     ],
-    integraciones: ["Todos los dominios (protecciÃ³n transversal)", "Isabella AI (detecciÃ³n de amenazas)"],
+    integraciones: ["Todos los dominios (protección transversal)", "Isabella AI (detección de amenazas)"],
   },
 };
 
@@ -80,13 +80,13 @@ const membershipLevels = [
 
 const accessMatrix = [
   { feature: "Lectura completa de la wiki", free: true, premium: true, devs: true, advance: true, enterprise: true },
-  { feature: "Isabella IA bÃ¡sica", free: true, premium: true, devs: true, advance: true, enterprise: true },
+  { feature: "Isabella IA básica", free: true, premium: true, devs: true, advance: true, enterprise: true },
   { feature: "Dashboard general (solo lectura)", free: false, premium: true, devs: true, advance: true, enterprise: true },
   { feature: "Casos de uso completos", free: false, premium: true, devs: true, advance: true, enterprise: true },
   { feature: "Kit APIs (read-only docs)", free: false, premium: true, devs: true, advance: true, enterprise: true },
-  { feature: "Kit APIs (sandbox tÃ©cnico)", free: false, premium: false, devs: true, advance: true, enterprise: true },
+  { feature: "Kit APIs (sandbox técnico)", free: false, premium: false, devs: true, advance: true, enterprise: true },
   { feature: "Acceso a NOAâ€‘TAMV (lectura)", free: false, premium: false, devs: true, advance: true, enterprise: true },
-  { feature: "Acceso a NOAâ€‘TAMV (operaciÃ³n)", free: false, premium: false, devs: false, advance: true, enterprise: true },
+  { feature: "Acceso a NOAâ€‘TAMV (operación)", free: false, premium: false, devs: false, advance: true, enterprise: true },
   { feature: "Social Core (comunidad/gov)", free: false, premium: false, devs: true, advance: true, enterprise: true },
   { feature: "Despliegues federados guiados", free: false, premium: false, devs: false, advance: true, enterprise: true },
   { feature: "Despliegues federados llave en mano", free: false, premium: false, devs: false, advance: false, enterprise: true },
@@ -102,14 +102,14 @@ const DomainPage = () => {
   if (!data) {
     return (
       <WikiPage title="Dominio no encontrado">
-        <p className="text-muted-foreground">Este dominio aÃºn no estÃ¡ documentado.</p>
+        <p className="text-muted-foreground">Este dominio aún no está documentado.</p>
       </WikiPage>
     );
   }
 
   return (
     <WikiPage title={data.title} subtitle={data.tipo}>
-      <Section title="PropÃ³sito">
+      <Section title="Propósito">
         <p className="text-muted-foreground leading-relaxed">{data.proposito}</p>
       </Section>
 
@@ -141,12 +141,12 @@ const DomainPage = () => {
         </div>
       </Section>
 
-      {/* Membership section only for EconomÃ­a */}
+      {/* Membership section only for Economía */}
       {slug === "economia" && (
         <>
-          <Section title="Modelos de membresÃ­a y niveles de acceso">
+          <Section title="Modelos de membresía y niveles de acceso">
             <p className="text-muted-foreground leading-relaxed mb-4">
-              TAMV opera con un modelo de membresÃ­as escalonado que permite desde la exploraciÃ³n libre hasta
+              TAMV opera con un modelo de membresías escalonado que permite desde la exploración libre hasta
               despliegues federados completos. Cada nivel desbloquea acceso progresivo a dominios, APIs,
               herramientas y gobernanza del ecosistema.
             </p>
@@ -167,7 +167,7 @@ const DomainPage = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-muted/30 border-b border-border/50">
-                    <th className="text-left px-3 py-2.5 text-foreground font-medium text-xs">Dominio / FunciÃ³n</th>
+                    <th className="text-left px-3 py-2.5 text-foreground font-medium text-xs">Dominio / Función</th>
                     {membershipLevels.map((l) => (
                       <th key={l.name} className="text-center px-2 py-2.5 text-foreground font-medium text-xs">{l.name}</th>
                     ))}
@@ -189,14 +189,14 @@ const DomainPage = () => {
             </div>
           </Section>
 
-          <Section title="Modelo econÃ³mico">
+          <Section title="Modelo económico">
             <div className="space-y-3">
               {[
-                { tier: "Free â€” 0 MXN/mes", desc: "Acceso pedagÃ³gico y exploratorio. Lectura completa de la wiki, Isabella bÃ¡sica, casos de uso pÃºblicos. Puerta de entrada educativa." },
-                { tier: "Premium â€” ~7â€“15 USD/mes", desc: "Usuarios individuales y microempresas. Dashboards bÃ¡sicos, contenidos ampliados, mÃ³dulos introductorios de UTAMV, reportes." },
-                { tier: "Devs â€” ~25â€“50 USD/mes", desc: "Acceso tÃ©cnico intensivo. Kit de APIs completo con sandbox, documentaciÃ³n avanzada, ejemplos NOAâ€‘TAMV, Social Core." },
-                { tier: "Advance â€” ~250â€“500 USD/mes", desc: "Instituciones medianas y universidades. Monitoreo avanzado, integraciÃ³n parcial con NOA y Social Core, configuraciÃ³n de nodos, soporte prioritario." },
-                { tier: "Enterprise â€” Contrato anual (a negociar)", desc: "Ecosistemas multi-nodo, despliegues federados llave en mano, gobernanza compartida, integraciÃ³n con infra propia, SLA dedicado." },
+                { tier: "Free â€” 0 MXN/mes", desc: "Acceso pedagógico y exploratorio. Lectura completa de la wiki, Isabella básica, casos de uso públicos. Puerta de entrada educativa." },
+                { tier: "Premium â€” ~7â€“15 USD/mes", desc: "Usuarios individuales y microempresas. Dashboards básicos, contenidos ampliados, módulos introductorios de UTAMV, reportes." },
+                { tier: "Devs â€” ~25â€“50 USD/mes", desc: "Acceso técnico intensivo. Kit de APIs completo con sandbox, documentación avanzada, ejemplos NOAâ€‘TAMV, Social Core." },
+                { tier: "Advance â€” ~250â€“500 USD/mes", desc: "Instituciones medianas y universidades. Monitoreo avanzado, integración parcial con NOA y Social Core, configuración de nodos, soporte prioritario." },
+                { tier: "Enterprise â€” Contrato anual (a negociar)", desc: "Ecosistemas multi-nodo, despliegues federados llave en mano, gobernanza compartida, integración con infra propia, SLA dedicado." },
               ].map((t) => (
                 <div key={t.tier} className="rounded-lg border border-border/50 bg-card/50 p-4">
                   <h4 className="font-semibold text-foreground text-sm">{t.tier}</h4>

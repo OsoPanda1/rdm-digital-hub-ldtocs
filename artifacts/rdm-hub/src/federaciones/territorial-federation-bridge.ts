@@ -52,32 +52,32 @@ export class TerritorialFederationBridge {
   }
 
   /**
-   * ValidaciÃ³n fuerte de contribuciÃ³n antes de enrutar.
-   * No permite coords vacÃ­as, tipos no mapeados o territorios invÃ¡lidos.
+   * Validación fuerte de contribución antes de enrutar.
+   * No permite coords vacías, tipos no mapeados o territorios inválidos.
    */
   private validateContribution(contribution: UserContribution): boolean {
     if (!contribution) {
-      logger.error('[TFB] ContribuciÃ³n nula recibida');
+      logger.error('[TFB] Contribución nula recibida');
       return false;
     }
 
     if (!contribution.id || !contribution.userId) {
-      logger.warn('[TFB] ContribuciÃ³n sin id o userId', { contribution });
+      logger.warn('[TFB] Contribución sin id o userId', { contribution });
       return false;
     }
 
     if (!contribution.type) {
-      logger.warn('[TFB] ContribuciÃ³n sin tipo declarado', { contributionId: contribution.id });
+      logger.warn('[TFB] Contribución sin tipo declarado', { contributionId: contribution.id });
       return false;
     }
 
     if (!contribution.coords || typeof contribution.coords.lat !== 'number' || typeof contribution.coords.lng !== 'number') {
-      logger.warn('[TFB] ContribuciÃ³n sin coordenadas vÃ¡lidas', { contributionId: contribution.id });
+      logger.warn('[TFB] Contribución sin coordenadas válidas', { contributionId: contribution.id });
       return false;
     }
 
     if (!contribution.territorio) {
-      logger.warn('[TFB] ContribuciÃ³n sin territorio asignado', { contributionId: contribution.id });
+      logger.warn('[TFB] Contribución sin territorio asignado', { contributionId: contribution.id });
       return false;
     }
 
@@ -85,7 +85,7 @@ export class TerritorialFederationBridge {
   }
 
   /**
-   * Determina severidad federada a partir de prioridad y tipo de contribuciÃ³n.
+   * Determina severidad federada a partir de prioridad y tipo de contribución.
    */
   private getEventSeverity(priority: TerritorialFederationMap['priority']): 'INFO' | 'ALERTA' | 'CRITICO' {
     switch (priority) {
@@ -99,8 +99,8 @@ export class TerritorialFederationBridge {
   }
 
   /**
-   * Enruta una contribuciÃ³n territorial hacia federaciones TAMV con hardening:
-   * validaciÃ³n previa, trazas Ãºnicas y eventos secundarios controlados.
+   * Enruta una contribución territorial hacia federaciones TAMV con hardening:
+   * validación previa, trazas únicas y eventos secundarios controlados.
    */
   routeContribution(contribution: UserContribution): void {
     if (!this.validateContribution(contribution)) {
@@ -134,7 +134,7 @@ export class TerritorialFederationBridge {
       correlationId: contribution.id,
     });
 
-    // Route to secondary federations (sin userId para minimizar exposiciÃ³n de identidad)
+    // Route to secondary federations (sin userId para minimizar exposición de identidad)
     for (const fed of map.secondaryFeds) {
       federationBus.emit({
         type: `${map.eventType}_SYNC`,
@@ -153,7 +153,7 @@ export class TerritorialFederationBridge {
       });
     }
 
-    logger.info('[TFB] ContribuciÃ³n enrutada', {
+    logger.info('[TFB] Contribución enrutada', {
       type: contribution.type,
       primary: map.primaryFed,
       secondary: map.secondaryFeds,
@@ -163,11 +163,11 @@ export class TerritorialFederationBridge {
   }
 
   /**
-   * ActualizaciÃ³n de estadÃ­sticas territoriales con validaciÃ³n bÃ¡sica.
+   * Actualización de estadísticas territoriales con validación básica.
    */
   routeTerritorialStats(stats: TerritorialStats): void {
     if (!stats || !stats.territorio) {
-      logger.warn('[TFB] Stats territoriales invÃ¡lidas', { stats });
+      logger.warn('[TFB] Stats territoriales inválidas', { stats });
       return;
     }
 
@@ -182,22 +182,22 @@ export class TerritorialFederationBridge {
   }
 
   /**
-   * ActualizaciÃ³n de heatmap con lÃ­mite de puntos y validaciÃ³n de coordenadas.
+   * Actualización de heatmap con límite de puntos y validación de coordenadas.
    */
   routeHeatMapUpdate(points: TerritorialHeatPoint[]): void {
     if (!Array.isArray(points) || points.length === 0) {
-      logger.warn('[TFB] Heatmap vacÃ­o, no se emite evento');
+      logger.warn('[TFB] Heatmap vacío, no se emite evento');
       return;
     }
 
-    // LÃ­mite de protecciÃ³n: evitar floods en KAOS_HYPERRENDER.
+    // Límite de protección: evitar floods en KAOS_HYPERRENDER.
     const MAX_POINTS = 500;
     const safePoints = points.slice(0, MAX_POINTS).filter(p =>
       p && typeof p.lat === 'number' && typeof p.lng === 'number',
     );
 
     if (safePoints.length === 0) {
-      logger.warn('[TFB] Heatmap sin puntos vÃ¡lidos');
+      logger.warn('[TFB] Heatmap sin puntos válidos');
       return;
     }
 

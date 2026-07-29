@@ -15,7 +15,7 @@ export default function EcosistemaLTOS() {
     <RDMPageShell
       eyebrow="Ecosistema LTOS"
       title="Plataformas y Repositorios"
-      description={`Arquitecto: ${platforms.architect}. Repo paraguas: ${platforms.umbrella_repo}. ORCID ${platforms.credentials?.orcid} Â· DOI ${platforms.credentials?.doi}.`}
+      description={`Arquitecto: ${platforms.architect}. Repo paraguas: ${platforms.umbrella_repo}. ORCID ${platforms.credentials?.orcid} · DOI ${platforms.credentials?.doi}.`}
     >
       <Tabs defaultValue="platforms" className="w-full">
         <TabsList>
@@ -33,7 +33,7 @@ export default function EcosistemaLTOS() {
                 <div className="flex flex-wrap gap-2">
                   {p.federation && <Badge variant="secondary">{p.federation}</Badge>}
                   {p.files != null && <Badge variant="outline">{p.files} archivos</Badge>}
-                  {p.pages != null && <Badge variant="outline">{p.pages} pÃ¡ginas</Badge>}
+                  {p.pages != null && <Badge variant="outline">{p.pages} páginas</Badge>}
                   {p.migrations != null && <Badge variant="outline">{p.migrations} migraciones</Badge>}
                 </div>
                 {p.highlights && (
@@ -58,7 +58,7 @@ export default function EcosistemaLTOS() {
                 <CardContent className="flex gap-2 text-xs text-muted-foreground">
                   <Badge variant="outline">{r.language}</Badge>
                   <span>â˜… {r.stars}</span>
-                  <span>Â· {r.updated}</span>
+                  <span>· {r.updated}</span>
                 </CardContent>
               </Card>
             </a>

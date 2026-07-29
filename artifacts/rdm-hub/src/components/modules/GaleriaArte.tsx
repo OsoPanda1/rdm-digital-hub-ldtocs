@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * GalerÃ­a de Arte TAMV
- * Triple Federado: Conceptual | Legal | TÃ©cnico
+ * Galería de Arte TAMV
+ * Triple Federado: Conceptual | Legal | Técnico
  */
 
 import { useState } from 'react';
@@ -50,7 +50,7 @@ interface Artwork {
 const MOCK_ARTWORKS: Artwork[] = [
   {
     id: '1',
-    title: 'SueÃ±os CÃ³smicos',
+    title: 'Sueños Cósmicos',
     artist: 'Luna Digital',
     artistAvatar: '/placeholder.svg',
     imageUrl: '/placeholder.svg',
@@ -115,7 +115,7 @@ const MOCK_ARTWORKS: Artwork[] = [
   },
   {
     id: '6',
-    title: 'Ondas CuÃ¡nticas',
+    title: 'Ondas Cuánticas',
     artist: 'Quantum Artist',
     artistAvatar: '/placeholder.svg',
     imageUrl: '/placeholder.svg',
@@ -161,8 +161,8 @@ const GaleriaArte = () => {
             <Palette className="w-8 h-8 text-pink-400" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold">GalerÃ­a de Arte TAMV</h1>
-            <p className="text-muted-foreground">Descubre y colecciona arte digital Â· Triple Federado</p>
+            <h1 className="text-3xl font-bold">Galería de Arte TAMV</h1>
+            <p className="text-muted-foreground">Descubre y colecciona arte digital · Triple Federado</p>
           </div>
         </div>
 
@@ -219,8 +219,8 @@ const GaleriaArte = () => {
               <SelectValue placeholder="Ordenar por" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="popular">MÃ¡s popular</SelectItem>
-              <SelectItem value="recent">MÃ¡s reciente</SelectItem>
+              <SelectItem value="popular">Más popular</SelectItem>
+              <SelectItem value="recent">Más reciente</SelectItem>
               <SelectItem value="price-low">Precio: Menor</SelectItem>
               <SelectItem value="price-high">Precio: Mayor</SelectItem>
             </SelectContent>
@@ -338,7 +338,7 @@ const GaleriaArte = () => {
         <Card className="p-12 text-center">
           <Palette className="w-16 h-16 mx-auto text-muted-foreground/30 mb-4" />
           <h3 className="text-xl font-bold mb-2">No se encontraron obras</h3>
-          <p className="text-muted-foreground">Intenta con otros filtros o tÃ©rminos de bÃºsqueda</p>
+          <p className="text-muted-foreground">Intenta con otros filtros o términos de búsqueda</p>
         </Card>
       )}
     </div>

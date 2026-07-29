@@ -49,8 +49,8 @@ export function ReviewPrompt() {
   return (
     <section className="px-6 pb-8">
       <div className="max-w-3xl mx-auto rounded-2xl border border-border/50 p-4 bg-card/70 space-y-3">
-        <p className="font-medium">Â¿Me ayudas con una reseÃ±a rÃ¡pida?</p>
-        <p className="text-xs text-muted-foreground">Tu opiniÃ³n mejora la calidad turÃ­stica de Real del Monte.</p>
+        <p className="font-medium">¿Me ayudas con una reseña rápida?</p>
+        <p className="text-xs text-muted-foreground">Tu opinión mejora la calidad turística de Real del Monte.</p>
 
         <div className="flex gap-2 items-center">
           <label className="text-sm">Rating:</label>
@@ -68,7 +68,7 @@ export function ReviewPrompt() {
 
         <div className="flex gap-2">
           <button className="px-3 py-2 rounded-lg bg-accent text-accent-foreground text-sm" onClick={() => submit(true)}>
-            SÃ­, enviar
+            Sí, enviar
           </button>
           <button className="px-3 py-2 rounded-lg border text-sm" onClick={() => submit(false)}>
             No por ahora

@@ -75,9 +75,9 @@ export interface UseMapOptions {
 
 const DEFAULT_LAYERS: MapLayerConfig[] = [
   { id: 'osm', name: 'OpenStreetMap', type: 'base', visible: true, zIndex: 100 },
-  { id: 'satellite', name: 'SatÃ©lite', type: 'base', visible: false, zIndex: 101 },
+  { id: 'satellite', name: 'Satélite', type: 'base', visible: false, zIndex: 101 },
   { id: 'federation-heat', name: 'Calor Federado', type: 'federation', visible: true, opacity: 0.4, zIndex: 200 },
-  { id: 'poi-markers', name: 'Puntos de InterÃ©s', type: 'overlay', visible: true, zIndex: 300 },
+  { id: 'poi-markers', name: 'Puntos de Interés', type: 'overlay', visible: true, zIndex: 300 },
   { id: 'realtime-events', name: 'Eventos en Vivo', type: 'realtime', visible: true, zIndex: 400 },
   { id: 'user-path', name: 'Tu Recorrido', type: 'overlay', visible: false, zIndex: 350 },
 ];
@@ -286,10 +286,10 @@ export function useUnifiedMap(options: UseMapOptions) {
 
     eventMarker.bindPopup(`
       <div class="realtime-popup">
-        <h5>âš¡ DecisiÃ³n GEN-7 Activa</h5>
+        <h5>âš¡ Decisión GEN-7 Activa</h5>
         <p><strong>Nivel:</strong> ${decision.level}</p>
-        <p><strong>IntenciÃ³n:</strong> ${decision.retentionIntent}</p>
-        <p><strong>PatrÃ³n:</strong> ${decision.pattern}</p>
+        <p><strong>Intención:</strong> ${decision.retentionIntent}</p>
+        <p><strong>Patrón:</strong> ${decision.pattern}</p>
         <p><strong>Distancia a salida:</strong> ${decision.distanceToExit.toFixed(0)}m</p>
         <p class="text-xs text-muted-foreground">Actualizado: ${new Date(decision.timestamp).toLocaleTimeString()}</p>
       </div>
@@ -324,7 +324,7 @@ export function useUnifiedMap(options: UseMapOptions) {
       className: 'user-location-pulse',
     });
 
-    userMarker.bindPopup('<div class="user-popup">ðŸ“ Tu ubicaciÃ³n actual</div>');
+    userMarker.bindPopup('<div class="user-popup">ðŸ“ Tu ubicación actual</div>');
     userMarker.addTo(map);
     layersRef.current.set('user-location', userMarker);
   }, [state.userLocation]);

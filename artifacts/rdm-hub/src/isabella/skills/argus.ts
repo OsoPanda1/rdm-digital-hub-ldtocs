@@ -84,12 +84,12 @@ class ArgusEngine {
 
   private generateOutcome(dim: string, scenario: ArgusSimulationInput['scenarioDefinition'], prob: number): string {
     const outcomes: Record<string, string[]> = {
-      economia: ['Incremento en flujo econÃ³mico local', 'EstabilizaciÃ³n de ingresos turÃ­sticos', 'Aumento en derrama econÃ³mica'],
-      cultura: ['Fortalecimiento de identidad local', 'PreservaciÃ³n de patrimonio cultural', 'RevitalizaciÃ³n de tradiciones'],
-      etica: ['Cumplimiento de principios isabellinos', 'Transparencia en procesos', 'ParticipaciÃ³n comunitaria'],
-      infraestructura: ['Mejora en capacidad de servicio', 'OptimizaciÃ³n de recursos tÃ©cnicos', 'Escalabilidad del sistema'],
-      social: ['CohesiÃ³n comunitaria', 'InclusiÃ³n digital', 'DistribuciÃ³n equitativa de beneficios'],
-      technical: ['Estabilidad del sistema', 'Mejora en rendimiento', 'ReducciÃ³n de latencia'],
+      economia: ['Incremento en flujo económico local', 'Estabilización de ingresos turísticos', 'Aumento en derrama económica'],
+      cultura: ['Fortalecimiento de identidad local', 'Preservación de patrimonio cultural', 'Revitalización de tradiciones'],
+      etica: ['Cumplimiento de principios isabellinos', 'Transparencia en procesos', 'Participación comunitaria'],
+      infraestructura: ['Mejora en capacidad de servicio', 'Optimización de recursos técnicos', 'Escalabilidad del sistema'],
+      social: ['Cohesión comunitaria', 'Inclusión digital', 'Distribución equitativa de beneficios'],
+      technical: ['Estabilidad del sistema', 'Mejora en rendimiento', 'Reducción de latencia'],
     };
     const dimOutcomes = outcomes[dim] ?? ['Impacto neutral esperado'];
     return dimOutcomes[Math.floor(prob * dimOutcomes.length) % dimOutcomes.length];
@@ -109,12 +109,12 @@ class ArgusEngine {
 
   private generateMitigation(dim: string, scenario: ArgusSimulationInput['scenarioDefinition']): string {
     const mitigations: Record<string, string> = {
-      economia: 'Implementar monitoreo trimestral de indicadores econÃ³micos locales.',
+      economia: 'Implementar monitoreo trimestral de indicadores económicos locales.',
       cultura: 'Establecer consulta con la comunidad antes de implementar cambios culturales.',
-      etica: 'Someter la decisiÃ³n a evaluaciÃ³n de LUMEN con supervisiÃ³n humana.',
+      etica: 'Someter la decisión a evaluación de LUMEN con supervisión humana.',
       infraestructura: 'Realizar pruebas de carga y tener plan de rollback.',
-      social: 'Asegurar canales de retroalimentaciÃ³n comunitaria durante la implementaciÃ³n.',
-      technical: 'Tener redundancia operativa y plan de contingencia tÃ©cnica.',
+      social: 'Asegurar canales de retroalimentación comunitaria durante la implementación.',
+      technical: 'Tener redundancia operativa y plan de contingencia técnica.',
     };
     return mitigations[dim] ?? 'Evaluar riesgos adicionales antes de proceder.';
   }
@@ -122,16 +122,16 @@ class ArgusEngine {
   private buildRecommendations(sims: SimulationResult[], risks: RiskProfile[], input: ArgusSimulationInput): string[] {
     const recs: string[] = [];
     if (risks.length > 1) {
-      recs.push('Se recomienda proceder con precauciÃ³n debido a mÃºltiples riesgos identificados.');
+      recs.push('Se recomienda proceder con precaución debido a múltiples riesgos identificados.');
     }
     if (sims.some(s => s.probability > 0.7)) {
-      recs.push('Las condiciones son favorables para la implementaciÃ³n en el horizonte temporal definido.');
+      recs.push('Las condiciones son favorables para la implementación en el horizonte temporal definido.');
     }
     if (input.timeHorizon === 'largo') {
       recs.push('Establecer hitos intermedios para validar supuestos en el camino.');
     }
     if (input.constraints.dependencies && input.constraints.dependencies.length > 0) {
-      recs.push(`Asegurar que las dependencias (${input.constraints.dependencies.join(', ')}) estÃ©n resueltas antes de iniciar.`);
+      recs.push(`Asegurar que las dependencias (${input.constraints.dependencies.join(', ')}) estén resueltas antes de iniciar.`);
     }
     return recs;
   }

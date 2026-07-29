@@ -15,7 +15,7 @@ const EXPERIENCES = [
   {
     id: "historia",
     title: "Historia Minera",
-    subtitle: "500 aÃ±os de plata",
+    subtitle: "500 años de plata",
     image: mineEntrance,
     icon: Pickaxe,
     href: "#historia",
@@ -23,8 +23,8 @@ const EXPERIENCES = [
   },
   {
     id: "gastronomia",
-    title: "GastronomÃ­a",
-    subtitle: "Pastes & tradiciÃ³n",
+    title: "Gastronomía",
+    subtitle: "Pastes & tradición",
     image: pastesFood,
     icon: Utensils,
     href: "#gastronomia",

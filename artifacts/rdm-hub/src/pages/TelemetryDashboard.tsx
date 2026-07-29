@@ -49,7 +49,7 @@ export default function TelemetryDashboard() {
       if (metricsRes.data?.kpis) setKpis(metricsRes.data.kpis);
       setAlerts(alertsRes.count ?? 0);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Error de conexiÃ³n");
+      setError(e instanceof Error ? e.message : "Error de conexión");
     } finally {
       setLoading(false);
     }
@@ -67,7 +67,7 @@ export default function TelemetryDashboard() {
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-3">
               <Radio className="h-8 w-8 text-gold" />
-              TelemetrÃ­a del Nodo Cero
+              Telemetría del Nodo Cero
             </h1>
             <p className="text-muted-foreground mt-1">Monitoreo en tiempo real de las 7 federaciones TAMV</p>
           </div>

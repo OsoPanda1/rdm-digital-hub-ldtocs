@@ -24,28 +24,28 @@ const MAX_INPUT_LENGTH = 1000;
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/realito-chat`;
 
 const suggestions = [
-  "Â¿QuÃ© hacer con 2 horas libres?",
-  "Â¿DÃ³nde comer el mejor paste?",
-  "Ruta histÃ³rica recomendada",
-  "Â¿QuÃ© eventos hay hoy?",
+  "¿Qué hacer con 2 horas libres?",
+  "¿Dónde comer el mejor paste?",
+  "Ruta histórica recomendada",
+  "¿Qué eventos hay hoy?",
 ];
 
 const localFallbackReply = (msg: string): string => {
   const text = msg.toLowerCase();
 
   if (text.includes("paste") || text.includes("comer")) {
-    return "Para comer, empieza por los pastes tradicionales en el centro y luego prueba un cafÃ© de olla en los portales. Si quieres, te armo una ruta gastronÃ³mica por tiempos.";
+    return "Para comer, empieza por los pastes tradicionales en el centro y luego prueba un café de olla en los portales. Si quieres, te armo una ruta gastronómica por tiempos.";
   }
 
   if (text.includes("evento") || text.includes("hoy")) {
-    return "Hoy te recomiendo revisar la plaza principal y los foros culturales cercanos; suelen concentrar actividades y mÃºsica local por la tarde.";
+    return "Hoy te recomiendo revisar la plaza principal y los foros culturales cercanos; suelen concentrar actividades y música local por la tarde.";
   }
 
   if (text.includes("ruta") || text.includes("historia")) {
-    return "Ruta histÃ³rica sugerida: Plaza Principal â†’ Parroquia de la AsunciÃ³n â†’ callejones coloniales â†’ Museo del Paste â†’ Mina de Acosta.";
+    return "Ruta histórica sugerida: Plaza Principal â†’ Parroquia de la Asunción â†’ callejones coloniales â†’ Museo del Paste â†’ Mina de Acosta.";
   }
 
-  return "Actualmente estoy en modo offline. Pronto estarÃ© disponible con respuestas potenciadas por IA. Mientras tanto, explora el mapa interactivo o la guÃ­a de lugares para descubrir Real del Monte.";
+  return "Actualmente estoy en modo offline. Pronto estaré disponible con respuestas potenciadas por IA. Mientras tanto, explora el mapa interactivo o la guía de lugares para descubrir Real del Monte.";
 };
 
 export default function RealitoChat({ initialOpen = false }: RealitoChatProps) {
@@ -87,7 +87,7 @@ export default function RealitoChat({ initialOpen = false }: RealitoChatProps) {
         });
 
         if (!resp.ok || !resp.body) {
-          throw new Error("Error de conexiÃ³n");
+          throw new Error("Error de conexión");
         }
 
         setMessages((prev) => [...prev, { id: assistantId, role: "assistant", content: "" }]);
@@ -167,7 +167,7 @@ export default function RealitoChat({ initialOpen = false }: RealitoChatProps) {
             <div className="flex-1 space-y-3 overflow-y-auto p-4">
               {messages.length === 0 ? (
                 <div className="space-y-3">
-                  <p className="text-sm text-silver-400">Â¿QuÃ© deseas explorar hoy?</p>
+                  <p className="text-sm text-silver-400">¿Qué deseas explorar hoy?</p>
                   <div className="flex flex-wrap gap-2">
                     {suggestions.map((suggestion) => (
                       <button
@@ -193,7 +193,7 @@ export default function RealitoChat({ initialOpen = false }: RealitoChatProps) {
                 ))
               )}
               {isTyping && (
-                <div className="w-fit rounded-xl bg-white/10 px-3 py-2 text-sm text-silver-400">REALITO estÃ¡ escribiendoâ€¦</div>
+                <div className="w-fit rounded-xl bg-white/10 px-3 py-2 text-sm text-silver-400">REALITO está escribiendoâ€¦</div>
               )}
               <div ref={endRef} />
             </div>

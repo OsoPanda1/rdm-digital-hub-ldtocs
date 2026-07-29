@@ -2,16 +2,16 @@
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
-// ConfiguraciÃ³n de telemetrÃ­a (monitoreo) para RDM Digital
-// Recopila mÃ©tricas operativas, de error y de rendimiento del front-end.
+// Configuración de telemetría (monitoreo) para RDM Digital
+// Recopila métricas operativas, de error y de rendimiento del front-end.
 // Se ejecuta en el lado del cliente utilizando Performance API, error reporting, canvas para huellas, y reporting.
 
 export const TELEMETRIA_CONFIG = {
-  // MÃ©tricas de rendimiento centradas en el usuario
+  // Métricas de rendimiento centradas en el usuario
   performance: {
-    // Contentful Paint y Layout Shift especÃ­ficos del Core Web Vitals
+    // Contentful Paint y Layout Shift específicos del Core Web Vitals
     // maxLargestContentfulPaint: umbral en ms para LCP (ideal < 2.5s)
-    // maxCumulativeLayoutShift: umbral mÃ¡ximo aceptable para CLS (< 0.1)
+    // maxCumulativeLayoutShift: umbral máximo aceptable para CLS (< 0.1)
     // maxFirstContentfulPaint: umbral en ms para FCP (ideal < 1.8s)
   },
 
@@ -21,18 +21,18 @@ export const TELEMETRIA_CONFIG = {
     // y fallos de red; normaliza antes de reportar.
   },
 
-  // MÃ©trica de actividad centrada en el usuario (engagement)
+  // Métrica de actividad centrada en el usuario (engagement)
   engagement: {
     // Seguimiento de eventos interactivos del usuario:
-    // clics del ratÃ³n, teclas presionadas, entradas en formularios
+    // clics del ratón, teclas presionadas, entradas en formularios
   },
 
-  // Seguimiento de estado de conexiÃ³n en el lado del cliente
+  // Seguimiento de estado de conexión en el lado del cliente
   offline: {
-    // Periodos sin conexiÃ³n, reintentos de red, capacidad de recuperaciÃ³n de Service Worker
+    // Periodos sin conexión, reintentos de red, capacidad de recuperación de Service Worker
   },
 
-  // SesiÃ³n de depuraciÃ³n en producciÃ³n (agresivo en desarrollo, rudo en producciÃ³n)
+  // Sesión de depuración en producción (agresivo en desarrollo, rudo en producción)
   debug: {
     // Solo activo en entorno de desarrollo para permitir captura detallada
     enabled: import.meta.env.DEV,
@@ -41,9 +41,9 @@ export const TELEMETRIA_CONFIG = {
   },
 };
 
-// Payload rÃ­gido de mÃ©tricas de telemetrÃ­a con tipos TypeScript estrictos
+// Payload rígido de métricas de telemetría con tipos TypeScript estrictos
 export type TelemObject = {
-  // id_mÃ©trica (hash Ãºnico, tÃ­pico SHAâ€‘256 o estructura bloque)
+  // id_métrica (hash único, típico SHAâ€‘256 o estructura bloque)
   id: string;
   // timestamp ISO `2024â€‘06â€‘27T...`
   ts: string;
@@ -51,13 +51,13 @@ export type TelemObject = {
   nombre: string;
   // categoria para filtrar: `performance`, `error`, `engagement`, `offline`
   categoria: 'performance' | 'error' | 'engagement' | 'offline';
-  // regiÃ³n del usuario cuando estÃ¡ disponible
+  // región del usuario cuando está disponible
   region: string;
-  // datos ocultos para cada mÃ©trica
+  // datos ocultos para cada métrica
   data: unknown;
 };
 
-// Modelos de fÃ¡brica de mÃ©tricas para mantener DRY
+// Modelos de fábrica de métricas para mantener DRY
 const build = <T extends object>(id: string, categoria: TelemObject['categoria'], data: T): TelemObject => (
   {
     id,
@@ -69,43 +69,43 @@ const build = <T extends object>(id: string, categoria: TelemObject['categoria']
   } as const
 );
 
-// Helpers especializados para mÃ©tricas habituales
+// Helpers especializados para métricas habituales
 export const telemetryExamples = {
-  // Ejemplo de mÃ©trica de rendimiento (FPS)
+  // Ejemplo de métrica de rendimiento (FPS)
   fps: () => build('fps', 'performance', { fps: typeof window !== 'undefined' ? Math.round((window.performance as any)?.now?.() ?? 60) : 60 }),
 
   // Ejemplo de error (falso, para pruebas)
   errorPage: () => build('error_page_view', 'error', { page: window.location.pathname, error: 'sin_conexion' }),
 
-  // Ejemplo de actividad de usuario (click rÃ¡pido)
+  // Ejemplo de actividad de usuario (click rápido)
   quickClick: () => build('link_click', 'engagement', { url: window.location.href, time: Date.now() }),
 
-  // MÃ©trica de memoria de visualizaciÃ³n en el cliente para budgets de RAM
+  // Métrica de memoria de visualización en el cliente para budgets de RAM
   memory: () => build('client_memory_mb', 'performance', {
     used: (typeof window !== 'undefined' && (window.performance as any)?.memory?.usedJSHeapSize) ?? 0 / 1048576,
     total: (typeof window !== 'undefined' && (window.performance as any)?.memory?.jsHeapSizeLimit) ?? 0 / 1048576,
   }),
 };
 
-// Registro de mÃ©tricas a una funciÃ³n reportadora central (puede ser fuente de datos, beacon, o logger)
+// Registro de métricas a una función reportadora central (puede ser fuente de datos, beacon, o logger)
 
 // === CARDINALITY & SAMPLING CONTROLS ===
-// MÃ¡ximo de entradas de telemetrÃ­a Ãºnicas por sesiÃ³n antes de aplicar muestreo
+// Máximo de entradas de telemetría únicas por sesión antes de aplicar muestreo
 const MAX_ENTRIES_PER_SESSION = 10_000;
-// Tasa de muestreo (0.0 - 1.0) al acercarse al lÃ­mite de cardinalidad
+// Tasa de muestreo (0.0 - 1.0) al acercarse al límite de cardinalidad
 const SAMPLING_RATE = 0.1;
 
 let telemetryCounter = 0;
 
 /**
- * Reporta una mÃ©trica de telemetrÃ­a con guardas de cardinalidad y rate-limit.
- * Descarta eventos silenciosamente cuando se excede el lÃ­mite por sesiÃ³n
+ * Reporta una métrica de telemetría con guardas de cardinalidad y rate-limit.
+ * Descarta eventos silenciosamente cuando se excede el límite por sesión
  * o cuando el muestreo reduce el volumen bajo backpressure.
  */
 export const reportMetric = (metric: TelemObject): void => {
   telemetryCounter++;
 
-  // Guarda de cardinalidad: descarte duro a las 10k por sesiÃ³n
+  // Guarda de cardinalidad: descarte duro a las 10k por sesión
   if (telemetryCounter > MAX_ENTRIES_PER_SESSION) {
     if (telemetryCounter === MAX_ENTRIES_PER_SESSION + 1) {
       // console.warn would go here; cardinality guard active
@@ -113,12 +113,12 @@ export const reportMetric = (metric: TelemObject): void => {
     return;
   }
 
-  // Muestreo: solo reporta ~10% de eventos cuando estÃ¡ al 80% del lÃ­mite
+  // Muestreo: solo reporta ~10% de eventos cuando está al 80% del límite
   if (telemetryCounter > MAX_ENTRIES_PER_SESSION * 0.8) {
     if (Math.random() > SAMPLING_RATE) return;
   }
 
-  // Enviado a Supabase usando `telemeta` (productos de Supabase pga datos pÃºblicos)
+  // Enviado a Supabase usando `telemeta` (productos de Supabase pga datos públicos)
   if (import.meta.env.VITE_SUPABASE_URL) {
     fetch(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/telemeta`, {
       method: 'POST',
@@ -133,7 +133,7 @@ export const reportMetric = (metric: TelemObject): void => {
   }
 };
 
-/** Reinicia el contador de telemetrÃ­a por sesiÃ³n (llamar en navegaciÃ³n) */
+/** Reinicia el contador de telemetría por sesión (llamar en navegación) */
 export const resetTelemetryCounter = (): void => {
   telemetryCounter = 0;
 };

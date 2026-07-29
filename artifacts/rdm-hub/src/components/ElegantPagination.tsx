@@ -30,7 +30,7 @@ export function ElegantPagination({ page, totalPages, onChange }: ElegantPaginat
           <button
             key={index}
             type="button"
-            aria-label={`Ir a pÃ¡gina ${index + 1}`}
+            aria-label={`Ir a página ${index + 1}`}
             onClick={() => onChange(index)}
             className={`h-2.5 rounded-full transition-all ${
               index === page ? "w-8 bg-accent" : "w-2.5 bg-muted-foreground/40 hover:bg-accent/50"

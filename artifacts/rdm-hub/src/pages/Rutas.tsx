@@ -50,7 +50,7 @@ interface TouristRoute {
   bgGradient: string;
   duration: string;
   distance: string;
-  difficulty: "FÃ¡cil" | "Moderada" | "DifÃ­cil" | "Desafiante";
+  difficulty: "Fácil" | "Moderada" | "Difícil" | "Desafiante";
   physicalLevel: number; // 1-10
   bestTime: string;
   idealFor: string[];
@@ -73,32 +73,32 @@ interface TouristRoute {
 const touristRoutes: TouristRoute[] = [
   {
     id: "historica",
-    name: "Ruta HistÃ³rica",
-    tagline: "Caminando por 460 aÃ±os de historia",
-    description: "Recorrido por los lugares mÃ¡s emblemÃ¡ticos que cuentan la historia de Real del Monte, desde su fundaciÃ³n minera hasta la actualidad.",
-    fullDescription: "La Ruta HistÃ³rica es un viaje en el tiempo que te lleva a travÃ©s de mÃ¡s de cuatro siglos de historia. Comenzando en la Plaza Principal, donde todo iniciÃ³ en 1560, caminarÃ¡s por las mismas calles que recorrieron mineros, empresarios ingleses y revolucionarios. Cada edificio, cada callejÃ³n y cada plaza tiene una historia que contar. Esta ruta incluye visitas al corazÃ³n minero del pueblo, al cementerio anglicano Ãºnico en MÃ©xico, y a los edificios que albergan la memoria de una Ã©poca dorada. Es una experiencia imperdible para quienes desean comprender la profunda significaciÃ³n histÃ³rica de este Pueblo MÃ¡gico.",
+    name: "Ruta Histórica",
+    tagline: "Caminando por 460 años de historia",
+    description: "Recorrido por los lugares más emblemáticos que cuentan la historia de Real del Monte, desde su fundación minera hasta la actualidad.",
+    fullDescription: "La Ruta Histórica es un viaje en el tiempo que te lleva a través de más de cuatro siglos de historia. Comenzando en la Plaza Principal, donde todo inició en 1560, caminarás por las mismas calles que recorrieron mineros, empresarios ingleses y revolucionarios. Cada edificio, cada callejón y cada plaza tiene una historia que contar. Esta ruta incluye visitas al corazón minero del pueblo, al cementerio anglicano único en México, y a los edificios que albergan la memoria de una época dorada. Es una experiencia imperdible para quienes desean comprender la profunda significación histórica de este Pueblo Mágico.",
     icon: History,
     color: "text-terracotta",
     bgGradient: "from-terracotta/20 to-terracotta/5",
     duration: "3-4 horas",
     distance: "4.5 km",
-    difficulty: "FÃ¡cil",
+    difficulty: "Fácil",
     physicalLevel: 3,
-    bestTime: "Todo el aÃ±o, preferentemente en la maÃ±ana",
+    bestTime: "Todo el año, preferentemente en la mañana",
     idealFor: ["Familias", "Adultos mayores", "Estudiantes de historia", "Turistas culturales"],
-    whatToBring: ["Calzado cÃ³modo", "Protector solar", "Agua", "CÃ¡mara fotogrÃ¡fica", "Dinero en efectivo para entradas"],
+    whatToBring: ["Calzado cómodo", "Protector solar", "Agua", "Cámara fotográfica", "Dinero en efectivo para entradas"],
     stops: [
       {
         name: "Plaza Principal",
-        description: "CorazÃ³n histÃ³rico del pueblo desde 1560. AquÃ­ se encuentra el Kiosco de la Independencia y la Parroquia de la AsunciÃ³n, construida en el siglo XVIII.",
+        description: "Corazón histórico del pueblo desde 1560. Aquí se encuentra el Kiosco de la Independencia y la Parroquia de la Asunción, construida en el siglo XVIII.",
         duration: "30 min",
-        highlights: ["Arquitectura colonial", "Kiosco histÃ³rico", "Jardines centenarios"]
+        highlights: ["Arquitectura colonial", "Kiosco histórico", "Jardines centenarios"]
       },
       {
         name: "Museo de Medicina Laboral",
-        description: "Antiguo hospital de mineros convertido en museo. Exhibe herramientas mÃ©dicas del siglo XIX y relata las condiciones de salud de los trabajadores mineros.",
+        description: "Antiguo hospital de mineros convertido en museo. Exhibe herramientas médicas del siglo XIX y relata las condiciones de salud de los trabajadores mineros.",
         duration: "45 min",
-        highlights: ["Instrumentos mÃ©dicos antiguos", "Historia de la medicina minera", "Arquitectura hospitalaria colonial"]
+        highlights: ["Instrumentos médicos antiguos", "Historia de la medicina minera", "Arquitectura hospitalaria colonial"]
       },
       {
         name: "Casa de la Cultura",
@@ -108,31 +108,31 @@ const touristRoutes: TouristRoute[] = [
       },
       {
         name: "Mina de Acosta",
-        description: "La mina mÃ¡s profunda y famosa del distrito. Desciende 460 metros bajo tierra en un recorrido que muestra las duras condiciones del trabajo minero.",
+        description: "La mina más profunda y famosa del distrito. Desciende 460 metros bajo tierra en un recorrido que muestra las duras condiciones del trabajo minero.",
         duration: "90 min",
-        highlights: ["TÃºneles histÃ³ricos", "Museo minero", "Experiencia subterrÃ¡nea"],
+        highlights: ["Túneles históricos", "Museo minero", "Experiencia subterránea"],
         tips: "Llevar chaqueta, la temperatura baja de 15Â°C"
       },
       {
-        name: "PanteÃ³n InglÃ©s",
-        description: "Cementerio anglicano mÃ¡s alto del mundo a 2,700 msnm. Sus tumbas del siglo XIX cuentan historias de amor, tragedia y esperanza.",
+        name: "Panteón Inglés",
+        description: "Cementerio anglicano más alto del mundo a 2,700 msnm. Sus tumbas del siglo XIX cuentan historias de amor, tragedia y esperanza.",
         duration: "45 min",
-        highlights: ["Arquitectura funeraria victoriana", "Tumbas histÃ³ricas", "Vistas panorÃ¡micas"]
+        highlights: ["Arquitectura funeraria victoriana", "Tumbas históricas", "Vistas panorámicas"]
       }
     ],
     practicalInfo: {
       startPoint: "Plaza Principal (frente al Kiosco)",
-      endPoint: "PanteÃ³n InglÃ©s",
+      endPoint: "Panteón Inglés",
       restrooms: ["Plaza Principal", "Mina de Acosta", "Casa de la Cultura"],
       foodStops: ["Vendedores en Plaza", "Ãrea de la Mina"],
-      parking: "Estacionamiento pÃºblico en Plaza Principal",
+      parking: "Estacionamiento público en Plaza Principal",
       guided: true,
-      price: "$150-200 MXN por persona (con guÃ­a)"
+      price: "$150-200 MXN por persona (con guía)"
     },
     tips: [
-      "Contrata un guÃ­a certificado en la Oficina de Turismo para obtener informaciÃ³n detallada",
+      "Contrata un guía certificado en la Oficina de Turismo para obtener información detallada",
       "La Mina de Acosta cierra a las 17:00 hrs, planifica tu visita temprano",
-      "El PanteÃ³n InglÃ©s es especialmente fotogÃ©nico durante la golden hour",
+      "El Panteón Inglés es especialmente fotogénico durante la golden hour",
       "Usa calzado antideslizante, algunas calles empedradas pueden resbalar"
     ],
     warnings: [
@@ -143,9 +143,9 @@ const touristRoutes: TouristRoute[] = [
   {
     id: "senderismo",
     name: "Ruta de Senderismo",
-    tagline: "Entre bosques de niebla y paisajes montaÃ±osos",
-    description: "Explora los senderos naturales que rodean Real del Monte, descubriendo formaciones rocosas Ãºnicas y bosques de oyamel.",
-    fullDescription: "La Ruta de Senderismo conecta al visitante con la naturaleza exuberante de la Sierra de Pachuca. A travÃ©s de senderos bien marcados que atraviesan bosques de oyamel, pino y encino, descubrirÃ¡s paisajes que parecen sacados de un cuento. El punto culminante son las PeÃ±as Cargadas, formaciones rocosas gigantescas en aparente equilibrio imposible que han sido testigos silenciosos de millones de aÃ±os. Esta ruta ofrece vistas panorÃ¡micas del valle, encuentros con la fauna local y la posibilidad de respirar el aire puro de la montaÃ±a. Es una experiencia que renovarÃ¡ tu conexiÃ³n con la naturaleza.",
+    tagline: "Entre bosques de niebla y paisajes montañosos",
+    description: "Explora los senderos naturales que rodean Real del Monte, descubriendo formaciones rocosas únicas y bosques de oyamel.",
+    fullDescription: "La Ruta de Senderismo conecta al visitante con la naturaleza exuberante de la Sierra de Pachuca. A través de senderos bien marcados que atraviesan bosques de oyamel, pino y encino, descubrirás paisajes que parecen sacados de un cuento. El punto culminante son las Peñas Cargadas, formaciones rocosas gigantescas en aparente equilibrio imposible que han sido testigos silenciosos de millones de años. Esta ruta ofrece vistas panorámicas del valle, encuentros con la fauna local y la posibilidad de respirar el aire puro de la montaña. Es una experiencia que renovará tu conexión con la naturaleza.",
     icon: Mountain,
     color: "text-forest",
     bgGradient: "from-forest/20 to-forest/5",
@@ -154,59 +154,59 @@ const touristRoutes: TouristRoute[] = [
     difficulty: "Moderada",
     physicalLevel: 6,
     bestTime: "Marzo a noviembre (evitar lluvias intensas)",
-    idealFor: ["Senderistas", "FotÃ³grafos de naturaleza", "Amantes del ecoturismo", "Grupos de amigos"],
-    whatToBring: ["Botas de trekking", "Ropa en capas", "Mochila ligera", "2L de agua", "Snacks energÃ©ticos", "Protector solar", "Repelente", "CÃ¡mara", "Bastones (opcional)"],
+    idealFor: ["Senderistas", "Fotógrafos de naturaleza", "Amantes del ecoturismo", "Grupos de amigos"],
+    whatToBring: ["Botas de trekking", "Ropa en capas", "Mochila ligera", "2L de agua", "Snacks energéticos", "Protector solar", "Repelente", "Cámara", "Bastones (opcional)"],
     stops: [
       {
         name: "Mirador La Cruz",
-        description: "Punto de inicio con vistas panorÃ¡micas de 360Â° del pueblo y la sierra. Ideal para fotografÃ­as de amanecer.",
+        description: "Punto de inicio con vistas panorámicas de 360Â° del pueblo y la sierra. Ideal para fotografías de amanecer.",
         duration: "20 min",
-        highlights: ["Vista panorÃ¡mica", "SeÃ±alÃ©tica interpretativa", "Bancas de descanso"]
+        highlights: ["Vista panorámica", "Señalética interpretativa", "Bancas de descanso"]
       },
       {
         name: "Bosque de Oyamel",
-        description: "Sendero a travÃ©s del bosque de Abies religiosa. Durante el invierno, este bosque puede albergar mariposas monarca.",
+        description: "Sendero a través del bosque de Abies religiosa. Durante el invierno, este bosque puede albergar mariposas monarca.",
         duration: "90 min",
         highlights: ["Bosque primario", "Aire puro", "Silencio natural"],
-        tips: "MantÃ©n silencio para observar fauna"
+        tips: "Mantén silencio para observar fauna"
       },
       {
-        name: "PeÃ±as Cargadas",
+        name: "Peñas Cargadas",
         description: "Formaciones rocosas gigantes en equilibrio aparentemente imposible. La vista desde la base es impresionante.",
         duration: "60 min",
-        highlights: ["Formaciones geolÃ³gicas Ãºnicas", "Escalada bÃ¡sica", "Vistas espectaculares"]
+        highlights: ["Formaciones geológicas únicas", "Escalada básica", "Vistas espectaculares"]
       },
       {
         name: "Manantial de San Antonio",
-        description: "Fuente de agua mineral natural que ha sido utilizada desde tiempos prehispÃ¡nicos. El agua es potable y refrescante.",
+        description: "Fuente de agua mineral natural que ha sido utilizada desde tiempos prehispánicos. El agua es potable y refrescante.",
         duration: "30 min",
-        highlights: ["Agua natural", "Ãrea de descanso", "Historia prehispÃ¡nica"]
+        highlights: ["Agua natural", "Ãrea de descanso", "Historia prehispánica"]
       },
       {
         name: "Valle del Silencio",
-        description: "Pradera rodeada de montaÃ±as donde el silencio es absoluto. Perfecto para meditaciÃ³n y conexiÃ³n con la naturaleza.",
+        description: "Pradera rodeada de montañas donde el silencio es absoluto. Perfecto para meditación y conexión con la naturaleza.",
         duration: "40 min",
-        highlights: ["Pradera natural", "ObservaciÃ³n de aves", "Paz absoluta"]
+        highlights: ["Pradera natural", "Observación de aves", "Paz absoluta"]
       }
     ],
     practicalInfo: {
       startPoint: "Mirador La Cruz (acceso por carretera a Pachuca)",
       endPoint: "Valle del Silencio (regreso por sendero circular)",
-      restrooms: ["Inicio en Mirador (baÃ±os portÃ¡tiles)"],
+      restrooms: ["Inicio en Mirador (baños portátiles)"],
       foodStops: ["No hay, llevar provisiones"],
       parking: "Estacionamiento en Mirador La Cruz",
       guided: true,
-      price: "$200-300 MXN por persona (con guÃ­a especializado)"
+      price: "$200-300 MXN por persona (con guía especializado)"
     },
     tips: [
       "Salir temprano (7:00-8:00 am) para evitar neblina densa",
       "Informa tu ruta a alguien antes de salir",
-      "No te desvÃ­es de los senderos marcados",
+      "No te desvíes de los senderos marcados",
       "Lleva suficiente agua, no hay fuentes en el camino",
-      "El clima cambia rÃ¡pido, lleva impermeable"
+      "El clima cambia rápido, lleva impermeable"
     ],
     warnings: [
-      "No hacer en caso de tormenta elÃ©ctrica",
+      "No hacer en caso de tormenta eléctrica",
       "Cuidado con resbalones en rocas mojadas",
       "Presencia ocasional de serpientes (no venenosas en general)",
       "La altitud (2,700m) puede afectar a personas no aclimatadas"
@@ -214,120 +214,120 @@ const touristRoutes: TouristRoute[] = [
   },
   {
     id: "ecoturistica",
-    name: "Ruta EcoturÃ­stica",
-    tagline: "ConservaciÃ³n y educaciÃ³n ambiental",
-    description: "Enfocada en la conservaciÃ³n ambiental, esta ruta incluye visitas a proyectos ecolÃ³gicos, reforestaciÃ³n y educaciÃ³n sobre la biodiversidad local.",
-    fullDescription: "La Ruta EcoturÃ­stica es una experiencia educativa y transformadora que te conecta con los esfuerzos de conservaciÃ³n de la Sierra de Pachuca. A travÃ©s de visitas a viveros comunitarios, proyectos de reforestaciÃ³n y Ã¡reas protegidas, comprenderÃ¡s la importancia de preservar estos ecosistemas Ãºnicos. AprenderÃ¡s sobre las especies endÃ©micas, la importancia del bosque de oyamel para la captaciÃ³n de agua, y los esfuerzos locales por mantener el equilibrio ecolÃ³gico. Esta ruta incluye actividades prÃ¡cticas como plantaciÃ³n de Ã¡rboles y talleres de identificaciÃ³n de flora y fauna. Es ideal para familias, estudiantes y cualquier persona interesada en el turismo responsable.",
+    name: "Ruta Ecoturística",
+    tagline: "Conservación y educación ambiental",
+    description: "Enfocada en la conservación ambiental, esta ruta incluye visitas a proyectos ecológicos, reforestación y educación sobre la biodiversidad local.",
+    fullDescription: "La Ruta Ecoturística es una experiencia educativa y transformadora que te conecta con los esfuerzos de conservación de la Sierra de Pachuca. A través de visitas a viveros comunitarios, proyectos de reforestación y áreas protegidas, comprenderás la importancia de preservar estos ecosistemas únicos. Aprenderás sobre las especies endémicas, la importancia del bosque de oyamel para la captación de agua, y los esfuerzos locales por mantener el equilibrio ecológico. Esta ruta incluye actividades prácticas como plantación de árboles y talleres de identificación de flora y fauna. Es ideal para familias, estudiantes y cualquier persona interesada en el turismo responsable.",
     icon: Trees,
     color: "text-emerald-600",
     bgGradient: "from-emerald-500/20 to-emerald-500/5",
     duration: "5-6 horas",
     distance: "6 km",
-    difficulty: "FÃ¡cil",
+    difficulty: "Fácil",
     physicalLevel: 4,
-    bestTime: "Temporada de lluvias (junio-septiembre) para reforestaciÃ³n",
-    idealFor: ["Familias con niÃ±os", "Estudiantes", "Grupos escolares", "Turistas responsables"],
-    whatToBring: ["Calzado cÃ³modo", "Ropa que se pueda ensuciar", "Guantes de jardinerÃ­a", "Agua reutilizable", "Protector solar biodegradable", "Cuaderno de campo"],
+    bestTime: "Temporada de lluvias (junio-septiembre) para reforestación",
+    idealFor: ["Familias con niños", "Estudiantes", "Grupos escolares", "Turistas responsables"],
+    whatToBring: ["Calzado cómodo", "Ropa que se pueda ensuciar", "Guantes de jardinería", "Agua reutilizable", "Protector solar biodegradable", "Cuaderno de campo"],
     stops: [
       {
         name: "Vivero Comunitario",
-        description: "Vivero donde se producen plantas nativas para reforestaciÃ³n. Aprende sobre especies endÃ©micas y sus usos.",
+        description: "Vivero donde se producen plantas nativas para reforestación. Aprende sobre especies endémicas y sus usos.",
         duration: "60 min",
-        highlights: ["Plantas nativas", "Taller de identificaciÃ³n", "Actividad de siembra"]
+        highlights: ["Plantas nativas", "Taller de identificación", "Actividad de siembra"]
       },
       {
-        name: "Zona de ReforestaciÃ³n",
-        description: "Ãrea donde se realizan actividades de plantaciÃ³n de Ã¡rboles. Los visitantes pueden plantar su propio Ã¡rbol.",
+        name: "Zona de Reforestación",
+        description: "Ãrea donde se realizan actividades de plantación de árboles. Los visitantes pueden plantar su propio árbol.",
         duration: "90 min",
-        highlights: ["PlantaciÃ³n de Ã¡rboles", "Compromiso ambiental", "Certificado de participaciÃ³n"],
+        highlights: ["Plantación de árboles", "Compromiso ambiental", "Certificado de participación"],
         tips: "Se proporcionan herramientas y plantas"
       },
       {
-        name: "Sendero de InterpretaciÃ³n Ambiental",
-        description: "Sendero con seÃ±alÃ©tica sobre la flora, fauna y geologÃ­a locales. Incluye estaciones de observaciÃ³n.",
+        name: "Sendero de Interpretación Ambiental",
+        description: "Sendero con señalética sobre la flora, fauna y geología locales. Incluye estaciones de observación.",
         duration: "75 min",
-        highlights: ["SeÃ±alÃ©tica educativa", "ObservaciÃ³n de aves", "IdentificaciÃ³n de plantas"]
+        highlights: ["Señalética educativa", "Observación de aves", "Identificación de plantas"]
       },
       {
-        name: "Centro de EducaciÃ³n Ambiental",
-        description: "Espacio con exhibiciones interactivas sobre la biodiversidad de la sierra y los retos de conservaciÃ³n.",
+        name: "Centro de Educación Ambiental",
+        description: "Espacio con exhibiciones interactivas sobre la biodiversidad de la sierra y los retos de conservación.",
         duration: "45 min",
         highlights: ["Exhibiciones interactivas", "Documentales", "Biblioteca ambiental"]
       },
       {
         name: "Mirador de Aves",
-        description: "Punto de observaciÃ³n de aves con guÃ­as especializados. Se han registrado mÃ¡s de 80 especies.",
+        description: "Punto de observación de aves con guías especializados. Se han registrado más de 80 especies.",
         duration: "60 min",
-        highlights: ["ObservaciÃ³n de aves", "PrismÃ¡ticos disponibles", "GuÃ­a de aves local"]
+        highlights: ["Observación de aves", "Prismáticos disponibles", "Guía de aves local"]
       }
     ],
     practicalInfo: {
-      startPoint: "Centro de EducaciÃ³n Ambiental (carretera a Huasca)",
+      startPoint: "Centro de Educación Ambiental (carretera a Huasca)",
       endPoint: "Mismo punto de inicio (ruta circular)",
-      restrooms: ["Centro de EducaciÃ³n Ambiental", "Vivero Comunitario"],
+      restrooms: ["Centro de Educación Ambiental", "Vivero Comunitario"],
       foodStops: ["Ãrea de picnic (llevar comida)"],
-      parking: "Estacionamiento en Centro de EducaciÃ³n Ambiental",
+      parking: "Estacionamiento en Centro de Educación Ambiental",
       guided: true,
-      price: "$250-350 MXN por persona (incluye material y Ã¡rbol)"
+      price: "$250-350 MXN por persona (incluye material y árbol)"
     },
     tips: [
-      "Reserva con anticipaciÃ³n, los grupos son pequeÃ±os",
-      "Puedes regresar a visitar tu Ã¡rbol plantado",
+      "Reserva con anticipación, los grupos son pequeños",
+      "Puedes regresar a visitar tu árbol plantado",
       "Lleva binoculares si tienes",
-      "Viste colores neutros para observaciÃ³n de fauna"
+      "Viste colores neutros para observación de fauna"
     ]
   },
   {
     id: "aventura",
     name: "Ruta de Aventura",
-    tagline: "Adrenalina en la montaÃ±a",
-    description: "Para los amantes de la emociÃ³n: tirolesa, rappel, escalada en roca y mÃ¡s actividades extremas en el entorno natural.",
-    fullDescription: "La Ruta de Aventura estÃ¡ diseÃ±ada para quienes buscan emociones fuertes y experiencias que ponen a prueba sus lÃ­mites. En el impresionante escenario de las PeÃ±as Cargadas y sus alrededores, podrÃ¡s practicar escalada en roca natural, descender por acantilados con rappel, volar sobre el bosque en tirolesa, y explorar caÃ±ones. Todas las actividades son supervisadas por instructores certificados y cuentan con equipo de seguridad profesional. No se requiere experiencia previa para la mayorÃ­a de las actividades, solo actitud aventurera y ganas de superaciÃ³n. Es una manera Ãºnica de experimentar la geografÃ­a de Real del Monte desde perspectivas que pocos llegan a ver.",
+    tagline: "Adrenalina en la montaña",
+    description: "Para los amantes de la emoción: tirolesa, rappel, escalada en roca y más actividades extremas en el entorno natural.",
+    fullDescription: "La Ruta de Aventura está diseñada para quienes buscan emociones fuertes y experiencias que ponen a prueba sus límites. En el impresionante escenario de las Peñas Cargadas y sus alrededores, podrás practicar escalada en roca natural, descender por acantilados con rappel, volar sobre el bosque en tirolesa, y explorar cañones. Todas las actividades son supervisadas por instructores certificados y cuentan con equipo de seguridad profesional. No se requiere experiencia previa para la mayoría de las actividades, solo actitud aventurera y ganas de superación. Es una manera única de experimentar la geografía de Real del Monte desde perspectivas que pocos llegan a ver.",
     icon: Compass,
     color: "text-orange-600",
     bgGradient: "from-orange-500/20 to-orange-500/5",
     duration: "6-8 horas",
-    distance: "5 km (varÃ­a por actividades)",
+    distance: "5 km (varía por actividades)",
     difficulty: "Desafiante",
     physicalLevel: 8,
     bestTime: "Marzo a junio (clima estable)",
     idealFor: ["Aventureros", "Grupos de amigos", "Team building", "Deportistas"],
-    whatToBring: ["Ropa deportiva ajustada", "Tenis con buen grip", "Guantes (opcional)", "2L de agua", "Snacks", "CÃ¡mara de acciÃ³n", "Repelente"],
+    whatToBring: ["Ropa deportiva ajustada", "Tenis con buen grip", "Guantes (opcional)", "2L de agua", "Snacks", "Cámara de acción", "Repelente"],
     stops: [
       {
         name: "Base de Operaciones",
-        description: "Punto de reuniÃ³n donde se da la inducciÃ³n de seguridad y se entrega el equipo necesario.",
+        description: "Punto de reunión donde se da la inducción de seguridad y se entrega el equipo necesario.",
         duration: "45 min",
-        highlights: ["InducciÃ³n de seguridad", "Entrega de equipo", "Calentamiento"]
+        highlights: ["Inducción de seguridad", "Entrega de equipo", "Calentamiento"]
       },
       {
         name: "Tirolesa del Ãguila",
-        description: "Vuelo de 400 metros sobre el bosque a 80 metros de altura. SensaciÃ³n Ãºnica de libertad.",
+        description: "Vuelo de 400 metros sobre el bosque a 80 metros de altura. Sensación única de libertad.",
         duration: "60 min",
-        highlights: ["400m de vuelo", "80m de altura", "Vistas panorÃ¡micas"],
+        highlights: ["400m de vuelo", "80m de altura", "Vistas panorámicas"],
         tips: "No llevar objetos sueltos en bolsillos"
       },
       {
-        name: "ParedÃ³n de Escalada",
+        name: "Paredón de Escalada",
         description: "Rutas de escalada en roca natural de diferentes grados de dificultad (5.5 a 5.10).",
         duration: "120 min",
         highlights: ["Escalada en roca natural", "Diferentes niveles", "Instructores certificados"]
       },
       {
-        name: "Rappel en PeÃ±as Cargadas",
-        description: "Descenso controlado de 30 metros por la pared de las PeÃ±as Cargadas. Experiencia vertiginosa.",
+        name: "Rappel en Peñas Cargadas",
+        description: "Descenso controlado de 30 metros por la pared de las Peñas Cargadas. Experiencia vertiginosa.",
         duration: "90 min",
-        highlights: ["Descenso de 30m", "TÃ©cnica de rappel", "Adrenalina pura"]
+        highlights: ["Descenso de 30m", "Técnica de rappel", "Adrenalina pura"]
       },
       {
-        name: "CaÃ±onismo BÃ¡sico",
-        description: "Recorrido por un caÃ±Ã³n secuencial con saltos controlados a pozas de agua (en temporada).",
+        name: "Cañonismo Básico",
+        description: "Recorrido por un cañón secuencial con saltos controlados a pozas de agua (en temporada).",
         duration: "90 min",
-        highlights: ["Saltos a pozas", "Nado", "Trekking acuÃ¡tico"]
+        highlights: ["Saltos a pozas", "Nado", "Trekking acuático"]
       }
     ],
     practicalInfo: {
-      startPoint: "Base de Operaciones Aventura (PeÃ±as Cargadas)",
+      startPoint: "Base de Operaciones Aventura (Peñas Cargadas)",
       endPoint: "Mismo punto de inicio",
       restrooms: ["Base de Operaciones"],
       foodStops: ["Ãrea de comida en Base de Operaciones"],
@@ -336,71 +336,71 @@ const touristRoutes: TouristRoute[] = [
       price: "$800-1,200 MXN por persona (todo incluido)"
     },
     tips: [
-      "Reserva con al menos una semana de anticipaciÃ³n",
+      "Reserva con al menos una semana de anticipación",
       "No consumir alcohol antes de las actividades",
-      "Informa sobre condiciones mÃ©dicas relevantes",
-      "Sigue SIEMPRE las instrucciones de los guÃ­as",
-      "Puedes contratar paquete fotogrÃ¡fico"
+      "Informa sobre condiciones médicas relevantes",
+      "Sigue SIEMPRE las instrucciones de los guías",
+      "Puedes contratar paquete fotográfico"
     ],
     warnings: [
-      "No apto para personas con problemas cardÃ­acos",
+      "No apto para personas con problemas cardíacos",
       "No apto para mujeres embarazadas",
       "No apto para personas con miedo intenso a las alturas",
-      "Requiere firma de liberaciÃ³n de responsabilidad",
-      "Actividades sujetas a condiciones climÃ¡ticas"
+      "Requiere firma de liberación de responsabilidad",
+      "Actividades sujetas a condiciones climáticas"
     ]
   },
   {
     id: "gastronomica",
-    name: "Ruta GastronÃ³mica",
+    name: "Ruta Gastronómica",
     tagline: "Un viaje de sabores tradicionales",
-    description: "Recorrido por las tradiciones culinarias de Real del Monte, degustando pastes, dulces tÃ­picos y platillos de la cocina minera.",
-    fullDescription: "La Ruta GastronÃ³mica es un festÃ­n para los sentidos que te lleva a travÃ©s de los sabores que definieron a Real del Monte. Desde el icÃ³nico paste hasta los guisos mineros que sustentaron generaciones de trabajadores, cada parada es una lecciÃ³n de historia y cultura. Visitaremos pastelerÃ­as tradicionales donde se guardan secretos familiares transmitidos por generaciones, probaremos dulces que datan de la Ã©poca colonial, y degustaremos bebidas que han refrescado a mineros desde el siglo XIX. Esta ruta no es solo para comer: es para comprender cÃ³mo la gastronomÃ­a refleja la fusiÃ³n cultural Ãºnica de este Pueblo MÃ¡gico. Los grupos son reducidos para garantizar una experiencia Ã­ntima y personalizada.",
+    description: "Recorrido por las tradiciones culinarias de Real del Monte, degustando pastes, dulces típicos y platillos de la cocina minera.",
+    fullDescription: "La Ruta Gastronómica es un festín para los sentidos que te lleva a través de los sabores que definieron a Real del Monte. Desde el icónico paste hasta los guisos mineros que sustentaron generaciones de trabajadores, cada parada es una lección de historia y cultura. Visitaremos pastelerías tradicionales donde se guardan secretos familiares transmitidos por generaciones, probaremos dulces que datan de la época colonial, y degustaremos bebidas que han refrescado a mineros desde el siglo XIX. Esta ruta no es solo para comer: es para comprender cómo la gastronomía refleja la fusión cultural única de este Pueblo Mágico. Los grupos son reducidos para garantizar una experiencia íntima y personalizada.",
     icon: Utensils,
     color: "text-gold",
     bgGradient: "from-gold/20 to-gold/5",
     duration: "4-5 horas",
     distance: "3 km (caminata muy ligera)",
-    difficulty: "FÃ¡cil",
+    difficulty: "Fácil",
     physicalLevel: 2,
-    bestTime: "Todo el aÃ±o, especialmente octubre (Festival del Paste)",
+    bestTime: "Todo el año, especialmente octubre (Festival del Paste)",
     idealFor: ["Foodies", "Familias", "Grupos de amigos", "Turistas culturales"],
-    whatToBring: ["Ropa cÃ³moda", "Hambre", "Botella de agua", "Dinero en efectivo", "CÃ¡mara"],
+    whatToBring: ["Ropa cómoda", "Hambre", "Botella de agua", "Dinero en efectivo", "Cámara"],
     stops: [
       {
         name: "Desayuno Tradicional",
-        description: "Iniciamos con un desayuno de campeones: huevos al gusto, frijoles, cafÃ© de altura y pan reciÃ©n hecho en una autÃ©ntica cocina local.",
+        description: "Iniciamos con un desayuno de campeones: huevos al gusto, frijoles, café de altura y pan recién hecho en una auténtica cocina local.",
         duration: "45 min",
-        highlights: ["CafÃ© de la regiÃ³n", "Pan artesanal", "Huevos rancheros"]
+        highlights: ["Café de la región", "Pan artesanal", "Huevos rancheros"]
       },
       {
         name: "Taller de Paste",
         description: "Aprende a hacer tu propio paste con una familia pastelesa tradicional. Te llevas lo que prepares.",
         duration: "90 min",
         highlights: ["Receta tradicional", "Masa desde cero", "Llevas tu paste"],
-        tips: "Reservar con anticipaciÃ³n, cupo limitado"
+        tips: "Reservar con anticipación, cupo limitado"
       },
       {
-        name: "Recorrido de PastelerÃ­as",
-        description: "Visita a 3 pastelerÃ­as icÃ³nicas para degustar diferentes variedades: tradicional, de mole y dulce.",
+        name: "Recorrido de Pastelerías",
+        description: "Visita a 3 pastelerías icónicas para degustar diferentes variedades: tradicional, de mole y dulce.",
         duration: "60 min",
-        highlights: ["DegustaciÃ³n guiada", "Historias familiares", "TÃ©cnica de elaboraciÃ³n"]
+        highlights: ["Degustación guiada", "Historias familiares", "Técnica de elaboración"]
       },
       {
         name: "Museo del Paste",
-        description: "Visita al Ãºnico museo dedicado al paste en MÃ©xico. Historia, utensilios antiguos y cultura pastelesa.",
+        description: "Visita al único museo dedicado al paste en México. Historia, utensilios antiguos y cultura pastelesa.",
         duration: "45 min",
-        highlights: ["Historia del paste", "Utensilios antiguos", "GalerÃ­a fotogrÃ¡fica"]
+        highlights: ["Historia del paste", "Utensilios antiguos", "Galería fotográfica"]
       },
       {
         name: "Comida Minera",
-        description: "Almuerzo completo con guiso de res minero, truchas o barbacoa estilo Hidalgo, acompaÃ±ado de aguas frescas.",
+        description: "Almuerzo completo con guiso de res minero, truchas o barbacoa estilo Hidalgo, acompañado de aguas frescas.",
         duration: "75 min",
-        highlights: ["Guiso tradicional", "Recetas antiguas", "Ambiente histÃ³rico"]
+        highlights: ["Guiso tradicional", "Recetas antiguas", "Ambiente histórico"]
       },
       {
         name: "Dulces y Postres",
-        description: "Finalizamos con una degustaciÃ³n de dulces tÃ­picos: obleas de gajeta, jamoncillo, cocada y ate.",
+        description: "Finalizamos con una degustación de dulces típicos: obleas de gajeta, jamoncillo, cocada y ate.",
         duration: "30 min",
         highlights: ["Dulces coloniales", "Recetas tradicionales", "Para llevar"]
       }
@@ -408,8 +408,8 @@ const touristRoutes: TouristRoute[] = [
     practicalInfo: {
       startPoint: "Plaza Principal (frente a la Parroquia)",
       endPoint: "Portal del Comercio",
-      restrooms: ["En cada parada gastronÃ³mica"],
-      foodStops: ["Todas las paradas incluyen degustaciÃ³n"],
+      restrooms: ["En cada parada gastronómica"],
+      foodStops: ["Todas las paradas incluyen degustación"],
       parking: "Estacionamiento en Plaza Principal",
       guided: true,
       price: "$600-800 MXN por persona (todas las degustaciones incluidas)"
@@ -418,65 +418,65 @@ const touristRoutes: TouristRoute[] = [
       "Ven con hambre, son muchas degustaciones",
       "Avisa sobre alergias alimentarias al reservar",
       "Puedes comprar productos para llevar en cada parada",
-      "Lleva bolsa tÃ©rmica si planeas comprar pastes",
+      "Lleva bolsa térmica si planeas comprar pastes",
       "La ruta puede adaptarse para vegetarianos"
     ]
   },
   {
     id: "cervecera",
     name: "Ruta Cervecera",
-    tagline: "TradiciÃ³n cervecera cornish-mexicana",
-    description: "Descubre la tradiciÃ³n cervecera traÃ­da por los ingleses, visita cervecerÃ­as artesanales y degusta cervezas inspiradas en la historia local.",
-    fullDescription: "La Ruta Cervecera revela una faceta poco conocida de la historia de Real del Monte: la tradiciÃ³n cervecera traÃ­da por los mineros cornish. Los ingleses no solo trajeron tÃ©cnicas mineras, tambiÃ©n establecieron las primeras cervecerÃ­as de la regiÃ³n para abastecer a la comunidad expatriada. Hoy, esta tradiciÃ³n revive a travÃ©s de cervecerÃ­as artesanales que honran esa herencia con recetas innovadoras inspiradas en ingredientes locales. En esta ruta visitarÃ¡s cervecerÃ­as artesanales, aprenderÃ¡s sobre el proceso de elaboraciÃ³n, degustarÃ¡s estilos que van desde ales inglesas tradicionales hasta cervezas con toques de frutas locales y especias. Incluye maridajes especializados y la historia de cÃ³mo la cerveza se convirtiÃ³ en parte de la cultura local.",
+    tagline: "Tradición cervecera cornish-mexicana",
+    description: "Descubre la tradición cervecera traída por los ingleses, visita cervecerías artesanales y degusta cervezas inspiradas en la historia local.",
+    fullDescription: "La Ruta Cervecera revela una faceta poco conocida de la historia de Real del Monte: la tradición cervecera traída por los mineros cornish. Los ingleses no solo trajeron técnicas mineras, también establecieron las primeras cervecerías de la región para abastecer a la comunidad expatriada. Hoy, esta tradición revive a través de cervecerías artesanales que honran esa herencia con recetas innovadoras inspiradas en ingredientes locales. En esta ruta visitarás cervecerías artesanales, aprenderás sobre el proceso de elaboración, degustarás estilos que van desde ales inglesas tradicionales hasta cervezas con toques de frutas locales y especias. Incluye maridajes especializados y la historia de cómo la cerveza se convirtió en parte de la cultura local.",
     icon: Beer,
     color: "text-amber-600",
     bgGradient: "from-amber-500/20 to-amber-500/5",
     duration: "4 horas",
     distance: "2 km",
-    difficulty: "FÃ¡cil",
+    difficulty: "Fácil",
     physicalLevel: 2,
-    bestTime: "Todo el aÃ±o, fines de semana ideales",
+    bestTime: "Todo el año, fines de semana ideales",
     idealFor: ["Amantes de la cerveza artesanal", "Adultos", "Grupos de amigos", "Parejas"],
-    whatToBring: ["IdentificaciÃ³n oficial", "Ropa cÃ³moda", "Dinero para compras", "Transporte designado o taxi"],
+    whatToBring: ["Identificación oficial", "Ropa cómoda", "Dinero para compras", "Transporte designado o taxi"],
     stops: [
       {
-        name: "CervecerÃ­a La Mina",
-        description: "CervecerÃ­a artesanal con temÃ¡tica minera. AquÃ­ se elabora la 'Stout del Minero', inspirada en las porters inglesas tradicionales.",
+        name: "Cervecería La Mina",
+        description: "Cervecería artesanal con temática minera. Aquí se elabora la 'Stout del Minero', inspirada en las porters inglesas tradicionales.",
         duration: "60 min",
-        highlights: ["Tour de elaboraciÃ³n", "DegustaciÃ³n de 3 cervezas", "Historia cervecera local"]
+        highlights: ["Tour de elaboración", "Degustación de 3 cervezas", "Historia cervecera local"]
       },
       {
-        name: "CervecerÃ­a del Bosque",
+        name: "Cervecería del Bosque",
         description: "Ubicada en un entorno natural, especializada en cervezas con ingredientes locales como pino, manzanilla y miel.",
         duration: "60 min",
-        highlights: ["Cervezas botÃ¡nicas", "Ingredientes locales", "Terraza con vistas"]
+        highlights: ["Cervezas botánicas", "Ingredientes locales", "Terraza con vistas"]
       },
       {
-        name: "CervecerÃ­a Cornish Pride",
-        description: "Fiel a las raÃ­ces inglesas, elabora bitters, pale ales y stouts tradicionales con recetas autÃ©nticas.",
+        name: "Cervecería Cornish Pride",
+        description: "Fiel a las raíces inglesas, elabora bitters, pale ales y stouts tradicionales con recetas auténticas.",
         duration: "60 min",
-        highlights: ["Recetas autÃ©nticas inglesas", "Historia de la cerveza en Real del Monte", "Maridaje con paste"]
+        highlights: ["Recetas auténticas inglesas", "Historia de la cerveza en Real del Monte", "Maridaje con paste"]
       },
       {
-        name: "CervecerÃ­a 2700",
-        description: "Nombrada por la altitud del pueblo. Especializada en IPAs y cervezas de alta graduaciÃ³n con carÃ¡cter montaÃ±Ã©s.",
+        name: "Cervecería 2700",
+        description: "Nombrada por la altitud del pueblo. Especializada en IPAs y cervezas de alta graduación con carácter montañés.",
         duration: "60 min",
         highlights: ["IPAs artesanales", "Cervezas de temporada", "Venta de growlers"]
       }
     ],
     practicalInfo: {
-      startPoint: "CervecerÃ­a La Mina (centro del pueblo)",
-      endPoint: "CervecerÃ­a 2700",
-      restrooms: ["En cada cervecerÃ­a"],
+      startPoint: "Cervecería La Mina (centro del pueblo)",
+      endPoint: "Cervecería 2700",
+      restrooms: ["En cada cervecería"],
       foodStops: ["Maridajes incluidos en cada parada"],
       parking: "Varios puntos de estacionamiento en el centro",
       guided: true,
       price: "$500-700 MXN por persona (degustaciones incluidas)"
     },
     tips: [
-      "Solo para mayores de 18 aÃ±os con identificaciÃ³n",
-      "HidrÃ¡tate entre cervezas",
-      "No manejes despuÃ©s del tour, usa transporte alternativo",
+      "Solo para mayores de 18 años con identificación",
+      "Hidrátate entre cervezas",
+      "No manejes después del tour, usa transporte alternativo",
       "Pregunta por ediciones limitadas",
       "Puedes comprar cerveza para llevar"
     ],
@@ -484,7 +484,7 @@ const touristRoutes: TouristRoute[] = [
       "Consumo responsable obligatorio",
       "No apto para menores de edad",
       "No apto para mujeres embarazadas",
-      "No consumir alcohol si tomarÃ¡s el volante"
+      "No consumir alcohol si tomarás el volante"
     ]
   }
 ];
@@ -519,7 +519,7 @@ const RouteCard = ({ route, isSelected, onClick }: { route: TouristRoute; isSele
               <Footprints className="w-3 h-3" />
               {route.distance}
             </span>
-            <Badge variant={route.difficulty === "FÃ¡cil" ? "secondary" : route.difficulty === "Moderada" ? "default" : "destructive"} className="text-xs">
+            <Badge variant={route.difficulty === "Fácil" ? "secondary" : route.difficulty === "Moderada" ? "default" : "destructive"} className="text-xs">
               {route.difficulty}
             </Badge>
           </div>
@@ -558,7 +558,7 @@ const RouteDetail = ({ route }: { route: TouristRoute }) => {
           <div className="bg-background/50 rounded-xl p-4 text-center">
             <Clock className={`w-5 h-5 ${route.color} mx-auto mb-2`} />
             <div className="text-sm font-medium text-foreground">{route.duration}</div>
-            <div className="text-xs text-muted-foreground">DuraciÃ³n</div>
+            <div className="text-xs text-muted-foreground">Duración</div>
           </div>
           <div className="bg-background/50 rounded-xl p-4 text-center">
             <Route className={`w-5 h-5 ${route.color} mx-auto mb-2`} />
@@ -573,7 +573,7 @@ const RouteDetail = ({ route }: { route: TouristRoute }) => {
           <div className="bg-background/50 rounded-xl p-4 text-center">
             <Sun className={`w-5 h-5 ${route.color} mx-auto mb-2`} />
             <div className="text-sm font-medium text-foreground">{route.bestTime.split(',')[0]}</div>
-            <div className="text-xs text-muted-foreground">Mejor Ã©poca</div>
+            <div className="text-xs text-muted-foreground">Mejor época</div>
           </div>
         </div>
       </div>
@@ -581,7 +581,7 @@ const RouteDetail = ({ route }: { route: TouristRoute }) => {
       {/* Physical Level */}
       <div className="bg-muted/30 rounded-2xl p-6">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-foreground">Nivel fÃ­sico requerido</span>
+          <span className="text-sm font-medium text-foreground">Nivel físico requerido</span>
           <span className={`text-sm font-bold ${route.color}`}>{route.physicalLevel}/10</span>
         </div>
         <Progress value={route.physicalLevel * 10} className="h-2" />
@@ -595,7 +595,7 @@ const RouteDetail = ({ route }: { route: TouristRoute }) => {
       <Tabs defaultValue="stops" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="stops">Paradas</TabsTrigger>
-          <TabsTrigger value="info">Info PrÃ¡ctica</TabsTrigger>
+          <TabsTrigger value="info">Info Práctica</TabsTrigger>
           <TabsTrigger value="ideal">Ideal Para</TabsTrigger>
           <TabsTrigger value="tips">Consejos</TabsTrigger>
         </TabsList>
@@ -652,7 +652,7 @@ const RouteDetail = ({ route }: { route: TouristRoute }) => {
             <div className="p-4 rounded-xl bg-muted/30">
               <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                 <MapPin className="w-4 h-4" />
-                UbicaciÃ³n
+                Ubicación
               </h4>
               <div className="space-y-2 text-sm">
                 <p><strong>Inicio:</strong> {route.practicalInfo.startPoint}</p>
@@ -669,7 +669,7 @@ const RouteDetail = ({ route }: { route: TouristRoute }) => {
               <div className="space-y-2 text-sm">
                 <p><strong>Servicios sanitarios:</strong> {route.practicalInfo.restrooms.join(", ")}</p>
                 <p><strong>Comida/Bebida:</strong> {route.practicalInfo.foodStops.join(", ")}</p>
-                <p><strong>GuÃ­a:</strong> {route.practicalInfo.guided ? "Requerido/Incluido" : "Opcional"}</p>
+                <p><strong>Guía:</strong> {route.practicalInfo.guided ? "Requerido/Incluido" : "Opcional"}</p>
               </div>
             </div>
           </div>
@@ -700,7 +700,7 @@ const RouteDetail = ({ route }: { route: TouristRoute }) => {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-foreground mb-3">QuÃ© llevar:</h4>
+              <h4 className="font-semibold text-foreground mb-3">Qué llevar:</h4>
               <ul className="space-y-2">
                 {route.whatToBring.map((item, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -719,7 +719,7 @@ const RouteDetail = ({ route }: { route: TouristRoute }) => {
             <div>
               <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-gold" />
-                Consejos Ãºtiles
+                Consejos útiles
               </h4>
               <ul className="space-y-2">
                 {route.tips.map((tip, i) => (
@@ -817,7 +817,7 @@ const RutasPage = () => {
                   <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-foreground mb-6 leading-[1.1]">
                     Rutas{" "}
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-gold to-terracotta">
-                      TurÃ­sticas
+                      Turísticas
                     </span>
                   </h1>
                 </TextReveal>
@@ -828,8 +828,8 @@ const RutasPage = () => {
                   transition={{ delay: 0.5, duration: 0.8 }}
                   className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed"
                 >
-                  Seis experiencias Ãºnicas diseÃ±adas para que descubras Real del Monte desde 
-                  diferentes perspectivas: historia, naturaleza, gastronomÃ­a y aventura.
+                  Seis experiencias únicas diseñadas para que descubras Real del Monte desde 
+                  diferentes perspectivas: historia, naturaleza, gastronomía y aventura.
                 </motion.p>
               </motion.div>
             </div>
@@ -885,7 +885,7 @@ const RutasPage = () => {
                 <thead>
                   <tr className="border-b border-border">
                     <th className="text-left py-4 px-4 font-semibold text-foreground">Ruta</th>
-                    <th className="text-center py-4 px-4 font-semibold text-foreground">DuraciÃ³n</th>
+                    <th className="text-center py-4 px-4 font-semibold text-foreground">Duración</th>
                     <th className="text-center py-4 px-4 font-semibold text-foreground">Distancia</th>
                     <th className="text-center py-4 px-4 font-semibold text-foreground">Dificultad</th>
                     <th className="text-center py-4 px-4 font-semibold text-foreground">Ideal Para</th>
@@ -906,7 +906,7 @@ const RutasPage = () => {
                       <td className="text-center py-4 px-4 text-muted-foreground">{route.duration}</td>
                       <td className="text-center py-4 px-4 text-muted-foreground">{route.distance}</td>
                       <td className="text-center py-4 px-4">
-                        <Badge variant={route.difficulty === "FÃ¡cil" ? "secondary" : route.difficulty === "Moderada" ? "default" : "destructive"}>
+                        <Badge variant={route.difficulty === "Fácil" ? "secondary" : route.difficulty === "Moderada" ? "default" : "destructive"}>
                           {route.difficulty}
                         </Badge>
                       </td>
@@ -938,11 +938,11 @@ const RutasPage = () => {
               className="max-w-3xl mx-auto text-center"
             >
               <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Â¿Listo para Explorar?
+                ¿Listo para Explorar?
               </h2>
               <p className="text-muted-foreground mb-8">
-                Todas nuestras rutas incluyen guÃ­as certificados, seguro de viajero y 
-                la garantÃ­a de una experiencia autÃ©ntica en Real del Monte.
+                Todas nuestras rutas incluyen guías certificados, seguro de viajero y 
+                la garantía de una experiencia auténtica en Real del Monte.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8">
@@ -951,7 +951,7 @@ const RutasPage = () => {
                 </Button>
                 <Button variant="outline" size="lg" className="rounded-full px-8 border-2">
                   <Map className="w-4 h-4 mr-2" />
-                  Descargar GuÃ­a Completa
+                  Descargar Guía Completa
                 </Button>
               </div>
             </motion.div>

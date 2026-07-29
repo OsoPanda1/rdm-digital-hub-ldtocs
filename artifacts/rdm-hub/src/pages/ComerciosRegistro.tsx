@@ -50,10 +50,10 @@ export default function ComerciosRegistro() {
   };
 
   const useMyLocation = () => {
-    if (!navigator.geolocation) return toast.error("GeolocalizaciÃ³n no disponible");
+    if (!navigator.geolocation) return toast.error("Geolocalización no disponible");
     navigator.geolocation.getCurrentPosition(
       (pos) => setForm((f) => ({ ...f, latitude: String(pos.coords.latitude), longitude: String(pos.coords.longitude) })),
-      () => toast.error("No se pudo obtener tu ubicaciÃ³n"),
+      () => toast.error("No se pudo obtener tu ubicación"),
     );
   };
 
@@ -85,32 +85,32 @@ export default function ComerciosRegistro() {
         <header className="mb-8">
           <h1 className="text-4xl font-bold">Registra tu negocio</h1>
           <p className="text-muted-foreground mt-2">
-            Tras tu pago, tu ficha aparece automÃ¡ticamente en el catÃ¡logo digital de RDMÂ·X.
+            Tras tu pago, tu ficha aparece automáticamente en el catálogo digital de RDM·X.
           </p>
         </header>
 
         {!session ? (
           <form onSubmit={handleAuth} className="glass-surface p-6 space-y-4">
-            <h2 className="text-xl font-semibold">{authMode === "login" ? "Inicia sesiÃ³n" : "Crea tu cuenta"}</h2>
+            <h2 className="text-xl font-semibold">{authMode === "login" ? "Inicia sesión" : "Crea tu cuenta"}</h2>
             <div className="space-y-2">
               <Label>Correo</Label>
               <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="space-y-2">
-              <Label>ContraseÃ±a</Label>
+              <Label>Contraseña</Label>
               <Input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
             <Button type="submit" className="w-full">{authMode === "login" ? "Entrar" : "Registrarme"}</Button>
             <button type="button" onClick={() => setAuthMode(authMode === "login" ? "signup" : "login")}
               className="text-sm text-muted-foreground underline w-full">
-              {authMode === "login" ? "Â¿No tienes cuenta? Crea una" : "Â¿Ya tienes cuenta? Inicia sesiÃ³n"}
+              {authMode === "login" ? "¿No tienes cuenta? Crea una" : "¿Ya tienes cuenta? Inicia sesión"}
             </button>
           </form>
         ) : (
           <form onSubmit={submit} className="glass-surface p-6 space-y-5">
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>CategorÃ­a</Label>
+                <Label>Categoría</Label>
                 <select required className="w-full border rounded-md p-2 bg-background"
                   value={form.category_id} onChange={(e) => setForm({ ...form, category_id: e.target.value })}>
                   <option value="">Seleccionaâ€¦</option>
@@ -125,11 +125,11 @@ export default function ComerciosRegistro() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label>DescripciÃ³n</Label>
+              <Label>Descripción</Label>
               <Textarea required rows={4} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
             </div>
             <div className="space-y-2">
-              <Label>DirecciÃ³n</Label>
+              <Label>Dirección</Label>
               <Input required value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} />
             </div>
             <div className="grid md:grid-cols-3 gap-4">
@@ -142,12 +142,12 @@ export default function ComerciosRegistro() {
                 <Input required type="number" step="any" value={form.longitude} onChange={(e) => setForm({ ...form, longitude: e.target.value })} />
               </div>
               <div className="flex items-end">
-                <Button type="button" variant="outline" onClick={useMyLocation} className="w-full">Usar mi ubicaciÃ³n</Button>
+                <Button type="button" variant="outline" onClick={useMyLocation} className="w-full">Usar mi ubicación</Button>
               </div>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>TelÃ©fono</Label>
+                <Label>Teléfono</Label>
                 <Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
               </div>
               <div className="space-y-2">
@@ -163,7 +163,7 @@ export default function ComerciosRegistro() {
               {loading ? "Procesandoâ€¦" : "Continuar al pago"}
             </Button>
             <p className="text-xs text-muted-foreground text-center">
-              Tu ficha se publicarÃ¡ automÃ¡ticamente al confirmarse el pago vÃ­a webhook.
+              Tu ficha se publicará automáticamente al confirmarse el pago vía webhook.
             </p>
           </form>
         )}

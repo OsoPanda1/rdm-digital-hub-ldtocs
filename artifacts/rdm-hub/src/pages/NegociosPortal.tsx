@@ -51,10 +51,10 @@ export default function NegociosPortal() {
     try {
       const { error } = await supabase.auth.signInWithPassword({ email: login.email, password: login.password });
       if (error) throw error;
-      toast({ title: "SesiÃ³n iniciada", description: "Acceso de comercio habilitado." });
+      toast({ title: "Sesión iniciada", description: "Acceso de comercio habilitado." });
       navigate("/admin/dashboard");
     } catch (error) {
-      toast({ title: "Error", description: error instanceof Error ? error.message : "No se pudo iniciar sesiÃ³n", variant: "destructive" });
+      toast({ title: "Error", description: error instanceof Error ? error.message : "No se pudo iniciar sesión", variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -64,7 +64,7 @@ export default function NegociosPortal() {
     event.preventDefault();
 
     if (signup.password !== signup.confirmPassword) {
-      toast({ title: "Error", description: "Las contraseÃ±as no coinciden", variant: "destructive" });
+      toast({ title: "Error", description: "Las contraseñas no coinciden", variant: "destructive" });
       return;
     }
 
@@ -91,7 +91,7 @@ export default function NegociosPortal() {
       if (bizError) throw bizError;
 
       setBusinessId(bizData.id);
-      toast({ title: "Â¡Registro completado!", description: "Tu negocio fue creado. Revisa tu email para confirmar la cuenta." });
+      toast({ title: "¡Registro completado!", description: "Tu negocio fue creado. Revisa tu email para confirmar la cuenta." });
     } catch (error) {
       toast({
         title: "Error al crear negocio",
@@ -131,7 +131,7 @@ export default function NegociosPortal() {
       <div className="min-h-screen bg-background">
         <main className="mx-auto max-w-5xl px-4 pb-16 pt-24 md:px-6">
           <h1 className="font-serif text-3xl text-gold-400">Portal de comercios RDM Digital</h1>
-          <p className="mt-2 text-sm text-silver-500">Alta de negocios, acceso para comercios y pago online mensual para aparecer en el catÃ¡logo.</p>
+          <p className="mt-2 text-sm text-silver-500">Alta de negocios, acceso para comercios y pago online mensual para aparecer en el catálogo.</p>
 
           <div className="mt-6 rounded-2xl border border-white/10 bg-night-800/70 p-4">
             <Tabs defaultValue="signup">
@@ -152,11 +152,11 @@ export default function NegociosPortal() {
                     <Input type="email" value={signup.email} onChange={(e) => setSignup({ ...signup, email: e.target.value })} required />
                   </div>
                   <div>
-                    <Label>ContraseÃ±a</Label>
+                    <Label>Contraseña</Label>
                     <Input type="password" value={signup.password} onChange={(e) => setSignup({ ...signup, password: e.target.value })} required minLength={6} />
                   </div>
                   <div>
-                    <Label>Confirmar contraseÃ±a</Label>
+                    <Label>Confirmar contraseña</Label>
                     <Input type="password" value={signup.confirmPassword} onChange={(e) => setSignup({ ...signup, confirmPassword: e.target.value })} required minLength={6} />
                   </div>
                   <div>
@@ -164,7 +164,7 @@ export default function NegociosPortal() {
                     <Input value={business.name} onChange={(e) => setBusiness({ ...business, name: e.target.value })} required />
                   </div>
                   <div>
-                    <Label>CategorÃ­a</Label>
+                    <Label>Categoría</Label>
                     <select
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                       value={business.category}
@@ -176,15 +176,15 @@ export default function NegociosPortal() {
                     </select>
                   </div>
                   <div className="md:col-span-2">
-                    <Label>DescripciÃ³n</Label>
+                    <Label>Descripción</Label>
                     <Input value={business.description} onChange={(e) => setBusiness({ ...business, description: e.target.value })} required minLength={10} />
                   </div>
                   <div>
-                    <Label>TelÃ©fono</Label>
+                    <Label>Teléfono</Label>
                     <Input value={business.phone} onChange={(e) => setBusiness({ ...business, phone: e.target.value })} />
                   </div>
                   <div>
-                    <Label>DirecciÃ³n</Label>
+                    <Label>Dirección</Label>
                     <Input value={business.address} onChange={(e) => setBusiness({ ...business, address: e.target.value })} />
                   </div>
                   <div className="md:col-span-2">
@@ -200,21 +200,21 @@ export default function NegociosPortal() {
                     <Input type="email" value={login.email} onChange={(e) => setLogin({ ...login, email: e.target.value })} required />
                   </div>
                   <div>
-                    <Label>ContraseÃ±a</Label>
+                    <Label>Contraseña</Label>
                     <Input type="password" value={login.password} onChange={(e) => setLogin({ ...login, password: e.target.value })} required />
                   </div>
                   <div className="md:col-span-2">
-                    <Button disabled={loading} type="submit" className="w-full">Iniciar sesiÃ³n de comercio</Button>
+                    <Button disabled={loading} type="submit" className="w-full">Iniciar sesión de comercio</Button>
                   </div>
                 </form>
               </TabsContent>
 
               <TabsContent value="payments" className="mt-4 space-y-3">
-                <p className="text-sm text-silver-500">El pago mensual activa tu negocio como destacado en el catÃ¡logo de RDM Digital.</p>
+                <p className="text-sm text-silver-500">El pago mensual activa tu negocio como destacado en el catálogo de RDM Digital.</p>
 
                 <div>
                   <Label>ID de negocio</Label>
-                  <Input value={businessId} onChange={(e) => setBusinessId(e.target.value)} placeholder="Pega aquÃ­ tu businessId" />
+                  <Input value={businessId} onChange={(e) => setBusinessId(e.target.value)} placeholder="Pega aquí tu businessId" />
                 </div>
                 <div>
                   <Label>Plan</Label>

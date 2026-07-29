@@ -29,7 +29,7 @@ const statusMeta: Record<ModuleStatus, { label: string; className: string; Icon:
     Icon: Clock3,
   },
   design: {
-    label: "DiseÃ±o",
+    label: "Diseño",
     className: "border-cyan-300/30 bg-cyan-300/10 text-cyan-100",
     Icon: Circle,
   },
@@ -42,8 +42,8 @@ const Operativo = () => {
   return (
     <RDMLayout>
       <SEOMeta
-        title="Operativo RDMÂ·X â€” Estado de mÃ³dulos en producciÃ³n"
-        description="Tablero vivo del documento maestro: mÃ³dulos backend, frontend, IA, gemelos digitales y plataforma con su nivel de completitud."
+        title="Operativo RDM·X â€” Estado de módulos en producción"
+        description="Tablero vivo del documento maestro: módulos backend, frontend, IA, gemelos digitales y plataforma con su nivel de completitud."
       />
 
       <section className="container mx-auto px-6 pb-24 pt-10">
@@ -63,8 +63,8 @@ const Operativo = () => {
             Estado <span className="text-gradient-gold">operativo</span> del ecosistema
           </h1>
           <p className="mx-auto mt-5 max-w-2xl font-body text-base leading-relaxed text-muted-foreground">
-            Refleja el contrato de cada mÃ³dulo derivado de <code className="text-cyan-100/80">docs/</code>:
-            quÃ© estÃ¡ listo para producciÃ³n, quÃ© estÃ¡ en progreso y dÃ³nde aÃºn queda diseÃ±o por bajar a cÃ³digo.
+            Refleja el contrato de cada módulo derivado de <code className="text-cyan-100/80">docs/</code>:
+            qué está listo para producción, qué está en progreso y dónde aún queda diseño por bajar a código.
           </p>
         </motion.div>
 
@@ -157,7 +157,7 @@ const Operativo = () => {
                           to={m.route}
                           className="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.2em] text-cyan-100 hover:text-white"
                         >
-                          Abrir mÃ³dulo <ArrowRight className="h-3 w-3" />
+                          Abrir módulo <ArrowRight className="h-3 w-3" />
                         </Link>
                       )}
                     </div>

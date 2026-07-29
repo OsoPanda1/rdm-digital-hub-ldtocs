@@ -11,8 +11,8 @@ interface ErrorStateProps {
 }
 
 export function ErrorState({
-  title = 'Algo saliÃ³ mal',
-  message = 'No pudimos cargar esta secciÃ³n. Intenta de nuevo.',
+  title = 'Algo salió mal',
+  message = 'No pudimos cargar esta sección. Intenta de nuevo.',
   onRetry,
   variant = 'inline',
   className = '',

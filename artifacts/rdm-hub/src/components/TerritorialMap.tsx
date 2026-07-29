@@ -52,7 +52,7 @@ export function TerritorialMap() {
               >
                 <p className="text-sm font-medium">{site.name}</p>
                 <p className="text-xs text-muted-foreground">{site.category}</p>
-                {isFocused && <p className="text-xs text-accent mt-1">Foco activo por decisiÃ³n GEN-7</p>}
+                {isFocused && <p className="text-xs text-accent mt-1">Foco activo por decisión GEN-7</p>}
               </article>
             );
           })}

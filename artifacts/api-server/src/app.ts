@@ -22,11 +22,25 @@ const SECURITY_PROFILE =
 const OBSERVABILITY_MODE =
   process.env.RDM_OBSERVABILITY_MODE ?? "verbose";
 
+// All domain variants for the RDM Digital Hub
+const PRODUCTION_DOMAINS = [
+  "https://visitarealdelmonte.online",
+  "https://www.visitarealdelmonte.online",
+  "https://api.visitarealdelmonte.online",
+];
+
+const DEV_ORIGINS = [
+  "http://localhost:3000", "http://localhost:5173",
+  "http://localhost:22942", "http://0.0.0.0:22942",
+  "http://localhost:4173",  // vite preview
+];
+
 // â”€â”€ CORS Allowlist (PennyLane pattern: explicit origins, never reflect) â”€â”€
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "")
   .split(",")
   .map((o) => o.trim())
-  .filter(Boolean);
+  .filter(Boolean)
+  .concat(PRODUCTION_DOMAINS);
 
 const app: Express = express();
 

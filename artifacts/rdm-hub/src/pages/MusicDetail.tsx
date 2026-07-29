@@ -51,13 +51,13 @@ export default function MusicDetail() {
     if (!isCurrent) {
       player.selectBySlug(track.slug);
     }
-    // togglePlay deberÃ­a encargarse de respetar el estado actual internamente
+    // togglePlay debería encargarse de respetar el estado actual internamente
     player.togglePlay();
   };
 
   const handleDonationClick = () => {
     if (!track.donation_url) return;
-    // Apertura segura; idealmente usar <a> en vez de window.open, pero mantenemos patrÃ³n
+    // Apertura segura; idealmente usar <a> en vez de window.open, pero mantenemos patrón
     window.open(track.donation_url, "_blank", "noopener,noreferrer");
   };
 
@@ -91,7 +91,7 @@ export default function MusicDetail() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/70">
-                Pista oficial Â· RDM Radio
+                Pista oficial · RDM Radio
               </p>
               <h1 className="text-3xl md:text-4xl font-display font-bold mt-2">
                 {track.title}
@@ -115,7 +115,7 @@ export default function MusicDetail() {
 
               {territories.length > 0 && (
                 <p className="mt-4 flex items-center gap-2 text-[11px] font-mono text-muted-foreground">
-                  <MapPin className="h-3 w-3" /> {territories.join(" Â· ")}
+                  <MapPin className="h-3 w-3" /> {territories.join(" · ")}
                 </p>
               )}
 

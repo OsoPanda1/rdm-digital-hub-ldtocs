@@ -19,12 +19,12 @@ export default function AtlasPastes() {
     <RDMLayout>
       <SEOMeta
         title="Los pastes â€” Memoria comestible"
-        description="Los pastes de Real del Monte: la negociaciÃ³n cotidiana entre Cornualles y la sierra de Hidalgo."
+        description="Los pastes de Real del Monte: la negociación cotidiana entre Cornualles y la sierra de Hidalgo."
       />
       <AtlasPageHeader
-        kicker="Capa II Â· Memoria comestible"
-        title="Una receta es tambiÃ©n un tratado."
-        intro="El paste cruzÃ³ el AtlÃ¡ntico en el bolsillo de un minero cornish, se cocinÃ³ al carbÃ³n en la sierra, recibiÃ³ el chile y el mole, y aprendiÃ³ a quedarse."
+        kicker="Capa II · Memoria comestible"
+        title="Una receta es también un tratado."
+        intro="El paste cruzó el Atlántico en el bolsillo de un minero cornish, se cocinó al carbón en la sierra, recibió el chile y el mole, y aprendió a quedarse."
         image={img}
       />
 
@@ -56,8 +56,8 @@ export default function AtlasPastes() {
             Cada octubre el pueblo huele a horno.
           </h2>
           <p className="mt-4 max-w-2xl text-white/85">
-            El Festival Internacional del Paste reÃºne a cocineros, panaderos y a delegaciones de
-            Cornualles. Es la conversaciÃ³n culinaria mÃ¡s antigua entre Inglaterra y MÃ©xico, servida
+            El Festival Internacional del Paste reúne a cocineros, panaderos y a delegaciones de
+            Cornualles. Es la conversación culinaria más antigua entre Inglaterra y México, servida
             en una sola pieza hojaldrada.
           </p>
         </div>

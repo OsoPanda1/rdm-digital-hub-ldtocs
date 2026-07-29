@@ -11,14 +11,14 @@ import mineTunnel from "@/assets/mine-tunnel.jpg";
 import { ElegantPagination } from "@/components/ElegantPagination";
 
 const TIMELINE = [
-  { year: "Siglo XVI", event: "Comienza la explotaciÃ³n de vetas argentÃ­feras en la regiÃ³n de Pachuca-Real del Monte." },
-  { year: "1766", event: "Se registra una de las huelgas mineras mÃ¡s tempranas del continente en Real del Monte." },
-  { year: "1824", event: "Llegan mineros de Cornwall y se consolida el intercambio tecnolÃ³gico y cultural con Hidalgo." },
-  { year: "S. XIX", event: "Se populariza el paste como alimento minero prÃ¡ctico y luego como identidad gastronÃ³mica local." },
-  { year: "1906", event: "Declive de ciclos mineros tradicionales y transiciÃ³n paulatina hacia nueva economÃ­a regional." },
-  { year: "2004", event: "Mineral del Monte es reconocido como Pueblo MÃ¡gico por su patrimonio histÃ³rico y turÃ­stico." },
+  { year: "Siglo XVI", event: "Comienza la explotación de vetas argentíferas en la región de Pachuca-Real del Monte." },
+  { year: "1766", event: "Se registra una de las huelgas mineras más tempranas del continente en Real del Monte." },
+  { year: "1824", event: "Llegan mineros de Cornwall y se consolida el intercambio tecnológico y cultural con Hidalgo." },
+  { year: "S. XIX", event: "Se populariza el paste como alimento minero práctico y luego como identidad gastronómica local." },
+  { year: "1906", event: "Declive de ciclos mineros tradicionales y transición paulatina hacia nueva economía regional." },
+  { year: "2004", event: "Mineral del Monte es reconocido como Pueblo Mágico por su patrimonio histórico y turístico." },
   { year: "2017", event: "La Comarca Minera se integra al programa de Geoparques Mundiales de UNESCO." },
-  { year: "Hoy", event: "El destino fusiona patrimonio industrial, turismo cultural, aventura de montaÃ±a y escapadas romÃ¡nticas." },
+  { year: "Hoy", event: "El destino fusiona patrimonio industrial, turismo cultural, aventura de montaña y escapadas románticas." },
 ];
 
 const PAGE_SIZE = 4;
@@ -62,7 +62,7 @@ export function HistorySection() {
           >
             <p className="mb-4 font-body text-sm uppercase tracking-[0.3em] text-accent">â›ï¸ Patrimonio Minero</p>
             <h2 className="font-display text-4xl font-bold leading-[0.9] md:text-7xl">
-              Bajo estas montaÃ±as,
+              Bajo estas montañas,
               <br />
               <span className="text-accent">imperios</span> nacieron
             </h2>
@@ -79,7 +79,7 @@ export function HistorySection() {
               viewport={{ once: true }}
               className="col-span-2 h-[280px] overflow-hidden rounded-2xl"
             >
-              <img src={mineTunnel} alt="TÃºnel de mina" className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
+              <img src={mineTunnel} alt="Túnel de mina" className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -88,7 +88,7 @@ export function HistorySection() {
               transition={{ delay: 0.1 }}
               className="h-[200px] overflow-hidden rounded-2xl"
             >
-              <img src={panteonIngles} alt="PanteÃ³n InglÃ©s" className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
+              <img src={panteonIngles} alt="Panteón Inglés" className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -103,13 +103,13 @@ export function HistorySection() {
 
           <div className="flex flex-col justify-center">
             <p className="mb-5 font-body text-lg leading-relaxed text-foreground/70">
-              La historia de Real del Monte no es solo una lÃ­nea de tiempo: es una red de oficios, migraciones,
-              luchas laborales y tecnologÃ­a extractiva que transformÃ³ a Hidalgo durante siglos.
+              La historia de Real del Monte no es solo una línea de tiempo: es una red de oficios, migraciones,
+              luchas laborales y tecnología extractiva que transformó a Hidalgo durante siglos.
             </p>
             <p className="mb-10 font-body text-base leading-relaxed text-foreground/70">
-              Esta narrativa conecta el origen minero, la huella cornish, la dimensiÃ³n obrera y la reconversiÃ³n
-              turÃ­stica contemporÃ¡nea para que el visitante entienda por quÃ© el pueblo emociona mÃ¡s cuando se recorre
-              con contexto histÃ³rico.
+              Esta narrativa conecta el origen minero, la huella cornish, la dimensión obrera y la reconversión
+              turística contemporánea para que el visitante entienda por qué el pueblo emociona más cuando se recorre
+              con contexto histórico.
             </p>
 
             <div className="space-y-6">

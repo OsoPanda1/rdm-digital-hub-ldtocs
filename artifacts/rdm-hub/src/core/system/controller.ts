@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * RDM Core Service â€” Controlador central de modo antifrÃ¡gil
- * Integra reglas determinÃ­sticas + IA Isabella Guardian
+ * RDM Core Service â€” Controlador central de modo antifrágil
+ * Integra reglas determinísticas + IA Isabella Guardian
  */
 
 import { SystemMode, SystemMetrics, decideMode } from "./modes";

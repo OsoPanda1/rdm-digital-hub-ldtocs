@@ -15,9 +15,9 @@ type CinematicIntroProps = {
 const MAP_NODES = [
   { x: 80,  y: 190, label: "Plaza Principal",  delay: 3.2 },
   { x: 195, y: 130, label: "Mina de Acosta",   delay: 3.8 },
-  { x: 330, y: 165, label: "PanteÃ³n InglÃ©s",   delay: 4.4 },
+  { x: 330, y: 165, label: "Panteón Inglés",   delay: 4.4 },
   { x: 460, y: 95,  label: "Ruta del Paste",   delay: 5.0 },
-  { x: 590, y: 145, label: "Mirador La PeÃ±a",  delay: 5.6 },
+  { x: 590, y: 145, label: "Mirador La Peña",  delay: 5.6 },
   { x: 705, y: 115, label: "Mineral del Monte",delay: 6.2 },
 ];
 
@@ -46,7 +46,7 @@ const PHASES = {
   stars:      0.4,   // Star field appears
   mapLine:    2.2,   // Map path starts drawing
   nodes:      3.0,   // Nodes start appearing
-  tagline:    7.5,   // "PUEBLO MÃGICO Â· HIDALGO Â· MÃ‰XICO"
+  tagline:    7.5,   // "PUEBLO MÃGICO · HIDALGO · MÃ‰XICO"
   title:      9.5,   // Main title
   subtitle:   12.5,  // Subtitle text
   ekg:        16.0,  // EKG heartbeat
@@ -378,7 +378,7 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({
               className="mb-5 text-[10px] md:text-xs font-semibold uppercase text-cyan-400/80"
               style={{ fontFamily: "var(--font-body, monospace)" }}
             >
-              Pueblo MÃ¡gico Â· Hidalgo Â· MÃ©xico
+              Pueblo Mágico · Hidalgo · México
             </motion.p>
           )}
         </AnimatePresence>
@@ -417,7 +417,7 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({
               className="mt-5 max-w-lg text-sm md:text-base text-slate-300/80 leading-relaxed"
               style={{ fontFamily: "var(--font-body, sans-serif)" }}
             >
-              El pulso vivo de un pueblo mÃ¡gico en tiempo real.
+              El pulso vivo de un pueblo mágico en tiempo real.
               Historias, personas, comercios y datos latiendo
               en un mismo territorio soberano.
             </motion.p>
@@ -435,7 +435,7 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({
             >
               {[
                 { value: "2,700m", label: "Altitud" },
-                { value: "500+", label: "AÃ±os" },
+                { value: "500+", label: "Años" },
                 { value: "14Â°C", label: "Clima" },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col items-center gap-1">

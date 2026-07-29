@@ -119,7 +119,7 @@ export default function Telemetry() {
           `[${nowIso}] federation.health â†’ ${
             fedSummary?.online ?? "?"
           }/${fedSummary?.total ?? "?"} online (${latency}ms avg)`,
-          `[${nowIso}] tracking.events â†’ ${reqMin}/min Â· ${reqHr}/hr`,
+          `[${nowIso}] tracking.events â†’ ${reqMin}/min · ${reqHr}/hr`,
           `[${nowIso}] mesh.bandwidth â†’ ${bandwidth} MB/s`,
           ...recentSlice.map(
             (e) =>
@@ -177,14 +177,14 @@ export default function Telemetry() {
               value: `${sample.cpuUsagePct}%`,
               icon: Cpu,
               color: sev(sample.cpuUsagePct),
-              hint: "Uso lÃ³gico estimado del clÃºster principal.",
+              hint: "Uso lógico estimado del clúster principal.",
             },
             {
               label: "Memoria",
               value: `${sample.memoryUsagePct}%`,
               icon: HardDrive,
               color: sev(sample.memoryUsagePct, 60, 80, 90),
-              hint: "Uso de memoria en servicios crÃ­ticos.",
+              hint: "Uso de memoria en servicios críticos.",
             },
           ]
         : [],
@@ -199,7 +199,7 @@ export default function Telemetry() {
           animate={{ opacity: [0.3, 1, 0.3] }}
           transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
         />
-        Conectando telemetrÃ­a realâ€¦
+        Conectando telemetría realâ€¦
       </div>
     );
   }
@@ -207,7 +207,7 @@ export default function Telemetry() {
   if (!sample) {
     return (
       <div className="glass-card rounded-xl border border-border/20 p-6 text-sm font-mono text-destructive/80">
-        No se pudo obtener telemetrÃ­a en tiempo real.
+        No se pudo obtener telemetría en tiempo real.
       </div>
     );
   }
@@ -312,7 +312,7 @@ export default function Telemetry() {
       <div className="glass-card rounded-xl border border-border/20 p-4">
         <div className="mb-2 flex items-center justify-between">
           <p className="text-[11px] font-mono uppercase tracking-wider text-foreground">
-            Log soberano Â· datos reales
+            Log soberano · datos reales
           </p>
           <p className="text-[10px] font-mono text-muted-foreground">
             {sample.lastUpdate.slice(11, 19)} UTC

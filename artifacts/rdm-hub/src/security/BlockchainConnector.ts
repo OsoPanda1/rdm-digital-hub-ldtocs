@@ -147,7 +147,7 @@ export class BlockchainConnector {
         timestamp: new Date(),
       };
     }
-    logger.info("[BLOCKCHAIN] TransacciÃ³n procesada", { id: tx.id, chain: tx.chain, success, durationMs: Date.now() - start });
+    logger.info("[BLOCKCHAIN] Transacción procesada", { id: tx.id, chain: tx.chain, success, durationMs: Date.now() - start });
   }
 }
 

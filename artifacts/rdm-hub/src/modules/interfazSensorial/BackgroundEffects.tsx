@@ -6,10 +6,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
 /**
- * Interfaz Sensorial: Efectos de Fondo DinÃ¡micos
+ * Interfaz Sensorial: Efectos de Fondo Dinámicos
  * 
  * Componente que gestiona los efectos visuales de fondo que crean
- * la atmÃ³sfera inmersiva de TAMV Online Network.
+ * la atmósfera inmersiva de TAMV Online Network.
  */
 const BackgroundEffects: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });

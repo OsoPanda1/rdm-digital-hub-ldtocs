@@ -62,7 +62,7 @@ const TAMVTrixEffect: React.FC<TAMVTrixEffectProps> = ({
         const depth = Math.random(); // 0 cercano, 1 lejano
         const scale = 0.7 + Math.random() * 1.1;
         const drift = (Math.random() - 0.5) * 1.2;
-        const opacity = 0.3 + 0.7 * (1 - depth); // columnas cercanas = mÃ¡s intensas
+        const opacity = 0.3 + 0.7 * (1 - depth); // columnas cercanas = más intensas
 
         return {
           y: Math.floor(Math.random() * canvas.height),
@@ -99,7 +99,7 @@ const TAMVTrixEffect: React.FC<TAMVTrixEffectProps> = ({
           minFontSize +
           (maxFontSize - minFontSize) * col.scale * (0.4 + 0.6 * z);
 
-        const velocity = speed * (0.3 + 0.9 * z); // mÃ¡s cerca = mÃ¡s rÃ¡pido
+        const velocity = speed * (0.3 + 0.9 * z); // más cerca = más rápido
 
         const baseX = i * columnWidth + columnWidth / 2;
         const x = baseX + col.drift * 24 * z;
@@ -110,7 +110,7 @@ const TAMVTrixEffect: React.FC<TAMVTrixEffectProps> = ({
           CORE_LETTERS[Math.floor(Math.random() * CORE_LETTERS.length)];
         const wordLetter = word[col.charIndex % word.length];
 
-        // profundo â†’ mÃ¡s algoritmo (letras sueltas), cerca â†’ mÃ¡s palabra legible
+        // profundo â†’ más algoritmo (letras sueltas), cerca â†’ más palabra legible
         const letter = depth > 0.5 ? coreLetter : wordLetter;
 
         // gradiente vertical con cabeza brillante y cola suave
@@ -149,7 +149,7 @@ const TAMVTrixEffect: React.FC<TAMVTrixEffectProps> = ({
         ctx.globalAlpha = 1;
         ctx.shadowBlur = 0;
 
-        // actualizar posiciÃ³n de la columna (respiraciÃ³n del espacio)
+        // actualizar posición de la columna (respiración del espacio)
         col.y += velocity * (fontSize / 9);
 
         // reset cuando sale del canvas

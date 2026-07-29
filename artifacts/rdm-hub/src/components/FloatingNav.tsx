@@ -10,11 +10,11 @@ const NAV_ITEMS = [
   { id: "inicio", label: "Inicio" },
   { id: "experiencias", label: "Experiencias" },
   { id: "historia", label: "Historia" },
-  { id: "gastronomia", label: "GastronomÃ­a" },
+  { id: "gastronomia", label: "Gastronomía" },
   { id: "aventura", label: "Aventura" },
   { id: "hospedaje", label: "Hospedaje" },
   { id: "cultura", label: "Cultura" },
-  { id: "innovacion", label: "InnovaciÃ³n" },
+  { id: "innovacion", label: "Innovación" },
 ];
 
 interface FloatingNavProps {
@@ -108,7 +108,7 @@ export function FloatingNav({ onDichosClick }: FloatingNavProps) {
               }}
               className="block w-full text-left px-3 py-2.5 text-sm font-body text-accent hover:text-accent/80 transition-colors rounded-lg font-medium"
             >
-              ðŸ“œ CallejÃ³n de los Dichos
+              ðŸ“œ Callejón de los Dichos
             </button>
           )}
         </motion.div>

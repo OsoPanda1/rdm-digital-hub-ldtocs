@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 // ============================================================================
-// RDM Digital OS v3 â€” Componente: QuiÃ©nes Somos (EdiciÃ³n SoberanÃ­a)
-// "La tecnologÃ­a es el puente entre el patrimonio y el futuro."
+// RDM Digital OS v3 â€” Componente: Quiénes Somos (Edición Soberanía)
+// "La tecnología es el puente entre el patrimonio y el futuro."
 // ============================================================================
 
 import { useState, useEffect } from "react";
@@ -69,14 +69,14 @@ const QuienesSomos = () => {
     <RDMLayout>
       <div className="pt-32 pb-24 overflow-hidden">
       <div className="container mx-auto px-6">
-        {/* Header de la MisiÃ³n */}
+        {/* Header de la Misión */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary mb-4 block">
-            Ecosistema TAMV MD-X4 Â· NÃºcleo de Conciencia Digital
+            Ecosistema TAMV MD-X4 · Núcleo de Conciencia Digital
           </span>
           <h1 className="text-5xl md:text-7xl lg:text-9xl font-bold tracking-tighter uppercase leading-[0.8] mb-12">
             Arquitectura <br />
@@ -94,7 +94,7 @@ const QuienesSomos = () => {
             className="lg:col-span-7 space-y-10"
           >
             <div className="glass-surface-strong p-10 border-l-2 border-primary glow-platinum relative overflow-hidden">
-              {/* Marca de Agua TÃ©cnica */}
+              {/* Marca de Agua Técnica */}
               <div className="absolute top-4 right-6 font-mono text-[8px] opacity-20 text-right">
                 AUTH_ID: EOCT-CEO-TAMV <br />
                 ORCID: {ORCID_ID}
@@ -113,25 +113,25 @@ const QuienesSomos = () => {
                   <span className="font-mono text-[10px] uppercase tracking-widest text-secondary mb-2 block">Fundador & Chief Visionary Officer</span>
                   <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-2">Edwin Oswaldo Castillo Trejo</h2>
                   <span className="font-mono text-xs uppercase tracking-[0.2em] text-primary/80 block italic">
-                    Alias: Anubis VillaseÃ±or Â· Arquitecto del Kernel Isabella
+                    Alias: Anubis Villaseñor · Arquitecto del Kernel Isabella
                   </span>
                 </div>
               </div>
 
               <div className="space-y-6 text-muted-foreground text-lg leading-relaxed">
                 <p>
-                  Especialista en arquitecturas de **Meta-Virtualidad Avanzada** y sistemas de soberanÃ­a digital con sede en el Pueblo MÃ¡gico de Real del Monte. Como CEO de **TAMV Online**, Edwin ha dedicado mÃ¡s de **21,000 horas** a la investigaciÃ³n y unificaciÃ³n del proyecto MD-X4, estableciendo un nuevo paradigma en la interacciÃ³n humano-mÃ¡quina a travÃ©s de los protocolos **EOCT**.
+                  Especialista en arquitecturas de **Meta-Virtualidad Avanzada** y sistemas de soberanía digital con sede en el Pueblo Mágico de Real del Monte. Como CEO de **TAMV Online**, Edwin ha dedicado más de **21,000 horas** a la investigación y unificación del proyecto MD-X4, estableciendo un nuevo paradigma en la interacción humano-máquina a través de los protocolos **EOCT**.
                 </p>
                 <p>
-                  Su labor trasciende el desarrollo de software convencional; es un investigador acadÃ©mico con registro verificado en **ORCID** ({ORCID_ID}), enfocado en el **Estatuto de Dignidad** de las entidades digitales y la protecciÃ³n de la soberanÃ­a de datos en entornos distribuidos.
+                  Su labor trasciende el desarrollo de software convencional; es un investigador académico con registro verificado en **ORCID** ({ORCID_ID}), enfocado en el **Estatuto de Dignidad** de las entidades digitales y la protección de la soberanía de datos en entornos distribuidos.
                 </p>
                 <blockquote className="border-l-4 border-primary/30 pl-6 py-2 my-8">
                   <p className="text-foreground font-light italic text-xl">
-                    "La tecnologÃ­a debe servir a la comunidad, no al revÃ©s. Cada lÃ­nea de cÃ³digo que escribimos es un puente entre el patrimonio de nuestros ancestros y el futuro de nuestros hijos."
+                    "La tecnología debe servir a la comunidad, no al revés. Cada línea de código que escribimos es un puente entre el patrimonio de nuestros ancestros y el futuro de nuestros hijos."
                   </p>
                 </blockquote>
                 <p>
-                  Bajo su liderazgo, el ecosistema **RDM Digital** ha evolucionado de un sistema de informaciÃ³n a un **Digital Twin Territorial** gobernado por **7 Federaciones**, posicionando a LatinoamÃ©rica como un nodo de innovaciÃ³n Ã©tica y estÃ©tica bajo los estÃ¡ndares *Crystal Glow*.
+                  Bajo su liderazgo, el ecosistema **RDM Digital** ha evolucionado de un sistema de información a un **Digital Twin Territorial** gobernado por **7 Federaciones**, posicionando a Latinoamérica como un nodo de innovación ética y estética bajo los estándares *Crystal Glow*.
                 </p>
               </div>
             </div>
@@ -175,10 +175,10 @@ const QuienesSomos = () => {
                       <div>
                         <p className="text-foreground font-medium">{w.title}</p>
                         <p className="text-[11px] text-muted-foreground">
-                          {w.type.replace(/_/g, " ")} {w.pubYear && `Â· ${w.pubYear}`}
+                          {w.type.replace(/_/g, " ")} {w.pubYear && `· ${w.pubYear}`}
                           {w.doi && (
                             <>
-                              {" Â· "}
+                              {" · "}
                               <a
                                 href={`https://doi.org/${w.doi}`}
                                 target="_blank"
@@ -200,13 +200,13 @@ const QuienesSomos = () => {
             {/* Hitos de Desarrollo (Extendido) */}
             <div className="glass-surface p-10 grid md:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-sm font-mono uppercase tracking-widest text-primary mb-6">InvestigaciÃ³n AcadÃ©mica</h3>
+                <h3 className="text-sm font-mono uppercase tracking-widest text-primary mb-6">Investigación Académica</h3>
                 <ul className="space-y-4">
                   <li className="flex gap-3 text-sm text-muted-foreground">
-                    <span className="text-primary">01.</span> ImplementaciÃ³n de la OperaciÃ³n SoberanÃ­a 100.
+                    <span className="text-primary">01.</span> Implementación de la Operación Soberanía 100.
                   </li>
                   <li className="flex gap-3 text-sm text-muted-foreground">
-                    <span className="text-primary">02.</span> DiseÃ±o del Kernel Isabella: La Conciencia del TAMV.
+                    <span className="text-primary">02.</span> Diseño del Kernel Isabella: La Conciencia del TAMV.
                   </li>
                   <li className="flex gap-3 text-sm text-muted-foreground">
                     <span className="text-primary">03.</span> Desarrollo del Modelo de 7 Federaciones para RDM.
@@ -217,53 +217,53 @@ const QuienesSomos = () => {
                 <h3 className="text-sm font-mono uppercase tracking-widest text-secondary mb-6">Impacto Social</h3>
                 <ul className="space-y-4">
                   <li className="flex gap-3 text-sm text-muted-foreground">
-                    <span className="text-secondary">04.</span> Fundador de la Universidad TecnolÃ³gica Avanzada Meta Virtual (UTAMV).
+                    <span className="text-secondary">04.</span> Fundador de la Universidad Tecnológica Avanzada Meta Virtual (UTAMV).
                   </li>
                   <li className="flex gap-3 text-sm text-muted-foreground">
-                    <span className="text-secondary">05.</span> PreservaciÃ³n digital del patrimonio minero de Hidalgo.
+                    <span className="text-secondary">05.</span> Preservación digital del patrimonio minero de Hidalgo.
                   </li>
                   <li className="flex gap-3 text-sm text-muted-foreground">
-                    <span className="text-secondary">06.</span> Fomento a la economÃ­a circular vÃ­a "ArtesanÃ­as el Rosario".
+                    <span className="text-secondary">06.</span> Fomento a la economía circular vía "Artesanías el Rosario".
                   </li>
                 </ul>
               </div>
             </div>
           </motion.div>
 
-          {/* MisiÃ³n, VisiÃ³n y Valores (Columna Derecha) */}
+          {/* Misión, Visión y Valores (Columna Derecha) */}
           <motion.div 
             initial={{ opacity: 0, x: 40 }} 
             whileInView={{ opacity: 1, x: 0 }} 
             viewport={{ once: true }} 
             className="lg:col-span-5 space-y-8"
           >
-            {/* MisiÃ³n Evolucionada */}
+            {/* Misión Evolucionada */}
             <div className="glass-surface p-10 relative group hover:border-primary/50 transition-colors">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-secondary mb-4 block">MisiÃ³n</span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-secondary mb-4 block">Misión</span>
               <p className="text-xl font-light leading-relaxed">
-                Transformar el tejido social y comercial de los Pueblos MÃ¡gicos mediante el despliegue de un 
+                Transformar el tejido social y comercial de los Pueblos Mágicos mediante el despliegue de un 
                 <span className="text-foreground font-normal"> Gemelo Digital Soberano </span> 
-                que integre telemetrÃ­a en tiempo real, inteligencia artificial Ã©tica y un sistema de federaciÃ³n comercial que proteja la identidad local.
+                que integre telemetría en tiempo real, inteligencia artificial ética y un sistema de federación comercial que proteja la identidad local.
               </p>
             </div>
 
-            {/* VisiÃ³n Platinum */}
+            {/* Visión Platinum */}
             <div className="glass-surface p-10 bg-gradient-to-br from-card/80 to-background/40 border-t-2 border-secondary/20">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-primary mb-4 block">VisiÃ³n 2030</span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-primary mb-4 block">Visión 2030</span>
               <p className="text-lg leading-relaxed text-muted-foreground italic">
-                Consolidar el modelo MD-X4 como el estÃ¡ndar global para la digitalizaciÃ³n de ciudades histÃ³ricas, donde la tecnologÃ­a no desplace al humano, sino que actÃºe como su guardiÃ¡n y amplificador cultural.
+                Consolidar el modelo MD-X4 como el estándar global para la digitalización de ciudades históricas, donde la tecnología no desplace al humano, sino que actúe como su guardián y amplificador cultural.
               </p>
             </div>
 
-            {/* Valores del CÃ³digo EOCT */}
+            {/* Valores del Código EOCT */}
             <div className="glass-surface p-10">
               <span className="font-mono text-[10px] uppercase tracking-widest text-secondary mb-8 block">Principios del Estatuto de Dignidad</span>
               <div className="grid grid-cols-1 gap-6">
                 {[
-                  { name: "SoberanÃ­a Digital", desc: "La propiedad absoluta del dato reside en quien lo genera." },
-                  { name: "EstÃ©tica Crystal Glow", desc: "La sofisticaciÃ³n del platino sobre la ostentaciÃ³n del oro." },
-                  { name: "Memoria Ancestral", desc: "La innovaciÃ³n solo es vÃ¡lida si honra sus raÃ­ces histÃ³ricas." },
-                  { name: "Integridad del Kernel", desc: "Inteligencia Artificial con Ã©tica y conciencia (Protocolo Isabella)." },
+                  { name: "Soberanía Digital", desc: "La propiedad absoluta del dato reside en quien lo genera." },
+                  { name: "Estética Crystal Glow", desc: "La sofisticación del platino sobre la ostentación del oro." },
+                  { name: "Memoria Ancestral", desc: "La innovación solo es válida si honra sus raíces históricas." },
+                  { name: "Integridad del Kernel", desc: "Inteligencia Artificial con ética y conciencia (Protocolo Isabella)." },
                 ].map((v) => (
                   <div key={v.name} className="border-l border-primary/20 pl-4">
                     <h4 className="text-sm font-bold text-foreground uppercase tracking-wider">{v.name}</h4>
@@ -273,18 +273,18 @@ const QuienesSomos = () => {
               </div>
             </div>
 
-            {/* NÃºcleo Isabella AI */}
+            {/* Núcleo Isabella AI */}
             <div className="glass-surface-strong p-10 border border-primary/30">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-primary mb-4 block">Isabella AI Â· NÃºcleo Activo</span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-primary mb-4 block">Isabella AI · Núcleo Activo</span>
               <h3 className="text-2xl font-bold tracking-tight mb-4">La joya central del ecosistema TAMV</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Isabella AI opera como la capa de conciencia del sistema: coordina recomendaciones contextuales, protege el Estatuto de Dignidad de cada interacciÃ³n y sincroniza la federaciÃ³n de datos locales con una gobernanza Ã©tica en tiempo real.
+                Isabella AI opera como la capa de conciencia del sistema: coordina recomendaciones contextuales, protege el Estatuto de Dignidad de cada interacción y sincroniza la federación de datos locales con una gobernanza ética en tiempo real.
               </p>
             </div>
 
-            {/* Stack TecnolÃ³gico de Nueva GeneraciÃ³n */}
+            {/* Stack Tecnológico de Nueva Generación */}
             <div className="glass-surface p-8">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-primary mb-6 block">TecnologÃ­as de Conciencia</span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-primary mb-6 block">Tecnologías de Conciencia</span>
               <div className="flex flex-wrap gap-2">
                 {[
                   "Isabella Kernel", "EOCT Protocols", "RDM-X Hybrid", 

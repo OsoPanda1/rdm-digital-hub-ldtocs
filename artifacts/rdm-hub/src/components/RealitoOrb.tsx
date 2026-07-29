@@ -28,7 +28,7 @@ export function RealitoOrb() {
       id: "welcome",
       role: "assistant",
       content:
-        "Â¡Hola! Soy **Realito**, tu guÃ­a cognitivo de Real del Monte. PregÃºntame sobre comida, historia, aventura, hospedaje o cultura. ðŸ”ï¸",
+        "¡Hola! Soy **Realito**, tu guía cognitivo de Real del Monte. Pregúntame sobre comida, historia, aventura, hospedaje o cultura. ðŸ”ï¸",
     },
   ]);
   const [input, setInput] = useState("");
@@ -180,7 +180,7 @@ export function RealitoOrb() {
           id: `err_${Date.now()}`,
           role: "assistant",
           content:
-            "La bruma de la sierra interrumpiÃ³ la seÃ±al. Explora el centro histÃ³rico y sus minas tradicionales mientras reconecto. â›ï¸",
+            "La bruma de la sierra interrumpió la señal. Explora el centro histórico y sus minas tradicionales mientras reconecto. â›ï¸",
         },
       ]);
     }
@@ -224,7 +224,7 @@ export function RealitoOrb() {
                   <div>
                     <p className="text-sm font-display font-bold">Realito AI</p>
                     <p className="text-[10px] text-muted-foreground font-body">
-                      NÃºcleo Heptafederado Â· v4.1
+                      Núcleo Heptafederado · v4.1
                     </p>
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export function RealitoOrb() {
               <div className="flex items-center justify-between mt-2 text-[9px] text-muted-foreground font-body">
                 <span className="flex items-center gap-1">
                   <ShieldCheck className="w-3 h-3 text-accent" />
-                  PQC Â· Kyber-1024
+                  PQC · Kyber-1024
                 </span>
                 <span className="flex items-center gap-1">
                   <Activity className="w-3 h-3 text-accent" />
@@ -329,7 +329,7 @@ export function RealitoOrb() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                  placeholder="Â¿QuÃ© quieres explorar?"
+                  placeholder="¿Qué quieres explorar?"
                   disabled={isLoading}
                   className="flex-1 bg-muted/50 rounded-xl px-4 py-2.5 text-sm font-body outline-none placeholder:text-muted-foreground focus:ring-1 focus:ring-accent disabled:opacity-50"
                 />

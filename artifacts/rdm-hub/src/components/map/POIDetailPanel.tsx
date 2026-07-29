@@ -15,9 +15,9 @@ export interface POIDetailPanelProps {
 
 /**
  * POIDetailPanel â€” panel lateral accesible con ficha completa del POI.
- * - Se abre cuando hay un id (vÃ­a clic en mapa o resultado del SearchOverlay).
- * - Focus trap suave: enfoca el botÃ³n cerrar al abrir y restaura el foco previo al cerrar.
- * - ESC cierra; el resto del foco fluye natural (Radix-style, sin sobreingenierÃ­a).
+ * - Se abre cuando hay un id (vía clic en mapa o resultado del SearchOverlay).
+ * - Focus trap suave: enfoca el botón cerrar al abrir y restaura el foco previo al cerrar.
+ * - ESC cierra; el resto del foco fluye natural (Radix-style, sin sobreingeniería).
  */
 export default function POIDetailPanel({ poiId, onClose }: POIDetailPanelProps) {
   const closeBtnRef = useRef<HTMLButtonElement>(null);
@@ -89,7 +89,7 @@ export default function POIDetailPanel({ poiId, onClose }: POIDetailPanelProps) 
               </h2>
               <p className="text-xs text-[hsl(var(--muted-foreground))] flex items-center gap-1.5">
                 <MapPin className="h-3.5 w-3.5" />
-                {poi.municipality} Â· {poi.altitudeM} m Â· {poi.lat.toFixed(4)}, {poi.lng.toFixed(4)}
+                {poi.municipality} · {poi.altitudeM} m · {poi.lat.toFixed(4)}, {poi.lng.toFixed(4)}
               </p>
             </div>
 
@@ -105,7 +105,7 @@ export default function POIDetailPanel({ poiId, onClose }: POIDetailPanelProps) 
             {relatedChapter && (
               <section aria-labelledby="poi-chapter" className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.3)] p-4">
                 <span className="text-[10px] uppercase tracking-widest text-[hsl(var(--electric))]">
-                  CapÃ­tulo asociado
+                  Capítulo asociado
                 </span>
                 <h3 id="poi-chapter" className="mt-1 font-display text-base">
                   {relatedChapter.title}
@@ -120,7 +120,7 @@ export default function POIDetailPanel({ poiId, onClose }: POIDetailPanelProps) 
                   to={`/capitulos${relatedChapter.href}`.replace("/capitulos/capitulos", "/capitulos")}
                   className="mt-3 inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-[hsl(var(--gold))] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--electric))] rounded"
                 >
-                  <BookOpen className="h-3.5 w-3.5" /> Profundizar en la guÃ­a
+                  <BookOpen className="h-3.5 w-3.5" /> Profundizar en la guía
                   <ExternalLink className="h-3 w-3" />
                 </Link>
               </section>
@@ -142,7 +142,7 @@ export default function POIDetailPanel({ poiId, onClose }: POIDetailPanelProps) 
             </div>
 
             <p className="text-[10px] uppercase tracking-widest text-[hsl(var(--muted-foreground))] pt-3">
-              FederaciÃ³n Â· {String((poi as unknown as { federationId?: string }).federationId ?? "â€”")}
+              Federación · {String((poi as unknown as { federationId?: string }).federationId ?? "â€”")}
             </p>
           </div>
         </motion.aside>

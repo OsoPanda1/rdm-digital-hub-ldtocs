@@ -10,7 +10,7 @@ import { Server, Cloud, Shield, CheckCircle, Globe, Wrench, Box, ListChecks } fr
 const Despliegue = () => (
   <WikiPage
     title="Manual de Despliegue Universal"
-        subtitle="GuÃ­a paso a paso para replicar el ecosistema TAMV en cualquier infraestructura"
+        subtitle="Guía paso a paso para replicar el ecosistema TAMV en cualquier infraestructura"
       >
         {/* Hero Banner */}
         <div className="relative h-48 w-full overflow-hidden">
@@ -25,23 +25,23 @@ const Despliegue = () => (
         <TabsTrigger value="onpremise" className="text-xs">On-Premise</TabsTrigger>
         <TabsTrigger value="federada" className="text-xs">Federada</TabsTrigger>
         <TabsTrigger value="checklist" className="text-xs">Checklist</TabsTrigger>
-        <TabsTrigger value="certificacion" className="text-xs">CertificaciÃ³n</TabsTrigger>
+        <TabsTrigger value="certificacion" className="text-xs">Certificación</TabsTrigger>
       </TabsList>
 
       {/* PREREQUISITOS */}
       <TabsContent value="prerequisitos" className="space-y-6 mt-6">
-        <Section title="Prerequisitos tÃ©cnicos">
+        <Section title="Prerequisitos técnicos">
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-            Antes de iniciar cualquier despliegue del ecosistema TAMV, asegÃºrate de contar con los conocimientos y herramientas mÃ­nimas.
+            Antes de iniciar cualquier despliegue del ecosistema TAMV, asegúrate de contar con los conocimientos y herramientas mínimas.
           </p>
 
           <div className="space-y-4">
             <div className="rounded-lg border border-border/50 bg-card/50 p-4">
-              <h4 className="font-semibold text-foreground text-sm mb-3">ðŸ“š Conocimientos mÃ­nimos</h4>
+              <h4 className="font-semibold text-foreground text-sm mb-3">ðŸ“š Conocimientos mínimos</h4>
               <ul className="space-y-1.5 text-sm text-muted-foreground">
-                {["AdministraciÃ³n bÃ¡sica de Linux (Ubuntu/Rocky)", "Docker y Docker Compose (creaciÃ³n y gestiÃ³n de contenedores)",
-                  "Redes: DNS, firewalls, puertos, VPN bÃ¡sica", "Git: ramas, commits, merge/rebase",
-                  "PostgreSQL: conexiÃ³n, queries bÃ¡sicos, backups", "Conceptos de seguridad: TLS, RBAC, Zero-Trust (recomendado)"].map((k) => (
+                {["Administración básica de Linux (Ubuntu/Rocky)", "Docker y Docker Compose (creación y gestión de contenedores)",
+                  "Redes: DNS, firewalls, puertos, VPN básica", "Git: ramas, commits, merge/rebase",
+                  "PostgreSQL: conexión, queries básicos, backups", "Conceptos de seguridad: TLS, RBAC, Zero-Trust (recomendado)"].map((k) => (
                   <li key={k} className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />{k}</li>
                 ))}
               </ul>
@@ -73,7 +73,7 @@ const Despliegue = () => (
       <TabsContent value="local" className="space-y-6 mt-6">
         <Section title="Entorno local de referencia">
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-            El stack Docker Compose de referencia permite levantar todo el ecosistema TAMV en una mÃ¡quina local para desarrollo y pruebas.
+            El stack Docker Compose de referencia permite levantar todo el ecosistema TAMV en una máquina local para desarrollo y pruebas.
           </p>
 
           <div className="rounded-lg border border-border/50 bg-card/50 p-4 mb-4">
@@ -84,10 +84,10 @@ const Despliegue = () => (
                 { svc: "db-postgres", desc: "PostgreSQL 16 con extensiones" },
                 { svc: "redis", desc: "Cache y colas de mensajes" },
                 { svc: "grafana", desc: "Dashboards de monitoreo" },
-                { svc: "prometheus", desc: "RecolecciÃ³n de mÃ©tricas" },
+                { svc: "prometheus", desc: "Recolección de métricas" },
                 { svc: "tempo", desc: "Distributed tracing" },
-                { svc: "loki", desc: "AgregaciÃ³n de logs" },
-                { svc: "jupyter", desc: "Notebooks para anÃ¡lisis" },
+                { svc: "loki", desc: "Agregación de logs" },
+                { svc: "jupyter", desc: "Notebooks para análisis" },
                 { svc: "isabella-ai", desc: "Servicio de IA contextual" },
               ].map((s) => (
                 <div key={s.svc} className="rounded-md border border-border/50 bg-muted/20 p-2.5">
@@ -122,7 +122,7 @@ const Despliegue = () => (
         <Section title="Despliegue en Cloud">
           <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 mb-4">
             <p className="text-sm text-muted-foreground">
-              MÃ©todo recomendado para iniciar rÃ¡pidamente. Compatible con AWS, GCP, Azure y Lovable Cloud.
+              Método recomendado para iniciar rápidamente. Compatible con AWS, GCP, Azure y Lovable Cloud.
             </p>
           </div>
 
@@ -130,19 +130,19 @@ const Despliegue = () => (
             <h4 className="font-semibold text-foreground text-sm mb-3">Escenario de referencia</h4>
             <p className="text-xs text-muted-foreground leading-relaxed">
               Cluster Kubernetes gestionado + PostgreSQL gestionado + CDN para frontend + observabilidad con Grafana Cloud.
-              NOAâ€‘TAMV dispone de mÃ³dulos Terraform para topologÃ­as federadas que se publicarÃ¡n en el repositorio oficial.
+              NOAâ€‘TAMV dispone de módulos Terraform para topologías federadas que se publicarán en el repositorio oficial.
             </p>
           </div>
 
           <div className="space-y-4">
             {[
               { step: "1. Provisionar infraestructura", desc: "Usar Terraform/OpenTofu para levantar VPC, subnets, bases de datos PostgreSQL y servicios de edge computing." },
-              { step: "2. Configurar identidad", desc: "Desplegar el mÃ³dulo ID-NVIDA con proveedor OAuth2/OIDC. Configurar claves de cifrado y certificados TLS 1.3." },
-              { step: "3. Base de datos", desc: "Inicializar esquema TAMV con migraciones SQL. Configurar RLS, triggers de auditorÃ­a y conexiÃ³n a EOCT." },
+              { step: "2. Configurar identidad", desc: "Desplegar el módulo ID-NVIDA con proveedor OAuth2/OIDC. Configurar claves de cifrado y certificados TLS 1.3." },
+              { step: "3. Base de datos", desc: "Inicializar esquema TAMV con migraciones SQL. Configurar RLS, triggers de auditoría y conexión a EOCT." },
               { step: "4. Edge Functions", desc: "Desplegar funciones serverless para Isabella AI, webhooks y procesamiento de pipelines hexagonales." },
-              { step: "5. Frontend", desc: "Build estÃ¡tico con Vite + React. Servir desde CDN con cachÃ© agresivo y service workers para PWA." },
+              { step: "5. Frontend", desc: "Build estático con Vite + React. Servir desde CDN con caché agresivo y service workers para PWA." },
               { step: "6. Monitoreo", desc: "Conectar Grafana Cloud o Prometheus self-hosted. Configurar alertas para latencia, CPU y health checks." },
-              { step: "7. ValidaciÃ³n", desc: "Ejecutar suite de tests E2E. Verificar todos los dominios operativos y obtener certificaciÃ³n federada." },
+              { step: "7. Validación", desc: "Ejecutar suite de tests E2E. Verificar todos los dominios operativos y obtener certificación federada." },
             ].map((s) => (
               <div key={s.step} className="flex items-start gap-3">
                 <Cloud className="h-4 w-4 text-primary mt-0.5 shrink-0" />
@@ -155,13 +155,13 @@ const Despliegue = () => (
           </div>
         </Section>
 
-        <Section title="Requisitos mÃ­nimos Cloud">
+        <Section title="Requisitos mínimos Cloud">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {[
               { label: "Compute", value: "2 vCPU, 4GB RAM por nodo" },
               { label: "Storage", value: "50GB SSD (PostgreSQL)" },
-              { label: "Network", value: "100 Mbps, IP pÃºblica" },
-              { label: "SSL", value: "Certificado TLS 1.3 vÃ¡lido" },
+              { label: "Network", value: "100 Mbps, IP pública" },
+              { label: "SSL", value: "Certificado TLS 1.3 válido" },
               { label: "DNS", value: "Dominio propio configurado" },
               { label: "CDN", value: "Cloudflare o equivalente" },
             ].map((r) => (
@@ -196,10 +196,10 @@ const Despliegue = () => (
 
           <div className="space-y-3">
             {[
-              { title: "Hardware mÃ­nimo", desc: "Servidor x86_64 con 8GB RAM, 4 cores, 200GB SSD. GPU opcional para mÃ³dulos XR." },
+              { title: "Hardware mínimo", desc: "Servidor x86_64 con 8GB RAM, 4 cores, 200GB SSD. GPU opcional para módulos XR." },
               { title: "Sistema operativo", desc: "Ubuntu 22.04 LTS o Rocky Linux 9. Docker Engine 24+ y Docker Compose v2." },
-              { title: "Red", desc: "Firewall configurado, puertos 80/443/5432/8443. VPN para administraciÃ³n remota." },
-              { title: "Backups", desc: "pg_dump automatizado cada 6 horas. RetenciÃ³n mÃ­nima 30 dÃ­as. RÃ©plica en sitio secundario." },
+              { title: "Red", desc: "Firewall configurado, puertos 80/443/5432/8443. VPN para administración remota." },
+              { title: "Backups", desc: "pg_dump automatizado cada 6 horas. Retención mínima 30 días. Réplica en sitio secundario." },
             ].map((item) => (
               <div key={item.title} className="flex items-start gap-3">
                 <Server className="h-4 w-4 text-primary mt-0.5 shrink-0" />
@@ -217,15 +217,15 @@ const Despliegue = () => (
       <TabsContent value="federada" className="space-y-6 mt-6">
         <Section title="Despliegue Federado">
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-            Modelo para crear una red de nodos autÃ³nomos interconectados bajo el protocolo CITE-MESH.
+            Modelo para crear una red de nodos autónomos interconectados bajo el protocolo CITE-MESH.
           </p>
           <div className="space-y-4">
             {[
-              { phase: "Fase 1: Nodo semilla", desc: "Desplegar instancia base con todos los dominios activos. Este nodo serÃ¡ la autoridad raÃ­z de certificaciÃ³n." },
-              { phase: "Fase 2: Registro federado", desc: "Configurar el registro central de nodos. Cada nuevo nodo se registra con su clave pÃºblica y metadata." },
-              { phase: "Fase 3: SincronizaciÃ³n", desc: "Activar protocolo CITE-MESH para sincronizaciÃ³n bidireccional de datos entre nodos, con resoluciÃ³n de conflictos." },
+              { phase: "Fase 1: Nodo semilla", desc: "Desplegar instancia base con todos los dominios activos. Este nodo será la autoridad raíz de certificación." },
+              { phase: "Fase 2: Registro federado", desc: "Configurar el registro central de nodos. Cada nuevo nodo se registra con su clave pública y metadata." },
+              { phase: "Fase 3: Sincronización", desc: "Activar protocolo CITE-MESH para sincronización bidireccional de datos entre nodos, con resolución de conflictos." },
               { phase: "Fase 4: Gobernanza", desc: "Establecer el consejo de guardianes entre nodos. Cada nodo elige representantes para la gobernanza federada." },
-              { phase: "Fase 5: CertificaciÃ³n", desc: "Ejecutar auditorÃ­a automatizada. Verificar compliance con estÃ¡ndares TAMV y emitir certificado de nodo federado." },
+              { phase: "Fase 5: Certificación", desc: "Ejecutar auditoría automatizada. Verificar compliance con estándares TAMV y emitir certificado de nodo federado." },
             ].map((p) => (
               <div key={p.phase} className="rounded-lg border border-border/50 bg-card/50 p-4">
                 <div className="flex items-center gap-2 mb-1">
@@ -243,23 +243,23 @@ const Despliegue = () => (
       <TabsContent value="checklist" className="space-y-6 mt-6">
         <Section title="Checklist de despliegue federado">
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-            Lista de verificaciÃ³n de 12 puntos para un despliegue federado exitoso. Cada punto debe completarse
-            y documentarse antes de solicitar certificaciÃ³n.
+            Lista de verificación de 12 puntos para un despliegue federado exitoso. Cada punto debe completarse
+            y documentarse antes de solicitar certificación.
           </p>
           <div className="space-y-2">
             {[
-              "Registrar nodo en el registro central con clave pÃºblica y metadata de contacto",
+              "Registrar nodo en el registro central con clave pública y metadata de contacto",
               "Configurar DNS con dominio propio apuntando al nodo (A/AAAA + CNAME)",
-              "Obtener certificado TLS 1.3 vÃ¡lido para el dominio del nodo",
+              "Obtener certificado TLS 1.3 válido para el dominio del nodo",
               "Desplegar servicios core: API, PostgreSQL, Redis, Isabella AI",
               "Ejecutar migraciones de base de datos y verificar esquema TAMV",
-              "Configurar RLS en todas las tablas con polÃ­ticas por dominio",
+              "Configurar RLS en todas las tablas con políticas por dominio",
               "Conectar observabilidad: Prometheus + Grafana + alertas configuradas",
-              "Ejecutar tests de seguridad: escaneo de vulnerabilidades, verificaciÃ³n TLS, OWASP",
-              "Verificar conectividad con nodo semilla y sincronizaciÃ³n CITE-MESH",
+              "Ejecutar tests de seguridad: escaneo de vulnerabilidades, verificación TLS, OWASP",
+              "Verificar conectividad con nodo semilla y sincronización CITE-MESH",
               "Ejecutar suite completa de tests E2E con cobertura > 80%",
-              "Designar guardiÃ¡n de nodo y documentar protocolo de incidentes",
-              "Solicitar auditorÃ­a de certificaciÃ³n y obtener certificado federado",
+              "Designar guardián de nodo y documentar protocolo de incidentes",
+              "Solicitar auditoría de certificación y obtener certificado federado",
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 border border-border/50">
                 <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-xs font-bold shrink-0">
@@ -274,17 +274,17 @@ const Despliegue = () => (
 
       {/* CERTIFICACIÃ“N */}
       <TabsContent value="certificacion" className="space-y-6 mt-6">
-        <Section title="Sistema de CertificaciÃ³n Federada">
+        <Section title="Sistema de Certificación Federada">
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-            Cada rÃ©plica del ecosistema TAMV debe pasar un proceso de validaciÃ³n para ser reconocida oficialmente como nodo federado.
+            Cada réplica del ecosistema TAMV debe pasar un proceso de validación para ser reconocida oficialmente como nodo federado.
           </p>
 
           <div className="space-y-3 mb-6">
             {[
-              { level: "Nodo Observador", desc: "Registro bÃ¡sico. Acceso de lectura a la federaciÃ³n. Para niveles Free/Premium.", criteria: "Registro completo, acepta CÃ³dice Maestro." },
-              { level: "Nodo Colaborador", desc: "Puede aportar datos y propuestas. Para nivel Devs.", criteria: "Seguridad base, APIs estÃ¡ndar, tests mÃ­nimos aprobados." },
-              { level: "Nodo Operador", desc: "Opera servicios activos. Para nivel Advance.", criteria: "Uptime > 99.5%, auditorÃ­a de seguridad aprobada, guardiÃ¡n designado." },
-              { level: "Nodo GuardiÃ¡n", desc: "MÃ¡ximo nivel. Gobernanza activa. Solo Enterprise.", criteria: "Cumplimiento total Ã©tico/contractual, participaciÃ³n activa, SLA verificado." },
+              { level: "Nodo Observador", desc: "Registro básico. Acceso de lectura a la federación. Para niveles Free/Premium.", criteria: "Registro completo, acepta Códice Maestro." },
+              { level: "Nodo Colaborador", desc: "Puede aportar datos y propuestas. Para nivel Devs.", criteria: "Seguridad base, APIs estándar, tests mínimos aprobados." },
+              { level: "Nodo Operador", desc: "Opera servicios activos. Para nivel Advance.", criteria: "Uptime > 99.5%, auditoría de seguridad aprobada, guardián designado." },
+              { level: "Nodo Guardián", desc: "Máximo nivel. Gobernanza activa. Solo Enterprise.", criteria: "Cumplimiento total ético/contractual, participación activa, SLA verificado." },
             ].map((n) => (
               <div key={n.level} className="rounded-lg border border-border/50 bg-card/50 p-4">
                 <h4 className="font-semibold text-foreground text-sm">{n.level}</h4>
@@ -296,11 +296,11 @@ const Despliegue = () => (
 
           <div className="space-y-3">
             {[
-              { title: "VerificaciÃ³n de integridad", desc: "Hash SHA-256 del codebase debe coincidir con la versiÃ³n oficial. MÃ³dulos custom deben estar documentados.", icon: Shield },
-              { title: "Tests de seguridad", desc: "Penetration testing automatizado. Zero vulnerabilidades crÃ­ticas. RLS activo en todas las tablas.", icon: Shield },
-              { title: "Compliance normativo", desc: "VerificaciÃ³n de cumplimiento con GDPR, AI Act y estÃ¡ndares ISO 27001. AuditorÃ­a de datos personales.", icon: CheckCircle },
-              { title: "Performance baseline", desc: "Latencia < 200ms P95. Uptime > 99.5% en perÃ­odo de prueba de 30 dÃ­as. Health checks operativos.", icon: CheckCircle },
-              { title: "Gobernanza local", desc: "GuardiÃ¡n de nodo designado. Protocolo de incidentes documentado. Canal de comunicaciÃ³n con la federaciÃ³n.", icon: CheckCircle },
+              { title: "Verificación de integridad", desc: "Hash SHA-256 del codebase debe coincidir con la versión oficial. Módulos custom deben estar documentados.", icon: Shield },
+              { title: "Tests de seguridad", desc: "Penetration testing automatizado. Zero vulnerabilidades críticas. RLS activo en todas las tablas.", icon: Shield },
+              { title: "Compliance normativo", desc: "Verificación de cumplimiento con GDPR, AI Act y estándares ISO 27001. Auditoría de datos personales.", icon: CheckCircle },
+              { title: "Performance baseline", desc: "Latencia < 200ms P95. Uptime > 99.5% en período de prueba de 30 días. Health checks operativos.", icon: CheckCircle },
+              { title: "Gobernanza local", desc: "Guardián de nodo designado. Protocolo de incidentes documentado. Canal de comunicación con la federación.", icon: CheckCircle },
             ].map((item) => (
               <div key={item.title} className="flex items-start gap-3">
                 <item.icon className="h-4 w-4 text-primary mt-0.5 shrink-0" />
@@ -314,8 +314,8 @@ const Despliegue = () => (
 
           <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 mt-4">
             <p className="text-sm text-muted-foreground">
-              <strong className="text-primary">Proceso:</strong> Solicitud â†’ AuditorÃ­a tÃ©cnica â†’ AuditorÃ­a de gobernanza
-              â†’ EmisiÃ³n de certificado con firma criptogrÃ¡fica del GuardiÃ¡n Supremo â†’ RevisiÃ³n periÃ³dica cada 12 meses.
+              <strong className="text-primary">Proceso:</strong> Solicitud â†’ Auditoría técnica â†’ Auditoría de gobernanza
+              â†’ Emisión de certificado con firma criptográfica del Guardián Supremo â†’ Revisión periódica cada 12 meses.
             </p>
           </div>
         </Section>

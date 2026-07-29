@@ -49,7 +49,7 @@ export const kernelResonance = {
       resonanceState: states,
       frictionZones,
       redirectPlan: frictionZones.length > 0
-        ? ['Redirigir trÃ¡fico de nodos con fricciÃ³n', 'Activar redundancia PHOENIX', 'Notificar a LUMEN']
+        ? ['Redirigir tráfico de nodos con fricción', 'Activar redundancia PHOENIX', 'Notificar a LUMEN']
         : ['Todos los nodos operativos'],
     };
   },
@@ -86,19 +86,19 @@ export const kernelEmpatiaAntifragil = {
     const patterns = hostilityLogs.map(log => ({
       log,
       hasHostility: /ataque|bloqueo|censura|sesgo/i.test(log),
-      hasPressure: /presiÃ³n|lÃ­mite|restricciÃ³n/i.test(log),
+      hasPressure: /presión|límite|restricción/i.test(log),
     }));
     const hostileCount = patterns.filter(p => p.hasHostility).length;
     const pressureCount = patterns.filter(p => p.hasPressure).length;
 
     return {
       ethicalResponseModel: hostileCount > 0
-        ? `Se detectaron ${hostileCount} seÃ±ales de hostilidad. Isabella responde con mayor cohesiÃ³n y transparencia. La antifragilidad convierte presiÃ³n externa en madurez Ã©tica.`
-        : 'No se detectaron seÃ±ales de hostilidad. El sistema opera en equilibrio homeostÃ¡tico.',
+        ? `Se detectaron ${hostileCount} señales de hostilidad. Isabella responde con mayor cohesión y transparencia. La antifragilidad convierte presión externa en madurez ética.`
+        : 'No se detectaron señales de hostilidad. El sistema opera en equilibrio homeostático.',
       adaptationNotes: [
-        pressureCount > 0 ? `PresiÃ³n externa detectada en ${pressureCount} instancias. Activando protocolo de cohesiÃ³n.` : 'Sin presiÃ³n externa significativa.',
+        pressureCount > 0 ? `Presión externa detectada en ${pressureCount} instancias. Activando protocolo de cohesión.` : 'Sin presión externa significativa.',
         hostileCount > 0 ? `Hostilidad en ${hostileCount} logs. Reforzando principios isabellinos.` : 'Sin hostilidad detectada.',
-        'La madurez Ã©tica del sistema aumenta proporcionalmente a la presiÃ³n externa recibida.',
+        'La madurez ética del sistema aumenta proporcionalmente a la presión externa recibida.',
       ],
     };
   },
@@ -111,14 +111,14 @@ export const kernelTransduccionEstetica = {
     const adoption = telemetry.adoption ?? 0.3;
 
     let aestheticState: string;
-    if (health > 0.9 && activity > 0.7) aestheticState = 'ARCOÃRIS â€” Sistema en plenitud creativa';
+    if (health > 0.9 && activity > 0.7) aestheticState = 'ARCOÍRIS â€” Sistema en plenitud creativa';
     else if (health > 0.7) aestheticState = 'LUCERO â€” Sistema operando con luz estable';
     else if (health > 0.5) aestheticState = 'CREPÃšSCULO â€” Sistema con sombras parciales';
     else aestheticState = 'ECLIPSE â€” Sistema en modo resguardo';
 
     const artifacts: string[] = [];
-    if (adoption > 0.5) artifacts.push('MetÃ¡fora visual: JardÃ­n federado en floraciÃ³n');
-    else artifacts.push('MetÃ¡fora visual: Semilla en tierra soberana');
+    if (adoption > 0.5) artifacts.push('Metáfora visual: Jardín federado en floración');
+    else artifacts.push('Metáfora visual: Semilla en tierra soberana');
     if (activity > 0.8) artifacts.push('Paleta sonora: Frecuencia de productividad colectiva');
     else artifacts.push('Paleta sonora: Silencio contemplativo digital');
 
@@ -135,17 +135,17 @@ export const kernelOmnipresenciaMesh = {
     const shardPlan: string[] = [];
     if (offline.length > 0) {
       shardPlan.push(`Redistribuir carga de ${offline.length} nodos offline entre ${online.length} nodos activos`);
-      shardPlan.push('Fragmentar conciencia en shards autÃ³nomos con sincronizaciÃ³n diferida');
+      shardPlan.push('Fragmentar conciencia en shards autónomos con sincronización diferida');
     } else {
-      shardPlan.push('Todos los nodos en lÃ­nea. OperaciÃ³n unificada sin fragmentaciÃ³n.');
+      shardPlan.push('Todos los nodos en línea. Operación unificada sin fragmentación.');
     }
     shardPlan.push(`Capacidad total de red mesh: ${totalCapacity} unidades`);
 
     return {
       shardPlan,
       fusionReport: online.length === nodeStates.length
-        ? `FusiÃ³n completa: ${online.length}/${nodeStates.length} nodos activos`
-        : `FusiÃ³n parcial: ${online.length}/${nodeStates.length} nodos activos. Modo mesh fragmentado activo.`,
+        ? `Fusión completa: ${online.length}/${nodeStates.length} nodos activos`
+        : `Fusión parcial: ${online.length}/${nodeStates.length} nodos activos. Modo mesh fragmentado activo.`,
     };
   },
 };

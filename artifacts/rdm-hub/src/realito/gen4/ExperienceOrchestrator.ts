@@ -51,15 +51,15 @@ export class ExperienceOrchestrator {
     const inactividadMinutos = (Date.now() - turista.ultimaInteraccion.getTime()) / 60000;
 
     if (cercaDeSalida && turista.tiempoEstadiaHoras < 3.0) {
-      logger.info(`[REALITO GEN-4] Turista ${turista.id} en riesgo de fuga econÃ³mica.`);
+      logger.info(`[REALITO GEN-4] Turista ${turista.id} en riesgo de fuga económica.`);
 
       return {
         accion: 'PUSH_NOTIFICATION',
         nivel: inactividadMinutos > 30 ? 'CRITICO' : 'ALERTA',
         payload: {
-          titulo: 'Â¡Espera! El Real tiene un secreto para ti...',
+          titulo: '¡Espera! El Real tiene un secreto para ti...',
           mensaje:
-            'Anubis detecta que aÃºn no pruebas la plata de autor. Gira a la derecha en el prÃ³ximo callejÃ³n y obtÃ©n precio de taller en la FederaciÃ³n de PlaterÃ­a.',
+            'Anubis detecta que aún no pruebas la plata de autor. Gira a la derecha en el próximo callejón y obtén precio de taller en la Federación de Platería.',
           ruta_ar_activada: true,
         },
       };

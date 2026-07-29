@@ -89,6 +89,6 @@ export const FEDERATION_CHROMATIC: Record<FederationId, { primary: string; name:
   3: { primary: "#0f766e", name: "Territorial" },
   4: { primary: "#d4a017", name: "Cognitiva" },
   5: { primary: "#4b5563", name: "Interfaz (Nexo)" },
-  6: { primary: "#3730a3", name: "CriptogrÃ¡fica" },
+  6: { primary: "#3730a3", name: "Criptográfica" },
   7: { primary: "#047857", name: "Resiliencia" },
 };

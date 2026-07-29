@@ -27,14 +27,14 @@ const PaginationControls = ({ meta, onPageChange }: PaginationControlsProps) => 
 
   return (
     <motion.nav
-      aria-label="PaginaciÃ³n"
+      aria-label="Paginación"
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       className="mt-8 rounded-2xl border border-cyan-100/10 bg-slate-950/45 p-3 backdrop-blur-xl"
     >
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <p className="text-xs tracking-[0.16em] uppercase text-cyan-100/60">
-          PÃ¡gina {meta.page} de {meta.totalPages} Â· {meta.totalItems} registros
+          Página {meta.page} de {meta.totalPages} · {meta.totalItems} registros
         </p>
 
         <div className="flex flex-wrap items-center gap-1.5">

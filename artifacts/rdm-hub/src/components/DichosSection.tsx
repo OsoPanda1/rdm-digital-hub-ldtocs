@@ -25,7 +25,7 @@ const CATEGORIES = [
   { id: "COMIDA_BEBIDA", label: "Comida y Bebida", icon: "ðŸ·" },
   { id: "TRABAJO", label: "Trabajo", icon: "âš™ï¸" },
   { id: "VIDA_COTIDIANA", label: "Vida Cotidiana", icon: "ðŸ›ï¸" },
-  { id: "MINERIA", label: "MinerÃ­a", icon: "ðŸ’Ž" },
+  { id: "MINERIA", label: "Minería", icon: "ðŸ’Ž" },
 ];
 
 interface Dicho {
@@ -127,15 +127,15 @@ export function DichosSection({ onBack }: DichosSectionProps) {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
             <p className="text-xs tracking-[0.4em] uppercase text-accent font-body mb-4 flex items-center gap-2">
               <BookOpen className="w-3 h-3" />
-              Archivo HistÃ³rico Â· Real del Monte
+              Archivo Histórico · Real del Monte
             </p>
             <h1 className="text-4xl md:text-7xl font-display font-bold mb-4 leading-[0.9]">
-              CallejÃ³n de los{" "}
+              Callejón de los{" "}
               <span className="text-accent">Dichos</span>
             </h1>
             <p className="text-foreground/60 font-body max-w-xl text-lg leading-relaxed">
-              La identidad de nuestro Pueblo MÃ¡gico codificada en 47 expresiones atemporales.
-              Un ecosistema lingÃ¼Ã­stico preservado en alta fidelidad.
+              La identidad de nuestro Pueblo Mágico codificada en 47 expresiones atemporales.
+              Un ecosistema lingüístico preservado en alta fidelidad.
             </p>
           </motion.div>
         </div>
@@ -232,8 +232,8 @@ export function DichosSection({ onBack }: DichosSectionProps) {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
           {[
             { label: "Personajes Mapeados", value: dichos.length },
-            { label: "TaxonomÃ­as", value: CATEGORIES.length - 1 },
-            { label: "AÃ±os de PreservaciÃ³n", value: "200+" },
+            { label: "Taxonomías", value: CATEGORIES.length - 1 },
+            { label: "Años de Preservación", value: "200+" },
             { label: "Registros Ãšnicos", value: "47" },
           ].map((stat, i) => (
             <motion.div
@@ -270,7 +270,7 @@ export function DichosSection({ onBack }: DichosSectionProps) {
         ) : filteredDichos.length === 0 ? (
           <div className="text-center py-20">
             <Quote className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
-            <p className="text-sm text-muted-foreground font-body">No existen registros bajo esos parÃ¡metros.</p>
+            <p className="text-sm text-muted-foreground font-body">No existen registros bajo esos parámetros.</p>
           </div>
         ) : (
           <div className="space-y-2 pb-24">
@@ -324,7 +324,7 @@ export function DichosSection({ onBack }: DichosSectionProps) {
                             </div>
                             <div>
                               <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-body mb-1">
-                                TraducciÃ³n
+                                Traducción
                               </p>
                               <p className="text-xs text-foreground/80 font-body">{d.significado}</p>
                             </div>

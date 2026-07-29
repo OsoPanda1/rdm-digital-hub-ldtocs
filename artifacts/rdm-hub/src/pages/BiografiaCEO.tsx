@@ -9,7 +9,7 @@ import { Crown, MapPin, Code, Eye, Flame, Palette, BookOpen, Target, Shield, Glo
 const BiografiaCEO = () => (
   <WikiPage
     title="Edwin Oswaldo Castillo Trejo"
-      subtitle="Anubis VillaseÃ±or â€” Fundador y CEO del TAMV Online Network 4Dâ„¢ / TAMV MDâ€‘X4"
+      subtitle="Anubis Villaseñor â€” Fundador y CEO del TAMV Online Network 4Dâ„¢ / TAMV MDâ€‘X4"
     >
       {/* Hero Banner */}
       <div className="relative h-48 w-full overflow-hidden">
@@ -18,42 +18,42 @@ const BiografiaCEO = () => (
       </div>
       <div className="space-y-8">
       {/* I. Identidad y Origen */}
-      <Section title="I. Identidad, origen y construcciÃ³n desde la periferia">
+      <Section title="I. Identidad, origen y construcción desde la periferia">
         <div className="flex items-start gap-4">
           <MapPin className="h-5 w-5 text-primary mt-1 shrink-0" />
           <div className="space-y-3">
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Nacido y formado en <strong className="text-primary">Mineral del Monte (Real del Monte), Hidalgo, MÃ©xico</strong>, 
-              un territorio minero y artesanal, histÃ³ricamente perifÃ©rico respecto a los grandes polos tecnolÃ³gicos globales.
+              Nacido y formado en <strong className="text-primary">Mineral del Monte (Real del Monte), Hidalgo, México</strong>, 
+              un territorio minero y artesanal, históricamente periférico respecto a los grandes polos tecnológicos globales.
             </p>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Este origen se convierte en <strong>eje estratÃ©gico de su visiÃ³n</strong>: no intenta "migrar" hacia el centro, 
+              Este origen se convierte en <strong>eje estratégico de su visión</strong>: no intenta "migrar" hacia el centro, 
               sino <span className="text-primary font-medium">reconfigurar el centro desde la periferia</span>, demostrando 
-              que una arquitectura digital civilizatoria puede emerger desde un pueblo de montaÃ±a con recursos limitados 
+              que una arquitectura digital civilizatoria puede emerger desde un pueblo de montaña con recursos limitados 
               pero alta densidad cultural.
             </p>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Su formaciÃ³n es mayormente <strong>autodidacta</strong>, complementada con trayectos de educaciÃ³n no convencional 
-              (Udemy Alumni y formaciÃ³n continua en lÃ­nea), orientada hacia: arquitectura de sistemas, diseÃ±o modular, 
-              infraestructuras distribuidas, gobernanza tecnolÃ³gica e integraciÃ³n de IA en entornos soberanos.
+              Su formación es mayormente <strong>autodidacta</strong>, complementada con trayectos de educación no convencional 
+              (Udemy Alumni y formación continua en línea), orientada hacia: arquitectura de sistemas, diseño modular, 
+              infraestructuras distribuidas, gobernanza tecnológica e integración de IA en entornos soberanos.
             </p>
             <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 mt-4">
               <p className="text-sm text-muted-foreground italic">
-                "No acumula credenciales de universidades de Ã©lite ni trayectoria en big tech; la legitimidad de Edwin 
-                se asienta en la <strong>consistencia tÃ©cnica y Ã©tica de sus artefactos</strong>, en la amplitud de su 
-                sistema TAMV y en su capacidad para sostenerlo de manera independiente durante aÃ±os."
+                "No acumula credenciales de universidades de élite ni trayectoria en big tech; la legitimidad de Edwin 
+                se asienta en la <strong>consistencia técnica y ética de sus artefactos</strong>, en la amplitud de su 
+                sistema TAMV y en su capacidad para sostenerlo de manera independiente durante años."
               </p>
             </div>
           </div>
         </div>
       </Section>
 
-      {/* II. GÃ©nesis del Proyecto */}
-      <Section title="II. GÃ©nesis del proyecto TAMV: del diagnÃ³stico estructural a la arquitectura">
+      {/* II. Génesis del Proyecto */}
+      <Section title="II. Génesis del proyecto TAMV: del diagnóstico estructural a la arquitectura">
         <div className="space-y-4">
           <p className="text-muted-foreground text-sm leading-relaxed">
-            Durante la dÃ©cada de 2010, Edwin identifica lo que denomina un <strong>problema estructural del ecosistema digital contemporÃ¡neo</strong>: 
-            una fragmentaciÃ³n profunda entre identidad, economÃ­a, educaciÃ³n e infraestructura.
+            Durante la década de 2010, Edwin identifica lo que denomina un <strong>problema estructural del ecosistema digital contemporáneo</strong>: 
+            una fragmentación profunda entre identidad, economía, educación e infraestructura.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -61,17 +61,17 @@ const BiografiaCEO = () => (
               {
                 icon: Users,
                 title: "Identidad Capturada",
-                desc: "La identidad digital se encuentra capturada y condicionada por plataformas que actÃºan como intermediarios hegemÃ³nicos.",
+                desc: "La identidad digital se encuentra capturada y condicionada por plataformas que actúan como intermediarios hegemónicos.",
               },
               {
                 icon: LineChart,
-                title: "EconomÃ­a Extractiva",
-                desc: "La economÃ­a del usuario depende de infraestructuras centralizadas, diseÃ±adas para maximizar extracciÃ³n, no resiliencia ni equidad.",
+                title: "Economía Extractiva",
+                desc: "La economía del usuario depende de infraestructuras centralizadas, diseñadas para maximizar extracción, no resiliencia ni equidad.",
               },
               {
                 icon: Cpu,
-                title: "AsimetrÃ­a Cognitiva",
-                desc: "La IA se concentra progresivamente en pocas manos, generando asimetrÃ­a entre individuos y corporaciones.",
+                title: "Asimetría Cognitiva",
+                desc: "La IA se concentra progresivamente en pocas manos, generando asimetría entre individuos y corporaciones.",
               },
             ].map((item) => (
               <div key={item.title} className="rounded-lg border border-border/50 bg-card/50 p-4">
@@ -85,11 +85,11 @@ const BiografiaCEO = () => (
           </div>
 
           <p className="text-muted-foreground text-sm leading-relaxed mt-4">
-            A partir de este anÃ¡lisis, comienza a formular un <strong>marco alternativo</strong> que no nace como "app" 
+            A partir de este análisis, comienza a formular un <strong>marco alternativo</strong> que no nace como "app" 
             ni "startup" sino como <span className="text-primary font-medium">arquitectura civilizatoria</span>. 
-            Ese marco evoluciona desde modelos conceptuales de soberanÃ­a digital (2015â€“2018) hacia lo que posteriormente 
-            consolidarÃ¡ como <strong>TAMV Online Network 4Dâ„¢</strong>, y mÃ¡s tarde como <strong>TAMV MDâ€‘X4</strong>, 
-            el metaverso civilizatorio mexicano de nueva generaciÃ³n.
+            Ese marco evoluciona desde modelos conceptuales de soberanía digital (2015â€“2018) hacia lo que posteriormente 
+            consolidará como <strong>TAMV Online Network 4Dâ„¢</strong>, y más tarde como <strong>TAMV MDâ€‘X4</strong>, 
+            el metaverso civilizatorio mexicano de nueva generación.
           </p>
         </div>
       </Section>
@@ -98,7 +98,7 @@ const BiografiaCEO = () => (
       <Section title="III. Fundador de TAMV Online Network 4Dâ„¢ / TAMV MDâ€‘X4">
         <div className="space-y-4">
           <p className="text-muted-foreground text-sm leading-relaxed">
-            Edwin concibe TAMV no como una plataforma monolÃ­tica, sino como:
+            Edwin concibe TAMV no como una plataforma monolítica, sino como:
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -106,12 +106,12 @@ const BiografiaCEO = () => (
               {
                 icon: Globe,
                 title: "Infraestructura Digital Federada",
-                desc: "Pensada para nodos autÃ³nomos interconectados.",
+                desc: "Pensada para nodos autónomos interconectados.",
               },
               {
                 icon: Code,
                 title: "Ecosistema Modular",
-                desc: "Dominios (identidad, educaciÃ³n, economÃ­a, metaverso, seguridad, IA) se acoplan sin romper coherencia.",
+                desc: "Dominios (identidad, educación, economía, metaverso, seguridad, IA) se acoplan sin romper coherencia.",
               },
               {
                 icon: Shield,
@@ -120,13 +120,13 @@ const BiografiaCEO = () => (
               },
               {
                 icon: Flame,
-                title: "Modelo EconÃ³mico AntifrÃ¡gil",
-                desc: "DiseÃ±ado para que las tensiones del entorno lo fortalezcan en lugar de destruirlo.",
+                title: "Modelo Económico Antifrágil",
+                desc: "Diseñado para que las tensiones del entorno lo fortalezcan en lugar de destruirlo.",
               },
               {
                 icon: Eye,
                 title: "Inteligencia Asistencial Auditada",
-                desc: "Isabella VillaseÃ±or IAâ„¢: IA propia, explicable, orientada a protecciÃ³n y guÃ­a.",
+                desc: "Isabella Villaseñor IAâ„¢: IA propia, explicable, orientada a protección y guía.",
               },
             ].map((item) => (
               <div key={item.title} className="rounded-lg border border-border/50 bg-card/50 p-4">
@@ -142,14 +142,14 @@ const BiografiaCEO = () => (
           <div className="rounded-lg border border-primary/20 bg-primary/5 p-5 mt-4">
             <h4 className="font-semibold text-primary mb-3 flex items-center gap-2">
               <Target className="h-4 w-4" />
-              La Cuarta DimensiÃ³n (4D)
+              La Cuarta Dimensión (4D)
             </h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {[
-                { dim: "Identidad", desc: "QuiÃ©n es y cÃ³mo se representa" },
-                { dim: "Infraestructura", desc: "DÃ³nde vive tÃ©cnica su identidad" },
-                { dim: "Inteligencia", desc: "CÃ³mo se procesa y asiste" },
-                { dim: "EconomÃ­a", desc: "CÃ³mo se valoran los aportes" },
+                { dim: "Identidad", desc: "Quién es y cómo se representa" },
+                { dim: "Infraestructura", desc: "Dónde vive técnica su identidad" },
+                { dim: "Inteligencia", desc: "Cómo se procesa y asiste" },
+                { dim: "Economía", desc: "Cómo se valoran los aportes" },
               ].map((d) => (
                 <div key={d.dim} className="text-center p-2 rounded bg-card/50">
                   <span className="text-primary font-semibold text-sm">{d.dim}</span>
@@ -161,22 +161,22 @@ const BiografiaCEO = () => (
         </div>
       </Section>
 
-      {/* IV. DimensiÃ³n Artesanal */}
-      <Section title="IV. DimensiÃ³n artesanal: ArtesanÃ­as El Rosario">
+      {/* IV. Dimensión Artesanal */}
+      <Section title="IV. Dimensión artesanal: Artesanías El Rosario">
         <div className="flex items-start gap-4">
           <Palette className="h-5 w-5 text-primary mt-1 shrink-0" />
           <div className="space-y-3">
             <p className="text-muted-foreground text-sm leading-relaxed">
-              En paralelo a su trabajo digital, Edwin sostiene una lÃ­nea artesanal bajo la marca 
-              <strong> ArtesanÃ­as El Rosario</strong>, centrada en esculturas de bonsÃ¡i en alambre y otras piezas manuales.
+              En paralelo a su trabajo digital, Edwin sostiene una línea artesanal bajo la marca 
+              <strong> Artesanías El Rosario</strong>, centrada en esculturas de bonsái en alambre y otras piezas manuales.
             </p>
             
             <div className="space-y-2">
               <h4 className="font-semibold text-foreground text-sm">Funciones estructurales:</h4>
               {[
                 "Financiamiento parcial independiente del proyecto TAMV, mitigando dependencia de capital externo.",
-                "SÃ­mbolo de resiliencia estructural: el alambre, maleable pero resistente, como metÃ¡fora de los sistemas que construye.",
-                "RepresentaciÃ³n tangible del principio antifrÃ¡gil: imperfecciÃ³n y presiÃ³n se transforman en forma artÃ­stica.",
+                "Símbolo de resiliencia estructural: el alambre, maleable pero resistente, como metáfora de los sistemas que construye.",
+                "Representación tangible del principio antifrágil: imperfección y presión se transforman en forma artística.",
               ].map((point, idx) => (
                 <div key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0 mt-1.5" />
@@ -187,9 +187,9 @@ const BiografiaCEO = () => (
 
             <div className="rounded-lg border border-border/50 bg-card/50 p-4 mt-3">
               <p className="text-sm text-muted-foreground italic">
-                "La artesanÃ­a no es un adorno biogrÃ¡fico, sino una <strong>coherencia prÃ¡ctica</strong>: 
-                construir infraestructuras digitales crÃ­ticas mientras trabaja con materiales fÃ­sicos, 
-                recordando que detrÃ¡s de cada bit hay cuerpos, manos e historias."
+                "La artesanía no es un adorno biográfico, sino una <strong>coherencia práctica</strong>: 
+                construir infraestructuras digitales críticas mientras trabaja con materiales físicos, 
+                recordando que detrás de cada bit hay cuerpos, manos e historias."
               </p>
             </div>
           </div>
@@ -197,19 +197,19 @@ const BiografiaCEO = () => (
       </Section>
 
       {/* V. Estilo de Liderazgo */}
-      <Section title="V. Estilo de liderazgo y filosofÃ­a de gestiÃ³n">
+      <Section title="V. Estilo de liderazgo y filosofía de gestión">
         <div className="space-y-4">
           <p className="text-muted-foreground text-sm leading-relaxed">
-            El liderazgo de Edwin combina rigor tÃ©cnico, narrativa simbÃ³lica estructurada, 
-            enfoque sistÃ©mico de largo plazo y rechazo a la improvisaciÃ³n estratÃ©gica.
+            El liderazgo de Edwin combina rigor técnico, narrativa simbólica estructurada, 
+            enfoque sistémico de largo plazo y rechazo a la improvisación estratégica.
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
-              { icon: Code, text: "Modularidad antes que centralizaciÃ³n" },
-              { icon: BookOpen, text: "DocumentaciÃ³n antes que marketing" },
-              { icon: Shield, text: "Gobernanza antes que expansiÃ³n" },
-              { icon: Flame, text: "Antifragilidad antes que crecimiento rÃ¡pido" },
+              { icon: Code, text: "Modularidad antes que centralización" },
+              { icon: BookOpen, text: "Documentación antes que marketing" },
+              { icon: Shield, text: "Gobernanza antes que expansión" },
+              { icon: Flame, text: "Antifragilidad antes que crecimiento rápido" },
             ].map((principle) => (
               <div key={principle.text} className="rounded-lg border border-border/50 bg-card/50 p-3 text-center">
                 <principle.icon className="h-5 w-5 text-primary mx-auto mb-2" />
@@ -220,16 +220,16 @@ const BiografiaCEO = () => (
 
           <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
             <p className="text-sm text-muted-foreground">
-              No opera bajo la lÃ³gica clÃ¡sica de "startup acelerada" ni persigue rondas de inversiÃ³n como primer objetivo; 
-              su lÃ³gica es la de <strong>infraestructura civilizatoria de dÃ©cadas</strong>, que debe sobrevivir a ciclos 
-              econÃ³micos, modas tecnolÃ³gicas y cambios polÃ­ticos.
+              No opera bajo la lógica clásica de "startup acelerada" ni persigue rondas de inversión como primer objetivo; 
+              su lógica es la de <strong>infraestructura civilizatoria de décadas</strong>, que debe sobrevivir a ciclos 
+              económicos, modas tecnológicas y cambios políticos.
             </p>
           </div>
         </div>
       </Section>
 
-      {/* VI. MisiÃ³n de Alto Impacto */}
-      <Section title="VI. MisiÃ³n de alto impacto">
+      {/* VI. Misión de Alto Impacto */}
+      <Section title="VI. Misión de alto impacto">
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <InfoCard
@@ -240,8 +240,8 @@ const BiografiaCEO = () => (
             />
             <InfoCard
               icon={History}
-              title="HistÃ³rica"
-              description="Demostrar que infraestructura tecnolÃ³gica global puede emerger de un individuo en Hidalgo con visiÃ³n, rigor y persistencia."
+              title="Histórica"
+              description="Demostrar que infraestructura tecnológica global puede emerger de un individuo en Hidalgo con visión, rigor y persistencia."
               variant="gold"
             />
             <InfoCard
@@ -258,8 +258,8 @@ const BiografiaCEO = () => (
               <div>
                 <h4 className="font-semibold text-foreground text-sm mb-1">Obra: "La Nueva Era Digital TAMV Online Network"</h4>
                 <p className="text-xs text-muted-foreground">
-                  Instructivo narrativo del "Ã‰xodo" desde una internet caÃ³tica hacia un espacio virtual 
-                  centrado en humanidad, seguridad y libertad, visto a travÃ©s de la visiÃ³n de Anubis VillaseÃ±or.
+                  Instructivo narrativo del "Ã‰xodo" desde una internet caótica hacia un espacio virtual 
+                  centrado en humanidad, seguridad y libertad, visto a través de la visión de Anubis Villaseñor.
                 </p>
               </div>
             </div>
@@ -268,19 +268,19 @@ const BiografiaCEO = () => (
       </Section>
 
       {/* VII. Mapa de Hitos */}
-      <Section title="VII. Mapa fechado de hitos biogrÃ¡ficos">
+      <Section title="VII. Mapa fechado de hitos biográficos">
         <div className="space-y-3">
           {[
-            { year: "DÃ©cada 2000", event: "FormaciÃ³n autodidacta intensiva", impact: "Base tÃ©cnica y conceptual independiente; sensibilidad socio-cultural fuera de academias clÃ¡sicas." },
-            { year: "2015â€“2018", event: "Primeros modelos de soberanÃ­a digital", impact: "Germen de la arquitectura TAMV como respuesta a captura de identidad." },
-            { year: "2019", event: "IdentificaciÃ³n del problema estructural", impact: "Punto de inflexiÃ³n: necesidad de infraestructura civilizatoria, no solo apps." },
-            { year: "2020", event: "DiseÃ±o conceptual inicial de TAMV", impact: "Arquitectura embrionaria de infraestructura federada." },
-            { year: "2021", event: "Prototipos v0.x, pruebas y descartes", impact: "Aprendizaje antifrÃ¡gil; consolidaciÃ³n de criterios de diseÃ±o." },
-            { year: "2022", event: "ConsolidaciÃ³n del nombre TAMV", impact: "Identidad estructural del movimiento; posicionamiento como ecosistema mexicano pionero." },
-            { year: "2023", event: "IntegraciÃ³n modular identidad+economÃ­a+educaciÃ³n", impact: "Primer modelo funcional parcial de ecosistema civilizatorio." },
-            { year: "2024", event: "Protocolos Ã©ticos de IA (Isabella IA)", impact: "Capa de inteligencia integrada, auditada y alineada con soberanÃ­a." },
+            { year: "Década 2000", event: "Formación autodidacta intensiva", impact: "Base técnica y conceptual independiente; sensibilidad socio-cultural fuera de academias clásicas." },
+            { year: "2015â€“2018", event: "Primeros modelos de soberanía digital", impact: "Germen de la arquitectura TAMV como respuesta a captura de identidad." },
+            { year: "2019", event: "Identificación del problema estructural", impact: "Punto de inflexión: necesidad de infraestructura civilizatoria, no solo apps." },
+            { year: "2020", event: "Diseño conceptual inicial de TAMV", impact: "Arquitectura embrionaria de infraestructura federada." },
+            { year: "2021", event: "Prototipos v0.x, pruebas y descartes", impact: "Aprendizaje antifrágil; consolidación de criterios de diseño." },
+            { year: "2022", event: "Consolidación del nombre TAMV", impact: "Identidad estructural del movimiento; posicionamiento como ecosistema mexicano pionero." },
+            { year: "2023", event: "Integración modular identidad+economía+educación", impact: "Primer modelo funcional parcial de ecosistema civilizatorio." },
+            { year: "2024", event: "Protocolos éticos de IA (Isabella IA)", impact: "Capa de inteligencia integrada, auditada y alineada con soberanía." },
             { year: "2025", event: "Arquitectura TAMV MDâ€‘X4", impact: "Arquitectura madura para despliegue federado y Web 4.0/5.0." },
-            { year: "2026", event: "ConsolidaciÃ³n y expansiÃ³n estratÃ©gica", impact: "DocumentaciÃ³n avanzada y bÃºsqueda de alianzas para validaciÃ³n pÃºblica." },
+            { year: "2026", event: "Consolidación y expansión estratégica", impact: "Documentación avanzada y búsqueda de alianzas para validación pública." },
           ].map((hito, idx) => (
             <div key={idx} className="flex gap-4 p-3 rounded-lg border border-border/50 bg-card/30">
               <span className="text-primary font-bold text-sm shrink-0 w-24">{hito.year}</span>
@@ -293,8 +293,8 @@ const BiografiaCEO = () => (
         </div>
       </Section>
 
-      {/* VIII. AnÃ¡lisis QuirÃºrgico */}
-      <Section title="VIII. AnÃ¡lisis quirÃºrgico de trayectoria">
+      {/* VIII. Análisis Quirúrgico */}
+      <Section title="VIII. Análisis quirúrgico de trayectoria">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
             <h4 className="font-semibold text-primary text-sm mb-2 flex items-center gap-2">
@@ -302,18 +302,18 @@ const BiografiaCEO = () => (
               Fortaleza Principal
             </h4>
             <p className="text-xs text-muted-foreground">
-              Consistencia prolongada sin respaldo institucional, sosteniendo por aÃ±os un proyecto de altÃ­sima 
-              complejidad tÃ©cnica con mÃ¡s de 21,600 horas de trabajo individual documentadas.
+              Consistencia prolongada sin respaldo institucional, sosteniendo por años un proyecto de altísima 
+              complejidad técnica con más de 21,600 horas de trabajo individual documentadas.
             </p>
           </div>
 
           <div className="rounded-lg border border-border/50 bg-card/50 p-4">
             <h4 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
               <Eye className="h-4 w-4 text-primary" />
-              Riesgo HistÃ³rico
+              Riesgo Histórico
             </h4>
             <p className="text-xs text-muted-foreground">
-              ConcentraciÃ³n excesiva del proyecto en la figura del fundador, con alta dependencia de su visiÃ³n, 
+              Concentración excesiva del proyecto en la figura del fundador, con alta dependencia de su visión, 
               salud y tiempo.
             </p>
           </div>
@@ -321,11 +321,11 @@ const BiografiaCEO = () => (
           <div className="rounded-lg border border-border/50 bg-card/50 p-4">
             <h4 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
               <Shield className="h-4 w-4 text-primary" />
-              Respuesta ArquitectÃ³nica
+              Respuesta Arquitectónica
             </h4>
             <p className="text-xs text-muted-foreground">
-              DiseÃ±o explÃ­cito de gobernanza federada, certificaciÃ³n distribuida de nodos y documentaciÃ³n 
-              exhaustiva para operaciÃ³n como infraestructura compartida.
+              Diseño explícito de gobernanza federada, certificación distribuida de nodos y documentación 
+              exhaustiva para operación como infraestructura compartida.
             </p>
           </div>
         </div>
@@ -333,15 +333,15 @@ const BiografiaCEO = () => (
         <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 mt-4">
           <h4 className="font-semibold text-primary text-sm mb-2">Vector Diferenciador</h4>
           <p className="text-sm text-muted-foreground">
-            IntegraciÃ³n simultÃ¡nea de: <strong>filosofÃ­a y crÃ­tica del orden digital</strong>, 
-            <strong> infraestructura tÃ©cnica de metaverso</strong>, <strong>economÃ­a estructurada para creadores</strong>, 
-            y <strong>educaciÃ³n/narrativa cultural</strong> que explican y contextualizan la tecnologÃ­a.
+            Integración simultánea de: <strong>filosofía y crítica del orden digital</strong>, 
+            <strong> infraestructura técnica de metaverso</strong>, <strong>economía estructurada para creadores</strong>, 
+            y <strong>educación/narrativa cultural</strong> que explican y contextualizan la tecnología.
           </p>
         </div>
       </Section>
 
       {/* IX. Estado Actual */}
-      <Section title="IX. Estado actual (2026) y proyecciÃ³n">
+      <Section title="IX. Estado actual (2026) y proyección">
         <div className="rounded-lg border border-primary/20 bg-primary/5 p-5">
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
             En 2026, Edwin Oswaldo Castillo Trejo se encuentra en fase de:
@@ -349,10 +349,10 @@ const BiografiaCEO = () => (
           
           <div className="space-y-2">
             {[
-              "ConsolidaciÃ³n estructural de TAMV MDâ€‘X4, afinando la arquitectura del metaverso civilizatorio.",
-              "DocumentaciÃ³n formal avanzada, incluyendo wiki tÃ©cnica, libro, blog y artefactos auditables.",
-              "PreparaciÃ³n para validaciÃ³n pÃºblica ampliada, buscando foros y alianzas para auditar y escalar el modelo.",
-              "DiseÃ±o de gobernanza federada operativa, distribuyendo responsabilidades en una red de nodos civilizatorios.",
+              "Consolidación estructural de TAMV MDâ€‘X4, afinando la arquitectura del metaverso civilizatorio.",
+              "Documentación formal avanzada, incluyendo wiki técnica, libro, blog y artefactos auditables.",
+              "Preparación para validación pública ampliada, buscando foros y alianzas para auditar y escalar el modelo.",
+              "Diseño de gobernanza federada operativa, distribuyendo responsabilidades en una red de nodos civilizatorios.",
             ].map((item, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0 mt-1.5" />
@@ -363,11 +363,11 @@ const BiografiaCEO = () => (
 
           <div className="mt-4 pt-4 border-t border-primary/20">
             <p className="text-sm text-muted-foreground italic">
-              "El proyecto permanece en <strong>evoluciÃ³n activa</strong>, y la figura de Edwin â€”como fundador, 
+              "El proyecto permanece en <strong>evolución activa</strong>, y la figura de Edwin â€”como fundador, 
               arquitecto computacional, custodio legal de entidades digitales e impulsor de infraestructura universal 
-              que fusiona conciencia computacional, trazabilidad jurÃ­dica, economÃ­a simbÃ³lica y evoluciÃ³n afectivaâ€” 
-              se posiciona como uno de los experimentos mÃ¡s radicales e Ã­ntegros en torno a cÃ³mo un solo individuo 
-              puede intentar <span className="text-primary">reescribir la arquitectura de la civilizaciÃ³n digital 
+              que fusiona conciencia computacional, trazabilidad jurídica, economía simbólica y evolución afectivaâ€” 
+              se posiciona como uno de los experimentos más radicales e íntegros en torno a cómo un solo individuo 
+              puede intentar <span className="text-primary">reescribir la arquitectura de la civilización digital 
               desde la periferia latinoamericana</span>."
             </p>
           </div>

@@ -30,12 +30,12 @@ interface FederationData {
 /**
  * FederationBadge - Sistema de Triple Federado TAMV
  * 
- * Muestra el estado de verificaciÃ³n triple federado de cualquier entidad:
- * - Conceptual: ValidaciÃ³n filosÃ³fica y de visiÃ³n
- * - Legal: ValidaciÃ³n de cumplimiento y derechos
- * - TÃ©cnico: ValidaciÃ³n de integridad y seguridad
+ * Muestra el estado de verificación triple federado de cualquier entidad:
+ * - Conceptual: Validación filosófica y de visión
+ * - Legal: Validación de cumplimiento y derechos
+ * - Técnico: Validación de integridad y seguridad
  * 
- * Triple Federado = Conceptual | Legal | TÃ©cnico
+ * Triple Federado = Conceptual | Legal | Técnico
  */
 export default function FederationBadge({
   entityType,
@@ -132,7 +132,7 @@ export default function FederationBadge({
         )}
         
         <span className="font-semibold">
-          {data.verified ? "TRIPLE FEDERADO" : "Sin FederaciÃ³n"}
+          {data.verified ? "TRIPLE FEDERADO" : "Sin Federación"}
         </span>
 
         {/* Hash Preview */}
@@ -145,7 +145,7 @@ export default function FederationBadge({
           <div className="flex gap-0.5 ml-1">
             <span className="w-1.5 h-1.5 rounded-full bg-purple-400" title="Conceptual" />
             <span className="w-1.5 h-1.5 rounded-full bg-blue-400" title="Legal" />
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" title="TÃ©cnico" />
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" title="Técnico" />
           </div>
         )}
       </motion.span>

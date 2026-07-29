@@ -43,7 +43,7 @@ const HeroSection = () => {
           className="glass rounded-full px-5 py-2 mb-6 flex items-center gap-2">
           <span className="font-body text-[11px] tracking-[0.25em] uppercase text-[hsl(var(--platinum))]">Real del Monte</span>
           <span className="mx-1 h-3 w-px bg-foreground/20" />
-          <span className="text-[hsl(var(--gold))] text-[11px] tracking-[0.25em] uppercase font-body">Pueblo MÃ¡gico</span>
+          <span className="text-[hsl(var(--gold))] text-[11px] tracking-[0.25em] uppercase font-body">Pueblo Mágico</span>
         </motion.div>
 
         <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, delay: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
@@ -56,7 +56,7 @@ const HeroSection = () => {
 
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 1.3 }}
           className="font-display text-base md:text-xl text-muted-foreground italic text-center max-w-2xl mt-6 leading-relaxed">
-          Historia minera, gastronomÃ­a local, eventos vivos y rutas culturales en una sola plataforma digital a 2,660 metros de altura.
+          Historia minera, gastronomía local, eventos vivos y rutas culturales en una sola plataforma digital a 2,660 metros de altura.
         </motion.p>
 
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.5 }}
@@ -75,7 +75,7 @@ const HeroSection = () => {
           <Link to="/#mapa" className="btn-hero-primary group inline-flex items-center gap-2">
             <Compass className="h-4 w-4 transition-transform group-hover:rotate-45" /> Explorar Mapa Vivo
           </Link>
-          <Link to="/rutas" className="btn-hero-glass inline-flex items-center gap-2">Ver Rutas TurÃ­sticas</Link>
+          <Link to="/rutas" className="btn-hero-glass inline-flex items-center gap-2">Ver Rutas Turísticas</Link>
         </motion.div>
       </motion.div>
 

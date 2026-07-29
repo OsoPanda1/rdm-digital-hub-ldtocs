@@ -16,9 +16,9 @@ export default function AtlasCalles() {
         description="Las calles de Real del Monte: nombres, esquinas y memoria."
       />
       <AtlasPageHeader
-        kicker="Capa IV Â· Superficie"
+        kicker="Capa IV · Superficie"
         title="La ciudad se inclina contra la sierra."
-        intro="Real del Monte es un pueblo que se aprendiÃ³ a sÃ­ mismo en pendiente. Las calles bajan donde la roca lo permitiÃ³ y guardan, en sus nombres, un siglo de personas."
+        intro="Real del Monte es un pueblo que se aprendió a sí mismo en pendiente. Las calles bajan donde la roca lo permitió y guardan, en sus nombres, un siglo de personas."
         image={img}
       />
 

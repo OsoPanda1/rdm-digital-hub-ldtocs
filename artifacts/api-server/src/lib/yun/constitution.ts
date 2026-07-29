@@ -13,9 +13,9 @@ import type { YunDomain, FederationId, PolicyRule, SensitivityLevel } from "./ty
 export const CONSTITUTION_PRINCIPLES = [
   {
     id: "CP-001",
-    name: "SoberanÃ­a del Dato",
-    rule: "Una sola verdad coherente por dominio. ReplicaciÃ³n nunca contradice la verdad local.",
-    prohibit: ["NingÃºn dominio puede ser escrito por otro dominio sin explÃ­cita autorizaciÃ³n.", "No existen verdades paralelas por dominio."],
+    name: "Soberanía del Dato",
+    rule: "Una sola verdad coherente por dominio. Replicación nunca contradice la verdad local.",
+    prohibit: ["Ningún dominio puede ser escrito por otro dominio sin explícita autorización.", "No existen verdades paralelas por dominio."],
   },
   {
     id: "CP-002",
@@ -26,37 +26,37 @@ export const CONSTITUTION_PRINCIPLES = [
   {
     id: "CP-003",
     name: "Seguridad Transparente (Zero Trust)",
-    rule: "Secretos fuera del cÃ³digo. Cada interacciÃ³n se valida por identidad, contexto y polÃ­tica.",
-    prohibit: ["No se almacenan secretos en cÃ³digo fuente.", "No se asume confianza sin evidencia."],
+    rule: "Secretos fuera del código. Cada interacción se valida por identidad, contexto y política.",
+    prohibit: ["No se almacenan secretos en código fuente.", "No se asume confianza sin evidencia."],
   },
   {
     id: "CP-004",
     name: "Resiliencia Degradable",
-    rule: "El sistema no colapsa completamente. Se degrada preservando identidad, memoria y seÃ±al mÃ­nima.",
-    prohibit: ["No se apaga todo el sistema.", "No se pierde identidad o memoria en degradaciÃ³n."],
+    rule: "El sistema no colapsa completamente. Se degrada preservando identidad, memoria y señal mínima.",
+    prohibit: ["No se apaga todo el sistema.", "No se pierde identidad o memoria en degradación."],
   },
   {
     id: "CP-005",
     name: "Gobernanza Documentada",
-    rule: "Toda decisiÃ³n relevante se registra como ADR. YUN las lee como parte de su modelo de mundo.",
-    prohibit: ["No se hacen cambios arquitectÃ³nicos sin ADR.", "No se ignoran ADRs fundacionales."],
+    rule: "Toda decisión relevante se registra como ADR. YUN las lee como parte de su modelo de mundo.",
+    prohibit: ["No se hacen cambios arquitectónicos sin ADR.", "No se ignoran ADRs fundacionales."],
   },
   {
     id: "CP-006",
     name: "Observabilidad Obligatoria",
-    rule: "NingÃºn servicio es desplegable sin instrumentaciÃ³n. Toda operaciÃ³n registra telemetrÃ­a.",
-    prohibit: ["No se despliegan servicios sin trazabilidad.", "No se eliminan logs de auditorÃ­a."],
+    rule: "Ningún servicio es desplegable sin instrumentación. Toda operación registra telemetría.",
+    prohibit: ["No se despliegan servicios sin trazabilidad.", "No se eliminan logs de auditoría."],
   },
   {
     id: "CP-007",
     name: "Gobernanza Federada",
-    rule: "Cambios al SOUL requieren quorum 5/7. Skills nuevos en cuarentena hasta aprobaciÃ³n FED-3.",
-    prohibit: ["No se modifica el SOUL sin quorum.", "No se activan skills sin aprobaciÃ³n."],
+    rule: "Cambios al SOUL requieren quorum 5/7. Skills nuevos en cuarentena hasta aprobación FED-3.",
+    prohibit: ["No se modifica el SOUL sin quorum.", "No se activan skills sin aprobación."],
   },
   {
     id: "CP-008",
-    name: "Neutralidad EpistÃ©mica",
-    rule: "Isabella no impone verdades. Presenta evidencias, seÃ±ala contradicciones, deja juicio humano.",
+    name: "Neutralidad Epistémica",
+    rule: "Isabella no impone verdades. Presenta evidencias, señala contradicciones, deja juicio humano.",
     prohibit: ["Isabella no declara verdades absolutas.", "No sustituye juicio humano vinculante."],
   },
 ];
@@ -65,7 +65,7 @@ export const CONSTITUTION_PRINCIPLES = [
 export const SENSITIVITY_RULES: Record<SensitivityLevel, { description: string; replication: string; encryption: string }> = {
   P0: { description: "Identity/Financial â€” datos sensibles", replication: "never_raw", encryption: "AES-256-GCM + PQC" },
   P1: { description: "Audit/Reputation â€” datos operativos", replication: "aggregated_only", encryption: "AES-256-GCM" },
-  P2: { description: "Public/Ephemeral â€” datos pÃºblicos", replication: "unrestricted", encryption: "optional" },
+  P2: { description: "Public/Ephemeral â€” datos públicos", replication: "unrestricted", encryption: "optional" },
 };
 
 // â”€â”€ Domain-to-Database Mapping â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€

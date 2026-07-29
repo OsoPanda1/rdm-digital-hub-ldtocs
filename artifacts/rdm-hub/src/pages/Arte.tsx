@@ -15,48 +15,48 @@ import rdm4 from "@/assets/rdm02.jpg";
 
 const crafts = [
   {
-    title: "PlaterÃ­a Tradicional",
+    title: "Platería Tradicional",
     icon: Gem,
-    description: "Los artesanos de Real del Monte trabajan la plata utilizando tÃ©cnicas heredadas de los mineros del siglo XIX. Desde aretes y collares hasta piezas de decoraciÃ³n, cada obra cuenta con minerales locales como adorno.",
+    description: "Los artesanos de Real del Monte trabajan la plata utilizando técnicas heredadas de los mineros del siglo XIX. Desde aretes y collares hasta piezas de decoración, cada obra cuenta con minerales locales como adorno.",
     techniques: ["Filigrana", "Embossing", "Pulido tradicional", "Engaste de minerales"],
     materials: ["Plata .925", "Pirita", "Cuarzo", "Plata nativa"]
   },
   {
     title: "Textiles y Bordados",
     icon: Scissors,
-    description: "Las artesanas locales crean piezas Ãºnicas que combinan diseÃ±os otomÃ­es con influencias inglesas. Mantas, cojines y prendas de vestir bordadas a mano son algunas de sus creaciones.",
-    techniques: ["Punto de cruz", "Bordado otomÃ­", "Tejido en telar", "Ganchillo"],
-    materials: ["Lana natural", "Hilo de algodÃ³n", "Seda", "Tintes naturales"]
+    description: "Las artesanas locales crean piezas únicas que combinan diseños otomíes con influencias inglesas. Mantas, cojines y prendas de vestir bordadas a mano son algunas de sus creaciones.",
+    techniques: ["Punto de cruz", "Bordado otomí", "Tejido en telar", "Ganchillo"],
+    materials: ["Lana natural", "Hilo de algodón", "Seda", "Tintes naturales"]
   },
   {
     title: "Pintura y Escultura",
     icon: Brush,
     description: "Artistas locales capturan la esencia del pueblo en sus obras. Paisajes neblinosos, escenas mineras y retratos de personajes locales son temas recurrentes.",
-    techniques: ["Ã“leo", "AcrÃ­lico", "Acuarela", "Escultura en cantera"],
+    techniques: ["Ã“leo", "Acrílico", "Acuarela", "Escultura en cantera"],
     materials: ["Ã“leos", "Madera local", "Cantera", "Metal reciclado"]
   },
   {
     title: "Trabajos en Metal",
     icon: CircleDot,
-    description: "Herreros y metalisteros crean desde herramientas decorativas hasta muebles y objetos de arte utilizando tÃ©cnicas de forja tradicional.",
-    techniques: ["Forja al carbÃ³n", "Soldadura artÃ­stica", "PÃ¡tinas", "Damasco"],
+    description: "Herreros y metalisteros crean desde herramientas decorativas hasta muebles y objetos de arte utilizando técnicas de forja tradicional.",
+    techniques: ["Forja al carbón", "Soldadura artística", "Pátinas", "Damasco"],
     materials: ["Hierro", "Cobre", "Bronce", "Metal reciclado de minas"]
   }
 ];
 
 const artists = [
   {
-    name: "Familia SÃ¡nchez",
-    specialty: "PlaterÃ­a",
-    generation: "4ta GeneraciÃ³n",
-    description: "Maestros plateros con mÃ¡s de 100 aÃ±os de tradiciÃ³n familiar creando joyerÃ­a con minerales locales.",
-    awards: ["Premio Nacional de ArtesanÃ­as 2019", "Reconocimiento Estatal 2020"]
+    name: "Familia Sánchez",
+    specialty: "Platería",
+    generation: "4ta Generación",
+    description: "Maestros plateros con más de 100 años de tradición familiar creando joyería con minerales locales.",
+    awards: ["Premio Nacional de Artesanías 2019", "Reconocimiento Estatal 2020"]
   },
   {
-    name: "MarÃ­a Elena Torres",
-    specialty: "Bordado OtomÃ­",
+    name: "María Elena Torres",
+    specialty: "Bordado Otomí",
     generation: "Artesana Master",
-    description: "Preservadora de tÃ©cnicas ancestrales de bordado que ha enseÃ±ado a mÃ¡s de 50 jÃ³venes del pueblo.",
+    description: "Preservadora de técnicas ancestrales de bordado que ha enseñado a más de 50 jóvenes del pueblo.",
     awards: ["Maestra Artesana Hidalgo", "Premio FONART 2018"]
   },
   {
@@ -64,31 +64,31 @@ const artists = [
     specialty: "Escultura en Metal",
     generation: "Grupo Fundado 2010",
     description: "Ex-mineros que transforman herramientas de trabajo en obras de arte, contando la historia del pueblo.",
-    awards: ["Premio de Arte ContemporÃ¡neo", "Reconocimiento Municipal"]
+    awards: ["Premio de Arte Contemporáneo", "Reconocimiento Municipal"]
   }
 ];
 
 const workshops = [
   {
-    name: "Taller de PlaterÃ­a BÃ¡sica",
+    name: "Taller de Platería Básica",
     duration: "4 horas",
     price: "$850 MXN",
     includes: ["Materiales", "Herramientas", "Pieza terminada"],
-    description: "Aprende las tÃ©cnicas bÃ¡sicas de trabajo con plata y crea tu propio anillo o aretes."
+    description: "Aprende las técnicas básicas de trabajo con plata y crea tu propio anillo o aretes."
   },
   {
     name: "Bordado Tradicional",
     duration: "3 horas",
     price: "$600 MXN",
-    includes: ["Kit de bordado", "DiseÃ±os tradicionales", "Certificado"],
-    description: "IniciaciÃ³n al bordado otomÃ­-cornish con maestras artesanas locales."
+    includes: ["Kit de bordado", "Diseños tradicionales", "Certificado"],
+    description: "Iniciación al bordado otomí-cornish con maestras artesanas locales."
   },
   {
-    name: "FotografÃ­a en la Neblina",
+    name: "Fotografía en la Neblina",
     duration: "6 horas",
     price: "$1,200 MXN",
-    includes: ["GuÃ­a profesional", "Transporte", "Coffee break"],
-    description: "Captura la atmÃ³sfera Ãºnica de Real del Monte con un fotÃ³grafo profesional."
+    includes: ["Guía profesional", "Transporte", "Coffee break"],
+    description: "Captura la atmósfera única de Real del Monte con un fotógrafo profesional."
   }
 ];
 
@@ -117,11 +117,11 @@ const ArtePage = () => {
                   Creatividad Local
                 </span>
                 <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4">
-                  Arte y ArtesanÃ­a
+                  Arte y Artesanía
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-2xl">
-                  Descubre el talento de artesanos que fusionan tradiciÃ³n minera, herencia otomÃ­ 
-                  y creatividad contemporÃ¡nea en obras Ãºnicas.
+                  Descubre el talento de artesanos que fusionan tradición minera, herencia otomí 
+                  y creatividad contemporánea en obras únicas.
                 </p>
               </motion.div>
             </div>
@@ -138,10 +138,10 @@ const ArtePage = () => {
               className="text-center mb-16"
             >
               <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Nuestras ArtesanÃ­as
+                Nuestras Artesanías
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                Tradiciones que se mantienen vivas a travÃ©s del trabajo de maestros artesanos
+                Tradiciones que se mantienen vivas a través del trabajo de maestros artesanos
               </p>
             </motion.div>
 
@@ -168,7 +168,7 @@ const ArtePage = () => {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <span className="text-xs text-muted-foreground uppercase tracking-wider">TÃ©cnicas</span>
+                      <span className="text-xs text-muted-foreground uppercase tracking-wider">Técnicas</span>
                       <div className="flex flex-wrap gap-1 mt-2">
                         {craft.techniques.map((tech) => (
                           <span key={tech} className="px-2 py-0.5 rounded bg-muted text-xs text-muted-foreground">
@@ -256,7 +256,7 @@ const ArtePage = () => {
                 Talleres Disponibles
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                Aprende de los maestros artesanos en experiencias prÃ¡cticas
+                Aprende de los maestros artesanos en experiencias prácticas
               </p>
             </motion.div>
 

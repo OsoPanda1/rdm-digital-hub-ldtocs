@@ -79,7 +79,7 @@ class MnemosEngine {
       nodes.push({
         artifactId: id,
         title: entry.title,
-        summary: `Registro categorÃ­a: ${entry.category}, evidencias: ${entry.evidence.length}`,
+        summary: `Registro categoría: ${entry.category}, evidencias: ${entry.evidence.length}`,
         source: 'mnemos',
         confidenceScore: 0.95,
         timestamp: entry.timestamp,

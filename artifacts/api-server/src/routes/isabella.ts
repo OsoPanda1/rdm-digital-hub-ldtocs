@@ -4,7 +4,7 @@
  */
 // artifacts/api-server/src/routes/isabella.ts
 // Isabella AI â€” Î©-Core v4.0 Enterprise Backend API Routes
-// IntegraciÃ³n: SOUL Â· Isa API Â· Mexa API Â· Memory Â· Skills Â· Evaluation Â· Fairness Â· XRAI
+// Integración: SOUL · Isa API · Mexa API · Memory · Skills · Evaluation · Fairness · XRAI
 // Endpoints: /api/isabella/*
 
 import type { Router, Request, Response, NextFunction } from "express";
@@ -329,7 +329,7 @@ export function registerIsabellaRoutes(router: Router) {
 
     res.status(200).json({
       ok: true,
-      data: { feedbackId: entry.id, rating: entry.rating, message: "Gracias por tu feedback. MejorarÃ¡ la experiencia de Isabella." },
+      data: { feedbackId: entry.id, rating: entry.rating, message: "Gracias por tu feedback. Mejorará la experiencia de Isabella." },
     });
   });
 
@@ -469,8 +469,8 @@ export function registerIsabellaRoutes(router: Router) {
         agents: AGENTS.map((a) => ({ id: a.id, name: a.name, federation: a.federation, autonomy: a.autonomy })),
         skills: skillRegistry.status(),
         federations: [
-          "FED-1 (PreservaciÃ³n)", "FED-2 (EstÃ¡ndares)", "FED-3 (TecnologÃ­a)",
-          "FED-4 (CuraciÃ³n)", "FED-5 (Integridad)", "FED-6 (AdopciÃ³n)", "FED-7 (AuditorÃ­a)",
+          "FED-1 (Preservación)", "FED-2 (Estándares)", "FED-3 (Tecnología)",
+          "FED-4 (Curación)", "FED-5 (Integridad)", "FED-6 (Adopción)", "FED-7 (Auditoría)",
         ],
       },
     });

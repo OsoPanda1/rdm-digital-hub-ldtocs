@@ -4,7 +4,7 @@
  */
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Isabella.Crypto â€” Federation & Cryptographic Sovereignty (Î©-Core v4.0 Enterprise)
-// MÃ¡scaras de federaciÃ³n, firma y verificaciÃ³n de payloads
+// Máscaras de federación, firma y verificación de payloads
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { createHash, randomBytes } from "crypto";
@@ -15,7 +15,7 @@ const FEDERATIONS: FederationId[] = ["FED-1", "FED-2", "FED-3", "FED-4", "FED-5"
 const SEK = process.env.MEXA_API_SECURE_KEY ?? "isabella-crypto-dev-key";
 
 export function createFederationMask(federationId: FederationId, nodeId: string): FederationMask {
-  if (!FEDERATIONS.includes(federationId)) throw new Error(`FederaciÃ³n invÃ¡lida: ${federationId}`);
+  if (!FEDERATIONS.includes(federationId)) throw new Error(`Federación inválida: ${federationId}`);
   const timestamp = Date.now();
   const raw = `${federationId}:${nodeId}:${timestamp}:${SEK}`;
   const signature = createHash("sha256").update(raw).digest("hex");

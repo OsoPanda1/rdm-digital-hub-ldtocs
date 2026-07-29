@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * TAMVTrixField â€“ Campo cuÃ¡ntico vivo de TAMV ONLINE
- * Fondo inmersivo 3D: solo alfabeto TAMVONLINE, profundidad, respiraciÃ³n y hero central.
+ * TAMVTrixField â€“ Campo cuántico vivo de TAMV ONLINE
+ * Fondo inmersivo 3D: solo alfabeto TAMVONLINE, profundidad, respiración y hero central.
  */
 
 import React, { useEffect, useRef, useState } from "react";
@@ -110,7 +110,7 @@ const TAMVTrixField: React.FC<TAMVTrixFieldProps> = ({
         const x = baseX + col.drift * 28 * z;
         const y = col.y;
 
-        // centro mÃ¡s denso / rÃ¡pido, bordes mÃ¡s ligeros
+        // centro más denso / rápido, bordes más ligeros
         const distToCenter = Math.abs(x - centerX) / centerX;
         const densityBoost = 0.4 + (1 - Math.min(distToCenter, 1)) * 0.8;
         const velocityBase = 0.9 * (0.3 + 0.9 * z);
@@ -252,7 +252,7 @@ const TAMVTrixField: React.FC<TAMVTrixFieldProps> = ({
           <div className="absolute inset-[30%] rounded-full border border-slate-500/12" />
         </div>
 
-        {/* PartÃ­culas TAMV */}
+        {/* Partículas TAMV */}
         <div
           className="absolute inset-0"
           style={{ transform: "translateZ(-100px)" }}
@@ -354,14 +354,14 @@ const TAMVTrixField: React.FC<TAMVTrixFieldProps> = ({
                 transition={{ delay: 2.2 }}
                 className="mt-5 text-[10px] md:text-xs lg:text-sm tracking-[0.38em] text-slate-300 uppercase"
               >
-                CAMPO MATRIZIAL VIVO Â· IDENTIDAD TOTAL TAMV
+                CAMPO MATRIZIAL VIVO · IDENTIDAD TOTAL TAMV
               </motion.p>
             </motion.div>
           )}
         </AnimatePresence>
       )}
 
-      {/* ViÃ±eta + scanlines */}
+      {/* Viñeta + scanlines */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{

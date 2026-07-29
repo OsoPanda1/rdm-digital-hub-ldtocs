@@ -69,7 +69,7 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
     const onPlay = () => { setIsPlaying(true); setError(null) }
     const onPause = () => setIsPlaying(false)
     const onError = () => {
-      const msg = audio.src ? `Error al cargar audio: ${audio.src.split('/').pop()}` : 'Error de reproducciÃ³n'
+      const msg = audio.src ? `Error al cargar audio: ${audio.src.split('/').pop()}` : 'Error de reproducción'
       setError(msg)
       logger.warn(msg)
     }

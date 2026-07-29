@@ -14,14 +14,14 @@ type Msg = { role: "user" | "assistant"; content: string; ts?: number };
 const CHAT_URL = "/api/isabella/chat";
 
 const GREETINGS = [
-  "Â¡Hola! Soy **Isabella**, la IA territorial de RDM Digital Hub. Conozco cada rincÃ³n de Real del Monte â€” historia, minas, gastronomÃ­a, eventos. Â¿QuÃ© deseas explorar?",
+  "¡Hola! Soy **Isabella**, la IA territorial de RDM Digital Hub. Conozco cada rincón de Real del Monte â€” historia, minas, gastronomía, eventos. ¿Qué deseas explorar?",
 ];
 
 const SUGGESTIONS = [
-  "Â¿CuÃ¡l es la historia de las minas?",
-  "Â¿DÃ³nde comer los mejores pastes?",
-  "Â¿QuÃ© hacer este fin de semana?",
-  "CuÃ©ntame sobre el PanteÃ³n InglÃ©s",
+  "¿Cuál es la historia de las minas?",
+  "¿Dónde comer los mejores pastes?",
+  "¿Qué hacer este fin de semana?",
+  "Cuéntame sobre el Panteón Inglés",
 ];
 
 export function IsabellaChat() {
@@ -118,7 +118,7 @@ export function IsabellaChat() {
       setMessages((prev) => [...prev, {
         role: "assistant",
         content: online === false
-          ? "âš ï¸ Isabella no estÃ¡ conectada al servidor. Verifica que la API estÃ© activa."
+          ? "âš ï¸ Isabella no está conectada al servidor. Verifica que la API esté activa."
           : "Lo siento, hubo un problema al procesar tu mensaje. Intenta de nuevo.",
         ts: Date.now(),
       }]);
@@ -192,7 +192,7 @@ export function IsabellaChat() {
                     Isabella
                   </p>
                   <p className="text-[9px] font-mono uppercase tracking-widest text-[hsl(43_70%_60%)]">
-                    {online === null ? "Conectandoâ€¦" : online ? "IA Territorial Â· En lÃ­nea" : "Sin conexiÃ³n al servidor"}
+                    {online === null ? "Conectandoâ€¦" : online ? "IA Territorial · En línea" : "Sin conexión al servidor"}
                   </p>
                 </div>
               </div>
@@ -205,14 +205,14 @@ export function IsabellaChat() {
                     if (last) voice.speak(last.content);
                   }}
                   className="p-1.5 rounded-lg text-white/40 hover:text-white/80 hover:bg-white/5 transition-colors"
-                  title="Leer Ãºltima respuesta"
+                  title="Leer última respuesta"
                 >
                   {voice.isSpeaking ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5" />}
                 </button>
                 <button
                   onClick={clearChat}
                   className="p-1.5 rounded-lg text-white/40 hover:text-white/80 hover:bg-white/5 transition-colors"
-                  title="Nueva conversaciÃ³n"
+                  title="Nueva conversación"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
                 </button>

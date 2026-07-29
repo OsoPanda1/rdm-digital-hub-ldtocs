@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: TAMV-EOL
  */
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// Isabella VillaseÃ±or AIâ„¢ â€” Shared Types (Î©-Core v4.0 Enterprise)
+// Isabella Villaseñor AIâ„¢ â€” Shared Types (Î©-Core v4.0 Enterprise)
 // Sistema Operativo Cognitivo Soberano del Ecosistema TAMV
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
@@ -252,11 +252,11 @@ export type KnowledgeEntry = {
 // â”€â”€ TAMV Federation Map â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const TAMV_FEDERATIONS: Record<FederationId, { name: string; domain: string; scope: string }> = {
-  "FED-1": { name: "PreservaciÃ³n",     domain: "seguridad",   scope: "DevSecOps, CI/CD, parches" },
-  "FED-2": { name: "EstÃ¡ndares",       domain: "calidad",     scope: "Normas, versiones, compatibilidad" },
-  "FED-3": { name: "TecnologÃ­a",       domain: "gobernanza",  scope: "Kernel, skills, quorum, auditorÃ­a" },
-  "FED-4": { name: "CuraciÃ³n",         domain: "contenido",   scope: "Biblioteca, publicaciÃ³n, XR" },
-  "FED-5": { name: "Integridad",       domain: "verificaciÃ³n", scope: "DAG, firmas, trazabilidad" },
-  "FED-6": { name: "AdopciÃ³n",         domain: "educaciÃ³n",   scope: "UTAMV, tutorÃ­as, comunidades" },
-  "FED-7": { name: "AuditorÃ­a",        domain: "Ã©tica",       scope: "Triple bloqueo, incidentes, gobernanza" },
+  "FED-1": { name: "Preservación",     domain: "seguridad",   scope: "DevSecOps, CI/CD, parches" },
+  "FED-2": { name: "Estándares",       domain: "calidad",     scope: "Normas, versiones, compatibilidad" },
+  "FED-3": { name: "Tecnología",       domain: "gobernanza",  scope: "Kernel, skills, quorum, auditoría" },
+  "FED-4": { name: "Curación",         domain: "contenido",   scope: "Biblioteca, publicación, XR" },
+  "FED-5": { name: "Integridad",       domain: "verificación", scope: "DAG, firmas, trazabilidad" },
+  "FED-6": { name: "Adopción",         domain: "educación",   scope: "UTAMV, tutorías, comunidades" },
+  "FED-7": { name: "Auditoría",        domain: "ética",       scope: "Triple bloqueo, incidentes, gobernanza" },
 };

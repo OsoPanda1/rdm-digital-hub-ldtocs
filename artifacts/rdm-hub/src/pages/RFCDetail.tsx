@@ -11,7 +11,7 @@ import { getRFCById, RFC_COLORS, getAllRFCs, type RFCStatus } from "@/data/rfc-s
 
 const statusLabels: Record<RFCStatus, string> = {
   draft: "Borrador",
-  review: "RevisiÃ³n",
+  review: "Revisión",
   ratified: "Ratificado",
   superseded: "Sustituido",
 };
@@ -88,7 +88,7 @@ export default function RFCDetail() {
               <p className="font-medium">{rfc.created}</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Ãšltima actualizaciÃ³n</p>
+              <p className="text-sm text-muted-foreground">Ãšltima actualización</p>
               <p className="font-medium">{rfc.updated}</p>
             </div>
             {rfc.superseded_by && (

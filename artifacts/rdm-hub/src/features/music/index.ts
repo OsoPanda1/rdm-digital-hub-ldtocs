@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * RDM Ecos MÃºsica â€” Feature exports
+ * RDM Ecos Música â€” Feature exports
  */
 export * from './types';
 export * from './engine';

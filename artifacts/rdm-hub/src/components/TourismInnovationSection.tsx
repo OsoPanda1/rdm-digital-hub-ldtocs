@@ -36,7 +36,7 @@ export function TourismInnovationSection() {
           <span className="text-accent">mapeadas al producto</span>
         </h2>
         <p className="mx-auto mt-6 max-w-3xl font-body text-base leading-relaxed text-foreground/70">
-          InvestigaciÃ³n comparativa de estÃ¡ndares en plataformas turÃ­sticas internacionales,
+          Investigación comparativa de estándares en plataformas turísticas internacionales,
           aterrizada en un roadmap ejecutable para RDM Digital con enfoque en valor real para visitantes.
         </p>
       </motion.div>
@@ -45,13 +45,13 @@ export function TourismInnovationSection() {
         <div className="rounded-2xl border border-border bg-card/70 p-6 backdrop-blur-sm">
           <p className="text-sm text-muted-foreground">Capacidades implementadas</p>
           <p className="mt-2 font-display text-4xl font-bold text-accent">{implementedCount}/30</p>
-          <p className="mt-2 text-sm text-foreground/70">Base productiva activa con navegaciÃ³n, IA, telemetrÃ­a y narrativa inmersiva.</p>
+          <p className="mt-2 text-sm text-foreground/70">Base productiva activa con navegación, IA, telemetría y narrativa inmersiva.</p>
         </div>
         <div className="rounded-2xl border border-border bg-card/70 p-6 backdrop-blur-sm">
-          <p className="text-sm text-muted-foreground">Checklist pre-producciÃ³n</p>
+          <p className="text-sm text-muted-foreground">Checklist pre-producción</p>
           <ul className="mt-3 space-y-2 text-sm text-foreground/80">
-            <li>â€¢ Cerrar mÃ³dulos UI por vertical turÃ­stica.</li>
-            <li>â€¢ Integrar reservas, reseÃ±as verificadas y analytics de conversiÃ³n.</li>
+            <li>â€¢ Cerrar módulos UI por vertical turística.</li>
+            <li>â€¢ Integrar reservas, reseñas verificadas y analytics de conversión.</li>
             <li>â€¢ Validar seguridad, observabilidad y flujos de despliegue continuo.</li>
           </ul>
         </div>

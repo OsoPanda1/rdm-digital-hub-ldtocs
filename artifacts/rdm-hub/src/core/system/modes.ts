@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * RDM Core Service â€” Sistema de modos adaptativos antifrÃ¡gil
+ * RDM Core Service â€” Sistema de modos adaptativos antifrágil
  * Modos: NORMAL | SAFE | EMERGENCY
  */
 

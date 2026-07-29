@@ -4,8 +4,8 @@
  */
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Mexa API â€” Cryptographic Sovereignty Layer (Î©-Core v4.0 Enterprise)
-// Capa criptogrÃ¡fica: firma digital, verificaciÃ³n de procedencia,
-// mÃ¡scara de federaciÃ³n para los 7 nodos TAMV
+// Capa criptográfica: firma digital, verificación de procedencia,
+// máscara de federación para los 7 nodos TAMV
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { createHash, randomBytes } from "crypto";
@@ -21,7 +21,7 @@ export function createFederationMask(
   secret: string,
 ): FederationMask {
   if (!FEDERATIONS.includes(federationId)) {
-    throw new Error(`FederaciÃ³n invÃ¡lida: ${federationId}`);
+    throw new Error(`Federación inválida: ${federationId}`);
   }
   const timestamp = Date.now();
   const raw = `${federationId}:${nodeId}:${timestamp}:${secret}`;

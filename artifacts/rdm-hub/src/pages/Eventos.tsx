@@ -22,7 +22,7 @@ export default function EventosPage() {
 
   return (
     <RDMLayout>
-      <SEOMeta title="Eventos y Festivales â€” Real del Monte" description="Calendario de eventos culturales, festivales gastronÃ³micos, actividades deportivas y temporadas especiales en Real del Monte, Pueblo MÃ¡gico." />
+      <SEOMeta title="Eventos y Festivales â€” Real del Monte" description="Calendario de eventos culturales, festivales gastronómicos, actividades deportivas y temporadas especiales en Real del Monte, Pueblo Mágico." />
 
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
@@ -37,7 +37,7 @@ export default function EventosPage() {
               Eventos y <span className="text-[hsl(var(--rdm-amber))]">Festivales</span>
             </h1>
             <p className="text-white/70 max-w-xl" style={{ fontFamily: "var(--font-body)" }}>
-              {EVENTOS_RDM.length} eventos que hacen de Real del Monte un destino vivo todo el aÃ±o.
+              {EVENTOS_RDM.length} eventos que hacen de Real del Monte un destino vivo todo el año.
             </p>
           </motion.div>
         </div>
@@ -74,7 +74,7 @@ export default function EventosPage() {
           {filteredEvents.length === 0 ? (
             <div className="text-center py-16 rdm-glass rounded-2xl">
               <Calendar className="h-12 w-12 text-[hsl(var(--muted-foreground))] mx-auto mb-4 opacity-40" />
-              <p className="text-[hsl(var(--muted-foreground))]">No hay eventos en esta categorÃ­a.</p>
+              <p className="text-[hsl(var(--muted-foreground))]">No hay eventos en esta categoría.</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">

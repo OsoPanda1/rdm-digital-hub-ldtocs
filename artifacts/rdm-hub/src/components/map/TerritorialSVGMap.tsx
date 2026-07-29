@@ -57,13 +57,13 @@ const FACET_TONES: Record<
   economica: {
     ring: "hsl(145,55%,45%)",
     glow: "hsla(145,55%,45%,0.4)",
-    tag: "EconÃ³mica",
+    tag: "Económica",
     color: "hsl(145,55%,45%)",
   },
   tecnologica: {
     ring: "hsl(280,70%,60%)",
     glow: "hsla(280,70%,60%,0.45)",
-    tag: "TecnolÃ³gica",
+    tag: "Tecnológica",
     color: "hsl(280,70%,60%)",
   },
   educativa: {
@@ -257,7 +257,7 @@ export default function TerritorialSVGMap({
   const nextHoverRef = useRef<string | null>(null)
   const svgRef = useRef<SVGSVGElement | null>(null)
 
-  // Sync con prop externa (deep-link / selecciÃ³n externa)
+  // Sync con prop externa (deep-link / selección externa)
   useEffect(() => {
     if (selectedId) setHover(selectedId)
     else if (highlightId) setHover(highlightId)
@@ -297,7 +297,7 @@ export default function TerritorialSVGMap({
     [pois, hover],
   )
 
-  // Roving tabindex con flechas (vecino mÃ¡s cercano euclidiano)
+  // Roving tabindex con flechas (vecino más cercano euclidiano)
   const handleKey = useCallback(
     (e: KeyboardEvent<SVGSVGElement>) => {
       if (
@@ -321,7 +321,7 @@ export default function TerritorialSVGMap({
         if (p.poi.id === current.poi.id) continue
         const dx = p.x - current.x
         const dy = p.y - current.y
-        const aligned = dirX * dx + dirY * dy // proyecciÃ³n en la direcciÃ³n
+        const aligned = dirX * dx + dirY * dy // proyección en la dirección
         if (aligned <= 0) continue
 
         const lateral = Math.abs(dirX ? dy : dx)
@@ -454,14 +454,14 @@ export default function TerritorialSVGMap({
             {active.name}
           </h3>
           <p className="mt-0.5 text-xs text-[hsl(var(--muted-foreground))]">
-            {active.municipality} Â· {active.altitudeM} m
+            {active.municipality} · {active.altitudeM} m
           </p>
 
           <p className="mt-2 text-sm text-[hsl(var(--foreground)/0.85)]">
             {active.description}
           </p>
           <p className="mt-2 text-xs italic text-[hsl(var(--foreground)/0.7)]">
-            Â«{active.significance}Â»
+            «{active.significance}»
           </p>
 
           <div className="mt-3 flex flex-wrap items-center gap-2">

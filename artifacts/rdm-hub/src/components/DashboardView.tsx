@@ -115,7 +115,7 @@ export function DashboardView() {
           transition={{ delay: 0.25 }}
           className={card}
         >
-          <p className={cardTitle}>DistribuciÃ³n por CategorÃ­a</p>
+          <p className={cardTitle}>Distribución por Categoría</p>
           <div className="space-y-2">
             {Object.entries(categoryCounts).map(([cat, count]) => {
               const Icon = INTENT_ICONS[cat] || MapPin;
@@ -176,7 +176,7 @@ export function DashboardView() {
             <thead>
               <tr className="border-b border-border text-left">
                 <th className="pb-2 text-xs text-muted-foreground font-medium">Nombre</th>
-                <th className="pb-2 text-xs text-muted-foreground font-medium">CategorÃ­a</th>
+                <th className="pb-2 text-xs text-muted-foreground font-medium">Categoría</th>
                 <th className="pb-2 text-xs text-muted-foreground font-medium">Rating</th>
                 <th className="pb-2 text-xs text-muted-foreground font-medium hidden md:table-cell">Coordenadas</th>
               </tr>

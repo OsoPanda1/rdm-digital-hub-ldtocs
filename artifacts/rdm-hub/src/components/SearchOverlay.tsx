@@ -24,7 +24,7 @@ const KIND_ICONS: Record<SearchHitKind, React.ComponentType<{ className?: string
 
 const KIND_LABELS: Record<SearchHitKind, string> = {
   poi: "Lugar",
-  capitulo: "CapÃ­tulo",
+  capitulo: "Capítulo",
   mina: "Mina",
   paste: "Paste",
   ruta: "Ruta",
@@ -34,7 +34,7 @@ const KIND_LABELS: Record<SearchHitKind, string> = {
 /**
  * SearchOverlay â€” buscador inmersivo full-screen.
  * Se abre con âŒ˜/Ctrl+K o con `openSearchOverlay()`.
- * Sugerencias instantÃ¡neas tipadas, agrupadas, con preview narrativo
+ * Sugerencias instantáneas tipadas, agrupadas, con preview narrativo
  * y deep-link a `/mapa?poi=...` para anclar POIs en el mapa territorial.
  */
 export default function SearchOverlay() {
@@ -116,12 +116,12 @@ export default function SearchOverlay() {
           className="fixed inset-0 z-[120] flex items-start justify-center px-4 pt-[8vh]"
           role="dialog"
           aria-modal="true"
-          aria-label="BÃºsqueda turÃ­stica"
+          aria-label="Búsqueda turística"
         >
           {/* Backdrop */}
           <button
             type="button"
-            aria-label="Cerrar bÃºsqueda"
+            aria-label="Cerrar búsqueda"
             onClick={() => setOpen(false)}
             className="absolute inset-0 bg-[hsl(var(--navy-dark)/0.72)] backdrop-blur-2xl"
           />
@@ -165,12 +165,12 @@ export default function SearchOverlay() {
             <div
               id="search-overlay-listbox"
               role="listbox"
-              aria-label="Resultados de bÃºsqueda"
+              aria-label="Resultados de búsqueda"
               className="max-h-[60vh] overflow-y-auto py-2"
             >
               {hits.length === 0 && (
                 <div className="px-6 py-10 text-center text-sm text-[hsl(var(--muted-foreground))]">
-                  Sin resultados para «{debouncedQuery}». Prueba con <em>paste</em>, <em>Acosta</em> o <em>panteÃ³n</em>.
+                  Sin resultados para «{debouncedQuery}». Prueba con <em>paste</em>, <em>Acosta</em> o <em>panteón</em>.
                 </div>
               )}
               {hits.map((hit, i) => {
@@ -216,8 +216,8 @@ export default function SearchOverlay() {
             </div>
 
             <div className="flex items-center justify-between px-5 py-2.5 border-t border-[hsl(var(--border))] text-[10px] uppercase tracking-widest text-[hsl(var(--muted-foreground))]">
-              <span>â†‘â†“ navegar Â· â†µ abrir</span>
-              <span>RDM Â· BÃºsqueda territorial viva</span>
+              <span>â†‘â†“ navegar · â†µ abrir</span>
+              <span>RDM · Búsqueda territorial viva</span>
             </div>
           </motion.div>
         </motion.div>

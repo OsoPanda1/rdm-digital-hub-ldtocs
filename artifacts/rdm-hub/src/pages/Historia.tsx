@@ -38,82 +38,82 @@ const timeline = [
   {
     year: "1534",
     title: "Primeras Exploraciones",
-    description: "Exploradores espaÃ±oles inician expediciones a la Sierra de Pachuca, atraÃ­dos por rumores de ricos yacimientos de plata en tierras otomÃ­es.",
+    description: "Exploradores españoles inician expediciones a la Sierra de Pachuca, atraídos por rumores de ricos yacimientos de plata en tierras otomíes.",
     icon: Compass,
     color: "bg-stone",
-    details: "Las primeras expediciones fueron lideradas por conquistadores que escucharon relatos de los indÃ­genas sobre montaÃ±as brillantes. Sin embargo, la topografÃ­a montaÃ±osa y la resistencia de los pueblos originales dificultaron el establecimiento inicial."
+    details: "Las primeras expediciones fueron lideradas por conquistadores que escucharon relatos de los indígenas sobre montañas brillantes. Sin embargo, la topografía montañosa y la resistencia de los pueblos originales dificultaron el establecimiento inicial."
   },
   {
     year: "1560",
     title: "Descubrimiento de la Veta Madre",
-    description: "Juan de ZÃºÃ±iga y Juan de la Cruz descubren la veta madre de plata en la Sierra de Pachuca, dando origen al Real de Minas de Pachuca y el nacimiento oficial de la comunidad minera.",
+    description: "Juan de Zúñiga y Juan de la Cruz descubren la veta madre de plata en la Sierra de Pachuca, dando origen al Real de Minas de Pachuca y el nacimiento oficial de la comunidad minera.",
     icon: Gem,
     color: "bg-terracotta",
-    details: "El descubrimiento ocurriÃ³ en lo que hoy se conoce como Mina de San Antonio. La veta se extendÃ­a por kilÃ³metros bajo la montaÃ±a, prometiendo riquezas incalculables. La Corona EspaÃ±ola inmediatamente estableciÃ³ el Real de Minas, un distrito minero con privilegios especiales."
+    details: "El descubrimiento ocurrió en lo que hoy se conoce como Mina de San Antonio. La veta se extendía por kilómetros bajo la montaña, prometiendo riquezas incalculables. La Corona Española inmediatamente estableció el Real de Minas, un distrito minero con privilegios especiales."
   },
   {
     year: "1580",
-    title: "FundaciÃ³n del Real de Minas",
-    description: "Se establece oficialmente el Real de Minas con la construcciÃ³n de las primeras haciendas de beneficio y el trazado de las calles principales siguiendo el modelo colonial espaÃ±ol.",
+    title: "Fundación del Real de Minas",
+    description: "Se establece oficialmente el Real de Minas con la construcción de las primeras haciendas de beneficio y el trazado de las calles principales siguiendo el modelo colonial español.",
     icon: Building2,
     color: "bg-primary",
-    details: "La fundaciÃ³n trajo consigo la construcciÃ³n de la Iglesia de la AsunciÃ³n, las primeras viviendas para mineros y las haciendas de beneficio donde se procesaba el mineral. La poblaciÃ³n comenzÃ³ a crecer rÃ¡pidamente, atrayendo trabajadores de todo el centro de MÃ©xico."
+    details: "La fundación trajo consigo la construcción de la Iglesia de la Asunción, las primeras viviendas para mineros y las haciendas de beneficio donde se procesaba el mineral. La población comenzó a crecer rápidamente, atrayendo trabajadores de todo el centro de México."
   },
   {
     year: "1766",
     title: "La Llegada de los Cornish",
-    description: "Inmigrantes de Cornualles, Inglaterra llegan a Real del Monte trayendo tecnologÃ­a minera revolucionaria, steam engines, y una cultura que transformarÃ­a para siempre al pueblo.",
+    description: "Inmigrantes de Cornualles, Inglaterra llegan a Real del Monte trayendo tecnología minera revolucionaria, steam engines, y una cultura que transformaría para siempre al pueblo.",
     icon: Ship,
     color: "bg-gold",
-    details: "Bajo el mando de empresarios como John Rule y James Vetch, llegaron mÃ¡s de 150 familias cornish entre 1824 y 1840. Trajeron consigo bombas de vapor, trenes de mina, herramientas especializadas y conocimientos avanzados de ingenierÃ­a. TambiÃ©n construyeron la primera estaciÃ³n de ferrocarril en MÃ©xico."
+    details: "Bajo el mando de empresarios como John Rule y James Vetch, llegaron más de 150 familias cornish entre 1824 y 1840. Trajeron consigo bombas de vapor, trenes de mina, herramientas especializadas y conocimientos avanzados de ingeniería. También construyeron la primera estación de ferrocarril en México."
   },
   {
     year: "1824",
-    title: "Independencia EconÃ³mica",
-    description: "Pedro Romero de Terreros compra las minas a la Corona EspaÃ±ola, marcando el inicio de la minerÃ­a independiente mexicana y una nueva era de prosperidad.",
+    title: "Independencia Económica",
+    description: "Pedro Romero de Terreros compra las minas a la Corona Española, marcando el inicio de la minería independiente mexicana y una nueva era de prosperidad.",
     icon: Crown,
     color: "bg-forest",
-    details: "Romero de Terreros, descendiente de la nobleza espaÃ±ola pero mexicano de nacimiento, invirtiÃ³ fortunas en modernizar las operaciones mineras. Bajo su administraciÃ³n, las minas alcanzaron niveles de producciÃ³n nunca antes vistos, financiando proyectos de infraestructura en toda la regiÃ³n."
+    details: "Romero de Terreros, descendiente de la nobleza española pero mexicano de nacimiento, invirtió fortunas en modernizar las operaciones mineras. Bajo su administración, las minas alcanzaron niveles de producción nunca antes vistos, financiando proyectos de infraestructura en toda la región."
   },
   {
     year: "1850",
-    title: "La RevoluciÃ³n del Paste",
-    description: "Las pastelerÃ­as cornish-mexicanas se establecen formalmente, fusionando la receta del Cornish Pasty con ingredientes locales como el mole, frijol y chile, creando un Ã­cono gastronÃ³mico Ãºnico.",
+    title: "La Revolución del Paste",
+    description: "Las pastelerías cornish-mexicanas se establecen formalmente, fusionando la receta del Cornish Pasty con ingredientes locales como el mole, frijol y chile, creando un ícono gastronómico único.",
     icon: Flame,
     color: "bg-terracotta",
-    details: "Las esposas de los mineros ingleses comenzaron a preparar pasties para sus maridos, pero pronto las cocineras mexicanas adaptaron la receta con sabores locales. AsÃ­ naciÃ³ el paste mexicano, una fusiÃ³n culinaria que solo existe en Real del Monte."
+    details: "Las esposas de los mineros ingleses comenzaron a preparar pasties para sus maridos, pero pronto las cocineras mexicanas adaptaron la receta con sabores locales. Así nació el paste mexicano, una fusión culinaria que solo existe en Real del Monte."
   },
   {
     year: "1900",
-    title: "El PanteÃ³n InglÃ©s",
-    description: "Se consagra el Cementerio de los Anglicanos, hoy conocido como PanteÃ³n InglÃ©s, el cementerio anglicano mÃ¡s alto del mundo a 2,700 metros sobre el nivel del mar.",
+    title: "El Panteón Inglés",
+    description: "Se consagra el Cementerio de los Anglicanos, hoy conocido como Panteón Inglés, el cementerio anglicano más alto del mundo a 2,700 metros sobre el nivel del mar.",
     icon: Landmark,
     color: "bg-stone",
-    details: "El PanteÃ³n InglÃ©s alberga tumbas que datan desde 1830 hasta 1960. Sus lÃ¡pidas de mÃ¡rmol cuentan historias de amor, tragedia y aventura. Es el Ãºnico cementerio en MÃ©xico donde se practican servicios anglicanos regulares y representa la memoria histÃ³rica de la comunidad cornish."
+    details: "El Panteón Inglés alberga tumbas que datan desde 1830 hasta 1960. Sus lápidas de mármol cuentan historias de amor, tragedia y aventura. Es el único cementerio en México donde se practican servicios anglicanos regulares y representa la memoria histórica de la comunidad cornish."
   },
   {
     year: "1930",
-    title: "Era de la NacionalizaciÃ³n",
+    title: "Era de la Nacionalización",
     description: "Las minas pasan a manos del gobierno mexicano. El auge minero declina, pero la comunidad encuentra nuevas formas de subsistencia preservando su patrimonio cultural.",
     icon: Scale,
     color: "bg-primary",
-    details: "La nacionalizaciÃ³n de la minerÃ­a por parte del gobierno federal marcÃ³ el fin de una era. Muchas familias emigraron, pero las que se quedaron comenzaron a preservar conscientemente su patrimonio Ãºnico. Se fundaron los primeros museos y comenzÃ³ el turismo cultural."
+    details: "La nacionalización de la minería por parte del gobierno federal marcó el fin de una era. Muchas familias emigraron, pero las que se quedaron comenzaron a preservar conscientemente su patrimonio único. Se fundaron los primeros museos y comenzó el turismo cultural."
   },
   {
     year: "2004",
-    title: "Nombramiento Pueblo MÃ¡gico",
-    description: "Real del Monte es nombrado Pueblo MÃ¡gico por la SecretarÃ­a de Turismo, reconociendo su importancia histÃ³rica, cultural y arquitectÃ³nica Ãºnica en MÃ©xico.",
+    title: "Nombramiento Pueblo Mágico",
+    description: "Real del Monte es nombrado Pueblo Mágico por la Secretaría de Turismo, reconociendo su importancia histórica, cultural y arquitectónica única en México.",
     icon: Sparkles,
     color: "bg-gold",
-    details: "El nombramiento de Pueblo MÃ¡gico vino acompaÃ±ado de inversiones en infraestructura turÃ­stica, restauraciÃ³n del centro histÃ³rico y programas de preservaciÃ³n cultural. Real del Monte se convirtiÃ³ en destino internacional, atrayendo a visitantes de todo el mundo."
+    details: "El nombramiento de Pueblo Mágico vino acompañado de inversiones en infraestructura turística, restauración del centro histórico y programas de preservación cultural. Real del Monte se convirtió en destino internacional, atrayendo a visitantes de todo el mundo."
   },
   {
     year: "2024",
     title: "Bicentenario Cornish-Mexicano",
-    description: "CelebraciÃ³n de 200 aÃ±os de relaciÃ³n cultural entre Cornualles y Real del Monte, con eventos internacionales, intercambios culturales y el fortalecimiento de los lazos histÃ³ricos.",
+    description: "Celebración de 200 años de relación cultural entre Cornualles y Real del Monte, con eventos internacionales, intercambios culturales y el fortalecimiento de los lazos históricos.",
     icon: Anchor,
     color: "bg-forest",
-    details: "El bicentenario marcÃ³ el retorno de descendientes de las familias cornish originales, la inauguraciÃ³n de nuevos espacios museÃ­sticos, y la consolidaciÃ³n de Real del Monte como un caso Ãºnico de diÃ¡spora cultural en AmÃ©rica Latina."
+    details: "El bicentenario marcó el retorno de descendientes de las familias cornish originales, la inauguración de nuevos espacios museísticos, y la consolidación de Real del Monte como un caso único de diáspora cultural en América Latina."
   }
 ];
 
@@ -122,103 +122,103 @@ const heritageSections = [
   {
     id: "mining",
     title: "Herencia Minera",
-    subtitle: "El corazÃ³n de plata de MÃ©xico",
-    description: "Real del Monte fue el distrito minero mÃ¡s importante de la Nueva EspaÃ±a durante tres siglos. Las minas de Acosta, Dificultad, San Cayetano y Dolores produjeron toneladas de plata que financiaron guerras, construyeron naciones y atrajeron a aventureros de todo el mundo.",
-    extendedDescription: `Las minas de Real del Monte fueron conocidas como "La Mina del Rey" durante la Ã©poca colonial debido a la calidad excepcional de su mineral. La veta madre se extendÃ­a por mÃ¡s de 5 kilÃ³metros bajo la montaÃ±a, con ramificaciones que llegaban hasta Pachuca.
+    subtitle: "El corazón de plata de México",
+    description: "Real del Monte fue el distrito minero más importante de la Nueva España durante tres siglos. Las minas de Acosta, Dificultad, San Cayetano y Dolores produjeron toneladas de plata que financiaron guerras, construyeron naciones y atrajeron a aventureros de todo el mundo.",
+    extendedDescription: `Las minas de Real del Monte fueron conocidas como "La Mina del Rey" durante la época colonial debido a la calidad excepcional de su mineral. La veta madre se extendía por más de 5 kilómetros bajo la montaña, con ramificaciones que llegaban hasta Pachuca.
 
-La minerÃ­a en Real del Monte revolucionÃ³ la industria mexicana. AquÃ­ se introdujeron las primeras bombas de vapor de AmÃ©rica Latina, los primeros ferrocarriles mineros, y las tÃ©cnicas de perforaciÃ³n mÃ¡s avanzadas de la Ã©poca. Los ingenieros formados en Real del Monte llevaron su conocimiento a otros distritos mineros de MÃ©xico y SudamÃ©rica.
+La minería en Real del Monte revolucionó la industria mexicana. Aquí se introdujeron las primeras bombas de vapor de América Latina, los primeros ferrocarriles mineros, y las técnicas de perforación más avanzadas de la época. Los ingenieros formados en Real del Monte llevaron su conocimiento a otros distritos mineros de México y Sudamérica.
 
-La plata de Real del Monte financiÃ³ la Independencia de MÃ©xico, pagÃ³ deudas internacionales, y contribuyÃ³ al desarrollo de infraestructura en todo el paÃ­s. Cada tonelada de mineral extraÃ­da representaba meses de trabajo en condiciones extremas, a mÃ¡s de 400 metros bajo tierra.`,
+La plata de Real del Monte financió la Independencia de México, pagó deudas internacionales, y contribuyó al desarrollo de infraestructura en todo el país. Cada tonelada de mineral extraída representaba meses de trabajo en condiciones extremas, a más de 400 metros bajo tierra.`,
     image: minaImg,
     stats: [
-      { label: "AÃ±os de historia minera", value: "460+" },
-      { label: "Minas histÃ³ricas documentadas", value: "35+" },
-      { label: "KilÃ³metros de tÃºneles", value: "500+" },
-      { label: "Toneladas de plata extraÃ­das", value: "80K+" }
+      { label: "Años de historia minera", value: "460+" },
+      { label: "Minas históricas documentadas", value: "35+" },
+      { label: "Kilómetros de túneles", value: "500+" },
+      { label: "Toneladas de plata extraídas", value: "80K+" }
     ],
     highlights: [
-      "Mina de Acosta: La mÃ¡s profunda, con 460 metros de profundidad",
-      "Sistema de drenaje mÃ¡s avanzado de su Ã©poca en AmÃ©rica",
-      "Primera mÃ¡quina de vapor en MÃ©xico, instalada en 1827",
+      "Mina de Acosta: La más profunda, con 460 metros de profundidad",
+      "Sistema de drenaje más avanzado de su época en América",
+      "Primera máquina de vapor en México, instalada en 1827",
       "Archivo minero con mapas y planos desde 1560"
     ]
   },
   {
     id: "cornish",
     title: "Legado Cornish",
-    subtitle: "Una comunidad que transformÃ³ un pueblo",
-    description: "La inmigraciÃ³n cornish dejÃ³ una huella indeleble en Real del Monte. Sus tÃ©cnicas mineras, arquitectura victoriana, tradiciones religiosas, deportes y gastronomÃ­a se fusionaron con la cultura mexicana creando una identidad Ãºnica en el mundo.",
-    extendedDescription: `Entre 1824 y 1840, mÃ¡s de 3,000 cornish llegaron a Real del Monte, transformando un pueblo minero colonial en una comunidad bicultural Ãºnica. Trajeron consigo no solo tecnologÃ­a, sino toda una forma de vida.
+    subtitle: "Una comunidad que transformó un pueblo",
+    description: "La inmigración cornish dejó una huella indeleble en Real del Monte. Sus técnicas mineras, arquitectura victoriana, tradiciones religiosas, deportes y gastronomía se fusionaron con la cultura mexicana creando una identidad única en el mundo.",
+    extendedDescription: `Entre 1824 y 1840, más de 3,000 cornish llegaron a Real del Monte, transformando un pueblo minero colonial en una comunidad bicultural única. Trajeron consigo no solo tecnología, sino toda una forma de vida.
 
-La arquitectura victoriana de sus casas, con techos a dos aguas, jardines ornamentales y chimeneas caracterÃ­sticas, contrastaba con la arquitectura colonial espaÃ±ol. Construyeron su propia iglesia anglicana, club social, escuela, y cementerio.
+La arquitectura victoriana de sus casas, con techos a dos aguas, jardines ornamentales y chimeneas características, contrastaba con la arquitectura colonial español. Construyeron su propia iglesia anglicana, club social, escuela, y cementerio.
 
-Los cornish introdujeron el fÃºtbol a MÃ©xico (el primer partido documentado fue en Real del Monte en 1900), la lucha greco-romana, los coros masculinos, y por supuesto, el paste. Sus descendientes, muchos con apellidos como Rule, Phillips, Harvey y TreviÃ±o, aÃºn viven en el pueblo y preservan sus tradiciones.
+Los cornish introdujeron el fútbol a México (el primer partido documentado fue en Real del Monte en 1900), la lucha greco-romana, los coros masculinos, y por supuesto, el paste. Sus descendientes, muchos con apellidos como Rule, Phillips, Harvey y Treviño, aún viven en el pueblo y preservan sus tradiciones.
 
-La relaciÃ³n entre Cornualles y Real del Monte es tan especial que en 2008, el gobierno britÃ¡nico designÃ³ a Real del Monte como parte de la "Cornish Mining World Heritage Site", el Ãºnico lugar fuera de Gran BretaÃ±a con esta distinciÃ³n.`,
+La relación entre Cornualles y Real del Monte es tan especial que en 2008, el gobierno británico designó a Real del Monte como parte de la "Cornish Mining World Heritage Site", el único lugar fuera de Gran Bretaña con esta distinción.`,
     image: panteonImg,
     stats: [
       { label: "Inmigrantes cornish", value: "3,000+" },
       { label: "Familias establecidas", value: "150+" },
-      { label: "AÃ±os de influencia", value: "200+" },
+      { label: "Años de influencia", value: "200+" },
       { label: "Descendientes vivos hoy", value: "500+" }
     ],
     highlights: [
-      "Ãšnica comunidad cornish en AmÃ©rica Latina",
-      "Primer partido de fÃºtbol en MÃ©xico (1900)",
-      "Primer ferrocarril en MÃ©xico (1829)",
-      "Primer diario bilingÃ¼e espaÃ±ol-inglÃ©s"
+      "Ãšnica comunidad cornish en América Latina",
+      "Primer partido de fútbol en México (1900)",
+      "Primer ferrocarril en México (1829)",
+      "Primer diario bilingüe español-inglés"
     ]
   },
   {
     id: "architecture",
     title: "Arquitectura Colonial",
     subtitle: "Caminar por las calles es viajar en el tiempo",
-    description: "Las calles empedradas, casas con techos de teja roja, balcones de madera tallada, jardines florales y fachadas coloridas crean un ambiente que transporta al visitante al siglo XIX. El Centro HistÃ³rico estÃ¡ protegido por el INAH.",
-    extendedDescription: `El Centro HistÃ³rico de Real del Monte comprende 12 manzanas de arquitectura colonial y victoriana perfectamente preservada. Las calles empedradas originales del siglo XVI siguen en uso, desgastadas por siglos de pisadas.
+    description: "Las calles empedradas, casas con techos de teja roja, balcones de madera tallada, jardines florales y fachadas coloridas crean un ambiente que transporta al visitante al siglo XIX. El Centro Histórico está protegido por el INAH.",
+    extendedDescription: `El Centro Histórico de Real del Monte comprende 12 manzanas de arquitectura colonial y victoriana perfectamente preservada. Las calles empedradas originales del siglo XVI siguen en uso, desgastadas por siglos de pisadas.
 
-Las casas muestran la evoluciÃ³n arquitectÃ³nica del pueblo: las mÃ¡s antiguas, de adobe y techos de teja con patios interiores coloniales; las de la Ã©poca de esplendor minero, con fachadas de cantera y balcones de madera; y las construidas por los ingleses, con influencias victorianas, jardines frontales y ventanas de guillotina.
+Las casas muestran la evolución arquitectónica del pueblo: las más antiguas, de adobe y techos de teja con patios interiores coloniales; las de la época de esplendor minero, con fachadas de cantera y balcones de madera; y las construidas por los ingleses, con influencias victorianas, jardines frontales y ventanas de guillotina.
 
-El trazado del pueblo sigue el modelo de plaza central hispanoamericano, con la Parroquia de la AsunciÃ³n como punto focal. Los callejones estrechos, las escalinatas de piedra, los arcos y los portales comerciales crean un ambiente Ãºnico que ha sido escenario de numerosas producciones cinematogrÃ¡ficas.
+El trazado del pueblo sigue el modelo de plaza central hispanoamericano, con la Parroquia de la Asunción como punto focal. Los callejones estrechos, las escalinatas de piedra, los arcos y los portales comerciales crean un ambiente único que ha sido escenario de numerosas producciones cinematográficas.
 
-El INAH ha catalogado mÃ¡s de 200 edificios como patrimonio histÃ³rico, y la mayorÃ­a han sido restaurados respetando tÃ©cnicas originales y materiales tradicionales.`,
+El INAH ha catalogado más de 200 edificios como patrimonio histórico, y la mayoría han sido restaurados respetando técnicas originales y materiales tradicionales.`,
     image: callesImg,
     stats: [
-      { label: "Edificios histÃ³ricos catalogados", value: "200+" },
-      { label: "Manzanas del centro histÃ³rico", value: "12" },
-      { label: "AÃ±o de fundaciÃ³n original", value: "1560" },
-      { label: "KilÃ³metros de calles empedradas", value: "8" }
+      { label: "Edificios históricos catalogados", value: "200+" },
+      { label: "Manzanas del centro histórico", value: "12" },
+      { label: "Año de fundación original", value: "1560" },
+      { label: "Kilómetros de calles empedradas", value: "8" }
     ],
     highlights: [
-      "Plaza Principal: CorazÃ³n social desde 1560",
-      "Parroquia de la AsunciÃ³n: Arquitectura barroca del siglo XVIII",
+      "Plaza Principal: Corazón social desde 1560",
+      "Parroquia de la Asunción: Arquitectura barroca del siglo XVIII",
       "Portal del Comercio: Sigue siendo centro comercial",
-      "Callejones romÃ¡nticos: Escenario de leyendas"
+      "Callejones románticos: Escenario de leyendas"
     ]
   },
   {
     id: "nature",
-    title: "GeografÃ­a y Naturaleza",
+    title: "Geografía y Naturaleza",
     subtitle: "Un pueblo entre el bosque y la neblina",
-    description: "Ubicado a 2,700 metros sobre el nivel del mar, Real del Monte estÃ¡ envuelto en bosque de oyamel y pino. La neblina que frecuentemente cubre el pueblo ha inspirado poetas, pintores y leyendas durante siglos.",
-    extendedDescription: `Real del Monte se asienta en la Sierra de Pachuca, parte del Eje NeovolcÃ¡nico Transversal. A 2,700 metros de altitud, es uno de los pueblos mÃ¡s altos de MÃ©xico, lo que explica su clima fresco y su caracterÃ­stica neblina.
+    description: "Ubicado a 2,700 metros sobre el nivel del mar, Real del Monte está envuelto en bosque de oyamel y pino. La neblina que frecuentemente cubre el pueblo ha inspirado poetas, pintores y leyendas durante siglos.",
+    extendedDescription: `Real del Monte se asienta en la Sierra de Pachuca, parte del Eje Neovolcánico Transversal. A 2,700 metros de altitud, es uno de los pueblos más altos de México, lo que explica su clima fresco y su característica neblina.
 
-El bosque que rodea al pueblo es principalmente de oyamel (Abies religiosa), pino y encino. Este ecosistema alberga una biodiversidad Ãºnica, incluyendo especies endÃ©micas de orquÃ­deas, hongos y mariposas. Durante el invierno, el bosque se transforma en un paisaje mÃ¡gico cuando la nieve cubre los Ã¡rboles.
+El bosque que rodea al pueblo es principalmente de oyamel (Abies religiosa), pino y encino. Este ecosistema alberga una biodiversidad única, incluyendo especies endémicas de orquídeas, hongos y mariposas. Durante el invierno, el bosque se transforma en un paisaje mágico cuando la nieve cubre los árboles.
 
-La neblina es un elemento definitorio del paisaje realmontense. Se forma cuando las nubes del Golfo de MÃ©xico chocan con la sierra, creando un manto blanco que envuelve al pueblo. Los lugareÃ±os dicen que la neblina trae consigo "los susurros de los mineros del pasado".
+La neblina es un elemento definitorio del paisaje realmontense. Se forma cuando las nubes del Golfo de México chocan con la sierra, creando un manto blanco que envuelve al pueblo. Los lugareños dicen que la neblina trae consigo "los susurros de los mineros del pasado".
 
-Las formaciones rocosas como las PeÃ±as Cargadas son testimonios geolÃ³gicos de millones de aÃ±os de erosiÃ³n. Los manantiales de agua mineral, como el de San Antonio, han sido aprovechados desde la Ã©poca prehispÃ¡nica.`,
+Las formaciones rocosas como las Peñas Cargadas son testimonios geológicos de millones de años de erosión. Los manantiales de agua mineral, como el de San Antonio, han sido aprovechados desde la época prehispánica.`,
     image: penasImg,
     stats: [
       { label: "Altitud sobre el nivel del mar", value: "2,700m" },
-      { label: "HectÃ¡reas de bosque protegido", value: "12,000" },
+      { label: "Hectáreas de bosque protegido", value: "12,000" },
       { label: "Especies de flora documentadas", value: "850+" },
-      { label: "DÃ­as con neblina al aÃ±o", value: "180+" }
+      { label: "Días con neblina al año", value: "180+" }
     ],
     highlights: [
       "Bosque de oyamel: Hogar de la mariposa monarca",
-      "Parque EcoturÃ­stico PeÃ±as Cargadas",
+      "Parque Ecoturístico Peñas Cargadas",
       "Manantiales de agua mineral natural",
-      "Mirador La Cruz: Vista panorÃ¡mica 360Â°"
+      "Mirador La Cruz: Vista panorámica 360Â°"
     ]
   }
 ];
@@ -227,45 +227,45 @@ Las formaciones rocosas como las PeÃ±as Cargadas son testimonios geolÃ³gicos
 const historicalFigures = [
   {
     name: "Ricardo Bell",
-    role: "El Payaso que Hizo ReÃ­r a la Dictadura",
+    role: "El Payaso que Hizo Reír a la Dictadura",
     period: "1881-1911",
-    description: "Richard Bell Guest, el clown inglÃ©s que revolucionÃ³ el entretenimiento en MÃ©xico Porfiriano. Su personaje 'El HuÃ¡caro' hizo reÃ­r incluso al General Porfirio DÃ­az.",
-    contribution: "FundÃ³ el Gran Circo Bell y democratizÃ³ la risa en una Ã©poca de represiÃ³n. Su leyenda persiste en la tumba 55 del PanteÃ³n InglÃ©s."
+    description: "Richard Bell Guest, el clown inglés que revolucionó el entretenimiento en México Porfiriano. Su personaje 'El Huácaro' hizo reír incluso al General Porfirio Díaz.",
+    contribution: "Fundó el Gran Circo Bell y democratizó la risa en una época de represión. Su leyenda persiste en la tumba 55 del Panteón Inglés."
   },
   {
     name: "Pedro Romero de Terreros",
     role: "Empresario Minero",
     period: "1824-1860",
-    description: "Conde de Regla y visionario empresario que modernizÃ³ la minerÃ­a realmontense. InvirtiÃ³ millones de pesos en tecnologÃ­a de punta y mejorÃ³ las condiciones de los mineros.",
+    description: "Conde de Regla y visionario empresario que modernizó la minería realmontense. Invirtió millones de pesos en tecnología de punta y mejoró las condiciones de los mineros.",
     contribution: 'Introdujo el sistema de "patentado" para distribuir ganancias entre los trabajadores'
   },
   {
     name: "John Rule",
     role: "Ingeniero Jefe",
     period: "1824-1835",
-    description: "Ingeniero de Cornualles contratado para modernizar las operaciones mineras. DiseÃ±Ã³ el sistema de drenaje mÃ¡s avanzado de AmÃ©rica.",
-    contribution: "ConstruyÃ³ la primera mÃ¡quina de vapor en MÃ©xico y el primer ferrocarril"
+    description: "Ingeniero de Cornualles contratado para modernizar las operaciones mineras. Diseñó el sistema de drenaje más avanzado de América.",
+    contribution: "Construyó la primera máquina de vapor en México y el primer ferrocarril"
   },
   {
-    name: "NicolÃ¡s ZÃºÃ±iga y Miranda",
-    role: "PolÃ­tico y Escritor",
+    name: "Nicolás Zúñiga y Miranda",
+    role: "Político y Escritor",
     period: "1863-1925",
-    description: "Nacido en Real del Monte, se convirtiÃ³ en figura polÃ­tica nacional. EscribiÃ³ extensamente sobre la historia minera de su pueblo natal.",
-    contribution: "PreservÃ³ documentos histÃ³ricos y testimonios de la Ã©poca minera dorada"
+    description: "Nacido en Real del Monte, se convirtió en figura política nacional. Escribió extensamente sobre la historia minera de su pueblo natal.",
+    contribution: "Preservó documentos históricos y testimonios de la época minera dorada"
   },
   {
     name: "William Boyer",
-    role: "CapellÃ¡n Anglicano",
+    role: "Capellán Anglicano",
     period: "1850-1880",
-    description: "Sacerdote anglicano que sirviÃ³ a la comunidad cornish durante 30 aÃ±os. FundÃ³ la escuela bilingÃ¼e y el coro de la iglesia.",
-    contribution: "DejÃ³ registros detallados de la vida cotidiana de la comunidad inglesa"
+    description: "Sacerdote anglicano que sirvió a la comunidad cornish durante 30 años. Fundó la escuela bilingüe y el coro de la iglesia.",
+    contribution: "Dejó registros detallados de la vida cotidiana de la comunidad inglesa"
   }
 ];
 
 // Video content
 const historicalVideos = [
   {
-    title: "Documental: 200 AÃ±os de Historia Cornish-Mexicana",
+    title: "Documental: 200 Años de Historia Cornish-Mexicana",
     thumbnail: minaImg,
     duration: "45:30",
     description: "Recorrido completo por la historia de la comunidad cornish en Real del Monte"
@@ -274,29 +274,29 @@ const historicalVideos = [
     title: "La Mina de Acosta: Descendiendo al Pasado",
     thumbnail: minaImg,
     duration: "18:45",
-    description: "Recorrido en video por los tÃºneles histÃ³ricos de la mina mÃ¡s profunda"
+    description: "Recorrido en video por los túneles históricos de la mina más profunda"
   },
   {
-    title: "Arquitectura y Leyendas del Centro HistÃ³rico",
+    title: "Arquitectura y Leyendas del Centro Histórico",
     thumbnail: callesImg,
     duration: "25:20",
     description: "Caminata virtual por las calles empedradas y sus historias"
   },
   {
-    title: "El PanteÃ³n InglÃ©s: Memoria de una Comunidad",
+    title: "El Panteón Inglés: Memoria de una Comunidad",
     thumbnail: panteonImg,
     duration: "32:15",
-    description: "Documental sobre el cementerio anglicano mÃ¡s alto del mundo"
+    description: "Documental sobre el cementerio anglicano más alto del mundo"
   }
 ];
 
 // Image gallery
 const historicalImages = [
-  { src: minaImg, alt: "Mina de Acosta", caption: "Entrada histÃ³rica de la Mina de Acosta" },
-  { src: panteonImg, alt: "PanteÃ³n InglÃ©s", caption: "Tumbas victorianas entre la neblina" },
+  { src: minaImg, alt: "Mina de Acosta", caption: "Entrada histórica de la Mina de Acosta" },
+  { src: panteonImg, alt: "Panteón Inglés", caption: "Tumbas victorianas entre la neblina" },
   { src: callesImg, alt: "Calles Coloniales", caption: "Callejones empedrados del siglo XVI" },
-  { src: heroImg, alt: "Vista PanorÃ¡mica", caption: "Real del Monte desde el mirador" },
-  { src: penasImg, alt: "PeÃ±as Cargadas", caption: "Formaciones rocosas milenarias" },
+  { src: heroImg, alt: "Vista Panorámica", caption: "Real del Monte desde el mirador" },
+  { src: penasImg, alt: "Peñas Cargadas", caption: "Formaciones rocosas milenarias" },
 ];
 
 const HistoriaPage = () => {
@@ -318,7 +318,7 @@ const HistoriaPage = () => {
         <div className="px-6 md:px-16 pt-8">
           <VideoEmbed
             youtubeId="dQw4w9WgXcQ"
-            title="500 AÃ±os de Historia Minera"
+            title="500 Años de Historia Minera"
             variant="hero"
             caption="Del descubrimiento de la Veta Madre a la identidad actual"
           />
@@ -354,7 +354,7 @@ const HistoriaPage = () => {
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-terracotta/20 text-terracotta text-sm font-medium mb-6 backdrop-blur-sm"
                 >
                   <Clock className="w-4 h-4" />
-                  Desde 1560 â€¢ 460+ aÃ±os de historia
+                  Desde 1560 â€¢ 460+ años de historia
                 </motion.span>
                 
                 <TextReveal>
@@ -372,8 +372,8 @@ const HistoriaPage = () => {
                   transition={{ delay: 0.5, duration: 0.8 }}
                   className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed"
                 >
-                  MÃ¡s de cuatro siglos de historia minera, donde la plata forjÃ³ no solo metales preciosos, 
-                  sino una cultura Ãºnica que fusiona lo mexicano con lo cornish. Un testimonio viviente 
+                  Más de cuatro siglos de historia minera, donde la plata forjó no solo metales preciosos, 
+                  sino una cultura única que fusiona lo mexicano con lo cornish. Un testimonio viviente 
                   del encuentro entre dos mundos.
                 </motion.p>
 
@@ -385,11 +385,11 @@ const HistoriaPage = () => {
                 >
                   <Button size="lg" className="bg-terracotta hover:bg-terracotta/90 text-white rounded-full px-8">
                     <Scroll className="w-4 h-4 mr-2" />
-                    Explorar LÃ­nea del Tiempo
+                    Explorar Línea del Tiempo
                   </Button>
                   <Button variant="outline" size="lg" className="rounded-full px-8 border-2">
                     <BookOpen className="w-4 h-4 mr-2" />
-                    Archivo HistÃ³rico
+                    Archivo Histórico
                   </Button>
                 </motion.div>
               </motion.div>
@@ -419,9 +419,9 @@ const HistoriaPage = () => {
           <div className="container mx-auto px-4 md:px-8">
             <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {[
-                { value: "1560", label: "AÃ±o de fundaciÃ³n" },
-                { value: "200+", label: "AÃ±os de herencia cornish" },
-                { value: "35+", label: "Minas histÃ³ricas" },
+                { value: "1560", label: "Año de fundación" },
+                { value: "200+", label: "Años de herencia cornish" },
+                { value: "35+", label: "Minas históricas" },
                 { value: "200+", label: "Edificios patrimonio" },
               ].map((stat, index) => (
                 <StaggerItem key={index}>
@@ -446,12 +446,12 @@ const HistoriaPage = () => {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <span className="text-terracotta text-sm font-medium uppercase tracking-wider">CronologÃ­a</span>
+              <span className="text-terracotta text-sm font-medium uppercase tracking-wider">Cronología</span>
               <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mt-2 mb-4">
-                LÃ­nea del Tiempo HistÃ³rica
+                Línea del Tiempo Histórica
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Los momentos que definieron la historia de este Pueblo MÃ¡gico, desde sus orÃ­genes 
+                Los momentos que definieron la historia de este Pueblo Mágico, desde sus orígenes 
                 mineros hasta su reconocimiento internacional.
               </p>
             </motion.div>
@@ -532,7 +532,7 @@ const HistoriaPage = () => {
                 Pilares de Nuestra Historia
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Cuatro dimensiones que definen la identidad Ãºnica de Real del Monte
+                Cuatro dimensiones que definen la identidad única de Real del Monte
               </p>
             </motion.div>
 
@@ -540,7 +540,7 @@ const HistoriaPage = () => {
               <TabsList className="w-full max-w-3xl mx-auto grid grid-cols-2 md:grid-cols-4 mb-12">
                 <TabsTrigger value="mining" className="data-[state=active]:bg-terracotta data-[state=active]:text-white">
                   <Pickaxe className="w-4 h-4 mr-2" />
-                  MinerÃ­a
+                  Minería
                 </TabsTrigger>
                 <TabsTrigger value="cornish" className="data-[state=active]:bg-gold data-[state=active]:text-white">
                   <Ship className="w-4 h-4 mr-2" />
@@ -623,7 +623,7 @@ const HistoriaPage = () => {
                 Quienes Forjaron el Pueblo
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Figuras histÃ³ricas que dejaron su huella indeleble en la historia de Real del Monte
+                Figuras históricas que dejaron su huella indeleble en la historia de Real del Monte
               </p>
             </motion.div>
 
@@ -679,7 +679,7 @@ const HistoriaPage = () => {
                 El Cisma de la Carcajada
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                La anatomÃ­a del mito de Ricardo Bell y la tumba apÃ³stata del PanteÃ³n InglÃ©s
+                La anatomía del mito de Ricardo Bell y la tumba apóstata del Panteón Inglés
               </p>
             </motion.div>
 
@@ -701,15 +701,15 @@ const HistoriaPage = () => {
                 </div>
                 <div className="glass rounded-2xl p-6 ml-13">
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    <strong className="text-foreground">Inglaterra, 1858.</strong> El humo industrial de Deptford asfixiaba los pulmones del proletariado victoriano. En este vientre de hollÃ­n naciÃ³ Richard Bell Guest, hijo de James Bell, un clown itinerante escocÃ©s, y Emilia Guest, de sangre irlandesa.
+                    <strong className="text-foreground">Inglaterra, 1858.</strong> El humo industrial de Deptford asfixiaba los pulmones del proletariado victoriano. En este vientre de hollín nació Richard Bell Guest, hijo de James Bell, un clown itinerante escocés, y Emilia Guest, de sangre irlandesa.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    DebutÃ³ a los dos aÃ±os en Lyon, Francia. A lomos del Circo Chiarini en 1861, recorriÃ³ una Europa fragmentada. La Inglaterra de la RevoluciÃ³n Industrial era una maquinaria devoradora de almas. Para la Ã©lite britÃ¡nica, el payaso no era un artista; era un bufÃ³n despreciable.
+                    Debutó a los dos años en Lyon, Francia. A lomos del Circo Chiarini en 1861, recorrió una Europa fragmentada. La Inglaterra de la Revolución Industrial era una maquinaria devoradora de almas. Para la élite británica, el payaso no era un artista; era un bufón despreciable.
                   </p>
                   <div className="mt-4 p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                     <p className="text-sm text-purple-400 font-medium">
                       <Calendar className="w-4 h-4 inline mr-2" />
-                      1881: Bell cruza el AtlÃ¡ntico y arriba al MÃ©xico Porfiriano
+                      1881: Bell cruza el Atlántico y arriba al México Porfiriano
                     </p>
                   </div>
                 </div>
@@ -728,22 +728,22 @@ const HistoriaPage = () => {
                     <span className="text-purple-500 font-serif font-bold">II</span>
                   </div>
                   <h3 className="font-serif text-2xl font-bold text-foreground">
-                    El "HuÃ¡caro" que Hizo ReÃ­r al Dictador
+                    El "Huácaro" que Hizo Reír al Dictador
                   </h3>
                 </div>
                 <div className="glass rounded-2xl p-6 ml-13">
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    Bell no fue un payaso convencional. DescartÃ³ la estridencia del clown rojo para abrazar al Pierrot melancÃ³lico. Se maquillÃ³ de blanco espectral, vistiÃ³ el traje holgado y naciÃ³ el <em>"huÃ¡caro"</em>. Su comedia no era de pastelazos, sino de crÃ­tica social finï¿½ï¿½sima.
+                    Bell no fue un payaso convencional. Descartó la estridencia del clown rojo para abrazar al Pierrot melancólico. Se maquilló de blanco espectral, vistió el traje holgado y nació el <em>"huácaro"</em>. Su comedia no era de pastelazos, sino de crítica social finï¿½ï¿½sima.
                   </p>
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    Con el Circo OrrÃ­n, Bell se convirtiÃ³ en una deidad popular. <strong>Juan de Dios Peza</strong>, en <em>El Monitor Republicano</em>, sentenciÃ³: <em>"Es mÃ¡s popular que el pulque"</em>. Llenaba plazas enteras. Incluso el <strong>General Porfirio DÃ­az</strong>, un hombre de semblante pÃ©treo, acudÃ­a a su palco solo para doblegarse ante la risa.
+                    Con el Circo Orrín, Bell se convirtió en una deidad popular. <strong>Juan de Dios Peza</strong>, en <em>El Monitor Republicano</em>, sentenció: <em>"Es más popular que el pulque"</em>. Llenaba plazas enteras. Incluso el <strong>General Porfirio Díaz</strong>, un hombre de semblante pétreo, acudía a su palco solo para doblegarse ante la risa.
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     <Badge variant="outline" className="border-purple-500/50 text-purple-400">
                       <Crown className="w-3 h-3 mr-1" /> Favorito del Dictador
                     </Badge>
                     <Badge variant="outline" className="border-purple-500/50 text-purple-400">
-                      <Heart className="w-3 h-3 mr-1" /> Ãcono Popular
+                      <Heart className="w-3 h-3 mr-1" /> Ícono Popular
                     </Badge>
                     <Badge variant="outline" className="border-purple-500/50 text-purple-400">
                       <Building2 className="w-3 h-3 mr-1" /> Gran Circo Bell (1907)
@@ -770,10 +770,10 @@ const HistoriaPage = () => {
                 </div>
                 <div className="glass rounded-2xl p-6 ml-13 border-amber-500/30">
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    Las giras del Circo OrrÃ­n lo llevarÃ¡n a tocar la <strong>Comarca Minera</strong>: Pachuca y, finalmente, Real del Monte. El choque fue brutal. Bell no encontrÃ³ nopales y desierto, sino un <em>"Little Cornwall"</em> incrustado en la sierra.
+                    Las giras del Circo Orrín lo llevarán a tocar la <strong>Comarca Minera</strong>: Pachuca y, finalmente, Real del Monte. El choque fue brutal. Bell no encontró nopales y desierto, sino un <em>"Little Cornwall"</em> incrustado en la sierra.
                   </p>
                   <blockquote className="border-l-4 border-amber-500 pl-4 my-6 italic text-foreground/80">
-                    "Bell, embriagado por este sincretismo y acogido por la calidez ruda de los mineros, subiÃ³ al PanteÃ³n InglÃ©s. AllÃ­, mirando las lÃ¡pidas devotas al este, escupiÃ³ su rebeldÃ­a. ComprÃ³ un espacio por adelantado y jurÃ³: <em>'Cuando la muerte me alcance, entiÃ©rrenme dÃ¡ndole la espalda al paÃ­s que me escupiÃ³'</em>."
+                    "Bell, embriagado por este sincretismo y acogido por la calidez ruda de los mineros, subió al Panteón Inglés. Allí, mirando las lápidas devotas al este, escupió su rebeldía. Compró un espacio por adelantado y juró: <em>'Cuando la muerte me alcance, entiérrenme dándole la espalda al país que me escupió'</em>."
                   </blockquote>
                 </div>
               </motion.div>
@@ -791,22 +791,22 @@ const HistoriaPage = () => {
                     <AlertTriangle className="w-5 h-5 text-red-500" />
                   </div>
                   <h3 className="font-serif text-2xl font-bold text-foreground">
-                    La CirugÃ­a a la Verdad
+                    La Cirugía a la Verdad
                   </h3>
                 </div>
                 <div className="glass rounded-2xl p-6 ml-13 bg-red-950/10 border-red-500/30">
                   <div className="flex items-center gap-2 mb-4">
                     <Eye className="w-5 h-5 text-red-400" />
-                    <span className="text-red-400 font-medium">La respuesta histÃ³rica es: NO</span>
+                    <span className="text-red-400 font-medium">La respuesta histórica es: NO</span>
                   </div>
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    Con el estallido de la RevoluciÃ³n Maderista en 1911, Bell huyÃ³ con su familia hacia Nueva York. Una tormenta de nieve empeorÃ³ su condiciÃ³n de salud. El domingo <strong>12 de marzo de 1911</strong>, a los 53 aÃ±os, Ricardo Bell exhalÃ³ su Ãºltimo aliento. Fue sepultado en Nueva York. Su propia hija, Sylvia Bell, lo confirmÃ³ en su libro biogrÃ¡fico de 1984.
+                    Con el estallido de la Revolución Maderista en 1911, Bell huyó con su familia hacia Nueva York. Una tormenta de nieve empeoró su condición de salud. El domingo <strong>12 de marzo de 1911</strong>, a los 53 años, Ricardo Bell exhaló su último aliento. Fue sepultado en Nueva York. Su propia hija, Sylvia Bell, lo confirmó en su libro biográfico de 1984.
                   </p>
                   <div className="p-4 rounded-lg mb-4 bg-muted border border-border"
                   >
                     <h4 className="font-bold text-foreground mb-2">El Enigma Resuelto:</h4>
                     <p className="text-sm text-muted-foreground">
-                      La <strong>tumba 55</strong> pertenece en realidad a un minero britÃ¡nico llamado <strong>Richard Bell</strong>, originario de Middleton, Teesdale, Inglaterra. Este minero falleciÃ³ el <strong>25 de octubre de 1875</strong>, a los 63 aÃ±os. Â¿Por quÃ© estÃ¡ volteada? No fue un acto de rebeldÃ­a. La historia forense sugiere que un deslizamiento de tierra o un error de los sepultureros locales alterÃ³ la orientaciÃ³n de la cantera.
+                      La <strong>tumba 55</strong> pertenece en realidad a un minero británico llamado <strong>Richard Bell</strong>, originario de Middleton, Teesdale, Inglaterra. Este minero falleció el <strong>25 de octubre de 1875</strong>, a los 63 años. ¿Por qué está volteada? No fue un acto de rebeldía. La historia forense sugiere que un deslizamiento de tierra o un error de los sepultureros locales alteró la orientación de la cantera.
                     </p>
                   </div>
                 </div>
@@ -825,19 +825,19 @@ const HistoriaPage = () => {
                     <Sparkles className="w-5 h-5 text-amber-500" />
                   </div>
                   <h3 className="font-serif text-2xl font-bold text-foreground">
-                    La TransmutaciÃ³n SociolÃ³gica
+                    La Transmutación Sociológica
                   </h3>
                 </div>
                 <div className="glass rounded-2xl p-6 ml-13">
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    Si la historia es clara, <strong>Â¿por quÃ© sobrevive la leyenda?</strong> Porque el pueblo de Real del Monte necesitaba que fuera verdad.
+                    Si la historia es clara, <strong>¿por qué sobrevive la leyenda?</strong> Porque el pueblo de Real del Monte necesitaba que fuera verdad.
                   </p>
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    La psicologÃ­a colectiva hizo el resto. Fusionaron al minero anÃ³nimo con el Ã­dolo popular. Inventaron el desprecio a Inglaterra para justificar el error topogrÃ¡fico de la tumba.
+                    La psicología colectiva hizo el resto. Fusionaron al minero anónimo con el ídolo popular. Inventaron el desprecio a Inglaterra para justificar el error topográfico de la tumba.
                   </p>
                   <div className="p-4 rounded-lg bg-gradient-to-r from-amber-500/20 to-purple-500/20 border border-amber-500/30 my-6">
                     <p className="text-foreground font-serif italic text-center">
-                      "Nueva York guarda el polvo. Real del Monte resguarda el espÃ­ritu."
+                      "Nueva York guarda el polvo. Real del Monte resguarda el espíritu."
                     </p>
                   </div>
                   <p className="text-sm text-muted-foreground text-center">
@@ -858,7 +858,7 @@ const HistoriaPage = () => {
                   onClick={() => navigate('/mapa')}
                 >
                   <MapPin className="w-4 h-4 mr-2" />
-                  Visitar el PanteÃ³n InglÃ©s
+                  Visitar el Panteón Inglés
                 </Button>
               </motion.div>
             </div>
@@ -880,16 +880,16 @@ const HistoriaPage = () => {
             >
               <span className="text-gold text-sm font-medium uppercase tracking-wider">Multimedia</span>
               <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mt-2 mb-4">
-                Archivo Visual HistÃ³rico
+                Archivo Visual Histórico
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                ImÃ¡genes y videos que capturan la esencia histÃ³rica de Real del Monte
+                Imágenes y videos que capturan la esencia histórica de Real del Monte
               </p>
             </motion.div>
 
             <div className="grid lg:grid-cols-2 gap-12">
               <div>
-                <h3 className="font-serif text-2xl font-bold text-foreground mb-6">GalerÃ­a de ImÃ¡genes</h3>
+                <h3 className="font-serif text-2xl font-bold text-foreground mb-6">Galería de Imágenes</h3>
                 <ImageGallery />
               </div>
               <div>
@@ -911,11 +911,11 @@ const HistoriaPage = () => {
               className="max-w-3xl mx-auto text-center"
             >
               <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
-                SÃ© Parte de la Historia
+                Sé Parte de la Historia
               </h2>
               <p className="text-muted-foreground mb-8">
                 Visita Real del Monte y camina por las mismas calles donde mineros, inmigrantes y 
-                soÃ±adores forjaron una de las historias mÃ¡s fascinantes de MÃ©xico.
+                soñadores forjaron una de las historias más fascinantes de México.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button size="lg" className="bg-terracotta hover:bg-terracotta/90 text-white rounded-full px-8">
@@ -924,7 +924,7 @@ const HistoriaPage = () => {
                 </Button>
                 <Button variant="outline" size="lg" className="rounded-full px-8 border-2">
                   <BookOpen className="w-4 h-4 mr-2" />
-                  Descargar GuÃ­a HistÃ³rica
+                  Descargar Guía Histórica
                 </Button>
               </div>
             </motion.div>

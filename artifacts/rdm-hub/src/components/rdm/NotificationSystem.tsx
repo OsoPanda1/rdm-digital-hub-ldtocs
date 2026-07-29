@@ -7,7 +7,7 @@
  * Visual toast notifications + optional Web Audio API sound effects.
  * Usage: import { useRDMNotify } from "@/components/rdm/NotificationSystem"
  *        const notify = useRDMNotify();
- *        notify.success("Â¡XP ganada!", "+50 puntos de exploraciÃ³n");
+ *        notify.success("¡XP ganada!", "+50 puntos de exploración");
  */
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";

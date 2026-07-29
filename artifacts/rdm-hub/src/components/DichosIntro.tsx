@@ -134,7 +134,7 @@ export function DichosIntro({ onComplete }: DichosIntroProps) {
           transition={{ duration: 1.4, ease: "easeOut" }}
           className="text-4xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight leading-[0.9] mb-4"
         >
-          <span className="shimmer-text">CallejÃ³n del</span>
+          <span className="shimmer-text">Callejón del</span>
           <br />
           <span className="shimmer-text">Dicho Virtual</span>
         </motion.h1>
@@ -167,7 +167,7 @@ export function DichosIntro({ onComplete }: DichosIntroProps) {
           transition={{ duration: 1 }}
           className="text-sm md:text-lg text-muted-foreground font-body max-w-xl mx-auto leading-relaxed"
         >
-          Archivo Digital de TradiciÃ³n y Cultura Popular Realmontense
+          Archivo Digital de Tradición y Cultura Popular Realmontense
         </motion.p>
 
         {/* Sparkle badge */}

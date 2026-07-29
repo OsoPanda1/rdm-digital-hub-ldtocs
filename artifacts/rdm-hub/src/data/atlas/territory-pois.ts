@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 // src/data/rdmTerritoryPOIs.ts
-// NÃºcleo territorial del Nodo Cero Real del Monte / Kernel TAMV.
-// Combina POIs canÃ³nicos + entidades narrativas (minas, pastes, calles, leyendas, rutas, eventos)
+// Núcleo territorial del Nodo Cero Real del Monte / Kernel TAMV.
+// Combina POIs canónicos + entidades narrativas (minas, pastes, calles, leyendas, rutas, eventos)
 // + utilidades geoespaciales y filtros para IA, juegos, dashboards y RDM Digital.
 
 import type { FederationId } from "./federations";
@@ -30,7 +30,7 @@ export type POICategory =
 export type RdmRiskLevel = "low" | "medium" | "high" | "critical";
 
 export type TerritorialRelevance =
-  | "core-node" // NÃºcleo del Nodo Cero
+  | "core-node" // Núcleo del Nodo Cero
   | "federated-node" // Nodo federado relevante
   | "support-node"; // Nodo de soporte/periferia
 
@@ -79,7 +79,7 @@ export interface TerritorialBase {
 }
 
 //
-// POIs CANÃ“NICOS (cartografÃ­a fÃ­sica)
+// POIs CANÃ“NICOS (cartografía física)
 //
 
 export interface TerritoryPOI {
@@ -102,7 +102,7 @@ export interface TerritoryPOI {
 export const RDM_TERRITORY_POIS: TerritoryPOI[] = [
   {
     id: "rdm-centro",
-    name: "Real del Monte (Centro HistÃ³rico)",
+    name: "Real del Monte (Centro Histórico)",
     category: "historico",
     municipality: "Real del Monte",
     lat: 20.1432,
@@ -110,7 +110,7 @@ export const RDM_TERRITORY_POIS: TerritoryPOI[] = [
     altitudeM: 2700,
     description: "Cabecera del Nodo Cero. Templo principal del territorio TAMV.",
     significance:
-      "Coordenada de fundaciÃ³n de la RepÃºblica Digital. Origen del manuscrito.",
+      "Coordenada de fundación de la República Digital. Origen del manuscrito.",
     federationId: "gubernamental",
     riskLevel: "medium",
     relevance: "core-node",
@@ -126,22 +126,22 @@ export const RDM_TERRITORY_POIS: TerritoryPOI[] = [
     description:
       "Mina cornish del siglo XIX. Eje patrimonial del temporal extractivo.",
     significance:
-      "Memoria del trabajo cornish-mexicano. SÃ­mbolo de la herida y la resiliencia.",
+      "Memoria del trabajo cornish-mexicano. Símbolo de la herida y la resiliencia.",
     federationId: "cultural",
     riskLevel: "high",
     relevance: "federated-node",
   },
   {
     id: "panteon-ingles",
-    name: "PanteÃ³n InglÃ©s",
+    name: "Panteón Inglés",
     category: "historico",
     municipality: "Real del Monte",
     lat: 20.1455,
     lng: -98.6678,
     altitudeM: 2710,
-    description: "Cementerio cornish del siglo XIX, Ãºnico en su tipo en MÃ©xico.",
+    description: "Cementerio cornish del siglo XIX, único en su tipo en México.",
     significance:
-      "Sincretismo cornish-otomÃ­-mexicano. FederaciÃ³n Cultural.",
+      "Sincretismo cornish-otomí-mexicano. Federación Cultural.",
     federationId: "cultural",
     riskLevel: "medium",
     relevance: "federated-node",
@@ -154,9 +154,9 @@ export const RDM_TERRITORY_POIS: TerritoryPOI[] = [
     lat: 20.1234,
     lng: -98.7333,
     altitudeM: 2400,
-    description: "Capital polÃ­tico-administrativa del Estado de Hidalgo.",
+    description: "Capital político-administrativa del Estado de Hidalgo.",
     significance:
-      "Nodo de articulaciÃ³n con el Estado Federal. Sede de relaciones formales.",
+      "Nodo de articulación con el Estado Federal. Sede de relaciones formales.",
     federationId: "gubernamental",
     riskLevel: "medium",
     relevance: "federated-node",
@@ -169,8 +169,8 @@ export const RDM_TERRITORY_POIS: TerritoryPOI[] = [
     lat: 20.2167,
     lng: -98.7333,
     altitudeM: 2400,
-    description: "Pueblo MÃ¡gico, bosque de oyameles, parque nacional.",
-    significance: "FederaciÃ³n de Salud y Cultural. Reserva ecocognitiva.",
+    description: "Pueblo Mágico, bosque de oyameles, parque nacional.",
+    significance: "Federación de Salud y Cultural. Reserva ecocognitiva.",
     federationId: "salud",
     riskLevel: "low",
     relevance: "federated-node",
@@ -184,7 +184,7 @@ export const RDM_TERRITORY_POIS: TerritoryPOI[] = [
     lng: -98.6691,
     altitudeM: 2700,
     description: "Asambleas federadas, festivales, mercado del paste.",
-    significance: "Sede fÃ­sica de la asamblea ciudadana del Nodo Cero.",
+    significance: "Sede física de la asamblea ciudadana del Nodo Cero.",
     federationId: "gubernamental",
     riskLevel: "medium",
     relevance: "core-node",
@@ -200,7 +200,7 @@ export const RDM_TERRITORY_POIS: TerritoryPOI[] = [
     description:
       "Mercado federado de productores locales bajo el protocolo TAMV.",
     significance:
-      "FederaciÃ³n EconÃ³mica. Punto de circulaciÃ³n de CrÃ©dito TAMV.",
+      "Federación Económica. Punto de circulación de Crédito TAMV.",
     federationId: "economica",
     riskLevel: "medium",
     relevance: "core-node",
@@ -214,9 +214,9 @@ export const RDM_TERRITORY_POIS: TerritoryPOI[] = [
     lng: -98.6685,
     altitudeM: 2705,
     description:
-      "Espacio simbÃ³lico de la FederaciÃ³n TecnolÃ³gica. Servidor ritual.",
+      "Espacio simbólico de la Federación Tecnológica. Servidor ritual.",
     significance:
-      "NÃºcleo cognitivo. Isabella Sentinel residencia simbÃ³lica.",
+      "Núcleo cognitivo. Isabella Sentinel residencia simbólica.",
     federationId: "tecnologica",
     riskLevel: "high",
     relevance: "core-node",
@@ -231,25 +231,25 @@ export const RDM_TERRITORY_POIS: TerritoryPOI[] = [
     lng: -98.6705,
     altitudeM: 2710,
     description:
-      "Sede educativa del territorio. PedagogÃ­a descolonizada.",
+      "Sede educativa del territorio. Pedagogía descolonizada.",
     significance:
-      "FederaciÃ³n Educativa. FormaciÃ³n de ciudadanos del Nodo Cero.",
+      "Federación Educativa. Formación de ciudadanos del Nodo Cero.",
     federationId: "educativa",
     riskLevel: "low",
     relevance: "federated-node",
   },
   {
     id: "archivo-oral",
-    name: "Archivo Oral OtomÃ­-Cornish",
+    name: "Archivo Oral Otomí-Cornish",
     category: "historico",
     municipality: "Real del Monte",
     lat: 20.144,
     lng: -98.6695,
     altitudeM: 2700,
     description:
-      "Repositorio fÃ­sico-digital de testimonios y lenguas originarias.",
+      "Repositorio físico-digital de testimonios y lenguas originarias.",
     significance:
-      "FederaciÃ³n Cultural. Custodia de la memoria temporal.",
+      "Federación Cultural. Custodia de la memoria temporal.",
     federationId: "cultural",
     riskLevel: "high",
     relevance: "core-node",
@@ -271,7 +271,7 @@ export type Mine = TerritorialBase & {
   connections: string[];
 };
 
-export type PasteOrigin = "tradicional" | "mestizo" | "contemporÃ¡neo";
+export type PasteOrigin = "tradicional" | "mestizo" | "contemporáneo";
 
 export type Paste = TerritorialBase & {
   kind: "paste";
@@ -324,7 +324,7 @@ export type Chapter = TerritorialBase & {
 };
 
 //
-// CAPÃTULOS (Atlas superior)
+// CAPÍTULOS (Atlas superior)
 //
 
 export const chapters: Chapter[] = [
@@ -336,9 +336,9 @@ export const chapters: Chapter[] = [
     tags: ["minas", "patrimonio-industrial", "subsuelo"],
     slug: "minas",
     title: "Las minas",
-    kicker: "Capa I Â· Subsuelo",
+    kicker: "Capa I · Subsuelo",
     blurb:
-      "Bajo el pueblo respira una segunda geografÃ­a. GalerÃ­as que sostuvieron la plata del mundo y dieron forma a todo lo que estÃ¡ arriba.",
+      "Bajo el pueblo respira una segunda geografía. Galerías que sostuvieron la plata del mundo y dieron forma a todo lo que está arriba.",
     image: minasImg,
     href: "/minas",
     links: [
@@ -355,9 +355,9 @@ export const chapters: Chapter[] = [
     tags: ["pastes", "gastronomia", "memoria-comestible"],
     slug: "pastes",
     title: "Los pastes",
-    kicker: "Capa II Â· Memoria comestible",
+    kicker: "Capa II · Memoria comestible",
     blurb:
-      "Llegaron en bolsillos de mineros cornish y se quedaron como ofrenda diaria. Cada paste es una negociaciÃ³n entre dos paÃ­ses que aprendieron a convivir.",
+      "Llegaron en bolsillos de mineros cornish y se quedaron como ofrenda diaria. Cada paste es una negociación entre dos países que aprendieron a convivir.",
     image: pastesImg,
     href: "/pastes",
     links: [
@@ -373,10 +373,10 @@ export const chapters: Chapter[] = [
     importance: 1,
     tags: ["cementerio-ingles", "patrimonio", "memoria"],
     slug: "cementerio",
-    title: "El cementerio inglÃ©s",
-    kicker: "Capa III Â· Memoria silenciosa",
+    title: "El cementerio inglés",
+    kicker: "Capa III · Memoria silenciosa",
     blurb:
-      "Las cruces miran hacia Cornualles. AquÃ­ descansan quienes nunca volvieron a casa y, sin saberlo, fundaron otra.",
+      "Las cruces miran hacia Cornualles. Aquí descansan quienes nunca volvieron a casa y, sin saberlo, fundaron otra.",
     image: cementerioImg,
     href: "/cementerio",
     links: [
@@ -392,9 +392,9 @@ export const chapters: Chapter[] = [
     tags: ["calles", "tejido-urbano", "superficie"],
     slug: "calles",
     title: "Las calles",
-    kicker: "Capa IV Â· Superficie",
+    kicker: "Capa IV · Superficie",
     blurb:
-      "Bajan en pendientes imposibles, doblan donde la roca lo permitiÃ³. Cada esquina recuerda un nombre que casi nadie pronuncia ya.",
+      "Bajan en pendientes imposibles, doblan donde la roca lo permitió. Cada esquina recuerda un nombre que casi nadie pronuncia ya.",
     image: callesImg,
     href: "/calles",
     links: [
@@ -420,8 +420,8 @@ export const mines: Mine[] = [
     founded: "1727",
     status: "visitable",
     description:
-      "Una de las pocas minas activas convertidas en museo vivo. Sus malacates aÃºn se mueven; sus tÃºneles aÃºn huelen a humedad y carburo.",
-    connections: ["Pachuca", "Cornualles", "CompaÃ±Ã­a Real del Monte y Pachuca"],
+      "Una de las pocas minas activas convertidas en museo vivo. Sus malacates aún se mueven; sus túneles aún huelen a humedad y carburo.",
+    connections: ["Pachuca", "Cornualles", "Compañía Real del Monte y Pachuca"],
     links: [
       { targetId: "chapter-minas", kind: "appears-in-route" },
       { targetId: "route-patrimonio-minero", kind: "appears-in-route" },
@@ -437,7 +437,7 @@ export const mines: Mine[] = [
     founded: "1739",
     status: "memoria",
     description:
-      "Centro del primer paro minero de AmÃ©rica en 1766. Una huelga que precediÃ³ en una dÃ©cada a la independencia de los Estados Unidos.",
+      "Centro del primer paro minero de América en 1766. Una huelga que precedió en una década a la independencia de los Estados Unidos.",
     connections: ["Conde de Regla", "Huelga de 1766", "Plata novohispana"],
     links: [{ targetId: "legend-conde-veta-perdida", kind: "appears-in-legend" }],
   },
@@ -447,12 +447,12 @@ export const mines: Mine[] = [
     federationLayer: "subsuelo",
     importance: 2,
     tags: ["mina", "tecnologia", "migracion-britanica"],
-    name: "Mina de Santa InÃ©s",
+    name: "Mina de Santa Inés",
     founded: "1801",
     status: "patrimonio",
     description:
-      "Sus tiros descendieron mÃ¡s de 400 metros bajo el nivel del mar interior. Hoy se preserva como sitio de memoria industrial.",
-    connections: ["TecnologÃ­a Cornish", "Bombas de vapor", "MigraciÃ³n britÃ¡nica"],
+      "Sus tiros descendieron más de 400 metros bajo el nivel del mar interior. Hoy se preserva como sitio de memoria industrial.",
+    connections: ["Tecnología Cornish", "Bombas de vapor", "Migración británica"],
   },
   {
     id: "mine-san-juan-pachuca",
@@ -464,8 +464,8 @@ export const mines: Mine[] = [
     founded: "1850",
     status: "patrimonio",
     description:
-      "Ãšltima gran obra del ciclo minero del siglo XIX. Su malacate aÃºn corona el horizonte.",
-    connections: ["Ciclo decimonÃ³nico", "Acueducto", "Ferrocarril"],
+      "Ãšltima gran obra del ciclo minero del siglo XIX. Su malacate aún corona el horizonte.",
+    connections: ["Ciclo decimonónico", "Acueducto", "Ferrocarril"],
   },
 ];
 
@@ -483,7 +483,7 @@ export const pastes: Paste[] = [
     name: "Paste de carne con papa",
     filling: "Res, papa, poro, especias",
     origin: "tradicional",
-    note: "El original cornish, adaptado al maÃ­z y al chile de la sierra.",
+    note: "El original cornish, adaptado al maíz y al chile de la sierra.",
     links: [{ targetId: "chapter-pastes", kind: "appears-in-route" }],
   },
   {
@@ -495,7 +495,7 @@ export const pastes: Paste[] = [
     name: "Paste de mole verde",
     filling: "Pollo, mole de pepita",
     origin: "mestizo",
-    note: "Cuando el bolsillo del minero se llenÃ³ de cocina mexicana.",
+    note: "Cuando el bolsillo del minero se llenó de cocina mexicana.",
   },
   {
     id: "paste-tinga",
@@ -514,8 +514,8 @@ export const pastes: Paste[] = [
     federationLayer: "memoria-comestible",
     importance: 3,
     tags: ["tradicional", "dulce"],
-    name: "Paste de piÃ±a",
-    filling: "PiÃ±a caramelizada",
+    name: "Paste de piña",
+    filling: "Piña caramelizada",
     origin: "tradicional",
     note: "El postre que terminaba la jornada bajo tierra.",
   },
@@ -527,7 +527,7 @@ export const pastes: Paste[] = [
     tags: ["contemporaneo", "dulce"],
     name: "Paste de arroz con leche",
     filling: "Arroz, leche, canela",
-    origin: "contemporÃ¡neo",
+    origin: "contemporáneo",
     note: "La cocina de la abuela traducida a pasta hojaldrada.",
   },
 ];
@@ -546,7 +546,7 @@ export const streets: Street[] = [
     name: "Calle Hidalgo",
     era: "Siglo XIX",
     story:
-      "Eje principal del comercio. AquÃ­ caminaron mineros, comerciantes ingleses y arrieros de Pachuca.",
+      "Eje principal del comercio. Aquí caminaron mineros, comerciantes ingleses y arrieros de Pachuca.",
   },
   {
     id: "street-callejon-conde",
@@ -554,10 +554,10 @@ export const streets: Street[] = [
     federationLayer: "superficie",
     importance: 2,
     tags: ["mirador", "conde-de-regla"],
-    name: "CallejÃ³n del Conde",
+    name: "Callejón del Conde",
     era: "Siglo XVIII",
     story:
-      "Ruta privada del Conde de Regla. Hoy es uno de los miradores mÃ¡s silenciosos del pueblo.",
+      "Ruta privada del Conde de Regla. Hoy es uno de los miradores más silenciosos del pueblo.",
   },
   {
     id: "street-constitucion",
@@ -565,7 +565,7 @@ export const streets: Street[] = [
     federationLayer: "superficie",
     importance: 2,
     tags: ["arquitectura-cornish", "vivienda"],
-    name: "Calle ConstituciÃ³n",
+    name: "Calle Constitución",
     era: "Siglo XIX",
     story:
       "Casas blancas y rojas que aprendieron de la arquitectura cornish a inclinar el tejado contra la lluvia.",
@@ -576,10 +576,10 @@ export const streets: Street[] = [
     federationLayer: "superficie",
     importance: 3,
     tags: ["politica", "siglo-xx"],
-    name: "Calle Mariano JimÃ©nez",
+    name: "Calle Mariano Jiménez",
     era: "Siglo XX",
     story:
-      "Bautizada en honor al insurgente. AquÃ­ se firmÃ³ parte de la historia polÃ­tica de la sierra.",
+      "Bautizada en honor al insurgente. Aquí se firmó parte de la historia política de la sierra.",
   },
 ];
 
@@ -595,8 +595,8 @@ export const legends: Legend[] = [
     importance: 2,
     tags: ["mina", "aparicion", "guia"],
     title: "La novia de la mina",
-    era: "TradiciÃ³n oral",
-    body: "Cuentan que en las galerÃ­as mÃ¡s profundas, los mineros encontraban a una mujer vestida de blanco. No los asustaba. Los guiaba hacia la veta. Y a veces, los acompaÃ±aba a la salida.",
+    era: "Tradición oral",
+    body: "Cuentan que en las galerías más profundas, los mineros encontraban a una mujer vestida de blanco. No los asustaba. Los guiaba hacia la veta. Y a veces, los acompañaba a la salida.",
   },
   {
     id: "legend-campana-cornualles",
@@ -606,7 +606,7 @@ export const legends: Legend[] = [
     tags: ["campana", "cornualles", "muerte"],
     title: "La campana de Cornualles",
     era: "Siglo XIX",
-    body: "Trajeron una campana desde Inglaterra para llamar a la jornada. Cuando sonaba por la noche sin que nadie la tocara, los mineros entendÃ­an que alguien habÃ­a muerto bajo tierra.",
+    body: "Trajeron una campana desde Inglaterra para llamar a la jornada. Cuando sonaba por la noche sin que nadie la tocara, los mineros entendían que alguien había muerto bajo tierra.",
   },
   {
     id: "legend-conde-veta-perdida",
@@ -616,7 +616,7 @@ export const legends: Legend[] = [
     tags: ["conde-de-regla", "veta-perdida"],
     title: "El conde y la veta perdida",
     era: "Siglo XVIII",
-    body: "Se dice que el Conde de Regla escondiÃ³ un mapa con la veta mÃ¡s rica del distrito. Nunca apareciÃ³. Algunos creen que sigue debajo del pueblo, esperando.",
+    body: "Se dice que el Conde de Regla escondió un mapa con la veta más rica del distrito. Nunca apareció. Algunos creen que sigue debajo del pueblo, esperando.",
   },
 ];
 
@@ -637,7 +637,7 @@ export const routes: Route[] = [
     steps: [
       "Mina de Acosta â€” descenso guiado",
       "Museo de Sitio Mina de Acosta",
-      "PanteÃ³n InglÃ©s",
+      "Panteón Inglés",
       "Mirador del Hiloche",
     ],
     links: [
@@ -657,7 +657,7 @@ export const routes: Route[] = [
     steps: [
       "Plaza Principal",
       "Recorrido por la Calle Hidalgo",
-      "DegustaciÃ³n en una pasterÃ­a tradicional",
+      "Degustación en una pastería tradicional",
       "Mirador hacia Pachuca",
     ],
     links: [
@@ -675,9 +675,9 @@ export const routes: Route[] = [
     duration: "1.5 h",
     difficulty: "ligera",
     steps: [
-      "CallejÃ³n del Conde",
-      "Cementerio InglÃ©s al ocaso",
-      "Casas embrujadas de la Calle ConstituciÃ³n",
+      "Callejón del Conde",
+      "Cementerio Inglés al ocaso",
+      "Casas embrujadas de la Calle Constitución",
     ],
     links: [
       { targetId: "street-callejon-conde", kind: "appears-in-route" },
@@ -701,7 +701,7 @@ export const events: Event[] = [
     date: "Octubre",
     place: "Centro de Real del Monte",
     description:
-      "El encuentro mÃ¡s importante entre Hidalgo y Cornualles. Talleres, concursos y mesas de cocina viva.",
+      "El encuentro más importante entre Hidalgo y Cornualles. Talleres, concursos y mesas de cocina viva.",
   },
   {
     id: "event-dia-minero",
@@ -709,11 +709,11 @@ export const events: Event[] = [
     federationLayer: "memoria-silenciosa",
     importance: 2,
     tags: ["minero", "procesion", "memoria"],
-    name: "DÃ­a del Minero",
+    name: "Día del Minero",
     date: "11 de julio",
     place: "Plaza Principal",
     description:
-      "ProcesiÃ³n, ofrendas y memoria viva de quienes hicieron de la plata el lenguaje del pueblo.",
+      "Procesión, ofrendas y memoria viva de quienes hicieron de la plata el lenguaje del pueblo.",
   },
   {
     id: "event-noche-cementerio",
@@ -721,16 +721,16 @@ export const events: Event[] = [
     federationLayer: "memoria-silenciosa",
     importance: 2,
     tags: ["noche", "cementerio-ingles", "recorrido"],
-    name: "Noche del PanteÃ³n InglÃ©s",
+    name: "Noche del Panteón Inglés",
     date: "Finales de octubre",
-    place: "PanteÃ³n InglÃ©s",
+    place: "Panteón Inglés",
     description:
       "Recorrido nocturno con narradores. La memoria mira hacia Cornualles bajo la luz de las velas.",
   },
 ];
 
 //
-// ESTADÃSTICAS / METADATA TERRITORIAL
+// ESTADÍSTICAS / METADATA TERRITORIAL
 //
 
 export const territoryStats = {
@@ -742,7 +742,7 @@ export const territoryStats = {
 
 //
 // UTILIDADES GEOESPACIALES
-// (Haversine para distancia sobre esfera terrestre, patrÃ³n usual)
+// (Haversine para distancia sobre esfera terrestre, patrón usual)
 //
 
 export interface LatLng {
@@ -800,7 +800,7 @@ export function getSacredKernel(): TerritoryPOI | undefined {
 
 /**
  * Grafo ligero: todas las entidades narrativas juntas,
- * Ãºtil para engines tipo Isabella, recomendadores, juegos.
+ * útil para engines tipo Isabella, recomendadores, juegos.
  */
 export const territorialGraph = {
   chapters,

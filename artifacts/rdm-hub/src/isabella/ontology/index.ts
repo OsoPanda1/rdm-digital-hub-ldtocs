@@ -35,7 +35,7 @@ export async function locateNode(
     return {
       node: null,
       alignment,
-      timeUp: { allowed: false, reason: "Nodo no encontrado en la ontologÃ­a", containedFederation: null, violatedRule: "node_not_found" },
+      timeUp: { allowed: false, reason: "Nodo no encontrado en la ontología", containedFederation: null, violatedRule: "node_not_found" },
       children: [],
       path: [],
     };

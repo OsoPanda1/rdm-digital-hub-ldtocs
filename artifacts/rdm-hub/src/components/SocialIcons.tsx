@@ -7,7 +7,7 @@ import SocialLinks from "@/modules/constelacionInteractiva/SocialLinks";
 
 /**
  * Componente de compatibilidad para mantener retrocompatibilidad
- * con el cÃ³digo existente. Delega al nuevo componente SocialLinks.
+ * con el código existente. Delega al nuevo componente SocialLinks.
  */
 const SocialIcons = (props: Record<string, unknown>) => {
   return <SocialLinks {...props} />;

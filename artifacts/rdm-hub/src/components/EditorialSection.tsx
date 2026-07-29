@@ -50,7 +50,7 @@ const EditorialSection = ({
       <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-background/80 to-transparent" />
       {/* Category badge */}
       <div className="absolute top-4 left-4 glass rounded-full px-3 py-1">
-        <span className="font-body text-[9px] tracking-[0.3em] uppercase text-gold">{chapter.split("Â·")[0]?.trim()}</span>
+        <span className="font-body text-[9px] tracking-[0.3em] uppercase text-gold">{chapter.split("·")[0]?.trim()}</span>
       </div>
     </motion.div>
   );

@@ -144,8 +144,8 @@ const ModulesGrid: React.FC = () => {
       ]
     },
     {
-      title: "Puentes OnÃ­ricos",
-      description: "Portales de conexiÃ³n entre diferentes Dream Spaces para experiencias colaborativas Ãºnicas",
+      title: "Puentes Oníricos",
+      description: "Portales de conexión entre diferentes Dream Spaces para experiencias colaborativas únicas",
       icon: <Zap className="w-7 h-7 text-white" />,
       gradient: "bg-gradient-to-br from-orange-600 to-red-600",
       stats: [

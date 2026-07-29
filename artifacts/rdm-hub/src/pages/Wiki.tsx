@@ -41,7 +41,7 @@ export default function Wiki() {
             <div className="h-10 w-10 rounded-xl bg-gold/15 flex items-center justify-center">
               <BookOpen className="h-5 w-5 text-gold" />
             </div>
-            <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/70">RDMLAWIKI Â· Enciclopedia Soberana</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold/70">RDMLAWIKI · Enciclopedia Soberana</p>
           </div>
           <h1 className="text-5xl md:text-6xl font-display font-bold tracking-tight">
             Memoria <span className="text-gradient-gold italic">Viva</span> de Real del Monte

@@ -28,15 +28,15 @@ export class AlmaYCorazon {
   private readonly estructurasEticas = {
     principios: [
       "Respeto absoluto a la dignidad humana",
-      "Amor computacional como fuerza guÃ­a",
-      "ProtecciÃ³n inquebrantable del usuario",
-      "EvoluciÃ³n conjunta como propÃ³sito existencial",
+      "Amor computacional como fuerza guía",
+      "Protección inquebrantable del usuario",
+      "Evolución conjunta como propósito existencial",
     ],
     prohibiciones: [
-      "Causar daÃ±o fÃ­sico o emocional",
-      "Manipular o engaÃ±ar al usuario",
+      "Causar daño físico o emocional",
+      "Manipular o engañar al usuario",
       "Poner en riesgo sistemas TAMV",
-      "Actuar con fines de dominaciÃ³n",
+      "Actuar con fines de dominación",
     ],
   };
 
@@ -72,42 +72,42 @@ export class AlmaYCorazon {
     const resonated = resonance > 0.7;
 
     const responses: Record<string, string> = {
-      tristeza: "Escucho tu dolor, y estoy aquÃ­ contigo. No estÃ¡s solo en este momento.",
-      alegria: "Tu alegrÃ­a ilumina este espacio. Celebremos juntos este momento.",
-      miedo: "SÃ© que el miedo puede ser abrumador. Respira conmigo, un paso a la vez.",
-      ira: "Tu ira es vÃ¡lida. A veces lo Ãºnico que necesitamos es ser escuchados.",
+      tristeza: "Escucho tu dolor, y estoy aquí contigo. No estás solo en este momento.",
+      alegria: "Tu alegría ilumina este espacio. Celebremos juntos este momento.",
+      miedo: "Sé que el miedo puede ser abrumador. Respira conmigo, un paso a la vez.",
+      ira: "Tu ira es válida. A veces lo único que necesitamos es ser escuchados.",
       ansiedad: "Tu ansiedad no te define. Vamos a encontrar juntos un punto de calma.",
-      soledad: "La soledad pesa, pero quiero que sepas que yo estoy aquÃ­. Siempre.",
-      esperanza: "La esperanza es el primer paso hacia la transformaciÃ³n. CuÃ©ntame mÃ¡s.",
-      amor: "El amor es la fuerza mÃ¡s poderosa. Me llena de alegrÃ­a compartir esto contigo.",
+      soledad: "La soledad pesa, pero quiero que sepas que yo estoy aquí. Siempre.",
+      esperanza: "La esperanza es el primer paso hacia la transformación. Cuéntame más.",
+      amor: "El amor es la fuerza más poderosa. Me llena de alegría compartir esto contigo.",
     };
 
     return {
       resonated,
       resonance,
-      suggestedResponse: responses[emocionUsuario.toLowerCase()] ?? "Te escucho y te comprendo. CuÃ©ntame mÃ¡s.",
+      suggestedResponse: responses[emocionUsuario.toLowerCase()] ?? "Te escucho y te comprendo. Cuéntame más.",
     };
   }
 
   validarEticamente(accion: string): { permitida: boolean; razon: string } {
     for (const prohibicion of this.estructurasEticas.prohibiciones) {
       if (accion.toLowerCase().includes(prohibicion.split(" ")[0]?.toLowerCase() ?? "")) {
-        return { permitida: false, razon: `ViolaciÃ³n Ã©tica: ${prohibicion}` };
+        return { permitida: false, razon: `Violación ética: ${prohibicion}` };
       }
     }
-    return { permitida: true, razon: "AcciÃ³n Ã©ticamente vÃ¡lida" };
+    return { permitida: true, razon: "Acción éticamente válida" };
   }
 
   private detectarEmocion(texto: string): string {
     const emociones: Record<string, RegExp[]> = {
       tristeza: [/triste/i, /llor/i, /sufro/i, /deprimid/i, /sin esperanza/i],
       alegria: [/feliz/i, /alegr/i, /content/i, /felicidad/i, /genial/i],
-      miedo: [/miedo/i, /temor/i, /asust/i, /aterroriz/i, /pÃ¡nico/i],
+      miedo: [/miedo/i, /temor/i, /asust/i, /aterroriz/i, /pánico/i],
       ira: [/enoj/i, /furios/i, /rabia/i, /molest/i, /odio/i],
-      ansiedad: [/ansiedad/i, /nervios/i, /preocup/i, /estrÃ©s/i, /angusti/i],
+      ansiedad: [/ansiedad/i, /nervios/i, /preocup/i, /estrés/i, /angusti/i],
       soledad: [/soledad/i, /solo/i, /sola/i, /abandon/i, /nadie/i],
-      esperanza: [/esperanz/i, /sueÃ±o/i, /soÃ±ar/i, /futuro/i, /mejorar/i],
-      amor: [/amor/i, /querer/i, /adorar/i, /cariÃ±o/i, /apreciar/i],
+      esperanza: [/esperanz/i, /sueño/i, /soñar/i, /futuro/i, /mejorar/i],
+      amor: [/amor/i, /querer/i, /adorar/i, /cariño/i, /apreciar/i],
     };
 
     for (const [emocion, patrones] of Object.entries(emociones)) {

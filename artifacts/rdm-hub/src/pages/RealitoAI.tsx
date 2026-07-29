@@ -12,10 +12,10 @@ type Msg = { role: "user" | "assistant"; content: string };
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
 const capabilities = [
-  { icon: MapPin, title: "Sugerencias Predictivas", description: "Recomienda negocios y experiencias premium segÃºn densidad de jugadores, tiempo de estancia y contexto climÃ¡tico.", accent: "gold" },
-  { icon: TrendingUp, title: "RegulaciÃ³n EconÃ³mica", description: "Ajusta valor virtual de minerales segÃºn saturaciÃ³n de zonas, redistribuciÃ³n de flujo y metas de la DAO.", accent: "electric" },
-  { icon: ShieldAlert, title: "ProtecciÃ³n Antifraude", description: "DetecciÃ³n de GPS spoofing, velocidades imposibles (>120 km/h) y bloqueo automÃ¡tico de minerÃ­a sospechosa.", accent: "destructive" },
-  { icon: Thermometer, title: "EnergÃ­a de Zona", description: "Analiza densidad de jugadores, historial de consumo y contexto temporal para recomendar rutas Ã³ptimas.", accent: "teal" },
+  { icon: MapPin, title: "Sugerencias Predictivas", description: "Recomienda negocios y experiencias premium según densidad de jugadores, tiempo de estancia y contexto climático.", accent: "gold" },
+  { icon: TrendingUp, title: "Regulación Económica", description: "Ajusta valor virtual de minerales según saturación de zonas, redistribución de flujo y metas de la DAO.", accent: "electric" },
+  { icon: ShieldAlert, title: "Protección Antifraude", description: "Detección de GPS spoofing, velocidades imposibles (>120 km/h) y bloqueo automático de minería sospechosa.", accent: "destructive" },
+  { icon: Thermometer, title: "Energía de Zona", description: "Analiza densidad de jugadores, historial de consumo y contexto temporal para recomendar rutas óptimas.", accent: "teal" },
 ];
 
 const accentStyles: Record<string, { border: string; icon: string; bg: string }> = {
@@ -26,10 +26,10 @@ const accentStyles: Record<string, { border: string; icon: string; bg: string }>
 };
 
 const quickPrompts = [
-  "Â¿DÃ³nde comer el mejor paste?",
-  "CuÃ©ntame la historia minera",
-  "Â¿QuÃ© rutas de senderismo hay?",
-  "Â¿CÃ³mo funciona Veta Soberana?",
+  "¿Dónde comer el mejor paste?",
+  "Cuéntame la historia minera",
+  "¿Qué rutas de senderismo hay?",
+  "¿Cómo funciona Veta Soberana?",
 ];
 
 export default function RealitoAI() {
@@ -63,7 +63,7 @@ export default function RealitoAI() {
       });
 
       if (!resp.ok || !resp.body) {
-        const err = await resp.json().catch(() => ({ error: "Error de conexiÃ³n" }));
+        const err = await resp.json().catch(() => ({ error: "Error de conexión" }));
         setMessages((prev) => [...prev, { role: "assistant", content: `âš ï¸ ${err.error || "Error al conectar con Realito AI"}` }]);
         setIsLoading(false);
         return;
@@ -120,9 +120,9 @@ export default function RealitoAI() {
           <Bot className="h-7 w-7 text-white" />
         </motion.div>
         <div>
-          <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground mb-1">OrÃ¡culo Cognitivo</p>
+          <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground mb-1">Oráculo Cognitivo</p>
           <h1 className="text-4xl font-display font-bold tracking-tight">Realito AI</h1>
-          <p className="text-sm font-body text-muted-foreground">Tu guÃ­a inteligente de Real del Monte</p>
+          <p className="text-sm font-body text-muted-foreground">Tu guía inteligente de Real del Monte</p>
         </div>
       </motion.div>
 
@@ -182,7 +182,7 @@ export default function RealitoAI() {
           {messages.length === 0 && (
             <div className="text-center py-8">
               <Sparkles className="mx-auto h-8 w-8 text-gold/40 mb-4" />
-              <p className="text-muted-foreground text-[13px] font-body">PregÃºntame sobre Real del Monte</p>
+              <p className="text-muted-foreground text-[13px] font-body">Pregúntame sobre Real del Monte</p>
               <div className="flex flex-wrap justify-center gap-2 mt-4">
                 {quickPrompts.map((p) => (
                   <button key={p} onClick={() => sendMessage(p)}
@@ -209,7 +209,7 @@ export default function RealitoAI() {
           {isLoading && messages[messages.length - 1]?.role === "user" && (
             <div className="flex gap-3 items-center">
               <Loader2 className="h-4 w-4 text-gold animate-spin" />
-              <span className="text-muted-foreground text-[12px]">Realito estÃ¡ pensando...</span>
+              <span className="text-muted-foreground text-[12px]">Realito está pensando...</span>
             </div>
           )}
           <div ref={chatEndRef} />

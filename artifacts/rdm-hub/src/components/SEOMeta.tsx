@@ -16,8 +16,8 @@ interface SEOMetaProps {
 }
 
 const DEFAULT_META = {
-  title: 'RDM Digital - Real del Monte | Pueblo MÃ¡gico',
-  description: 'Explora Real del Monte, Hidalgo: historia, cultura, ecoturismo, gastronomÃ­a y mÃ¡s. Descubre los mejores lugares, eventos y rutas turÃ­sticas.',
+  title: 'RDM Digital - Real del Monte | Pueblo Mágico',
+  description: 'Explora Real del Monte, Hidalgo: historia, cultura, ecoturismo, gastronomía y más. Descubre los mejores lugares, eventos y rutas turísticas.',
   image: '/images/rdm-hero.png',
   siteName: 'RDM Digital',
   siteUrl: 'https://visitarealdelmonte.online',
@@ -166,11 +166,11 @@ export function SEOMeta({
 export const PAGE_SEO = {
   home: {
     title: 'RDM Digital - Descubre Real del Monte',
-    description: 'Tu guÃ­a completa para explorar Real del Monte, Hidalgo. Historia, cultura, ecoturismo, gastronomÃ­a, eventos y mÃ¡s.',
+    description: 'Tu guía completa para explorar Real del Monte, Hidalgo. Historia, cultura, ecoturismo, gastronomía, eventos y más.',
   },
   lugares: {
-    title: 'Lugares TurÃ­sticos - Real del Monte',
-    description: 'Descubre los lugares mÃ¡s Hermosos de Real del Monte: Mina de Acosta, PanteÃ³n InglÃ©s, miradores y mÃ¡s.',
+    title: 'Lugares Turísticos - Real del Monte',
+    description: 'Descubre los lugares más Hermosos de Real del Monte: Mina de Acosta, Panteón Inglés, miradores y más.',
   },
   directorio: {
     title: 'Directorio de Negocios - RDM Digital',
@@ -178,7 +178,7 @@ export const PAGE_SEO = {
   },
   eventos: {
     title: 'Eventos y Actividades - Real del Monte',
-    description: 'Consulta los prÃ³ximos eventos, festivales y actividades en Real del Monte.',
+    description: 'Consulta los próximos eventos, festivales y actividades en Real del Monte.',
   },
   comunidad: {
     title: 'Comunidad - Comparte tu Experiencia',
@@ -186,43 +186,43 @@ export const PAGE_SEO = {
   },
   historia: {
     title: 'Historia de Real del Monte',
-    description: 'Descubre la rica historia de Real del Monte, desde la Ã©poca colonial hasta nuestros dÃ­as.',
+    description: 'Descubre la rica historia de Real del Monte, desde la época colonial hasta nuestros días.',
   },
   cultura: {
     title: 'Cultura y Tradiciones - Real del Monte',
-    description: 'Explora la cultura y tradiciones del Pueblo MÃ¡gico de Real del Monte, Hidalgo.',
+    description: 'Explora la cultura y tradiciones del Pueblo Mágico de Real del Monte, Hidalgo.',
   },
   rutas: {
-    title: 'Rutas TurÃ­sticas - Explora Real del Monte',
+    title: 'Rutas Turísticas - Explora Real del Monte',
     description: 'Descubre las mejores rutas de senderismo y caminatas en Real del Monte.',
   },
   gastronomia: {
-    title: 'GastronomÃ­a - Sabores de Real del Monte',
-    description: 'Descubre la gastronomÃ­a de Real del Monte: el tradicional paste, carnitas y mÃ¡s.',
+    title: 'Gastronomía - Sabores de Real del Monte',
+    description: 'Descubre la gastronomía de Real del Monte: el tradicional paste, carnitas y más.',
   },
   ecoturismo: {
     title: 'Ecoturismo - Naturaleza en Real del Monte',
     description: 'Explora la naturaleza de Real del Monte: bosques, miradores y rutas de aventura.',
   },
   arte: {
-    title: 'Arte y ArtesanÃ­as - Real del Monte',
-    description: 'Descubre el arte local y las artesanÃ­as tradicionales de Real del Monte.',
+    title: 'Arte y Artesanías - Real del Monte',
+    description: 'Descubre el arte local y las artesanías tradicionales de Real del Monte.',
   },
   mapa: {
     title: 'Mapa Interactivo - Real del Monte',
     description: 'Explora Real del Monte con nuestro mapa interactivo. Encuentra lugares, negocios y rutas.',
   },
   auth: {
-    title: 'Iniciar SesiÃ³n - RDM Digital',
-    description: 'Inicia sesiÃ³n o regÃ­strate en RDM Digital para guardar tus lugares favoritos y mÃ¡s.',
+    title: 'Iniciar Sesión - RDM Digital',
+    description: 'Inicia sesión o regístrate en RDM Digital para guardar tus lugares favoritos y más.',
   },
   reglamento: {
     title: 'Reglamento - Normas de la Comunidad',
-    description: 'Normas y polÃ­ticas de la comunidad RDM Digital. ParticipaciÃ³n respetuosa.',
+    description: 'Normas y políticas de la comunidad RDM Digital. Participación respetuosa.',
   },
   apoyanews: {
     title: 'Apoya RDM Digital',
-    description: 'Apoya el desarrollo de la plataforma turÃ­stica de Real del Monte con tu donaciÃ³n.',
+    description: 'Apoya el desarrollo de la plataforma turística de Real del Monte con tu donación.',
   },
 };
 

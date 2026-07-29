@@ -4,7 +4,7 @@
  */
 /**
  * Interfaz de Chat con Isabella AI
- * Triple Federado: Conceptual | Legal | TÃ©cnico
+ * Triple Federado: Conceptual | Legal | Técnico
  */
 
 import { useState, useRef, useEffect } from 'react';
@@ -109,7 +109,7 @@ const IsabellaChat = () => {
             `}>
               <p className="text-sm whitespace-pre-wrap">{message.content}</p>
               
-              {/* Hash de federaciÃ³n */}
+              {/* Hash de federación */}
               {message.federationHash && !isUser && (
                 <div className="mt-2 pt-2 border-t border-border/30">
                   <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
@@ -151,7 +151,7 @@ const IsabellaChat = () => {
                 <Badge variant="secondary" className="text-[10px]">AI</Badge>
               </h2>
               <p className="text-xs text-muted-foreground">
-                {isLoading ? 'Pensando...' : 'En lÃ­nea Â· Triple Federado'}
+                {isLoading ? 'Pensando...' : 'En línea · Triple Federado'}
               </p>
             </div>
           </div>
@@ -175,7 +175,7 @@ const IsabellaChat = () => {
               {voiceMode === "cloud" ? <Volume2 className="w-4 h-4 text-green-400" /> : <Volume2 className="w-4 h-4 text-yellow-400" />}
             </Button>
 
-            {/* BotÃ³n de protocolos */}
+            {/* Botón de protocolos */}
             <Button 
               variant="ghost" 
               size="sm"
@@ -184,7 +184,7 @@ const IsabellaChat = () => {
               <Shield className="w-4 h-4" />
             </Button>
 
-            {/* BotÃ³n de limpiar */}
+            {/* Botón de limpiar */}
             <Button 
               variant="ghost" 
               size="sm"
@@ -246,7 +246,7 @@ const IsabellaChat = () => {
               {ISABELLA_CORE_IDENTITY.purpose}
             </p>
             <p className="text-xs text-muted-foreground mt-4 italic">
-              "BABAS significa TE AMO" â€” Anubis VillaseÃ±or
+              "BABAS significa TE AMO" â€” Anubis Villaseñor
             </p>
           </div>
         ) : (
@@ -270,7 +270,7 @@ const IsabellaChat = () => {
                     />
                   ))}
                 </div>
-                <span className="text-xs text-muted-foreground">Isabella estÃ¡ escribiendo...</span>
+                <span className="text-xs text-muted-foreground">Isabella está escribiendo...</span>
               </motion.div>
             )}
           </>
@@ -319,7 +319,7 @@ const IsabellaChat = () => {
               if (lastAi) speak(lastAi.content, { federation: "F6", useCase: "comunidad" });
             }}
             className="shrink-0 relative"
-            title={voiceSpeaking ? "Detener voz" : "Leer Ãºltimo mensaje"}
+            title={voiceSpeaking ? "Detener voz" : "Leer último mensaje"}
           >
             {voiceSpeaking ? <VolumeX className="w-4 h-4 text-purple-400" /> : <Volume2 className="w-4 h-4" />}
             <span className={`absolute -top-1 -right-1 w-2 h-2 rounded-full ${voiceMode === "cloud" ? "bg-green-400" : "bg-yellow-400"}`} />
@@ -342,14 +342,14 @@ const IsabellaChat = () => {
           </Button>
         </div>
 
-        {/* Sugerencias rÃ¡pidas */}
+        {/* Sugerencias rápidas */}
         {messages.length === 0 && (
           <div className="flex flex-wrap gap-2 mt-3">
             {[
-              'Â¿QuÃ© es TAMV?',
-              'Â¿QuiÃ©n te creÃ³?',
-              'CuÃ©ntame sobre los DreamSpaces',
-              'Â¿QuÃ© significa BABAS?'
+              '¿Qué es TAMV?',
+              '¿Quién te creó?',
+              'Cuéntame sobre los DreamSpaces',
+              '¿Qué significa BABAS?'
             ].map((suggestion) => (
               <Button
                 key={suggestion}

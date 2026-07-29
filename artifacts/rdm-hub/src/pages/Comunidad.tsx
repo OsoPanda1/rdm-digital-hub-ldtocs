@@ -27,7 +27,7 @@ import heroImg from "@/assets/hero-real-del-monte.webp";
 
 const categories = [
   { id: "all", label: "Todos", icon: Sparkles },
-  { id: "gastronomia", label: "GastronomÃ­a", icon: Utensils },
+  { id: "gastronomia", label: "Gastronomía", icon: Utensils },
   { id: "historia", label: "Historia", icon: Clock },
   { id: "naturaleza", label: "Naturaleza", icon: Mountain },
   { id: "aventura", label: "Aventura", icon: Camera },
@@ -36,10 +36,10 @@ const categories = [
 ];
 
 const placeholderImages: Record<string, string> = {
-  "Centro HistÃ³rico": callesImg,
+  "Centro Histórico": callesImg,
   "Mina de Acosta": minaImg,
-  "PanteÃ³n InglÃ©s": panteonImg,
-  "PeÃ±as Cargadas": penasImg,
+  "Panteón Inglés": panteonImg,
+  "Peñas Cargadas": penasImg,
   "Plaza Principal": heroImg,
   "Calles Coloniales": callesImg,
   "Real del Monte": heroImg,
@@ -202,7 +202,7 @@ const Comunidad = () => {
     <RDMLayout>
       <SEOMeta 
         title="Foro Comunitario"
-        description="Comparte tus experiencias, fotos y recuerdos de Real del Monte. Foro pÃºblico para visitantes y locales."
+        description="Comparte tus experiencias, fotos y recuerdos de Real del Monte. Foro público para visitantes y locales."
       />
       <div className="min-h-screen bg-background overflow-x-hidden">
 
@@ -212,7 +212,7 @@ const Comunidad = () => {
           <div className="container mx-auto px-4 md:px-8 text-center relative z-10">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-xs font-medium text-primary mb-4">
-                <MessageCircle className="w-3 h-3" /> Foro PÃºblico
+                <MessageCircle className="w-3 h-3" /> Foro Público
               </span>
               <h1 className="font-serif text-4xl md:text-6xl font-bold text-foreground mb-4">
                 Muro de Recuerdos
@@ -230,7 +230,7 @@ const Comunidad = () => {
               ) : (
                 <Link to="/auth">
                   <Button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-8 py-3 rounded-xl text-lg">
-                    <LogIn className="w-5 h-5 mr-2" /> Inicia sesiÃ³n para publicar
+                    <LogIn className="w-5 h-5 mr-2" /> Inicia sesión para publicar
                   </Button>
                 </Link>
               )}
@@ -268,8 +268,8 @@ const Comunidad = () => {
             ) : filteredPosts.length === 0 ? (
               <div className="text-center py-20 text-muted-foreground">
                 <MessageCircle className="w-16 h-16 mx-auto mb-4 opacity-30" />
-                <p className="text-lg">No hay publicaciones en esta categorÃ­a aÃºn.</p>
-                <p className="text-sm mt-2">Â¡SÃ© el primero en compartir tu experiencia!</p>
+                <p className="text-lg">No hay publicaciones en esta categoría aún.</p>
+                <p className="text-sm mt-2">¡Sé el primero en compartir tu experiencia!</p>
               </div>
             ) : (
               <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
@@ -439,13 +439,13 @@ const Comunidad = () => {
                       type="text"
                       value={newPost.title}
                       onChange={e => setNewPost(p => ({ ...p, title: e.target.value }))}
-                      placeholder="TÃ­tulo de tu experiencia *"
+                      placeholder="Título de tu experiencia *"
                       className="w-full bg-muted/50 border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-primary"
                     />
                     <textarea
                       value={newPost.content}
                       onChange={e => setNewPost(p => ({ ...p, content: e.target.value }))}
-                      placeholder="CuÃ©ntanos tu experiencia en Real del Monte... *"
+                      placeholder="Cuéntanos tu experiencia en Real del Monte... *"
                       rows={4}
                       className="w-full bg-muted/50 border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-primary resize-none"
                     />

@@ -107,7 +107,7 @@ export function ContributionForm({ userId, coords, poiId, poiName, onSubmit, onC
             <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4 bg-muted/30 rounded-lg p-2">
               <MapPin className="w-3 h-3 text-rdm-amber" />
               <span>{coords.lat.toFixed(5)}, {coords.lng.toFixed(5)}</span>
-              {poiName && <span className="text-rdm-amber">Â· {poiName}</span>}
+              {poiName && <span className="text-rdm-amber">· {poiName}</span>}
             </div>
 
             {step === 'select_type' && (

@@ -23,10 +23,10 @@ export function FooterSection() {
           <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">
             Tu aventura
             <br />
-            <span className="text-accent">comienza aquÃ­</span>
+            <span className="text-accent">comienza aquí</span>
           </h2>
           <p className="text-foreground/60 font-body max-w-md mx-auto mb-8">
-            Real del Monte te espera con 500 aÃ±os de historia, sabores Ãºnicos y la
+            Real del Monte te espera con 500 años de historia, sabores únicos y la
             magia de la Sierra de Pachuca.
           </p>
           <a
@@ -48,19 +48,19 @@ export function FooterSection() {
               </div>
               <div>
                 <p className="font-display font-bold text-lg">RDM Digital</p>
-                <p className="text-xs text-muted-foreground font-body">OS v4.1 â€” SoberanÃ­a Territorial</p>
+                <p className="text-xs text-muted-foreground font-body">OS v4.1 â€” Soberanía Territorial</p>
               </div>
             </div>
             <p className="text-sm text-muted-foreground font-body leading-relaxed">
-              Sistema operativo territorial diseÃ±ado para transformar Real del Monte
-              en el primer nodo turÃ­stico inteligente de LatinoamÃ©rica.
+              Sistema operativo territorial diseñado para transformar Real del Monte
+              en el primer nodo turístico inteligente de Latinoamérica.
             </p>
           </div>
 
           <div>
             <h4 className="font-display font-semibold mb-4">Contacto</h4>
             <div className="space-y-3 text-sm text-muted-foreground font-body">
-              <p className="flex items-center gap-2"><MapPin className="w-4 h-4 text-accent" /> Real del Monte, Hidalgo, MÃ©xico</p>
+              <p className="flex items-center gap-2"><MapPin className="w-4 h-4 text-accent" /> Real del Monte, Hidalgo, México</p>
               <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-accent" /> info@rdmdigital.mx</p>
               <p className="flex items-center gap-2"><Phone className="w-4 h-4 text-accent" /> +52 771 123 4567</p>
             </div>
@@ -69,7 +69,7 @@ export function FooterSection() {
           <div>
             <h4 className="font-display font-semibold mb-4">Explorar</h4>
             <div className="space-y-2">
-              {["Historia", "GastronomÃ­a", "Aventura", "Hospedaje", "Cultura"].map((item) => (
+              {["Historia", "Gastronomía", "Aventura", "Hospedaje", "Cultura"].map((item) => (
                 <a
                   key={item}
                   href={`#${item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`}

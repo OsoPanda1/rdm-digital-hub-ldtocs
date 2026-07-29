@@ -33,7 +33,7 @@ import {
 
 const SPATIAL_MODES: { mode: SpatialMode; label: string; icon: typeof Globe; desc: string }[] = [
   { mode: "archivo", label: "Archivo", icon: Radio, desc: "Lossless, sin procesamiento" },
-  { mode: "espacio", label: "Espacio", icon: Headphones, desc: "AcÃºstica de RDM" },
+  { mode: "espacio", label: "Espacio", icon: Headphones, desc: "Acústica de RDM" },
   { mode: "metaverso", label: "Metaverso", icon: Waves, desc: "XR espacial" },
 ];
 

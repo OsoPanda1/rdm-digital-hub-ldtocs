@@ -13,11 +13,11 @@ interface POI {
 }
 
 const pois: POI[] = [
-  { id: "1", name: "Mina de Acosta", description: "Desciende 400 metros al corazÃ³n de la montaÃ±a, donde los ecos de los mineros cornish aÃºn resuenan.", x: 35, y: 40, category: "historia" },
-  { id: "2", name: "PanteÃ³n InglÃ©s", description: "El Ãºnico cementerio en MÃ©xico con tumbas que miran a Cornwall.", x: 62, y: 28, category: "historia" },
+  { id: "1", name: "Mina de Acosta", description: "Desciende 400 metros al corazón de la montaña, donde los ecos de los mineros cornish aún resuenan.", x: 35, y: 40, category: "historia" },
+  { id: "2", name: "Panteón Inglés", description: "El único cementerio en México con tumbas que miran a Cornwall.", x: 62, y: 28, category: "historia" },
   { id: "3", name: "Pastes El Portal", description: "El paste original, herencia de los mineros ingleses, horneado con la receta de 1850.", x: 48, y: 55, category: "gastronomia" },
-  { id: "4", name: "Parroquia de la AsunciÃ³n", description: "Cantera labrada que desafÃ­a la niebla. Su torre es el faro de la montaÃ±a.", x: 45, y: 45, category: "arquitectura" },
-  { id: "5", name: "PeÃ±a del Cuervo", description: "Donde el bosque se abre y la vista abraza todo el valle.", x: 78, y: 35, category: "naturaleza" },
+  { id: "4", name: "Parroquia de la Asunción", description: "Cantera labrada que desafía la niebla. Su torre es el faro de la montaña.", x: 45, y: 45, category: "arquitectura" },
+  { id: "5", name: "Peña del Cuervo", description: "Donde el bosque se abre y la vista abraza todo el valle.", x: 78, y: 35, category: "naturaleza" },
   { id: "6", name: "Museo de Medicina", description: "La historia de la salud en un pueblo donde la altitud dictaba las reglas.", x: 28, y: 60, category: "historia" },
 ];
 
@@ -129,7 +129,7 @@ const FogMap = () => {
           onMouseMove={handleMouseMove}
           onTouchMove={handleTouchMove}
         >
-          <img src={aerialImage} alt="Mapa aÃ©reo de Real del Monte" loading="lazy" className="w-full h-full object-cover" />
+          <img src={aerialImage} alt="Mapa aéreo de Real del Monte" loading="lazy" className="w-full h-full object-cover" />
 
           <canvas
             ref={canvasRef}
@@ -151,7 +151,7 @@ const FogMap = () => {
                 className="absolute w-4 h-4 rounded-full bg-electric pulse-electric transform -translate-x-1/2 -translate-y-1/2 z-20"
                 style={{ left: `${userLocation.x}%`, top: `${userLocation.y}%` }}
               >
-                <span className="absolute -top-6 left-1/2 -translate-x-1/2 font-body text-[10px] tracking-wider uppercase text-electric whitespace-nowrap">TÃº</span>
+                <span className="absolute -top-6 left-1/2 -translate-x-1/2 font-body text-[10px] tracking-wider uppercase text-electric whitespace-nowrap">Tú</span>
               </div>
             )}
           </div>

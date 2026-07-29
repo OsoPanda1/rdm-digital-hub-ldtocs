@@ -4,7 +4,7 @@
  */
 /**
  * Map service abstraction.
- * ImplementaciÃ³n actual: Leaflet. Switch a Mapbox solo requiere reescribir este archivo.
+ * Implementación actual: Leaflet. Switch a Mapbox solo requiere reescribir este archivo.
  */
 import L from "leaflet";
 

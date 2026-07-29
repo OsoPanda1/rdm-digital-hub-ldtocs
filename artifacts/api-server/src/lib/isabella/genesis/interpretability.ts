@@ -45,7 +45,7 @@ export function createInterpretability(): Interpretability {
       if (decision.ledgerAnchor) factors.push("anchored_ledger");
 
       return {
-        summary: `DecisiÃ³n ${decision.decisionId}: ${decision.decision.action} (confianza: ${(decision.decision.confidence * 100).toFixed(0)}%)`,
+        summary: `Decisión ${decision.decisionId}: ${decision.decision.action} (confianza: ${(decision.decision.confidence * 100).toFixed(0)}%)`,
         technicalTrace: decision.plan.map((step) => ({
           stepId: step.stepId,
           tool: step.tool,

@@ -69,7 +69,7 @@ export const TOURISM_INDEX: SearchHit[] = [
       id: m.id,
       kind: "mina",
       title: m.name,
-      subtitle: `Fundada ${m.founded} Â· ${m.status}`,
+      subtitle: `Fundada ${m.founded} · ${m.status}`,
       narrative: m.description,
       href: "/capitulos/minas",
       facet: "subsuelo",

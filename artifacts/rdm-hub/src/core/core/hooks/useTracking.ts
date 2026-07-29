@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 /**
- * Tracking client â€” envÃ­a eventos al Edge Function `ingest-event`.
- * Debe fallar silenciosamente: jamÃ¡s rompe la UX.
+ * Tracking client â€” envía eventos al Edge Function `ingest-event`.
+ * Debe fallar silenciosamente: jamás rompe la UX.
  */
 
 import { useCallback } from "react";
@@ -64,7 +64,7 @@ export interface TrackPayload {
   external_session_id?: string;
   /**
    * Si es true, indica al backend que debe anonimizar IP
-   * (por ejemplo, truncando direcciones o usando agregaciÃ³n).
+   * (por ejemplo, truncando direcciones o usando agregación).
    */
   anonymize_ip?: boolean;
 }
@@ -99,7 +99,7 @@ function loadOfflineQueue(): InternalTrackBody[] {
 function saveOfflineQueue(queue: InternalTrackBody[]): void {
   if (!isBrowser()) return;
   try {
-    // limitamos el tamaÃ±o para no crecer indefinidamente
+    // limitamos el tamaño para no crecer indefinidamente
     const trimmed =
       queue.length > OFFLINE_QUEUE_MAX
         ? queue.slice(queue.length - OFFLINE_QUEUE_MAX)
@@ -140,14 +140,14 @@ async function flushOfflineQueue(): Promise<void> {
 }
 
 /**
- * EnvÃ­a un evento a Supabase o lo deja en cola offline si no hay conexiÃ³n.
+ * Envía un evento a Supabase o lo deja en cola offline si no hay conexión.
  */
 async function sendOrQueueEvent(body: InternalTrackBody): Promise<void> {
   try {
     // Primero intentamos flush de la cola anterior.
     await flushOfflineQueue();
 
-    // Si no hay cliente o no hay conexiÃ³n, encolamos.
+    // Si no hay cliente o no hay conexión, encolamos.
     if (!supabase?.functions || (isBrowser() && !navigator.onLine)) {
       const queue = loadOfflineQueue();
       queue.push(body);
@@ -165,7 +165,7 @@ async function sendOrQueueEvent(body: InternalTrackBody): Promise<void> {
 }
 
 /**
- * API pÃºblica de tracking genÃ©rico.
+ * API pública de tracking genérico.
  */
 export async function track(input: TrackPayload): Promise<void> {
   try {
@@ -204,7 +204,7 @@ export async function track(input: TrackPayload): Promise<void> {
 }
 
 /**
- * Hook bÃ¡sico de tracking.
+ * Hook básico de tracking.
  */
 export function useTracking() {
   const trackEvent = useCallback((input: TrackPayload) => track(input), []);
@@ -212,7 +212,7 @@ export function useTracking() {
 }
 
 /**
- * Helper especializado para el Plano TurÃ­stico del RDM.
+ * Helper especializado para el Plano Turístico del RDM.
  *
  * Ejemplo:
  *   const tourism = useTourismTracking();

@@ -61,7 +61,7 @@ const TIERS: {
     bg: "rgba(255,215,0,0.08)",
     benefits: [
       "Todo lo de Mecenas",
-      "Voto en proxima crÃ³nica",
+      "Voto en proxima crónica",
       "Solicitud de restauracion de 1 track",
       "Credito en pagina de credits",
       "Badge legendario Productor",

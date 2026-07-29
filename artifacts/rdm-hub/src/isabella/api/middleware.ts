@@ -194,16 +194,16 @@ export function validateHexagon(input: HexagonInput, traceId: string): HexagonRe
 
   if (allowed) {
     decision = 'PERMITIDO';
-    rationale = 'Ambos hexÃ¡gonos validados correctamente. AcciÃ³n autorizada.';
+    rationale = 'Ambos hexágonos validados correctamente. Acción autorizada.';
   } else if (inner.violatedRules.length > 0 && outer.violatedRules.length > 0) {
     decision = 'BLOQUEADO';
-    rationale = `ViolaciÃ³n en ambos hexÃ¡gonos: ${allViolations.join('; ')}`;
+    rationale = `Violación en ambos hexágonos: ${allViolations.join('; ')}`;
   } else if (inner.violatedRules.length > 0) {
     decision = 'RESTRINGIDO';
-    rationale = `ViolaciÃ³n en hexÃ¡gono interno: ${inner.violatedRules.join('; ')}`;
+    rationale = `Violación en hexágono interno: ${inner.violatedRules.join('; ')}`;
   } else {
     decision = 'RESTRINGIDO';
-    rationale = `ViolaciÃ³n en hexÃ¡gono externo: ${outer.violatedRules.join('; ')}`;
+    rationale = `Violación en hexágono externo: ${outer.violatedRules.join('; ')}`;
   }
 
   return { allowed, decision, rationale, auditId, traceId };

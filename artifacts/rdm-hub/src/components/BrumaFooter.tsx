@@ -11,7 +11,7 @@ import logoImg from "@/assets/rdm-logo.png";
 
 const footerLinks = [
   { label: "Historia", path: "/historia" },
-  { label: "GastronomÃ­a", path: "/gastronomia" },
+  { label: "Gastronomía", path: "/gastronomia" },
   { label: "Cultura", path: "/cultura" },
   { label: "Rutas", path: "/rutas" },
   { label: "Comercios", path: "/comercios" },
@@ -44,18 +44,18 @@ const BrumaFooter = () => {
                 <div>
                   <span className="font-display text-xl font-bold text-foreground">RDM Digital</span>
                   <div className="flex items-center gap-1 text-[10px] tracking-wider text-gold/60">
-                    <Sparkles className="w-3 h-3" /> InnovaciÃ³n TurÃ­stica 2026
+                    <Sparkles className="w-3 h-3" /> Innovación Turística 2026
                   </div>
                 </div>
               </div>
               <p className="text-sm leading-relaxed text-muted-foreground mb-6">
-                Tu guÃ­a comunitaria digital para descubrir Real del Monte, Pueblo MÃ¡gico de Hidalgo. Servicios de altura para visitantes exigentes.
+                Tu guía comunitaria digital para descubrir Real del Monte, Pueblo Mágico de Hidalgo. Servicios de altura para visitantes exigentes.
               </p>
               <h3 className="font-display text-3xl md:text-4xl tracking-tight mb-4">
                 <span className="text-gradient-gold">La niebla siempre vuelve</span>
               </h3>
               <p className="font-display text-base text-platinum/50 italic max-w-lg">
-                Y con ella, la invitaciÃ³n a perderse entre calles empedradas, ecos mineros y el aroma de un paste reciÃ©n horneado.
+                Y con ella, la invitación a perderse entre calles empedradas, ecos mineros y el aroma de un paste recién horneado.
               </p>
             </motion.div>
           </div>
@@ -97,7 +97,7 @@ const BrumaFooter = () => {
           <div className="flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-4">
             <div className="flex items-center gap-2">
               <MapPin className="w-3 h-3 text-gold/40" />
-              <p className="font-body text-[10px] text-muted-foreground tracking-wider">Â© 2026 RDM Digital Â· InnovaciÃ³n TurÃ­stica Inteligente</p>
+              <p className="font-body text-[10px] text-muted-foreground tracking-wider">Â© 2026 RDM Digital · Innovación Turística Inteligente</p>
             </div>
             <div className="flex items-center gap-4">
               <Link to="/apoya" className="inline-flex items-center gap-2 text-xs text-gold hover:text-gold-light transition-colors">

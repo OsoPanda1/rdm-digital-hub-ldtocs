@@ -13,27 +13,27 @@ const legends = [
     icon: Ghost,
     color: "from-electric/30 to-transparent",
     excerpt:
-      "Cuentan los viejos mineros que en los tÃºneles abandonados de la mina de Acosta, cuando la lÃ¡mpara se apaga, se escucha el llanto de una mujer que perdiÃ³ a su hijo en un derrumbe. Quien la sigue, no vuelve a ver la luz del sol.",
-    moral: "Respeta los socavones: la montaÃ±a guarda memoria.",
+      "Cuentan los viejos mineros que en los túneles abandonados de la mina de Acosta, cuando la lámpara se apaga, se escucha el llanto de una mujer que perdió a su hijo en un derrumbe. Quien la sigue, no vuelve a ver la luz del sol.",
+    moral: "Respeta los socavones: la montaña guarda memoria.",
   },
   {
     id: "carruaje-ingles",
-    title: "El Carruaje InglÃ©s",
+    title: "El Carruaje Inglés",
     epoch: "1875",
     icon: Moon,
     color: "from-gold/30 to-transparent",
     excerpt:
-      "En las noches de niebla espesa, vecinos del PanteÃ³n InglÃ©s juran haber visto un carruaje negro tirado por caballos sin jinete que cruza la calle principal. Adentro, la silueta de un capataz britÃ¡nico cuenta monedas que nunca se acaban.",
-    moral: "La codicia no se entierra: viaja con uno hasta la Ãºltima estaciÃ³n.",
+      "En las noches de niebla espesa, vecinos del Panteón Inglés juran haber visto un carruaje negro tirado por caballos sin jinete que cruza la calle principal. Adentro, la silueta de un capataz británico cuenta monedas que nunca se acaban.",
+    moral: "La codicia no se entierra: viaja con uno hasta la última estación.",
   },
   {
     id: "duende-veta",
     title: "El Duende de la Veta",
-    epoch: "TradiciÃ³n oral",
+    epoch: "Tradición oral",
     icon: Flame,
     color: "from-copper/30 to-transparent",
     excerpt:
-      "Un pequeÃ±o ser de barba blanca aparece a los mineros que trabajan solos. Si le ofreces un trago de aguardiente, te muestra la veta mÃ¡s rica. Si te burlas de Ã©l, la mina se te traga.",
+      "Un pequeño ser de barba blanca aparece a los mineros que trabajan solos. Si le ofreces un trago de aguardiente, te muestra la veta más rica. Si te burlas de él, la mina se te traga.",
     moral: "Antes de extraer, hay que ofrendar.",
   },
   {
@@ -43,7 +43,7 @@ const legends = [
     icon: Skull,
     color: "from-teal/30 to-transparent",
     excerpt:
-      "Esperando a su prometido inglÃ©s que partiÃ³ a Pachuca y nunca volviÃ³, una joven realmontense subiÃ³ al cerro del JudÃ­o con su vestido de novia. Hoy, las parejas que suben al mirador escuchan un suspiro entre el viento.",
+      "Esperando a su prometido inglés que partió a Pachuca y nunca volvió, una joven realmontense subió al cerro del Judío con su vestido de novia. Hoy, las parejas que suben al mirador escuchan un suspiro entre el viento.",
     moral: "El amor mal correspondido se queda en el paisaje.",
   },
   {
@@ -53,18 +53,18 @@ const legends = [
     icon: Flame,
     color: "from-gold/30 to-transparent",
     excerpt:
-      "En la pasterÃ­a mÃ¡s antigua del pueblo, cada noche aparece un paste reciÃ©n horneado que nadie cocinÃ³. Dicen que es la abuela inglesa que enseÃ±Ã³ la receta original y todavÃ­a vigila la masa.",
-    moral: "La tradiciÃ³n no se hereda: se aparece.",
+      "En la pastería más antigua del pueblo, cada noche aparece un paste recién horneado que nadie cocinó. Dicen que es la abuela inglesa que enseñó la receta original y todavía vigila la masa.",
+    moral: "La tradición no se hereda: se aparece.",
   },
   {
     id: "campana-muda",
     title: "La Campana Muda",
-    epoch: "Templo de la AsunciÃ³n",
+    epoch: "Templo de la Asunción",
     icon: BookOpen,
     color: "from-platinum/30 to-transparent",
     excerpt:
-      "Una de las campanas del templo no suena desde 1920. Cuentan que enmudeciÃ³ el dÃ­a que un minero muriÃ³ rezando. Repica sola, dicen, cuando alguien va a perder a alguien en la mina.",
-    moral: "El silencio tambiÃ©n avisa.",
+      "Una de las campanas del templo no suena desde 1920. Cuentan que enmudeció el día que un minero murió rezando. Repica sola, dicen, cuando alguien va a perder a alguien en la mina.",
+    moral: "El silencio también avisa.",
   },
 ];
 
@@ -106,11 +106,11 @@ export default function Mitos() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#020617] via-[#020617] to-[#020617]">
-      {/* Capas atmosfÃ©ricas */}
+      {/* Capas atmosféricas */}
       <Starfield />
       <FloatingMist />
 
-      {/* Hero cinematogrÃ¡fico */}
+      {/* Hero cinematográfico */}
       <section className="relative overflow-hidden px-6 pt-28 pb-20 lg:px-12">
         <motion.div
           aria-hidden
@@ -126,7 +126,7 @@ export default function Mitos() {
           >
             <Ghost className="h-3.5 w-3.5 text-electric" />
             <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-electric">
-              FederaciÃ³n de Cultura y Memoria
+              Federación de Cultura y Memoria
             </span>
           </motion.div>
 
@@ -148,9 +148,9 @@ export default function Mitos() {
             transition={{ ...fadeUp.transition, delay: 0.2 }}
             className="mx-auto mt-6 max-w-2xl text-balance text-base font-body leading-relaxed text-muted-foreground md:text-lg"
           >
-            Real del Monte se cuenta a sÃ­ mismo en la voz de sus abuelos, en el
-            crujir de sus minas y en el viento del PanteÃ³n InglÃ©s. Estas son
-            las historias que la montaÃ±a se niega a olvidar.
+            Real del Monte se cuenta a sí mismo en la voz de sus abuelos, en el
+            crujir de sus minas y en el viento del Panteón Inglés. Estas son
+            las historias que la montaña se niega a olvidar.
           </motion.p>
 
           <motion.div
@@ -159,7 +159,7 @@ export default function Mitos() {
             className="mt-9 flex items-center justify-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground"
           >
             <Mountain className="h-3 w-3 text-gold" />
-            <span>Archivo vivo Â· CuradurÃ­a TAMV Online</span>
+            <span>Archivo vivo · Curaduría TAMV Online</span>
           </motion.div>
         </motion.div>
       </section>
@@ -183,7 +183,7 @@ export default function Mitos() {
                   className={`pointer-events-none absolute -right-24 -top-28 h-64 w-64 rounded-full bg-gradient-to-br ${l.color} blur-3xl opacity-60 transition-opacity duration-500 group-hover:opacity-100`}
                 />
 
-                {/* Borde lumÃ­nico inferior */}
+                {/* Borde lumínico inferior */}
                 <div
                   aria-hidden
                   className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent opacity-40"
@@ -200,7 +200,7 @@ export default function Mitos() {
                           {l.epoch}
                         </span>
                         <span className="text-[10px] font-mono uppercase tracking-[0.20em] text-gold/80">
-                          CrÃ³nica del Mineral
+                          Crónica del Mineral
                         </span>
                       </div>
                     </div>
@@ -216,7 +216,7 @@ export default function Mitos() {
 
                   <div className="mt-6 border-t border-border/25 pt-5">
                     <p className="mb-1.5 text-[10px] font-mono uppercase tracking-[0.25em] text-gold/80">
-                      Lo que enseÃ±a
+                      Lo que enseña
                     </p>
                     <p className="text-[13px] font-body italic text-slate-100/90">
                       &laquo; {l.moral} &raquo;
@@ -234,7 +234,7 @@ export default function Mitos() {
           })}
         </div>
 
-        {/* Cierre editorial / invitaciÃ³n */}
+        {/* Cierre editorial / invitación */}
         <motion.div
           {...fadeUp}
           className="mx-auto mt-20 max-w-3xl rounded-3xl border border-gold/25 bg-gradient-to-b from-slate-900/80 to-slate-950/95 p-10 text-center shadow-[0_24px_80px_rgba(0,0,0,0.75)]"
@@ -243,12 +243,12 @@ export default function Mitos() {
             <BookOpen className="h-6 w-6 text-gold" />
           </div>
           <h3 className="text-2xl font-display font-bold md:text-3xl">
-            Â¿Conoces una leyenda que aÃºn no contamos?
+            ¿Conoces una leyenda que aún no contamos?
           </h3>
           <p className="mx-auto mt-3 max-w-xl text-sm font-body leading-relaxed text-muted-foreground">
             Este archivo vive mientras la comunidad lo alimente. Comparte tu
-            historia en el mÃ³dulo de Comunidad y el consejo editorial del RDM
-            decidirÃ¡ si la montaÃ±a la adopta.
+            historia en el módulo de Comunidad y el consejo editorial del RDM
+            decidirá si la montaña la adopta.
           </p>
           <a
             href="/comunidad"
@@ -257,7 +257,7 @@ export default function Mitos() {
             Compartir mi leyenda
           </a>
           <p className="mt-3 text-[10px] font-mono uppercase tracking-[0.18em] text-gold/70">
-            Archivo curado Â· No todas las historias salen a la luz
+            Archivo curado · No todas las historias salen a la luz
           </p>
         </motion.div>
       </section>

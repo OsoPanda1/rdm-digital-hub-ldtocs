@@ -140,7 +140,7 @@ export function RDMInteractiveMap() {
     <section className="px-6 py-16 md:px-16 lg:px-24">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8 text-center">
         <p className="mb-4 flex items-center justify-center gap-2 text-sm uppercase tracking-[0.3em] text-[hsl(var(--rdm-amber))]" style={{ fontFamily: "var(--font-body)" }}>
-          <Navigation className="h-4 w-4" /> CartografÃ­a Territorial
+          <Navigation className="h-4 w-4" /> Cartografía Territorial
         </p>
         <h2 className="text-4xl md:text-6xl font-bold" style={{ fontFamily: "var(--font-display)" }}>Mapa <span className="text-[hsl(var(--rdm-amber))]">Inteligente</span></h2>
       </motion.div>
