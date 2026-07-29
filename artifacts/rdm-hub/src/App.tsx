@@ -16,7 +16,7 @@ import { RouteErrorBoundary } from '@/components/RouteErrorBoundary'
 import { AudioPlayerProvider } from '@/contexts/AudioPlayerContext'
 import { RDMAuthProvider, useRDMAuth } from '@/contexts/RDMAuthContext'
 import { NotificationProvider } from '@/components/NotificationSystem'
-// Vercel analytics removed â€” not needed on Replit
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import { logger } from '@/lib/logger'
 import { captureException as sentryCaptureException } from '@/integrations/observability/sentry'
 
@@ -540,7 +540,7 @@ const AppInner = () => {
             </>
           )}
           <Suspense fallback={<LoadingFallback />}><RealitoChatLauncher /></Suspense>
-          {/* Vercel analytics removed on Replit */}
+          <SpeedInsights />
       </TooltipProvider>
     </ErrorBoundary>
   )
