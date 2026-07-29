@@ -533,9 +533,10 @@ export function registerIsabellaRoutes(router: Router) {
       return;
     }
 
-    const scene = await xrRenderer.generateScene(description, options);
-    res.status(201).json({ ok: true, data: scene });
-  } catch (err) { next(err); }
+    try {
+      const scene = await xrRenderer.generateScene(description, options);
+      res.status(201).json({ ok: true, data: scene });
+    } catch (err) { next(err); }
   });
 
   // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -558,9 +559,10 @@ export function registerIsabellaRoutes(router: Router) {
       return;
     }
 
-    const result = await isa.reason({ query, context, knowledgeGraph, maxDepth });
-    res.status(200).json({ ok: true, data: result });
-  } catch (err) { next(err); }
+    try {
+      const result = await isa.reason({ query, context, knowledgeGraph, maxDepth });
+      res.status(200).json({ ok: true, data: result });
+    } catch (err) { next(err); }
   });
 
   // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€

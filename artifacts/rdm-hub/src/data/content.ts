@@ -105,8 +105,8 @@ export const DICHO_CATS = [
 
 export const TAG_CONFIG: Record<string, { color: string; icon: string; label: string }> = {
   Gobernanza: { color: "oklch(0.55 0.13 220)", icon: "ðŸ“–", label: "Gobernanza" },
-  TecnologÃ­a: { color: "oklch(0.6 0.14 80)", icon: "âš¡", label: "TecnologÃ­a" },
-  GastronomÃ­a: { color: "oklch(0.62 0.18 30)", icon: "ðŸ½ï¸", label: "GastronomÃ­a" },
+  "Tecnología": { color: "oklch(0.6 0.14 80)", icon: "âš¡", label: "TecnologÃ­a" },
+  "Gastronomía": { color: "oklch(0.62 0.18 30)", icon: "ðŸ½ï¸", label: "GastronomÃ­a" },
   Cultura: { color: "oklch(0.5 0.16 330)", icon: "ðŸŽµ", label: "Cultura" },
   Comunidad: { color: "oklch(0.58 0.15 130)", icon: "ðŸ‘¥", label: "Comunidad" },
 };

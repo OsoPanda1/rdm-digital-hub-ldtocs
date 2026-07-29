@@ -37,6 +37,16 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik/acme.json:/acme.json
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 384M
+        reservations:
+          cpus: "0.10"
+          memory: 128M
+    memswap_limit: 512M
+    pids_limit: 256
     networks:
       - rdm_proxy
     labels:
@@ -73,6 +83,16 @@ services:
       - VITE_API_BASE_URL=https://${API_HOST:-api.visitarealdelmonte.online}/v1
       - VITE_API_GATEWAY=https://${API_HOST:-api.visitarealdelmonte.online}
       - VITE_SITE_URL=https://${SITE_HOST:-visitarealdelmonte.online}
+    deploy:
+      resources:
+        limits:
+          cpus: "0.75"
+          memory: 512M
+        reservations:
+          cpus: "0.10"
+          memory: 128M
+    memswap_limit: 768M
+    pids_limit: 256
     networks:
       - rdm_proxy
     labels:
@@ -112,6 +132,16 @@ services:
       - RDM_FEDERATION_MODE=heptafederado-prod
       - RDM_SECURITY_PROFILE=production
       - RDM_OBSERVABILITY_MODE=standard
+    deploy:
+      resources:
+        limits:
+          cpus: "1.00"
+          memory: 1536M
+        reservations:
+          cpus: "0.25"
+          memory: 512M
+    memswap_limit: 2048M
+    pids_limit: 512
     networks:
       - rdm_proxy
       - rdm_internal
@@ -153,6 +183,16 @@ services:
       retries: 5
       start_period: 30s
     shm_size: 128mb
+    deploy:
+      resources:
+        limits:
+          cpus: "0.75"
+          memory: 1024M
+        reservations:
+          cpus: "0.20"
+          memory: 256M
+    memswap_limit: 1536M
+    pids_limit: 256
 
   # ─── REDIS (cache + rate limiting) ────────────────────────────────────────
   redis:
@@ -167,6 +207,16 @@ services:
       --appendfsync everysec
     volumes:
       - redis_data:/data
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          cpus: "0.10"
+          memory: 128M
+    memswap_limit: 768M
+    pids_limit: 128
     networks:
       - rdm_internal
     healthcheck:
@@ -193,6 +243,16 @@ services:
       - ./backups:/backups
       - ./scripts/backup.sh:/backup.sh:ro
     entrypoint: ["/bin/sh", "/backup.sh"]
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M
+        reservations:
+          cpus: "0.05"
+          memory: 64M
+    memswap_limit: 384M
+    pids_limit: 128
     networks:
       - rdm_internal
 

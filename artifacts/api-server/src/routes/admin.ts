@@ -14,6 +14,8 @@ import { validate, schemas } from "../middlewares/validate";
 
 export function registerAdminRoutes(router: Router) {
   const auditLog = createAdminAuditLog();
+  const strictAdminRateLimit = rateLimitByRoute({ name: "admin-strict", limit: 60 });
+  router.use("/admin", strictAdminRateLimit);
 
   router.get("/admin/audit", requireRdmRole("admin"), (req: Request, res: Response, next: NextFunction) => {
     const { actor, action, severity, since, until } = req.query;

@@ -9,7 +9,7 @@ import pinoHttp from "pino-http";
 
 import router from "./routes";
 import { logger } from "./lib/logger";
-import { attachRdmIdentity, rateLimitByRoute } from "./lib/security";
+import { attachRdmIdentity, clientIp, rateLimitByRoute } from "./lib/security";
 import { attachJwtIdentity } from "./middlewares/auth";
 import { tracingMiddleware } from "./lib/tracing";
 import { loadEnv } from "./lib/env";
@@ -91,14 +91,6 @@ app.use(
       : false,
     hsts: NODE_ENV === "production" ? { maxAge: 31536000, includeSubDomains: true, preload: true } : false,
     referrerPolicy: { policy: "strict-origin-when-cross-origin" },
-    permissionsPolicy: {
-      camera: [],
-      "display-capture": [],
-      fullscreen: [],
-      geolocation: [],
-      microphone: [],
-      payment: [],
-    },
     crossOriginEmbedderPolicy: NODE_ENV === "production",
     crossOriginOpenerPolicy: NODE_ENV === "production",
     crossOriginResourcePolicy: NODE_ENV === "production" ? { policy: "cross-origin" } : false,
@@ -160,15 +152,15 @@ setInterval(() => {
 }, 300_000); // cleanup every 5 min
 
 app.use((req, res, next) => {
-  const clientIp = (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() || req.ip || "unknown";
+  const ip = clientIp(req);
   const now = Date.now();
-  const bucket = globalRateLimitBuckets.get(clientIp);
+  const bucket = globalRateLimitBuckets.get(ip);
   if (bucket && bucket.resetAt > now && bucket.count >= GLOBAL_RATE_LIMIT) {
     res.status(429).json({ ok: false, error: "Rate limit exceeded", retryAfter: Math.ceil((bucket.resetAt - now) / 1000) });
     return;
   }
   if (!bucket || bucket.resetAt <= now) {
-    globalRateLimitBuckets.set(clientIp, { count: 1, resetAt: now + GLOBAL_RATE_WINDOW_MS });
+    globalRateLimitBuckets.set(ip, { count: 1, resetAt: now + GLOBAL_RATE_WINDOW_MS });
   } else {
     bucket.count++;
   }

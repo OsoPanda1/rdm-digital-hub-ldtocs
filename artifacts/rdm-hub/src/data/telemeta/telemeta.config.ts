@@ -49,8 +49,8 @@ export type TelemObject = {
   ts: string;
   // nombre breve amigable para la UI
   nombre: string;
-  // categorÃ­a para filtrar: `performance`, `error`, `engagement`, `offline`
-  categorÃ­a: 'performance' | 'error' | 'engagement' | 'offline';
+  // categoria para filtrar: `performance`, `error`, `engagement`, `offline`
+  categoria: 'performance' | 'error' | 'engagement' | 'offline';
   // regiÃ³n del usuario cuando estÃ¡ disponible
   region: string;
   // datos ocultos para cada mÃ©trica
@@ -58,12 +58,12 @@ export type TelemObject = {
 };
 
 // Modelos de fÃ¡brica de mÃ©tricas para mantener DRY
-const build = <T extends object>(id: string, categorÃ­a: TelemObject['categorÃ­a'], data: T): TelemObject => (
+const build = <T extends object>(id: string, categoria: TelemObject['categoria'], data: T): TelemObject => (
   {
     id,
     ts: new Date().toISOString(),
     nombre: id,
-    categorÃ­a,
+    categoria,
     region: 'MX',
     data,
   } as const

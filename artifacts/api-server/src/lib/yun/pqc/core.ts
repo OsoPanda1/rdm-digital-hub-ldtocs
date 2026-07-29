@@ -108,6 +108,7 @@ const GRACE_PERIOD_MS = 30 * 24 * 60 * 60 * 1000; // 30 days after expiry
 const HKDF_INFO = Buffer.from("yun-pqc-hybrid-handshake-v1");
 const HKDF_SALT = Buffer.alloc(32, 0);
 const MAX_KEYS = Number(process.env.RDM_PQC_MAX_KEYS ?? 500);
+const STRICT_HYBRID_HANDSHAKE = process.env.RDM_PQC_STRICT_HYBRID !== "false";
 
 // â”€â”€ PQC Hybrid Crypto Engine â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
@@ -190,8 +191,8 @@ export class YunPqcCrypto {
     // Kyber algorithms â†’ X25519 (for KEM / key agreement)
     // Dilithium algorithms â†’ Ed25519 (for signatures)
     const isKem = params.algorithm.startsWith("kyber");
-    const keyType = isKem ? "x25519" : "ed25519";
-    const { publicKey, privateKey } = generateKeyPairSync(keyType as "x25519" | "ed25519");
+    const keyPair = isKem ? generateKeyPairSync("x25519") : generateKeyPairSync("ed25519");
+    const { publicKey, privateKey } = keyPair;
 
     const publicKeyPem = publicKey.export({ type: "spki", format: "pem" }) as string;
     const privateKeyPem = privateKey.export({ type: "pkcs8", format: "pem" }) as string;
@@ -296,6 +297,10 @@ export class YunPqcCrypto {
     let pqcSharedSecret: Buffer;
     let pqcEncrypted: Buffer;
 
+    if (!params.bobPqPublicKey && STRICT_HYBRID_HANDSHAKE) {
+      throw new Error("Hybrid handshake rejected: missing PQC peer public key.");
+    }
+
     if (params.bobPqPublicKey) {
       try {
         // Alice generates an ephemeral X25519 key pair
@@ -313,13 +318,15 @@ export class YunPqcCrypto {
           ephemeral.publicKey.export({ type: "spki", format: "der" }) as Buffer,
         );
       } catch (err) {
-        // Fallback: if X25519 fails (e.g., invalid key format), use random
-        logger.warn({ error: (err as Error).message }, "Hybrid handshake X25519 fallback â€” falling back to random secret");
+        logger.warn({ error: (err as Error).message }, "Hybrid handshake X25519 validation failed");
+        if (STRICT_HYBRID_HANDSHAKE) {
+          throw new Error("Hybrid handshake rejected: invalid PQC peer public key.");
+        }
         pqcSharedSecret = randomBytes(32);
         pqcEncrypted = randomBytes(32);
       }
     } else {
-      // No PQ key available; use random for backward compatibility
+      // Legacy compatibility is disabled by default; only explicit RDM_PQC_STRICT_HYBRID=false may use this fallback.
       pqcSharedSecret = randomBytes(32);
       pqcEncrypted = randomBytes(32);
     }
@@ -440,6 +447,10 @@ export class YunPqcCrypto {
 
       if (!classicValid) {
         return { valid: false, reason: "Classic signature invalid." };
+      }
+
+      if ((!params.pqcSignature || !params.pqcPublicKey) && STRICT_HYBRID_HANDSHAKE) {
+        return { valid: false, reason: "Hybrid signature rejected: PQC signature and public key are required." };
       }
 
       // Verify PQC Ed25519 signature (if public key provided)

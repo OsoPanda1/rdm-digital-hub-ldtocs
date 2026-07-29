@@ -4,7 +4,7 @@
  */
 import type { Router, Request, Response, NextFunction } from "express";
 import { getDb, isDbAvailable } from "../lib/db-client";
-import { territories, poiState } from "../../db/schema";
+import { territories, poiState } from "../db/schema";
 import { requireRdmRole, rateLimitByRoute } from "../lib/security";
 import { eq, ilike, sql, and, or } from "drizzle-orm";
 import { apiSuccess, apiPaginated, apiError } from "../lib/api-response";

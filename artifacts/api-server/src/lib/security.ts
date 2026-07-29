@@ -36,7 +36,7 @@ function isPrivateIp(ip: string): boolean {
   return ip === "::1" || ip === "localhost";
 }
 
-function clientIp(req: Request): string {
+export function clientIp(req: Request): string {
   const forwarded = req.headers["x-forwarded-for"];
   if (typeof forwarded === "string" && forwarded.trim()) {
     const ips = forwarded.split(",").map((s) => s.trim()).filter(Boolean);
@@ -106,11 +106,17 @@ export function rateLimitByRoute(options: { name: string; limit: number; windowM
     if (bucket.count >= options.limit) {
       const retryAfter = Math.ceil((bucket.resetAt - now) / 1000);
       res.setHeader("Retry-After", String(retryAfter));
+      res.setHeader("X-RateLimit-Limit", String(options.limit));
+      res.setHeader("X-RateLimit-Remaining", "0");
+      res.setHeader("X-RateLimit-Reset", String(Math.ceil(bucket.resetAt / 1000)));
       logger.warn({ key, retryAfter, limit: options.limit }, "Rate limit exceeded");
       res.status(429).json({ ok: false, error: "rate_limit_exceeded", retryAfterSeconds: retryAfter });
       return;
     }
     bucket.count += 1;
+    res.setHeader("X-RateLimit-Limit", String(options.limit));
+    res.setHeader("X-RateLimit-Remaining", String(Math.max(0, options.limit - bucket.count)));
+    res.setHeader("X-RateLimit-Reset", String(Math.ceil(bucket.resetAt / 1000)));
     next();
   };
 }

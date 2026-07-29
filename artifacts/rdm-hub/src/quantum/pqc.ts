@@ -47,6 +47,7 @@ type OqsWasmExports = Record<string, (...args: unknown[]) => unknown>
 let oqsWasmModule: { exports: OqsWasmExports } | null = null
 let wasmLoadAttempted = false
 let wasmAvailable = false
+const allowClassicalFallback = () => import.meta.env.VITE_PQC_ALLOW_CLASSICAL_FALLBACK === "true"
 
 async function loadOqsWasm(): Promise<boolean> {
   if (wasmLoadAttempted) return wasmAvailable
@@ -189,11 +190,18 @@ export class PostQuantumCryptoV2 {
   }
 
   get provider(): string {
-    return this.wasmReady ? "liboqs-wasm" : "webcrypto-fallback"
+    return this.wasmReady ? "liboqs-wasm" : "strict-hybrid-required"
+  }
+
+  private assertHybridReady(): void {
+    if (!this.wasmReady && !allowClassicalFallback()) {
+      throw new Error("PQC strict mode rejected a classical-only fallback. Set VITE_PQC_ALLOW_CLASSICAL_FALLBACK=true only for local tests.")
+    }
   }
 
   // Kyber KEM
   async keygen(identity?: string): Promise<PQCKeyPair> {
+    this.assertHybridReady()
     // For identity-derived keys we keep the invariant pk = SHA-256(sk) so the
     // same pair works for both KEM round-trips and fallback sign/verify.
     if (identity) {
@@ -205,10 +213,12 @@ export class PostQuantumCryptoV2 {
   }
 
   async encapsulate(publicKey: string): Promise<PQCKEMResult> {
+    this.assertHybridReady()
     return kyberEncapsulate(publicKey)
   }
 
   async decapsulate(kemCiphertext: string, secretKey: string): Promise<string> {
+    this.assertHybridReady()
     return kyberDecapsulate(kemCiphertext, secretKey)
   }
 
@@ -239,10 +249,12 @@ export class PostQuantumCryptoV2 {
 
   // Dilithium signatures
   async sign(data: string, secretKey: string): Promise<string> {
+    this.assertHybridReady()
     return dilithiumSign(data, secretKey)
   }
 
   async verify(data: string, signature: string, publicKey: string): Promise<boolean> {
+    this.assertHybridReady()
     return dilithiumVerify(data, signature, publicKey)
   }
 

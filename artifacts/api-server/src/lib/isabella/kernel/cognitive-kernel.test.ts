@@ -3,7 +3,18 @@
  * SPDX-License-Identifier: TAMV-EOL
  */
 import { describe, it, expect, beforeEach } from "vitest";
-import { createCognitiveKernel } from "../lib/isabella/kernel/cognitive-kernel";
+import { createCognitiveKernel } from "./cognitive-kernel";
+import { createMetaReasoner } from "./meta-reasoner";
+import { createCapabilityFabric } from "./capability-fabric";
+import { createHierarchicalMemory } from "./hierarchical-memory";
+import { createEmergencyProtocols } from "./emergency";
+import { createKnowledgeGraph } from "./knowledge-graph";
+import { createPlanner } from "./planner";
+import { createVerifier } from "./verifier";
+import { createConfidenceModel } from "./confidence";
+import { createSimulationEngine } from "./simulator";
+import { createEvaluator } from "./evaluator";
+import { createDynamicContextEngine } from "./dynamic-context";
 
 describe("CognitiveKernel", () => {
   let kernel: ReturnType<typeof createCognitiveKernel>;
@@ -103,7 +114,6 @@ describe("CognitiveKernel", () => {
 });
 
 describe("Meta-Reasoner", () => {
-  const { createMetaReasoner } = require("../lib/isabella/kernel/meta-reasoner");
   const reasoner = createMetaReasoner();
 
   it("selects quick-response for simple questions", () => {
@@ -154,7 +164,6 @@ describe("Meta-Reasoner", () => {
 });
 
 describe("Capability Fabric", () => {
-  const { createCapabilityFabric } = require("../lib/isabella/kernel/capability-fabric");
   const fabric = createCapabilityFabric();
 
   it("selects required capabilities", () => {
@@ -189,7 +198,6 @@ describe("Capability Fabric", () => {
 });
 
 describe("Hierarchical Memory", () => {
-  const { createHierarchicalMemory } = require("../lib/isabella/kernel/hierarchical-memory");
   const mem = createHierarchicalMemory();
 
   it("stores and retrieves entries", () => {
@@ -260,7 +268,6 @@ describe("Hierarchical Memory", () => {
 });
 
 describe("Emergency Protocols", () => {
-  const { createEmergencyProtocols } = require("../lib/isabella/kernel/emergency");
   let emerg: ReturnType<typeof createEmergencyProtocols>;
 
   beforeEach(() => {
@@ -294,7 +301,6 @@ describe("Emergency Protocols", () => {
 });
 
 describe("Knowledge Graph", () => {
-  const { createKnowledgeGraph } = require("../lib/isabella/kernel/knowledge-graph");
   const kg = createKnowledgeGraph();
 
   it("adds entities", () => {
@@ -339,7 +345,6 @@ describe("Knowledge Graph", () => {
 });
 
 describe("Planner", () => {
-  const { createPlanner } = require("../lib/isabella/kernel/planner");
   const planner = createPlanner();
 
   it("creates a plan", () => {
@@ -358,7 +363,6 @@ describe("Planner", () => {
 });
 
 describe("Verifier", () => {
-  const { createVerifier } = require("../lib/isabella/kernel/verifier");
   const verifier = createVerifier();
 
   it("verifies output with no hallucinations", () => {
@@ -384,7 +388,6 @@ describe("Verifier", () => {
 });
 
 describe("Confidence Model", () => {
-  const { createConfidenceModel } = require("../lib/isabella/kernel/confidence");
   const conf = createConfidenceModel();
 
   it("calculates confidence score", () => {
@@ -401,7 +404,6 @@ describe("Confidence Model", () => {
 });
 
 describe("Simulator", () => {
-  const { createSimulationEngine } = require("../lib/isabella/kernel/simulator");
   const sim = createSimulationEngine();
 
   it("creates scenarios", () => {
@@ -419,7 +421,6 @@ describe("Simulator", () => {
 });
 
 describe("Evaluator", () => {
-  const { createEvaluator } = require("../lib/isabella/kernel/evaluator");
   const evaluator = createEvaluator();
 
   it("records metrics and returns aggregate", () => {
@@ -447,7 +448,6 @@ describe("Evaluator", () => {
 });
 
 describe("Dynamic Context", () => {
-  const { createDynamicContextEngine } = require("../lib/isabella/kernel/dynamic-context");
   const ctx = createDynamicContextEngine();
 
   it("returns current context", () => {

@@ -45,7 +45,14 @@ export default function SearchOverlay() {
   const lastFocusRef = useRef<HTMLElement | null>(null);
   const navigate = useNavigate();
 
-  const hits = useMemo(() => searchTourism(query, 24), [query]);
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+
+  useEffect(() => {
+    const handle = window.setTimeout(() => setDebouncedQuery(query.trim()), 140);
+    return () => window.clearTimeout(handle);
+  }, [query]);
+
+  const hits = useMemo(() => searchTourism(debouncedQuery, 16), [debouncedQuery]);
 
   // Keyboard: open with âŒ˜/Ctrl+K, close with Esc
   useEffect(() => {
@@ -79,7 +86,7 @@ export default function SearchOverlay() {
     }
   }, [open]);
 
-  useEffect(() => setCursor(0), [query]);
+  useEffect(() => setCursor(0), [debouncedQuery]);
 
   const go = (hit: SearchHit) => {
     setOpen(false);
@@ -163,7 +170,7 @@ export default function SearchOverlay() {
             >
               {hits.length === 0 && (
                 <div className="px-6 py-10 text-center text-sm text-[hsl(var(--muted-foreground))]">
-                  Sin resultados para Â«{query}Â». Prueba con <em>paste</em>, <em>Acosta</em> o <em>panteÃ³n</em>.
+                  Sin resultados para «{debouncedQuery}». Prueba con <em>paste</em>, <em>Acosta</em> o <em>panteÃ³n</em>.
                 </div>
               )}
               {hits.map((hit, i) => {

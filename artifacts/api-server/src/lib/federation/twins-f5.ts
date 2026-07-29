@@ -68,3 +68,16 @@ export function createDigitalTwinsF5(): DigitalTwinsF5 {
     async stats() { return { totalScenes: scenes.size, totalSensors: Array.from(sensors.values()).reduce((s, a) => s + a.length, 0) }; },
   };
 }
+
+
+export function createTwinsF5() {
+  const engine = createDigitalTwinsF5();
+  return {
+    async listScenes() { return []; },
+    getScene: (id: string) => engine.getScene(id),
+    getSensorReadings: (id: string) => engine.getSensors(id),
+    createScene: (input: { name: string; description?: string; territoryId?: string }) => engine.createScene(input.name, []),
+    addSensorReading: (sceneId: string, sensor: { sensorType: string; value: number; unit?: string }) => engine.addSensor(sceneId, sensor),
+    stats: () => engine.stats(),
+  };
+}
