@@ -1,9 +1,8 @@
 {
   "version": 2,
   "buildCommand": "pnpm --filter @workspace/rdm-hub build",
-  "outputDirectory": "dist",
+  "outputDirectory": "artifacts/rdm-hub/dist",
   "installCommand": "pnpm install --frozen-lockfile",
-  "framework": "vite",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "https://api.visitarealdelmonte.online/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
