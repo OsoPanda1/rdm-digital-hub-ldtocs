@@ -1,25 +1,22 @@
 "use client";
 
-import { useState } from "react";
-
-const categories = [
-  "Todos", "Turismo", "Gastronomía", "Artesanías", "Hospedaje", "Servicios", "Transporte",
-];
-
-const businesses = [
-  { name: "Pasteuría La Mina", cat: "Gastronomía", desc: "Los mejores pastes tradicionales" },
-  { name: "Hotel Real del Monte", cat: "Hospedaje", desc: "Hospedaje en el centro histórico" },
-  { name: "Artesanías El Sopón", cat: "Artesanías", desc: "Artesanía local en cantera" },
-  { name: "Restaurante El Edén", cat: "Gastronomía", desc: "Cocina tradicional hidalguense" },
-  { name: "Guía Turística RDM", cat: "Turismo", desc: "Recorridos guiados por el pueblo" },
-  { name: "Transportes RDM", cat: "Transporte", desc: "Transporte local y shuttle CDMX" },
-  { name: "Cabañas del Bosque", cat: "Hospedaje", desc: "Ecoturismo y cabañas" },
-  { name: "Museo del Paste", cat: "Gastronomía", desc: "Historia y degustación del paste" },
-];
+import { useState, useMemo } from "react";
+import { useNegocios } from "@/hooks/use-negocios";
 
 export default function DirectorioPage() {
   const [activeCat, setActiveCat] = useState("Todos");
-  const filtered = activeCat === "Todos" ? businesses : businesses.filter((b) => b.cat === activeCat);
+  const { data: negocios, isLoading } = useNegocios();
+
+  const categories = useMemo(() => {
+    if (!negocios) return ["Todos"];
+    const cats = [...new Set(negocios.map((b) => b.cat))];
+    return ["Todos", ...cats];
+  }, [negocios]);
+
+  const filtered = useMemo(() => {
+    if (!negocios) return [];
+    return activeCat === "Todos" ? negocios : negocios.filter((b) => b.cat === activeCat);
+  }, [negocios, activeCat]);
 
   return (
     <div className="min-h-screen">
@@ -51,15 +48,20 @@ export default function DirectorioPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((biz) => (
-            <div key={biz.name} className="border border-[#2a2d35] rounded-xl p-6 bg-[#121418] hover:border-[#c8a356] transition-colors">
-              <span className="text-xs text-[#c8a356] font-medium">{biz.cat}</span>
-              <h3 className="font-medium mt-1">{biz.name}</h3>
-              <p className="text-sm text-[#9ca3af] mt-1">{biz.desc}</p>
-            </div>
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="text-[#6b7280]">Cargando directorio...</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filtered.map((biz) => (
+              <div key={biz.id} className="border border-[#2a2d35] rounded-xl p-6 bg-[#121418] hover:border-[#c8a356] transition-colors">
+                <span className="text-xs text-[#c8a356] font-medium">{biz.cat}</span>
+                <h3 className="font-medium mt-1">{biz.name}</h3>
+                <p className="text-sm text-[#9ca3af] mt-1">{biz.description}</p>
+                {biz.phone && <p className="text-xs text-[#6b7280] mt-2">{biz.phone}</p>}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

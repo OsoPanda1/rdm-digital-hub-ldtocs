@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { useNegocios } from "@/hooks/use-negocios";
 
 const sections = [
   { id: "negocios", label: "Negocios" },
@@ -9,8 +10,22 @@ const sections = [
   { id: "donar", label: "Apoyar" },
 ];
 
+const plans = [
+  { name: "Básico", price: "Gratis", features: ["Directorio", "Mapa", "Eventos"] },
+  { name: "Comercio", price: "$199/mes", features: ["Perfil de negocio", "Promociones", "Estadísticas"] },
+  { name: "Premium", price: "$499/mes", features: ["Prioridad", "API access", "Soporte prioritario"] },
+];
+
 export default function EconomiaPage() {
   const [activeSection, setActiveSection] = useState("negocios");
+  const { data: negocios } = useNegocios();
+
+  const cats = useMemo(() => {
+    if (!negocios) return []
+    const map = new Map<string, number>()
+    negocios.forEach((b) => map.set(b.cat, (map.get(b.cat) || 0) + 1))
+    return Array.from(map.entries()).map(([cat, count]) => ({ cat, count }))
+  }, [negocios])
 
   return (
     <div className="min-h-screen">
@@ -42,14 +57,12 @@ export default function EconomiaPage() {
           <div className="space-y-4">
             <p className="text-[#9ca3af]">Portal de negocios locales. Registra tu comercio y forma parte del directorio digital.</p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {["Turismo", "Gastronomía", "Artesanías", "Servicios", "Hospedaje", "Transporte"].map(
-                (cat) => (
-                  <div key={cat} className="border border-[#2a2d35] rounded-xl p-6 bg-[#121418]">
-                    <p className="font-medium">{cat}</p>
-                    <p className="text-sm text-[#9ca3af] mt-1">Negocios registrados</p>
-                  </div>
-                ),
-              )}
+              {cats.map(({ cat, count }) => (
+                <div key={cat} className="border border-[#2a2d35] rounded-xl p-6 bg-[#121418]">
+                  <p className="font-medium">{cat}</p>
+                  <p className="text-sm text-[#c8a356] mt-1">{count} negocios registrados</p>
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -65,11 +78,7 @@ export default function EconomiaPage() {
 
         {activeSection === "membresias" && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { name: "Básico", price: "Gratis", features: ["Directorio", "Mapa", "Eventos"] },
-              { name: "Comercio", price: "$199/mes", features: ["Perfil de negocio", "Promociones", "Estadísticas"] },
-              { name: "Premium", price: "$499/mes", features: ["Prioridad", "API access", "Soporte prioritario"] },
-            ].map((plan) => (
+            {plans.map((plan) => (
               <div key={plan.name} className="border border-[#2a2d35] rounded-xl p-6 bg-[#121418]">
                 <h3 className="font-medium text-lg">{plan.name}</h3>
                 <p className="text-2xl font-bold text-[#c8a356] mt-2">{plan.price}</p>

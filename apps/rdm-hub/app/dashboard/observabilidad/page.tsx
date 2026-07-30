@@ -2,31 +2,19 @@
 
 import { useAuth } from "@/providers/auth-provider";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-
-type HealthStatus = {
-  status: string;
-  uptime: number;
-  region: string;
-};
+import { useEffect } from "react";
+import { useHealth } from "@/hooks/use-health";
 
 export default function ObservabilidadPage() {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
-  const [health, setHealth] = useState<HealthStatus | null>(null);
+  const { data: health, isLoading } = useHealth();
 
   useEffect(() => {
-    if (!isLoading && !user) router.push("/auth");
-  }, [user, isLoading, router]);
+    if (!authLoading && !user) router.push("/auth");
+  }, [user, authLoading, router]);
 
-  useEffect(() => {
-    fetch("/api/health")
-      .then((r) => r.json())
-      .then(setHealth)
-      .catch(() => {});
-  }, []);
-
-  if (isLoading || !user) return null;
+  if (authLoading || !user) return null;
 
   return (
     <div className="space-y-8">
@@ -41,12 +29,12 @@ export default function ObservabilidadPage() {
           <p className="text-2xl font-bold text-green-400 mt-1">{health?.status ?? "—"}</p>
         </div>
         <div className="border border-[#2a2d35] rounded-xl p-4 bg-[#121418]">
-          <p className="text-sm text-[#9ca3af]">Uptime</p>
-          <p className="text-2xl font-bold mt-1">{health ? `${Math.round(health.uptime)}s` : "—"}</p>
+          <p className="text-sm text-[#9ca3af]">Base de datos</p>
+          <p className="text-2xl font-bold mt-1">{health?.db?.connected ? "Online" : "—"}</p>
         </div>
         <div className="border border-[#2a2d35] rounded-xl p-4 bg-[#121418]">
           <p className="text-sm text-[#9ca3af]">Región</p>
-          <p className="text-2xl font-bold mt-1">{health?.region ?? "—"}</p>
+          <p className="text-2xl font-bold mt-1">{health?.supabase_region ?? "—"}</p>
         </div>
         <div className="border border-[#2a2d35] rounded-xl p-4 bg-[#121418]">
           <p className="text-sm text-[#9ca3af]">API</p>
@@ -72,19 +60,28 @@ export default function ObservabilidadPage() {
 
         <div className="border border-[#2a2d35] rounded-xl p-6 bg-[#121418]">
           <h2 className="font-medium mb-4">Telemetría</h2>
-          <div className="space-y-4 text-sm">
-            {[
-              { metric: "Latencia API", value: "45ms" },
-              { metric: "Peticiones/min", value: "23" },
-              { metric: "Errores (24h)", value: "0" },
-              { metric: "Memoria", value: "128 MB" },
-            ].map((m) => (
-              <div key={m.metric} className="flex items-center justify-between">
-                <span className="text-[#9ca3af]">{m.metric}</span>
-                <span className="text-[#e8e6e0] font-mono">{m.value}</span>
+          {isLoading ? (
+            <div className="text-[#6b7280] text-sm">Cargando...</div>
+          ) : (
+            <div className="space-y-4 text-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-[#9ca3af]">Latencia DB</span>
+                <span className="text-[#e8e6e0] font-mono">{health?.db?.latency_ms ?? "—"}ms</span>
               </div>
-            ))}
-          </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[#9ca3af]">Tablas</span>
+                <span className="text-[#e8e6e0] font-mono">{health?.db?.tables?.length ?? "—"}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[#9ca3af]">Políticas</span>
+                <span className="text-[#e8e6e0] font-mono">{health?.policies?.active ?? "—"} activas</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[#9ca3af]">Herramientas</span>
+                <span className="text-[#e8e6e0] font-mono">{health?.tools?.active ?? "—"} activas</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

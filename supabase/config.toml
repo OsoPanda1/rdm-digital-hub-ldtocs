@@ -1,14 +1,6 @@
-[functions]
+[api]
 enabled = true
+port = 54321
 
-[functions.health-check]
-verify_jwt = false
-import_map = "./import_map.json"
-
-[functions.model-router]
-verify_jwt = true
-import_map = "./import_map.json"
-
-[functions.cron-audit-sync]
-verify_jwt = false
-import_map = "./import_map.json"
+[db]
+migration_dirs = ["data/migrations"]

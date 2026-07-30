@@ -33,3 +33,9 @@ coverage/
 
 # Supabase local
 supabase/.temp
+
+# Backups
+*.bak
+
+# CLI-generated migrations (originals in data/migrations/)
+supabase/migrations/
