@@ -38,7 +38,7 @@ const nextConfig = {
         ],
       },
       {
-        source: '/:path(.+\\.(css|js|png|jpg|svg|webp|woff2|ico))',
+        source: '/_next/static/:path*',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],

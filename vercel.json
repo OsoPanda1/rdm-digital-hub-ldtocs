@@ -1,22 +1,4 @@
 {
-  "version": 2,
-  "name": "nodo-cero-rdm",
-  "buildCommand": "cd ../.. && pnpm install && pnpm --filter rdm-hub build",
-  "installCommand": "pnpm install",
-  "builds": [
-    { "src": "apps/rdm-hub/package.json", "use": "@vercel/next" }
-  ],
-  "routes": [
-    { "src": "/(.*)", "dest": "apps/rdm-hub/$1" }
-  ],
-  "regions": ["sfo1", "iad1", "gru1"],
-  "env": {
-    "NEXT_PUBLIC_NODE_ID": "@next_public_node_id",
-    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key"
-  },
-  "functions": {
-    "apps/rdm-hub/app/api/**/*.ts": { "memory": 512, "maxDuration": 10 }
-  },
-  "crons": []
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "buildCommand": "pnpm --filter rdm-hub build"
 }
