@@ -2,9 +2,9 @@
   "name": "nodo-cero-rdm",
   "private": true,
   "devDependencies": {
-    "turbo": "^1.10.0",
+    "turbo": "^2.9.14",
     "typescript": "^5.0.0",
-    "pnpm": "^8.0.0"
+    "pnpm": "^10.34.4"
   },
   "workspaces": [
     "apps/*",
