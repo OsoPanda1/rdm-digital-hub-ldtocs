@@ -1,5 +1,5 @@
 {
-  "rootDirectory": "apps/rdm-hub",
-  "installCommand": "cd ../.. && pnpm install --no-frozen-lockfile",
-  "buildCommand": "cd ../.. && pnpm --filter rdm-hub build"
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "buildCommand": "pnpm --filter rdm-hub build",
+  "outputDirectory": "apps/rdm-hub/.next"
 }
