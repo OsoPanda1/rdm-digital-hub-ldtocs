@@ -1,21 +1,9 @@
 import { NextResponse } from "next/server";
-import { eventos } from "@/lib/data";
+import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 export async function GET() {
-  return NextResponse.json({ ok: true, data: eventos });
-}
-
-export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-    const newEvent = {
-      date: body.date || "Próximamente",
-      title: body.title,
-      loc: body.loc || "Por confirmar",
-    };
-    eventos.push(newEvent);
-    return NextResponse.json({ ok: true, data: newEvent }, { status: 201 });
-  } catch {
-    return NextResponse.json({ ok: false, error: "Invalid body" }, { status: 400 });
-  }
+  const supabase = await createServerSupabaseClient();
+  const { data, error } = await supabase.from("events").select("*").order("date");
+  if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+  return NextResponse.json({ ok: true, data });
 }

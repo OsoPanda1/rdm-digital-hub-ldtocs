@@ -1,26 +1,13 @@
 import { NextResponse } from "next/server";
-import { lugares } from "@/lib/data";
+import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const cat = searchParams.get("cat");
-  const filtered = cat ? lugares.filter((p) => p.cat === cat) : lugares;
-
-  return NextResponse.json({ ok: true, data: filtered });
-}
-
-export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-    const newPlace = {
-      id: String(Date.now()),
-      name: body.name,
-      cat: body.cat || "general",
-      desc: body.desc || "",
-    };
-    lugares.push(newPlace);
-    return NextResponse.json({ ok: true, data: newPlace }, { status: 201 });
-  } catch {
-    return NextResponse.json({ ok: false, error: "Invalid body" }, { status: 400 });
-  }
+  const supabase = await createServerSupabaseClient();
+  let query = supabase.from("places").select("*").order("name");
+  if (cat) query = query.eq("cat", cat);
+  const { data, error } = await query;
+  if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+  return NextResponse.json({ ok: true, data });
 }
