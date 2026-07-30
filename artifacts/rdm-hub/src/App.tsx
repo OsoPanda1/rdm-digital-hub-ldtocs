@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 Edwin Oswaldo Castillo Trejo. TAMV Online Network
  * SPDX-License-Identifier: MIT
  */
@@ -17,6 +17,7 @@ import { AudioPlayerProvider } from '@/contexts/AudioPlayerContext'
 import { RDMAuthProvider, useRDMAuth } from '@/contexts/RDMAuthContext'
 import { NotificationProvider } from '@/components/NotificationSystem'
 import { SpeedInsights } from '@vercel/speed-insights/react'
+import { Analytics } from '@vercel/analytics/react'
 import { logger } from '@/lib/logger'
 import { captureException as sentryCaptureException } from '@/integrations/observability/sentry'
 
@@ -541,6 +542,7 @@ const AppInner = () => {
           )}
           <Suspense fallback={<LoadingFallback />}><RealitoChatLauncher /></Suspense>
           <SpeedInsights />
+          <Analytics />
       </TooltipProvider>
     </ErrorBoundary>
   )

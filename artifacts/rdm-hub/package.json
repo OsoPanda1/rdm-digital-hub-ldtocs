@@ -58,6 +58,7 @@
     "@types/three": "^0.185.1",
     "@types/uuid": "^11.0.0",
     "@vitejs/plugin-react": "catalog:",
+    "@vercel/analytics": "^2.0.1",
     "@vitest/coverage-v8": "^3.2.4",
     "@workspace/api-client-react": "workspace:*",
     "autoprefixer": "^10.5.4",
