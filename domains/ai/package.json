@@ -1,0 +1,11 @@
+{
+  "name": "@nodo-cero/domain-ai",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@nodo-cero/ai-sdk": "workspace:*"
+  },
+  "exports": {
+    "./*": "./src/*.ts"
+  }
+}

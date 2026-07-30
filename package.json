@@ -1,0 +1,20 @@
+{
+  "name": "nodo-cero-rdm",
+  "private": true,
+  "devDependencies": {
+    "turbo": "^1.10.0",
+    "typescript": "^5.0.0",
+    "pnpm": "^8.0.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "domains/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test"
+  }
+}

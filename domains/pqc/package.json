@@ -1,0 +1,8 @@
+{
+  "name": "@nodo-cero/domain-pqc",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    "./*": "./src/*.ts"
+  }
+}

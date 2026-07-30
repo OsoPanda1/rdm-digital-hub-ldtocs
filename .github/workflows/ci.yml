@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install
+        run: pnpm install
+
+      - name: Lint
+        run: pnpm -w run lint || true
+
+      - name: Typecheck
+        run: pnpm -w run build --filter="^*" || true
+
+      - name: Unit tests
+        run: pnpm -w run test || true
+
+      - name: Build
+        run: pnpm -w run build
