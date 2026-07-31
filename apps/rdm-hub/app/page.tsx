@@ -47,13 +47,23 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-24 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 max-w-4xl mx-auto w-full px-4">
+        <div className="mt-16 w-full max-w-3xl mx-auto px-4 aspect-video rounded-xl overflow-hidden border border-[#2a2d35]">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/gl_3mLH24ng"
+            title="Real del Monte - Video Promocional"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full"
+          />
+        </div>
+
+        <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 max-w-4xl mx-auto w-full px-4">
           {[
-            { label: "Lugares", href: "/lugares" },
+            { label: "Lugares", href: "/explorar" },
             { label: "Historia", href: "/historia" },
             { label: "Gastronomía", href: "/gastronomia" },
             { label: "Eventos", href: "/eventos" },
-            { label: "Mapa", href: "/mapa" },
+            { label: "Mapa", href: "/explorar" },
             { label: "Cultura", href: "/cultura" },
             { label: "Directorio", href: "/directorio" },
             { label: "Isabella AI", href: "/isabella" },

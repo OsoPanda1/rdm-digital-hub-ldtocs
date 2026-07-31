@@ -1,0 +1,5 @@
+{
+  "installCommand": "corepack enable && pnpm install --no-frozen-lockfile",
+  "startCommand": "pnpm --filter rdm-hub dev",
+  "port": 3000
+}

@@ -1,6 +1,11 @@
 {
   "name": "nodo-cero-rdm",
   "private": true,
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@10.28.0",
   "devDependencies": {
     "turbo": "^1.10.0",
     "typescript": "^5.0.0",
