@@ -1,783 +1,267 @@
-```
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                                                                              ║
-║                    ██████  ██████  ███    ███     ██   ██ ██    ██ ██████     ║
-║                    ██   ██ ██   ██ ████  ████     ██   ██ ██    ██ ██   ██    ║
-║                    ██   ██ ██   ██ ██ ████ ██     ███████ ██    ██ ██████     ║
-║                    ██   ██ ██   ██ ██  ██  ██     ██   ██ ██    ██ ██   ██    ║
-║                    ██████  ██████  ██      ██     ██   ██  ██████  ██████     ║
-║                                                                              ║
-║                         ╔═══════════════════════╗                            ║
-║                         ║  R D M   D I G I T A L  ║                            ║
-║                         ║     H U B   ·   N O D O     ║                            ║
-║                         ║        C E R O          ║                            ║
-║                         ╚═══════════════════════╝                            ║
-║                                                                              ║
-║          Plataforma Territorial Inteligente de Real del Monte                ║
-║                     Pueblo Mágico · Hidalgo · México                        ║
-║                                                                              ║
-║                    ●  Next.js 15  ●  Supabase  ●  Isabella AI               ║
-║                    ●  Turborepo   ●  React 19  ●  Federated Governance      ║
-║                                                                              ║
-╚══════════════════════════════════════════════════════════════════════════════╝
-```
+# RDM Digital Hub — Nodo Cero
 
-<br>
+Plataforma territorial inteligente de **Real del Monte, Hidalgo (Pueblo Mágico)**. Ecosistema digital que integra turismo, historia, cultura, gastronomía, economía, comunidad, gobernanza e inteligencia artificial gobernada.
 
-<div align="center">
-
-[![Licencia](https://img.shields.io/badge/license-Proprietary-gold?style=for-the-badge&labelColor=0a0b0e&color=c8a356)](LICENSE)
-[![Next.js](https://img.shields.io/badge/Next.js_15-black?style=for-the-badge&logo=next.js&logoColor=white&labelColor=0a0b0e)](https://nextjs.org)
-[![React](https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black&labelColor=0a0b0e)](https://react.dev)
-[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white&labelColor=0a0b0e)](https://supabase.com)
-[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white&labelColor=0a0b0e)](https://www.typescriptlang.org)
-[![Tailwind](https://img.shields.io/badge/Tailwind_v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white&labelColor=0a0b0e)](https://tailwindcss.com)
-[![pnpm](https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white&labelColor=0a0b0e)](https://pnpm.io)
-[![Turborepo](https://img.shields.io/badge/Turborepo-EF4444?style=for-the-badge&logo=turborepo&logoColor=white&labelColor=0a0b0e)](https://turbo.build)
-[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white&labelColor=0a0b0e)](https://vercel.com)
-[![Three.js](https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=three.js&logoColor=white&labelColor=0a0b0e)](https://threejs.org)
-[![TanStack Query](https://img.shields.io/badge/TanStack_Query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white&labelColor=0a0b0e)](https://tanstack.com/query)
-[![Zustand](https://img.shields.io/badge/Zustand-443e38?style=for-the-badge&logo=&logoColor=white&labelColor=0a0b0e)](https://zustand-demo.pmnd.rs)
-
-</div>
-
-<br>
+> **Estado de este documento:** espejo real del repositorio al commit `8f0dd9e`. Todo lo marcado como funcional fue verificado leyendo el código y/o ejecutando los comandos; todo lo marcado como placeholder o roto está identificado con evidencia, no con intención.
 
 ---
 
-# 📋 Índice
+## 1. Qué es el proyecto
 
-1. [El Problema](#-el-problema)
-2. [La Solución](#-la-solución)
-3. [¿Qué es Nodo Cero?](#-qué-es-nodo-cero)
-4. [Arquitectura del Sistema](#-arquitectura-del-sistema)
-5. [Stack Tecnológico](#-stack-tecnológico)
-6. [Estructura del Monorepo](#-estructura-del-monorepo)
-7. [Las 14 Páginas Temáticas](#-las-14-páginas-temáticas)
-8. [Isabella — Núcleo Cognitivo Gobernado](#-isabella--núcleo-cognitivo-gobernado)
-9. [Modelo de Gobernanza Federada](#-modelo-de-gobernanza-federada)
-10. [Domains — Contratos y Lógica de Negocio](#-domains--contratos-y-lógica-de-negocio)
-11. [Supabase Edge Functions](#-supabase-edge-functions)
-12. [Base de Datos — Migraciones SQL](#-base-de-datos--migraciones-sql)
-13. [Seguridad y Performance](#-seguridad-y-performance)
-14. [Roadmap Técnico](#-roadmap-técnico)
-15. [Requisitos e Instalación](#-requisitos-e-instalación)
-16. [Variables de Entorno](#-variables-de-entorno)
-17. [Comandos](#-comandos)
-18. [Deploy en Vercel](#-deploy-en-vercel)
-19. [Contribuir](#-contribuir)
-20. [Créditos y Filosofía](#-créditos-y-filosofía)
+Un **monorepo antifrágil** que opera como un sistema heptafederado de 7 nodos (la arquitectura interna **Yun**): cada nodo reconoce archivos y bases de datos por dominio, y todo el cómputo pesado se desplaza a **lazy-systems de segundo y tercer plano** para que el camino crítico de respuesta del usuario nunca cargue trabajo de indexación, agregados o simulaciones.
 
-<br>
+### Heptafederación (los 7 nodos)
+
+| Nodo | Dominio | Estado del nodo |
+| --- | --- | --- |
+| `node:turismo` | territorio, rutas, lugares | build real de `rdm-hub` |
+| `node:cultura` | patrimonio, música, arte | build real de `rdm-hub` |
+| `node:gastronomia` | pastes, restaurantes, rutas | build real de `rdm-hub` |
+| `node:ai` | Isabella (núcleo cognitivo) | build real de `rdm-hub` |
+| `node:gamificacion` | `apps/gamification-3d` | **no existe aún** (stub honesto) |
+| `node:mapas` | `domains/maps` | **scaffold** (stub honesto) |
+| `node:seguridad` | `domains/security` | **scaffold** (stub honesto) |
+
+### Lazy-systems (fuera del camino crítico)
+
+| Plano | Script | Qué hace |
+| --- | --- | --- |
+| Secundario | `scripts/lazy-secondary.mjs` | indexa `data/raw-json` → `data/cache/index.json` (operacional) |
+| Terciario | `scripts/lazy-tertiary.mjs` | agrega `raw-json`/`combined-json` → `data/cache/aggregates.json` (operacional) |
 
 ---
 
-## 🔴 El Problema
+## 2. Stack y estructura
 
-Real del Monte — Pueblo Mágico con más de **500 años de historia minera, cultural y gastronómica** — carecía de una plataforma digital unificada que reflejara su identidad territorial. Los problemas identificados:
-
-| Problema | Impacto |
-|----------|---------|
-| **Fragmentación de datos** | La información turística, histórica, económica y cultural estaba dispersa en sitios estáticos, redes sociales y documentos sin estructura |
-| **Sin gobierno de datos** | No existía un modelo de propiedad, trazabilidad ni auditoría de la información del territorio |
-| **IA sin gobernanza** | Cualquier implementación de IA carecía de controles, políticas y auditoría — riesgos de sesgo, desinformación y decisiones no trazables |
-| **Sin identidad digital soberana** | El pueblo no tenía control sobre su representación digital ni los datos generados en su territorio |
-| **Economía local invisible** | Los negocios locales (pasteurías, hospedajes, artesanos) no tenían presencia digital unificada ni métricas de impacto |
-| **Memoria colectiva en riesgo** | La historia oral, mitos, dichos y tradiciones no estaban catalogados ni preservados digitalmente |
-| **Sin observabilidad territorial** | No existía monitoreo del estado del territorio, sus servicios ni su comunidad digital |
-
-<br>
-
----
-
-## 🟢 La Solución
-
-**RDM Digital Hub — Nodo Cero** es la primera plataforma territorial inteligente de un Pueblo Mágico mexicano, construida sobre un modelo de **soberanía digital federada**. No es un sitio web turístico más: es el **núcleo cognitivo y operativo del territorio en el plano digital**.
-
-> Un solo monorepo. Cero silos. Gobernanza desde el primer commit.
-
-<br>
-
----
-
-## 🎯 ¿Qué es Nodo Cero?
-
-Nodo Cero es el **primer nodo de una red federada de territorios inteligentes**. Funciona como:
-
-- **🕸️ Portal territorial** — 14 páginas que cubren cada dimensión de Real del Monte: historia, cultura, gastronomía, economía, gobernanza, comunidad, eventos, directorio
-- **🧠 Núcleo cognitivo gobernado** — Isabella, un sistema de IA con auditoría, políticas y trazabilidad obligatoria en cada decisión
-- **🏛️ Plataforma de gobernanza** — Federaciones, políticas, RFCs y transparencia en un modelo de gobierno participativo
-- **📊 Panel de control** — Dashboard protegido con métricas de territorio, economía, comunidad y observabilidad en tiempo real
-- **🔌 API pública** — Endpoints REST para health, lugares, negocios, eventos y cognición (Isabella)
-- **🗄️ Base de datos soberana** — 4 migraciones SQL que definen el esquema completo del territorio en Supabase/Postgres
-- **⚡ Edge Functions** — 3 funciones serverless para health checks, routing de modelos AI y sincronización de auditoría
-
-<br>
-
----
-
-## 🏗️ Arquitectura del Sistema
+| Capa | Tecnología |
+| --- | --- |
+| Frontend | Next.js 15.5 (App Router), React 19, Tailwind CSS 4 |
+| Monorepo | Turborepo 2.10.7, pnpm 10.28.0 (`pnpm-workspace.yaml`) |
+| Backend de datos | Supabase / PostgreSQL (región `us-east-1`) |
+| Edge functions | Supabase (Deno): `health-check`, `model-router`, `cron-audit-sync` |
+| IA | `domains/ai` + `packages/ai-sdk` (contractos tipados) |
+| Deploy | Vercel |
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                            CLIENTE (Browser)                                │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────────────┐  │
-│  │  Next.js │ │  React   │ │  TanStack│ │  Zustand │ │  react-leaflet   │  │
-│  │  App     │ │  19      │ │  Query   │ │  State   │ │  @react-three    │  │
-│  │  Router  │ │          │ │  Cache   │ │  Store   │ │  /drei / fiber   │  │
-│  └────┬─────┘ └──────────┘ └──────────┘ └──────────┘ └──────────────────┘  │
-└───────┼─────────────────────────────────────────────────────────────────────┘
-        │                           ▲
-        │ HTTPS                     │ SSR / Streaming
-        ▼                           │
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         SERVER (Next.js + Vercel)                           │
-│                                                                             │
-│  ┌──────────────────────────────────────────────────────────────────────┐  │
-│  │  middleware.ts                    Trace ID · Node ID · Island Mode   │  │
-│  └──────────────────────────────────────────────────────────────────────┘  │
-│                                                                             │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
-│  │  API Routes  │  │  Server      │  │  Server      │  │  Auth        │  │
-│  │  /api/*      │  │  Components  │  │  Actions     │  │  Callback    │  │
-│  └──────┬───────┘  └──────────────┘  └──────────────┘  └──────────────┘  │
-└─────────┼───────────────────────────────────────────────────────────────────┘
-          │
-          ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         DOMAIN LAYER (packages)                             │
-│                                                                             │
-│  ┌──────────────────────────────────────────────────────────────────────┐  │
-│  │  @nodo-cero/ai-sdk      Tipos compartidos del sistema cognitivo     │  │
-│  │  @nodo-cero/domain-ai   Percepción · Policy Gate · Auditoría        │  │
-│  │  @nodo-cero/domain-*    6 dominios adicionales (identidad,          │  │
-│  │                         turismo, economía, gobernanza,              │  │
-│  │                         observabilidad, PQC)                        │  │
-│  └──────────────────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────────────────┘
-          │
-          ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                      DATA + INFRASTRUCTURE LAYER                            │
-│                                                                             │
-│  ┌────────────────┐  ┌────────────────┐  ┌──────────────────────────────┐  │
-│  │  Supabase      │  │  Supabase      │  │  Supabase Edge Functions     │  │
-│  │  Postgres      │  │  Auth         │  │  · health-check              │  │
-│  │  (4 migrations)│  │  (SSR + OAuth) │  │  · model-router              │  │
-│  │                │  │                │  │  · cron-audit-sync           │  │
-│  └────────────────┘  └────────────────┘  └──────────────────────────────┘  │
-│                                                                             │
-│  ┌──────────────────────────────────────────────────────────────────────┐  │
-│  │  Vercel Edge Network · 3 regiones (sfo1, iad1, gru1)                │  │
-│  │  Vercel Analytics · Speed Insights · Cron Jobs                       │  │
-│  └──────────────────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────────────────┘
+apps/rdm-hub/            # Aplicación Next.js principal (única app real)
+domains/                 # 12 dominios (ai real; security/maps/digital-twins/ai-voice/payments = scaffolds)
+packages/                # ai-sdk (real), json-parsers (scaffold)
+infra/                   # vercel, backups, databases, security (scaffolds)
+data/migrations/         # 4 migraciones SQL
+data/seed/               # 4 seeds SQL (lugares, negocios, eventos, rutas)
+data/raw-json, data/combined-json, data/cache   # insumos/salidas de lazy-systems
+scripts/                 # lazy-*, apply-migrations, apply-seed, json-schemas
+supabase/                # config.toml, 3 edge functions, 4 migraciones
 ```
 
-<br>
+---
+
+## 3. Qué hace hoy (verificado)
+
+- **29 rutas** compilan y sirven (`next build` ✓, 29 páginas estáticas + 7 rutas dinámicas).
+- **Sitio en línea** en `https://rdm-digital-hub-ldtocs.vercel.app` (HTTP 200, título correcto, `/api/health` y `/historia` 200).
+- **Autenticación real** contra Supabase: registro, login, sesión y guarda de rutas `/dashboard/*` (componentes `auth-provider`, `auth/callback`).
+- **Datos reales desde Supabase**: directorio (`businesses`), eventos (`events`), lugares (`places`) vía hooks React Query + API routes.
+- **Health check real** (`/api/health`): sondea 5 tablas, reporta 15 tablas, latencia, región y nodo.
+- **Pipeline de Isabella** (percepción → policy gate → decisión → auditoría) implementado en `domains/ai` y expuesto en `/api/v1/isabella`.
+- **Orquestación antifrágil**: `turbo run build` (2.10.7), `security:scan`, `backup`, nodos heptafederados y lazy-systems operativos.
+- **Migraciones y seeds** aplicables vía `db:migrate` / `db:seed` (requieren `SUPABASE_DB_URL`).
 
 ---
 
-## 🛠️ Stack Tecnológico
+## 4. Problemas identificados y cómo se resolvieron
 
-| Capa | Tecnología | Versión | Propósito |
-|------|-----------|---------|-----------|
-| **Framework** | Next.js | 15.2+ (App Router) | SSR, streaming, server components, API routes |
-| **UI** | React | 19.2+ | Componentes, hooks, server components |
-| **Lenguaje** | TypeScript | 5.8+ | Tipado estricto en toda la codebase |
-| **Monorepo** | pnpm + Turborepo | 8+ / 1.10+ | Workspaces, build caching, pipelines paralelos |
-| **Estilos** | Tailwind CSS | 4.2+ | Utility-first, PostCSS, tema oscuro RDM |
-| **Fuentes** | DM Sans + Playfair Display | Google Fonts | Sans-serif para UI, Serif para títulos |
-| **Base de datos** | Supabase Postgres | — | 9 tablas Isabella + profiles + places + economy |
-| **Auth** | Supabase SSR | 0.6+ | Server/client auth, cookies, OAuth callback |
-| **Cache cliente** | TanStack Query | 5.83+ | staleTime 5min, gcTime 30min, retry 1 |
-| **Estado** | Zustand | 5.0+ | Estado global ligero |
-| **Mapas** | Leaflet + react-leaflet | 1.9+ / 5.0+ | Mapas interactivos, capas, marcadores |
-| **3D** | Three.js + @react-three/fiber + drei | 0.185+ | Gemelo digital, visualizaciones |
-| **Gráficas** | Recharts | 2.15+ | Barras, líneas, radar para dashboards |
-| **Animaciones** | Framer Motion | 12.42+ | Transiciones, layout animations |
-| **Iconos** | Lucide React | 0.577+ | Iconos SVG consistentes |
-| **Notificaciones** | Sonner | 2.0+ | Toasts estilizados |
-| **Analytics** | Vercel Analytics + Speed Insights | 1.5+ / 1.2+ | Métricas de uso y performance |
-| **Validación** | Zod | 3.24+ | Env vars, percepciones Isabella |
-| **Edge Functions** | Supabase Edge Functions | Deno | health-check, model-router, cron-audit-sync |
-| **AI SDK** | @nodo-cero/ai-sdk | workspace | IsabellaPerception, IsabellaDecision, contracts |
-| **Post-Quantum** | @nodo-cero/domain-pqc | workspace | Kyber512, firmas, config PQC |
-
-<br>
+| Problema | Síntoma | Resolución | Estado |
+| --- | --- | --- | --- |
+| Deploy servía `.next` como listado estático | Outage total del sitio | `outputDirectory` mal en `vercel.json`; corregido vía API de Vercel (`rootDirectory=apps/rdm-hub`, `framework=nextjs`, `outputDirectory=.next`) | ✅ resuelto |
+| Turbo no veía `infra/*` | `turbo ls` incompleto | faltaba `pnpm-workspace.yaml`; creado (20 workspaces, 19 paquetes turbo) | ✅ resuelto |
+| `pipeline` deprecado / JSON inválido | propuesta de `turbo.json` con comentarios y `pipeline` | migrado a clave `tasks` de turbo 2, outputs relativos al paquete | ✅ resuelto |
+| Contraseña de DB hardcodeada en `apply-migrations.ps1` | secreto en repo | retirada; ahora se lee `SUPABASE_DB_URL` | ⚠️ parcheado, **rotación pendiente** |
+| Propuesta de scripts de DB decorativos | `db:migrate`/`db:seed` como `console.log` | se mantienen los scripts reales de PowerShell contra Supabase | ✅ resuelto |
+| WebContainer/StackBlitz sin engines | dev bloqueado en navegador | `engines` en root y `rdm-hub`, `.stackblitzrc` | ✅ resuelto |
+| Speed Insights 5/100 | score catastrófico | iframe de YouTube → `loading="lazy"`; preconnects muertos a Google Fonts eliminados (next/font auto-hospeda) | ⚠️ mitigado, ver §9 |
+| Bash fork roto en Windows | comandos fallan | usar PowerShell (`bash` solo como wrapper) | ⚠️ entorno |
 
 ---
 
-## 📁 Estructura del Monorepo
+## 5. Implementado / Funcional / No funcional
 
-```
-nodo-cero-isabella/
-│
-├── 📦 apps/
-│   └── 🚀 rdm-hub/                          # ★ Next.js 15 App Router — El frontend
-│       ├── app/
-│       │   ├── layout.tsx                   # Root layout · DM Sans + Playfair · Providers · Analytics
-│       │   ├── page.tsx                     # Landing page (server component, hero + grid navegación)
-│       │   ├── providers.tsx                # QueryProvider + AuthProvider + Toaster
-│       │   ├── globals.css                  # Tailwind v4 · Tema oscuro soberano RDM
-│       │   ├── robots.ts                    # SEO · Disallow /api/ /dashboard/ /auth/
-│       │   ├── sitemap.ts                   # 13 URLs · changeFrequency · priority
-│       │   ├── not-found.tsx                # 404 personalizado con vínculo al inicio
-│       │   │
-│       │   ├── 📁 auth/                     # Login · Register · Callback OAuth Supabase
-│       │   ├── 📁 explorar/                 # Mapa · Lugares · Rutas · Gemelo Digital 3D
-│       │   ├── 📁 historia/                 # Cronología minera · Mitos · Dichos populares
-│       │   ├── 📁 cultura/                  # Patrimonio · Galería · Música · Archivo · Arte
-│       │   ├── 📁 gastronomia/              # Pastes · Ruta gastronómica · Restaurantes · Platillos
-│       │   ├── 📁 economia/                 # Negocios · Comercios · Membresías · Donaciones
-│       │   ├── 📁 comunidad/                # Feed social · Wiki · Enciclopedia · Leaderboard
-│       │   ├── 📁 isabella/                 # ★ Chat con IA gobernada (policy-gate + audit trail)
-│       │   ├── 📁 gobernanza/               # Federaciones · Políticas · RFCs · Transparencia
-│       │   ├── 📁 directorio/               # Directorio de negocios con filtro por categoría
-│       │   ├── 📁 eventos/                  # Calendario de eventos del Pueblo Mágico
-│       │   ├── 📁 acerca/                   # Plataforma · Equipo · Filosofía · Contacto
-│       │   │
-│       │   ├── 📁 dashboard/                # ★ Layout protegido con sidebar + auth guard
-│       │   │   ├── layout.tsx               # DashboardNav lateral + main
-│       │   │   ├── page.tsx                 # Panel principal · Bienvenida + cards de estado
-│       │   │   ├── _components/
-│       │   │   │   └── dashboard-nav.tsx    # Sidebar con 6 rutas + signOut
-│       │   │   ├── 📁 territorio/           # Stats cobertura · lugares · rutas · visitantes
-│       │   │   ├── 📁 economia/             # Métricas económicas · barras por categoría
-│       │   │   ├── 📁 comunidad/            # Usuarios · contribuciones · actividad reciente
-│       │   │   └── 📁 observabilidad/       # ★ Health check real · uptime · telemetría · federaciones
-│       │   │
-│       │   └── 📁 api/                      # ★ API REST interna
-│       │       ├── 📁 health/               # GET → { status, node, uptime, region }
-│       │       ├── 📁 places/               # GET (filtro cat) + POST (crear lugar)
-│       │       ├── 📁 negocios/             # GET (filtro cat) + POST (crear negocio)
-│       │       ├── 📁 eventos/              # GET + POST
-│       │       ├── 📁 data/                 # GET → datos agregados
-│       │       ├── 📁 v1/isabella/          # ★ POST percepción → processPerception → decisión
-│       │       └── 📁 auth/callback/        # Supabase OAuth · exchangeCodeForSession
-│       │
-│       ├── 📁 components/
-│       │   ├── navbar.tsx                   # Sticky · backdrop-blur · auth-aware · oculta en dashboard
-│       │   ├── footer.tsx                   # 4 columnas · links a secciones · legal
-│       │   └── 📁 ui/                       # ★ Componentes reutilizables
-│       │       ├── button.tsx               # Variants: primary, secondary, danger, ghost
-│       │       ├── card.tsx                 # Card + CardHeader + CardContent + CardTitle
-│       │       ├── badge.tsx                # Variants: default, success, warning, danger, info
-│       │       ├── input.tsx                # Input con estilo RDM consistente
-│       │       └── tabs.tsx                 # Tabs client-side reutilizables
-│       │
-│       ├── 📁 providers/
-│       │   ├── auth-provider.tsx            # Contexto Supabase · getSession + onAuthStateChange + signOut
-│       │   └── query-provider.tsx           # TanStack Query · staleTime 5min · gcTime 30min
-│       │
-│       ├── 📁 lib/
-│       │   ├── 📁 supabase/
-│       │   │   ├── client.ts               # createBrowserClient (browser runtime)
-│       │   │   └── server.ts               # createServerClient + cookies (server runtime)
-│       │   ├── env.ts                       # Zod validation client + server env vars
-│       │   ├── utils.ts                     # cn() = clsx + twMerge
-│       │   └── data.ts                      # Datos estáticos: lugares, negocios, eventos, historia
-│       │
-│       ├── middleware.ts                    # Trace ID · Node ID en headers de cada request
-│       ├── next.config.mjs                  # CSP · Security headers · Cache · Server Actions 2mb
-│       ├── postcss.config.mjs               # @tailwindcss/postcss plugin
-│       ├── tsconfig.json                    # baseUrl + paths @/ → ./*
-│       ├── .env.local.example
-│       └── package.json                     # Next 15 · React 19 · Supabase · TanStack · Three · Leaflet
-│
-│
-├── 📦 packages/
-│   └── 📘 ai-sdk/                           # @nodo-cero/ai-sdk
-│       └── src/
-│           └── contracts.ts                 # ★ IsabellaPerception · IsabellaDecision · IsabellaMemoryItem
-│                                           #   · IsabellaToolCall · IsabellaPolicy · IsabellaAuditEvent
-│
-│
-├── 📦 domains/                              # ★ Domain-Driven Design packages
-│   ├── 📘 ai/                               # @nodo-cero/domain-ai
-│   │   ├── src/
-│   │   │   ├── application/
-│   │   │   │   └── handlers/
-│   │   │   │       └── processPerception.ts # ★ Flujo canónico: auditar → policy-gate → decidir → auditar
-│   │   │   └── infrastructure/
-│   │   │       ├── policy-gate.ts           # ★ Policy Gate: allowed / denied / requires_approval
-│   │   │       └── audit-tracer.ts          # ★ Audit trail · stub → Supabase isabella_audit_logs
-│   │   └── package.json
-│   │
-│   ├── identity/                            # @nodo-cero/domain-identity — Profile, AuthSession
-│   ├── tourism/                             # @nodo-cero/domain-tourism — Place, Route, Event
-│   ├── economy/                             # @nodo-cero/domain-economy — Business, Membership, Transaction
-│   ├── governance/                          # @nodo-cero/domain-governance — Federation, Policy, RFC
-│   ├── observability/                       # @nodo-cero/domain-observability — HealthCheck, Metric, AuditEvent
-│   └── pqc/                                 # @nodo-cero/domain-pqc — PQCConfig, PQCSignature, PQCKeyPair
-│
-│
-├── 📁 supabase/
-│   ├── config.toml                          # Configuración local Supabase
-│   ├── import_map.json
-│   └── 📁 functions/                        # ★ Edge Functions (Deno)
-│       ├── health-check/                    # Status del nodo · uptime · versión
-│       ├── model-router/                    # Ruteo de modelos AI (stub)
-│       └── cron-audit-sync/                 # Sync periódico de logs de auditoría
-│
-│
-├── 📁 data/
-│   └── 📁 migrations/                       # ★ 4 migraciones SQL
-│       ├── 001_create_isabella_tables.sql   # 9 tablas: sessions · messages · memory · decisions
-│       │                                   #   · tools · tool_calls · policies · approvals · audit_logs
-│       ├── 002_create_profiles_tables.sql   # profiles · roles · permissions
-│       ├── 003_create_places_tables.sql     # places · routes · events
-│       └── 004_create_economy_tables.sql    # businesses · memberships · transactions
-│
-│
-├── 📁 docs/
-│   ├── README.md
-│   └── 📁 isabella/
-│       └── blueprint.md                    # Plano de Isabella · flujos · políticas · memoria
-│
-├── 📁 infra/
-│   └── 📁 vercel/
-│       └── README.md                       # Configuración de despliegue Vercel
-│
-├── 📁 .github/
-│   ├── workflows/
-│   │   └── ci.yml                          # CI · pnpm install → turbo build → lint → test
-│   └── PULL_REQUEST_TEMPLATE.md
-│
-│
-├── vercel.json                             # Build monorepo · rutas · 3 regiones · env vars
-├── turbo.json                              # Pipeline Turborepo: build, dev, lint
-├── tsconfig.base.json                      # Base TS: ES2022, Bundler, strict, react-jsx
-├── pnpm-workspace.yaml                     # Workspaces: apps/*, packages/*, domains/*
-├── package.json                            # Root: turbo dev/build/lint scripts
-└── .gitignore                              # node_modules, .next, .env, .turbo, dist, coverage
-```
+### Funcional (verificado)
+- 29 rutas sirviendo; 20 páginas de contenido navegables.
+- Auth Supabase (login/registro/sesión).
+- Directorio, Eventos y Lugares con datos reales de la DB.
+- Health check con telemetría real.
+- Lazy-systems que escriben cachés reales.
+- Nodos heptafederados que ejecutan builds reales.
+- Migraciones + seeds SQL (4 + 4).
 
-<br>
+### Implementado pero NO funcional (roto / stub)
+- **Chat de Isabella: roto.** La página envía `{action, payload:{input}}` pero el endpoint exige `inputType` y `timestamp` (Zod) → responde **400** → la UI muestra "Error al conectar con Isabella." (evidencia: `hooks/use-isabella.ts` vs `api/v1/isabella/route.ts`).
+- **Decisiones de Isabella: stub.** `processPerception` devuelve "Decision generada automáticamente (stub)" — no hay LLM ni `model-router` conectado.
+- **Auditoría de Isabella: stub.** `audit-tracer` solo hace `console.log`, **no escribe** en `isabella_audit_logs`.
+- **Policy gate: stub demo.** ignora `isabella_policies` de la DB; solo reacciona a `riskLevel === 'high'`.
+- `useIsabellaHistory` consulta `?action=history`, el endpoint no lo implementa (devuelve info fija).
+- 6 botones "Reproducir" de música sin audio real.
+
+### NO implementado (placeholder explícito en la UI)
+Mapa interactivo, Gemelo Digital 3D, Galería (6 recuadros "Imagen N"), Archivo Sonoro, Enciclopedia, Panel de comercios, Donaciones, RFCs, `apps/gamification-3d`, `apps/5-tenedores`, `apps/visitarealdelmonte-core`, `apps/observability`.
 
 ---
 
-## 🌐 Las 14 Páginas Temáticas
+## 6. Avance real hacia producción y despliegue
 
-Cada página (excepto landing y dashboard) usa un sistema de **tabs internos** que permite navegar entre subsecciones sin recargar la página.
+Estimación conservadora basada en lo verificado en §5. No incluye intención futura.
 
-| # | Ruta | Secciones (tabs) | Tipo | Auth |
-|---|------|-------------------|------|------|
-| 1 | `/` | Hero + grid de navegación a 8 secciones | Server | No |
-| 2 | `/auth` | Login · Register · Callback OAuth | Client | No |
-| 3 | `/explorar` | 🗺️ Mapa · 📍 Lugares · 🛤️ Rutas · 🏗️ Gemelo Digital 3D | Client | No |
-| 4 | `/historia` | 📜 Cronología · ⛏️ Minería · 🧙 Mitos · 🗣️ Dichos | Client | No |
-| 5 | `/cultura` | 🏛️ Patrimonio · 🖼️ Galería · 🎵 Música · 📚 Archivo · 🎨 Arte | Client | No |
-| 6 | `/gastronomia` | 🥟 Pastes · 🗺️ Ruta gastronómica · 🍽️ Restaurantes · 📋 Platillos | Client | No |
-| 7 | `/economia` | 💼 Negocios · 🏪 Comercios · 💳 Membresías · ❤️ Donar | Client | No |
-| 8 | `/comunidad` | 📰 Feed · 📖 Wiki · 📚 Enciclopedia · 🏆 Leaderboard | Client | No |
-| 9 | `/isabella` | 💬 Chat con Isabella (AI con policy-gate + audit trail) | Client | No |
-| 10 | `/gobernanza` | 🏛️ Federaciones · 📜 Políticas · 📋 RFCs · 🔍 Transparencia | Client | No |
-| 11 | `/directorio` | 🔎 Buscador de negocios con filtro por categoría | Client | No |
-| 12 | `/eventos` | 📅 Calendario de eventos del Pueblo Mágico | Client | No |
-| 13 | `/acerca` | ℹ️ Plataforma · 👥 Equipo · 🧭 Filosofía · 📞 Contacto | Client | No |
-| 14 | `/dashboard/*` | 📊 Panel protegido con sidebar + 4 subpáginas | Client | ✅ Sí |
+### Despliegue: **~55%**
 
-<br>
+| Componente | Avance | Nota |
+| --- | --- | --- |
+| Build reproducible local | 100% | `pnpm install` + `turbo run build` verificados |
+| CI/CD automatizada | 30% | no hay GitHub Actions; deploy vía Vercel Git |
+| Deploy en Vercel | 85% | URL funcional 200 OK |
+| Dominio propio (`visitarealdelmonte.online`) | 15% | agregado al proyecto pero **NXDOMAIN** (nameservers sin configurar) |
+| Cuenta/infra de Vercel | 40% | estado incierto (ver §9) |
 
----
+### Producción (producto): **~35%**
 
-## 🧠 Isabella — Núcleo Cognitivo Gobernado
-
-Isabella es el **núcleo cognitivo del territorio**. No es un chatbot común: cada percepción que recibe pasa por un **flujo canónico de gobernanza** antes de producir una decisión.
-
-### 🔄 Flujo Canónico de Isabella
-
-```
-        ┌──────────┐
-        │  Usuario  │
-        │  (chat)   │
-        └────┬─────┘
-             │ POST /api/v1/isabella
-             ▼
-     ┌───────────────┐
-     │   Percepción  │  ← IsabellaPerception { sessionId, actorId, inputType, payload, timestamp }
-     │   (Zod val)   │
-     └───────┬───────┘
-             │
-             ▼
-     ┌───────────────┐
-     │ 🖊️ Audit     │  ← isabella_audit_logs: "perception.received"
-     │   Trace       │
-     └───────┬───────┘
-             │
-             ▼
-     ┌───────────────┐
-     │ 🚦 Policy    │  ← policyGate(perception) → allowed / denied / requires_approval
-     │   Gate       │
-     └───────┬───────┘
-             │
-             ├── denied ──────────────→ 📄 Decisión: policyStatus = "denied"
-             │                                   └── 🖊️ Audit: "decision.created"
-             │
-             ├── requires_approval ──→ 📄 Decisión: policyStatus = "requires_approval"
-             │                                   └── 🖊️ Audit: "decision.created"
-             │                                   └── ⏳ Approval pendiente (isabella_approvals)
-             │
-             └── allowed ────────────→ 🤖 Decisión automática (stub → futura tool execution)
-                                         └── 🖊️ Audit: "decision.created"
-                                         └── 🛠️ Tool calls (pendiente)
-```
-
-### 🗄️ Tablas de Isabella (Migration 001)
-
-| Tabla | Propósito |
-|-------|-----------|
-| `isabella_sessions` | Sesiones cognitivas por actor/tenant |
-| `isabella_messages` | Historial de mensajes por sesión |
-| `isabella_memory_items` | Memoria por alcance (inmediata · sesión · proyecto · territorial · histórica) |
-| `isabella_decisions` | Decisiones producidas con confianza, riesgo y status de política |
-| `isabella_tools` | Catálogo de herramientas que Isabella puede ejecutar |
-| `isabella_tool_calls` | Ejecuciones de herramientas asociadas a decisiones |
-| `isabella_policies` | Políticas de gobernanza con reglas versionadas |
-| `isabella_approvals` | Aprobaciones humanas para decisiones de alto riesgo |
-| `isabella_audit_logs` | Trazabilidad completa de cada evento del sistema |
-
-<br>
+| Módulo | Avance | Evidencia |
+| --- | --- | --- |
+| UI pública (20 páginas) | 60% | todas renderizan; mayoría con contenido hardcoded |
+| Datos territoriales | 45% | lugares y eventos reales; rutas hardcoded; mapa placeholder |
+| Economía | 40% | directorio real; membresías hardcoded; panel/donaciones placeholder |
+| Comunidad | 25% | feed/wiki/leaderboard hardcoded o placeholder |
+| Gobernanza | 30% | F1–F7 hardcoded; RFCs/transparencia placeholder |
+| IA Isabella | 20% | pipeline stub + chat roto |
+| Gamificación / Digital Twin / Mapas 3D | 5% | libs instaladas (three/leaflet), **sin uso** |
+| Seguridad / RLS | 10% | auditoría externa recibida, sin aplicar |
+| Observabilidad | 55% | health real; trazabilidad de Isabella pendiente |
+| Infraestructura (migraciones, backups) | 40% | 4 migraciones; backups solo scaffolding |
 
 ---
 
-## 🏛️ Modelo de Gobernanza Federada
+## 7. Páginas actuales y contenido
 
-El proyecto implementa un modelo de **7 federaciones** que representan los dominios de soberanía del territorio digital:
-
-| Federación | Descripción | Estado |
-|------------|-------------|--------|
-| **F1 — Gobernanza** | Políticas, RFCs, transparencia, toma de decisiones | ✅ Operational |
-| **F2 — Identidad y Acceso** | Auth, perfiles, roles, permisos federados | ✅ Operational |
-| **F3 — Datos Territoriales** | Lugares, rutas, gemelo digital, capas de mapa | ⚠️ Degraded |
-| **F4 — Comercio y Monetización** | Negocios, membresías, transacciones, donaciones | ✅ Operational |
-| **F5 — IA Cognitiva** | Isabella, memory, policies, approvals, audit | ✅ Operational |
-| **F6 — Comunidad y Contenido** | Feed, wiki, enciclopedia, leaderboard, cultura | ✅ Operational |
-| **F7 — Observabilidad** | Health checks, telemetría, uptime, alertas | ✅ Operational |
-
-<br>
-
----
-
-## 📦 Domains — Contratos y Lógica de Negocio
-
-El monorepo contiene **7 paquetes de dominio**, cada uno con contratos TypeScript y lógica aislada:
-
-### 🤖 ai — @nodo-cero/domain-ai
-```typescript
-// processPerception.ts — Flujo canónico completo
-export async function processPerception(
-  perception: IsabellaPerception
-): Promise<IsabellaDecision> {
-  // 1. Audit perception received
-  // 2. Resolve policy gate (risk-based rules)
-  // 3. Generate decision with policyStatus + toolCalls
-  // 4. Audit decision created
-  return decision;
-}
-```
-
-### 🔐 identity — @nodo-cero/domain-identity
-`Profile`, `AuthSession`, `Role`, `Permission`
-
-### 🗺️ tourism — @nodo-cero/domain-tourism
-`Place`, `Route`, `Event`, `Category`
-
-### 💰 economy — @nodo-cero/domain-economy
-`Business`, `Membership`, `Transaction`, `Subscription`
-
-### ⚖️ governance — @nodo-cero/domain-governance
-`Federation`, `Policy`, `RFC`, `Vote`
-
-### 📊 observability — @nodo-cero/domain-observability
-`HealthCheck`, `Metric`, `AuditEvent`, `Alert`
-
-### 🔐 pqc — @nodo-cero/domain-pqc
-`PQCConfig`, `PQCSignature`, `PQCKeyPair` (post-quantum cryptography readiness)
-
-<br>
+| Ruta | Tipo | Contenido | Fuente |
+| --- | --- | --- | --- |
+| `/` | ○ estática | Hero, CTA, video YouTube lazy, 8 accesos | hardcoded |
+| `/acerca` | ○ | Plataforma (14+ módulos/7 federaciones), Equipo, Filosofía, Contacto | hardcoded |
+| `/auth` | ○ | Login / registro | Supabase Auth |
+| `/auth/callback` | ƒ | Intercambio de sesión | Supabase Auth |
+| `/comunidad` | ○ | Feed (3 posts), Wiki (6 temas), Enciclopedia, Leaderboard | hardcoded |
+| `/cultura` | ○ | Patrimonio (6), Galería (placeholder), Música (4, sin audio), Archivo Sonoro, Arte | hardcoded |
+| `/directorio` | ○ | Negocios con filtro por categoría | **DB `businesses`** |
+| `/economia` | ○ | Categorías de negocios (DB), planes de membresía, paneles | DB + hardcoded |
+| `/eventos` | ○ | Calendario de eventos | **DB `events`** |
+| `/explorar` | ○ | Mapa (placeholder), Lugares (**DB `places`**), Rutas (8 hardcoded), Gemelo Digital | mixta |
+| `/gastronomia` | ○ | Pastes, Ruta del Paste, Restaurantes, Platillos | hardcoded |
+| `/gobernanza` | ○ | Federación F1–F7, Políticas, RFCs, Transparencia | hardcoded |
+| `/historia` | ○ | Cronología, Minería, Mitos, Dichos | hardcoded |
+| `/isabella` | ○ | Chat con Isabella | **roto** (400) |
+| `/dashboard` | ○ | Panel (auth) | hardcoded |
+| `/dashboard/territorio` | ○ | 4 KPIs + mapa placeholder (auth) | hardcoded |
+| `/dashboard/economia` | ○ | 3 KPIs + categorías (auth) | hardcoded |
+| `/dashboard/comunidad` | ○ | 3 KPIs + actividad (auth) | hardcoded |
+| `/dashboard/observabilidad` | ○ | Estado real vía `/api/health` (auth) | **DB en vivo** |
+| `/robots.txt`, `/sitemap.xml` | ○ | SEO | generado |
+| `/api/health` | ƒ | Health + telemetría de 5 tablas | **DB en vivo** |
+| `/api/places` `/api/negocios` `/api/eventos` | ƒ | CRUD lectura | **DB en vivo** |
+| `/api/v1/isabella` | ƒ | Percepción → decisión | domain-ai (stub) |
+| `/api/data` | ƒ | 6 lugares hardcoded (legacy) | hardcoded |
 
 ---
 
-## ⚡ Supabase Edge Functions
+## 8. Archivos críticos y por qué
 
-| Función | Ruta | Propósito |
-|---------|------|-----------|
-| **health-check** | `/health-check` | Status del nodo, uptime, versión, región |
-| **model-router** | `/model-router` | Ruteo de requests AI entre modelos (stub) |
-| **cron-audit-sync** | (cron) | Sync periódico de logs de auditoría entre nodos |
-
-<br>
-
----
-
-## 🗄️ Base de Datos — Migraciones SQL
-
-| Migración | Tablas | Propósito |
-|-----------|--------|-----------|
-| `001` | 9 tablas | Sistema Isabella completo (sesiones, mensajes, memoria, decisiones, herramientas, políticas, aprobaciones, auditoría) |
-| `002` | 3 tablas | Perfiles de usuario, roles, permisos |
-| `003` | 3 tablas | Lugares turísticos, rutas, eventos |
-| `004` | 3 tablas | Negocios, membresías, transacciones |
-
-<br>
+| Archivo | Por qué es crítico |
+| --- | --- |
+| `apps/rdm-hub/app/api/v1/isabella/route.ts` | Contrato del núcleo cognitivo; **hoy devuelve 400 al chat** |
+| `apps/rdm-hub/app/api/health/route.ts` | Única telemetría real del sistema |
+| `apps/rdm-hub/app/page.tsx` | LCP/rendimiento de la home (Speed Insights) |
+| `apps/rdm-hub/app/layout.tsx` | Fuentes, analytics, layout global, CSP heredada |
+| `apps/rdm-hub/providers/auth-provider.tsx` | Sesión en toda la app |
+| `apps/rdm-hub/lib/supabase/server.ts` / `client.ts` | Acceso seguro a la DB |
+| `apps/rdm-hub/next.config.mjs` | Headers de seguridad (CSP), caché de estáticos |
+| `domains/ai/src/application/handlers/processPerception.ts` | Flujo canónico de Isabella (auditar→política→decidir) |
+| `domains/ai/src/infrastructure/policy-gate.ts` | Control de riesgo de herramientas de Isabella |
+| `data/migrations/*.sql` | Esquema de las 15 tablas |
+| `scripts/apply-migrations.ps1` / `apply-seed.ps1` | Aplican esquema + datos (requieren `SUPABASE_DB_URL`) |
+| `scripts/lazy-*.mjs` | Lazy-systems que mantienen la latencia fuera del camino crítico |
+| `package.json` / `turbo.json` / `pnpm-workspace.yaml` | Orquestación monorepo + heptafederación |
+| `vercel.json` (root y `apps/rdm-hub`) | Instalación y build del deploy |
+| `.env.local` | Credenciales Supabase (**nunca versionar**) |
 
 ---
 
-## 🛡️ Seguridad y Performance
+## 9. Deuda técnica y fallas detectadas (no corregidas)
 
-### Seguridad implementada
+### Críticas
+| Fallo | Evidencia | Acción requerida |
+| --- | --- | --- |
+| **Chat de Isabella roto (400)** | payload de `use-isabella.ts` no cumple el Zod de la ruta (`inputType`, `timestamp` faltantes) | alinear contrato cliente↔ruta y agregar tests |
+| **Contraseña de DB expuesta en historial git** | estaba en `apply-migrations.ps1` (ya retirada del código) | **rotar credenciales de Supabase** |
+| **RLS sin verificar/aplicar** | auditoría externa: 4 migraciones insuficientes; tablas sirven con anon key | aplicar RLS tabla por tabla |
+| **56 vulnerabilidades Dependabot** (23 high, 31 moderate, 2 low) | reporte GitHub; 4 nuevas avisadas en últimos pushes | `pnpm audit` + actualizar dependencias |
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Content-Security-Policy                                     │
-│  ├── default-src 'self'                                      │
-│  ├── script-src 'self' 'unsafe-inline' 'unsafe-eval'         │
-│  │   + Cloudflare Challenges + Vercel Scripts                │
-│  ├── style-src 'self' 'unsafe-inline' + Google Fonts         │
-│  ├── img-src 'self' data: blob: https:                       │
-│  ├── font-src 'self' + fonts.gstatic.com                     │
-│  ├── connect-src 'self' + Supabase (REST + WS) + Vercel APIs │
-│  ├── frame-ancestors 'none'                                  │
-│  ├── base-uri 'self'                                         │
-│  └── form-action 'self'                                      │
-├─────────────────────────────────────────────────────────────┤
-│  X-Frame-Options: DENY                                       │
-│  X-Content-Type-Options: nosniff                             │
-│  Referrer-Policy: strict-origin-when-cross-origin            │
-│  Permissions-Policy: camera=(), microphone=(), geolocation=(self) │
-│  Cache-Control (api): no-store, must-revalidate              │
-│  Cache-Control (assets): public, max-age=31536000, immutable │
-│  Server Actions body limit: 2mb                              │
-│  Middleware: Trace ID + Node ID por request                   │
-│  Env vars: Zod validation con throw en producción            │
-└─────────────────────────────────────────────────────────────┘
-```
+### Altas
+| Fallo | Evidencia |
+| --- | --- |
+| Estado de la cuenta Vercel incierto | el usuario reportó haberla borrado; la API seguía devolviendo el proyecto |
+| Dominio sin DNS (`NXDOMAIN`) | nameservers no apuntados a `ns1/ns2.vercel-dns.com` |
+| KPIs de dashboards hardcoded mostrados como reales | territorio 47/12/6/1284, economía 24/156/18, comunidad 142/89/234, F1–F7 "Operational" |
+| Auditoría de Isabella no persiste | `audit-tracer` solo `console.log` |
+| Decisiones de Isabella son stub | `processPerception` devuelve mensaje fijo |
 
-### Performance
+### Medias
+| Fallo | Evidencia |
+| --- | --- |
+| `/api/data` duplica a `/api/places` con datos hardcoded | legacy sin migrar |
+| Scripts raíz referencian apps inexistentes | `dev:visitarealdelmonte`, `dev:mobile`, `dev:gamification`, etc. |
+| `useIsabellaHistory` sin soporte en el endpoint | la ruta ignora `action=history` |
+| `images.unoptimized: true` | imágenes futuras no se optimizarían |
+| Botones "Reproducir" sin audio y galería sin imágenes | sin assets de contenido |
+| Duración `historia` inconsistente: 5 eventos en página vs 10 en `lib/data.ts` | fuentes duplicadas |
+| Hidratación SSR de Leaflet/Three.js sin hardening | libs instaladas, sin uso ni guías SSR |
+| Trace ID de Isabella sin firma inmutable | auditoría recomendó firma criptográfica |
 
-| Estrategia | Implementación |
-|------------|---------------|
-| **SSR parcial** | Landing page server component (sin JS de cliente) |
-| **Caching** | TanStack Query staleTime 5min, gcTime 30min |
-| **Assets** | Cache público 1 año con immutable |
-| **Fonts** | next/font/google + preconnect + swap display |
-| **Build** | Turborepo caching remoto y local |
-| **Edge** | Middleware en Edge Runtime (latencia mínima) |
-| **CDN** | Vercel Edge Network, 3 regiones (SFO, IAD, GRU) |
-| **Monitoreo** | Vercel Analytics + Speed Insights + health endpoint |
-
-<br>
+### Requiere decisión del usuario
+- ¿Qué hacer con Vercel (cuenta/dominio/deploy) tras la orden de "no mover nada"?
+- ¿Rotar credenciales de Supabase ya, o esperar ventana?
 
 ---
 
-## 🗺️ Roadmap Técnico
-
-- [ ] **Fase 1 — Fundación** ✅ Monorepo · 14 páginas · API REST · Domains · Migraciones SQL
-- [ ] **Fase 2 — Isabella Real** 🔄 Integración con LLM real (OpenAI/Anthropic) · Memoria persistente · Tool execution
-- [ ] **Fase 3 — Gemelo Digital** 🏗️ Mapa 3D interactivo con datos en tiempo real · Capas históricas
-- [ ] **Fase 4 — Federación** 🌐 Multi-nodo · Sync entre nodos · Consenso federado
-- [ ] **Fase 5 — Economía** 💳 Membresías · Pagos · Tokenización de activos territoriales
-- [ ] **Fase 6 — PQC** 🔐 Post-quantum cryptography para firmas y comunicaciones entre nodos
-- [ ] **Fase 7 — App Móvil** 📱 React Native o PWA con capacidades offline
-
-<br>
-
----
-
-## 📋 Requisitos e Instalación
-
-| Requisito | Versión mínima |
-|-----------|---------------|
-| Node.js | ≥ 22 |
-| pnpm | ≥ 8 |
-| Git | ≥ 2.30 |
-| Supabase | Proyecto activo (gratuito) |
+## 10. Cómo correr
 
 ```bash
-# 1. Clonar
-git clone https://github.com/OsoPanda1/rdm-digital-hub-ldtocs.git
-cd rdm-digital-hub-ldtocs
+pnpm install          # 20 workspace projects / 19 paquetes turbo
+pnpm dev              # turbo dev (parallel)
+pnpm --filter rdm-hub dev   # solo el hub (puerto 3000)
 
-# 2. Instalar dependencias
-pnpm install
+pnpm build            # build de todo el monorepo
+pnpm node:turismo     # nodo heptafederado (build real de rdm-hub)
+pnpm lazy:secondary   # plano secundario → data/cache/index.json
+pnpm lazy:tertiary    # plano terciario → data/cache/aggregates.json
 
-# 3. Configurar variables de entorno
-cp apps/rdm-hub/.env.local.example apps/rdm-hub/.env.local
-# Editar .env.local con tus credenciales de Supabase
-
-# 4. Iniciar desarrollo
-pnpm dev
-# → http://localhost:3000
+# DB (requiere SUPABASE_DB_URL en el entorno)
+pnpm db:migrate
+pnpm db:seed
 ```
 
-<br>
+> Windows: usar PowerShell; el bash del entorno tiene el fork roto.
 
 ---
 
-## 🔐 Variables de Entorno
+## 11. Registro de avance
 
-```env
-# ─────────────────────────────────────────────────────────────
-# Supabase (obligatorio)
-# ─────────────────────────────────────────────────────────────
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-
-# ─────────────────────────────────────────────────────────────
-# Identidad del Nodo
-# ─────────────────────────────────────────────────────────────
-NEXT_PUBLIC_NODE_ID=nd-rdm-hub-001
-NEXT_PUBLIC_NODE_NAME=Nodo Cero — Real del Monte
-
-# ─────────────────────────────────────────────────────────────
-# Isabella AI (opcional para desarrollo)
-# ─────────────────────────────────────────────────────────────
-ISABELLA_CORE_ENDPOINT=https://isabella.example/api
-ISABELLA_API_KEY=sk-...
-
-# ─────────────────────────────────────────────────────────────
-# Post-Quantum Cryptography (opcional)
-# ─────────────────────────────────────────────────────────────
-PQC_ALGORITHM_STANDARD=kyber512
-
-# ─────────────────────────────────────────────────────────────
-# Analytics (opcional)
-# ─────────────────────────────────────────────────────────────
-NEXT_PUBLIC_POSTHOG_KEY=
-NEXT_PUBLIC_POSTHOG_HOST=
 ```
-
-<br>
+8f0dd9e perf: iframe de YouTube lazy (LCP/TBT), quitar preconnects muertos
+9cb8b03 feat: heptafederación (node:*) y lazy-systems operacionales
+7d37cfb feat: antifragile monorepo phase 1 (turbo 2, pnpm-workspace, infra/domain scaffolds)
+d1687e7 fix: restore Vercel deploy (rootDirectory + .next output)
+5725cb8 fix: outputDirectory for monorepo
+266cc49 hardening: seed data, react-query hooks, edge functions, wired 6 pages
+b8459f4 feat: initial monorepo setup
+```
 
 ---
 
-## 🚀 Comandos
-
-| Comando | Descripción |
-|---------|-------------|
-| `pnpm dev` | Inicia todos los workspaces en paralelo (Turborepo) |
-| `pnpm dev --filter rdm-hub` | Solo el frontend Next.js en puerto 3000 |
-| `pnpm build` | Build de producción de todos los workspaces |
-| `pnpm build --filter rdm-hub` | Build solo de la app |
-| `pnpm lint` | Lint de todos los workspaces |
-| `pnpm test` | Tests (pendiente de implementar) |
-| `pnpm turbo run build --cache-dir=.turbo` | Build con caché local |
-
-<br>
-
----
-
-## ▲ Deploy en Vercel
-
-### Paso 1 — Conectar el repositorio
-
-```
-Vercel Dashboard → Add New → Project
-→ Import Git Repository → OsoPanda1/rdm-digital-hub-ldtocs
-```
-
-### Paso 2 — Configurar el proyecto
-
-| Campo | Valor |
-|-------|-------|
-| **Framework Preset** | Next.js |
-| **Root Directory** | `apps/rdm-hub` |
-| **Build Command** | `cd ../.. && pnpm install && pnpm --filter rdm-hub build` |
-| **Install Command** | `pnpm install` |
-| **Output Directory** | `.next` (auto) |
-
-### Paso 3 — Variables de Entorno
-
-Agregar desde las Secrets de Vercel o directamente:
-
-| Nombre | Descripción |
-|--------|-------------|
-| `NEXT_PUBLIC_SUPABASE_URL` | URL de tu proyecto Supabase |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Anon key de Supabase |
-| `NEXT_PUBLIC_NODE_ID` | `nd-rdm-hub-001` |
-
-### Paso 4 — Desplegar
-
-```bash
-# Opcional: deploy desde CLI
-vercel --prod
-```
-
-### Paso 5 — Domain (opcional)
-
-Configurar dominio personalizado `visitarealdelmonte.online` en:
-```
-Vercel Dashboard → Project → Domains
-```
-
-<details>
-<summary><b>📋 El archivo <code>vercel.json</code> ya está configurado:</b></summary>
-
-```json
-{
-  "version": 2,
-  "name": "nodo-cero-rdm",
-  "buildCommand": "cd ../.. && pnpm install && pnpm --filter rdm-hub build",
-  "installCommand": "pnpm install",
-  "builds": [
-    { "src": "apps/rdm-hub/package.json", "use": "@vercel/next" }
-  ],
-  "routes": [
-    { "src": "/(.*)", "dest": "apps/rdm-hub/$1" }
-  ],
-  "regions": ["sfo1", "iad1", "gru1"],
-  "functions": {
-    "apps/rdm-hub/app/api/**/*.ts": { "memory": 512, "maxDuration": 10 }
-  }
-}
-```
-</details>
-
-<br>
-
----
-
-## 🤝 Contribuir
-
-Este es un proyecto de **soberanía territorial**. Las contribuciones deben alinearse con la filosofía del Nodo Cero:
-
-1. **Fork** el repositorio
-2. Crea una rama: `git checkout -b feat/mi-aporte`
-3. Sigue la estructura de domains existente
-4. Asegura que tu código pase: `pnpm lint && pnpm build`
-5. Abre un Pull Request contra `main`
-
-<br>
-
----
-
-## 📜 Créditos y Filosofía
-
-**RDM Digital Hub — Nodo Cero** es un proyecto de **soberanía digital territorial**. No es una app, no es un sitio web: es la **representación digital gobernada de un territorio con 500 años de historia**.
-
-> *"La tecnología no debe extraer valor del territorio — debe amplificar su memoria, su cultura y su autonomía."*
-
-### Principios
-
-- **Datos soberanos** — La información del territorio pertenece al territorio
-- **Gobernanza primero** — Toda decisión cognitiva es auditada, política-evaluada y trazable
-- **Federación nativa** — Un nodo es el primero de muchos
-- **Memoria perpetua** — La historia, mitos, dichos y cultura no se pierden en el olvido digital
-- **Economía local** — La plataforma existe para servir a quienes habitan el territorio, no al revés
-
----
-
-<div align="center">
-
-<br>
-
-**Real del Monte, Hidalgo, México** — Pueblo Mágico desde 2004
-
-**Nodo Cero · RDM Digital Hub**
-
-[![Hecho en México](https://img.shields.io/badge/Hecho_en_México-0a0b0e?style=for-the-badge&labelColor=0a0b0e&color=c8a356)]()
-
-</div>
+*Última actualización: 2026-07-30. README regenerado a partir del estado real del código, no de intenciones.*
