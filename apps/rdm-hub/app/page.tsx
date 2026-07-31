@@ -53,6 +53,8 @@ export default function Home() {
             title="Real del Monte - Video Promocional"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
             className="w-full h-full"
           />
         </div>
