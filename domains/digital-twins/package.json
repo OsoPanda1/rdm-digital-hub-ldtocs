@@ -1,0 +1,6 @@
+{
+  "name": "@nodo-cero/domain-digital-twins",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Gemelos digitales del territorio: modelos 3D de minas, patrimonio y nodos físicos sincronizados."
+}

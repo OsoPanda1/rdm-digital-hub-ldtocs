@@ -1,0 +1,6 @@
+{
+  "name": "@nodo-cero/domain-security",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Criptografía post-quántica, firmas, tokens de auditoría y políticas de seguridad del Nodo Cero."
+}

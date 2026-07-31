@@ -1,0 +1,11 @@
+{
+  "name": "@nodo-cero/infra-databases",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Multi-DB del Nodo Cero: Supabase/Postgres, Redis, Neon y bases OSS con tiers gratuitos.",
+  "scripts": {
+    "migrate": "echo '[infra/databases] migraciones via: pnpm db:migrate (scripts/apply-migrations.ps1)'",
+    "seed": "echo '[infra/databases] seed via: pnpm db:seed (scripts/apply-seed.ps1)'",
+    "db:check": "echo '[infra/databases] pendiente: health check por motor de DB'"
+  }
+}

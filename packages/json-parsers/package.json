@@ -1,0 +1,6 @@
+{
+  "name": "@nodo-cero/json-parsers",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Parsers JSON generados desde esquemas (estilo turbo-json-parse): contratos de Isabella, mapas, digital twins y registros del territorio."
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@nodo-cero/infra-security",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Hardening de infraestructura: CSP, headers, escaneo de dependencias y configuración endurecida.",
+  "scripts": {
+    "security:scan": "echo '[infra/security] pendiente: semgrep / npm audit / escaneo de contenedores'",
+    "hardening": "echo '[infra/security] pendiente: CSP, headers y hardening por servicio'"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@nodo-cero/infra-backups",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Backups antifrágiles: respaldo, verificación, restore y simulacros de desastre (drill) de las bases del Nodo Cero.",
+  "scripts": {
+    "backup": "echo '[infra/backups] pendiente: pg_dump + verificación de integridad'",
+    "backup:verify": "echo '[infra/backups] pendiente: validación de restore en sandbox'",
+    "backup:restore": "echo '[infra/backups] pendiente: procedimiento de restore documentado'",
+    "backup:drill": "echo '[infra/backups] pendiente: simulacro de desastre programado'"
+  }
+}

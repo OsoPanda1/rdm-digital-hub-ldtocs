@@ -1,0 +1,6 @@
+{
+  "name": "@nodo-cero/domain-maps",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Capas cartográficas del territorio: Leaflet, vectores, rutas mineras y geocodificación de Real del Monte."
+}

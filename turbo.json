@@ -1,15 +1,67 @@
 {
-  "pipeline": {
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    "turbo.json",
+    "package.json",
+    "pnpm-lock.yaml",
+    "tsconfig.base.json"
+  ],
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "dist/**"]
+      "outputs": [".next/**", "dist/**", "out/**"]
     },
     "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "typecheck": {},
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"]
+    },
+    "security:scan": {
       "cache": false
     },
-    "test": {
+    "hardening": {
+      "dependsOn": ["security:scan"],
+      "cache": false
+    },
+    "migrate": {
+      "cache": false
+    },
+    "seed": {
+      "dependsOn": ["migrate"],
+      "cache": false
+    },
+    "db:check": {},
+    "backup": {
+      "cache": false
+    },
+    "backup:verify": {
+      "dependsOn": ["backup"]
+    },
+    "backup:restore": {
+      "dependsOn": ["backup"],
+      "cache": false
+    },
+    "backup:drill": {
+      "dependsOn": ["backup:restore"],
+      "cache": false
+    },
+    "policy:check": {},
+    "check": {
       "dependsOn": ["^build"]
     },
-    "lint": {}
+    "ci": {
+      "dependsOn": ["^build"]
+    },
+    "format": {},
+    "clean": {
+      "cache": false
+    }
   }
 }

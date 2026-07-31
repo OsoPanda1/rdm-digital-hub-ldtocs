@@ -1,7 +1,12 @@
 # Migration runner for Supabase via direct Postgres connection
 # Uses supabase CLI db query for each statement
+# DB URL comes from SUPABASE_DB_URL env var (never hardcode credentials)
 
-$DB_URL = 'postgres://postgres.vbhkwooveztpezntxmof:743CJDBxunZYbGTl@aws-0-us-east-1.pooler.supabase.com:5432/postgres?sslmode=require'
+$DB_URL = $env:SUPABASE_DB_URL
+if (-not $DB_URL) {
+    Write-Host "ERROR: Set SUPABASE_DB_URL (e.g. in .env.local) before running migrations." -ForegroundColor Red
+    exit 1
+}
 $BASE = "$PSScriptRoot\..\data\migrations"
 
 function Run-Statements($file) {

@@ -1,0 +1,6 @@
+{
+  "name": "@nodo-cero/domain-payments",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Economía circular del territorio: pagos, membresías y transacciones de la federación de comercios."
+}

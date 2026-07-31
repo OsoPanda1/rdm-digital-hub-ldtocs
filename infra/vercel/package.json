@@ -1,0 +1,6 @@
+{
+  "name": "@nodo-cero/infra-vercel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Configuración y documentación del despliegue en Vercel del Nodo Cero."
+}
