@@ -2,7 +2,9 @@
 
 Plataforma territorial inteligente de **Real del Monte, Hidalgo (Pueblo Mágico)**. Ecosistema digital que integra turismo, historia, cultura, gastronomía, economía, comunidad, gobernanza e inteligencia artificial gobernada.
 
-> **Estado de este documento:** espejo real del repositorio al commit `8f0dd9e`. Todo lo marcado como funcional fue verificado leyendo el código y/o ejecutando los comandos; todo lo marcado como placeholder o roto está identificado con evidencia, no con intención.
+> **Estado de este documento:** espejo real del repositorio al commit `e4792fc`. Todo lo marcado como funcional fue verificado leyendo el código y/o ejecutando los comandos; todo lo marcado como placeholder o roto está identificado con evidencia, no con intención.
+
+> **Nota de emergencia (2026-07-31):** la cuenta de Vercel fue eliminada y el proyecto Supabase original (`vbhkwooveztpezntxmof`) murió con la integración. Se activó el **backup de emergencia de Vercel** y el deploy quedó restaurado (`https://rdm-digital-hub-ldtocs.vercel.app` responde 200). El backend se recreó en el proyecto Supabase **`xrxjhbnuyuflldmrdipu`** con keys nuevas (integradas en `.env.local`). **Pendiente:** aplicar migraciones + seeds al proyecto nuevo y recargar las env vars en Vercel.
 
 ---
 
@@ -81,6 +83,7 @@ supabase/                # config.toml, 3 edge functions, 4 migraciones
 | WebContainer/StackBlitz sin engines | dev bloqueado en navegador | `engines` en root y `rdm-hub`, `.stackblitzrc` | ✅ resuelto |
 | Speed Insights 5/100 | score catastrófico | iframe de YouTube → `loading="lazy"`; preconnects muertos a Google Fonts eliminados (next/font auto-hospeda) | ⚠️ mitigado, ver §9 |
 | Bash fork roto en Windows | comandos fallan | usar PowerShell (`bash` solo como wrapper) | ⚠️ entorno |
+| Backend Supabase eliminado con la cuenta de Vercel | `db.connected: false`, DNS muerto (`vbhkwooveztpezntxmof`) | proyecto recreado (`xrxjhbnuyuflldmrdipu`), keys nuevas en `.env.local` | ⚠️ migraciones/seeds **pendientes** de aplicar |
 
 ---
 
@@ -197,9 +200,9 @@ Estimación conservadora basada en lo verificado en §5. No incluye intención f
 ### Críticas
 | Fallo | Evidencia | Acción requerida |
 | --- | --- | --- |
+| **Migraciones + seeds no aplicadas al nuevo proyecto Supabase** | backend recreado en `xrxjhbnuyuflldmrdipu`; tablas RDM aún no existen | `pnpm db:migrate` + `pnpm db:seed` contra las keys nuevas |
+| **Env vars de Vercel desactualizadas** | proyecto Vercel restaurado desde backup conserva las keys muertas del proyecto anterior | recargar `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` en el dashboard |
 | **Chat de Isabella roto (400)** | payload de `use-isabella.ts` no cumple el Zod de la ruta (`inputType`, `timestamp` faltantes) | alinear contrato cliente↔ruta y agregar tests |
-| **Contraseña de DB expuesta en historial git** | estaba en `apply-migrations.ps1` (ya retirada del código) | **rotar credenciales de Supabase** |
-| **RLS sin verificar/aplicar** | auditoría externa: 4 migraciones insuficientes; tablas sirven con anon key | aplicar RLS tabla por tabla |
 | **56 vulnerabilidades Dependabot** (23 high, 31 moderate, 2 low) | reporte GitHub; 4 nuevas avisadas en últimos pushes | `pnpm audit` + actualizar dependencias |
 
 ### Altas
@@ -253,6 +256,7 @@ pnpm db:seed
 ## 11. Registro de avance
 
 ```
+e4792fc docs: README regenerado - estado real verificado, avances, deuda tecnica y fallas
 8f0dd9e perf: iframe de YouTube lazy (LCP/TBT), quitar preconnects muertos
 9cb8b03 feat: heptafederación (node:*) y lazy-systems operacionales
 7d37cfb feat: antifragile monorepo phase 1 (turbo 2, pnpm-workspace, infra/domain scaffolds)
