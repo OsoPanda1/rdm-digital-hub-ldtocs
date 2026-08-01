@@ -3,18 +3,18 @@ BEGIN;
 CREATE TABLE IF NOT EXISTS businesses (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text NOT NULL,
-  category text NOT NULL,
+  cat text NOT NULL,
   description text,
-  owner_id uuid REFERENCES auth.users(id) NOT NULL,
-  location jsonb,
-  contact jsonb,
+  owner_id uuid REFERENCES auth.users(id),
+  address text,
+  phone text,
   status text DEFAULT 'pending' CHECK (status IN ('pending','active','suspended')),
   created_at timestamptz DEFAULT now(),
   updated_at timestamptz DEFAULT now()
 );
 
 CREATE INDEX IF NOT EXISTS idx_businesses_status ON businesses (status);
-CREATE INDEX IF NOT EXISTS idx_businesses_category ON businesses (category);
+CREATE INDEX IF NOT EXISTS idx_businesses_cat ON businesses (cat);
 
 CREATE TABLE IF NOT EXISTS memberships (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),

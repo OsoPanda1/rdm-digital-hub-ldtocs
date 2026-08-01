@@ -11,4 +11,5 @@ INSERT INTO places (id, name, cat, description, lat, lng, address) VALUES
   ('a0000001-0000-0000-0000-000000000009', 'Palacio Municipal', 'arquitectura', 'Edificio del siglo XIX con arquitectura típica de la región. Sede del gobierno municipal.', 20.1382, -98.6733, 'Plaza de la Constitución 1, Centro'),
   ('a0000001-0000-0000-0000-000000000010', 'Capilla de Nuestra Señora del Rosario', 'arquitectura', 'Capilla del siglo XVIII con hermosos retablos dorados. Joya del barroco novohispano.', 20.1375, -98.6728, 'Calle del Rosario, Centro'),
   ('a0000001-0000-0000-0000-000000000011', 'Prismas Basálticos', 'naturaleza', 'Formación geológica de columnas de basalto de hasta 30 metros de altura. Maravilla natural a 15 minutos de Real del Monte.', 20.1185, -98.6874, 'Santa María Regla, Huasca de Ocampo'),
-  ('a0000001-0000-0000-0000-000000000012', 'Peña del Aire', 'naturaleza', 'Mirador natural con vista panorámica del valle. Ideal para senderismo y fotografía.', 20.1250, -98.6780, 'Carretera Real del Monte-Huasca');
+  ('a0000001-0000-0000-0000-000000000012', 'Peña del Aire', 'naturaleza', 'Mirador natural con vista panorámica del valle. Ideal para senderismo y fotografía.', 20.1250, -98.6780, 'Carretera Real del Monte-Huasca')
+ON CONFLICT (id) DO NOTHING;

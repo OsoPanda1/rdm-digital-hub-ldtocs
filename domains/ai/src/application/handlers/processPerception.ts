@@ -51,10 +51,16 @@ export async function processPerception(perception: IsabellaPerception): Promise
   }
 
   // Placeholder: simple rule-based decision
+  const userInput =
+    typeof (perception.payload as any)?.input === 'string'
+      ? (perception.payload as any).input.slice(0, 120)
+      : '';
   const decision: IsabellaDecision = {
     decisionId: `dec-${Date.now()}`,
     sessionId: perception.sessionId,
-    summary: 'Decision generada automáticamente (stub)',
+    summary: userInput
+      ? `Recibido: "${userInput}". La respuesta asistida por modelo de lenguaje se integrará en la siguiente fase.`
+      : 'Decision generada automáticamente (stub)',
     confidence: 0.6,
     riskLevel: 'low',
     policyStatus: 'allowed',

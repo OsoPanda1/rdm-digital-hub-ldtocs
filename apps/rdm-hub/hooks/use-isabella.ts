@@ -18,8 +18,9 @@ export function useIsabellaChat() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          action: 'perceive',
+          inputType: 'chat',
           payload: { input: prompt },
+          timestamp: new Date().toISOString(),
         }),
       })
       if (!res.ok) {

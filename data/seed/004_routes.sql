@@ -7,4 +7,5 @@ INSERT INTO routes (id, name, description, category, duration, distance) VALUES
   ('r0000001-0000-0000-0000-000000000005', 'Ruta de las Leyendas', 'Recorrido nocturno por callejones y plazas escuchando las leyendas del pueblo minero.', 'turismo', '2 horas', 1.5),
   ('r0000001-0000-0000-0000-000000000006', 'Ruta de la Cera', 'Talleres artesanales de velas y cerería tradicional.', 'tradicion', '3 horas', 1.0),
   ('r0000001-0000-0000-0000-000000000007', 'Ruta del Pulque', 'Degustación de pulque artesanal en las haciendas pulqueras de los alrededores.', 'gastronomia', '5 horas', 15.0),
-  ('r0000001-0000-0000-0000-000000000008', 'Ruta Fotográfica', 'Los mejores miradores y puntos fotográficos del Pueblo Mágico. Amanecer y atardecer.', 'turismo', '4 horas', 3.0);
+  ('r0000001-0000-0000-0000-000000000008', 'Ruta Fotográfica', 'Los mejores miradores y puntos fotográficos del Pueblo Mágico. Amanecer y atardecer.', 'turismo', '4 horas', 3.0)
+ON CONFLICT (id) DO NOTHING;
