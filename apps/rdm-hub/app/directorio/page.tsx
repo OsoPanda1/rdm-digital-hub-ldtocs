@@ -14,6 +14,8 @@ export default function DirectorioPage() {
   const [query, setQuery] = useState("");
   const { data: negocios, isLoading } = useNegocios();
 
+  const totalBusinesses = negocios?.length ?? 0;
+
   const categoryCounts = useMemo(() => {
     const counts = new Map<string, number>();
 
@@ -48,7 +50,7 @@ export default function DirectorioPage() {
     });
   }, [negocios, activeCat, query]);
 
-  const totalBusinesses = negocios?.length ?? 0;
+  const hasFiltersApplied = activeCat !== "Todos" || query.trim().length > 0;
 
   return (
     <div className="min-h-screen bg-[#07080b] text-[#f2efe8]">
@@ -136,4 +138,43 @@ export default function DirectorioPage() {
                     <div className="space-y-4 p-6">
                       <div className="h-3 w-24 animate-pulse rounded-full bg-white/[0.06]" />
                       <div className="h-5 w-2/3 animate-pulse rounded-full bg-white/[0.06]" />
-                      <div className="h-3 w-full animate-pulse rounded-full
+                      <div className="h-3 w-full animate-pulse rounded-full bg-white/[0.06]" />
+                      <div className="h-3 w-5/6 animate-pulse rounded-full bg-white/[0.06]" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : filteredBusinesses.length === 0 ? (
+              <div className="flex min-h-[320px] flex-col items-center justify-center rounded-3xl border border-white/8 bg-white/[0.03] px-6 py-14 text-center">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/8 bg-white/[0.04]">
+                  <Store className="h-7 w-7 text-[#a7adb8]" />
+                </div>
+                <p className="text-lg font-medium text-[#f2efe8]">Sin resultados</p>
+                <p className="mt-2 max-w-md text-sm leading-6 text-[#a7adb8]">
+                  {hasFiltersApplied
+                    ? "Ajusta el filtro o prueba con otra búsqueda para explorar más negocios del territorio."
+                    : "Todavía no hay negocios disponibles para mostrar."}
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-5">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-[#a7adb8]">
+                    {filteredBusinesses.length}{" "}
+                    {filteredBusinesses.length === 1 ? "negocio" : "negocios"} visibles
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+                  {filteredBusinesses.map((biz) => (
+                    <BusinessCard key={biz.id} biz={biz} />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
