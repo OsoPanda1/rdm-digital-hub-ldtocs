@@ -116,3 +116,9 @@ body {
 .leaflet-control-zoom a:hover { background: #1a1d24; }
 .leaflet-control-attribution { background: rgba(10, 11, 14, 0.8) !important; color: #6b7280; }
 .leaflet-control-attribution a { color: #c8a356; }
+
+/* Reproductores de audio en tema oscuro */
+audio { color-scheme: dark; }
+audio.rdm-audio {
+  filter: invert(0.86) hue-rotate(180deg);
+}
