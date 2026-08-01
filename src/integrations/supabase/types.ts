@@ -612,6 +612,57 @@ export type Database = {
         }
         Relationships: []
       }
+      tamv_event_store: {
+        Row: {
+          correlation_id: string | null
+          event_hash: string
+          event_id: string
+          event_type: string
+          federation: string
+          global_position: number
+          is_deleted: boolean
+          metadata: Json
+          occurred_at: string
+          payload: Json
+          recorded_at: string
+          source: string
+          stream_id: string
+          stream_version: number
+        }
+        Insert: {
+          correlation_id?: string | null
+          event_hash: string
+          event_id?: string
+          event_type: string
+          federation: string
+          global_position?: number
+          is_deleted?: boolean
+          metadata?: Json
+          occurred_at?: string
+          payload?: Json
+          recorded_at?: string
+          source: string
+          stream_id: string
+          stream_version: number
+        }
+        Update: {
+          correlation_id?: string | null
+          event_hash?: string
+          event_id?: string
+          event_type?: string
+          federation?: string
+          global_position?: number
+          is_deleted?: boolean
+          metadata?: Json
+          occurred_at?: string
+          payload?: Json
+          recorded_at?: string
+          source?: string
+          stream_id?: string
+          stream_version?: number
+        }
+        Relationships: []
+      }
       telemetry_pulses: {
         Row: {
           created_at: string
