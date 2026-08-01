@@ -46,7 +46,8 @@
     "@nodo-cero/domain-economy": "workspace:*",
     "@nodo-cero/domain-governance": "workspace:*",
     "@nodo-cero/domain-observability": "workspace:*",
-    "@nodo-cero/domain-pqc": "workspace:*"
+    "@nodo-cero/domain-pqc": "workspace:*",
+    "@nodo-cero/tamv-kernel": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.16.5",
