@@ -21,7 +21,7 @@ UPDATE places SET image_url = '/images/ecoturismo.jpg' WHERE id = 'a0000001-0000
 UPDATE places SET image_url = '/images/mirador-purisima.jpg' WHERE id = 'a0000001-0000-0000-0000-000000000012';
 
 -- NEGOCIOS
-UPDATE businesses SET image_url = '/images/gastronomia-1.jpg' WHERE id = 'b0000001-0000-0000-0000-000000000001';
+UPDATE businesses SET image_url = '/images/gastronomia-2.jpg' WHERE id = 'b0000001-0000-0000-0000-000000000001';
 UPDATE businesses SET image_url = '/images/gastronomia-2.jpg' WHERE id = 'b0000001-0000-0000-0000-000000000002';
 UPDATE businesses SET image_url = '/images/gastronomia-3.jpg' WHERE id = 'b0000001-0000-0000-0000-000000000003';
 UPDATE businesses SET image_url = '/images/gastronomia-4.jpg' WHERE id = 'b0000001-0000-0000-0000-000000000004';
@@ -47,7 +47,7 @@ UPDATE events SET image_url = '/images/plaza.jpg' WHERE id = 'e0000001-0000-0000
 UPDATE events SET image_url = '/images/gastronomia-5.jpg' WHERE id = 'e0000001-0000-0000-0000-000000000010';
 
 -- RUTAS
-UPDATE routes SET image_url = '/images/gastronomia-1.jpg' WHERE id = 'd0000001-0000-0000-0000-000000000001';
+UPDATE routes SET image_url = '/images/gastronomia-2.jpg' WHERE id = 'd0000001-0000-0000-0000-000000000001';
 UPDATE routes SET image_url = '/images/mina-acosta.jpg' WHERE id = 'd0000001-0000-0000-0000-000000000002';
 UPDATE routes SET image_url = '/images/realito-cultura.png' WHERE id = 'd0000001-0000-0000-0000-000000000003';
 UPDATE routes SET image_url = '/images/ecoturismo.jpg' WHERE id = 'd0000001-0000-0000-0000-000000000004';

@@ -23,6 +23,8 @@ $map = @(
   @("sed_deti.mp3",                                    "sed-de-ti.mp3"),
   @("reina_trejo.mp3",                                 "reina-trejo.mp3"),
   @("casa-bolio.mp3",                                  "casa-bolio.mp3"),
+  @("rdm_yoteadoro.mp3",                               "rdm-yoteadoro.mp3"),
+  @("rdmintro (2).mp3",                                "rdm-intro.mp3"),
   @("Cantina y callejón x Cantina y Callejón (Mashup).mp3", "cantina-callejon-mashup.mp3"),
   @("san antonio x san antonio (Mashup).mp3",          "san-antonio-mashup.mp3"),
   @("adicted_toyou).mp3",                              "adicted-to-you.mp3"),

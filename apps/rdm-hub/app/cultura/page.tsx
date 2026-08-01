@@ -25,27 +25,32 @@ const patrimonio = [
 ];
 
 const musica = [
-  { title: "Huella en Silencio", artist: "Música original", file: "/audio/huella-en-silencio.mp3" },
-  { title: "Legado", artist: "Música original", file: "/audio/legado.mp3" },
-  { title: "El Señalado", artist: "Música original", file: "/audio/el-senalado.mp3" },
-  { title: "Puro Dolor", artist: "Música original", file: "/audio/puro-dolor.mp3" },
-  { title: "Nueva Frecuencia", artist: "Música original", file: "/audio/nueva-frecuencia.mp3" },
-  { title: "Patio de Tierra", artist: "Música original", file: "/audio/patio-de-tierra.mp3" },
-  { title: "Polvo", artist: "Música original", file: "/audio/polvo.mp3" },
-  { title: "Shooting Star", artist: "Música original", file: "/audio/shooting-star.mp3" },
-  { title: "Stay Whit Me", artist: "Música original", file: "/audio/stay-whitme.mp3" },
-  { title: "Tu Mirada", artist: "Música original", file: "/audio/tu-mirada.mp3" },
-  { title: "Cada Noche", artist: "Música original", file: "/audio/cada-noche.mp3" },
-  { title: "A Mi Madre", artist: "Música original", file: "/audio/a-mi-madre.mp3" },
-  { title: "Sed de Ti", artist: "Música original", file: "/audio/sed-de-ti.mp3" },
-  { title: "Reina Trejo", artist: "Música original", file: "/audio/reina-trejo.mp3" },
-  { title: "Casa Bolio", artist: "Música original", file: "/audio/casa-bolio.mp3" },
-  { title: "Cantina y Callejón (Mashup)", artist: "Mashup", file: "/audio/cantina-callejon-mashup.mp3" },
-  { title: "San Antonio (Mashup)", artist: "Mashup", file: "/audio/san-antonio-mashup.mp3" },
-  { title: "Adicted to You", artist: "Música original", file: "/audio/adicted-to-you.mp3" },
-  { title: "Glitchy Cinematic", artist: "Pista ambiental", file: "/audio/glitchy-cinematic.mp3" },
-  { title: "Mind Explorer", artist: "Pista ambiental", file: "/audio/mind-explorer.mp3" },
-  { title: "Melodía Ambiental", artist: "Pista ambiental", file: "/audio/melodia-1543946.mp3" },
+  { title: "El Real (Legend)", artist: "Edwin Castillo", file: "/audio/a-mi-madre.mp3" },
+  { title: "A Mi Madre", artist: "RDM Digital", file: "/audio/reina-trejo.mp3" },
+  { title: "Tu Mirada", artist: "RDM Digital", file: "/audio/tu-mirada.mp3" },
+  { title: "Adicted to You", artist: "Edwin Castillo", file: "/audio/adicted-to-you.mp3" },
+  { title: "Cada Noche", artist: "Edwin Castillo", file: "/audio/cada-noche.mp3" },
+  { title: "El Señalado", artist: "Edwin Castillo", file: "/audio/el-senalado.mp3" },
+  { title: "Legado (Versión Extendida)", artist: "RDM Digital", file: "/audio/legado.mp3" },
+  { title: "Patio de Tierra", artist: "Edwin Castillo", file: "/audio/patio-de-tierra.mp3" },
+  { title: "Puro Dolor", artist: "Edwin Castillo", file: "/audio/puro-dolor.mp3" },
+  { title: "Shooting Star", artist: "Edwin Castillo", file: "/audio/shooting-star.mp3" },
+  { title: "RDM Yo Te Adoro", artist: "RDM Digital", file: "/audio/rdm-yoteadoro.mp3" },
+  { title: "RDM Intro (Versión Extendida)", artist: "RDM Digital", file: "/audio/rdm-intro.mp3" },
+];
+
+const musicaExtra = [
+  { title: "Huella en Silencio", artist: "Bonus", file: "/audio/huella-en-silencio.mp3" },
+  { title: "Nueva Frecuencia", artist: "Bonus", file: "/audio/nueva-frecuencia.mp3" },
+  { title: "Polvo", artist: "Bonus", file: "/audio/polvo.mp3" },
+  { title: "Stay Whit Me", artist: "Bonus", file: "/audio/stay-whitme.mp3" },
+  { title: "Sed de Ti", artist: "Bonus", file: "/audio/sed-de-ti.mp3" },
+  { title: "Casa Bolio", artist: "Bonus", file: "/audio/casa-bolio.mp3" },
+  { title: "Cantina y Callejón (Mashup)", artist: "Bonus", file: "/audio/cantina-callejon-mashup.mp3" },
+  { title: "San Antonio (Mashup)", artist: "Bonus", file: "/audio/san-antonio-mashup.mp3" },
+  { title: "Glitchy Cinematic", artist: "Bonus", file: "/audio/glitchy-cinematic.mp3" },
+  { title: "Mind Explorer", artist: "Bonus", file: "/audio/mind-explorer.mp3" },
+  { title: "Melodía Ambiental", artist: "Bonus", file: "/audio/melodia-1543946.mp3" },
 ];
 
 const arte = [
@@ -161,6 +166,39 @@ export default function CulturaPage() {
                 </div>
               ))}
             </div>
+            {musicaExtra.length > 0 && (
+              <div className="mt-8">
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-[#9ca3af] mb-4">
+                  Bonus
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {musicaExtra.map((track) => (
+                    <div
+                      key={track.file}
+                      className="border border-[#2a2d35] rounded-2xl bg-[#121418] p-5 hover:border-[#c8a356]/60 transition-colors space-y-3"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-[#c8a356]/30 to-transparent flex items-center justify-center shrink-0">
+                          <Music className="h-5 w-5 text-[#c8a356]" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="font-medium truncate">{track.title}</p>
+                          <p className="text-xs text-[#9ca3af]">{track.artist}</p>
+                        </div>
+                      </div>
+                      <audio
+                        controls
+                        preload="none"
+                        src={track.file}
+                        className="w-full h-10"
+                      >
+                        Tu navegador no soporta audio.
+                      </audio>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </>
         )}
 
