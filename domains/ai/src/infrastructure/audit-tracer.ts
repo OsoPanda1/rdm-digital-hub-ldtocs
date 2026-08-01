@@ -11,6 +11,7 @@ export async function auditTrace(payload: {
   eventType: string;
   data: Record<string, unknown>;
   traceId?: string;
+  metadata?: Record<string, unknown>;
 }) {
   // TODO: sustituir por insert a isabella_audit_logs
   console.log('[isabella.audit]', {
@@ -18,7 +19,8 @@ export async function auditTrace(payload: {
     sessionId: payload.sessionId,
     eventType: payload.eventType,
     traceId: payload.traceId ?? 'not-provided',
-    data: payload.data
+    data: payload.data,
+    metadata: payload.metadata
   });
   // Return a fake id for chaining
   return { auditId: 'audit_stub_' + Date.now() };
