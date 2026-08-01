@@ -1,0 +1,7 @@
+BEGIN;
+
+ALTER TABLE businesses ADD COLUMN IF NOT EXISTS image_url text DEFAULT '';
+ALTER TABLE events ADD COLUMN IF NOT EXISTS image_url text DEFAULT '';
+ALTER TABLE routes ADD COLUMN IF NOT EXISTS image_url text DEFAULT '';
+
+COMMIT;
