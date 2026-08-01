@@ -28,7 +28,7 @@ export const ISABELLA_SYSTEM_PROMPT = [
  */
 export async function generateChatResponse(
   messages: GatewayMessage[],
-  opts?: { maxTokens?: number; temperature?: number },
+  opts?: { maxTokens?: number; temperature?: number; signal?: AbortSignal },
 ): Promise<string | null> {
   const apiKey = process.env.AI_GATEWAY_API_KEY;
   if (!apiKey) {
@@ -49,7 +49,7 @@ export async function generateChatResponse(
         max_tokens: opts?.maxTokens ?? 500,
         temperature: opts?.temperature ?? 0.7,
       }),
-      signal: AbortSignal.timeout(30_000),
+      signal: opts?.signal ?? AbortSignal.timeout(30_000),
     });
 
     if (!res.ok) {
