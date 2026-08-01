@@ -13,6 +13,7 @@ export interface Business {
   website?: string
   lat?: number
   lng?: number
+  image_url?: string
   created_at: string
 }
 

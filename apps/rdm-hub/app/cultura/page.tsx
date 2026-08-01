@@ -1,110 +1,174 @@
 "use client";
 
 import { useState } from "react";
+import { Landmark, Image as ImageIcon, Music, Archive, Palette } from "lucide-react";
+import { PageHero } from "@/components/page-hero";
+import { SectionHeader } from "@/components/section-header";
+import { SmartImage } from "@/components/smart-image";
+import { CULTURE_HERO } from "@/lib/images";
 
-const sections = [
-  { id: "patrimonio", label: "Patrimonio" },
-  { id: "galeria", label: "Galería" },
-  { id: "musica", label: "Música" },
-  { id: "archivo", label: "Archivo Sonoro" },
-  { id: "arte", label: "Arte" },
+const tabs = [
+  { id: "patrimonio", label: "Patrimonio", icon: Landmark },
+  { id: "galeria", label: "Galería", icon: ImageIcon },
+  { id: "musica", label: "Música", icon: Music },
+  { id: "archivo", label: "Archivo Sonoro", icon: Archive },
+  { id: "arte", label: "Arte", icon: Palette },
+];
+
+const patrimonio = [
+  "Parroquia de la Asunción",
+  "Panteón Inglés",
+  "Palacio Municipal",
+  "Casa de la Cultura",
+  "Museo de Medicina Laboral",
+  "Teatro Hidalgo",
+];
+
+const musica = ["Canto a Real del Monte", "Corrido Minero", "Sones de Hidalgo", "Música de Viento"];
+
+const arte = [
+  { name: "Artesanía en Cantera", desc: "Tallado en piedra volcánica" },
+  { name: "Textiles Tradicionales", desc: "Bordados y tejidos de la región" },
+  { name: "Pintura Mural", desc: "Murales que narran la historia minera" },
+  { name: "Arte Contemporáneo", desc: "Expresiones artísticas modernas" },
 ];
 
 export default function CulturaPage() {
-  const [activeSection, setActiveSection] = useState("patrimonio");
+  const [activeTab, setActiveTab] = useState("patrimonio");
 
   return (
     <div className="min-h-screen">
-      <div className="border-b border-[#2a2d35]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-1 h-14 overflow-x-auto">
-            {sections.map((s) => (
-              <button
-                key={s.id}
-                onClick={() => setActiveSection(s.id)}
-                className={`px-4 py-2 text-sm rounded-lg whitespace-nowrap transition-colors ${
-                  activeSection === s.id
-                    ? "bg-[#c8a356]/10 text-[#c8a356]"
-                    : "text-[#9ca3af] hover:text-[#e8e6e0]"
-                }`}
-              >
-                {s.label}
-              </button>
-            ))}
-          </div>
+      <PageHero
+        eyebrow="Riqueza cultural"
+        title="Cultura de Real del Monte"
+        subtitle="Patrimonio, música, archivos sonoros y arte que viven en cada esquina."
+        image={CULTURE_HERO}
+      />
+
+      <div className="sticky top-14 z-40 border-b border-[#2a2d35] bg-[#0a0b0e]/85 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-1 h-14 overflow-x-auto">
+          {tabs.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setActiveTab(t.id)}
+              className={`inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg whitespace-nowrap transition-colors ${
+                activeTab === t.id ? "bg-[#c8a356]/10 text-[#c8a356]" : "text-[#9ca3af] hover:text-[#e8e6e0]"
+              }`}
+            >
+              <t.icon className="h-4 w-4" />
+              {t.label}
+            </button>
+          ))}
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-        <h1 className="font-serif text-3xl font-bold">Cultura</h1>
-        <p className="text-[#9ca3af]">La riqueza cultural de Real del Monte.</p>
-
-        {activeSection === "patrimonio" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              "Parroquia de la Asunción",
-              "Panteón Inglés",
-              "Palacio Municipal",
-              "Casa de la Cultura",
-              "Museo de Medicina Laboral",
-              "Teatro Hidalgo",
-            ].map((item) => (
-              <div key={item} className="border border-[#2a2d35] rounded-xl p-4 bg-[#121418]">
-                <p className="font-medium">{item}</p>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {activeSection === "galeria" && (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="aspect-square rounded-xl border border-[#2a2d35] bg-[#121418] flex items-center justify-center">
-                <p className="text-[#6b7280] text-sm">Imagen {i}</p>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {activeSection === "musica" && (
-          <div className="space-y-4">
-            {[
-              "Canto a Real del Monte",
-              "Corrido Minero",
-              "Sones de Hidalgo",
-              "Música de Viento",
-            ].map((track) => (
-              <div key={track} className="border border-[#2a2d35] rounded-xl p-4 bg-[#121418] flex items-center justify-between">
-                <p className="font-medium">{track}</p>
-                <button className="text-[#c8a356] text-sm hover:underline">Reproducir</button>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {activeSection === "archivo" && (
-          <div className="space-y-4">
-            <p className="text-[#9ca3af]">Archivo sonoro con grabaciones históricas y testimonios.</p>
-            <div className="border border-[#2a2d35] rounded-xl p-6 bg-[#121418] text-center">
-              <p className="text-[#6b7280]">Archivo sonoro — próximamente</p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+        {activeTab === "patrimonio" && (
+          <>
+            <SectionHeader
+              eyebrow="Edificios y sitios"
+              title="Patrimonio construido"
+              description="El legado arquitectónico que hace de Real del Monte un Pueblo Mágico."
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {patrimonio.map((item, i) => (
+                <article
+                  key={item}
+                  className="group border border-[#2a2d35] rounded-2xl overflow-hidden bg-[#121418] hover:border-[#c8a356]/60 transition-all duration-300"
+                >
+                  <SmartImage category={i % 2 === 0 ? "arquitectura" : "historico"} alt={item} className="h-44" overlay />
+                  <div className="p-5">
+                    <p className="font-serif text-lg font-bold group-hover:text-[#d4b26a] transition-colors">{item}</p>
+                  </div>
+                </article>
+              ))}
             </div>
-          </div>
+          </>
         )}
 
-        {activeSection === "arte" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              { name: "Artesanía en Cantera", desc: "Tallado en piedra volcánica" },
-              { name: "Textiles Tradicionales", desc: "Bordados y tejidos de la región" },
-              { name: "Pintura Mural", desc: "Murales que narran la historia minera" },
-              { name: "Arte Contemporáneo", desc: "Expresiones artísticas modernas" },
-            ].map((item) => (
-              <div key={item.name} className="border border-[#2a2d35] rounded-xl p-6 bg-[#121418]">
-                <h3 className="font-medium">{item.name}</h3>
-                <p className="text-sm text-[#9ca3af] mt-1">{item.desc}</p>
-              </div>
-            ))}
-          </div>
+        {activeTab === "galeria" && (
+          <>
+            <SectionHeader
+              eyebrow="Galería visual"
+              title="Estampas del pueblo"
+              description="Atardeceres, callejones, minas y montañas del territorio."
+            />
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {["naturaleza", "arquitectura", "mineria", "plaza", "historico", "cultura"].map((cat, i) => (
+                <SmartImage
+                  key={i}
+                  category={cat}
+                  alt={`Estampa ${i + 1}`}
+                  className="aspect-square rounded-2xl"
+                />
+              ))}
+            </div>
+          </>
+        )}
+
+        {activeTab === "musica" && (
+          <>
+            <SectionHeader
+              eyebrow="Sonidos del territorio"
+              title="Música tradicional"
+              description="Cantos, corridos y sones que cuentan la historia minera."
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {musica.map((track) => (
+                <div
+                  key={track}
+                  className="border border-[#2a2d35] rounded-2xl bg-[#121418] p-5 flex items-center justify-between hover:border-[#c8a356]/60 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-[#c8a356]/30 to-transparent flex items-center justify-center">
+                      <Music className="h-5 w-5 text-[#c8a356]" />
+                    </div>
+                    <p className="font-medium">{track}</p>
+                  </div>
+                  <span className="text-[#c8a356] text-sm">→</span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {activeTab === "archivo" && (
+          <>
+            <SectionHeader
+              eyebrow="Memoria oral"
+              title="Archivo sonoro"
+              description="Grabaciones históricas y testimonios de la comunidad."
+            />
+            <div className="border border-[#2a2d35] rounded-2xl bg-[#121418] p-14 text-center space-y-2">
+              <Archive className="h-8 w-8 mx-auto text-[#c8a356]" />
+              <p className="font-serif text-xl font-bold">Archivo sonoro</p>
+              <p className="text-sm text-[#9ca3af]">En construcción — pronto compartiremos las voces del territorio.</p>
+            </div>
+          </>
+        )}
+
+        {activeTab === "arte" && (
+          <>
+            <SectionHeader
+              eyebrow="Expresión creativa"
+              title="Arte local"
+              description="La creatividad de artistas y artesanos del municipio."
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {arte.map((item) => (
+                <article
+                  key={item.name}
+                  className="group border border-[#2a2d35] rounded-2xl overflow-hidden bg-[#121418] hover:border-[#c8a356]/60 transition-all duration-300"
+                >
+                  <SmartImage category="artesanias" alt={item.name} className="h-44" overlay />
+                  <div className="p-5 space-y-1">
+                    <h3 className="font-serif text-lg font-bold group-hover:text-[#d4b26a] transition-colors">{item.name}</h3>
+                    <p className="text-sm text-[#9ca3af]">{item.desc}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </div>

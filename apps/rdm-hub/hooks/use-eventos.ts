@@ -10,6 +10,7 @@ export interface Event {
   date: string
   location: string
   category: string
+  image_url?: string
   created_at: string
 }
 

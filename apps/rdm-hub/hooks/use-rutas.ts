@@ -10,6 +10,7 @@ export interface Route {
   category: string
   duration: string
   distance: number
+  image_url?: string
 }
 
 function getClient() {

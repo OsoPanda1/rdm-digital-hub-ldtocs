@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { Clock, MapPin, Phone, Route as RouteIcon, Mountain, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { categoryMeta } from "@/lib/images";
@@ -125,7 +126,7 @@ export function RouteCard({ ruta }: { ruta: RouteT }) {
   );
 }
 
-export function LinkArrow({ href, children }: { href: string; children: React.ReactNode }) {
+export function LinkArrow({ href, children }: { href: string; children: ReactNode }) {
   return (
     <Link
       href={href}
