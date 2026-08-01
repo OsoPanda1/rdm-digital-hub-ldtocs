@@ -1,39 +1,59 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Search, Store } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { BusinessCard } from "@/components/cards";
 import { useNegocios } from "@/hooks/use-negocios";
-import { categoryMeta } from "@/lib/images";
-import { ECONOMY_HERO } from "@/lib/images";
+import { categoryMeta, ECONOMY_HERO } from "@/lib/images";
+
+type CategoryName = "Todos" | string;
 
 export default function DirectorioPage() {
-  const [activeCat, setActiveCat] = useState("Todos");
+  const [activeCat, setActiveCat] = useState<CategoryName>("Todos");
   const [query, setQuery] = useState("");
   const { data: negocios, isLoading } = useNegocios();
 
-  const categories = useMemo(() => {
-    if (!negocios) return ["Todos"];
-    return ["Todos", ...[...new Set(negocios.map((b) => b.cat))]];
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+
+    for (const biz of negocios ?? []) {
+      counts.set(biz.cat, (counts.get(biz.cat) ?? 0) + 1);
+    }
+
+    return counts;
   }, [negocios]);
 
-  const filtered = useMemo(() => {
-    if (!negocios) return [];
-    const q = query.trim().toLowerCase();
-    return negocios.filter((b) => {
-      const byCat = activeCat === "Todos" || b.cat === activeCat;
-      const byQuery =
-        !q ||
-        b.name.toLowerCase().includes(q) ||
-        b.description?.toLowerCase().includes(q) ||
-        b.address?.toLowerCase().includes(q);
-      return byCat && byQuery;
+  const categories = useMemo<CategoryName[]>(() => {
+    if (!negocios?.length) return ["Todos"];
+
+    const uniqueCategories = [...new Set(negocios.map((biz) => biz.cat))];
+    return ["Todos", ...uniqueCategories];
+  }, [negocios]);
+
+  const filteredBusinesses = useMemo(() => {
+    if (!negocios?.length) return [];
+
+    const normalizedQuery = query.trim().toLowerCase();
+
+    return negocios.filter((biz) => {
+      const matchesCategory = activeCat === "Todos" || biz.cat === activeCat;
+      const matchesQuery =
+        !normalizedQuery ||
+        biz.name.toLowerCase().includes(normalizedQuery) ||
+        biz.description?.toLowerCase().includes(normalizedQuery) ||
+        biz.address?.toLowerCase().includes(normalizedQuery);
+
+      return matchesCategory && matchesQuery;
     });
   }, [negocios, activeCat, query]);
 
+  const totalBusinesses = negocios?.length ?? 0;
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#07080b] text-[#f2efe8]">
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(200,163,86,0.10),transparent_34%),linear-gradient(to_bottom,rgba(255,255,255,0.03),transparent_18%)]" />
+
       <PageHero
         eyebrow="Economía local"
         title="Directorio de negocios"
@@ -41,67 +61,79 @@ export default function DirectorioPage() {
         image={ECONOMY_HERO}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
-        <div className="flex flex-col lg:flex-row gap-4 lg:items-center justify-between">
-          <div className="flex items-center gap-1.5 flex-wrap">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCat(cat)}
-                className={`px-3 py-1.5 text-sm rounded-full whitespace-nowrap transition-colors border ${
-                  activeCat === cat
-                    ? "bg-[#c8a356]/15 border-[#c8a356]/60 text-[#c8a356]"
-                    : "border-[#2a2d35] text-[#9ca3af] hover:text-[#e8e6e0] hover:border-[#3a3e49]"
-                }`}
-              >
-                {cat === "Todos" ? `Todos (${negocios?.length ?? 0})` : `${categoryMeta(cat).label} (${negocios?.filter((b) => b.cat === cat).length ?? 0})`}
-              </button>
-            ))}
-          </div>
-
-          <div className="relative shrink-0 lg:w-72">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#6b7280]" />
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Buscar negocio o dirección…"
-              className="w-full pl-9 pr-4 py-2.5 bg-[#121418] border border-[#2a2d35] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#c8a356]"
-            />
-          </div>
-        </div>
-
-        {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="rounded-2xl border border-[#2a2d35] bg-[#121418] overflow-hidden">
-                <div className="h-40 animate-pulse bg-[#1a1d24]" />
-                <div className="p-5 space-y-3">
-                  <div className="h-4 w-24 rounded bg-[#1a1d24] animate-pulse" />
-                  <div className="h-5 w-2/3 rounded bg-[#1a1d24] animate-pulse" />
-                  <div className="h-3 w-full rounded bg-[#1a1d24] animate-pulse" />
-                </div>
+      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <section className="rounded-[2rem] border border-white/8 bg-white/[0.02] p-4 shadow-[0_30px_90px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:p-6 lg:p-8">
+          <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-sm text-[#a7adb8]">
+                <span className="h-2 w-2 rounded-full bg-[#c8a356] shadow-[0_0_16px_rgba(200,163,86,0.55)]" />
+                <span>{totalBusinesses} negocios registrados</span>
               </div>
-            ))}
-          </div>
-        ) : filtered.length === 0 ? (
-          <div className="border border-[#2a2d35] rounded-2xl bg-[#121418] p-14 text-center space-y-2">
-            <Store className="h-8 w-8 mx-auto text-[#6b7280]" />
-            <p className="font-medium">Sin resultados</p>
-            <p className="text-sm text-[#9ca3af]">Ajusta el filtro o la búsqueda.</p>
-          </div>
-        ) : (
-          <>
-            <p className="text-sm text-[#9ca3af]">
-              {filtered.length} {filtered.length === 1 ? "negocio" : "negocios"} en el directorio
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {filtered.map((biz) => (
-                <BusinessCard key={biz.id} biz={biz} />
-              ))}
+
+              <div className="flex flex-wrap items-center gap-2">
+                {categories.map((cat) => {
+                  const isActive = activeCat === cat;
+                  const count =
+                    cat === "Todos"
+                      ? totalBusinesses
+                      : categoryCounts.get(cat) ?? 0;
+
+                  const label = cat === "Todos" ? "Todos" : categoryMeta(cat).label;
+
+                  return (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => setActiveCat(cat)}
+                      aria-pressed={isActive}
+                      className={[
+                        "group inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-all duration-300",
+                        "focus:outline-none focus:ring-2 focus:ring-[#c8a356]/30 focus:ring-offset-2 focus:ring-offset-[#07080b]",
+                        isActive
+                          ? "border-[#c8a356]/40 bg-[#c8a356] text-[#0a0b0e] shadow-[0_12px_30px_rgba(200,163,86,0.18)]"
+                          : "border-white/8 bg-white/[0.03] text-[#cdd2dc] hover:border-white/14 hover:bg-white/[0.06] hover:text-white",
+                      ].join(" ")}
+                    >
+                      <span>{label}</span>
+                      <span
+                        className={[
+                          "rounded-full px-2 py-0.5 text-xs font-semibold",
+                          isActive ? "bg-black/10 text-black/70" : "bg-white/6 text-[#a7adb8]",
+                        ].join(" ")}
+                      >
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
+
+            <div className="relative w-full xl:max-w-sm">
+              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#7c828f]" />
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Buscar negocio, giro o dirección…"
+                className={[
+                  "w-full rounded-2xl border border-white/8 bg-white/[0.04] py-3 pl-11 pr-4 text-sm text-[#f2efe8]",
+                  "placeholder:text-[#7c828f] shadow-[0_10px_30px_rgba(0,0,0,0.18)]",
+                  "transition-all duration-300 focus:border-[#c8a356]/35 focus:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-[#c8a356]/20",
+                ].join(" ")}
+              />
+            </div>
+          </div>
+
+          <div className="mt-8">
+            {isLoading ? (
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="overflow-hidden rounded-3xl border border-white/8 bg-white/[0.03]"
+                  >
+                    <div className="h-44 animate-pulse bg-white/[0.05]" />
+                    <div className="space-y-4 p-6">
+                      <div className="h-3 w-24 animate-pulse rounded-full bg-white/[0.06]" />
+                      <div className="h-5 w-2/3 animate-pulse rounded-full bg-white/[0.06]" />
+                      <div className="h-3 w-full animate-pulse rounded-full
