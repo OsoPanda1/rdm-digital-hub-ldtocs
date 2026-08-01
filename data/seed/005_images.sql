@@ -1,5 +1,10 @@
 -- Seed data: Imágenes curadas para lugares, negocios, eventos y rutas
 -- Idempotente: solo actualiza cuando image_url está vacío.
+-- Envuelto en un bloque DO para que `supabase db query --file`
+-- lo ejecute como una sola sentencia preparada.
+
+DO $$
+BEGIN
 
 -- LUGARES
 UPDATE places SET image_url = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=1000&q=80' WHERE id = 'a0000001-0000-0000-0000-000000000001' AND image_url = '';
@@ -50,3 +55,5 @@ UPDATE routes SET image_url = 'https://images.unsplash.com/photo-1519681393784-d
 UPDATE routes SET image_url = 'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=1000&q=80' WHERE id = 'd0000001-0000-0000-0000-000000000006' AND image_url = '';
 UPDATE routes SET image_url = 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1000&q=80' WHERE id = 'd0000001-0000-0000-0000-000000000007' AND image_url = '';
 UPDATE routes SET image_url = 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1000&q=80' WHERE id = 'd0000001-0000-0000-0000-000000000008' AND image_url = '';
+
+END $$;
