@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Send, Sparkles, User } from "lucide-react";
-import { useIsabellaChat } from "@/hooks/use-isabella";
+import { useIsabellaChat, useIsabellaHistory } from "@/hooks/use-isabella";
 import { createClient } from "@/lib/supabase/client";
 
 type Message = {
@@ -26,8 +26,22 @@ export default function IsabellaPage() {
     },
   ]);
   const [input, setInput] = useState("");
+  const [hydrated, setHydrated] = useState(false);
   const chat = useIsabellaChat();
+  const { data: history } = useIsabellaHistory();
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!hydrated && history && history.length > 0) {
+      setMessages(
+        history.map((m) => ({
+          role: m.role === "user" ? "user" : "assistant",
+          content: m.content,
+        })),
+      );
+      setHydrated(true);
+    }
+  }, [history, hydrated]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
