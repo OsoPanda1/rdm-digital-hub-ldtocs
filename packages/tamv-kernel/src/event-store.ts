@@ -44,17 +44,27 @@ function getClient(): SupabaseClient {
   return client;
 }
 
+/** Serialización determinista: claves ordenadas (jsonb reordena en Postgres). */
+function stableStringify(value: unknown): string {
+  if (value === null || typeof value !== "object") return JSON.stringify(value ?? null);
+  if (Array.isArray(value)) return `[${value.map(stableStringify).join(",")}]`;
+  const entries = Object.entries(value as Record<string, unknown>)
+    .filter(([, v]) => v !== undefined)
+    .sort(([a], [b]) => (a < b ? -1 : 1));
+  return `{${entries.map(([k, v]) => `${JSON.stringify(k)}:${stableStringify(v)}`).join(",")}}`;
+}
+
 export function hashEventPayload(
   event: CivicEvent,
   streamId: string,
   streamVersion: number,
 ): string {
-  const raw = JSON.stringify({
+  const raw = stableStringify({
     id: event.id,
     type: event.type,
     federation: event.federation,
-    payload: event.payload,
-    occurredAt: event.occurredAt,
+    payload: event.payload ?? {},
+    occurredAt: new Date(event.occurredAt).toISOString(),
     source: event.source,
     correlationId: event.correlationId ?? null,
     streamId,
@@ -62,6 +72,7 @@ export function hashEventPayload(
   });
   return createHash("sha256").update(raw).digest("hex");
 }
+
 
 type Row = {
   global_position: number;
