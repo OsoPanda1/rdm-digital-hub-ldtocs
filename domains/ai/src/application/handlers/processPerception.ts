@@ -3,71 +3,142 @@ import { policyGate } from '../../infrastructure/policy-gate';
 import { auditTrace } from '../../infrastructure/audit-tracer';
 
 /**
- * processPerception - flujo canónico:
- * 1. auditar percepción entrante
- * 2. resolver políticas (policy-gate)
- * 3. decidir (stub)
- * 4. auditar decisión y devolverla
+ * processPerception - flujo canónico evolucionado:
+ * 1. normalizar percepción (territorio, tenant, canal)
+ * 2. auditar percepción entrante
+ * 3. resolver políticas (policy-gate)
+ * 4. decidir con reglas base (pre-LLM)
+ * 5. preparar contexto para IA (toolCalls / nextActions)
+ * 6. auditar decisión y devolverla
  */
 export async function processPerception(perception: IsabellaPerception): Promise<IsabellaDecision> {
-  const traceId = (perception.metadata as any)?.traceId ?? `trace-${Date.now()}`;
+  const traceId =
+    (perception.metadata as any)?.traceId ??
+    `trace-${perception.territoryId ?? 'rdm'}-${Date.now()}`;
+
+  const tenantId = (perception.payload as any)?.tenantId ?? 'rdm-nodo-cero';
+  const channel = perception.inputType;
+  const timestamp = perception.timestamp;
+
+  // Normalización mínima de territorio
+  if (!perception.territoryId) {
+    perception.territoryId = 'rdm-real-del-monte-hidalgo-mx';
+  }
+
   await auditTrace({
-    tenantId: (perception.payload as any)?.tenantId,
+    tenantId,
     sessionId: perception.sessionId,
     actorId: perception.actorId,
     eventType: 'perception.received',
     data: perception,
-    traceId
+    traceId,
+    metadata: { channel, timestamp }
   });
 
   const policy = await policyGate(perception);
 
+  // Branch 1: denegado por política
   if (policy.status === 'denied') {
     const decision: IsabellaDecision = {
       decisionId: `dec-${Date.now()}`,
       sessionId: perception.sessionId,
-      summary: 'Acción denegada por política',
+      summary: 'Acción denegada por política del nodo cero. Este evento queda registrado para análisis de riesgo.',
       confidence: 1,
       riskLevel: 'high',
       policyStatus: 'denied',
-      toolCalls: []
+      toolCalls: [],
+      details: {
+        reason: policy.reason ?? 'policy_denied',
+        channel,
+        territoryId: perception.territoryId
+      }
     };
-    await auditTrace({ eventType: 'decision.created', data: decision, traceId });
+
+    await auditTrace({
+      tenantId,
+      sessionId: perception.sessionId,
+      actorId: perception.actorId,
+      eventType: 'decision.denied',
+      data: decision,
+      traceId
+    });
+
     return decision;
   }
 
+  // Branch 2: requiere aprobación humana
   if (policy.status === 'requires_approval') {
     const decision: IsabellaDecision = {
       decisionId: `dec-${Date.now()}`,
       sessionId: perception.sessionId,
-      summary: 'Requiere aprobación humana',
-      confidence: 0.8,
+      summary:
+        'La acción propuesta requiere revisión humana según las políticas del nodo cero. Un operador territorial debe validar esta decisión.',
+      confidence: 0.85,
       riskLevel: 'high',
       policyStatus: 'requires_approval',
-      toolCalls: []
+      toolCalls: [],
+      details: {
+        reason: policy.reason ?? 'requires_approval',
+        channel,
+        territoryId: perception.territoryId,
+        nextActions: ['notify_human_operator']
+      }
     };
-    await auditTrace({ eventType: 'decision.created', data: decision, traceId });
+
+    await auditTrace({
+      tenantId,
+      sessionId: perception.sessionId,
+      actorId: perception.actorId,
+      eventType: 'decision.requires_approval',
+      data: decision,
+      traceId
+    });
+
     return decision;
   }
 
-  // Placeholder: simple rule-based decision
+  // Branch 3: permitido - decisión base pre-LLM
+  const rawInput = (perception.payload as any)?.input;
   const userInput =
-    typeof (perception.payload as any)?.input === 'string'
-      ? (perception.payload as any).input.slice(0, 120)
+    typeof rawInput === 'string'
+      ? rawInput.trim().slice(0, 240)
       : '';
+
+  const hasUserInput = userInput.length > 0;
+
+  // Riesgo dinámico simple por tipo de input
+  const riskLevel: IsabellaDecision['riskLevel'] =
+    channel === 'api' || channel === 'event' ? 'medium' : 'low';
+
+  const summaryBase = hasUserInput
+    ? `Percepción recibida desde canal "${channel}" en territorio "${perception.territoryId}".`
+    : 'Percepción recibida sin texto explícito; se mantiene registro para inteligencia territorial.';
+
   const decision: IsabellaDecision = {
     decisionId: `dec-${Date.now()}`,
     sessionId: perception.sessionId,
-    summary: userInput
-      ? `Recibido: "${userInput}". La respuesta asistida por modelo de lenguaje se integrará en la siguiente fase.`
-      : 'Decision generada automáticamente (stub)',
-    confidence: 0.6,
-    riskLevel: 'low',
+    summary: summaryBase,
+    confidence: hasUserInput ? 0.7 : 0.5,
+    riskLevel,
     policyStatus: 'allowed',
-    toolCalls: []
+    toolCalls: [],
+    details: {
+      channel,
+      territoryId: perception.territoryId,
+      tenantId,
+      echoInput: hasUserInput ? userInput : undefined,
+      nextActions: hasUserInput ? ['invoke_llm_gateway'] : []
+    }
   };
 
-  await auditTrace({ eventType: 'decision.created', data: decision, traceId });
+  await auditTrace({
+    tenantId,
+    sessionId: perception.sessionId,
+    actorId: perception.actorId,
+    eventType: 'decision.allowed',
+    data: decision,
+    traceId
+  });
 
   return decision;
 }
