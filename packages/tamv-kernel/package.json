@@ -1,0 +1,12 @@
+{
+  "name": "@nodo-cero/tamv-kernel",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.107.0"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  }
+}
