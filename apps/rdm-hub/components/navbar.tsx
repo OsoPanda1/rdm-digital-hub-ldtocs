@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Inicio", href: "/" },
+  { label: "OS Unificado", href: "/os" },
   { label: "Explorar", href: "/explorar" },
   { label: "Historia", href: "/historia" },
   { label: "Cultura", href: "/cultura" },
@@ -19,6 +20,7 @@ const navLinks = [
   { label: "Gobernanza", href: "/gobernanza" },
   { label: "Acerca", href: "/acerca" },
 ];
+
 
 export function Navbar() {
   const pathname = usePathname();
