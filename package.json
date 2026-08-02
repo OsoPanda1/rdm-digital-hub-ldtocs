@@ -20,6 +20,7 @@
     "dev:gamification": "turbo run dev --filter apps/gamification-3d",
     "dev:observability": "turbo run dev --filter apps/observability",
     "build": "turbo run build",
+    "build:dev": "cd apps/rdm-hub && ./node_modules/.bin/next build",
     "build:hub": "turbo run build --filter apps/rdm-hub",
     "build:visitarealdelmonte": "turbo run build --filter apps/visitarealdelmonte-core",
     "build:mobile": "turbo run build --filter apps/5-tenedores",
