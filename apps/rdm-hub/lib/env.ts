@@ -22,11 +22,15 @@ function parseEnv() {
     NEXT_PUBLIC_NODE_NAME: process.env.NEXT_PUBLIC_NODE_NAME,
   });
   if (!parsed.success) {
-    if (process.env.NODE_ENV === 'production') {
-      throw new Error(`Missing env vars: ${JSON.stringify(parsed.error.flatten().fieldErrors)}`);
-    }
+    // Never throw at module scope: this file is imported during the
+    // production build (prerender), where public env vars may be absent.
     console.warn("Missing client env vars:", parsed.error.flatten().fieldErrors);
-    return { NEXT_PUBLIC_SUPABASE_URL: "", NEXT_PUBLIC_SUPABASE_ANON_KEY: "", NEXT_PUBLIC_NODE_ID: "nd-0000", NEXT_PUBLIC_NODE_NAME: "Nodo Cero" };
+    return {
+      NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
+      NEXT_PUBLIC_NODE_ID: process.env.NEXT_PUBLIC_NODE_ID ?? "nd-0000",
+      NEXT_PUBLIC_NODE_NAME: process.env.NEXT_PUBLIC_NODE_NAME ?? "Nodo Cero",
+    };
   }
   return parsed.data;
 }
