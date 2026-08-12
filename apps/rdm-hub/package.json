@@ -58,7 +58,7 @@
     "@types/react-dom": "^19.2.0",
     "@types/three": "^0.185.0",
     "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.3",
+    "postcss": "^8.5.26",
     "tailwindcss": "^4.2.1",
     "typescript": "^5.8.3"
   }
